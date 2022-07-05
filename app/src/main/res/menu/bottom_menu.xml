@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/user_preferences"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Списки" />
+
+    <item
+        android:id="@+id/calendar"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Календарь" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Поиск" />
+
+    <item
+        android:id="@+id/current"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="Лента" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Профиль" />
+
+</menu>
