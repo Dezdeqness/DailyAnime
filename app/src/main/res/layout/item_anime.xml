@@ -17,8 +17,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/anime_logo"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/ic_launcher_background"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,7 +9,8 @@ class AnimeUiMapper @Inject constructor() {
     fun map(animeEntity: AnimeEntity) =
         AnimeUiItem(
             briefInfo = "${animeEntity.name}\n${animeEntity.status}",
-            kind = animeEntity.kind.name
+            kind = animeEntity.kind.name,
+            logoUrl = "https://shikimori.one/" + animeEntity.images["preview"].orEmpty(),
         )
 
 }

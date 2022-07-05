@@ -5,39 +5,39 @@ import com.squareup.moshi.Json
 
 data class AnimeAPI(
 
-    @Json(name = "id")
+    @field:Json(name = "id")
     val id: Int,
 
-    @Json(name = "name")
+    @field:Json(name = "name")
     val name: String,
 
-    @Json(name = "russian")
+    @field:Json(name = "russian")
     val russian: String,
 
-    @Json(name = "image")
+    @field:Json(name = "image")
     val images: Map<String, String>?,
 
-    @Json(name = "url")
+    @field:Json(name = "url")
     val url: String,
 
-    @Json(name = "kind")
+    @field:Json(name = "kind")
     val kind: String,
 
-    @Json(name = "score")
+    @field:Json(name = "score")
     val score: String,
 
-    @Json(name = "status")
+    @field:Json(name = "status")
     val status: String,
 
-    @Json(name = "episodes")
+    @field:Json(name = "episodes")
     val episodes: Int,
 
-    @Json(name = "episodes_aired")
+    @field:Json(name = "episodes_aired")
     val episodesAired: Int,
 
-    @Json(name = "aired_on")
+    @field:Json(name = "aired_on")
     val airedOn: String?,
 
-    @Json(name = "released_on")
+    @field:Json(name = "released_on")
     val releasedOn: String?,
 ) : DataModel.Api
