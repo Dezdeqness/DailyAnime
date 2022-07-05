@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+    id 'io.gitlab.arturbosch.detekt' version '1.21.0-RC2'
+}
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    parallel = true
+    allRules = false // activate all available (even unstable) rules.
+//    config = files("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+//    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+}
+
+tasks.named("detekt").configure {
+    reports {
+        // Enable/Disable XML report (default: true)
+        xml.required.set(true)
+        xml.outputLocation.set(file("build/reports/detekt.xml"))
+        // Enable/Disable HTML report (default: true)
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt.html"))
+        // Enable/Disable TXT report (default: true)
+        txt.required.set(true)
+        txt.outputLocation.set(file("build/reports/detekt.txt"))
+        // Enable/Disable SARIF report (default: false)
+        sarif.required.set(true)
+        sarif.outputLocation.set(file("build/reports/detekt.sarif"))
+        // Enable/Disable MD report (default: false)
+        md.required.set(true)
+        md.outputLocation.set(file("build/reports/detekt.md"))
+        custom {
+            // The simple class name of your custom report.
+            reportId = "CustomJsonReport"
+            outputLocation.set(file("build/reports/detekt.json"))
+        }
+    }
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext.javaVersion = JavaVersion.VERSION_1_8
+
+ext.versions = [
+        retrofit: "2.9.0",
+        dagger  : "2.42",
+        okttp   : "4.7.2",
+]
+
+ext.dagger = [
+        dagger        : "com.google.dagger:dagger:$versions.dagger",
+        daggerCompiler: "com.google.dagger:dagger-compiler:$versions.dagger",
+]
+
+ext.retrofit = [
+        retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+        retrofitMoshi: "com.squareup.retrofit2:converter-moshi:$versions.retrofit",
+]
+
+ext.okhttp = [
+        okhttpLogInterceptor: "com.squareup.okhttp3:logging-interceptor:$versions.okttp",
+        okhttp              : "com.squareup.okhttp3:okhttp:$versions.okttp",
+]
