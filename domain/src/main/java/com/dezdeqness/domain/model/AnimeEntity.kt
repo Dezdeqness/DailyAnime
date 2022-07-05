@@ -6,11 +6,9 @@ data class AnimeEntity(
     val russian: String,
     val images: Map<String, String>,
     val url: String,
-    // TODO: ENUM
-    val kind: String,
+    val kind: AnimeKindEntity,
     val score: String,
-    // TODO: ENUM
-    val status: String,
+    val status: AnimeStatusEntity,
     val episodes: Int,
     val episodesAired: Int,
     val airedOn: String,

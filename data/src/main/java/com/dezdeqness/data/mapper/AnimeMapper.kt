@@ -4,7 +4,10 @@ import com.dezdeqness.data.model.AnimeAPI
 import com.dezdeqness.domain.model.AnimeEntity
 import javax.inject.Inject
 
-class AnimeMapper @Inject constructor() {
+class AnimeMapper @Inject constructor(
+    private val animeKindMapper: AnimeKindMapper,
+    private val animeStatusMapper: AnimeStatusMapper,
+) {
 
     fun fromResponse(item: AnimeAPI) =
         AnimeEntity(
@@ -13,9 +16,9 @@ class AnimeMapper @Inject constructor() {
             russian = item.russian,
             images = item.images ?: mapOf(),
             url = item.url,
-            kind = item.kind,
+            kind = animeKindMapper.map(item.kind),
             score = item.score,
-            status = item.status,
+            status = animeStatusMapper.map(item.status),
             episodes = item.episodes,
             episodesAired = item.episodesAired,
             airedOn = item.airedOn.orEmpty(),
