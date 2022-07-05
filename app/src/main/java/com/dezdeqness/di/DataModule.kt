@@ -7,8 +7,8 @@ import com.dezdeqness.data.datasource.AnimeRemoteDataSource
 import com.dezdeqness.data.datasource.AnimeRemoteDataSourceImpl
 import com.dezdeqness.data.mapper.ApiErrorMapper
 import com.dezdeqness.data.repository.AnimeRepositoryImpl
-import com.dezdeqness.domain.AnimeRepository
-import com.dezdeqness.domain.ErrorMapper
+import com.dezdeqness.domain.repository.AnimeRepository
+import com.dezdeqness.domain.mapper.ErrorMapper
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

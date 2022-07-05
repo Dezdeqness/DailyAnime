@@ -1,4 +1,4 @@
-package com.dezdeqness.domain
+package com.dezdeqness.domain.model
 
 sealed class ErrorEntity(override val message: String) : Throwable(message) {
 

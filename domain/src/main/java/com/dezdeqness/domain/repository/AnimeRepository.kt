@@ -1,8 +1,8 @@
-package com.dezdeqness.data.datasource
+package com.dezdeqness.domain.repository
 
 import com.dezdeqness.domain.model.AnimeEntity
 
-interface AnimeRemoteDataSource {
+interface AnimeRepository {
 
     fun getListAnime(): Result<List<AnimeEntity>>
 

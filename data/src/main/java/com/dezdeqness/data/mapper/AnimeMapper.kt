@@ -1,7 +1,7 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.AnimeAPI
-import com.dezdeqness.domain.AnimeEntity
+import com.dezdeqness.domain.model.AnimeEntity
 import javax.inject.Inject
 
 class AnimeMapper @Inject constructor() {

@@ -4,7 +4,7 @@ import com.dezdeqness.data.AnimeApiService
 import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
-import com.dezdeqness.domain.ErrorMapper
+import com.dezdeqness.domain.mapper.ErrorMapper
 import javax.inject.Inject
 
 class AnimeRemoteDataSourceImpl @Inject constructor(

@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation
 
-import com.dezdeqness.domain.AnimeEntity
+import com.dezdeqness.domain.model.AnimeEntity
 import com.dezdeqness.presentation.models.AnimeUiItem
 import javax.inject.Inject
 

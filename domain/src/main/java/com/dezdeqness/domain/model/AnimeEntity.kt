@@ -1,4 +1,4 @@
-package com.dezdeqness.domain
+package com.dezdeqness.domain.model
 
 data class AnimeEntity(
     val id: Int,

@@ -1,8 +1,8 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.core.ApiException
-import com.dezdeqness.domain.ErrorEntity
-import com.dezdeqness.domain.ErrorMapper
+import com.dezdeqness.domain.model.ErrorEntity
+import com.dezdeqness.domain.mapper.ErrorMapper
 import javax.inject.Inject
 
 class ApiErrorMapper @Inject constructor() : ErrorMapper {

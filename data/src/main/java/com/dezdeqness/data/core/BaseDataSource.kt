@@ -1,6 +1,6 @@
 package com.dezdeqness.data.core
 
-import com.dezdeqness.domain.ErrorMapper
+import com.dezdeqness.domain.mapper.ErrorMapper
 
 abstract class BaseDataSource(
     private val errorMapper: ErrorMapper,

@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.animelist
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.domain.AnimeRepository
+import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.presentation.AnimeUiMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
