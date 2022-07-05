@@ -3,11 +3,8 @@ package com.dezdeqness.core
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dezdeqness.advancedrecycler.AdapterDelegateManager
-import com.dezdeqness.dslAdapterDelegate
-import com.dezdeqness.presentation.TestBaseAdapterDelegate
 import com.dezdeqness.presentation.features.animelist.animeAdapterDelegate
 import com.dezdeqness.presentation.models.AdapterItem
-import okhttp3.internal.notify
 
 class DelegateAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

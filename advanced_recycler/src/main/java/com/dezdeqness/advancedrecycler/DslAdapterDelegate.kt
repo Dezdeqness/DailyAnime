@@ -61,8 +61,4 @@ class AdapterDelegateViewBindingViewHolder<T, Binding : ViewBinding>(
         bind = bindingBlock
     }
 
-    fun userInteraction(userInteraction: (item: T) -> Unit) {
-        userInteraction(item)
-    }
-
 }

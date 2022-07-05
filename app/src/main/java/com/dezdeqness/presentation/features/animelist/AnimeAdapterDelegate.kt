@@ -12,9 +12,6 @@ fun animeAdapterDelegate() =
             ItemAnimeBinding.inflate(layoutInflater, parent, false)
         },
         block = {
-            userInteraction {
-
-            }
 
             bind {
                 with(binding) {

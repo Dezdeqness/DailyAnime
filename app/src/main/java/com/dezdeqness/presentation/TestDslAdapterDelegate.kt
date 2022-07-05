@@ -1,4 +1,4 @@
-package com.dezdeqness
+package com.dezdeqness.presentation
 
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.presentation.models.AdapterItem
@@ -12,11 +12,6 @@ fun dslAdapterDelegate() =
             TestLayoutBinding.inflate(layoutInflater, parent, false)
         },
         block = {
-
-            userInteraction {
-                item
-                binding
-            }
 
             bind {
 
