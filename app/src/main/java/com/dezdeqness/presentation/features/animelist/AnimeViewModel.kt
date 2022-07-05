@@ -23,11 +23,9 @@ class AnimeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getListAnime()
+                .map { list -> list.map { animeUiMapper.map(it) } }
                 .onSuccess { list ->
-                    list.forEach { item ->
-                        Log.d("AnimeViewModel", item.toString())
-                    }
-                    animeStateFlow
+                    _animeStateFlow.value = AnimeState(list = list)
                 }
                 .onFailure { exception ->
                     Log.d("AnimeViewModel", exception.toString())

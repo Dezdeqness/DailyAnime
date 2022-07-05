@@ -1,3 +1,6 @@
 package com.dezdeqness.presentation.models
 
-object AnimeUiItem : AdapterItem()
+data class AnimeUiItem(
+    val briefInfo: String,
+    val kind: String,
+) : AdapterItem()

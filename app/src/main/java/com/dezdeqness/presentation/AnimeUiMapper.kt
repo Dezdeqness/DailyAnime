@@ -6,6 +6,10 @@ import javax.inject.Inject
 
 class AnimeUiMapper @Inject constructor() {
 
-    fun map(animeEntity: AnimeEntity) = AnimeUiItem
+    fun map(animeEntity: AnimeEntity) =
+        AnimeUiItem(
+            briefInfo = "${animeEntity.name}\n${animeEntity.status}",
+            kind = animeEntity.kind.name
+        )
 
 }

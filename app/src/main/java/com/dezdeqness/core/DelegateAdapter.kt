@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dezdeqness.advancedrecycler.AdapterDelegateManager
 import com.dezdeqness.dslAdapterDelegate
 import com.dezdeqness.presentation.TestBaseAdapterDelegate
+import com.dezdeqness.presentation.features.animelist.animeAdapterDelegate
 import com.dezdeqness.presentation.models.AdapterItem
+import okhttp3.internal.notify
 
 class DelegateAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -13,8 +15,7 @@ class DelegateAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val items = mutableListOf<AdapterItem>()
 
     init {
-        manager.addDelegate(TestBaseAdapterDelegate())
-        manager.addDelegate(dslAdapterDelegate())
+        manager.addDelegate(animeAdapterDelegate())
     }
 
     override fun getItemViewType(position: Int) = manager.getItemViewType(items[position])
@@ -32,5 +33,13 @@ class DelegateAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         position: Int,
         payloads: List<Any>
     ) = manager.onBindViewHolder(holder, items[position], payloads)
+
+    fun setItems(list: List<AdapterItem>) {
+        with(items) {
+            clear()
+            addAll(list)
+            notifyDataSetChanged()
+        }
+    }
 
 }

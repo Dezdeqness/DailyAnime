@@ -1,38 +1,43 @@
 package com.dezdeqness.presentation
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import com.dezdeqness.R
+import com.dezdeqness.core.TrapFragment
 import com.dezdeqness.databinding.ActivityMainBinding
-import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.features.animelist.AnimeViewModel
-import javax.inject.Inject
+import com.dezdeqness.presentation.features.animelist.ListAnimeFragment
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: AnimeViewModel by viewModels(
-        factoryProducer = {
-            viewModelFactory
-        }
-    )
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        application
-            .getComponent()
-            .animeComponent()
-            .create()
-            .inject(this)
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.toString()
+        val listFragment = ListAnimeFragment()
+
+        binding.navigation.setOnItemSelectedListener { menuItem ->
+            val fragment = when (menuItem.itemId) {
+                R.id.user_preferences,
+                R.id.calendar,
+                R.id.current,
+                R.id.profile -> {
+                    TrapFragment()
+                }
+                R.id.search -> {
+                    listFragment
+                }
+                else -> null
+            }
+            fragment?.let {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.container, fragment)
+                    commit()
+                }
+            }
+            true
+        }
     }
 }
