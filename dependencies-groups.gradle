@@ -1,0 +1,68 @@
+def Group(closure) {
+    closure.delegate = dependencies
+    return closure
+}
+
+ext {
+    dagger = Group {
+        implementation deps.dagger.dagger
+        kapt deps.dagger.daggerCompiler
+    }
+
+    network = Group {
+        implementation deps.retrofit.retrofit
+        implementation deps.retrofit.retrofitMoshi
+
+        implementation deps.okhttp.okhttp
+        implementation deps.okhttp.okhttpLogInterceptor
+
+    }
+
+    glide = Group {
+        implementation deps.glide.glide
+    }
+
+    coroutines = Group {
+        implementation deps.coroutines.coroutines
+        implementation deps.coroutines.coroutinesAndroid
+    }
+
+    lifecycle = Group {
+        implementation deps.lifecycle.runtime
+        implementation deps.lifecycle.viewmodel
+    }
+
+    material = Group {
+        implementation deps.material.material
+    }
+
+    constraintLayout = Group {
+        implementation deps.constraintLayout.constraintLayout
+    }
+
+    core = Group {
+        implementation deps.core.core
+    }
+
+    appcompat = Group {
+        implementation deps.appcompat.appcompat
+    }
+
+    fragment = Group {
+        implementation deps.fragment.fragment
+    }
+
+    collection = Group {
+        implementation deps.collection.collection
+    }
+
+    unitTesting = Group {
+        implementation deps.unitTesting.junit
+    }
+
+    androidTesting = Group {
+        implementation deps.androidTesting.androidJunit
+        implementation deps.androidTesting.espresso
+    }
+
+}

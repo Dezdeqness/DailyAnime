@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'io.gitlab.arturbosch.detekt'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -33,8 +34,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility javaVersion
-        targetCompatibility javaVersion
+        sourceCompatibility versions.javaVersion
+        targetCompatibility versions.javaVersion
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -43,12 +44,7 @@ android {
 dependencies {
     implementation project(path: ':domain')
 
-    implementation retrofit.retrofit
-    implementation retrofit.retrofitMoshi
-
-    implementation okhttp.okhttp
-    implementation okhttp.okhttpLogInterceptor
-
-    implementation dagger.dagger
+    network()
+    dagger()
 
 }

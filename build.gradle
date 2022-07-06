@@ -1,8 +1,19 @@
+buildscript {
+    dependencies {
+        apply from: 'dependencies-versions.gradle'
+        apply from: 'dependencies-all.gradle'
+    }
+}
+
 plugins {
     id 'com.android.application' version '7.2.1' apply false
     id 'com.android.library' version '7.2.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
     id 'io.gitlab.arturbosch.detekt' version '1.21.0-RC2'
+}
+
+allprojects {
+    dependencies { apply from: "$rootProject.rootDir/dependencies-groups.gradle" }
 }
 
 detekt {
@@ -42,26 +53,3 @@ tasks.named("detekt").configure {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-ext.javaVersion = JavaVersion.VERSION_1_8
-
-ext.versions = [
-        retrofit: "2.9.0",
-        dagger  : "2.42",
-        okttp   : "4.7.2",
-]
-
-ext.dagger = [
-        dagger        : "com.google.dagger:dagger:$versions.dagger",
-        daggerCompiler: "com.google.dagger:dagger-compiler:$versions.dagger",
-]
-
-ext.retrofit = [
-        retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
-        retrofitMoshi: "com.squareup.retrofit2:converter-moshi:$versions.retrofit",
-]
-
-ext.okhttp = [
-        okhttpLogInterceptor: "com.squareup.okhttp3:logging-interceptor:$versions.okttp",
-        okhttp              : "com.squareup.okhttp3:okhttp:$versions.okttp",
-]
