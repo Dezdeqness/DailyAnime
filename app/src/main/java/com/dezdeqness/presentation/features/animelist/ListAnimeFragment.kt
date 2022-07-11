@@ -14,6 +14,7 @@ import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.core.DelegateAdapter
 import com.dezdeqness.databinding.FragmentListAnimeBinding
 import com.dezdeqness.getComponent
+import com.dezdeqness.ui.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,18 +26,13 @@ class ListAnimeFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private var adapter: DelegateAdapter? = null
+    private val adapter: DelegateAdapter by lazy { DelegateAdapter() }
 
     private val viewModel: AnimeViewModel by viewModels(
         factoryProducer = {
             viewModelFactory
         }
     )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        adapter = DelegateAdapter()
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -66,13 +62,15 @@ class ListAnimeFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         binding.listAnime.adapter = adapter
+        // TODO: Dynamic columns
+        binding.listAnime.addItemDecoration(GridSpacingItemDecoration())
     }
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.animeStateFlow.collect { state ->
-                    adapter?.setItems(state.list)
+                    adapter.setItems(state.list)
                 }
             }
         }
