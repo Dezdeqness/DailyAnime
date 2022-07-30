@@ -11,4 +11,6 @@
     <color name="text_primary">#FFFFFFFF</color>
 
     <color name="background_shadow">#AA000000</color>
+
+    <color name="chip_selected_state">#4C4A4A</color>
 </resources>
