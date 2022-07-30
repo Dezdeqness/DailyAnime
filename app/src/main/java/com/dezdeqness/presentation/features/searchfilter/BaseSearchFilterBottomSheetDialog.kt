@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 abstract class BaseSearchFilterBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetDialogFilterBinding? = null
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +52,4 @@ abstract class BaseSearchFilterBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
-    companion object {
-
-    }
 }
