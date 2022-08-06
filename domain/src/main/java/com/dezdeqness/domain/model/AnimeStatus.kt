@@ -8,7 +8,7 @@ enum class AnimeStatus(val status: String) {
     UNKNOWN("");
 
     companion object {
-        fun valueOfStatus(value: String) = values().find { it.status == value } ?: UNKNOWN
+        fun fromString(value: String) = values().find { it.status == value } ?: UNKNOWN
     }
 
 }

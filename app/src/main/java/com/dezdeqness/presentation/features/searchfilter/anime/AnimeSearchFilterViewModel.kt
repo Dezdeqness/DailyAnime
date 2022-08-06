@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-class AnimeSearchFilterViewModel constructor(
-    private val animeSearchFilterComposer: AnimeSearchFilterComposer = AnimeSearchFilterComposer(),
+class AnimeSearchFilterViewModel @Inject constructor(
+    private val animeSearchFilterComposer: AnimeSearchFilterComposer,
 ) : ViewModel() {
 
     private val _animeSearchFilterStateFlow: MutableStateFlow<AnimeSearchFilterState> =
