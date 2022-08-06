@@ -101,9 +101,9 @@ class SearchFilterView @JvmOverloads constructor(
 
     interface SearchChipListener {
 
-        fun onClickListener(itemId: String, cellId: Int)
+        fun onClickListener(itemId: String, cellId: String)
 
-        fun onLongClickListener(itemId: String, cellId: Int)
+        fun onLongClickListener(itemId: String, cellId: String)
 
     }
 

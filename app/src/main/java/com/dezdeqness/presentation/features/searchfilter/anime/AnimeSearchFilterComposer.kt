@@ -1,188 +1,125 @@
 package com.dezdeqness.presentation.features.searchfilter.anime
 
+import com.dezdeqness.data.provider.ConfigurationProvider
+import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.domain.model.FilterEntity
+import com.dezdeqness.domain.model.FilterType
+import com.dezdeqness.domain.model.GenreEntity
+import com.dezdeqness.domain.model.TypeEntity
 import com.dezdeqness.presentation.models.*
+import javax.inject.Inject
 
 
-class AnimeSearchFilterComposer {
+class AnimeSearchFilterComposer @Inject constructor(
+    private val configurationProvider: ConfigurationProvider,
+    private val resourceManager: ResourceProvider,
+) {
 
     fun compose(): List<AnimeSearchFilter> {
+        val filters = configurationProvider.getFilters()
         val animeFilters = mutableListOf<AnimeSearchFilter>()
-        animeFilters.add(composeGenreFilter())
+        animeFilters.add(
+            composeGenreFilter(
+                configurationProvider.getListGenre().filter { it.type == TypeEntity.ANIME })
+        )
         animeFilters.add(composeSeasonFilter())
-        animeFilters.add(composeStatusFilter())
-        animeFilters.add(composeTypeFilter())
-        animeFilters.add(composeTimeFilter())
-        animeFilters.add(composeAgeRatingFilter())
+        animeFilters.add(
+            composeFilter(
+                filters.filter { it.type == FilterType.STATUS },
+                ANIME_SEARCH_FILTER_STATUS
+            )
+        )
+        animeFilters.add(
+            composeFilter(
+                filters.filter { it.type == FilterType.KIND },
+                ANIME_SEARCH_FILTER_TYPE
+            )
+        )
+        animeFilters.add(
+            composeFilter(
+                filters.filter { it.type == FilterType.DURATION },
+                ANIME_SEARCH_FILTER_TIME
+            )
+        )
+        animeFilters.add(
+            composeFilter(
+                filters.filter { it.type == FilterType.RATING },
+                ANIME_SEARCH_FILTER_AGE_RATING
+            )
+        )
 
         return animeFilters
     }
 
-    private fun composeGenreFilter() =
+    private fun composeGenreFilter(listGenre: List<GenreEntity>) =
         AnimeSearchFilter(
             innerId = ANIME_SEARCH_FILTER_GENRE,
-            displayName = "Жанр",
-            items = listOf()
+            displayName = resourceManager.getString(ANIME_SEARCH_FILTER_GENRE),
+            items = listGenre
+                .map { item -> AnimeCell(id = item.id, displayName = item.name,) }
+                .sortedBy { it.displayName }
         )
 
+    // TODO: Make time adjustment
     private fun composeSeasonFilter() =
         AnimeSearchFilter(
             innerId = ANIME_SEARCH_FILTER_SEASON,
-            displayName = "Сезон",
+            displayName = resourceManager.getString(ANIME_SEARCH_FILTER_SEASON),
             items = listOf(
                 AnimeCell(
-                    id = 0,
+                    id = "0",
                     displayName = "Осень 2022"
                 ),
                 AnimeCell(
-                    id = 1,
+                    id = "1",
                     displayName = "Лето 2022"
                 ),
                 AnimeCell(
-                    id = 2,
+                    id = "2",
                     displayName = "Весна 2022"
                 ),
                 AnimeCell(
-                    id = 3,
+                    id = "3",
                     displayName = "Зима 2022"
                 ),
                 AnimeCell(
-                    id = 4,
+                    id = "4",
                     displayName = "2022 год"
                 ),
                 AnimeCell(
-                    id = 5,
+                    id = "5",
                     displayName = "2021 год"
                 ),
                 AnimeCell(
-                    id = 6,
+                    id = "6",
                     displayName = "2016-2020"
                 ),
                 AnimeCell(
-                    id = 7,
+                    id = "7",
                     displayName = "2011-2015"
                 ),
                 AnimeCell(
-                    id = 8,
+                    id = "8",
                     displayName = "2000-2010"
                 ),
                 AnimeCell(
-                    id = 9,
+                    id = "9",
                     displayName = "Более старые"
                 ),
             )
         )
 
 
-    private fun composeStatusFilter() =
+    private fun composeFilter(filter: List<FilterEntity>, id: String) =
         AnimeSearchFilter(
-            innerId = ANIME_SEARCH_FILTER_STATUS,
-            displayName = "Статус",
-            items = listOf(
+            innerId = id,
+            displayName = resourceManager.getString(id),
+            items = filter.map { item ->
                 AnimeCell(
-                    id = 0,
-                    displayName = "Анонс"
-                ),
-                AnimeCell(
-                    id = 1,
-                    displayName = "Онгоинг"
-                ),
-                AnimeCell(
-                    id = 2,
-                    displayName = "Завершен"
-                ),
-                AnimeCell(
-                    id = 3,
-                    displayName = "Недавно вышедшее"
-                ),
-            )
-        )
-
-    private fun composeTypeFilter() =
-        AnimeSearchFilter(
-            innerId = ANIME_SEARCH_FILTER_TYPE,
-            displayName = "Тип",
-            items = listOf(
-                AnimeCell(
-                    id = 0,
-                    displayName = "TV сериал"
-                ),
-                AnimeCell(
-                    id = 1,
-                    displayName = "TV 13"
-                ),
-                AnimeCell(
-                    id = 2,
-                    displayName = "TV 24"
-                ),
-                AnimeCell(
-                    id = 3,
-                    displayName = "TV 48"
-                ),
-                AnimeCell(
-                    id = 4,
-                    displayName = "Спешл"
-                ),
-                AnimeCell(
-                    id = 5,
-                    displayName = "Клип"
-                ),
-                AnimeCell(
-                    id = 6,
-                    displayName = "OVA"
-                ),
-                AnimeCell(
-                    id = 7,
-                    displayName = "ONA"
-                ),
-            )
-        )
-
-    private fun composeTimeFilter() =
-        AnimeSearchFilter(
-            innerId = ANIME_SEARCH_FILTER_TIME,
-            displayName = "Продолжительность эпизода",
-            items = listOf(
-                AnimeCell(
-                    id = 0,
-                    displayName = "< 10 мин."
-                ),
-                AnimeCell(
-                    id = 1,
-                    displayName = "< 30 мин."
-                ),
-                AnimeCell(
-                    id = 2,
-                    displayName = "> 30 мин."
-                ),
-            )
-        )
-
-    private fun composeAgeRatingFilter() =
-        AnimeSearchFilter(
-            innerId = ANIME_SEARCH_FILTER_AGE_RATING,
-            displayName = "Возрастной рейтинг",
-            items = listOf(
-                AnimeCell(
-                    id = 0,
-                    displayName = "G"
-                ),
-                AnimeCell(
-                    id = 1,
-                    displayName = "PG"
-                ),
-                AnimeCell(
-                    id = 2,
-                    displayName = "PG-13"
-                ),
-                AnimeCell(
-                    id = 3,
-                    displayName = "R-17"
-                ),
-                AnimeCell(
-                    id = 4,
-                    displayName = "R+"
-                ),
-            )
+                    id = item.id,
+                    displayName = item.name
+                )
+            }
         )
 
 }

@@ -7,7 +7,7 @@ data class AnimeSearchFilter(
 ) : AdapterItem()
 
 data class AnimeCell(
-    val id: Int,
+    val id: String,
     val displayName: String,
     val state: CellState = CellState.NONE,
 )
