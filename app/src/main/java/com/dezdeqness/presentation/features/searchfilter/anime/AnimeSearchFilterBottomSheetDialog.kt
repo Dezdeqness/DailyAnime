@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.searchfilter.anime
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -8,18 +9,33 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.databinding.ItemAnimeSearchFilterBinding
+import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.searchfilter.BaseSearchFilterBottomSheetDialog
 import com.dezdeqness.view.SearchFilterView
 import kotlinx.coroutines.launch
 
 class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
 
-    private val viewModel: AnimeSearchFilterViewModel by viewModels()
+    private val viewModel: AnimeSearchFilterViewModel by viewModels(
+        factoryProducer = {
+            viewModelFactory
+        }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity()
+            .application
+            .getComponent()
+            .animeSearchFilterComponent()
+            .create()
+            .inject(this)
     }
 
     private fun setupObservers() {
@@ -33,13 +49,13 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                                 ItemAnimeSearchFilterBinding.inflate(layoutInflater).apply {
                                     this.filter.setSearchChipListener(object :
                                         SearchFilterView.SearchChipListener {
-                                        override fun onClickListener(itemId: String, cellId: Int) {
+                                        override fun onClickListener(itemId: String, cellId: String) {
 
                                         }
 
                                         override fun onLongClickListener(
                                             itemId: String,
-                                            cellId: Int
+                                            cellId: String
                                         ) {
 
                                         }

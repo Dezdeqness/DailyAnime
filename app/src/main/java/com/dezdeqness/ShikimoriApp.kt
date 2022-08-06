@@ -15,4 +15,3 @@ class ShikimoriApp : Application() {
 fun Application.getComponent(): AppComponent {
     return (this as ShikimoriApp).appComponent
 }
-

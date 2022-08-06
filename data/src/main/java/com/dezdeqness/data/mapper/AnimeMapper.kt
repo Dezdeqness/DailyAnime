@@ -5,7 +5,9 @@ import com.dezdeqness.domain.model.AnimeEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AnimeMapper @Inject constructor() {
 
     fun fromResponse(item: AnimeRemote) =
@@ -15,9 +17,9 @@ class AnimeMapper @Inject constructor() {
             russian = item.russian,
             images = item.images ?: mapOf(),
             url = item.url,
-            kind = AnimeKind.valueOfKind(item.kind),
+            kind = AnimeKind.fromString(item.kind),
             score = item.score,
-            status = AnimeStatus.valueOfStatus(item.status),
+            status = AnimeStatus.fromString(item.status),
             episodes = item.episodes,
             episodesAired = item.episodesAired,
             airedOn = item.airedOn.orEmpty(),

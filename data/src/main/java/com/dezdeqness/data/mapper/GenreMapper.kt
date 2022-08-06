@@ -2,15 +2,18 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.GenreRemote
 import com.dezdeqness.domain.model.GenreEntity
+import com.dezdeqness.domain.model.TypeEntity
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GenreMapper @Inject constructor() {
 
     fun fromResponse(item: GenreRemote) =
         GenreEntity(
             id = "${item.id}-${item.name}",
             name = item.russian,
-            type = item.kind
+            type = TypeEntity.fromString(item.kind)
         )
 
 }
