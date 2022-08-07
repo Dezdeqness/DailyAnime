@@ -13,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentListAnimeBinding
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterBottomSheetDialog
 import com.dezdeqness.ui.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -70,10 +69,6 @@ class ListAnimeFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.animeStateFlow.collect { state ->
-                    if (state.list.isNotEmpty()) {
-                        val dialog = AnimeSearchFilterBottomSheetDialog.newInstance()
-                        dialog.show(parentFragmentManager, "tag")
-                    }
                     adapter.setItems(state.list)
                 }
             }
