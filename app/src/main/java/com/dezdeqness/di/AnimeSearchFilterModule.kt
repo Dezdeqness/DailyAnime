@@ -1,17 +1,15 @@
 package com.dezdeqness.di
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.data.AnimeApiService
-import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.data.repository.SearchFilterRepositoryImpl
+import com.dezdeqness.domain.repository.SearchFilterRepository
 import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterComposer
 import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import retrofit2.Retrofit
-import javax.inject.Singleton
 
 @Module
 abstract class AnimeSearchFilterModule {
@@ -20,17 +18,15 @@ abstract class AnimeSearchFilterModule {
 
         @Provides
         fun provideAnimeSearchFilterComposer(
-            configurationProvider: ConfigurationProvider,
             resourceManager: ResourceProvider,
         ) =
             AnimeSearchFilterComposer(
-                configurationProvider = configurationProvider,
                 resourceManager = resourceManager,
             )
     }
 
-//    @Binds
-//    abstract fun bindAnimeSearchFilterComposer(composer: AnimeSearchFilterComposer): AnimeSearchFilterComposer
+    @Binds
+    abstract fun bindSearchFilterRepository(searchFilterRepository: SearchFilterRepositoryImpl): SearchFilterRepository
 
     @Binds
     @IntoMap

@@ -17,7 +17,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideAssetManager(context: Context) = context.assets
+    fun provideAssetManager(context: Context): AssetManager = context.assets
 
     @Singleton
     @Provides
@@ -41,7 +41,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideMoshi() =
+    fun provideMoshi(): Moshi =
         Moshi.Builder()
             .add(FilterTypeAdapter())
             .build()

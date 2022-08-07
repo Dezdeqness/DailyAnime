@@ -1,7 +1,6 @@
 package com.dezdeqness.di
 
 import com.dezdeqness.data.BuildConfig
-import com.dezdeqness.data.AnimeApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
