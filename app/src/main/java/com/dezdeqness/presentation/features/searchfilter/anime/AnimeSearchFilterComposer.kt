@@ -1,26 +1,23 @@
 package com.dezdeqness.presentation.features.searchfilter.anime
 
-import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.FilterType
-import com.dezdeqness.domain.model.GenreEntity
-import com.dezdeqness.domain.model.TypeEntity
 import com.dezdeqness.presentation.models.*
 import javax.inject.Inject
 
 
 class AnimeSearchFilterComposer @Inject constructor(
-    private val configurationProvider: ConfigurationProvider,
     private val resourceManager: ResourceProvider,
 ) {
 
-    fun compose(): List<AnimeSearchFilter> {
-        val filters = configurationProvider.getFilters()
+    fun compose(filters: List<FilterEntity>): List<AnimeSearchFilter> {
         val animeFilters = mutableListOf<AnimeSearchFilter>()
         animeFilters.add(
-            composeGenreFilter(
-                configurationProvider.getListGenre().filter { it.type == TypeEntity.ANIME })
+            composeFilter(
+                filters.filter { it.type == FilterType.GENRE },
+                ANIME_SEARCH_FILTER_GENRE
+            )
         )
         animeFilters.add(composeSeasonFilter())
         animeFilters.add(
@@ -50,15 +47,6 @@ class AnimeSearchFilterComposer @Inject constructor(
 
         return animeFilters
     }
-
-    private fun composeGenreFilter(listGenre: List<GenreEntity>) =
-        AnimeSearchFilter(
-            innerId = ANIME_SEARCH_FILTER_GENRE,
-            displayName = resourceManager.getString(ANIME_SEARCH_FILTER_GENRE),
-            items = listGenre
-                .map { item -> AnimeCell(id = item.id, displayName = item.name,) }
-                .sortedBy { it.displayName }
-        )
 
     // TODO: Make time adjustment
     private fun composeSeasonFilter() =
@@ -109,7 +97,6 @@ class AnimeSearchFilterComposer @Inject constructor(
             )
         )
 
-
     private fun composeFilter(filter: List<FilterEntity>, id: String) =
         AnimeSearchFilter(
             innerId = id,
@@ -121,5 +108,14 @@ class AnimeSearchFilterComposer @Inject constructor(
                 )
             }
         )
+
+    companion object {
+        private const val ANIME_SEARCH_FILTER_GENRE = "anime_search_filter_genre"
+        private const val ANIME_SEARCH_FILTER_SEASON = "anime_search_filter_season"
+        private const val ANIME_SEARCH_FILTER_STATUS = "anime_search_filter_status"
+        private const val ANIME_SEARCH_FILTER_TYPE = "anime_search_filter_type"
+        private const val ANIME_SEARCH_FILTER_TIME = "anime_search_filter_time"
+        private const val ANIME_SEARCH_FILTER_AGE_RATING = "anime_search_filter_age_rating"
+    }
 
 }
