@@ -1,24 +1,25 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.data.model.AnimeAPI
+import com.dezdeqness.data.model.AnimeRemote
 import com.dezdeqness.domain.model.AnimeEntity
+import com.dezdeqness.domain.model.AnimeKind
+import com.dezdeqness.domain.model.AnimeStatus
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnimeMapper @Inject constructor(
-    private val animeKindMapper: AnimeKindMapper,
-    private val animeStatusMapper: AnimeStatusMapper,
-) {
+@Singleton
+class AnimeMapper @Inject constructor() {
 
-    fun fromResponse(item: AnimeAPI) =
+    fun fromResponse(item: AnimeRemote) =
         AnimeEntity(
             id = item.id,
             name = item.name,
             russian = item.russian,
             images = item.images ?: mapOf(),
             url = item.url,
-            kind = animeKindMapper.map(item.kind),
+            kind = AnimeKind.fromString(item.kind),
             score = item.score,
-            status = animeStatusMapper.map(item.status),
+            status = AnimeStatus.fromString(item.status),
             episodes = item.episodes,
             episodesAired = item.episodesAired,
             airedOn = item.airedOn.orEmpty(),

@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.core.BaseFragment
-import com.dezdeqness.core.DelegateAdapter
 import com.dezdeqness.databinding.FragmentListAnimeBinding
 import com.dezdeqness.getComponent
 import com.dezdeqness.ui.GridSpacingItemDecoration
@@ -26,7 +25,7 @@ class ListAnimeFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val adapter: DelegateAdapter by lazy { DelegateAdapter() }
+    private val adapter: AnimeListAdapter by lazy { AnimeListAdapter() }
 
     private val viewModel: AnimeViewModel by viewModels(
         factoryProducer = {

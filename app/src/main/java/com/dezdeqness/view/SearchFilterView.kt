@@ -9,6 +9,9 @@ import androidx.core.view.children
 import com.dezdeqness.R
 import com.dezdeqness.databinding.SingleChipBinding
 import com.dezdeqness.databinding.ViewFilterContainerBinding
+import com.dezdeqness.presentation.models.AnimeCell
+import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.CellState
 import com.google.android.material.chip.Chip
 
 class SearchFilterView @JvmOverloads constructor(
@@ -20,6 +23,11 @@ class SearchFilterView @JvmOverloads constructor(
     private var titleText: String = ""
 
     private var chipListener: SearchChipListener? = null
+
+    private var animeSearchFilter: AnimeSearchFilter? = null
+
+    private val filterId: String
+        get(): String = animeSearchFilter?.innerId.orEmpty()
 
     private var binding = ViewFilterContainerBinding.inflate(
         LayoutInflater.from(context),
@@ -40,11 +48,13 @@ class SearchFilterView @JvmOverloads constructor(
         onCreate()
     }
 
-    fun setChips(list: List<String>) {
+    fun setFilterData(animeSearchFilter: AnimeSearchFilter) {
+        this.animeSearchFilter = animeSearchFilter
         with(binding) {
+            setupTitle(animeSearchFilter.displayName)
             container.removeAllViews()
-            list.forEach { item ->
-                val chip = createChip(item)
+            animeSearchFilter.items.forEach { cell ->
+                val chip = createChip(cell)
                 container.addView(chip)
             }
         }
@@ -58,24 +68,35 @@ class SearchFilterView @JvmOverloads constructor(
         chipListener = null
     }
 
-    // TODO: Add state
-    fun updateChip(value: String) {
+    fun updateChip(item: AnimeCell?): Boolean {
+        if (item == null) {
+            return false
+        }
+        var isUpdated = false
         binding
             .container
             .children
             .filterIsInstance<Chip>()
-            .find { it.text == value }
-            ?.setChipBackgroundColorResource(R.color.chip_selected_state)
+            .find { it.tag == item.id }
+            ?.let { chip ->
+                setChipState(chip, item)
+                isUpdated = true
+            }
+        return isUpdated
+    }
 
+    private fun setupTitle(displayName: String) {
+        binding.title.text = displayName
     }
 
     private fun onCreate() {
         binding.title.text = titleText
     }
 
-    private fun createChip(item: String) =
+    private fun createChip(item: AnimeCell) =
         SingleChipBinding.inflate(LayoutInflater.from(context)).root.apply {
-            text = item
+            tag = item.id
+            text = item.displayName
             setOnClickListener {
                 chipListener?.onClickListener(item)
             }
@@ -83,14 +104,32 @@ class SearchFilterView @JvmOverloads constructor(
                 chipListener?.onLongClickListener(item)
                 true
             }
+            setChipState(this, item)
         }
 
+    private fun setChipState(chip: Chip, item: AnimeCell) {
+        when (item.state) {
+            CellState.INCLUDE -> {
+                chip.setChipBackgroundColorResource(R.color.chip_selected_state)
+                chip.isChipIconVisible = false
+
+            }
+            CellState.EXCLUDE -> {
+                chip.isChipIconVisible = true
+                chip.setChipBackgroundColorResource(R.color.chip_selected_state)
+            }
+            else -> {
+                chip.isChipIconVisible = false
+                chip.setChipBackgroundColorResource(R.color.chip_default_background)
+            }
+        }
+    }
 
     interface SearchChipListener {
 
-        fun onClickListener(item: String)
+        fun onClickListener(item: AnimeCell)
 
-        fun onLongClickListener(item: String)
+        fun onLongClickListener(item: AnimeCell)
 
     }
 

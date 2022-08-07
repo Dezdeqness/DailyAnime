@@ -10,6 +10,8 @@ import javax.inject.Singleton
     modules = [
         ViewModelBuilderModule::class,
         AppSubcomponents::class,
+        RemoteModule::class,
+        AppModule::class,
     ]
 )
 interface AppComponent {
@@ -20,5 +22,7 @@ interface AppComponent {
     }
 
     fun animeComponent(): AnimeComponent.Factory
+
+    fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Factory
 
 }

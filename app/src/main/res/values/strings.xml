@@ -3,4 +3,10 @@
 
     <string name="search_filter_title">Фильтр</string>
 
+    <string name="anime_search_filter_genre">Жанр</string>
+    <string name="anime_search_filter_season">Сезон</string>
+    <string name="anime_search_filter_status">Статус</string>
+    <string name="anime_search_filter_type">Тип</string>
+    <string name="anime_search_filter_time">Продолжительность эпизода</string>
+    <string name="anime_search_filter_age_rating">Возрастной рейтинг</string>
 </resources>

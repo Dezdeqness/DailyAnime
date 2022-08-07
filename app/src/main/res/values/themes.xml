@@ -26,10 +26,11 @@
 
     <style name="SearchFilter.Chip" parent="Base.Widget.MaterialComponents.Chip">
         <item name="android:stateListAnimator">@null</item>
+        <item name="chipIcon">@drawable/ic_chip_minus</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="rippleColor">@null</item>
         <item name="android:textSize">14sp</item>
-        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipBackgroundColor">@color/chip_default_background</item>
         <item name="chipStrokeColor">@color/black</item>
         <item name="closeIconVisible">false</item>
     </style>

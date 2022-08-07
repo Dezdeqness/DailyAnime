@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.lifecycle.ViewModelProvider
 import com.dezdeqness.databinding.BottomSheetDialogFilterBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import javax.inject.Inject
 
 
 abstract class BaseSearchFilterBottomSheetDialog : BottomSheetDialogFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private var _binding: BottomSheetDialogFilterBinding? = null
     protected val binding get() = _binding!!

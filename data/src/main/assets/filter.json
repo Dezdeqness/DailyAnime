@@ -1,0 +1,103 @@
+[
+    {
+        "id": "anons",
+        "name": "Анонс",
+        "type": "status"
+    },
+    {
+        "id": "ongoing",
+        "name": "Онгоинг",
+        "type": "status"
+    },
+    {
+        "id": "released",
+        "name": "Завершен",
+        "type": "status"
+    },
+    {
+        "id": "latest",
+        "name": "Недавно вышедшее",
+        "type": "status"
+    },
+    {
+        "id": "tv",
+        "name": "TV сериал",
+        "type": "kind"
+    },
+    {
+        "id": "tv_13",
+        "name": "TV 13",
+        "type": "kind"
+    },
+    {
+        "id": "tv_24",
+        "name": "TV 24",
+        "type": "kind"
+    },
+    {
+        "id": "tv_48",
+        "name": "TV 48",
+        "type": "kind"
+    },
+    {
+        "id": "special",
+        "name": "Спешл",
+        "type": "kind"
+    },
+    {
+        "id": "music",
+        "name": "Клип",
+        "type": "kind"
+    },
+    {
+        "id": "ova",
+        "name": "OVA",
+        "type": "kind"
+    },
+    {
+        "id": "ona",
+        "name": "ONA",
+        "type": "kind"
+    },
+    {
+        "id": "s",
+        "name": "< 10 мин.",
+        "type": "duration"
+    },
+    {
+        "id": "d",
+        "name": "< 30 мин.",
+        "type": "duration"
+    },
+    {
+        "id": "f",
+        "name": "> 30 мин.",
+        "type": "duration"
+    },
+    {
+        "id": "g",
+        "name": "G",
+        "type": "rating"
+    },
+    {
+        "id": "pg",
+        "name": "PG",
+        "type": "rating"
+    },
+    {
+        "id": "pg-13",
+        "name": "PG-13",
+        "type": "rating"
+    },
+    {
+        "id": "r",
+        "name": "R-17",
+        "type": "rating"
+    },
+    {
+        "id": "r_plus",
+        "name": "R+",
+        "type": "rating"
+    }
+]
+
