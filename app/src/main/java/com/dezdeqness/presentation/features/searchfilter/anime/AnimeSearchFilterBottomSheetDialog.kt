@@ -93,6 +93,9 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
     }
 
     companion object {
+
+        const val TAG = "AnimeSearchFilterBottomSheetDialog"
+
         fun newInstance() = AnimeSearchFilterBottomSheetDialog().apply {
             arguments = bundleOf()
         }
