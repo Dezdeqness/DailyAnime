@@ -13,9 +13,9 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     errorMapper: ErrorMapper,
 ) : BaseDataSource(errorMapper), AnimeRemoteDataSource {
 
-    override fun getListAnime() = tryWithCatch {
+    override fun getListAnime(queryMap: Map<String, String>) = tryWithCatch {
 
-        val response = mangaApiService.getListAnime(limit = 40, page = 1).execute()
+        val response = mangaApiService.getListAnime(limit = 40, page = 1, options = queryMap).execute()
 
         val responseBody = response.body()
 

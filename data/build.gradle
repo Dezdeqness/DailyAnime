@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 24
-        targetSdk 32
+        targetSdk 33
 
         buildConfigField "String", "BASE_API_URL", "\"https://shikimori.one/api/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -23,12 +23,10 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
-            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
