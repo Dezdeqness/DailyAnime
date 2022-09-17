@@ -16,32 +16,32 @@ class AnimeSearchFilterComposer @Inject constructor(
         animeFilters.add(
             composeFilter(
                 filters.filter { it.type == FilterType.GENRE },
-                ANIME_SEARCH_FILTER_GENRE
+                FilterType.GENRE.filterName
             )
         )
         animeFilters.add(composeSeasonFilter())
         animeFilters.add(
             composeFilter(
                 filters.filter { it.type == FilterType.STATUS },
-                ANIME_SEARCH_FILTER_STATUS
+                FilterType.STATUS.filterName
             )
         )
         animeFilters.add(
             composeFilter(
                 filters.filter { it.type == FilterType.KIND },
-                ANIME_SEARCH_FILTER_TYPE
+                FilterType.KIND.filterName
             )
         )
         animeFilters.add(
             composeFilter(
                 filters.filter { it.type == FilterType.DURATION },
-                ANIME_SEARCH_FILTER_TIME
+                FilterType.DURATION.filterName
             )
         )
         animeFilters.add(
             composeFilter(
                 filters.filter { it.type == FilterType.RATING },
-                ANIME_SEARCH_FILTER_AGE_RATING
+                FilterType.RATING.filterName
             )
         )
 
@@ -51,8 +51,8 @@ class AnimeSearchFilterComposer @Inject constructor(
     // TODO: Make time adjustment
     private fun composeSeasonFilter() =
         AnimeSearchFilter(
-            innerId = ANIME_SEARCH_FILTER_SEASON,
-            displayName = resourceManager.getString(ANIME_SEARCH_FILTER_SEASON),
+            innerId = FilterType.SEASON.filterName,
+            displayName = resourceManager.getString(PREFIX + FilterType.SEASON.filterName),
             items = listOf(
                 AnimeCell(
                     id = "0",
@@ -100,7 +100,7 @@ class AnimeSearchFilterComposer @Inject constructor(
     private fun composeFilter(filter: List<FilterEntity>, id: String) =
         AnimeSearchFilter(
             innerId = id,
-            displayName = resourceManager.getString(id),
+            displayName = resourceManager.getString(PREFIX + id),
             items = filter.map { item ->
                 AnimeCell(
                     id = item.id,
@@ -110,12 +110,7 @@ class AnimeSearchFilterComposer @Inject constructor(
         )
 
     companion object {
-        private const val ANIME_SEARCH_FILTER_GENRE = "anime_search_filter_genre"
-        private const val ANIME_SEARCH_FILTER_SEASON = "anime_search_filter_season"
-        private const val ANIME_SEARCH_FILTER_STATUS = "anime_search_filter_status"
-        private const val ANIME_SEARCH_FILTER_TYPE = "anime_search_filter_type"
-        private const val ANIME_SEARCH_FILTER_TIME = "anime_search_filter_time"
-        private const val ANIME_SEARCH_FILTER_AGE_RATING = "anime_search_filter_age_rating"
+        private const val PREFIX = "anime_search_filter_"
     }
 
 }

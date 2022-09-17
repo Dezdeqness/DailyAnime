@@ -2,10 +2,12 @@ package com.dezdeqness.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.dezdeqness.R
-import com.dezdeqness.core.TrapFragment
 import com.dezdeqness.databinding.ActivityMainBinding
-import com.dezdeqness.presentation.features.animelist.ListAnimeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,28 +18,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val listFragment = ListAnimeFragment()
-
-        binding.navigation.setOnItemSelectedListener { menuItem ->
-            val fragment = when (menuItem.itemId) {
+        val fragment = supportFragmentManager.findFragmentById(binding.container.id) as NavHostFragment
+        val navController = fragment.navController
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
                 R.id.user_preferences,
                 R.id.calendar,
                 R.id.current,
-                R.id.profile -> {
-                    TrapFragment()
-                }
-                R.id.search -> {
-                    listFragment
-                }
-                else -> null
-            }
-            fragment?.let {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.container, fragment)
-                    commit()
-                }
-            }
-            true
-        }
+                R.id.profile,
+                R.id.search,
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.navigation.setupWithNavController(navController)
     }
 }

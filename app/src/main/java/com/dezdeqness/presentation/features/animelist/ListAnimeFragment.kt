@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentListAnimeBinding
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterBottomSheetDialog
+import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.ui.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,6 +35,14 @@ class ListAnimeFragment : BaseFragment() {
             viewModelFactory
         }
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(AnimeSearchFilterBottomSheetDialog.TAG) { _, bundle ->
+            val filtersList = bundle.getParcelableArrayList<AnimeSearchFilter>(AnimeSearchFilterBottomSheetDialog.RESULT).orEmpty()
+            viewModel.applyFilter(filtersList)
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
