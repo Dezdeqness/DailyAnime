@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/search"
-        android:name="com.dezdeqness.presentation.features.animelist.ListAnimeFragment"
+        android:name="com.dezdeqness.presentation.features.animelist.AnimeListFragment"
         android:icon="@android:drawable/ic_menu_search"
         android:label="Поиск" />
 

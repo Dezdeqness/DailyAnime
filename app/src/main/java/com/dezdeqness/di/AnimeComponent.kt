@@ -1,6 +1,6 @@
 package com.dezdeqness.di
 
-import com.dezdeqness.presentation.features.animelist.ListAnimeFragment
+import com.dezdeqness.presentation.features.animelist.AnimeListFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [DataModule::class])
@@ -10,5 +10,5 @@ interface AnimeComponent {
         fun create(): AnimeComponent
     }
 
-    fun inject(fragment: ListAnimeFragment)
+    fun inject(fragment: AnimeListFragment)
 }

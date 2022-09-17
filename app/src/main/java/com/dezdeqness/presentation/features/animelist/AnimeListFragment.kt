@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.core.BaseFragment
-import com.dezdeqness.databinding.FragmentListAnimeBinding
+import com.dezdeqness.databinding.FragmentAnimeListBinding
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterBottomSheetDialog
 import com.dezdeqness.presentation.models.AnimeSearchFilter
@@ -20,9 +20,9 @@ import com.dezdeqness.ui.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ListAnimeFragment : BaseFragment() {
+class AnimeListFragment : BaseFragment() {
 
-    private var _binding: FragmentListAnimeBinding? = null
+    private var _binding: FragmentAnimeListBinding? = null
     private val binding get() = _binding!!
 
     @Inject
@@ -59,7 +59,7 @@ class ListAnimeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListAnimeBinding.inflate(layoutInflater)
+        _binding = FragmentAnimeListBinding.inflate(layoutInflater)
         return binding.root
     }
 
