@@ -1,5 +1,7 @@
 package com.dezdeqness.di
 
+import com.dezdeqness.di.subcomponents.AnimeComponent
+import com.dezdeqness.di.subcomponents.AnimeSearchFilterComponent
 import dagger.Module
 
 @Module(

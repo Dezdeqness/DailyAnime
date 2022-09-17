@@ -2,14 +2,18 @@ package com.dezdeqness.presentation.features.searchfilter.anime
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.presentation.Event
 import com.dezdeqness.presentation.models.AnimeCell
+import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
+import javax.inject.Named
 
 class AnimeSearchFilterViewModel @Inject constructor(
     private val animeSearchFilterComposer: AnimeSearchFilterComposer,
+    @Named("searchFiltersList") private val list: List<AnimeSearchFilter>,
     searchFilterRepository: SearchFilterRepository,
 ) : ViewModel() {
 

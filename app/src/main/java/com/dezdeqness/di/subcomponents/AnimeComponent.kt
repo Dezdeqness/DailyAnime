@@ -1,9 +1,10 @@
-package com.dezdeqness.di
+package com.dezdeqness.di.subcomponents
 
+import com.dezdeqness.di.modules.AnimeModule
 import com.dezdeqness.presentation.features.animelist.AnimeListFragment
 import dagger.Subcomponent
 
-@Subcomponent(modules = [DataModule::class])
+@Subcomponent(modules = [AnimeModule::class])
 interface AnimeComponent {
     @Subcomponent.Factory
     interface Factory {

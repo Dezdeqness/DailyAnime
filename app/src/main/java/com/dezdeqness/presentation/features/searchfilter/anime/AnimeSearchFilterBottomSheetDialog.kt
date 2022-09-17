@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.databinding.ItemAnimeSearchFilterBinding
+import com.dezdeqness.di.subcomponents.SearchFilterListModule
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.searchfilter.BaseSearchFilterBottomSheetDialog
 import com.dezdeqness.presentation.models.AnimeCell
@@ -21,10 +22,6 @@ import kotlinx.coroutines.launch
 class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
 
     private val viewModel: AnimeSearchFilterViewModel by viewModels(
-        // TODO: Change this
-        ownerProducer = {
-            requireActivity()
-        },
         factoryProducer = {
             viewModelFactory
         }
@@ -43,7 +40,13 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
             .application
             .getComponent()
             .animeSearchFilterComponent()
-            .create()
+            .filterModule(
+                SearchFilterListModule(
+                    requireArguments().getParcelableArrayList(ANIME_SEARCH_FILTER_LIST)
+                        ?: emptyList()
+                )
+            )
+            .build()
             .inject(this)
     }
 

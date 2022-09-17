@@ -1,4 +1,4 @@
-package com.dezdeqness.di
+package com.dezdeqness.di.modules
 
 import com.dezdeqness.data.BuildConfig
 import dagger.Module
