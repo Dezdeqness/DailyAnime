@@ -61,4 +61,9 @@ ext.deps = [
                 espresso: "androidx.test.espresso:espresso-core:$versions.espresso",
         ],
 
+        'navigation' : [
+                navigationFragment : "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
+                navigationCore: "androidx.navigation:navigation-ui-ktx:$versions.navigation",
+        ]
+
 ]

@@ -64,4 +64,26 @@ class AnimeSearchFilterViewModel @Inject constructor(
             _animeSearchFilterStateFlow.value.copy(currentCellUpdate = null)
     }
 
+    fun onApplyButtonClicked() {
+        val filters = _animeSearchFilterStateFlow.value
+
+        val animeSearchFilters = filters.items
+            .map { it.copy(items = it.items.filterNot { cellState -> cellState.state == CellState.NONE }) }
+            .filter { it.items.isNotEmpty() }
+
+        _animeSearchFilterStateFlow.value =
+            _animeSearchFilterStateFlow.value.copy(
+                listEvents = _animeSearchFilterStateFlow.value.listEvents + Event.ApplyFilter(
+                    filters = animeSearchFilters
+                )
+            )
+    }
+
+    fun onEventConsumed(event: Event) {
+        val value = _animeSearchFilterStateFlow.value
+        _animeSearchFilterStateFlow.value = value.copy(
+            listEvents = value.listEvents.toMutableList() - event
+        )
+    }
+
 }

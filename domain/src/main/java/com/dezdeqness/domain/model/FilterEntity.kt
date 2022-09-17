@@ -6,12 +6,11 @@ data class FilterEntity(
     val type: FilterType,
 )
 
-
 enum class FilterType(val filterName: String) {
     GENRE("genre"),
     STATUS("status"),
     KIND("kind"),
-    SPECIAL("special"),
+    SEASON("season"),
     DURATION("duration"),
     RATING("rating"),
     UNKNOWN("");

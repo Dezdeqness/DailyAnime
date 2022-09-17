@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.children
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +21,10 @@ import kotlinx.coroutines.launch
 class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
 
     private val viewModel: AnimeSearchFilterViewModel by viewModels(
+        // TODO: Change this
+        ownerProducer = {
+            requireActivity()
+        },
         factoryProducer = {
             viewModelFactory
         }
@@ -29,6 +34,7 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
+        setupListeners()
     }
 
     override fun onAttach(context: Context) {
@@ -48,6 +54,18 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                     setInitialState(state)
                     updateCell(state)
                     viewModel.nullifyCurrentCell()
+                    state.listEvents.forEach { event ->
+                        when(event) {
+                            is Event.ApplyFilter -> {
+                                setFragmentResult(TAG, bundleOf(
+                                    RESULT to event.filters,
+                                ))
+                                this@AnimeSearchFilterBottomSheetDialog.dismiss()
+                            }
+                        }
+
+                        viewModel.onEventConsumed(event)
+                    }
                 }
             }
         }
@@ -92,8 +110,15 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
         return filterBinding
     }
 
+    private fun setupListeners() {
+        binding.applyFilter.setOnClickListener {
+            viewModel.onApplyButtonClicked()
+        }
+    }
+
     companion object {
 
+        const val RESULT = "AnimeSearchFilterBottomSheetDialogResult"
         const val TAG = "AnimeSearchFilterBottomSheetDialog"
 
         fun newInstance() = AnimeSearchFilterBottomSheetDialog().apply {

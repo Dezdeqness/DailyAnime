@@ -4,6 +4,6 @@ import com.dezdeqness.domain.model.AnimeEntity
 
 interface AnimeRemoteDataSource {
 
-    fun getListAnime(): Result<List<AnimeEntity>>
+    fun getListAnime(queryMap: Map<String, String> = mapOf()): Result<List<AnimeEntity>>
 
 }

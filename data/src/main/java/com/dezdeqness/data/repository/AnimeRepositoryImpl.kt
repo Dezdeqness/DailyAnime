@@ -10,4 +10,8 @@ class AnimeRepositoryImpl @Inject constructor(
 
     override fun getListAnime() =
         animeRemoteDataSource.getListAnime()
+
+    override fun getListAnimeWithQuery(queryMap: Map<String, String>) =
+        animeRemoteDataSource.getListAnime(queryMap)
+
 }

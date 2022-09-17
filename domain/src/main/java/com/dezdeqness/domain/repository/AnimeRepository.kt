@@ -6,4 +6,6 @@ interface AnimeRepository {
 
     fun getListAnime(): Result<List<AnimeEntity>>
 
+    fun getListAnimeWithQuery(queryMap: Map<String, String>): Result<List<AnimeEntity>>
+
 }
