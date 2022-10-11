@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/text_primary"
-            app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+            app:navigationIcon="@drawable/ic_close"
             app:title="@string/search_filter_title"
             app:titleTextColor="@color/black">
 
