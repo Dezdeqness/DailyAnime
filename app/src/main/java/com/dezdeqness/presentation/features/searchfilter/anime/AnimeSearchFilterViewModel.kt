@@ -86,4 +86,17 @@ class AnimeSearchFilterViewModel @Inject constructor(
         )
     }
 
+    fun onResetButtonClicked() {
+        applyFilter(listOf())
+    }
+
+    private fun applyFilter(animeSearchFilters: List<AnimeSearchFilter>) {
+        _animeSearchFilterStateFlow.value =
+            _animeSearchFilterStateFlow.value.copy(
+                listEvents = _animeSearchFilterStateFlow.value.listEvents + Event.ApplyFilter(
+                    filters = animeSearchFilters
+                )
+            )
+    }
+
 }

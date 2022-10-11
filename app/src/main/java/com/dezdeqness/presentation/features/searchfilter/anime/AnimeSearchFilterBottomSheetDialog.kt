@@ -121,6 +121,10 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
         binding.applyFilter.setOnClickListener {
             viewModel.onApplyButtonClicked()
         }
+
+        binding.resetFilter.setOnClickListener {
+            viewModel.onResetButtonClicked()
+        }
     }
 
     companion object {
