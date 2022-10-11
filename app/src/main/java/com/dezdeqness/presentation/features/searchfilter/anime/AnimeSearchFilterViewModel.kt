@@ -24,9 +24,14 @@ class AnimeSearchFilterViewModel @Inject constructor(
     private val selectedCells: MutableList<AnimeCell> = mutableListOf()
 
     init {
-        searchFilterRepository.getFilterConfiguration().also {
+        if (list.isEmpty()) {
+            searchFilterRepository.getFilterConfiguration().run {
+                _animeSearchFilterStateFlow.value =
+                    AnimeSearchFilterState(items = animeSearchFilterComposer.compose(this))
+            }
+        } else {
             _animeSearchFilterStateFlow.value =
-                AnimeSearchFilterState(items = animeSearchFilterComposer.compose(it))
+                AnimeSearchFilterState(items = list)
         }
     }
 
@@ -69,18 +74,9 @@ class AnimeSearchFilterViewModel @Inject constructor(
     }
 
     fun onApplyButtonClicked() {
-        val filters = _animeSearchFilterStateFlow.value
+        val animeSearchFilters = _animeSearchFilterStateFlow.value.items
 
-        val animeSearchFilters = filters.items
-            .map { it.copy(items = it.items.filterNot { cellState -> cellState.state == CellState.NONE }) }
-            .filter { it.items.isNotEmpty() }
-
-        _animeSearchFilterStateFlow.value =
-            _animeSearchFilterStateFlow.value.copy(
-                listEvents = _animeSearchFilterStateFlow.value.listEvents + Event.ApplyFilter(
-                    filters = animeSearchFilters
-                )
-            )
+        applyFilter(animeSearchFilters)
     }
 
     fun onEventConsumed(event: Event) {
