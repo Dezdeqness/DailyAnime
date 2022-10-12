@@ -9,6 +9,7 @@ import javax.inject.Inject
 
 class AnimeSearchFilterComposer @Inject constructor(
     private val resourceManager: ResourceProvider,
+    private val animeSeasonCellComposer: AnimeSeasonCellComposer,
 ) {
 
     fun compose(filters: List<FilterEntity>): List<AnimeSearchFilter> {
@@ -48,53 +49,11 @@ class AnimeSearchFilterComposer @Inject constructor(
         return animeFilters
     }
 
-    // TODO: Make time adjustment
     private fun composeSeasonFilter() =
         AnimeSearchFilter(
             innerId = FilterType.SEASON.filterName,
             displayName = resourceManager.getString(PREFIX + FilterType.SEASON.filterName),
-            items = listOf(
-                AnimeCell(
-                    id = "0",
-                    displayName = "Осень 2022"
-                ),
-                AnimeCell(
-                    id = "1",
-                    displayName = "Лето 2022"
-                ),
-                AnimeCell(
-                    id = "2",
-                    displayName = "Весна 2022"
-                ),
-                AnimeCell(
-                    id = "3",
-                    displayName = "Зима 2022"
-                ),
-                AnimeCell(
-                    id = "4",
-                    displayName = "2022 год"
-                ),
-                AnimeCell(
-                    id = "5",
-                    displayName = "2021 год"
-                ),
-                AnimeCell(
-                    id = "6",
-                    displayName = "2016-2020"
-                ),
-                AnimeCell(
-                    id = "7",
-                    displayName = "2011-2015"
-                ),
-                AnimeCell(
-                    id = "8",
-                    displayName = "2000-2010"
-                ),
-                AnimeCell(
-                    id = "9",
-                    displayName = "Более старые"
-                ),
-            )
+            items = animeSeasonCellComposer.composeSeasonCells(),
         )
 
     private fun composeFilter(filter: List<FilterEntity>, id: String) =
