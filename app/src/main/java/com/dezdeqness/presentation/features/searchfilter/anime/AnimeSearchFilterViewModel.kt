@@ -2,14 +2,18 @@ package com.dezdeqness.presentation.features.searchfilter.anime
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.presentation.Event
 import com.dezdeqness.presentation.models.AnimeCell
+import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
+import javax.inject.Named
 
 class AnimeSearchFilterViewModel @Inject constructor(
     private val animeSearchFilterComposer: AnimeSearchFilterComposer,
+    @Named("searchFiltersList") private val list: List<AnimeSearchFilter>,
     searchFilterRepository: SearchFilterRepository,
 ) : ViewModel() {
 
@@ -20,9 +24,14 @@ class AnimeSearchFilterViewModel @Inject constructor(
     private val selectedCells: MutableList<AnimeCell> = mutableListOf()
 
     init {
-        searchFilterRepository.getFilterConfiguration().also {
+        if (list.isEmpty()) {
+            searchFilterRepository.getFilterConfiguration().run {
+                _animeSearchFilterStateFlow.value =
+                    AnimeSearchFilterState(items = animeSearchFilterComposer.compose(this))
+            }
+        } else {
             _animeSearchFilterStateFlow.value =
-                AnimeSearchFilterState(items = animeSearchFilterComposer.compose(it))
+                AnimeSearchFilterState(items = list)
         }
     }
 
@@ -65,18 +74,9 @@ class AnimeSearchFilterViewModel @Inject constructor(
     }
 
     fun onApplyButtonClicked() {
-        val filters = _animeSearchFilterStateFlow.value
+        val animeSearchFilters = _animeSearchFilterStateFlow.value.items
 
-        val animeSearchFilters = filters.items
-            .map { it.copy(items = it.items.filterNot { cellState -> cellState.state == CellState.NONE }) }
-            .filter { it.items.isNotEmpty() }
-
-        _animeSearchFilterStateFlow.value =
-            _animeSearchFilterStateFlow.value.copy(
-                listEvents = _animeSearchFilterStateFlow.value.listEvents + Event.ApplyFilter(
-                    filters = animeSearchFilters
-                )
-            )
+        applyFilter(animeSearchFilters)
     }
 
     fun onEventConsumed(event: Event) {
@@ -84,6 +84,19 @@ class AnimeSearchFilterViewModel @Inject constructor(
         _animeSearchFilterStateFlow.value = value.copy(
             listEvents = value.listEvents.toMutableList() - event
         )
+    }
+
+    fun onResetButtonClicked() {
+        applyFilter(listOf())
+    }
+
+    private fun applyFilter(animeSearchFilters: List<AnimeSearchFilter>) {
+        _animeSearchFilterStateFlow.value =
+            _animeSearchFilterStateFlow.value.copy(
+                listEvents = _animeSearchFilterStateFlow.value.listEvents + Event.ApplyFilter(
+                    filters = animeSearchFilters
+                )
+            )
     }
 
 }

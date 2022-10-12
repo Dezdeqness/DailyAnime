@@ -1,6 +1,9 @@
 package com.dezdeqness.di
 
 import android.content.Context
+import com.dezdeqness.di.modules.RemoteModule
+import com.dezdeqness.di.subcomponents.AnimeComponent
+import com.dezdeqness.di.subcomponents.AnimeSearchFilterComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -23,6 +26,6 @@ interface AppComponent {
 
     fun animeComponent(): AnimeComponent.Factory
 
-    fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Factory
+    fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Builder
 
 }

@@ -11,7 +11,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.databinding.ItemAnimeSearchFilterBinding
+import com.dezdeqness.di.subcomponents.SearchFilterListModule
 import com.dezdeqness.getComponent
+import com.dezdeqness.presentation.Event
 import com.dezdeqness.presentation.features.searchfilter.BaseSearchFilterBottomSheetDialog
 import com.dezdeqness.presentation.models.AnimeCell
 import com.dezdeqness.presentation.models.AnimeSearchFilter
@@ -21,10 +23,6 @@ import kotlinx.coroutines.launch
 class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
 
     private val viewModel: AnimeSearchFilterViewModel by viewModels(
-        // TODO: Change this
-        ownerProducer = {
-            requireActivity()
-        },
         factoryProducer = {
             viewModelFactory
         }
@@ -43,7 +41,13 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
             .application
             .getComponent()
             .animeSearchFilterComponent()
-            .create()
+            .filterModule(
+                SearchFilterListModule(
+                    requireArguments().getParcelableArrayList(ANIME_SEARCH_FILTER_LIST)
+                        ?: emptyList()
+                )
+            )
+            .build()
             .inject(this)
     }
 
@@ -55,13 +59,16 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                     updateCell(state)
                     viewModel.nullifyCurrentCell()
                     state.listEvents.forEach { event ->
-                        when(event) {
+                        when (event) {
                             is Event.ApplyFilter -> {
-                                setFragmentResult(TAG, bundleOf(
-                                    RESULT to event.filters,
-                                ))
+                                setFragmentResult(
+                                    TAG, bundleOf(
+                                        RESULT to event.filters,
+                                    )
+                                )
                                 this@AnimeSearchFilterBottomSheetDialog.dismiss()
                             }
+                            else -> {}
                         }
 
                         viewModel.onEventConsumed(event)
@@ -114,15 +121,23 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
         binding.applyFilter.setOnClickListener {
             viewModel.onApplyButtonClicked()
         }
+
+        binding.resetFilter.setOnClickListener {
+            viewModel.onResetButtonClicked()
+        }
     }
 
     companion object {
 
         const val RESULT = "AnimeSearchFilterBottomSheetDialogResult"
         const val TAG = "AnimeSearchFilterBottomSheetDialog"
+        private const val ANIME_SEARCH_FILTER_LIST = "anime_search_filter_list"
 
-        fun newInstance() = AnimeSearchFilterBottomSheetDialog().apply {
-            arguments = bundleOf()
-        }
+        fun newInstance(filters: List<AnimeSearchFilter> = listOf()) =
+            AnimeSearchFilterBottomSheetDialog().apply {
+                arguments = bundleOf(
+                    ANIME_SEARCH_FILTER_LIST to filters
+                )
+            }
     }
 }

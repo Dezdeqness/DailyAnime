@@ -18,9 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/text_primary"
-            app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+            app:navigationIcon="@drawable/ic_close"
             app:title="@string/search_filter_title"
-            app:titleTextColor="@color/black" />
+            app:titleTextColor="@color/black">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reset_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:text="Сбросить"
+                android:textSize="12sp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -41,9 +52,9 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/apply_filter"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="Применить"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
