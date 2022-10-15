@@ -57,13 +57,16 @@ ext.deps = [
         ],
 
         'androidTesting'  : [
-                androidJunit : "androidx.test.ext:junit:$versions.androidJunit",
-                espresso: "androidx.test.espresso:espresso-core:$versions.espresso",
+                androidJunit: "androidx.test.ext:junit:$versions.androidJunit",
+                espresso    : "androidx.test.espresso:espresso-core:$versions.espresso",
         ],
 
-        'navigation' : [
-                navigationFragment : "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
-                navigationCore: "androidx.navigation:navigation-ui-ktx:$versions.navigation",
+        'navigation'      : [
+                navigationFragment: "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
+                navigationCore    : "androidx.navigation:navigation-ui-ktx:$versions.navigation",
+        ],
+        'swipeRefresh'    : [
+                swipeLayout: "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipeRefresh",
         ]
 
 ]

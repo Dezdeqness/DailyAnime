@@ -59,6 +59,7 @@ dependencies {
     unitTesting()
     androidTesting()
     navigation()
+    swipe()
 
     implementation project(path: ':advanced_recycler')
     implementation project(path: ':data')
