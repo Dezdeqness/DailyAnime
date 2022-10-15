@@ -13,18 +13,24 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     errorMapper: ErrorMapper,
 ) : BaseDataSource(errorMapper), AnimeRemoteDataSource {
 
-    override fun getListAnime(queryMap: Map<String, String>) = tryWithCatch {
+    override fun getListAnime(queryMap: Map<String, String>, pageNumber: Int, sizeOfPage: Int) =
+        tryWithCatch {
 
-        val response = mangaApiService.getListAnime(limit = 40, page = 1, options = queryMap).execute()
+            val response =
+                mangaApiService.getListAnime(
+                    limit = sizeOfPage,
+                    page = pageNumber,
+                    options = queryMap,
+                ).execute()
 
-        val responseBody = response.body()
+            val responseBody = response.body()
 
-        if (response.isSuccessful && responseBody != null) {
-            val list = responseBody.map { item -> animeMapper.fromResponse(item) }
-            Result.success(list)
-        } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            if (response.isSuccessful && responseBody != null) {
+                val list = responseBody.map { item -> animeMapper.fromResponse(item) }
+                Result.success(list)
+            } else {
+                throw ApiException(response.code(), response.errorBody().toString())
+            }
+
         }
-
-    }
 }

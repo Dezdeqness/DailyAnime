@@ -7,6 +7,7 @@ import com.dezdeqness.data.datasource.AnimeRemoteDataSourceImpl
 import com.dezdeqness.data.repository.AnimeRepositoryImpl
 import com.dezdeqness.di.ViewModelKey
 import com.dezdeqness.domain.repository.AnimeRepository
+import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.features.animelist.AnimeViewModel
 import dagger.Binds
 import dagger.Module
@@ -21,6 +22,11 @@ abstract class AnimeModule {
         @Provides
         fun provideMangaApiService(retrofit: Retrofit): AnimeApiService =
             retrofit.create(AnimeApiService::class.java)
+
+        @Provides
+        fun provideUseCase(animeRepository: AnimeRepository) = GetAnimeListUseCase(
+            animeRepository = animeRepository
+        )
     }
 
     @Binds
