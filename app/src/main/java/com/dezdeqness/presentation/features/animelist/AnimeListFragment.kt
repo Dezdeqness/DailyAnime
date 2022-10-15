@@ -29,7 +29,11 @@ class AnimeListFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val adapter: AnimeListAdapter by lazy { AnimeListAdapter() }
+    private val adapter: AnimeListAdapter by lazy {
+        AnimeListAdapter {
+            viewModel.onLoadMore()
+        }
+    }
 
     private val viewModel: AnimeViewModel by viewModels(
         factoryProducer = {
@@ -92,8 +96,11 @@ class AnimeListFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.animeStateFlow.collect { state ->
-                    if (state.isListChanged) {
-                        adapter.submitList(state.list) {
+
+                    binding.refresh.isRefreshing = state.isRefreshing
+
+                    adapter.submitList(state.list, state.hasNextPage) {
+                        if (state.isNeedToScrollToTop) {
                             binding.listAnime.scrollToPosition(0)
                         }
                     }
@@ -102,7 +109,10 @@ class AnimeListFragment : BaseFragment() {
                             is Event.NavigateToFilter -> {
                                 val dialog =
                                     AnimeSearchFilterBottomSheetDialog.newInstance(event.filters)
-                                dialog.show(parentFragmentManager, AnimeSearchFilterBottomSheetDialog.TAG)
+                                dialog.show(
+                                    parentFragmentManager,
+                                    AnimeSearchFilterBottomSheetDialog.TAG
+                                )
                             }
                             else -> {}
                         }
