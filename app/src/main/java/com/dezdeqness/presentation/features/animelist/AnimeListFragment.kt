@@ -73,9 +73,16 @@ class AnimeListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRefreshLayout()
         setupRecyclerView()
         setupObservers()
         setupFab()
+    }
+
+    private fun setupRefreshLayout() {
+        binding.refresh.setOnRefreshListener {
+            viewModel.onRefreshSwiped()
+        }
     }
 
     private fun setupFab() {
