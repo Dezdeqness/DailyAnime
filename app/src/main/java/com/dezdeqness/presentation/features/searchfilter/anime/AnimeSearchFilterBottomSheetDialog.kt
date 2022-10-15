@@ -43,8 +43,7 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
             .animeSearchFilterComponent()
             .filterModule(
                 SearchFilterListModule(
-                    requireArguments().getParcelableArrayList(ANIME_SEARCH_FILTER_LIST)
-                        ?: emptyList()
+                    requireArguments().getParcelableArrayList(ANIME_SEARCH_FILTER_LIST) ?: listOf()
                 )
             )
             .build()

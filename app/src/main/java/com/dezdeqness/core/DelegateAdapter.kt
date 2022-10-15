@@ -7,9 +7,13 @@ import com.dezdeqness.advancedrecycler.AdapterDelegateManager
 import com.dezdeqness.advancedrecycler.BaseAdapterDelegate
 import com.dezdeqness.presentation.models.AdapterItem
 
-abstract class DelegateAdapter<T : Any>(adapterDelegateList: List<BaseAdapterDelegate<T>>) :
+abstract class DelegateAdapter<T : Any>(
+    adapterDelegateList: List<BaseAdapterDelegate<T>>,
+    loadMoreCallback: (() -> Unit)? = null
+) :
     ListAdapter<AdapterItem, RecyclerView.ViewHolder>(AdapterItemDiffUtil()) {
 
+    private val paginationHelper = PaginationHelper(loadMoreCallback)
     private val manager = AdapterDelegateManager<T>()
 
     init {
@@ -26,12 +30,21 @@ abstract class DelegateAdapter<T : Any>(adapterDelegateList: List<BaseAdapterDel
         manager.onCreateViewHolder(parent, viewType)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        manager.onBindViewHolder(holder, getItem(position) as T, listOf())
+        manager.onBindViewHolder(holder, getItem(position) as T, listOf()).also {
+            paginationHelper.loadMore(position, currentList.size)
+        }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
         payloads: List<Any>
-    ) = manager.onBindViewHolder(holder, getItem(position) as T, payloads)
+    ) = manager.onBindViewHolder(holder, getItem(position) as T, payloads).also {
+        paginationHelper.loadMore(position, currentList.size)
+    }
+
+    fun submitList(list: List<AdapterItem>, hasNextPage: Boolean, commitCallback: Runnable) {
+        this.submitList(list, commitCallback)
+        paginationHelper.setLoadingState(hasNextPage)
+    }
 
 }

@@ -19,5 +19,6 @@ ext.versions = [
         androidJunit   : "1.1.3",
         espresso       : "3.4.0",
         collection     : "1.2.0",
-        navigation     : "2.5.2,"
+        navigation     : "2.5.2",
+        swipeRefresh   : "1.1.0",
 ]

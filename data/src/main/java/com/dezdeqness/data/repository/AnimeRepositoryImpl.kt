@@ -8,10 +8,7 @@ class AnimeRepositoryImpl @Inject constructor(
     private val animeRemoteDataSource: AnimeRemoteDataSource,
 ) : AnimeRepository {
 
-    override fun getListAnime() =
-        animeRemoteDataSource.getListAnime()
-
-    override fun getListAnimeWithQuery(queryMap: Map<String, String>) =
-        animeRemoteDataSource.getListAnime(queryMap)
+    override fun getListWithFilter(queryMap: Map<String, String>, pageNumber: Int, sizeOfPage: Int) =
+        animeRemoteDataSource.getListAnime(queryMap, pageNumber, sizeOfPage)
 
 }

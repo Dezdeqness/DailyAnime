@@ -102,7 +102,7 @@ class AnimeSeasonCellComposer @Inject constructor() {
 
         when (getCurrentSeason(month)) {
             WINTER_SEASON -> {
-                val isNewYear = month != 11
+                val isNewYear = month != Calendar.DECEMBER
                 val cellNewYear = if (isNewYear) year else year + 1
                 val cellPastYear = if (isNewYear) year - 1 else year
                 cells.add(

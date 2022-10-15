@@ -65,6 +65,10 @@ ext {
         implementation deps.androidTesting.espresso
     }
 
+    swipe = Group {
+        implementation deps.swipeRefresh.swipeLayout
+    }
+
     navigation = Group {
 
         implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
