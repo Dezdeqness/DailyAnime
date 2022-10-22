@@ -1,6 +1,6 @@
 package com.dezdeqness.domain.usecases
 
-import com.dezdeqness.domain.model.AnimeEntity
+import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.repository.AnimeRepository
 
 class GetAnimeListUseCase(
@@ -27,7 +27,7 @@ class GetAnimeListUseCase(
     }
 
     data class AnimeListState(
-        val list: List<AnimeEntity> = listOf(),
+        val list: List<AnimeBriefEntity> = listOf(),
         val hasNextPage: Boolean = false,
         val currentPage: Int = 0,
     )

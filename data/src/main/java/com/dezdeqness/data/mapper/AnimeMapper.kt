@@ -3,7 +3,7 @@ package com.dezdeqness.data.mapper
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.domain.model.AnimeDetailsEntity
-import com.dezdeqness.domain.model.AnimeEntity
+import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class AnimeMapper @Inject constructor(
 ) {
 
     fun fromResponse(item: AnimeBriefRemote) =
-        AnimeEntity(
+        AnimeBriefEntity(
             id = item.id,
             name = item.name,
             russian = item.russian,
@@ -40,13 +40,14 @@ class AnimeMapper @Inject constructor(
             english = item.english.firstOrNull().orEmpty(),
             japanese = item.japanese.firstOrNull().orEmpty(),
             score = item.score,
-            kind = item.kind,
+            kind = AnimeKind.fromString(item.kind),
             duration = item.duration,
             rating = item.rating,
             airedOn = item.airedOn.orEmpty(),
             releasedOn = item.releasedOn.orEmpty(),
             episodes = item.episodes,
-            status = item.status,
+            url = item.url,
+            status = AnimeStatus.fromString(item.status),
             episodesAired = item.episodesAired,
             images = item.images ?: mapOf(),
             description = item.descriptionHTML,
