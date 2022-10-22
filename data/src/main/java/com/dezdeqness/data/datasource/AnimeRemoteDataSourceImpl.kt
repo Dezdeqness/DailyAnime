@@ -4,12 +4,18 @@ import com.dezdeqness.data.AnimeApiService
 import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.mapper.RelatedItemMapper
+import com.dezdeqness.data.mapper.RoleMapper
+import com.dezdeqness.data.mapper.ScreenshotMapper
 import com.dezdeqness.domain.mapper.ErrorMapper
 import javax.inject.Inject
 
 class AnimeRemoteDataSourceImpl @Inject constructor(
-    private val mangaApiService: AnimeApiService,
+    private val apiService: AnimeApiService,
     private val animeMapper: AnimeMapper,
+    private val screenshotMapper: ScreenshotMapper,
+    private val roleMapper: RoleMapper,
+    private val relatedItemMapper: RelatedItemMapper,
     errorMapper: ErrorMapper,
 ) : BaseDataSource(errorMapper), AnimeRemoteDataSource {
 
@@ -17,7 +23,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         tryWithCatch {
 
             val response =
-                mangaApiService.getListAnime(
+                apiService.getListAnime(
                     limit = sizeOfPage,
                     page = pageNumber,
                     options = queryMap,
@@ -33,4 +39,56 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             }
 
         }
+
+    override fun getDetailsAnimeMainInfo(id: Long) = tryWithCatch {
+        val response = apiService.getDetailsAnimeMainInfo(id).execute()
+
+        val responseBody = response.body()
+
+        if (response.isSuccessful && responseBody != null) {
+            val details = animeMapper.fromResponse(responseBody)
+            Result.success(details)
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
+
+    override fun getDetailsAnimeScreenshots(id: Long) = tryWithCatch {
+        val response = apiService.getDetailsAnimeScreenshots(id).execute()
+
+        val responseBody = response.body()
+
+        if (response.isSuccessful && responseBody != null) {
+            val screenshots = responseBody.map(screenshotMapper::fromResponse)
+            Result.success(screenshots)
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
+
+    override fun getDetailsAnimeRelated(id: Long) = tryWithCatch {
+        val response = apiService.getDetailsAnimeRelated(id).execute()
+
+        val responseBody = response.body()
+
+        if (response.isSuccessful && responseBody != null) {
+            val relates = responseBody.mapNotNull(relatedItemMapper::fromResponse)
+            Result.success(relates)
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
+
+    override fun getDetailsAnimeRoles(id: Long) = tryWithCatch {
+        val response = apiService.getDetailsAnimeRoles(id).execute()
+
+        val responseBody = response.body()
+
+        if (response.isSuccessful && responseBody != null) {
+            val roles = roleMapper.fromResponse(responseBody)
+            Result.success(roles)
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
 }
