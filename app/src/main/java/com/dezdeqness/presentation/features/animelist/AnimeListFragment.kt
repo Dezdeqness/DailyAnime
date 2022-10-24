@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentAnimeListBinding
 import com.dezdeqness.getComponent
@@ -30,9 +33,17 @@ class AnimeListFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val adapter: AnimeListAdapter by lazy {
-        AnimeListAdapter {
-            viewModel.onLoadMore()
-        }
+        AnimeListAdapter(
+            listener = { animeId ->
+                findNavController().navigate(
+                    R.id.animeDetailsFragment,
+                    bundleOf("animeId" to animeId),
+                )
+            },
+            loadMoreCallback = {
+                viewModel.onLoadMore()
+            },
+        )
     }
 
     private val viewModel: AnimeViewModel by viewModels(
@@ -77,6 +88,11 @@ class AnimeListFragment : BaseFragment() {
         setupRecyclerView()
         setupObservers()
         setupFab()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setupRefreshLayout() {

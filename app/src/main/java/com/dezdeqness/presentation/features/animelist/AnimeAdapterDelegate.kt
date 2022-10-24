@@ -1,23 +1,22 @@
 package com.dezdeqness.presentation.features.animelist
 
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.databinding.ItemAnimeBinding
 import com.dezdeqness.presentation.models.AdapterItem
-import com.dezdeqness.presentation.models.AnimeUiItem
+import com.dezdeqness.presentation.models.AnimeUiModel
 
-fun animeAdapterDelegate() =
-    adapterDelegateViewBinding<AnimeUiItem, AdapterItem, ItemAnimeBinding>(
-        modelClass = AnimeUiItem::class.java,
+fun animeAdapterDelegate(listener: (Long) -> Unit) =
+    adapterDelegateViewBinding<AnimeUiModel, AdapterItem, ItemAnimeBinding>(
+        modelClass = AnimeUiModel::class.java,
         viewBinding = { layoutInflater, parent ->
             ItemAnimeBinding.inflate(layoutInflater, parent, false)
         },
         block = {
 
             binding.root.setOnClickListener {
-                Toast.makeText(it.context, item.briefInfo, Toast.LENGTH_LONG).show()
+                listener(item.id)
             }
 
             bind {
