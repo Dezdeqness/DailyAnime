@@ -54,6 +54,7 @@ class AnimeMapper @Inject constructor(
             studioList = item.studios.map(studioMapper::fromResponse),
             genreList = item.genres.map(genreMapper::fromResponse),
             videoList = item.videos.map(videoMapper::fromResponse),
+            nextEpisodeAt = item.nextEpisodeAt.orEmpty(),
         )
 
 }

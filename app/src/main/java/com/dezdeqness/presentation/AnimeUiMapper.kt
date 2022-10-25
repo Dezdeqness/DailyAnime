@@ -1,16 +1,29 @@
 package com.dezdeqness.presentation
 
-import com.dezdeqness.domain.model.AnimeEntity
-import com.dezdeqness.presentation.models.AnimeUiItem
+import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.domain.model.RelatedItemEntity
+import com.dezdeqness.presentation.models.AnimeUiModel
+import com.dezdeqness.presentation.models.RelatedItemUiModel
+import com.dezdeqness.utils.ImageUrlUtils
 import javax.inject.Inject
 
-class AnimeUiMapper @Inject constructor() {
+class AnimeUiMapper @Inject constructor(
+    private val imageUrlUtils: ImageUrlUtils,
+) {
 
-    fun map(animeEntity: AnimeEntity) =
-        AnimeUiItem(
-            briefInfo = "${animeEntity.name}\n${animeEntity.status}",
-            kind = animeEntity.kind.name,
-            logoUrl = "https://shikimori.one/" + animeEntity.images["original"].orEmpty(),
+    fun map(animeBriefEntity: AnimeBriefEntity) =
+        AnimeUiModel(
+            id = animeBriefEntity.id,
+            briefInfo = "${animeBriefEntity.name}\n${animeBriefEntity.status}",
+            kind = animeBriefEntity.kind.name,
+            logoUrl = imageUrlUtils.parseOriginalUrl(animeBriefEntity.images),
+            airedYear = animeBriefEntity.airedOn.split("-").firstOrNull().orEmpty()
+        )
+
+    fun map(relatedItemUiModel: RelatedItemEntity) =
+        RelatedItemUiModel(
+            title = relatedItemUiModel.relationTitleRussian,
+            anime = map(relatedItemUiModel.animeBriefEntity)
         )
 
 }

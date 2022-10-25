@@ -21,6 +21,7 @@ data class AnimeDetailsEntity(
     val studioList: List<StudioEntity>,
     val genreList: List<GenreEntity>,
     val videoList: List<VideoEntity>,
+    val nextEpisodeAt: String,
 ) : AnimeBriefEntity(
     id = id,
     name = name,

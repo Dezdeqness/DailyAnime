@@ -37,7 +37,6 @@ class AnimeViewModel @Inject constructor(
         val events = _animeStateFlow.value.events
         _animeStateFlow.value = _animeStateFlow.value.copy(
             events = events + Event.NavigateToFilter(filters = filtersList),
-            isNeedToScrollToTop = false,
         )
     }
 
@@ -84,9 +83,15 @@ class AnimeViewModel @Inject constructor(
                     currentPage = state.currentPage
                     val list = state.list.map { animeUiMapper.map(it) }
 
+                    val events = if (isNeedToScrollToTop) {
+                        _animeStateFlow.value.events + Event.ScrollToTop
+                    } else {
+                        _animeStateFlow.value.events
+                    }
+
                     _animeStateFlow.value = _animeStateFlow.value.copy(
                         list = if (mergeWithCurrentList) _animeStateFlow.value.list + list else list,
-                        isNeedToScrollToTop = isNeedToScrollToTop,
+                        events = events,
                         isRefreshing = false,
                         hasNextPage = state.hasNextPage,
                     )

@@ -123,8 +123,9 @@ class AnimeListFragment : BaseFragment() {
                     binding.refresh.isRefreshing = state.isRefreshing
 
                     adapter.submitList(state.list, state.hasNextPage) {
-                        if (state.isNeedToScrollToTop) {
+                        if (state.events.contains(Event.ScrollToTop)) {
                             binding.listAnime.scrollToPosition(0)
+                            viewModel.onEventConsumed(Event.ScrollToTop)
                         }
                     }
                     state.events.forEach { event ->
