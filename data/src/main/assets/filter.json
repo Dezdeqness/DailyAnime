@@ -60,6 +60,11 @@
         "type": "kind"
     },
     {
+        "id": "movie",
+        "name": "Фильм",
+        "type": "kind"
+    },
+    {
         "id": "s",
         "name": "< 10 мин.",
         "type": "duration"

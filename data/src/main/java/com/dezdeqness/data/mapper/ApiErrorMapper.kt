@@ -10,12 +10,12 @@ import javax.inject.Singleton
 class ApiErrorMapper @Inject constructor() : ErrorMapper {
 
     override fun map(exception: Throwable) =
-        when(exception) {
+        when (exception) {
             is ApiException -> {
-                ErrorEntity.UnknownErrorEntity("")
+                ErrorEntity.UnknownErrorEntity("Code: ${exception.code}, message=${exception.message}")
             }
             else -> {
-                ErrorEntity.UnknownErrorEntity("")
+                ErrorEntity.UnknownErrorEntity("Message: ${exception.message}, stack: ${exception.stackTraceToString()}")
             }
         }
 

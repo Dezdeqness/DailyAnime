@@ -24,4 +24,6 @@ sealed class Event {
 
     data class NavigateToFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
 
+    object ScrollToTop : Event()
+
 }

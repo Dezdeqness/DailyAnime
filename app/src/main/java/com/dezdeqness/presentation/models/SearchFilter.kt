@@ -17,6 +17,10 @@ data class AnimeCell(
     var state: CellState = CellState.NONE,
 ) : Parcelable
 
+data class AnimeCellList(
+    val list: List<AnimeCell>
+) : AdapterItem()
+
 @Parcelize
 enum class CellState : Parcelable {
     INCLUDE,

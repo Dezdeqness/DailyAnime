@@ -20,6 +20,8 @@ ext {
 
     glide = Group {
         implementation deps.glide.glide
+        kapt deps.glide.glideCompiler
+        implementation deps.glide.glideTransformations
     }
 
     coroutines = Group {

@@ -3,6 +3,7 @@ package com.dezdeqness.di
 import android.content.Context
 import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.subcomponents.AnimeComponent
+import com.dezdeqness.di.subcomponents.AnimeDetailsComponent
 import com.dezdeqness.di.subcomponents.AnimeSearchFilterComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -25,6 +26,8 @@ interface AppComponent {
     }
 
     fun animeComponent(): AnimeComponent.Factory
+
+    fun animeDetailsComponent(): AnimeDetailsComponent.Builder
 
     fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Builder
 

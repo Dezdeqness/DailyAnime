@@ -7,27 +7,26 @@
 
     <fragment
         android:id="@+id/user_preferences"
-        android:name="com.dezdeqness.core.TrapFragment"
-        android:label="Списки" />
+        android:name="com.dezdeqness.core.TrapFragment" />
 
     <fragment
         android:id="@+id/calendar"
-        android:name="com.dezdeqness.core.TrapFragment"
-        android:label="Календарь" />
+        android:name="com.dezdeqness.core.TrapFragment" />
 
     <fragment
         android:id="@+id/search"
-        android:name="com.dezdeqness.presentation.features.animelist.AnimeListFragment"
-        android:label="Поиск" />
+        android:name="com.dezdeqness.presentation.features.animelist.AnimeListFragment" />
 
     <fragment
         android:id="@+id/current"
-        android:name="com.dezdeqness.core.TrapFragment"
-        android:label="Лента" />
+        android:name="com.dezdeqness.core.TrapFragment" />
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.dezdeqness.core.TrapFragment"
-        android:label="Профиль" />
+        android:name="com.dezdeqness.core.TrapFragment" />
+
+    <fragment
+        android:id="@+id/animeDetailsFragment"
+        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment" />
 
 </navigation>
