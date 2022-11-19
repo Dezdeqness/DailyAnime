@@ -46,6 +46,7 @@ android {
 
 dependencies {
 
+    room()
     dagger()
     network()
     glide()

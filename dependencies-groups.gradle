@@ -72,9 +72,13 @@ ext {
     }
 
     navigation = Group {
+        implementation deps.navigation.navigationFragment
+        implementation deps.navigation.navigationCore
+    }
 
-        implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
-        implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    room = Group {
+        implementation deps.room.room
+        kapt deps.room.roomCompiler
     }
 
 }

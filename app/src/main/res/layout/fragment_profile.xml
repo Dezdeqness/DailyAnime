@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/profile_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:shapeAppearance="@style/CustomShapeOverlay"
+            tools:srcCompat="@drawable/ic_launcher_background" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/nickname"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/authorization"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Авторизация" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>
