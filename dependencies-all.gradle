@@ -15,8 +15,8 @@ ext.deps = [
         ],
 
         'glide'           : [
-                glide: "com.github.bumptech.glide:glide:$versions.glide",
-                glideCompiler: "com.github.bumptech.glide:compiler:$versions.glide",
+                glide               : "com.github.bumptech.glide:glide:$versions.glide",
+                glideCompiler       : "com.github.bumptech.glide:compiler:$versions.glide",
                 glideTransformations: "jp.wasabeef:glide-transformations:$versions.glideTransformations"
         ],
 
@@ -69,6 +69,10 @@ ext.deps = [
         ],
         'swipeRefresh'    : [
                 swipeLayout: "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipeRefresh",
+        ],
+        'room'            : [
+                room        : "androidx.room:room-runtime:$versions.room",
+                roomCompiler: "androidx.room:room-compiler:$versions.room",
         ]
 
 ]

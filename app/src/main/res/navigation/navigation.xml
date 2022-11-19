@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.dezdeqness.core.TrapFragment" />
+        android:name="com.dezdeqness.presentation.features.profile.ProfileFragment" />
 
     <fragment
         android:id="@+id/animeDetailsFragment"
