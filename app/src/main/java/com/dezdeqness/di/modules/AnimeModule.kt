@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 
-@Module(includes = [DataModule::class])
+@Module
 abstract class AnimeModule {
 
     companion object {

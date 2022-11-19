@@ -2,6 +2,7 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
+import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
@@ -33,6 +34,11 @@ class AppModule {
             filterMapper = filterMapper,
             moshi = moshi,
         )
+
+    @Singleton
+    @Provides
+    fun provideTokenManager(context: Context) =
+        TokenManager(context = context)
 
     @Singleton
     @Provides

@@ -16,7 +16,7 @@ abstract class AnimeDetailsModule {
     companion object {
 
         @Provides
-        fun provideUseCase1(animeRepository: AnimeRepository) = GetAnimeDetailsUseCase(
+        fun provideGetAnimeDetailsUseCase(animeRepository: AnimeRepository) = GetAnimeDetailsUseCase(
             animeRepository = animeRepository
         )
     }
