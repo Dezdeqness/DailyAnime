@@ -8,3 +8,7 @@ java {
     sourceCompatibility = versions.javaVersion
     targetCompatibility = versions.javaVersion
 }
+
+dependencies {
+    coroutines()
+}
