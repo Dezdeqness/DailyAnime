@@ -7,7 +7,6 @@ import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
-import com.dezdeqness.domain.mapper.ErrorMapper
 import javax.inject.Inject
 
 class AnimeRemoteDataSourceImpl @Inject constructor(
@@ -16,8 +15,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     private val screenshotMapper: ScreenshotMapper,
     private val roleMapper: RoleMapper,
     private val relatedItemMapper: RelatedItemMapper,
-    errorMapper: ErrorMapper,
-) : BaseDataSource(errorMapper), AnimeRemoteDataSource {
+) : BaseDataSource(), AnimeRemoteDataSource {
 
     override fun getListAnime(queryMap: Map<String, String>, pageNumber: Int, sizeOfPage: Int) =
         tryWithCatch {
