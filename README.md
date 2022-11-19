@@ -10,7 +10,7 @@
 
 
 ## First stage(POC)
-- [ ] Authorization
+- [x] Authorization
 - [x] Anime list
 - [x] Anime details
 - [x] Anime filter
