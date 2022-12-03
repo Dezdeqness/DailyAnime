@@ -80,7 +80,7 @@ class TokenManager @Inject constructor(context: Context) {
         private const val KEY_CREATED_AT = "created_at"
         private const val KEY_EXPIRES_IN = "expires_in"
 
-        private const val TIME_SHIFT = 60 * 1000
+        private const val TIME_SHIFT = 60
     }
 
 }

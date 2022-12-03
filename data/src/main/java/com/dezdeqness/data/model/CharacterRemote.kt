@@ -14,7 +14,7 @@ data class CharacterRemote(
     val russian: String,
 
     @field:Json(name = "image")
-    val images: Map<String, String>,
+    val image: ImageRemote,
 
     @field:Json(name = "url")
     val url: String

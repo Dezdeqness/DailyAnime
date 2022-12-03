@@ -53,7 +53,8 @@ android {
 }
 dependencies {
     implementation project(path: ':domain')
-    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha04'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha01'
+    implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
 
     coroutines()
     network()

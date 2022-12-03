@@ -23,4 +23,24 @@ data class AccountLocal(
 
     @ColumnInfo(name = "sex")
     val sex: String,
+
+    @ColumnInfo(name = "anime_stats")
+    val anime: List<StatusLocal>? = null
 ) : DataModel.Db
+data class StatusLocal (
+    @ColumnInfo(name = "status_id")
+    val statusId: Long,
+
+    @ColumnInfo(name = "grouped_id")
+    val groupedId: String,
+
+    @ColumnInfo(name = "status_name")
+    val name: String,
+
+    @ColumnInfo(name = "size")
+    val size: Long,
+
+    @ColumnInfo(name = "type")
+    val type: String
+) : DataModel.Db
+

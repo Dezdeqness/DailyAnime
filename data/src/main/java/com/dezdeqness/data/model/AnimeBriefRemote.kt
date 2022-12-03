@@ -15,7 +15,7 @@ open class AnimeBriefRemote : DataModel.Api {
     val russian: String = ""
 
     @field:Json(name = "image")
-    val images: Map<String, String>? = null
+    val image: ImageRemote? = null
 
     @field:Json(name = "url")
     val url: String = ""
