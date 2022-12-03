@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2aba5a688849539fda3f5ea428f34488",
+    "identityHash": "6079054d5d3793aa36bb4ea19320c4f1",
     "entities": [
       {
         "tableName": "account",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nickname` TEXT NOT NULL, `avatar` TEXT NOT NULL, `last_online` TEXT NOT NULL, `name` TEXT NOT NULL, `sex` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nickname` TEXT NOT NULL, `avatar` TEXT NOT NULL, `last_online` TEXT NOT NULL, `name` TEXT NOT NULL, `sex` TEXT NOT NULL, `anime_stats` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -43,6 +43,182 @@
             "columnName": "sex",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "anime",
+            "columnName": "anime_stats",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "user_rate",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `score` INTEGER NOT NULL, `status` TEXT NOT NULL, `text` TEXT NOT NULL, `episodes` INTEGER NOT NULL, `chapters` INTEGER NOT NULL, `volumes` INTEGER NOT NULL, `text_html` TEXT NOT NULL, `rewatches` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL, `anime_id` INTEGER, `name` TEXT, `russian` TEXT, `url` TEXT, `kind` TEXT, `anime_score` REAL, `anime_status` TEXT, `anime_episodes` INTEGER, `anime_episodes_aired` INTEGER, `aired_on` TEXT, `released_on` TEXT, `original` TEXT, `preview` TEXT, `x96` TEXT, `x48` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "score",
+            "columnName": "score",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "text",
+            "columnName": "text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "episodes",
+            "columnName": "episodes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapters",
+            "columnName": "chapters",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "volumes",
+            "columnName": "volumes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "textHTML",
+            "columnName": "text_html",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rewatches",
+            "columnName": "rewatches",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "anime.id",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.russian",
+            "columnName": "russian",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.score",
+            "columnName": "anime_score",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.status",
+            "columnName": "anime_status",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.episodes",
+            "columnName": "anime_episodes",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.episodesAired",
+            "columnName": "anime_episodes_aired",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.airedOn",
+            "columnName": "aired_on",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.releasedOn",
+            "columnName": "released_on",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.image.original",
+            "columnName": "original",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.image.preview",
+            "columnName": "preview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.image.x96",
+            "columnName": "x96",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "anime.image.x48",
+            "columnName": "x48",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -58,7 +234,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2aba5a688849539fda3f5ea428f34488')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6079054d5d3793aa36bb4ea19320c4f1')"
     ]
   }
 }

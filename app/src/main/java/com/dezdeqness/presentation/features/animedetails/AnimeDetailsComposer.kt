@@ -64,7 +64,7 @@ class AnimeDetailsComposer @Inject constructor(
                     name = it.character.russian.ifEmpty {
                         it.character.name
                     },
-                    imageUrl = imageUrlUtils.parseOriginalUrl(it.character.images),
+                    imageUrl = imageUrlUtils.getImageWithBaseUrl(it.character.image.preview),
                 )
             })
         )
@@ -92,7 +92,7 @@ class AnimeDetailsComposer @Inject constructor(
 
         return AnimeDetailsState(
             title = details.russian,
-            imageUrl = imageUrlUtils.parseOriginalUrl(details.images),
+            imageUrl = imageUrlUtils.getImageWithBaseUrl(details.image.original),
             ratingScore = details.score,
             uiModels = uiItems,
         )
@@ -121,7 +121,14 @@ class AnimeDetailsComposer @Inject constructor(
 
             val pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
             val simpleDateFormat = SimpleDateFormat(pattern)
-            val date = simpleDateFormat.parse(details.nextEpisodeAt)
+
+            var date: Date? = null
+            try {
+                date = simpleDateFormat.parse(details.nextEpisodeAt)
+            } catch (_: Exception) {
+
+            }
+
 
             val currentDate = Date()
 

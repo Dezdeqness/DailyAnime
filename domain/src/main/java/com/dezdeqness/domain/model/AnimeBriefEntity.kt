@@ -4,7 +4,7 @@ open class AnimeBriefEntity(
     open val id: Long,
     open val name: String,
     open val russian: String,
-    open val images: Map<String, String>,
+    open val image: ImageEntity,
     open val url: String,
     open val kind: AnimeKind,
     open val score: Float,
@@ -22,7 +22,7 @@ open class AnimeBriefEntity(
         if (id != other.id) return false
         if (name != other.name) return false
         if (russian != other.russian) return false
-        if (images != other.images) return false
+        if (image != other.image) return false
         if (url != other.url) return false
         if (kind != other.kind) return false
         if (score != other.score) return false
@@ -39,7 +39,7 @@ open class AnimeBriefEntity(
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
         result = 31 * result + russian.hashCode()
-        result = 31 * result + images.hashCode()
+        result = 31 * result + image.hashCode()
         result = 31 * result + url.hashCode()
         result = 31 * result + kind.hashCode()
         result = 31 * result + score.hashCode()
@@ -52,6 +52,6 @@ open class AnimeBriefEntity(
     }
 
     override fun toString() =
-        "AnimeBriefEntity(id=$id, name='$name', russian='$russian', images=$images, url='$url', kind=$kind, score=$score, status=$status, episodes=$episodes, episodesAired=$episodesAired, airedOn='$airedOn', releasedOn='$releasedOn')"
+        "AnimeBriefEntity(id=$id, name='$name', russian='$russian', images=$image, url='$url', kind=$kind, score=$score, status=$status, episodes=$episodes, episodesAired=$episodesAired, airedOn='$airedOn', releasedOn='$releasedOn')"
 
 }

@@ -63,6 +63,22 @@ class AccountRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun getDetailsAccountInfo(userId: Long, token: String) = tryWithCatch {
+        val response = accountApiService.getProfileDetails(
+            id = userId,
+            token = "Bearer $token",
+        ).execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            Result.success(
+                accountMapper.fromResponse(responseBody)
+            )
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
+
     override fun refresh(token: String) = tryWithCatch {
         val response = authorizationApiService.refresh(
             token = token,

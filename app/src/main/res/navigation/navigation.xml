@@ -6,8 +6,8 @@
     app:startDestination="@+id/search">
 
     <fragment
-        android:id="@+id/user_preferences"
-        android:name="com.dezdeqness.core.TrapFragment" />
+        android:id="@+id/personal_list"
+        android:name="com.dezdeqness.presentation.features.personallist.PersonalListFragment" />
 
     <fragment
         android:id="@+id/calendar"

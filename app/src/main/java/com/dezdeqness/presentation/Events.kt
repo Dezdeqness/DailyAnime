@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation
 
+import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import java.util.*
 
@@ -23,6 +24,12 @@ sealed class Event {
     data class ApplyFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
 
     data class NavigateToFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
+
+    data class NavigateToSortFilter(val currentSort: String) : Event()
+
+    data class NavigateToEditRate(val rateId: Long) : Event()
+
+    data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
     object ScrollToTop : Event()
 

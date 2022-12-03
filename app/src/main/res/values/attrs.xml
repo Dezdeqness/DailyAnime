@@ -5,4 +5,8 @@
         <attr name="filterTitle" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="RibbonStatusView">
+
+    </declare-styleable>
+
 </resources>

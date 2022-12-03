@@ -6,6 +6,8 @@ import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.TokenEntity
 import com.dezdeqness.domain.repository.AccountRepository
+import kotlinx.coroutines.flow.flow
+import java.lang.Exception
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
@@ -44,6 +46,31 @@ class AccountRepositoryImpl @Inject constructor(
     override fun getProfileRemote(): Result<AccountEntity> {
         val tokenData = tokenManager.getTokenData()
         return accountRemoteDataSource.getBriefAccountInfo(tokenData.accessToken)
+    }
+
+    override fun getProfileDetails() = flow {
+        val tokenData = tokenManager.getTokenData()
+        if (tokenData.accessToken.isEmpty()) {
+            emit(Result.failure(Exception()))
+            return@flow
+        }
+
+        val profile = getProfileLocal()
+        if (profile == null) {
+            emit(Result.failure(Exception()))
+            return@flow
+        }
+
+        emit(Result.success(profile))
+
+        val detailsAccountInfo = accountRemoteDataSource.getDetailsAccountInfo(
+            token = tokenData.accessToken,
+            userId = profile.id,
+        ).onSuccess {
+            saveProfileLocal(it)
+        }
+
+        emit(detailsAccountInfo)
     }
 
     override fun getProfileLocal() = accountLocalDataSource.getAccount()
