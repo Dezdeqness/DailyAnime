@@ -2,6 +2,7 @@ package com.dezdeqness.domain.repository
 
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.TokenEntity
+import kotlinx.coroutines.flow.Flow
 
 interface AccountRepository {
 
@@ -22,6 +23,8 @@ interface AccountRepository {
     fun logout(): Result<String>
 
     fun getProfileRemote(): Result<AccountEntity>
+
+    fun getProfileDetails(): Flow<Result<AccountEntity>>
 
     fun getProfileLocal(): AccountEntity?
 
