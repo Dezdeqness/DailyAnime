@@ -16,7 +16,7 @@ class AnimeUiMapper @Inject constructor(
             id = animeBriefEntity.id,
             briefInfo = "${animeBriefEntity.name}\n${animeBriefEntity.status}",
             kind = animeBriefEntity.kind.name,
-            logoUrl = imageUrlUtils.parseOriginalUrl(animeBriefEntity.images),
+            logoUrl = imageUrlUtils.getImageWithBaseUrl(animeBriefEntity.image.preview),
             airedYear = animeBriefEntity.airedOn.split("-").firstOrNull().orEmpty()
         )
 
