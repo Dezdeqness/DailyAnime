@@ -38,7 +38,7 @@ class RemoteModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit(okHttpClient: OkHttpClient) =
+    fun providesRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient) =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(MoshiConverterFactory.create())
@@ -58,7 +58,7 @@ class RemoteModule {
     @Named("Account")
     @Singleton
     @Provides
-    fun providesAccoutRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient) =
+    fun providesAccountRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient) =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(MoshiConverterFactory.create())
@@ -69,10 +69,12 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providesHttpClientWithRefreshToken(
-        interceptorRefresh: RefreshTokenInterceptor
+        interceptorRefresh: RefreshTokenInterceptor,
+        interceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(interceptorRefresh)
+            .addInterceptor(interceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
