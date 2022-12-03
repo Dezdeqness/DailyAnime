@@ -16,4 +16,4 @@
 - [x] Anime filter
 - [ ] Anime search
 - [ ] Calendar
-- [ ] Personal list
+- [x] Personal list
