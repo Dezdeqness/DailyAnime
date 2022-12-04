@@ -7,6 +7,11 @@ interface AnimeRepository {
 
     fun getDetails(id: Long): Result<AnimeDetailsFullEntity>
 
-    fun getListWithFilter(queryMap: Map<String, String>, pageNumber: Int, sizeOfPage: Int): Result<List<AnimeBriefEntity>>
+    fun getListWithFilter(
+        queryMap: Map<String, String>,
+        pageNumber: Int,
+        sizeOfPage: Int,
+        searchQuery: String
+    ): Result<List<AnimeBriefEntity>>
 
 }

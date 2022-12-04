@@ -7,8 +7,8 @@ class GetAnimeListUseCase(
     private val animeRepository: AnimeRepository,
 ) {
 
-    operator fun invoke(pageNumber: Int, queryMap: Map<String, String>): Result<AnimeListState> {
-        val result = animeRepository.getListWithFilter(queryMap, pageNumber, PAGE_SIZE)
+    operator fun invoke(pageNumber: Int, queryMap: Map<String, String>, searchQuery: String): Result<AnimeListState> {
+        val result = animeRepository.getListWithFilter(queryMap, pageNumber, PAGE_SIZE, searchQuery)
         if (result.isFailure) {
             return Result.failure(result.exceptionOrNull() ?: Throwable())
         }

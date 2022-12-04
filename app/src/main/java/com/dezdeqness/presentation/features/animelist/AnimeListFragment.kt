@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.clearFragmentResult
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -86,6 +86,7 @@ class AnimeListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupSearchView()
         setupRefreshLayout()
         setupRecyclerView()
         setupObservers()
@@ -106,6 +107,23 @@ class AnimeListFragment : BaseFragment() {
         binding.refresh.setOnRefreshListener {
             viewModel.onRefreshSwiped()
         }
+    }
+
+    private fun setupSearchView() {
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.onQueryChanged(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isEmpty()) {
+                    viewModel.onQueryEmpty()
+                }
+                return false
+            }
+
+        })
     }
 
     private fun setupFab() {

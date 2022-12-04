@@ -51,8 +51,9 @@ class AnimeRepositoryImpl @Inject constructor(
     override fun getListWithFilter(
         queryMap: Map<String, String>,
         pageNumber: Int,
-        sizeOfPage: Int
+        sizeOfPage: Int,
+        searchQuery: String
     ) =
-        animeRemoteDataSource.getListAnime(queryMap, pageNumber, sizeOfPage)
+        animeRemoteDataSource.getListAnime(queryMap, pageNumber, sizeOfPage, searchQuery)
 
 }
