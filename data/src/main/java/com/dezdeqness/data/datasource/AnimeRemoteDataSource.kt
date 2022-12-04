@@ -11,7 +11,8 @@ interface AnimeRemoteDataSource {
     fun getListAnime(
         queryMap: Map<String, String> = mapOf(),
         pageNumber: Int,
-        sizeOfPage: Int
+        sizeOfPage: Int,
+        searchQuery: String
     ): Result<List<AnimeBriefEntity>>
 
     fun getDetailsAnimeMainInfo(

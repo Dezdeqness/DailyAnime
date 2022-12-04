@@ -27,6 +27,8 @@ class AnimeViewModel @Inject constructor(
 
     private var filtersList: List<AnimeSearchFilter> = emptyList()
 
+    private var query: String = ""
+
     private var currentPage = INITIAL_PAGE
 
     init {
@@ -60,6 +62,16 @@ class AnimeViewModel @Inject constructor(
         )
     }
 
+    fun onQueryChanged(query: String) {
+        this.query = query
+        fetchList(page = INITIAL_PAGE)
+    }
+
+    fun onQueryEmpty() {
+        this.query = ""
+        fetchList(page = INITIAL_PAGE)
+    }
+
     fun onEventConsumed(event: Event) {
         val value = _animeStateFlow.value
         _animeStateFlow.value = value.copy(
@@ -78,6 +90,7 @@ class AnimeViewModel @Inject constructor(
                 queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
                     filterSelectedCells()
                 ),
+                searchQuery = query,
             )
                 .onSuccess { state ->
                     currentPage = state.currentPage

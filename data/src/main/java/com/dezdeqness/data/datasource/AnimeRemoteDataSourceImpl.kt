@@ -17,15 +17,29 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     private val relatedItemMapper: RelatedItemMapper,
 ) : BaseDataSource(), AnimeRemoteDataSource {
 
-    override fun getListAnime(queryMap: Map<String, String>, pageNumber: Int, sizeOfPage: Int) =
+    override fun getListAnime(
+        queryMap: Map<String, String>,
+        pageNumber: Int,
+        sizeOfPage: Int,
+        searchQuery: String
+    ) =
         tryWithCatch {
-
-            val response =
+            val call = if (searchQuery.isEmpty()) {
                 apiService.getListAnime(
                     limit = sizeOfPage,
                     page = pageNumber,
                     options = queryMap,
-                ).execute()
+                )
+            } else {
+                apiService.getListAnimeWithSearchQuery(
+                    limit = sizeOfPage,
+                    page = pageNumber,
+                    options = queryMap,
+                    search = searchQuery,
+                )
+            }
+
+            val response = call.execute()
 
             val responseBody = response.body()
 
