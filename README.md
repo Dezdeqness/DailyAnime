@@ -15,5 +15,15 @@
 - [x] Anime details
 - [x] Anime filter
 - [x] Anime search
-- [ ] Calendar
+- [x] Calendar
 - [x] Personal list
+
+## Second stage(Improvements and enhancements)
+- [ ] Fragment core
+- [ ] Anime core
+- [ ] Actions core
+- [ ] User rates in calendar, search?
+- [ ] User rate from details
+- [ ] Di core
+- [ ] Payloads issue
+- [ ] Viewmodel core
