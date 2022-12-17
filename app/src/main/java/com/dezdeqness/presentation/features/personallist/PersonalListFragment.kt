@@ -143,7 +143,7 @@ class PersonalListFragment : BaseFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.personalListStateFlow.collect { state ->
-                    binding.refresh.isRefreshing = false
+                    binding.refresh.isRefreshing = state.isPullDownRefreshing
                     if (ribbonState.isEmpty() || ribbonState != state.ribbon) {
                         ribbonState = state.ribbon
                         binding.ribbon.populate(

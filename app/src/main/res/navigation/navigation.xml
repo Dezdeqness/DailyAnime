@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/calendar"
-        android:name="com.dezdeqness.core.TrapFragment" />
+        android:name="com.dezdeqness.presentation.features.calendar.CalendarFragment" />
 
     <fragment
         android:id="@+id/search"
