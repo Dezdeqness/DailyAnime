@@ -1,12 +1,6 @@
 package com.dezdeqness.di
 
-import com.dezdeqness.di.subcomponents.EditRateComponent
-import com.dezdeqness.di.subcomponents.AnimeComponent
-import com.dezdeqness.di.subcomponents.AnimeDetailsComponent
-import com.dezdeqness.di.subcomponents.AnimeSearchFilterComponent
-import com.dezdeqness.di.subcomponents.AuthorizationComponent
-import com.dezdeqness.di.subcomponents.PersonalListComponent
-import com.dezdeqness.di.subcomponents.ProfileComponent
+import com.dezdeqness.di.subcomponents.*
 import dagger.Module
 
 @Module(
@@ -18,6 +12,7 @@ import dagger.Module
         ProfileComponent::class,
         PersonalListComponent::class,
         EditRateComponent::class,
+        CalendarComponent::class,
     ]
 )
 class AppSubcomponents
