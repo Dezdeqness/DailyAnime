@@ -229,7 +229,7 @@ class PersonalListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun fetchPage(status: String) {
+    private suspend fun fetchPage(status: String, isNeedToScrollTop: Boolean = false) {
         userRatesRepository
             .getUserRates(status = status, page = 1)
             .collect { result ->
@@ -248,8 +248,15 @@ class PersonalListViewModel @Inject constructor(
                         personalListComposer.addFilter(userRatesUI, filter)
                     }
                     .onSuccess { items ->
+                        val events = if (isNeedToScrollTop) {
+                            _personalListStateFlow.value.events + Event.ScrollToTop
+                        } else {
+                            _personalListStateFlow.value.events
+                        }
+
                         _personalListStateFlow.value = _personalListStateFlow.value.copy(
                             items = items,
+                            events = events,
                             isPullDownRefreshing = false,
                         )
                     }

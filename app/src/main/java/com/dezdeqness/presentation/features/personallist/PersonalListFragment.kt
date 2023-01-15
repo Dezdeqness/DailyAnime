@@ -154,7 +154,10 @@ class PersonalListFragment : BaseFragment() {
                         )
                     }
                     adapter.submitList(state.items) {
-                        binding.personalList.scrollToPosition(0)
+                        if (state.events.contains(Event.ScrollToTop)) {
+                            binding.personalList.scrollToPosition(0)
+                            viewModel.onEventConsumed(Event.ScrollToTop)
+                        }
                     }
 
                     state.events.forEach { event ->
