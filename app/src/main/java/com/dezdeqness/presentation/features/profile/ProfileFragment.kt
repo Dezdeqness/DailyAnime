@@ -1,34 +1,24 @@
 package com.dezdeqness.presentation.features.profile
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentProfileBinding
-import com.dezdeqness.getComponent
+import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ProfileFragment : BaseFragment() {
-
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val viewModel: ProfileViewModel by viewModels(
         factoryProducer = {
@@ -44,24 +34,14 @@ class ProfileFragment : BaseFragment() {
             }
         }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity()
-            .application
-            .getComponent()
+    override fun getFragmentBinding(layoutInflater: LayoutInflater) =
+        FragmentProfileBinding.inflate(layoutInflater)
+
+    override fun setupScreenComponent(component: AppComponent) =
+        component
             .profileComponent()
             .create()
             .inject(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(layoutInflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

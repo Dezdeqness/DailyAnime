@@ -1,41 +1,31 @@
 package com.dezdeqness.presentation.features.personallist
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalListBinding
-import com.dezdeqness.getComponent
+import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.Event
 import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.features.sortdialog.SortBottomSheetDialog
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class PersonalListFragment : BaseFragment() {
-
-    private var _binding: FragmentPersonalListBinding? = null
-    private val binding get() = _binding!!
+class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
 
     private var ribbonState: List<RibbonStatusUiModel> = listOf()
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val adapter: PersonalListAdapter by lazy {
         PersonalListAdapter(
@@ -57,11 +47,16 @@ class PersonalListFragment : BaseFragment() {
         )
     }
 
-    private val viewModel: PersonalListViewModel by viewModels(
-        factoryProducer = {
-            viewModelFactory
-        }
-    )
+    private val viewModel: PersonalListViewModel by viewModels(factoryProducer = { viewModelFactory })
+
+    override fun getFragmentBinding(layoutInflater: LayoutInflater) =
+        FragmentPersonalListBinding.inflate(layoutInflater)
+
+    override fun setupScreenComponent(component: AppComponent) =
+        component
+            .personalListComponent()
+            .create()
+            .inject(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,25 +73,6 @@ class PersonalListFragment : BaseFragment() {
         viewModel.loadPersonalList()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity()
-            .application
-            .getComponent()
-            .personalListComponent()
-            .create()
-            .inject(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPersonalListBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -106,12 +82,6 @@ class PersonalListFragment : BaseFragment() {
         setupObservers()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        ribbonState = listOf()
-        _binding = null
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         clearFragmentResultListener(SortBottomSheetDialog.TAG)
@@ -119,7 +89,7 @@ class PersonalListFragment : BaseFragment() {
     }
 
     private fun setupSearchView() {
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -170,6 +140,7 @@ class PersonalListFragment : BaseFragment() {
                                     SortBottomSheetDialog.TAG
                                 )
                             }
+
                             is Event.NavigateToEditRate -> {
                                 val dialog =
                                     EditRateBottomSheetDialog.newInstance(event.rateId)
