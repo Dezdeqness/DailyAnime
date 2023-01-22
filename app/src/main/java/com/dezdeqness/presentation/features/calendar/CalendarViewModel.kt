@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.domain.model.AnimeCalendarEntity
 import com.dezdeqness.domain.repository.CalendarRepository
+import com.dezdeqness.presentation.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +38,6 @@ class CalendarViewModel @Inject constructor(
                     _calendarStateFlow.value = _calendarStateFlow.value.copy(
                         items = uiItems,
                         isPullDownRefreshing = false,
-                        scrollToTop = false,
                     )
                 }
                 .onFailure {
@@ -49,7 +49,6 @@ class CalendarViewModel @Inject constructor(
     fun onRefreshSwiped() {
         _calendarStateFlow.value = _calendarStateFlow.value.copy(
             isPullDownRefreshing = true,
-            scrollToTop = false,
         )
         fetchCalendar()
     }
@@ -65,9 +64,16 @@ class CalendarViewModel @Inject constructor(
             val uiItems = calendarComposer.compose(calendarItems, query = query)
             _calendarStateFlow.value = _calendarStateFlow.value.copy(
                 items = uiItems,
-                scrollToTop = true,
+                events = _calendarStateFlow.value.events + Event.ScrollToTop,
             )
         }
+    }
+
+    fun onEventConsumed(event: Event.ScrollToTop) {
+        val value = _calendarStateFlow.value
+        _calendarStateFlow.value = value.copy(
+            events = value.events.toMutableList() - event
+        )
     }
 
 }

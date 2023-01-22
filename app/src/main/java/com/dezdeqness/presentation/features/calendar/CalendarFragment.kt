@@ -1,35 +1,25 @@
 package com.dezdeqness.presentation.features.calendar
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentCalendarBinding
-import com.dezdeqness.getComponent
+import com.dezdeqness.di.AppComponent
+import com.dezdeqness.presentation.Event
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class CalendarFragment : BaseFragment() {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: CalendarViewModel by viewModels(
-        factoryProducer = {
-            viewModelFactory
-        }
-    )
+    private val viewModel: CalendarViewModel by viewModels(factoryProducer = { viewModelFactory })
 
     private val adapter: CalendarAdapter by lazy {
         CalendarAdapter(
@@ -42,28 +32,14 @@ class CalendarFragment : BaseFragment() {
         )
     }
 
-    private var _binding: FragmentCalendarBinding? = null
-    private val binding get() = _binding!!
+    override fun getFragmentBinding(layoutInflater: LayoutInflater) =
+        FragmentCalendarBinding.inflate(layoutInflater)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCalendarBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity()
-            .application
-            .getComponent()
+    override fun setupScreenComponent(component: AppComponent) =
+        component
             .calendarComponent()
             .create()
             .inject(this)
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -85,7 +61,7 @@ class CalendarFragment : BaseFragment() {
     }
 
     private fun setupSearchView() {
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -105,8 +81,9 @@ class CalendarFragment : BaseFragment() {
                 viewModel.calendarStateFlow.collect { state ->
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
                     adapter.submitList(state.items) {
-                        if (state.scrollToTop) {
+                        if (state.events.contains(Event.ScrollToTop)) {
                             binding.calendar.scrollToPosition(0)
+                            viewModel.onEventConsumed(Event.ScrollToTop)
                         }
                     }
                 }

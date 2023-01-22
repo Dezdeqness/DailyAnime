@@ -1,9 +1,10 @@
 package com.dezdeqness.presentation.features.calendar
 
+import com.dezdeqness.presentation.Event
 import com.dezdeqness.presentation.models.AdapterItem
 
 data class CalendarState(
     val items: List<AdapterItem> = listOf(),
     val isPullDownRefreshing: Boolean = false,
-    val scrollToTop: Boolean = false,
+    val events: List<Event> = listOf(),
 )
