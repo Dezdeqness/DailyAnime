@@ -105,7 +105,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
 
     private fun setupRefreshLayout() {
         binding.refresh.setOnRefreshListener {
-            viewModel.onRefreshSwiped()
+            viewModel.onPullDownRefreshed()
         }
     }
 

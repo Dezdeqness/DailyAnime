@@ -77,7 +77,7 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
 
     private fun setupRefreshLayout() {
         binding.refresh.setOnRefreshListener {
-            viewModel.onRefreshSwiped()
+            viewModel.onPullDownRefreshed()
         }
     }
 
@@ -117,7 +117,7 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.animeStateFlow.collect { state ->
 
-                    binding.refresh.isRefreshing = state.isRefreshing
+                    binding.refresh.isRefreshing = state.isPullDownRefreshing
 
                     adapter.submitList(state.list, state.hasNextPage) {
                         if (state.events.contains(Event.ScrollToTop)) {

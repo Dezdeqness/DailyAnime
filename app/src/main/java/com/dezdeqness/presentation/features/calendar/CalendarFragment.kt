@@ -56,7 +56,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>() {
 
     private fun setupRefreshLayout() {
         binding.refresh.setOnRefreshListener {
-            viewModel.onRefreshSwiped()
+            viewModel.onPullDownRefreshed()
         }
     }
 

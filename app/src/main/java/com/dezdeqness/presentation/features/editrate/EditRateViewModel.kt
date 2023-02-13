@@ -1,22 +1,27 @@
 package com.dezdeqness.presentation.features.editrate
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.dezdeqness.core.AppLogger
+import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.model.UserRateStatusEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.Event
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
 class EditRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
     @Named("rateId") private val rateId: Long,
-) : ViewModel() {
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    appLogger: AppLogger,
+) : BaseViewModel(
+    coroutineDispatcherProvider = coroutineDispatcherProvider,
+    appLogger = appLogger,
+) {
+
     private val _editRateStateFlow: MutableStateFlow<EditRateState> =
         MutableStateFlow(EditRateState())
 
@@ -28,13 +33,21 @@ class EditRateViewModel @Inject constructor(
         fetchUserRate()
     }
 
+    override fun viewModelTag() = "EditRateViewModel"
+
+    override fun onEventConsumed(event: Event) {
+        val value = _editRateStateFlow.value
+        _editRateStateFlow.value = value.copy(
+            events = value.events.toMutableList() - event
+        )
+    }
+
     fun onRatingChanged(rating: Long) {
         _editRateStateFlow.value = _editRateStateFlow.value.copy(
             score = rating,
         )
 
         checkIsContentChanged()
-
     }
 
     fun onEpisodesMinusClicked() {
@@ -95,13 +108,6 @@ class EditRateViewModel @Inject constructor(
         }
     }
 
-    fun onEventConsumed(event: Event) {
-        val value = _editRateStateFlow.value
-        _editRateStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
-
     private fun checkIsContentChanged() {
         _editRateStateFlow.value = _editRateStateFlow.value.copy(
             isUserRateChanged = isUserRateChanged(),
@@ -109,7 +115,7 @@ class EditRateViewModel @Inject constructor(
     }
 
     private fun fetchUserRate() {
-        viewModelScope.launch(Dispatchers.IO) {
+        launchOnIo {
             userRatesRepository.getLocalUserRate(rateId = rateId)?.let { userRate ->
                 localUserRate = userRate
                 emitEditRateState(userRate)

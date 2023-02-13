@@ -2,6 +2,9 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
+import com.dezdeqness.core.AppLogger
+import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.CoroutineDispatcherProviderImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
@@ -52,4 +55,11 @@ class AppModule {
             .add(FilterTypeAdapter())
             .build()
 
+    @Singleton
+    @Provides
+    fun provideCoroutineDispatcherProvider(): CoroutineDispatcherProvider = CoroutineDispatcherProviderImpl()
+
+    @Singleton
+    @Provides
+    fun provideAppLogger() = AppLogger()
 }
