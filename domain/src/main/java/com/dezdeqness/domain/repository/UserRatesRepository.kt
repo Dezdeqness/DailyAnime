@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRatesRepository {
 
-    fun getUserRates(status: String, page: Int): Flow<Result<List<UserRateEntity>>>
+    fun getUserRates(status: String, page: Int, onlyRemote: Boolean = false): Flow<Result<List<UserRateEntity>>>
 
     fun getLocalUserRate(rateId: Long): UserRateEntity?
 

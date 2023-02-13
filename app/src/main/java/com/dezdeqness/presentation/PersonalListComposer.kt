@@ -11,11 +11,28 @@ import com.dezdeqness.presentation.models.PersonalListFilterUiModel
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
 import com.dezdeqness.utils.ImageUrlUtils
+import java.util.Locale
 import javax.inject.Inject
 
 class PersonalListComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
 ) {
+
+    fun compose(
+        filter: PersonalListFilterEntity,
+        entityList: List<UserRateEntity>,
+        query: String? = null,
+    ): List<AdapterItem> {
+        val filteredItems = applyFilter(
+            items = entityList,
+            personalListFilterEntity = filter,
+            query = query,
+        )
+
+        return filteredItems.mapNotNull(::convert).run {
+            addFilter(this, filter)
+        }
+    }
 
     fun composeStatuses(
         fullAnimeStatusesEntity: FullAnimeStatusesEntity,
@@ -32,13 +49,13 @@ class PersonalListComposer @Inject constructor(
 
                 RibbonStatusUiModel(
                     id = statusEntity.groupedId,
-                    displayName = statusEntity.name.replace("_", "").toUpperCase(),
+                    displayName = statusEntity.name.replace("_", "").uppercase(Locale.getDefault()),
                     isSelected = isSelected,
                 )
             }
     }
 
-    fun addFilter(
+    private fun addFilter(
         items: List<AdapterItem>,
         personalListFilterEntity: PersonalListFilterEntity,
     ): List<AdapterItem> {
@@ -54,7 +71,7 @@ class PersonalListComposer @Inject constructor(
         return mutableList
     }
 
-    fun applyFilter(
+    private fun applyFilter(
         items: List<UserRateEntity>,
         personalListFilterEntity: PersonalListFilterEntity,
         query: String? = null,
@@ -64,7 +81,7 @@ class PersonalListComposer @Inject constructor(
             items
         } else {
             items.filter {
-                it.anime?.russian?.contains(query,true)
+                it.anime?.russian?.contains(query, true)
                     ?: it.anime?.name?.contains(query, true)
                     ?: false
             }
@@ -72,59 +89,24 @@ class PersonalListComposer @Inject constructor(
 
         val sort = personalListFilterEntity.sort
         val isAscending = personalListFilterEntity.isAscending
-        when (sort) {
-            Sort.NAME -> {
-                return if (isAscending) {
-                    list.sortedBy {
-                        it.anime?.russian
-                    }
-                } else {
-                    list.sortedByDescending {
-                        it.anime?.russian
-                    }
-                }
-            }
-            Sort.SCORE -> {
-                return if (isAscending) {
-                    list.sortedBy {
-                        it.score
-                    }
-                } else {
-                    list.sortedByDescending {
-                        it.score
-                    }
-                }
-            }
-            Sort.PROGRESS -> {
-                return if (isAscending) {
-                    list.sortedBy {
-                        it.episodes
-                    }
-                } else {
-                    list.sortedByDescending {
-                        it.episodes
-                    }
-                }
-            }
-            Sort.EPISODES -> {
-                return if (isAscending) {
-                    list.sortedBy {
-                        it.anime?.episodes
-                    }
-                } else {
-                    list.sortedByDescending {
-                        it.anime?.episodes
-
-                    }
-                }
-            }
-            else -> {
-                return list
-            }
+        val sortedList = when (sort) {
+            Sort.NAME -> { list.sortedByDescending { it.anime?.russian } }
+            Sort.SCORE -> { list.sortedByDescending { it.score } }
+            Sort.PROGRESS -> { list.sortedByDescending { it.episodes } }
+            Sort.EPISODES -> { list.sortedByDescending { it.anime?.episodes } }
+            else -> { list }
         }
+
+        val orderList = if (isAscending) {
+            sortedList.reversed()
+        } else {
+            sortedList
+        }
+
+        return orderList
     }
 
-    fun convert(item: UserRateEntity): UserRateUiModel? {
+    private fun convert(item: UserRateEntity): UserRateUiModel? {
 
         if (item.anime == null) {
             return null
