@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'io.gitlab.arturbosch.detekt'
 }
 
@@ -39,13 +39,12 @@ android {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
 }
 
 dependencies {
 
+    implementation 'androidx.core:core-ktx:+'
     room()
     dagger()
     network()
