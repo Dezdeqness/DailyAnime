@@ -86,6 +86,8 @@ class PersonalListComposer @Inject constructor(
                     ?: false
             }
         }
+            // Fix issue with different sorting from DB and API
+            .sortedByDescending { it.anime?.russian }
 
         val sort = personalListFilterEntity.sort
         val isAscending = personalListFilterEntity.isAscending
