@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.personallist
 
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 

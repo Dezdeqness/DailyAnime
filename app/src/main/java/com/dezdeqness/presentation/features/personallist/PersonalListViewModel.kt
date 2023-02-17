@@ -8,8 +8,12 @@ import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
-import com.dezdeqness.presentation.Event
-import com.dezdeqness.presentation.PersonalListComposer
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToSortFilter
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,12 +24,13 @@ class PersonalListViewModel @Inject constructor(
     private val personalListComposer: PersonalListComposer,
     private val personalListFilterRepository: PersonalListFilterRepository,
     private val accountRepository: AccountRepository,
+    private val actionConsumer: ActionConsumer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.Refreshable, BaseViewModel.InitialLoaded {
+), BaseViewModel.Refreshable, BaseViewModel.InitialLoaded, EventListener {
 
     private var currentRibbonId: String? = null
 
@@ -38,6 +43,10 @@ class PersonalListViewModel @Inject constructor(
     private val _personalListStateFlow: MutableStateFlow<PersonalListState> =
         MutableStateFlow(PersonalListState())
     val personalListStateFlow: StateFlow<PersonalListState> get() = _personalListStateFlow
+
+    init {
+        actionConsumer.attachListener(this)
+    }
 
     override fun viewModelTag() = "PersonalListViewModel"
     override fun onPullDownRefreshed() {
@@ -80,6 +89,24 @@ class PersonalListViewModel @Inject constructor(
         _personalListStateFlow.value = value.copy(
             events = value.events.toMutableList() - event
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        actionConsumer.detachListener()
+    }
+
+    override fun onEventReceive(event: Event) {
+        val events = _personalListStateFlow.value.events
+        _personalListStateFlow.value = _personalListStateFlow.value.copy(
+            events = events + event,
+        )
+    }
+
+    fun onActionReceive(action: Action) {
+        launchOnIo {
+            actionConsumer.consume(action)
+        }
     }
 
     // TODO: Add fetching when app from foreground
@@ -172,7 +199,7 @@ class PersonalListViewModel @Inject constructor(
             val events = _personalListStateFlow.value.events
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                events = events + Event.NavigateToSortFilter(
+                events = events + NavigateToSortFilter(
                     currentSort = filter.sort.sort,
                 ),
             )
@@ -203,7 +230,7 @@ class PersonalListViewModel @Inject constructor(
         val events = _personalListStateFlow.value.events
 
         _personalListStateFlow.value = _personalListStateFlow.value.copy(
-            events = events + Event.NavigateToEditRate(
+            events = events + NavigateToEditRate(
                 rateId = editRateId,
             ),
         )

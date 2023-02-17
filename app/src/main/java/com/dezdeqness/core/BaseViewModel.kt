@@ -2,7 +2,7 @@ package com.dezdeqness.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow

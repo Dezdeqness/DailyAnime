@@ -6,7 +6,8 @@ import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.model.UserRateStatusEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.EditUserRate
+import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -101,7 +102,7 @@ class EditRateViewModel @Inject constructor(
             val events = _editRateStateFlow.value.events
 
             _editRateStateFlow.value = _editRateStateFlow.value.copy(
-                events = events + Event.EditUserRate(
+                events = events + EditUserRate(
                     userRateUiModel = uiModel,
                 ),
             )

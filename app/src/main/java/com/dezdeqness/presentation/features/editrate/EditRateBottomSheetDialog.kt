@@ -16,8 +16,8 @@ import com.dezdeqness.databinding.BottomSheetDialogEditRateBinding
 import com.dezdeqness.di.subcomponents.UserRateModule
 import com.dezdeqness.domain.model.UserRateStatusEntity
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.Event
-import com.dezdeqness.presentation.features.sortdialog.SortBottomSheetDialog
+import com.dezdeqness.presentation.event.EditUserRate
+import com.dezdeqness.presentation.event.Event
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -115,7 +115,7 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
 
                     state.events.forEach { event ->
                         when (event) {
-                            is Event.EditUserRate -> {
+                            is EditUserRate -> {
                                 setFragmentResult(
                                     requestKey = TAG,
                                     result = bundleOf(

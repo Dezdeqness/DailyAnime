@@ -4,37 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentAnimeListBinding
 import com.dezdeqness.di.AppComponent
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.NavigateToFilter
+import com.dezdeqness.presentation.event.ScrollToTop
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterBottomSheetDialog
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.ui.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 
-class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
+class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListener {
 
     private val adapter: AnimeListAdapter by lazy {
         AnimeListAdapter(
-            listener = { animeId ->
-                findNavController().navigate(
-                    R.id.animeDetailsFragment,
-                    bundleOf("animeId" to animeId),
-                )
-            },
+            actionListener = this,
             loadMoreCallback = {
                 viewModel.onLoadMore()
             },
+        )
+    }
+
+    private val eventConsumer: EventConsumer by lazy {
+        EventConsumer(
+            fragment = this,
         )
     }
 
@@ -73,6 +76,10 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         clearFragmentResultListener(AnimeSearchFilterBottomSheetDialog.TAG)
+    }
+
+    override fun onActionReceive(action: Action) {
+        viewModel.onActionReceive(action)
     }
 
     private fun setupRefreshLayout() {
@@ -120,14 +127,14 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
 
                     adapter.submitList(state.list, state.hasNextPage) {
-                        if (state.events.contains(Event.ScrollToTop)) {
+                        if (state.events.contains(ScrollToTop)) {
                             binding.listAnime.scrollToPosition(0)
-                            viewModel.onEventConsumed(Event.ScrollToTop)
+                            viewModel.onEventConsumed(ScrollToTop)
                         }
                     }
                     state.events.forEach { event ->
                         when (event) {
-                            is Event.NavigateToFilter -> {
+                            is NavigateToFilter -> {
                                 val dialog =
                                     AnimeSearchFilterBottomSheetDialog.newInstance(event.filters)
                                 dialog.show(
@@ -135,7 +142,9 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
                                     AnimeSearchFilterBottomSheetDialog.TAG
                                 )
                             }
-
+                            is ConsumableEvent -> {
+                                eventConsumer.consume(event)
+                            }
                             else -> {}
                         }
 
@@ -146,4 +155,5 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>() {
             }
         }
     }
+
 }

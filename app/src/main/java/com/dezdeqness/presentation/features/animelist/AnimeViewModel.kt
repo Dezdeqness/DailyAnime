@@ -6,7 +6,11 @@ import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +21,13 @@ class AnimeViewModel @Inject constructor(
     private val getAnimeListUseCase: GetAnimeListUseCase,
     private val animeUiMapper: AnimeUiMapper,
     private val animeFilterResponseConverter: AnimeFilterResponseConverter,
+    private val actionConsumer: ActionConsumer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, BaseViewModel.LoadMore {
+), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, BaseViewModel.LoadMore, EventListener {
 
     private val _animeStateFlow: MutableStateFlow<AnimeState> = MutableStateFlow(AnimeState())
     val animeStateFlow: StateFlow<AnimeState> get() = _animeStateFlow
@@ -34,6 +39,7 @@ class AnimeViewModel @Inject constructor(
     private var currentPage = INITIAL_PAGE
 
     init {
+        actionConsumer.attachListener(this)
         initialPageLoad()
     }
 
@@ -81,10 +87,28 @@ class AnimeViewModel @Inject constructor(
         // TODO:
     }
 
+    override fun onEventReceive(event: Event) {
+        val events = _animeStateFlow.value.events
+        _animeStateFlow.value = _animeStateFlow.value.copy(
+            events = events + event,
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        actionConsumer.detachListener()
+    }
+
+    fun onActionReceive(action: Action) {
+        launchOnIo {
+            actionConsumer.consume(action)
+        }
+    }
+
     fun onFabClicked() {
         val events = _animeStateFlow.value.events
         _animeStateFlow.value = _animeStateFlow.value.copy(
-            events = events + Event.NavigateToFilter(filters = filtersList),
+            events = events + NavigateToFilter(filters = filtersList),
         )
     }
 
@@ -101,29 +125,6 @@ class AnimeViewModel @Inject constructor(
     fun onQueryEmpty() {
         this.query = ""
         initialPageLoad()
-    }
-
-    private fun initialPageLoad() {
-        onInitialLoad(
-            action = {
-                getAnimeListUseCase.invoke(
-                    pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filterSelectedCells()
-                    ),
-                    searchQuery = query,
-                )
-            },
-            onSuccess = { state ->
-                currentPage = state.currentPage
-                val list = state.list.map { animeUiMapper.map(it) }
-
-                _animeStateFlow.value = _animeStateFlow.value.copy(
-                    list = list,
-                    hasNextPage = state.hasNextPage,
-                )
-            },
-        )
     }
 
     fun onLoadMore() {
@@ -151,10 +152,32 @@ class AnimeViewModel @Inject constructor(
         )
     }
 
+    private fun initialPageLoad() {
+        onInitialLoad(
+            action = {
+                getAnimeListUseCase.invoke(
+                    pageNumber = INITIAL_PAGE,
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
+                        filterSelectedCells()
+                    ),
+                    searchQuery = query,
+                )
+            },
+            onSuccess = { state ->
+                currentPage = state.currentPage
+                val list = state.list.map { animeUiMapper.map(it) }
+
+                _animeStateFlow.value = _animeStateFlow.value.copy(
+                    list = list,
+                    hasNextPage = state.hasNextPage,
+                )
+            },
+        )
+    }
+
     private fun filterSelectedCells() =
         filtersList.map { it.copy(items = it.items.filterNot { cellState -> cellState.state == CellState.NONE }) }
             .filter { it.items.isNotEmpty() }
-
 
     companion object {
         private const val INITIAL_PAGE = 1

@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.calendar
 
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AdapterItem
 
 data class CalendarState(

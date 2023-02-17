@@ -13,7 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.databinding.ItemAnimeSearchFilterBinding
 import com.dezdeqness.di.subcomponents.SearchFilterListModule
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.ApplyFilter
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.features.searchfilter.BaseSearchFilterBottomSheetDialog
 import com.dezdeqness.presentation.models.AnimeCell
 import com.dezdeqness.presentation.models.AnimeSearchFilter
@@ -59,7 +60,7 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                     viewModel.nullifyCurrentCell()
                     state.listEvents.forEach { event ->
                         when (event) {
-                            is Event.ApplyFilter -> {
+                            is ApplyFilter -> {
                                 setFragmentResult(
                                     TAG, bundleOf(
                                         RESULT to event.filters,

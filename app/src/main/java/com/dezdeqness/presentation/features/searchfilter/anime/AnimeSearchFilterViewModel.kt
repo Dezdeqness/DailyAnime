@@ -4,7 +4,8 @@ import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.SearchFilterRepository
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.ApplyFilter
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AnimeCell
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
@@ -102,7 +103,7 @@ class AnimeSearchFilterViewModel @Inject constructor(
     private fun applyFilter(animeSearchFilters: List<AnimeSearchFilter>) {
         _animeSearchFilterStateFlow.value =
             _animeSearchFilterStateFlow.value.copy(
-                listEvents = _animeSearchFilterStateFlow.value.listEvents + Event.ApplyFilter(
+                listEvents = _animeSearchFilterStateFlow.value.listEvents + ApplyFilter(
                     filters = animeSearchFilters
                 )
             )

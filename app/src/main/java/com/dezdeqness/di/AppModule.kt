@@ -11,6 +11,7 @@ import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.presentation.action.ActionConsumer
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -62,4 +63,8 @@ class AppModule {
     @Singleton
     @Provides
     fun provideAppLogger() = AppLogger()
+
+    @Singleton
+    @Provides
+    fun provideActionConsumer() = ActionConsumer()
 }

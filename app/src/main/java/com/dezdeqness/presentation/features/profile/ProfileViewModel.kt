@@ -6,7 +6,7 @@ import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
 import com.dezdeqness.domain.usecases.LoginUseCase
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

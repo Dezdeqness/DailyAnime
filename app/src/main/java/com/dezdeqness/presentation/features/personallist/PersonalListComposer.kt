@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation
+package com.dezdeqness.presentation.features.personallist
 
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus

@@ -4,10 +4,12 @@ import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.databinding.ItemAnimeBinding
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeUiModel
 
-fun animeAdapterDelegate(listener: (Long) -> Unit) =
+fun animeAdapterDelegate(actionListener: ActionListener) =
     adapterDelegateViewBinding<AnimeUiModel, AdapterItem, ItemAnimeBinding>(
         modelClass = AnimeUiModel::class.java,
         viewBinding = { layoutInflater, parent ->
@@ -16,7 +18,7 @@ fun animeAdapterDelegate(listener: (Long) -> Unit) =
         block = {
 
             binding.root.setOnClickListener {
-                listener(item.id)
+                actionListener.onActionReceive(Action.AnimeClick(animeId = item.id))
             }
 
             bind {

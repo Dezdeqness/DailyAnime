@@ -16,14 +16,21 @@ import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalListBinding
 import com.dezdeqness.di.AppComponent
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.EventConsumer
+import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToSortFilter
+import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.features.sortdialog.SortBottomSheetDialog
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import kotlinx.coroutines.launch
 
-class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
+class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), ActionListener {
 
     private var ribbonState: List<RibbonStatusUiModel> = listOf()
 
@@ -44,6 +51,12 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
             onEditRateClicked = { editRate ->
                 viewModel.onEditRateClicked(editRate)
             }
+        )
+    }
+
+    private val eventConsumer: EventConsumer by lazy {
+        EventConsumer(
+            fragment = this,
         )
     }
 
@@ -88,6 +101,10 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
         clearFragmentResultListener(EditRateBottomSheetDialog.TAG)
     }
 
+    override fun onActionReceive(action: Action) {
+        viewModel.onActionReceive(action)
+    }
+
     private fun setupSearchView() {
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -124,15 +141,15 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
                         )
                     }
                     adapter.submitList(state.items) {
-                        if (state.events.contains(Event.ScrollToTop)) {
+                        if (state.events.contains(ScrollToTop)) {
                             binding.personalList.scrollToPosition(0)
-                            viewModel.onEventConsumed(Event.ScrollToTop)
+                            viewModel.onEventConsumed(ScrollToTop)
                         }
                     }
 
                     state.events.forEach { event ->
                         when (event) {
-                            is Event.NavigateToSortFilter -> {
+                            is NavigateToSortFilter -> {
                                 val dialog =
                                     SortBottomSheetDialog.newInstance(event.currentSort)
                                 dialog.show(
@@ -141,13 +158,16 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>() {
                                 )
                             }
 
-                            is Event.NavigateToEditRate -> {
+                            is NavigateToEditRate -> {
                                 val dialog =
                                     EditRateBottomSheetDialog.newInstance(event.rateId)
                                 dialog.show(
                                     parentFragmentManager,
                                     EditRateBottomSheetDialog.TAG
                                 )
+                            }
+                            is ConsumableEvent -> {
+                                eventConsumer.consume(event)
                             }
 
                             else -> {}

@@ -5,7 +5,11 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.AnimeCalendarEntity
 import com.dezdeqness.domain.repository.CalendarRepository
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.ScrollToTop
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -13,12 +17,13 @@ import javax.inject.Inject
 class CalendarViewModel @Inject constructor(
     private val calendarRepository: CalendarRepository,
     private val calendarComposer: CalendarComposer,
+    private val actionConsumer: ActionConsumer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable {
+), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, EventListener {
 
     private val _calendarStateFlow: MutableStateFlow<CalendarState> =
         MutableStateFlow(CalendarState())
@@ -29,6 +34,7 @@ class CalendarViewModel @Inject constructor(
     private var query = ""
 
     init {
+        actionConsumer.attachListener(this)
         onInitialLoad(
             action = { calendarRepository.getCalendar() },
             onSuccess = { items ->
@@ -73,6 +79,24 @@ class CalendarViewModel @Inject constructor(
         )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        actionConsumer.detachListener()
+    }
+
+    override fun onEventReceive(event: Event) {
+        val events = _calendarStateFlow.value.events
+        _calendarStateFlow.value = _calendarStateFlow.value.copy(
+            events = events + event,
+        )
+    }
+
+    fun onActionReceive(action: Action) {
+        launchOnIo {
+            actionConsumer.consume(action)
+        }
+    }
+
     fun onQueryChanged(query: String) {
         if (this.query == query) {
             return
@@ -84,7 +108,7 @@ class CalendarViewModel @Inject constructor(
             val uiItems = calendarComposer.compose(items = calendarItems, query = query)
             _calendarStateFlow.value = _calendarStateFlow.value.copy(
                 items = uiItems,
-                events = _calendarStateFlow.value.events + Event.ScrollToTop,
+                events = _calendarStateFlow.value.events + ScrollToTop,
             )
         }
     }
