@@ -18,7 +18,7 @@ class UserRatesRepositoryImpl @Inject constructor(
     private val tokenManager: TokenManager,
 ) : UserRatesRepository {
 
-    override fun getUserRates(status: String, page: Int): Flow<Result<List<UserRateEntity>>> =
+    override fun getUserRates(status: String, page: Int, onlyRemote: Boolean): Flow<Result<List<UserRateEntity>>> =
         flow {
             val profile = accountRepository.getProfileLocal()
             if (profile == null) {
@@ -27,10 +27,12 @@ class UserRatesRepositoryImpl @Inject constructor(
             }
             val token = tokenManager.getTokenData()
 
-            val localList = userRatesLocalDataSource.getUserRatesByStatus(status = status)
+            if (onlyRemote.not()) {
+                val localList = userRatesLocalDataSource.getUserRatesByStatus(status = status)
 
-            if (localList.isNotEmpty()) {
-                emit(Result.success(localList))
+                if (localList.isNotEmpty()) {
+                    emit(Result.success(localList))
+                }
             }
 
             emit(

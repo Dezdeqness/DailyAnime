@@ -1,28 +1,32 @@
 package com.dezdeqness.presentation.features.profile
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.dezdeqness.core.AppLogger
+import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
 import com.dezdeqness.domain.usecases.LoginUseCase
-import kotlinx.coroutines.Dispatchers
+import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val getProfileUseCase: GetProfileUseCase,
     private val accountRepository: AccountRepository,
-) : ViewModel() {
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    appLogger: AppLogger,
+) : BaseViewModel(
+    coroutineDispatcherProvider = coroutineDispatcherProvider,
+    appLogger = appLogger,
+), BaseViewModel.InitialLoaded {
 
     private val _profileStateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState())
     val profileStateFlow: StateFlow<ProfileState> get() = _profileStateFlow
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        launchOnIo {
             val isAuthorized = accountRepository.isAuthorized()
             if (isAuthorized) {
                 fetchProfile()
@@ -34,41 +38,49 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    override fun viewModelTag() = "ProfileViewModel"
+
+    override fun onEventConsumed(event: Event) {
+        // TODO
+    }
+
+    override fun setLoadingIndicatorVisible(isVisible: Boolean) {
+        // TODO
+    }
+
     fun onAuthorizationCodeReceived(code: String?) {
         if (code.isNullOrEmpty()) {
             // TODO: error prompt
-            Log.d("ProfileViewModel", "code is empty")
+            appLogger.logInfo(viewModelTag(), "code is empty")
             return
         }
-        viewModelScope.launch(Dispatchers.IO) {
+        launchOnIo {
             loginUseCase
                 .invoke(code)
                 .onSuccess {
                     fetchProfile()
                 }
                 .onFailure {
-                    Log.d("ProfileViewModel", "login failed")
+                    appLogger.logInfo(
+                        tag = viewModelTag(),
+                        throwable = it,
+                        message = "login failed",
+                    )
                 }
         }
     }
 
     private fun fetchProfile() {
-        viewModelScope.launch(Dispatchers.IO) {
-            getProfileUseCase
-                .invoke()
-                .collect { result ->
-                    result
-                        .onSuccess { account ->
-                            _profileStateFlow.value = _profileStateFlow.value.copy(
-                                isAuthorized = true,
-                                avatar = account.avatar,
-                                nickname = account.nickname,
-                            )
-                        }.onFailure {
-                            Log.d("ProfileViewModel", "fetchProfile failed")
-                        }
-                }
-        }
+        onInitialLoad(
+            collector = getProfileUseCase(),
+            onSuccess = { account ->
+                _profileStateFlow.value = _profileStateFlow.value.copy(
+                    isAuthorized = true,
+                    avatar = account.avatar,
+                    nickname = account.nickname,
+                )
+            },
+        )
     }
 
 }

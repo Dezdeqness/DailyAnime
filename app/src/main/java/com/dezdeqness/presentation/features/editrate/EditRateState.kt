@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.editrate
 
 import com.dezdeqness.domain.model.UserRateStatusEntity
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.event.Event
 
 data class EditRateState(
     val rateId: Long = 0,

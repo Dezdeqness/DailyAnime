@@ -6,13 +6,15 @@ import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.core.SingleListAdapter
 import com.dezdeqness.databinding.ItemCalendarBinding
 import com.dezdeqness.databinding.ItemCalendarListBinding
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.CalendarListUiModel
 import com.dezdeqness.presentation.models.CalendarUiModel
 import com.dezdeqness.ui.SingleLineSpacingItemDecoration
 
 fun calendarAdapterDelegate(
-    onAnimeClickListener: (Long) -> Unit,
+    actionListener: ActionListener,
 ) =
     adapterDelegateViewBinding<CalendarUiModel, AdapterItem, ItemCalendarBinding>(
         modelClass = CalendarUiModel::class.java,
@@ -22,7 +24,7 @@ fun calendarAdapterDelegate(
         block = {
 
             binding.root.setOnClickListener {
-                onAnimeClickListener(item.id)
+                actionListener.onActionReceive(Action.AnimeClick(animeId = item.id))
             }
 
             bind {
@@ -48,7 +50,7 @@ fun calendarAdapterDelegate(
     )
 
 fun calendarListDelegate(
-    onAnimeClickListener: (Long) -> Unit,
+    actionListener: ActionListener,
 ) =
     adapterDelegateViewBinding<CalendarListUiModel, AdapterItem, ItemCalendarListBinding>(
         modelClass = CalendarListUiModel::class.java,
@@ -58,7 +60,7 @@ fun calendarListDelegate(
         block = {
 
             binding.calendarItems.adapter = SingleListAdapter(calendarAdapterDelegate(
-                onAnimeClickListener
+                actionListener = actionListener,
             ))
             binding.calendarItems.addItemDecoration(SingleLineSpacingItemDecoration())
 

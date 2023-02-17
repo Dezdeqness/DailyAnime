@@ -19,11 +19,11 @@
 - [x] Personal list
 
 ## Second stage(Improvements and enhancements)
-- [ ] Fragment core
+- [x] Fragment core
 - [ ] Anime core
-- [ ] Actions core
+- [x] Actions core
 - [ ] User rates in calendar, search?
 - [ ] User rate from details
 - [ ] Di core
 - [ ] Payloads issue
-- [ ] Viewmodel core
+- [x] Viewmodel core

@@ -36,9 +36,6 @@ android {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 
     defaultConfig {
         javaCompileOptions {
@@ -55,6 +52,7 @@ dependencies {
     implementation project(path: ':domain')
     implementation 'androidx.security:security-crypto:1.1.0-alpha01'
     implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
+    implementation 'androidx.core:core-ktx:+'
 
     coroutines()
     network()

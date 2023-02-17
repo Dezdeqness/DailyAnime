@@ -1,20 +1,22 @@
 package com.dezdeqness.presentation.features.personallist
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.dezdeqness.core.AppLogger
+import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
-import com.dezdeqness.presentation.Event
-import com.dezdeqness.presentation.PersonalListComposer
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToSortFilter
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PersonalListViewModel @Inject constructor(
@@ -22,7 +24,13 @@ class PersonalListViewModel @Inject constructor(
     private val personalListComposer: PersonalListComposer,
     private val personalListFilterRepository: PersonalListFilterRepository,
     private val accountRepository: AccountRepository,
-) : ViewModel() {
+    private val actionConsumer: ActionConsumer,
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    appLogger: AppLogger,
+) : BaseViewModel(
+    coroutineDispatcherProvider = coroutineDispatcherProvider,
+    appLogger = appLogger,
+), BaseViewModel.Refreshable, BaseViewModel.InitialLoaded, EventListener {
 
     private var currentRibbonId: String? = null
 
@@ -34,12 +42,76 @@ class PersonalListViewModel @Inject constructor(
 
     private val _personalListStateFlow: MutableStateFlow<PersonalListState> =
         MutableStateFlow(PersonalListState())
-
     val personalListStateFlow: StateFlow<PersonalListState> get() = _personalListStateFlow
+
+    init {
+        actionConsumer.attachListener(this)
+    }
+
+    override fun viewModelTag() = "PersonalListViewModel"
+    override fun onPullDownRefreshed() {
+        currentRibbonId?.let { status ->
+            onPullDownRefreshed(
+                collector = userRatesRepository.getUserRates(
+                    status = status,
+                    page = INITIAL_PAGE,
+                    onlyRemote = true,
+                ),
+                onSuccess = { list ->
+                    userRatesList = list
+
+                    val uiItems = personalListComposer.compose(
+                        filter = personalListFilterRepository.getFilter(),
+                        entityList = list,
+                        query = query,
+                    )
+
+                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                        items = uiItems,
+                    )
+                },
+            )
+        }
+    }
+
+    override fun setPullDownIndicatorVisible(isVisible: Boolean) {
+        _personalListStateFlow.value = _personalListStateFlow.value.copy(
+            isPullDownRefreshing = isVisible,
+        )
+    }
+
+    override fun setLoadingIndicatorVisible(isVisible: Boolean) {
+        // TODO
+    }
+
+    override fun onEventConsumed(event: Event) {
+        val value = _personalListStateFlow.value
+        _personalListStateFlow.value = value.copy(
+            events = value.events.toMutableList() - event
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        actionConsumer.detachListener()
+    }
+
+    override fun onEventReceive(event: Event) {
+        val events = _personalListStateFlow.value.events
+        _personalListStateFlow.value = _personalListStateFlow.value.copy(
+            events = events + event,
+        )
+    }
+
+    fun onActionReceive(action: Action) {
+        launchOnIo {
+            actionConsumer.consume(action)
+        }
+    }
 
     // TODO: Add fetching when app from foreground
     fun loadPersonalList() {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        launchOnIo {
             accountRepository.getProfileDetails().collect { result ->
                 result.onSuccess { details ->
 
@@ -59,27 +131,12 @@ class PersonalListViewModel @Inject constructor(
                     } else {
                         _personalListStateFlow.value = _personalListStateFlow.value.copy(
                             ribbon = ribbon,
-                            isPullDownRefreshing = true,
                         )
-                        currentRibbonId?.let {
-                            fetchPage(it)
+                        currentRibbonId?.let { status ->
+                            initialLoad(status = status)
                         }
                     }
                 }
-                    .onFailure { exception ->
-                        Log.d("PersonalListViewModel", exception.toString())
-                    }
-            }
-        }
-    }
-
-    fun onRefreshSwiped() {
-        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-            isPullDownRefreshing = true,
-        )
-        viewModelScope.launch(context = Dispatchers.IO) {
-            currentRibbonId?.let {
-                fetchPage(it)
             }
         }
     }
@@ -94,80 +151,59 @@ class PersonalListViewModel @Inject constructor(
             ribbon = ribbon,
             items = listOf(),
         )
-        viewModelScope.launch(context = Dispatchers.IO) {
-            currentRibbonId?.let {
-                fetchPage(it)
+        launchOnIo {
+            currentRibbonId?.let { status ->
+                initialLoad(status = status)
             }
         }
     }
 
     fun onOrderChanged(isAscending: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        launchOnIo {
             val order = !isAscending
             personalListFilterRepository.setOrder(order)
 
-            val filteredItems = personalListComposer.applyFilter(
-                items = userRatesList,
-                personalListFilterEntity = personalListFilterRepository.getFilter(),
+            val uiItems = personalListComposer.compose(
+                filter = personalListFilterRepository.getFilter(),
+                entityList = userRatesList,
                 query = query,
             )
 
-            val filter = personalListFilterRepository.getFilter()
-            val userRatesUI = filteredItems.mapNotNull(personalListComposer::convert)
-
-            val items = personalListComposer.addFilter(userRatesUI, filter)
-
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                items = items,
-                isPullDownRefreshing = false,
+                items = uiItems,
             )
-
         }
     }
 
     fun onSortChanged(sort: String?) {
         if (sort == null) return
 
-        viewModelScope.launch(Dispatchers.IO) {
+        launchOnIo {
             personalListFilterRepository.setSort(sort)
 
-            val filteredItems = personalListComposer.applyFilter(
-                items = userRatesList,
-                personalListFilterEntity = personalListFilterRepository.getFilter(),
+            val uiItems = personalListComposer.compose(
+                filter = personalListFilterRepository.getFilter(),
+                entityList = userRatesList,
                 query = query,
             )
 
-            val filter = personalListFilterRepository.getFilter()
-            val userRatesUI = filteredItems.mapNotNull(personalListComposer::convert)
-
-            val items = personalListComposer.addFilter(userRatesUI, filter)
-
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                items = items,
-                isPullDownRefreshing = false,
+                items = uiItems,
             )
-
         }
     }
 
     fun onSortClicked() {
-        viewModelScope.launch(Dispatchers.IO) {
+        launchOnIo {
             val filter = personalListFilterRepository.getFilter()
             val events = _personalListStateFlow.value.events
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                events = events + Event.NavigateToSortFilter(
+                events = events + NavigateToSortFilter(
                     currentSort = filter.sort.sort,
                 ),
             )
         }
-    }
-
-    fun onEventConsumed(event: Event) {
-        val value = _personalListStateFlow.value
-        _personalListStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
     }
 
     fun onQueryChanged(query: String) {
@@ -177,21 +213,15 @@ class PersonalListViewModel @Inject constructor(
 
         this.query = query
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val filteredItems = personalListComposer.applyFilter(
-                items = userRatesList,
-                personalListFilterEntity = personalListFilterRepository.getFilter(),
+        launchOnIo {
+            val uiItems = personalListComposer.compose(
+                filter = personalListFilterRepository.getFilter(),
+                entityList = userRatesList,
                 query = query,
             )
 
-            val filter = personalListFilterRepository.getFilter()
-            val userRatesUI = filteredItems.mapNotNull(personalListComposer::convert)
-
-            val items = personalListComposer.addFilter(userRatesUI, filter)
-
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                items = items,
-                isPullDownRefreshing = false,
+                items = uiItems,
             )
         }
     }
@@ -200,7 +230,7 @@ class PersonalListViewModel @Inject constructor(
         val events = _personalListStateFlow.value.events
 
         _personalListStateFlow.value = _personalListStateFlow.value.copy(
-            events = events + Event.NavigateToEditRate(
+            events = events + NavigateToEditRate(
                 rateId = editRateId,
             ),
         )
@@ -211,63 +241,45 @@ class PersonalListViewModel @Inject constructor(
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            userRatesRepository.updateUserRate(
-                rateId = userRate.rateId,
-                status = userRate.status,
-                episodes = userRate.episodes,
-                score = userRate.score,
-            )
-                .onSuccess {
-                    currentRibbonId?.let { id ->
-                        fetchPage(id)
-                    }
+        onInitialLoad(
+            action = {
+                userRatesRepository.updateUserRate(
+                    rateId = userRate.rateId,
+                    status = userRate.status,
+                    episodes = userRate.episodes,
+                    score = userRate.score,
+                )
+            },
+            onSuccess = {
+                currentRibbonId?.let { status ->
+                    initialLoad(status = status)
                 }
-                .onFailure { exception ->
-                    Log.d("PersonalListViewModel", exception.toString())
-                }
-        }
-    }
-
-    private suspend fun fetchPage(status: String, isNeedToScrollTop: Boolean = false) {
-        userRatesRepository
-            .getUserRates(status = status, page = 1)
-            .collect { result ->
-                result
-                    .map { list ->
-                        val filter = personalListFilterRepository.getFilter()
-                        userRatesList = list
-                        val filteredItems = personalListComposer.applyFilter(
-                            items = list,
-                            personalListFilterEntity = filter,
-                            query = query,
-                        )
-
-                        val userRatesUI = filteredItems.mapNotNull(personalListComposer::convert)
-
-                        personalListComposer.addFilter(userRatesUI, filter)
-                    }
-                    .onSuccess { items ->
-                        val events = if (isNeedToScrollTop) {
-                            _personalListStateFlow.value.events + Event.ScrollToTop
-                        } else {
-                            _personalListStateFlow.value.events
-                        }
-
-                        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                            items = items,
-                            events = events,
-                            isPullDownRefreshing = false,
-                        )
-                    }
-                    .onFailure { exception ->
-                        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                            isPullDownRefreshing = false,
-                        )
-                        Log.d("PersonalListViewModel", exception.toString())
-                    }
 
             }
+        )
+    }
+
+    private fun initialLoad(status: String) {
+        onInitialLoad(
+            collector = userRatesRepository.getUserRates(status = status, page = INITIAL_PAGE),
+            onSuccess = { list ->
+                userRatesList = list
+
+                val uiItems = personalListComposer.compose(
+                    filter = personalListFilterRepository.getFilter(),
+                    entityList = userRatesList,
+                    query = query,
+                )
+
+                _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                    items = uiItems,
+                )
+            },
+        )
+    }
+
+    companion object {
+        private const val INITIAL_PAGE = 1
     }
 
 }

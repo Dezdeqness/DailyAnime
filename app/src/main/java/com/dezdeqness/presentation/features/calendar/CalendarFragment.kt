@@ -4,31 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentCalendarBinding
 import com.dezdeqness.di.AppComponent
-import com.dezdeqness.presentation.Event
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.EventConsumer
+import com.dezdeqness.presentation.event.ScrollToTop
 import kotlinx.coroutines.launch
 
-class CalendarFragment : BaseFragment<FragmentCalendarBinding>() {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener {
 
     private val viewModel: CalendarViewModel by viewModels(factoryProducer = { viewModelFactory })
 
     private val adapter: CalendarAdapter by lazy {
         CalendarAdapter(
-            onAnimeClickListener = { animeId ->
-                findNavController().navigate(
-                    R.id.animeDetailsFragment,
-                    bundleOf("animeId" to animeId),
-                )
-            }
+            actionListener = this,
+        )
+    }
+
+    private val eventConsumer: EventConsumer by lazy {
+        EventConsumer(
+            fragment = this,
         )
     }
 
@@ -50,13 +52,17 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>() {
         setupSearchView()
     }
 
+    override fun onActionReceive(action: Action) {
+        viewModel.onActionReceive(action)
+    }
+
     private fun setupRecyclerView() {
         binding.calendar.adapter = adapter
     }
 
     private fun setupRefreshLayout() {
         binding.refresh.setOnRefreshListener {
-            viewModel.onRefreshSwiped()
+            viewModel.onPullDownRefreshed()
         }
     }
 
@@ -81,14 +87,23 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>() {
                 viewModel.calendarStateFlow.collect { state ->
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
                     adapter.submitList(state.items) {
-                        if (state.events.contains(Event.ScrollToTop)) {
+                        if (state.events.contains(ScrollToTop)) {
                             binding.calendar.scrollToPosition(0)
-                            viewModel.onEventConsumed(Event.ScrollToTop)
+                            viewModel.onEventConsumed(ScrollToTop)
+                        }
+                        state.events.forEach { event ->
+                            when (event) {
+                                is ConsumableEvent -> {
+                                    eventConsumer.consume(event)
+                                }
+
+                                else -> {}
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
+    }
 }

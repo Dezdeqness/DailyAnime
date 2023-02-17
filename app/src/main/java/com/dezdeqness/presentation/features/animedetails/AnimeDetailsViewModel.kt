@@ -1,13 +1,12 @@
 package com.dezdeqness.presentation.features.animedetails
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.dezdeqness.core.AppLogger
+import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
-import kotlinx.coroutines.Dispatchers
+import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -15,24 +14,36 @@ class AnimeDetailsViewModel @Inject constructor(
     @Named("animeId") private val animeId: Long,
     private val useCase: GetAnimeDetailsUseCase,
     private val animeDetailsComposer: AnimeDetailsComposer,
-) : ViewModel() {
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    appLogger: AppLogger,
+) : BaseViewModel(
+    coroutineDispatcherProvider = coroutineDispatcherProvider,
+    appLogger = appLogger,
+), BaseViewModel.InitialLoaded {
 
     private val _animeDetailsStateFlow: MutableStateFlow<AnimeDetailsState> =
         MutableStateFlow(AnimeDetailsState())
     val animeDetailsStateFlow: StateFlow<AnimeDetailsState> get() = _animeDetailsStateFlow
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCase.invoke(animeId)
-                .onSuccess { details ->
+        launchOnIo {
+            onInitialLoad(
+                action = { useCase.invoke(animeId) },
+                onSuccess = { details ->
                     _animeDetailsStateFlow.value = animeDetailsComposer.compose(details)
-                    Log.d("AnimeDetailsViewModel", details.toString())
+                    logInfo(message = details.toString())
                 }
-                .onFailure {
-                    Log.d("AnimeDetailsViewModel", it.toString())
-                }
-
+            )
         }
+    }
+
+    override fun viewModelTag() = "ItemDetailsViewModel"
+    override fun onEventConsumed(event: Event) {
+        // TODO
+    }
+
+    override fun setLoadingIndicatorVisible(isVisible: Boolean) {
+        // TODO: shimmer?
     }
 
 }
