@@ -17,11 +17,6 @@
         android:title="Поиск" />
 
     <item
-        android:id="@+id/current"
-        android:icon="@drawable/ic_feed"
-        android:title="Лента" />
-
-    <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
         android:title="Профиль" />
