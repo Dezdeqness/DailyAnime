@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.editrate
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class EditRateUiModel(
