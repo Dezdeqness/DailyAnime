@@ -52,7 +52,6 @@ class RibbonStatusView @JvmOverloads constructor(
         isVisible = list.isNotEmpty()
         ribbonLayout.removeAllViews()
 
-
         list.forEach { uiModel ->
             val button = LayoutInflater.from(context)
                 .inflate(R.layout.item_ribbon_button, ribbonLayout, false)

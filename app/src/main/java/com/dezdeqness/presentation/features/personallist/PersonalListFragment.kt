@@ -26,12 +26,9 @@ import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.features.sortdialog.SortBottomSheetDialog
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import kotlinx.coroutines.launch
 
 class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), ActionListener {
-
-    private var ribbonState: List<RibbonStatusUiModel> = listOf()
 
     private val adapter: PersonalListAdapter by lazy {
         PersonalListAdapter(
@@ -130,10 +127,9 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.personalListStateFlow.collect { state ->
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
-                    if (ribbonState.isEmpty() || ribbonState != state.ribbon) {
-                        ribbonState = state.ribbon
+                    if (state.ribbon.isNotEmpty()) {
                         binding.ribbon.populate(
-                            list = ribbonState,
+                            list = state.ribbon,
                             listener = { id ->
                                 viewModel.onRibbonItemSelected(id = id)
                             }
