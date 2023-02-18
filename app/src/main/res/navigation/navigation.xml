@@ -18,10 +18,6 @@
         android:name="com.dezdeqness.presentation.features.animelist.AnimeListFragment" />
 
     <fragment
-        android:id="@+id/current"
-        android:name="com.dezdeqness.core.TrapFragment" />
-
-    <fragment
         android:id="@+id/profile"
         android:name="com.dezdeqness.presentation.features.profile.ProfileFragment" />
 
