@@ -28,12 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_anime"
+            <com.dezdeqness.ui.RecyclerViewWithState
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2" />
+                app:emptyStateLayout="@layout/state_anime_empty_screen"
+                app:recycleViewLayout="@layout/state_anime_recycler_view" />
+
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -9,4 +9,11 @@
 
     </declare-styleable>
 
+    <declare-styleable name="RecyclerViewWithState">
+        <attr name="recycleViewLayout" format="reference" />
+        <attr name="loadingStateLayout" format="reference" />
+        <attr name="errorStateLayout" format="reference" />
+        <attr name="emptyStateLayout" format="reference" />
+    </declare-styleable>
+
 </resources>

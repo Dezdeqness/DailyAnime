@@ -143,7 +143,6 @@ abstract class BaseViewModel(
                     if (isInitialLoad) {
                         initialLoaded.setLoadingIndicatorVisible(isVisible = false)
                     }
-                    onSuccess.invoke(value)
                 }
                 .onFailure { throwable ->
                     onFailure?.invoke(throwable)
@@ -286,7 +285,6 @@ abstract class BaseViewModel(
 
     interface InitialLoaded {
         fun setLoadingIndicatorVisible(isVisible: Boolean)
-        class NotImplementedMethodException : Exception()
     }
 
     interface LoadMore {

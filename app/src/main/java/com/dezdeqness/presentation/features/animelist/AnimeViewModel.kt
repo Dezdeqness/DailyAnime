@@ -80,7 +80,9 @@ class AnimeViewModel @Inject constructor(
     }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        // TODO
+        _animeStateFlow.value = _animeStateFlow.value.copy(
+            isInitialLoadingIndicatorShowing = isVisible,
+        )
     }
 
     override fun setLoadMoreIndicator(isVisible: Boolean) {
@@ -170,6 +172,7 @@ class AnimeViewModel @Inject constructor(
                 _animeStateFlow.value = _animeStateFlow.value.copy(
                     list = list,
                     hasNextPage = state.hasNextPage,
+                    isEmptyStateShowing = list.isEmpty(),
                 )
             },
         )
