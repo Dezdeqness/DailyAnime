@@ -114,9 +114,9 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
     }
 
     private fun setupRecyclerView() {
-        binding.listAnime.adapter = adapter
+        binding.recycler.adapter = adapter
         // TODO: Dynamic columns
-        binding.listAnime.addItemDecoration(GridSpacingItemDecoration())
+        binding.recycler.addItemDecoration(GridSpacingItemDecoration())
     }
 
     private fun setupObservers() {
@@ -124,14 +124,30 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.animeStateFlow.collect { state ->
 
+                    val isLoadingStateShowing =
+                        if (state.list.isEmpty() && state.isEmptyStateShowing.not()) {
+                            state.isInitialLoadingIndicatorShowing
+                        } else {
+                            false
+                        }
+
+                    binding.recycler.setLoadingState(
+                        isLoadingStateShowing = isLoadingStateShowing,
+                    )
+
+                    binding.recycler.setEmptyState(
+                        isEmptyStateShowing = state.isEmptyStateShowing,
+                    )
+
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
 
                     adapter.submitList(state.list, state.hasNextPage) {
                         if (state.events.contains(ScrollToTop)) {
-                            binding.listAnime.scrollToPosition(0)
+                            binding.recycler.scrollToPosition(0)
                             viewModel.onEventConsumed(ScrollToTop)
                         }
                     }
+
                     state.events.forEach { event ->
                         when (event) {
                             is NavigateToFilter -> {

@@ -6,6 +6,8 @@ import com.dezdeqness.presentation.models.AnimeUiModel
 data class AnimeState(
     val list: List<AnimeUiModel> = listOf(),
     val events: List<Event> = listOf(),
+    val isInitialLoadingIndicatorShowing: Boolean = false,
+    val isEmptyStateShowing: Boolean = false,
     val isPullDownRefreshing: Boolean = false,
     val hasNextPage: Boolean = false,
 )
