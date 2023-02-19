@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalListBinding
 import com.dezdeqness.di.AppComponent
@@ -32,12 +29,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     private val adapter: PersonalListAdapter by lazy {
         PersonalListAdapter(
-            onAnimeClickListener = { animeId ->
-                findNavController().navigate(
-                    R.id.animeDetailsFragment,
-                    bundleOf("animeId" to animeId),
-                )
-            },
+            actionListener = this,
             onSortClicked = {
                 viewModel.onSortClicked()
             },

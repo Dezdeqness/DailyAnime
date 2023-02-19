@@ -4,11 +4,13 @@ import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.databinding.ItemUserRateAnimeBinding
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.UserRateUiModel
 
 fun userRateAnimeAdapterDelegate(
-    onAnimeClickListener: (Long) -> Unit,
+    actionListener: ActionListener,
     onEditRateClicked: (Long) -> Unit,
 ) =
     adapterDelegateViewBinding<UserRateUiModel, AdapterItem, ItemUserRateAnimeBinding>(
@@ -19,7 +21,7 @@ fun userRateAnimeAdapterDelegate(
         block = {
 
             binding.root.setOnClickListener {
-                onAnimeClickListener.invoke(item.id)
+                actionListener.onActionReceive(Action.AnimeClick(animeId = item.id))
             }
 
             binding.animeChangeRate.setOnClickListener {
