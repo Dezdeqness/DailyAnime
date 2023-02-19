@@ -67,7 +67,7 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
     private fun setupListeners() {
         binding.ratingView.setOnRatingBarChangeListener { _, rating, fromUser ->
             if (fromUser) {
-                viewModel.onRatingChanged(rating.toLong() * 2)
+                viewModel.onRatingChanged((rating * 2).toLong())
             }
         }
         binding.rateEpisodeMinus.setOnClickListener {
