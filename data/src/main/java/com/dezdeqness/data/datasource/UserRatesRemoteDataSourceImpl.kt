@@ -4,9 +4,9 @@ import com.dezdeqness.data.UserRatesApiService
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.mapper.UserRatesMapper
-import com.dezdeqness.data.model.requet.UserRate
+import com.dezdeqness.data.model.requet.PostUserRate
+import com.dezdeqness.data.model.requet.UpdateUserRate
 import com.dezdeqness.data.model.requet.UserRateRequestBody
-import com.dezdeqness.domain.model.UserRateEntity
 import javax.inject.Inject
 
 class UserRatesRemoteDataSourceImpl @Inject constructor(
@@ -46,7 +46,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         token: String,
     ) = tryWithCatch {
         val body = UserRateRequestBody(
-            userRate = UserRate(
+            userRate = UpdateUserRate(
                 chapters = chapters.toString(),
                 episodes = episodes.toString(),
                 rewatches = rewatches.toString(),
@@ -70,5 +70,44 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun createUserRate(
+        userId: Long,
+        targetId: String,
+        targetType: String,
+        volumes: Long,
+        score: Float,
+        status: String,
+        rewatches: Long,
+        episodes: Long,
+        chapters: Long,
+        comment: String,
+        token: String
+    ) = tryWithCatch {
+        val body = UserRateRequestBody(
+            userRate = PostUserRate(
+                userId = userId,
+                targetId = targetId,
+                targetType = targetType,
+                chapters = chapters.toString(),
+                episodes = episodes.toString(),
+                rewatches = rewatches.toString(),
+                score = score.toString(),
+                status = status,
+                text = comment,
+                volumes = volumes.toString(),
+            )
+        )
+        val response = apiService.createUserRate(
+            body = body,
+            token = "Bearer $token",
+        ).execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            Result.success(userRatesMapper.fromResponse(responseBody))
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
 
 }
