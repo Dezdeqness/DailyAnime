@@ -101,7 +101,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
                     android:textColor="?colorOnSurface"
                     android:textSize="12sp" />
 
@@ -115,6 +114,19 @@
                     android:gravity="center"
                     android:textSize="24sp"
                     tools:text="Госпожа кагуя в любви как на войне" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/anime_change_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="8dp"
+                    android:text="Изменить"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:shapeAppearance="@style/CustomShapeOverlay"
+                    tools:visibility="visible" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -23,4 +23,18 @@ interface UserRatesRemoteDataSource {
         token: String,
     ): Result<UserRateEntity>
 
+    fun createUserRate(
+        userId: Long,
+        targetId: String,
+        targetType: String,
+        volumes: Long,
+        score: Float,
+        status: String,
+        rewatches: Long,
+        episodes: Long,
+        chapters: Long,
+        comment: String,
+        token: String,
+    ): Result<UserRateEntity>
+
 }

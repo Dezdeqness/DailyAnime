@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
+import androidx.fragment.app.clearFragmentResultListener
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +21,9 @@ import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentAnimeDetailsBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ArgsModule
+import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
+import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.google.android.material.appbar.AppBarLayout
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.launch
@@ -51,6 +57,11 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
         onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().popBackStack()
         }
+
+        setFragmentResultListener(EDIT_RATE_DIALOG_TAG) { _, bundle ->
+            val userRate = bundle.getParcelable<EditRateUiModel>(EditRateBottomSheetDialog.RESULT)
+            viewModel.onUserRateChanged(userRate)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,8 +86,17 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
             onBackPressedCallback?.handleOnBackPressed()
         }
 
+        binding.animeChangeRate.setOnClickListener {
+            viewModel.onEditRateClicked()
+        }
+
         setupRecyclerView()
         setupObservers()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
     private fun setupRecyclerView() {
@@ -91,6 +111,7 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
                     title = state.title
                     binding.ratingValueView.text = state.ratingScore.toString()
                     binding.ratingView.rating = state.ratingScore / 2
+                    binding.animeChangeRate.isVisible = state.isEditUserRateShowing
 
                     if (state.uiModels.isNotEmpty()) {
                         adapter.submitList(state.uiModels)
@@ -114,6 +135,24 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
                         .load(state.imageUrl)
                         .centerCrop()
                         .into(binding.imageView)
+                    state.events.forEach { event ->
+                        when (event) {
+                            is NavigateToEditRate -> {
+                                val dialog = EditRateBottomSheetDialog.newInstance(
+                                    rateId = event.rateId,
+                                    tag = EDIT_RATE_DIALOG_TAG,
+                                )
+                                dialog.show(
+                                    parentFragmentManager,
+                                    EDIT_RATE_DIALOG_TAG,
+                                )
+                            }
+
+                            else -> {}
+                        }
+
+                        viewModel.onEventConsumed(event)
+                    }
                 }
             }
         }
@@ -141,5 +180,9 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
         }
 
         abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State?)
+    }
+
+    companion object {
+        private const val EDIT_RATE_DIALOG_TAG = "anime_details_edit_rate_dialog"
     }
 }

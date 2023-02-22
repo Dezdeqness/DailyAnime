@@ -17,7 +17,7 @@ interface UserRatesDao {
 
 
     @Query("SELECT * FROM 'user_rate' WHERE id = :rateId")
-    fun getUserRateByRateId(rateId: Long): UserRateLocal
+    fun getUserRateByRateId(rateId: Long): UserRateLocal?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserRates(list: List<UserRateLocal>)

@@ -78,4 +78,25 @@ class UserRatesRepositoryImpl @Inject constructor(
         )
         return result.map { true }
     }
+
+    override fun createUserRate(targetId: String, status: String, episodes: Long, score: Float): Result<Boolean> {
+        val tokenData = tokenManager.getTokenData()
+
+        val profile = accountRepository.getProfileLocal() ?: return Result.failure(Exception())
+
+        val result = userRatesRemoteDataSource.createUserRate(
+            userId = profile.id,
+            targetId = targetId,
+            targetType = "Anime",
+            token = tokenData.accessToken,
+            score = score,
+            status = status,
+            episodes = episodes,
+            volumes = 0,
+            rewatches = 0,
+            chapters = 0,
+            comment = "",
+        )
+        return result.map { true }
+    }
 }

@@ -67,7 +67,7 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
     private fun setupListeners() {
         binding.ratingView.setOnRatingBarChangeListener { _, rating, fromUser ->
             if (fromUser) {
-                viewModel.onRatingChanged(rating.toLong() * 2)
+                viewModel.onRatingChanged((rating * 2).toLong())
             }
         }
         binding.rateEpisodeMinus.setOnClickListener {
@@ -112,12 +112,11 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
                     binding.currentStatus.text = state.status.status
                     binding.rateEdit.isEnabled = state.isUserRateChanged
 
-
                     state.events.forEach { event ->
                         when (event) {
                             is EditUserRate -> {
                                 setFragmentResult(
-                                    requestKey = TAG,
+                                    requestKey = requireArguments().getString(TAG).orEmpty(),
                                     result = bundleOf(
                                         RESULT to event.userRateUiModel,
                                     ),
@@ -136,13 +135,14 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
     companion object {
 
         const val RESULT = "EditRateBottomSheetDialogResult"
-        const val TAG = "EditRateBottomSheetDialog"
         private const val RATE_ID = "rate_id"
+        private const val TAG = "tag"
 
-        fun newInstance(rateId: Long) =
+        fun newInstance(rateId: Long, tag: String) =
             EditRateBottomSheetDialog().apply {
                 arguments = bundleOf(
-                    RATE_ID to rateId
+                    RATE_ID to rateId,
+                    TAG to tag,
                 )
             }
     }

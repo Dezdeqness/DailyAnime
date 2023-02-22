@@ -64,7 +64,6 @@ class AppModule {
     @Provides
     fun provideAppLogger() = AppLogger()
 
-    @Singleton
     @Provides
     fun provideActionConsumer() = ActionConsumer()
 }

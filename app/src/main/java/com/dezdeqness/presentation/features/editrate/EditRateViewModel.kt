@@ -117,8 +117,10 @@ class EditRateViewModel @Inject constructor(
 
     private fun fetchUserRate() {
         launchOnIo {
-            userRatesRepository.getLocalUserRate(rateId = rateId)?.let { userRate ->
-                localUserRate = userRate
+            val userRate = userRatesRepository.getLocalUserRate(rateId = rateId)
+            localUserRate = userRate ?: UserRateEntity.EMPTY_USER_RATE
+
+            userRate?.let {
                 emitEditRateState(userRate)
             }
         }

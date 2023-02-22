@@ -99,6 +99,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
 
                                 else -> {}
                             }
+                            viewModel.onEventConsumed(event)
                         }
                     }
                 }

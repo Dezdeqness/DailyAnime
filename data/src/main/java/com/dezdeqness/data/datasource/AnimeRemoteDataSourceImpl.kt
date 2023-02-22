@@ -52,8 +52,15 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
 
         }
 
-    override fun getDetailsAnimeMainInfo(id: Long) = tryWithCatch {
-        val response = apiService.getDetailsAnimeMainInfo(id).execute()
+    override fun getDetailsAnimeMainInfo(id: Long, token: String) = tryWithCatch {
+        val response = if (token.isNotEmpty()) {
+            apiService.getDetailsAnimeMainInfo(
+                id = id,
+                token = "Bearer $token",
+            ).execute()
+        } else {
+            apiService.getDetailsAnimeMainInfo(id).execute()
+        }
 
         val responseBody = response.body()
 

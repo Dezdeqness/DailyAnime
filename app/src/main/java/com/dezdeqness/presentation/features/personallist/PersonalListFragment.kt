@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalListBinding
 import com.dezdeqness.di.AppComponent
@@ -32,12 +29,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     private val adapter: PersonalListAdapter by lazy {
         PersonalListAdapter(
-            onAnimeClickListener = { animeId ->
-                findNavController().navigate(
-                    R.id.animeDetailsFragment,
-                    bundleOf("animeId" to animeId),
-                )
-            },
+            actionListener = this,
             onSortClicked = {
                 viewModel.onSortClicked()
             },
@@ -74,7 +66,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             viewModel.onSortChanged(sort)
         }
 
-        setFragmentResultListener(EditRateBottomSheetDialog.TAG) { _, bundle ->
+        setFragmentResultListener(EDIT_RATE_DIALOG_TAG) { _, bundle ->
             val userRate = bundle.getParcelable<EditRateUiModel>(EditRateBottomSheetDialog.RESULT)
             viewModel.onUserRateChanged(userRate)
         }
@@ -94,7 +86,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     override fun onDestroy() {
         super.onDestroy()
         clearFragmentResultListener(SortBottomSheetDialog.TAG)
-        clearFragmentResultListener(EditRateBottomSheetDialog.TAG)
+        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
     override fun onActionReceive(action: Action) {
@@ -155,10 +147,13 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
                             is NavigateToEditRate -> {
                                 val dialog =
-                                    EditRateBottomSheetDialog.newInstance(event.rateId)
+                                    EditRateBottomSheetDialog.newInstance(
+                                        rateId = event.rateId,
+                                        tag = EDIT_RATE_DIALOG_TAG,
+                                    )
                                 dialog.show(
                                     parentFragmentManager,
-                                    EditRateBottomSheetDialog.TAG
+                                    EDIT_RATE_DIALOG_TAG,
                                 )
                             }
                             is ConsumableEvent -> {
@@ -178,6 +173,10 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     private fun setupRecyclerView() {
         binding.personalList.adapter = adapter
+    }
+
+    companion object {
+        private const val EDIT_RATE_DIALOG_TAG = "personal_list_edit_rate_dialog"
     }
 
 }

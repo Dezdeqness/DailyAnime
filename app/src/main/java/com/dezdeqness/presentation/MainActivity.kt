@@ -2,9 +2,9 @@ package com.dezdeqness.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import com.dezdeqness.R
 import com.dezdeqness.databinding.ActivityMainBinding
+import com.dezdeqness.extensions.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,9 +15,34 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val fragment = supportFragmentManager.findFragmentById(binding.container.id) as NavHostFragment
-        val navController = fragment.navController
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        } // Else, need to wait for onRestoreInstanceState
 
-        binding.navigation.setupWithNavController(navController)
     }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setupBottomNavigationBar()
+    }
+
+    private fun setupBottomNavigationBar() {
+        val bottomVav = binding.navigation
+
+        val navGraphIds = listOf(
+            R.navigation.personal_list_nav_graph,
+            R.navigation.calendar_nav_graph,
+            R.navigation.search_nav_graph,
+            R.navigation.profile_nav_graph,
+        )
+
+         bottomVav.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.container,
+            intent = intent
+        )
+
+    }
+
 }
