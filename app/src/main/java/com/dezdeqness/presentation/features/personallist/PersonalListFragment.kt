@@ -66,7 +66,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             viewModel.onSortChanged(sort)
         }
 
-        setFragmentResultListener(EditRateBottomSheetDialog.TAG) { _, bundle ->
+        setFragmentResultListener(EDIT_RATE_DIALOG_TAG) { _, bundle ->
             val userRate = bundle.getParcelable<EditRateUiModel>(EditRateBottomSheetDialog.RESULT)
             viewModel.onUserRateChanged(userRate)
         }
@@ -86,7 +86,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     override fun onDestroy() {
         super.onDestroy()
         clearFragmentResultListener(SortBottomSheetDialog.TAG)
-        clearFragmentResultListener(EditRateBottomSheetDialog.TAG)
+        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
     override fun onActionReceive(action: Action) {
@@ -147,10 +147,13 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
                             is NavigateToEditRate -> {
                                 val dialog =
-                                    EditRateBottomSheetDialog.newInstance(event.rateId)
+                                    EditRateBottomSheetDialog.newInstance(
+                                        rateId = event.rateId,
+                                        tag = EDIT_RATE_DIALOG_TAG,
+                                    )
                                 dialog.show(
                                     parentFragmentManager,
-                                    EditRateBottomSheetDialog.TAG
+                                    EDIT_RATE_DIALOG_TAG,
                                 )
                             }
                             is ConsumableEvent -> {
@@ -170,6 +173,10 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     private fun setupRecyclerView() {
         binding.personalList.adapter = adapter
+    }
+
+    companion object {
+        private const val EDIT_RATE_DIALOG_TAG = "personal_list_edit_rate_dialog"
     }
 
 }

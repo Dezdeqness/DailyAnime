@@ -23,9 +23,7 @@ class UserRatesLocalDataSourceImpl @Inject constructor(
     override fun getUserRate(rateId: Long) =
         userRatesDao
             .getUserRateByRateId(rateId)
-            .run {
-                userRatesMapper.fromDatabase(this)
-            }
+            ?.let { userRatesMapper.fromDatabase(it) }
 
     override fun saveUserRates(list: List<UserRateEntity>) {
         val localList = list.map(userRatesMapper::toDatabase)

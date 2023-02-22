@@ -3,10 +3,7 @@ package com.dezdeqness.data.mapper
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.db.AnimeLocal
-import com.dezdeqness.domain.model.AnimeDetailsEntity
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.AnimeKind
-import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -57,6 +54,21 @@ class AnimeMapper @Inject constructor(
             genreList = item.genres.map(genreMapper::fromResponse),
             videoList = item.videos.map(videoMapper::fromResponse),
             nextEpisodeAt = item.nextEpisodeAt.orEmpty(),
+            userRate = item.userRate?.let { userRate ->
+                UserRateEntity(
+                    id = userRate.id,
+                    score = userRate.score,
+                    status = userRate.status,
+                    text = userRate.text.orEmpty(),
+                    episodes = userRate.episodes ?: 0,
+                    chapters = userRate.chapters ?: 0,
+                    volumes = userRate.volumes ?: 0,
+                    textHTML = userRate.textHTML,
+                    rewatches = userRate.rewatches,
+                    createdAt = userRate.createdAt,
+                    updatedAt = userRate.updatedAt,
+                )
+            },
         )
 
     fun toDatabase(item: AnimeBriefEntity?): AnimeLocal? {

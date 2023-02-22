@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/personal_list"
+        android:id="@+id/personal_list_nav_graph"
         android:icon="@drawable/ic_list"
         android:title="Списки" />
 
     <item
-        android:id="@+id/calendar"
+        android:id="@+id/calendar_nav_graph"
         android:icon="@drawable/ic_calendar"
         android:title="Календарь" />
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/search_nav_graph"
         android:icon="@drawable/ic_search"
         android:title="Поиск" />
 
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profile_nav_graph"
         android:icon="@drawable/ic_profile"
         android:title="Профиль" />
 

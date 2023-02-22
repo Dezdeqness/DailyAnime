@@ -1,18 +1,35 @@
 package com.dezdeqness.data.repository
 
 import com.dezdeqness.data.datasource.AnimeRemoteDataSource
+import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
+import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
+import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.AnimeRepository
+import com.dezdeqness.domain.repository.UserRatesRepository
+import java.lang.Exception
 import javax.inject.Inject
 
 class AnimeRepositoryImpl @Inject constructor(
     private val animeRemoteDataSource: AnimeRemoteDataSource,
+    private val userRatesLocalDataSource: UserRatesLocalDataSource,
+    private val tokenManager: TokenManager,
 ) : AnimeRepository {
 
     override fun getDetails(id: Long): Result<AnimeDetailsFullEntity> {
-        val mainInfoResult = animeRemoteDataSource.getDetailsAnimeMainInfo(id)
+        val tokenData = tokenManager.getTokenData()
+
+        val mainInfoResult = animeRemoteDataSource.getDetailsAnimeMainInfo(id, tokenData.accessToken)
         if (mainInfoResult.isFailure) {
             return Result.failure(mainInfoResult.exceptionOrNull() ?: Throwable())
+        }
+
+        if (tokenData.accessToken.isNotEmpty()) {
+            mainInfoResult.getOrNull()?.let {
+                it.userRate?.let {
+                    userRatesLocalDataSource.saveUserRates(listOf(it))
+                }
+            }
         }
 
         val screenshotsResult = animeRemoteDataSource.getDetailsAnimeScreenshots(id)

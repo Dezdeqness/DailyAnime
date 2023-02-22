@@ -6,10 +6,7 @@ import com.dezdeqness.data.model.RelatedItemRemote
 import com.dezdeqness.data.model.RoleRemote
 import com.dezdeqness.data.model.ScreenshotRemote
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 
 interface AnimeApiService {
 
@@ -33,6 +30,13 @@ interface AnimeApiService {
     @GET("animes/{id}")
     fun getDetailsAnimeMainInfo(
         @Path(value = "id") id: Long,
+    ): Call<AnimeDetailsRemote>
+
+    @GET("animes/{id}")
+    fun getDetailsAnimeMainInfo(
+        @Path(value = "id") id: Long,
+        @Header(value = "User-Agent") agent: String = "Shikimori Android APP",
+        @Header(value = "Authorization") token: String,
     ): Call<AnimeDetailsRemote>
 
     @GET("animes/{id}/screenshots")

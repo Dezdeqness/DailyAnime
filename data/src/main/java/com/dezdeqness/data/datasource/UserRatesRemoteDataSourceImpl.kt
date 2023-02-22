@@ -5,8 +5,9 @@ import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.mapper.UserRatesMapper
 import com.dezdeqness.data.model.requet.PostUserRate
+import com.dezdeqness.data.model.requet.PostUserRateRequestBody
 import com.dezdeqness.data.model.requet.UpdateUserRate
-import com.dezdeqness.data.model.requet.UserRateRequestBody
+import com.dezdeqness.data.model.requet.UpdateUserRateRequestBody
 import javax.inject.Inject
 
 class UserRatesRemoteDataSourceImpl @Inject constructor(
@@ -45,7 +46,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         comment: String,
         token: String,
     ) = tryWithCatch {
-        val body = UserRateRequestBody(
+        val body = UpdateUserRateRequestBody(
             userRate = UpdateUserRate(
                 chapters = chapters.toString(),
                 episodes = episodes.toString(),
@@ -83,7 +84,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         comment: String,
         token: String
     ) = tryWithCatch {
-        val body = UserRateRequestBody(
+        val body = PostUserRateRequestBody(
             userRate = PostUserRate(
                 userId = userId,
                 targetId = targetId,

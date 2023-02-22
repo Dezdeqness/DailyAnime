@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/personal_list_nav_graph"
+    app:startDestination="@id/personal_list">
+
+    <fragment
+        android:id="@+id/personal_list"
+        android:name="com.dezdeqness.presentation.features.personallist.PersonalListFragment" />
+
+    <fragment
+        android:id="@+id/animeDetailsFragment"
+        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment" />
+
+</navigation>

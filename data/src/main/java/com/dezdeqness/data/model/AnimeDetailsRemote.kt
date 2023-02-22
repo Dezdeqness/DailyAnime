@@ -31,4 +31,6 @@ class AnimeDetailsRemote : AnimeBriefRemote() {
     @field:Json(name = "next_episode_at")
     val nextEpisodeAt: String? = null
 
+    @field:Json(name = "user_rate")
+    val userRate: UserRateRemote? = null
 }

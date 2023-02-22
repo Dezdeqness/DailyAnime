@@ -5,10 +5,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRatesRepository {
 
-    fun getUserRates(status: String, page: Int, onlyRemote: Boolean = false): Flow<Result<List<UserRateEntity>>>
+    fun getUserRates(status: String, page: Int = 1, onlyRemote: Boolean = false): Flow<Result<List<UserRateEntity>>>
 
     fun getLocalUserRate(rateId: Long): UserRateEntity?
 
     fun updateUserRate(rateId: Long, status: String, episodes: Long, score: Float): Result<Boolean>
+
+    fun createUserRate(targetId: String, status: String, episodes: Long, score: Float): Result<Boolean>
 
 }
