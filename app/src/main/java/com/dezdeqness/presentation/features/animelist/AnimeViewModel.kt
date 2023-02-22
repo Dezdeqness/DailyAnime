@@ -133,7 +133,7 @@ class AnimeViewModel @Inject constructor(
         onLoadMore(
             action = {
                 getAnimeListUseCase.invoke(
-                    pageNumber = INITIAL_PAGE,
+                    pageNumber = currentPage,
                     queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
                         filterSelectedCells()
                     ),
