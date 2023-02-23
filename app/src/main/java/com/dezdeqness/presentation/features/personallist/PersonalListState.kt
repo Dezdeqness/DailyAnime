@@ -9,4 +9,6 @@ data class PersonalListState(
     val items: List<AdapterItem> = listOf(),
     val events: List<Event> = listOf(),
     val isPullDownRefreshing: Boolean = false,
+    val isInitialLoadingIndicatorShowing: Boolean = false,
+    val isEmptyStateShowing: Boolean = false,
 )

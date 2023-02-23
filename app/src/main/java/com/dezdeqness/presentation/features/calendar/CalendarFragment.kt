@@ -57,7 +57,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
     }
 
     private fun setupRecyclerView() {
-        binding.calendar.adapter = adapter
+        binding.recycler.adapter = adapter
     }
 
     private fun setupRefreshLayout() {
@@ -86,9 +86,25 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.calendarStateFlow.collect { state ->
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
+
+                    val isLoadingStateShowing =
+                        if (state.items.isEmpty() && state.isEmptyStateShowing.not()) {
+                            state.isInitialLoadingIndicatorShowing
+                        } else {
+                            false
+                        }
+
+                    binding.recycler.setLoadingState(
+                        isLoadingStateShowing = isLoadingStateShowing,
+                    )
+
+                    binding.recycler.setEmptyState(
+                        isEmptyStateShowing = state.isEmptyStateShowing,
+                    )
+
                     adapter.submitList(state.items) {
                         if (state.events.contains(ScrollToTop)) {
-                            binding.calendar.scrollToPosition(0)
+                            binding.recycler.scrollToPosition(0)
                             viewModel.onEventConsumed(ScrollToTop)
                         }
                         state.events.forEach { event ->

@@ -42,6 +42,7 @@ class CalendarViewModel @Inject constructor(
                 val uiItems = calendarComposer.compose(items, query = query)
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
                     items = uiItems,
+                    isEmptyStateShowing = uiItems.isEmpty(),
                 )
             },
         )
@@ -63,7 +64,9 @@ class CalendarViewModel @Inject constructor(
     }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        // TODO
+        _calendarStateFlow.value = _calendarStateFlow.value.copy(
+            isInitialLoadingIndicatorShowing = isVisible,
+        )
     }
 
     override fun onPullDownRefreshed() {
@@ -74,6 +77,7 @@ class CalendarViewModel @Inject constructor(
                 val uiItems = calendarComposer.compose(items = items, query = query)
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
                     items = uiItems,
+                    isEmptyStateShowing = uiItems.isEmpty(),
                 )
             },
         )
@@ -109,6 +113,7 @@ class CalendarViewModel @Inject constructor(
             _calendarStateFlow.value = _calendarStateFlow.value.copy(
                 items = uiItems,
                 events = _calendarStateFlow.value.events + ScrollToTop,
+                isEmptyStateShowing = uiItems.isEmpty(),
             )
         }
     }

@@ -15,6 +15,7 @@ import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToSortFilter
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.models.PersonalListFilterUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -68,6 +69,7 @@ class PersonalListViewModel @Inject constructor(
 
                     _personalListStateFlow.value = _personalListStateFlow.value.copy(
                         items = uiItems,
+                        isEmptyStateShowing = userRatesList.isEmpty(),
                     )
                 },
             )
@@ -81,7 +83,9 @@ class PersonalListViewModel @Inject constructor(
     }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        // TODO
+        _personalListStateFlow.value = _personalListStateFlow.value.copy(
+            isInitialLoadingIndicatorShowing = isVisible,
+        )
     }
 
     override fun onEventConsumed(event: Event) {
@@ -220,8 +224,11 @@ class PersonalListViewModel @Inject constructor(
                 query = query,
             )
 
+            val isEmpty = uiItems.filterNot { it is PersonalListFilterUiModel }.isEmpty()
+
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
+                isEmptyStateShowing = isEmpty,
             )
         }
     }
@@ -273,6 +280,7 @@ class PersonalListViewModel @Inject constructor(
 
                 _personalListStateFlow.value = _personalListStateFlow.value.copy(
                     items = uiItems,
+                    isEmptyStateShowing = userRatesList.isEmpty(),
                 )
             },
         )
