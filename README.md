@@ -23,7 +23,7 @@
 - [ ] Anime core
 - [x] Actions core
 - [ ] User rates in calendar, search?
-- [ ] User rate from details
+- [x] User rate from details
 - [ ] Di core
 - [ ] Payloads issue
 - [x] Viewmodel core
