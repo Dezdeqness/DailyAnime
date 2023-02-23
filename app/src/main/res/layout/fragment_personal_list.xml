@@ -33,11 +33,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/personal_list"
+            <com.dezdeqness.ui.RecyclerViewWithState
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:emptyStateLayout="@layout/state_personal_list_empty_state"
+                app:recycleViewLayout="@layout/state_default_recycler_view" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

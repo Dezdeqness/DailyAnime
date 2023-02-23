@@ -119,6 +119,22 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.personalListStateFlow.collect { state ->
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
+
+                    val isLoadingStateShowing =
+                        if (state.items.isEmpty() && state.isEmptyStateShowing.not()) {
+                            state.isInitialLoadingIndicatorShowing
+                        } else {
+                            false
+                        }
+
+                    binding.recycler.setLoadingState(
+                        isLoadingStateShowing = isLoadingStateShowing,
+                    )
+
+                    binding.recycler.setEmptyState(
+                        isEmptyStateShowing = state.isEmptyStateShowing,
+                    )
+
                     if (state.ribbon.isNotEmpty()) {
                         binding.ribbon.populate(
                             list = state.ribbon,
@@ -129,7 +145,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                     }
                     adapter.submitList(state.items) {
                         if (state.events.contains(ScrollToTop)) {
-                            binding.personalList.scrollToPosition(0)
+                            binding.recycler.scrollToPosition(0)
                             viewModel.onEventConsumed(ScrollToTop)
                         }
                     }
@@ -172,7 +188,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     }
 
     private fun setupRecyclerView() {
-        binding.personalList.adapter = adapter
+        binding.recycler.adapter = adapter
     }
 
     companion object {
