@@ -1,12 +1,14 @@
 package com.dezdeqness.domain.usecases
 
+import com.dezdeqness.domain.model.AuthorizationState
 import com.dezdeqness.domain.repository.AccountRepository
 
 class LoginUseCase(
     private val accountRepository: AccountRepository,
+
 ) {
 
-    operator fun invoke(code: String): Result<Boolean> {
+    suspend operator fun invoke(code: String): Result<Boolean> {
         val loginResult = accountRepository.login(code)
 
         if (loginResult.isFailure) {
@@ -30,6 +32,8 @@ class LoginUseCase(
         accountRepository.saveProfileLocal(
             profileResult.getOrNull() ?: return Result.failure(Throwable())
         )
+
+        accountRepository.emitAuthorizationState(AuthorizationState.LoggedIn)
 
         return Result.success(true)
     }

@@ -4,8 +4,11 @@ import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.model.AccountEntity
+import com.dezdeqness.domain.model.AuthorizationState
 import com.dezdeqness.domain.model.TokenEntity
 import com.dezdeqness.domain.repository.AccountRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
@@ -16,6 +19,8 @@ class AccountRepositoryImpl @Inject constructor(
     private val tokenManager: TokenManager,
 ) : AccountRepository {
 
+    private val _authorizationState: MutableSharedFlow<AuthorizationState> = MutableSharedFlow()
+    override fun authorizationState(): SharedFlow<AuthorizationState> = _authorizationState
     override fun getAuthorizationCodeUrl() = accountRemoteDataSource.getAuthorizationCodeUrl()
 
     override fun isAuthorized() = accountLocalDataSource.getAccount() != null
@@ -77,4 +82,7 @@ class AccountRepositoryImpl @Inject constructor(
         accountLocalDataSource.saveAccount(accountEntity)
     }
 
+    override suspend fun emitAuthorizationState(state: AuthorizationState) {
+        _authorizationState.emit(state)
+    }
 }

@@ -1,10 +1,14 @@
 package com.dezdeqness.domain.repository
 
 import com.dezdeqness.domain.model.AccountEntity
+import com.dezdeqness.domain.model.AuthorizationState
 import com.dezdeqness.domain.model.TokenEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 
 interface AccountRepository {
+
+    fun authorizationState(): SharedFlow<AuthorizationState>
 
     fun getAuthorizationCodeUrl(): Result<String>
 
@@ -29,5 +33,6 @@ interface AccountRepository {
     fun getProfileLocal(): AccountEntity?
 
     fun saveProfileLocal(accountEntity: AccountEntity)
+    suspend fun emitAuthorizationState(state: AuthorizationState)
 
 }
