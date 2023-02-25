@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.profile
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.domain.model.AuthorizationState
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
 import com.dezdeqness.domain.usecases.LoginUseCase
@@ -34,6 +35,21 @@ class ProfileViewModel @Inject constructor(
                 _profileStateFlow.value = _profileStateFlow.value.copy(
                     isAuthorized = false,
                 )
+            }
+        }
+
+        launchOnIo {
+            accountRepository.authorizationState().collect { state ->
+                val isAuthorized = when (state) {
+                    AuthorizationState.LoggedIn -> true
+                    AuthorizationState.LoggedOut -> false
+                }
+
+                launchOnMain {
+                    _profileStateFlow.value = _profileStateFlow.value.copy(
+                        isAuthorized = isAuthorized,
+                    )
+                }
             }
         }
     }
