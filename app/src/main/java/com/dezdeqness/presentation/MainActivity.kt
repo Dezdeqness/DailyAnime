@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val bottomVav = binding.navigation
 
         val navGraphIds = listOf(
-            R.navigation.personal_list_nav_graph,
+            R.navigation.personal_list_host_nav_graph,
             R.navigation.calendar_nav_graph,
             R.navigation.search_nav_graph,
             R.navigation.profile_nav_graph,

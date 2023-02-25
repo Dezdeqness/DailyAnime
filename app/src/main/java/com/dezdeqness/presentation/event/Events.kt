@@ -38,3 +38,7 @@ data class NavigateToEditRate(val rateId: Long) : Event()
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
 object ScrollToTop : Event()
+
+object NavigateToPersonalList : Event()
+
+object NavigateToUnauthorized : Event()

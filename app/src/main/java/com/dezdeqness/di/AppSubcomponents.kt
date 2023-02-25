@@ -13,6 +13,8 @@ import dagger.Module
         PersonalListComponent::class,
         EditRateComponent::class,
         CalendarComponent::class,
+        PersonalListHostComponent::class,
+        UnauthorizedComponent::class,
     ]
 )
 class AppSubcomponents

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.presentation.features.personallist.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
