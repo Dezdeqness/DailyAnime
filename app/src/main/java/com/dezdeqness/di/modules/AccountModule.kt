@@ -14,6 +14,7 @@ import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 abstract class AccountModule {
@@ -25,6 +26,7 @@ abstract class AccountModule {
             accountRepository = accountRepository
         )
 
+        @Singleton
         @Provides
         fun bindAccountRepository(
             accountRemoteDataSource: AccountRemoteDataSource,
