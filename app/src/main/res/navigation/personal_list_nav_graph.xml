@@ -2,11 +2,15 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/personal_list_nav_graph"
-    app:startDestination="@id/personal_list">
+    app:startDestination="@id/personalList">
 
     <fragment
-        android:id="@+id/personal_list"
-        android:name="com.dezdeqness.presentation.features.personallist.PersonalListFragment" />
+        android:id="@+id/personalList"
+        android:name="com.dezdeqness.presentation.features.personallist.list.PersonalListFragment" />
+
+    <fragment
+        android:id="@+id/unauthorized"
+        android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment" />
 
     <fragment
         android:id="@+id/animeDetailsFragment"
