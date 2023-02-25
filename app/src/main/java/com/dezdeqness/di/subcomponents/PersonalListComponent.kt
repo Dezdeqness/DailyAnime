@@ -1,7 +1,7 @@
 package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.modules.PersonalListModule
-import com.dezdeqness.presentation.features.personallist.PersonalListFragment
+import com.dezdeqness.presentation.features.personallist.list.PersonalListFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [PersonalListModule::class])

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.presentation.features.personallist.list
 
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AdapterItem

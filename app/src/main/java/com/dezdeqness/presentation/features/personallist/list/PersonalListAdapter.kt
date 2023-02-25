@@ -1,9 +1,9 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.presentation.features.personallist.list
 
 import com.dezdeqness.core.DelegateAdapter
 import com.dezdeqness.presentation.action.ActionListener
-import com.dezdeqness.presentation.features.personallist.recyclerview.personalListFilterAdapterDelegate
-import com.dezdeqness.presentation.features.personallist.recyclerview.userRateAnimeAdapterDelegate
+import com.dezdeqness.presentation.features.personallist.list.recyclerview.personalListFilterAdapterDelegate
+import com.dezdeqness.presentation.features.personallist.list.recyclerview.userRateAnimeAdapterDelegate
 import com.dezdeqness.presentation.models.AdapterItem
 
 class PersonalListAdapter(

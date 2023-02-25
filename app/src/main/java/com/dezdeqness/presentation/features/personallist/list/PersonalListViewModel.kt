@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.presentation.features.personallist.list
 
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
