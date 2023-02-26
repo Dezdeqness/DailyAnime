@@ -28,23 +28,44 @@ fun userRateAnimeAdapterDelegate(
                 onEditRateClicked.invoke(item.rateId)
             }
 
-            bind {
+            bind { payloads ->
                 with(binding) {
-                    animeTitle.text = item.name
-                    animeBriefInfo.text = item.briefInfo
-                    animeProgress.text = item.progress
-                    animeScore.text = item.score
+                    if (payloads.isEmpty()) {
+                        animeTitle.text = item.name
+                        animeBriefInfo.text = item.briefInfo
+                        animeProgress.text = item.progress
+                        animeScore.text = item.score
 
-                    Glide.with(root)
-                        .clear(animeLogo)
+                        Glide.with(root)
+                            .clear(animeLogo)
 
-                    Glide
-                        .with(root)
-                        .load(item.logoUrl)
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
-                        .into(animeLogo)
+                        Glide
+                            .with(root)
+                            .load(item.logoUrl)
+                            .centerCrop()
+                            .placeholder(R.drawable.ic_launcher_background)
+                            .into(animeLogo)
+                    } else {
+                        payloads
+                            .filterIsInstance<UserRateUiModel.UserRateUiModelPayload>()
+                            .forEach { payload ->
+                                payload.name?.let {
+                                    animeTitle.text = item.name
+                                }
+                                payload.briefInfo?.let {
+                                    animeBriefInfo.text = item.briefInfo
+                                }
+                                payload.progress?.let {
+                                    animeProgress.text = item.progress
+                                }
+                                payload.score?.let {
+                                    animeScore.text = item.score
+                                }
+
+                            }
+                    }
                 }
+
             }
         }
     )
