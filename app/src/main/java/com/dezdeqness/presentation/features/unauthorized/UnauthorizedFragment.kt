@@ -45,11 +45,19 @@ class UnauthorizedFragment : BaseFragment<FragmentUnauthorizedBinding>() {
 
     private fun setupListeners() {
         binding.signIn.setOnClickListener {
-            AuthorizationActivity.startActivity(authorizationObserver, requireContext())
+            AuthorizationActivity.startActivity(
+                authorizationObserver,
+                requireContext(),
+                isLogin = true
+            )
         }
 
         binding.signUp.setOnClickListener {
-            AuthorizationActivity.startActivity(authorizationObserver, requireContext())
+            AuthorizationActivity.startActivity(
+                authorizationObserver,
+                requireContext(),
+                isLogin = false
+            )
         }
     }
 
