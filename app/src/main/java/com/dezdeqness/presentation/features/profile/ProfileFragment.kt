@@ -52,7 +52,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun setupView() {
         binding.signIn.setOnClickListener {
-            AuthorizationActivity.startActivity(authorizationObserver, requireContext())
+            AuthorizationActivity.startActivity(authorizationObserver, requireContext(), isLogin = true)
         }
     }
 
