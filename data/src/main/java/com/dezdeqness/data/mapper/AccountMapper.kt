@@ -19,7 +19,7 @@ class AccountMapper @Inject constructor() {
             avatar = item.avatar,
             lastOnline = item.lastOnline,
             name = item.name.orEmpty(),
-            sex = item.sex,
+            sex = item.sex.orEmpty(),
             fullAnimeStatusesEntity = FullAnimeStatusesEntity(
                 item.stats?.fullStatuses?.anime?.map { status ->
                     StatusEntity(

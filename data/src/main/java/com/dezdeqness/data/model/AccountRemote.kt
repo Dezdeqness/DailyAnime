@@ -23,7 +23,7 @@ open class AccountRemote : DataModel.Api {
     val name: String? = null
 
     @field:Json(name = "sex")
-    val sex: String = ""
+    val sex: String? = null
 
     @field:Json(name = "stats")
     var stats: Stats? = null
