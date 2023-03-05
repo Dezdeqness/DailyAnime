@@ -22,8 +22,6 @@
 - [x] Fragment core
 - [x] Anime core
 - [x] Actions core
-- [ ] User rates in calendar, search?
 - [x] User rate from details
-- [ ] Di core
 - [x] Payloads issue
 - [x] Viewmodel core
