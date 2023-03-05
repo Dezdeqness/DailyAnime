@@ -2,6 +2,7 @@ package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
@@ -18,8 +19,14 @@ abstract class AnimeDetailsModule {
     companion object {
 
         @Provides
-        fun provideGetAnimeDetailsUseCase(animeRepository: AnimeRepository) = GetAnimeDetailsUseCase(
-            animeRepository = animeRepository
+        fun provideGetAnimeDetailsUseCase(
+            animeRepository: AnimeRepository,
+            accountRepository: AccountRepository,
+            userRatesRepository: UserRatesRepository,
+        ) = GetAnimeDetailsUseCase(
+            animeRepository = animeRepository,
+            accountRepository = accountRepository,
+            userRatesRepository = userRatesRepository,
         )
 
         @Provides

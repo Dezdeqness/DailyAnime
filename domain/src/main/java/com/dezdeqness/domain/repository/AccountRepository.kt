@@ -16,6 +16,8 @@ interface AccountRepository {
 
     fun saveToken(tokenEntity: TokenEntity): Result<Boolean>
 
+    fun getToken(): TokenEntity
+
     fun isSessionExpired(): Boolean
 
     fun clearToken()
