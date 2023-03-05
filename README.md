@@ -20,10 +20,10 @@
 
 ## Second stage(Improvements and enhancements)
 - [x] Fragment core
-- [ ] Anime core
+- [x] Anime core
 - [x] Actions core
 - [ ] User rates in calendar, search?
 - [x] User rate from details
 - [ ] Di core
-- [ ] Payloads issue
+- [x] Payloads issue
 - [x] Viewmodel core
