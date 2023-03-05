@@ -18,10 +18,19 @@
 - [x] Calendar
 - [x] Personal list
 
-## Second stage(Improvements and enhancements)
+## Second stage(Theming, redesign)
 - [x] Fragment core
 - [x] Anime core
 - [x] Actions core
 - [x] User rate from details
 - [x] Payloads issue
 - [x] Viewmodel core
+
+## Third stage(Improvements and enhancements)
+- [ ] Splash screen
+- [ ] Night theme
+- [ ] Redesign personal list screen(cell, order, sort, change ribbon)
+- [ ] Redesign search screen(fab, cell, placeholders, filter dialog)
+- [ ] Redesign profile
+- [ ] Redesign calendar
+- [ ] Redesign details screen
