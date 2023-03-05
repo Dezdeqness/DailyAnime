@@ -99,4 +99,8 @@ class UserRatesRepositoryImpl @Inject constructor(
         )
         return result.map { true }
     }
+
+    override fun updateLocalUserRate(userRateEntity: UserRateEntity) {
+        userRatesLocalDataSource.saveUserRates(listOf(userRateEntity))
+    }
 }

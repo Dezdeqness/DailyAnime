@@ -31,6 +31,8 @@ class AccountRepositoryImpl @Inject constructor(
         return Result.success(true)
     }
 
+    override fun getToken() = tokenManager.getTokenData()
+
     override fun isSessionExpired() = tokenManager.isTokenExpired()
 
     override fun clearToken() {
