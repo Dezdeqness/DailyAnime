@@ -10,8 +10,8 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.4.1' apply false
-    id 'com.android.library' version '7.4.1' apply false
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
     id 'io.gitlab.arturbosch.detekt' version '1.21.0-RC2'
 }
@@ -54,6 +54,6 @@ tasks.named("detekt").configure {
 }
 
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
