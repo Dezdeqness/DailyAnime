@@ -8,10 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="text_primary">#FFFFFFFF</color>
+    <color name="drawable_icon">#FF000000</color>
+    <color name="pure_white">#FFFFFFFF</color>
+
+    <color name="text_primary">#FF000000</color>
+
+    <color name="list_title_primary">#FF000000</color>
 
     <color name="background_shadow">#AA000000</color>
 
-    <color name="chip_default_background">@color/white</color>
-    <color name="chip_selected_state">#7C7C7C</color>
+    <color name="background_tint">#ffffffff</color>
+
+    <color name="loading_indicator">#FF000000</color>
+    <color name="chip_background">#ffffffff</color>
+    <color name="chip_stroke">#ff000000</color>
+
+    <color name="filter_divider">#14000000</color>
 </resources>
