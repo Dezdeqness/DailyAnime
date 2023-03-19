@@ -10,8 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.dezdeqness.R
+import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentAnimeListBinding
+import com.dezdeqness.databinding.ItemSearchViewBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.event.ScrollToTop
@@ -24,7 +27,13 @@ import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.ui.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 
-class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListener {
+class AnimeListFragment :
+    BaseFragment<FragmentAnimeListBinding>(),
+    ActionListener, BackFragmentListener {
+
+    private val searchView: SearchView by lazy {
+        ItemSearchViewBinding.inflate(layoutInflater).root
+    }
 
     private val adapter: AnimeListAdapter by lazy {
         AnimeListAdapter(
@@ -62,7 +71,6 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -71,6 +79,7 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
         setupRecyclerView()
         setupObservers()
         setupFab()
+        setupMenu()
     }
 
     override fun onDestroy() {
@@ -82,6 +91,40 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
         viewModel.onActionReceive(action)
     }
 
+    private fun setupMenu() {
+        binding.searchToolbar.apply {
+            inflateMenu(R.menu.menu_search)
+            title = null
+
+            menu?.findItem(R.id.action_search)?.actionView = searchView
+            searchView.apply {
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        viewModel.onQueryChanged(query)
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (newText.isEmpty()) {
+                            viewModel.onQueryEmpty()
+                        }
+                        return false
+                    }
+
+                })
+                setOnCloseListener {
+                    return@setOnCloseListener true
+                }
+            }
+        }
+    }
+
+    override fun isBackNeed() = searchView.isIconified
+
+    override fun onBackPressed() {
+        binding.searchToolbar.menu?.findItem(R.id.action_search)?.collapseActionView()
+    }
+
     private fun setupRefreshLayout() {
         binding.refresh.setOnRefreshListener {
             viewModel.onPullDownRefreshed()
@@ -89,20 +132,20 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
     }
 
     private fun setupSearchView() {
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.onQueryChanged(query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isEmpty()) {
-                    viewModel.onQueryEmpty()
-                }
-                return false
-            }
-
-        })
+//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String): Boolean {
+//                viewModel.onQueryChanged(query)
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String): Boolean {
+//                if (newText.isEmpty()) {
+//                    viewModel.onQueryEmpty()
+//                }
+//                return false
+//            }
+//
+//        })
     }
 
     private fun setupFab() {
@@ -158,9 +201,11 @@ class AnimeListFragment : BaseFragment<FragmentAnimeListBinding>(), ActionListen
                                     AnimeSearchFilterBottomSheetDialog.TAG
                                 )
                             }
+
                             is ConsumableEvent -> {
                                 eventConsumer.consume(event)
                             }
+
                             else -> {}
                         }
 

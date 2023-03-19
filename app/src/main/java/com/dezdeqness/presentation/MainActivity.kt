@@ -3,6 +3,7 @@ package com.dezdeqness.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dezdeqness.R
+import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.extensions.setupWithNavController
 
@@ -18,6 +19,23 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
+
+    }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.fragments.firstOrNull { it.isAdded && it.isVisible }
+            ?: return
+
+        val lastFragment =
+            fragment.childFragmentManager.fragments.filterIsInstance<BackFragmentListener>()
+                .lastOrNull()
+        val isBackOk = lastFragment?.isBackNeed() ?: true
+
+        if (isBackOk) {
+            super.onBackPressed()
+        } else {
+            lastFragment?.onBackPressed()
+        }
 
     }
 
