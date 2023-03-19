@@ -4,45 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/anime_logo"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/anime_logo"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/anime_kind"
+                style="@style/SearchItemLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="TV" />
+
+        </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/anime_kind"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/background_shadow"
-            android:padding="4dp"
-            android:textColor="@color/text_primary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="TV" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/anime_brief_info"
+            android:id="@+id/anime_title"
+            style="@style/SearchItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background_shadow"
-            android:padding="4dp"
-            android:textAlignment="center"
-            android:textColor="@color/text_primary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Death note\nCompleted" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:text="Death note" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </com.google.android.material.card.MaterialCardView>

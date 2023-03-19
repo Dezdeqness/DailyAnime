@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.view.children
 import com.dezdeqness.R
@@ -100,9 +101,8 @@ class SearchFilterView @JvmOverloads constructor(
             setOnClickListener {
                 chipListener?.onClickListener(item)
             }
-            setOnLongClickListener {
+            setOnCloseIconClickListener {
                 chipListener?.onLongClickListener(item)
-                true
             }
             setChipState(this, item)
         }
@@ -110,17 +110,23 @@ class SearchFilterView @JvmOverloads constructor(
     private fun setChipState(chip: Chip, item: AnimeCell) {
         when (item.state) {
             CellState.INCLUDE -> {
-                chip.setChipBackgroundColorResource(R.color.chip_selected_state)
-                chip.isChipIconVisible = false
-
+                chip.setTextColor(ContextCompat.getColor(context, R.color.pure_white))
+                chip.setChipBackgroundColorResource(R.color.purple_500)
+                chip.setCloseIconResource(R.drawable.ic_plus)
+                chip.setCloseIconTintResource(R.color.pure_white)
+                chip.isCloseIconVisible = true
             }
             CellState.EXCLUDE -> {
-                chip.isChipIconVisible = true
-                chip.setChipBackgroundColorResource(R.color.chip_selected_state)
+                chip.setTextColor(ContextCompat.getColor(context, R.color.pure_white))
+                chip.setChipBackgroundColorResource(R.color.purple_500)
+                chip.setCloseIconResource(R.drawable.ic_minus)
+                chip.setCloseIconTintResource(R.color.pure_white)
+                chip.isCloseIconVisible = true
             }
             else -> {
-                chip.isChipIconVisible = false
-                chip.setChipBackgroundColorResource(R.color.chip_default_background)
+                chip.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+                chip.setChipBackgroundColorResource(R.color.chip_background)
+                chip.isCloseIconVisible = false
             }
         }
     }
