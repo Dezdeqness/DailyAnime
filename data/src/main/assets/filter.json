@@ -65,20 +65,20 @@
         "type": "kind"
     },
     {
-        "id": "s",
-        "name": "< 10 мин.",
-        "type": "duration"
+      "id": "S",
+      "name": "Менее 10 мин.",
+      "type": "duration"
     },
-    {
-        "id": "d",
-        "name": "< 30 мин.",
-        "type": "duration"
-    },
-    {
-        "id": "f",
-        "name": "> 30 мин.",
-        "type": "duration"
-    },
+  {
+    "id": "D",
+    "name": "Менее 30 мин.",
+    "type": "duration"
+  },
+  {
+    "id": "F",
+    "name": "Более 30 мин.",
+    "type": "duration"
+  },
     {
         "id": "g",
         "name": "G",

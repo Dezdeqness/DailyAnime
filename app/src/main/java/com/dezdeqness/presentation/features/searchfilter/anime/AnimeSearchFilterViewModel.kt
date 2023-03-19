@@ -33,10 +33,9 @@ class AnimeSearchFilterViewModel @Inject constructor(
 
     init {
         if (list.isEmpty()) {
-            searchFilterRepository.getFilterConfiguration().run {
-                _animeSearchFilterStateFlow.value =
-                    AnimeSearchFilterState(items = animeSearchFilterComposer.compose(this))
-            }
+            val list = searchFilterRepository.getFilterConfiguration()
+            _animeSearchFilterStateFlow.value =
+                AnimeSearchFilterState(items = animeSearchFilterComposer.compose(list))
         } else {
             _animeSearchFilterStateFlow.value =
                 AnimeSearchFilterState(items = list)
@@ -72,11 +71,19 @@ class AnimeSearchFilterViewModel @Inject constructor(
     }
 
     fun onCellLongClicked(item: AnimeCell) {
-        if (item.state == CellState.NONE) {
-            item.state = CellState.EXCLUDE
-            selectedCells.add(item)
-        } else if (item.state == CellState.INCLUDE) {
-            item.state = CellState.EXCLUDE
+        when (item.state) {
+            CellState.NONE -> {
+                item.state = CellState.EXCLUDE
+                selectedCells.add(item)
+            }
+
+            CellState.INCLUDE -> {
+                item.state = CellState.EXCLUDE
+            }
+
+            CellState.EXCLUDE -> {
+                item.state = CellState.INCLUDE
+            }
         }
         _animeSearchFilterStateFlow.value =
             _animeSearchFilterStateFlow.value.copy(currentCellUpdate = item)

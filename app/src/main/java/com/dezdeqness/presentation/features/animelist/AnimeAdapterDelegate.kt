@@ -23,7 +23,7 @@ fun animeAdapterDelegate(actionListener: ActionListener) =
 
             bind {
                 with(binding) {
-                    animeBriefInfo.text = item.briefInfo
+                    animeTitle.text = item.title
                     animeKind.text = item.kind
                     Glide.with(root)
                         .clear(animeLogo)
@@ -32,7 +32,7 @@ fun animeAdapterDelegate(actionListener: ActionListener) =
                         .with(root)
                         .load(item.logoUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.ic_search_placeholder)
                         .into(animeLogo)
                 }
             }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_tint">#3D000000</color>
+
+    <color name="drawable_icon">#FFFFFFFF</color>
+
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="list_title_primary">#FFFFFFFF</color>
+
+    <color name="loading_indicator">#FFFFFFFF</color>
+
+    <color name="chip_background">#00000000</color>
+    <color name="chip_stroke">#ffffffff</color>
+
+</resources>

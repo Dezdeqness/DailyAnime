@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.dezdeqness.R
 
 
@@ -100,20 +98,7 @@ class RecyclerViewWithState @JvmOverloads constructor(
         this.isEmptyStateShowing = isEmptyStateShowing
         removeView(emptyStateView)
 
-        val gifImageView = emptyStateView?.findViewById<AppCompatImageView>(R.id.empty_screen_image)
-        gifImageView?.let {
-            Glide.with(this).clear(it)
-        }
-
         if (isEmptyStateShowing) {
-            gifImageView?.let {
-                Glide
-                    .with(this)
-                    .asGif()
-                    .load(R.raw.sad_cat)
-                    .into(it)
-            }
-
             addView(emptyStateView)
         }
     }
