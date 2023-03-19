@@ -14,9 +14,10 @@ class AnimeUiMapper @Inject constructor(
     fun map(animeBriefEntity: AnimeBriefEntity) =
         AnimeUiModel(
             id = animeBriefEntity.id,
-            briefInfo = "${animeBriefEntity.name}\n${animeBriefEntity.status}",
+            title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
+                ?: animeBriefEntity.name,
             kind = animeBriefEntity.kind.name,
-            logoUrl = imageUrlUtils.getImageWithBaseUrl(animeBriefEntity.image.preview),
+            logoUrl = imageUrlUtils.getImageWithBaseUrl(animeBriefEntity.image.original),
             airedYear = animeBriefEntity.airedOn.split("-").firstOrNull().orEmpty()
         )
 

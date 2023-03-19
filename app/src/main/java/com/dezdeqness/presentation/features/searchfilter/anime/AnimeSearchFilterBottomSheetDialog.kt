@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,10 +15,10 @@ import com.dezdeqness.databinding.ItemAnimeSearchFilterBinding
 import com.dezdeqness.di.subcomponents.SearchFilterListModule
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.ApplyFilter
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.features.searchfilter.BaseSearchFilterBottomSheetDialog
 import com.dezdeqness.presentation.models.AnimeCell
 import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.CellState
 import com.dezdeqness.view.SearchFilterView
 import kotlinx.coroutines.launch
 
@@ -57,6 +58,11 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                 viewModel.animeSearchFilterStateFlow.collect { state ->
                     setInitialState(state)
                     updateCell(state)
+                    val isSelected =
+                        state.items.flatMap { it.items }.any { it.state != CellState.NONE }
+
+                    binding.resetFilter.isVisible = isSelected
+
                     viewModel.nullifyCurrentCell()
                     state.listEvents.forEach { event ->
                         when (event) {
@@ -68,6 +74,7 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                                 )
                                 this@AnimeSearchFilterBottomSheetDialog.dismiss()
                             }
+
                             else -> {}
                         }
 

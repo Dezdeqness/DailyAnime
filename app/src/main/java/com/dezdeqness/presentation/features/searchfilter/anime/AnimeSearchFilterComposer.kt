@@ -16,7 +16,7 @@ class AnimeSearchFilterComposer @Inject constructor(
         val animeFilters = mutableListOf<AnimeSearchFilter>()
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.GENRE },
+                filters.filter { it.type == FilterType.GENRE }.sortedBy { it.name },
                 FilterType.GENRE.filterName
             )
         )
