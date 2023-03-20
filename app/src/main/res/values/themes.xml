@@ -59,7 +59,7 @@
     <style name="SearchItemLabel">
         <item name="android:background">@color/background_shadow</item>
         <item name="android:padding">4dp</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/search_label</item>
     </style>
 
     <style name="SearchItemTitle">

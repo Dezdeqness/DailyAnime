@@ -12,6 +12,7 @@
     <color name="pure_white">#FFFFFFFF</color>
 
     <color name="text_primary">#FF000000</color>
+    <color name="search_label">#FFFFFFFF</color>
 
     <color name="list_title_primary">#FF000000</color>
 
