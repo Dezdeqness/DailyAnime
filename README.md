@@ -30,7 +30,7 @@
 - [ ] Splash screen
 - [ ] Night theme
 - [ ] Redesign personal list screen(cell, order, sort, change ribbon)
-- [ ] Redesign search screen(fab, cell, placeholders, filter dialog)
+- [x] Redesign search screen(fab, cell, placeholders, filter dialog)
 - [ ] Redesign profile
 - [ ] Redesign calendar
 - [ ] Redesign details screen
