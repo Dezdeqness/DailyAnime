@@ -12,4 +12,6 @@
     <color name="chip_background">#00000000</color>
     <color name="chip_stroke">#ffffffff</color>
 
+    <color name="profile_background_label">#2AAAA8A8</color>
+
 </resources>

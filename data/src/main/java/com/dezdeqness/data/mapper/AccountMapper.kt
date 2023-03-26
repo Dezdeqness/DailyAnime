@@ -16,7 +16,7 @@ class AccountMapper @Inject constructor() {
         AccountEntity(
             id = item.id,
             nickname = item.nickname,
-            avatar = item.avatar,
+            avatar = item.image?.x160.orEmpty(),
             lastOnline = item.lastOnline,
             name = item.name.orEmpty(),
             sex = item.sex.orEmpty(),

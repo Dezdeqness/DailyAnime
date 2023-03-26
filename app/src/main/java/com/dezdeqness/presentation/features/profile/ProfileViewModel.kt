@@ -13,9 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
     private val getProfileUseCase: GetProfileUseCase,
-    private val accountRepository: AccountRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -28,29 +26,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            val isAuthorized = accountRepository.isAuthorized()
-            if (isAuthorized) {
-                fetchProfile()
-            } else {
-                _profileStateFlow.value = _profileStateFlow.value.copy(
-                    isAuthorized = false,
-                )
-            }
-        }
-
-        launchOnIo {
-            accountRepository.authorizationState().collect { state ->
-                val isAuthorized = when (state) {
-                    AuthorizationState.LoggedIn -> true
-                    AuthorizationState.LoggedOut -> false
-                }
-
-                launchOnMain {
-                    _profileStateFlow.value = _profileStateFlow.value.copy(
-                        isAuthorized = isAuthorized,
-                    )
-                }
-            }
+            fetchProfile()
         }
     }
 
@@ -64,34 +40,11 @@ class ProfileViewModel @Inject constructor(
         // TODO
     }
 
-    fun onAuthorizationCodeReceived(code: String?) {
-        if (code.isNullOrEmpty()) {
-            // TODO: error prompt
-            appLogger.logInfo(viewModelTag(), "code is empty")
-            return
-        }
-        launchOnIo {
-            loginUseCase
-                .invoke(code)
-                .onSuccess {
-                    fetchProfile()
-                }
-                .onFailure {
-                    appLogger.logInfo(
-                        tag = viewModelTag(),
-                        throwable = it,
-                        message = "login failed",
-                    )
-                }
-        }
-    }
-
     private fun fetchProfile() {
         onInitialLoad(
-            collector = getProfileUseCase(),
+            collector = getProfileUseCase.invoke(),
             onSuccess = { account ->
                 _profileStateFlow.value = _profileStateFlow.value.copy(
-                    isAuthorized = true,
                     avatar = account.avatar,
                     nickname = account.nickname,
                 )
