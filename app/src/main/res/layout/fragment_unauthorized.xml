@@ -6,10 +6,12 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Залогинься, ну че ты *__*"
+        android:gravity="center"
+        android:text="@string/unauthorized_title_profile"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -22,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Регистрация"
+            android:text="@string/unauthorized_sign_up"
             android:textAllCaps="false" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -30,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Авторизация"
+            android:text="@string/unauthorized_sign_in"
             android:textAllCaps="false" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

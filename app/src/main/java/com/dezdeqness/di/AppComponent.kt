@@ -45,7 +45,7 @@ interface AppComponent {
 
     fun calendarComponent(): CalendarComponent.Factory
 
-    fun personalListHostComponent() : PersonalListHostComponent.Factory
+    fun unauthorizedHostComponent(): UnauthorizedHostComponent.Factory
 
     fun unauthorizedComponent() : UnauthorizedComponent.Factory
 

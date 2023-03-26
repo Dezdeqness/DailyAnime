@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.list.recyclerview
+package com.dezdeqness.presentation.features.personallist.recyclerview
 
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.databinding.ItemPersonalListFilterBinding

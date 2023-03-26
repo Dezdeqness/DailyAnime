@@ -5,6 +5,7 @@ import android.content.res.AssetManager
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.CoroutineDispatcherProviderImpl
+import com.dezdeqness.data.manager.PersonalListFilterManager
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
@@ -58,7 +59,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideCoroutineDispatcherProvider(): CoroutineDispatcherProvider = CoroutineDispatcherProviderImpl()
+    fun provideCoroutineDispatcherProvider(): CoroutineDispatcherProvider =
+        CoroutineDispatcherProviderImpl()
 
     @Singleton
     @Provides
@@ -66,4 +68,10 @@ class AppModule {
 
     @Provides
     fun provideActionConsumer() = ActionConsumer()
+
+    @Singleton
+    fun providePersonalListFilter(context: Context) =
+        PersonalListFilterManager(
+            context = context,
+        )
 }

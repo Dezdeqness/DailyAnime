@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentUnauthorizedBinding
 import com.dezdeqness.di.AppComponent
@@ -40,7 +42,16 @@ class UnauthorizedFragment : BaseFragment<FragmentUnauthorizedBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupView()
         setupListeners()
+    }
+
+    private fun setupView() {
+        arguments
+            ?.getInt("titleResId", R.string.unauthorized_title_default)
+            ?.let {
+                binding.title.text = getString(it)
+            }
     }
 
     private fun setupListeners() {

@@ -42,3 +42,5 @@ object ScrollToTop : Event()
 object NavigateToPersonalList : Event()
 
 object NavigateToUnauthorized : Event()
+
+object NavigateToProfile : Event()
