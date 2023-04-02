@@ -74,7 +74,6 @@ class AnimeListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupSearchView()
         setupRefreshLayout()
         setupRecyclerView()
         setupObservers()
@@ -129,23 +128,6 @@ class AnimeListFragment :
         binding.refresh.setOnRefreshListener {
             viewModel.onPullDownRefreshed()
         }
-    }
-
-    private fun setupSearchView() {
-//        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String): Boolean {
-//                viewModel.onQueryChanged(query)
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String): Boolean {
-//                if (newText.isEmpty()) {
-//                    viewModel.onQueryEmpty()
-//                }
-//                return false
-//            }
-//
-//        })
     }
 
     private fun setupFab() {
