@@ -27,4 +27,7 @@
     <string name="profile_history">История</string>
     <string name="profile_statistics">Статистика</string>
 
+    <string name="history_empty_state">Ваша история пуста</string>
+    <string name="history_toolbar_title">История</string>
+
 </resources>
