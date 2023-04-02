@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
@@ -41,7 +42,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private fun setupViews() {
         with(binding) {
             history.setOnClickListener {
-
+                this@ProfileFragment
+                    .findNavController()
+                    .navigate(
+                        R.id.history,
+                    )
             }
             statistics.setOnClickListener {
 

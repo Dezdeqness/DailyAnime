@@ -17,4 +17,8 @@
             app:argType="reference" />
     </fragment>
 
+    <fragment
+        android:id="@+id/history"
+        android:name="com.dezdeqness.presentation.features.history.HistoryFragment" />
+
 </navigation>
