@@ -15,7 +15,7 @@ import retrofit2.http.Query
 interface UserRatesApiService {
 
     @GET("users/{id}/anime_rates")
-    fun gerUserRates(
+    fun getUserRates(
         @Path(value = "id") id: Long,
         @Query(value = "limit") limit: Int,
         @Query(value = "page") page: Int,

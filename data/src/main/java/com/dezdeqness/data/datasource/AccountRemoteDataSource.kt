@@ -1,6 +1,7 @@
 package com.dezdeqness.data.datasource
 
 import com.dezdeqness.domain.model.AccountEntity
+import com.dezdeqness.domain.model.HistoryEntity
 import com.dezdeqness.domain.model.TokenEntity
 
 interface AccountRemoteDataSource {
@@ -14,5 +15,7 @@ interface AccountRemoteDataSource {
     fun getBriefAccountInfo(token: String): Result<AccountEntity>
 
     fun getDetailsAccountInfo(userId: Long, token: String): Result<AccountEntity>
+
+    fun getHistory(userId: Long, page: Int, limit: Int): Result<List<HistoryEntity>>
 
 }

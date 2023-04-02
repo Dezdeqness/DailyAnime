@@ -79,6 +79,23 @@ class AccountRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun getHistory(userId: Long, page: Int, limit: Int) = tryWithCatch {
+        val response = accountApiService.getUserHistory(
+            id = userId,
+            page = page,
+            limit = limit
+        ).execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            Result.success(
+                responseBody.map(accountMapper::fromResponse)
+            )
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+    }
+
     override fun refresh(token: String) = tryWithCatch {
         val response = authorizationApiService.refresh(
             token = token,
