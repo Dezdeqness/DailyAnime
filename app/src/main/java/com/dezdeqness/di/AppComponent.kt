@@ -47,6 +47,8 @@ interface AppComponent {
 
     fun unauthorizedHostComponent(): UnauthorizedHostComponent.Factory
 
-    fun unauthorizedComponent() : UnauthorizedComponent.Factory
+    fun unauthorizedComponent(): UnauthorizedComponent.Factory
+
+    fun historyComponent(): HistoryComponent.Factory
 
 }
