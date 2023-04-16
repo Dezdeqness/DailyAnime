@@ -12,6 +12,9 @@ import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.data.provider.SettingsProvider
+import com.dezdeqness.data.repository.SettingsRepositoryImpl
+import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -52,6 +55,11 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun provideSettingsProvider(context: Context) =
+        SettingsProvider(context = context)
+
+    @Singleton
+    @Provides
     fun provideMoshi(): Moshi =
         Moshi.Builder()
             .add(FilterTypeAdapter())
@@ -70,8 +78,15 @@ class AppModule {
     fun provideActionConsumer() = ActionConsumer()
 
     @Singleton
+    @Provides
     fun providePersonalListFilter(context: Context) =
         PersonalListFilterManager(
             context = context,
         )
+
+    @Singleton
+    @Provides
+    fun provideSettingsRepository(settingsProvider: SettingsProvider): SettingsRepository =
+        SettingsRepositoryImpl(settingsProvider = settingsProvider)
+
 }

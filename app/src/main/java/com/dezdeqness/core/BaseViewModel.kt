@@ -253,27 +253,27 @@ abstract class BaseViewModel(
             lambda.invoke()
         }
 
-    fun launchOnMain(lambda: () -> Unit) =
+    fun launchOnMain(lambda: suspend () -> Unit) =
         launch(coroutineDispatcherProvider.main()) {
             lambda.invoke()
         }
 
-    fun launchOnComputation(lambda: () -> Unit) =
+    fun launchOnComputation(lambda: suspend () -> Unit) =
         launch(coroutineDispatcherProvider.computation()) {
             lambda.invoke()
         }
 
-    fun <T> asyncOnIo(lambda: () -> T) =
+    fun <T> asyncOnIo(lambda: suspend () -> T) =
         async(coroutineDispatcherProvider.io()) {
             lambda.invoke()
         }
 
-    fun <T> asyncOnMain(lambda: () -> T) =
+    fun <T> asyncOnMain(lambda: suspend () -> T) =
         async(coroutineDispatcherProvider.main()) {
             lambda.invoke()
         }
 
-    fun <T> asyncOnComputation(lambda: () -> T) =
+    fun <T> asyncOnComputation(lambda: suspend () -> T) =
         async(coroutineDispatcherProvider.computation()) {
             lambda.invoke()
         }

@@ -41,15 +41,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun setupViews() {
         with(binding) {
-            history.setOnClickListener {
+            historyLabel.setOnClickListener {
+                // TODO: event
                 this@ProfileFragment
                     .findNavController()
                     .navigate(
                         R.id.history,
                     )
             }
-            statistics.setOnClickListener {
+            statisticsLabel.setOnClickListener {
 
+            }
+
+            settingsLabel.setOnClickListener {
+                // TODO: event
+                this@ProfileFragment
+                    .findNavController()
+                    .navigate(
+                        R.id.settings,
+                    )
             }
         }
     }

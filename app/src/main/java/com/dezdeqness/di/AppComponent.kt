@@ -6,6 +6,7 @@ import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule
 import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.subcomponents.*
+import com.dezdeqness.domain.repository.SettingsRepository
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -50,5 +51,9 @@ interface AppComponent {
     fun unauthorizedComponent(): UnauthorizedComponent.Factory
 
     fun historyComponent(): HistoryComponent.Factory
+
+    fun settingsComponent(): SettingsComponent.Factory
+
+    fun settingsRepository(): SettingsRepository
 
 }
