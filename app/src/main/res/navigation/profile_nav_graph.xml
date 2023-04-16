@@ -21,4 +21,8 @@
         android:id="@+id/history"
         android:name="com.dezdeqness.presentation.features.history.HistoryFragment" />
 
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.dezdeqness.presentation.features.settings.SettingsFragment" />
+
 </navigation>

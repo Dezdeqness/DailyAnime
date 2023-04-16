@@ -12,7 +12,7 @@ class ImageUrlUtils @Inject constructor() {
 
 
     companion object {
-        private const val BASE_URL = "https://shikimori.one/"
+        private const val BASE_URL = "https://shikimori.me/"
     }
 
 }
