@@ -39,6 +39,7 @@ android {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion
     }
+    namespace 'com.dezdeqness'
 
 }
 
