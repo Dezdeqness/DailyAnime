@@ -24,6 +24,6 @@ abstract class HistoryModule {
     @Binds
     @IntoMap
     @ViewModelKey(HistoryViewModel::class)
-    abstract fun bindVHistoryViewModel(viewModel: HistoryViewModel): ViewModel
+    abstract fun bindHistoryViewModel(viewModel: HistoryViewModel): ViewModel
 
 }

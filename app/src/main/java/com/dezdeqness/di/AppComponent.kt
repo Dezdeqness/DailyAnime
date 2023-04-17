@@ -54,6 +54,8 @@ interface AppComponent {
 
     fun settingsComponent(): SettingsComponent.Factory
 
+    fun statsComponent(): StatsComponent.Factory
+
     fun settingsRepository(): SettingsRepository
 
 }

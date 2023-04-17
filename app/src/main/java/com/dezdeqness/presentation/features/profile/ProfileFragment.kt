@@ -50,7 +50,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     )
             }
             statisticsLabel.setOnClickListener {
-
+                // TODO: event
+                this@ProfileFragment
+                    .findNavController()
+                    .navigate(
+                        R.id.statistics,
+                    )
             }
 
             settingsLabel.setOnClickListener {

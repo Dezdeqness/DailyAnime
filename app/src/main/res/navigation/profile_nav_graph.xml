@@ -25,4 +25,8 @@
         android:id="@+id/settings"
         android:name="com.dezdeqness.presentation.features.settings.SettingsFragment" />
 
+    <fragment
+        android:id="@+id/statistics"
+        android:name="com.dezdeqness.presentation.features.stats.StatsFragment" />
+
 </navigation>
