@@ -8,6 +8,8 @@ data class AccountEntity(
     val name: String,
     val sex: String,
     val fullAnimeStatusesEntity: FullAnimeStatusesEntity,
+    val scores: List<StatsItemEntity> = listOf(),
+    val types: List<StatsItemEntity> = listOf(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -47,3 +49,7 @@ data class StatusEntity(
     val type: String
 )
 
+data class StatsItemEntity(
+    val name: String,
+    val value: Int,
+)
