@@ -3,10 +3,12 @@ package com.dezdeqness.data.mapper
 import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import com.dezdeqness.data.model.db.AccountLocal
+import com.dezdeqness.data.model.db.StatsLocal
 import com.dezdeqness.data.model.db.StatusLocal
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.HistoryEntity
+import com.dezdeqness.domain.model.StatsItemEntity
 import com.dezdeqness.domain.model.StatusEntity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,6 +34,18 @@ class AccountMapper @Inject constructor() {
                         type = status.type,
                     )
                 } ?: listOf()),
+            scores = item.stats?.scores?.items?.map { score ->
+                StatsItemEntity(
+                    name = score.name,
+                    value = score.value,
+                )
+            } ?: listOf(),
+            types = item.stats?.types?.items?.map { type ->
+                StatsItemEntity(
+                    name = type.name,
+                    value = type.value,
+                )
+            } ?: listOf(),
         )
 
     fun fromDatabase(item: AccountLocal) =
@@ -52,6 +66,18 @@ class AccountMapper @Inject constructor() {
                         type = status.type,
                     )
                 } ?: listOf()),
+            scores = item.scores?.map { score ->
+                StatsItemEntity(
+                    name = score.name,
+                    value = score.value,
+                )
+            } ?: listOf(),
+            types = item.types?.map { type ->
+                StatsItemEntity(
+                    name = type.name,
+                    value = type.value,
+                )
+            } ?: listOf(),
         )
 
     fun toDatabase(item: AccountEntity) =
@@ -70,6 +96,18 @@ class AccountMapper @Inject constructor() {
                     name = status.name,
                     size = status.size,
                     type = status.type,
+                )
+            },
+            scores = item.scores.map { score ->
+                StatsLocal(
+                    name = score.name,
+                    value = score.value,
+                )
+            },
+            types = item.types.map { type ->
+                StatsLocal(
+                    name = type.name,
+                    value = type.value,
                 )
             },
         )

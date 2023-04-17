@@ -29,14 +29,23 @@ open class AccountRemote : DataModel.Api {
     var stats: Stats? = null
 }
 
-data class Stats (
+data class Stats(
     @field:Json(name = "full_statuses")
-    val fullStatuses: FullStatuses
+    val fullStatuses: FullStatuses,
+    @field:Json(name = "scores")
+    val scores: StatsItemHolder,
+    @field:Json(name = "types")
+    val types: StatsItemHolder,
 )
 
 data class FullStatuses (
     @field:Json(name = "anime")
     val anime: List<Status>
+)
+
+data class StatsItemHolder(
+    @field:Json(name = "anime")
+    val items: List<StatsItem>,
 )
 
 data class Status (
@@ -56,3 +65,10 @@ data class Status (
     val type: String
 )
 
+data class StatsItem(
+    @field:Json(name = "name")
+    val name: String,
+
+    @field:Json(name = "value")
+    val value: Int,
+)
