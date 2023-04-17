@@ -31,6 +31,6 @@
 - [ ] Night theme
 - [ ] Redesign personal list screen(cell, order, sort, change ribbon)
 - [x] Redesign search screen(fab, cell, placeholders, filter dialog)
-- [ ] Redesign profile
+- [x] Redesign profile
 - [ ] Redesign calendar
 - [ ] Redesign details screen
