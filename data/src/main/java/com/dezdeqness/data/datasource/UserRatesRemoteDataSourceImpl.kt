@@ -17,7 +17,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
 
     override fun getUserRates(userId: Long, status: String, page: Int, token: String) =
         tryWithCatch {
-            val response = apiService.gerUserRates(
+            val response = apiService.getUserRates(
                 status = status,
                 id = userId,
                 page = page,

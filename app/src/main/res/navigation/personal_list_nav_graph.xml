@@ -6,10 +6,10 @@
 
     <fragment
         android:id="@+id/personalList"
-        android:name="com.dezdeqness.presentation.features.personallist.list.PersonalListFragment" />
+        android:name="com.dezdeqness.presentation.features.personallist.PersonalListFragment" />
 
     <fragment
-        android:id="@+id/unauthorized"
+        android:id="@+id/personalUnauthorized"
         android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment" />
 
     <fragment

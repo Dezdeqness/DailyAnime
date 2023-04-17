@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.list.recyclerview
+package com.dezdeqness.presentation.features.personallist.recyclerview
 
 import com.bumptech.glide.Glide
 import com.dezdeqness.R

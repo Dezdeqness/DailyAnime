@@ -17,6 +17,7 @@
     <color name="list_title_primary">#FF000000</color>
 
     <color name="background_shadow">#AA000000</color>
+    <color name="profile_divider">#AACACACA</color>
 
     <color name="background_tint">#ffffffff</color>
 
@@ -25,4 +26,5 @@
     <color name="chip_stroke">#ff000000</color>
 
     <color name="filter_divider">#14000000</color>
+    <color name="profile_background_label">#FFFFFFFF</color>
 </resources>

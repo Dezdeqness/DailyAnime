@@ -2,10 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile_nav_graph"
-    app:startDestination="@id/profile">
+    app:startDestination="@id/profileUnauthorized">
 
     <fragment
         android:id="@+id/profile"
         android:name="com.dezdeqness.presentation.features.profile.ProfileFragment" />
+
+    <fragment
+        android:id="@+id/profileUnauthorized"
+        android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment">
+        <argument
+            android:name="titleRedId"
+            android:defaultValue="@string/unauthorized_title_profile"
+            app:argType="reference" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/history"
+        android:name="com.dezdeqness.presentation.features.history.HistoryFragment" />
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.dezdeqness.presentation.features.settings.SettingsFragment" />
 
 </navigation>

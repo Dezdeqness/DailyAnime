@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.host
+package com.dezdeqness.presentation.features.unauthorized.host
 
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-class PersonalListHostViewModel @Inject constructor(
+class UnathorizedHostViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -21,15 +21,15 @@ class PersonalListHostViewModel @Inject constructor(
     appLogger = appLogger,
 ) {
 
-    private val _hostStateFlow: MutableStateFlow<PersonalListHostState> =
-        MutableStateFlow(PersonalListHostState())
-    val hostStateFlow: StateFlow<PersonalListHostState> get() = _hostStateFlow
+    private val _hostStateFlow: MutableStateFlow<UnauthorizedHostState> =
+        MutableStateFlow(UnauthorizedHostState())
+    val hostStateFlow: StateFlow<UnauthorizedHostState> get() = _hostStateFlow
 
     init {
         launchOnIo {
             val isAuthorized = accountRepository.isAuthorized()
             launchOnMain {
-                _hostStateFlow.value = PersonalListHostState(isAuthorized = isAuthorized)
+                _hostStateFlow.value = UnauthorizedHostState(isAuthorized = isAuthorized)
             }
         }
 
@@ -42,7 +42,7 @@ class PersonalListHostViewModel @Inject constructor(
                 }
 
                 launchOnMain {
-                    _hostStateFlow.value = PersonalListHostState(
+                    _hostStateFlow.value = UnauthorizedHostState(
                         events = listOf(event),
                         isAuthorized = isAuthorized,
                     )

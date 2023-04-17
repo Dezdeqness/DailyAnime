@@ -42,3 +42,7 @@ object ScrollToTop : Event()
 object NavigateToPersonalList : Event()
 
 object NavigateToUnauthorized : Event()
+
+object NavigateToProfile : Event()
+
+data class SwitchDarkTheme(val isEnabled: Boolean) : Event()

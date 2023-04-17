@@ -17,6 +17,21 @@
     <string name="anime_status_released">Вышедшее</string>
     <string name="anime_status_latest">Вышло недавно</string>
 
+    <string name="unauthorized_title_default">Залогинься, ну че ты *__*</string>
+    <string name="unauthorized_title_profile">Войдите в аккаунт чтобы получить доступ к дополнительным функциям</string>
+    <string name="unauthorized_sign_in">Авторизация</string>
+    <string name="unauthorized_sign_up">Регистрация</string>
+
     <string name="search_empty_state_title">По запросу ничего не найдено, сэнпай >__&lt;</string>
+
+    <string name="profile_history">История</string>
+    <string name="profile_statistics">Статистика</string>
+    <string name="profile_settings">Настройки</string>
+
+    <string name="history_empty_state">Ваша история пуста</string>
+    <string name="history_toolbar_title">История</string>
+
+    <string name="settings_toolbar_title">Настройки</string>
+    <string name="settings_dark_theme">Включить темную тему</string>
 
 </resources>

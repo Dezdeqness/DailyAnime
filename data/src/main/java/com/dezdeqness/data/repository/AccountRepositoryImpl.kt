@@ -5,6 +5,7 @@ import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.AuthorizationState
+import com.dezdeqness.domain.model.HistoryEntity
 import com.dezdeqness.domain.model.TokenEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -79,6 +80,16 @@ class AccountRepositoryImpl @Inject constructor(
     }
 
     override fun getProfileLocal() = accountLocalDataSource.getAccount()
+
+    override fun getUserHistory(page: Int, limit: Int): Result<List<HistoryEntity>> {
+        val userId = getProfileLocal()?.id ?: return Result.failure(Throwable())
+
+        return accountRemoteDataSource.getHistory(
+            userId = userId,
+            page = page,
+            limit = limit,
+        )
+    }
 
     override fun saveProfileLocal(accountEntity: AccountEntity) {
         accountLocalDataSource.saveAccount(accountEntity)
