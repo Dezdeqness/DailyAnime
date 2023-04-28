@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.profile.host
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
+import androidx.core.view.isGone
 import com.dezdeqness.R
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.NavigateToProfile
@@ -49,7 +49,7 @@ class ProfileHostFragment : BaseUnauthorizedHostFragment() {
         super.onViewCreated(view, savedInstanceState)
         getNavController().addOnDestinationChangedListener { _, destination, _ ->
             requireActivity().findViewById<View>(R.id.navigation)?.let {
-                it.isVisible = destination.id != R.id.settings
+                it.isGone = destination.id == R.id.settings || destination.id == R.id.statistics
             }
         }
     }

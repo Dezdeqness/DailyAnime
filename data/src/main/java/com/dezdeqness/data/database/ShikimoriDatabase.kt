@@ -8,7 +8,7 @@ import com.dezdeqness.data.datasource.db.dao.UserRatesDao
 import com.dezdeqness.data.model.db.AccountLocal
 import com.dezdeqness.data.model.db.UserRateLocal
 
-@TypeConverters(StatusConverter::class)
+@TypeConverters(StatusConverter::class, StatsConverter::class)
 @Database(entities = [AccountLocal::class, UserRateLocal::class], version = 1)
 abstract class ShikimoriDatabase : RoomDatabase() {
 

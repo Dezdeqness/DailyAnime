@@ -9,13 +9,6 @@ class GetProfileUseCase(
     private val accountRepository: AccountRepository,
 ) {
 
-    operator fun invoke(): Flow<Result<AccountEntity>> = flow {
-        val localProfile = accountRepository.getProfileLocal()
-        if (localProfile != null) {
-            emit(Result.success(localProfile))
-        }
-
-        emit(accountRepository.getProfileRemote())
-    }
+    operator fun invoke(): Flow<Result<AccountEntity>> = accountRepository.getProfileDetails()
 
 }

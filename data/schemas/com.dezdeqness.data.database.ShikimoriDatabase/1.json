@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6079054d5d3793aa36bb4ea19320c4f1",
+    "identityHash": "812c7b71110900fb01d9a4220c4766ce",
     "entities": [
       {
         "tableName": "account",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nickname` TEXT NOT NULL, `avatar` TEXT NOT NULL, `last_online` TEXT NOT NULL, `name` TEXT NOT NULL, `sex` TEXT NOT NULL, `anime_stats` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nickname` TEXT NOT NULL, `avatar` TEXT NOT NULL, `last_online` TEXT NOT NULL, `name` TEXT NOT NULL, `sex` TEXT NOT NULL, `anime_stats` TEXT, `anime_scores` TEXT, `anime_types` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -47,6 +47,18 @@
           {
             "fieldPath": "anime",
             "columnName": "anime_stats",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "scores",
+            "columnName": "anime_scores",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "types",
+            "columnName": "anime_types",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -234,7 +246,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6079054d5d3793aa36bb4ea19320c4f1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '812c7b71110900fb01d9a4220c4766ce')"
     ]
   }
 }
