@@ -18,7 +18,7 @@ class EventConsumer(
                 fragment
                     .findNavController()
                     .navigate(
-                        R.id.animeDetailsFragment,
+                        R.id.details,
                         bundleOf(
                             "animeId" to event.animeId
                         ),

@@ -8,8 +8,6 @@
         android:id="@+id/search"
         android:name="com.dezdeqness.presentation.features.animelist.AnimeListFragment" />
 
-    <fragment
-        android:id="@+id/animeDetailsFragment"
-        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment" />
+    <include app:graph="@navigation/details_nav_graph" />
 
 </navigation>
