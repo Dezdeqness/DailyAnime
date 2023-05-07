@@ -38,4 +38,10 @@
     <string name="stats_header_scores">Оценки</string>
     <string name="stats_header_types">Типы</string>
 
+    <string name="anime_details_description_title">Описание</string>
+    <string name="anime_details_related_title">Связанное</string>
+    <string name="anime_details_characters_title">Персонажи</string>
+    <string name="anime_details_screenshots_title">Кадры</string>
+    <string name="anime_details_video_title">Видео</string>
+
 </resources>
