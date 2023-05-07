@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.features.animedetails.recyclerview
 
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
@@ -20,11 +19,6 @@ fun roleAdapterDelegate() =
             ItemRoleBinding.inflate(layoutInflater, parent, false)
         },
         block = {
-
-            binding.root.setOnClickListener {
-                Toast.makeText(binding.root.context, item.name, Toast.LENGTH_SHORT).show()
-            }
-
             bind {
                 with(binding) {
 
@@ -38,7 +32,7 @@ fun roleAdapterDelegate() =
                         .with(roleImage)
                         .load(item.imageUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.ic_search_placeholder)
                         .into(roleImage)
                 }
             }
