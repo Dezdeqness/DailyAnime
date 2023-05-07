@@ -27,6 +27,8 @@ sealed class ConsumableEvent : Event()
 
 data class AnimeDetails(val animeId: Long) : ConsumableEvent()
 
+data class OpenVideo(val url: String) : ConsumableEvent()
+
 data class ApplyFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
 
 data class NavigateToFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
@@ -46,3 +48,5 @@ object NavigateToUnauthorized : Event()
 object NavigateToProfile : Event()
 
 data class SwitchDarkTheme(val isEnabled: Boolean) : Event()
+
+data class ShareUrl(val url: String) : Event()
