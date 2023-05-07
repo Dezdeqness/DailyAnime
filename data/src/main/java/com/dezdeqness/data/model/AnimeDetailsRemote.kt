@@ -19,6 +19,9 @@ class AnimeDetailsRemote : AnimeBriefRemote() {
     @field:Json(name = "description_html")
     val descriptionHTML: String = ""
 
+    @field:Json(name = "description")
+    val description: String? = null
+
     @field:Json(name = "genres")
     val genres: List<GenreRemote> = listOf()
 

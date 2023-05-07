@@ -19,5 +19,6 @@ class AnimeDetailsAdapter : DelegateAdapter<AdapterItem>(
         videosAdapterListDelegate(),
         descriptionAdapterDelegate(),
         cellsAdapterDelegate(),
+        spacerAdapterDelegate(),
     )
 )
