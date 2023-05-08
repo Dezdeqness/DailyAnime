@@ -18,7 +18,7 @@ class RecyclerViewWithState @JvmOverloads constructor(
 
     private var recyclerLayout: ViewGroup? = null
 
-    private val recyclerView: RecyclerView
+    val recyclerView: RecyclerView
         get() = recyclerLayout as RecyclerView
 
     private var emptyStateView: View? = null
@@ -56,7 +56,7 @@ class RecyclerViewWithState @JvmOverloads constructor(
 
         recyclerViewId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_recycleViewLayout, 0)
         loadingStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_loadingStateLayout, R.layout.state_loading)
-        emptyStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_emptyStateLayout, 0)
+        emptyStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_emptyStateLayout, R.layout.state_empty)
         errorStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_errorStateLayout, 0)
 
         recyclerLayout = LayoutInflater.from(context).inflate(recyclerViewId, this, false) as ViewGroup

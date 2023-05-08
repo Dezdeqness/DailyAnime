@@ -1,18 +1,19 @@
 package com.dezdeqness.presentation.features.animedetails.recyclerview
 
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.core.SingleListAdapter
 import com.dezdeqness.databinding.ItemRelatedBinding
 import com.dezdeqness.databinding.ItemRelatedListBinding
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
 import com.dezdeqness.ui.SingleLineSpacingItemDecoration
 
-fun relatesAdapterDelegate() =
+fun relatesAdapterDelegate(actionListener: ActionListener) =
     adapterDelegateViewBinding<RelatedItemUiModel, AdapterItem, ItemRelatedBinding>(
         modelClass = RelatedItemUiModel::class.java,
         viewBinding = { layoutInflater, parent ->
@@ -21,13 +22,13 @@ fun relatesAdapterDelegate() =
         block = {
 
             binding.root.setOnClickListener {
-                Toast.makeText(binding.root.context, item.title, Toast.LENGTH_SHORT).show()
+                actionListener.onActionReceive(Action.AnimeClick(animeId = item.id))
             }
 
             bind {
                 with(binding) {
-                    relatedName.text = item.title
-                    relatedType.text = item.anime.kind + " • " + item.anime.airedYear
+                    relatedName.text = item.type
+                    relatedType.text = item.briefInfo
 
                     Glide
                         .with(image)
@@ -35,16 +36,16 @@ fun relatesAdapterDelegate() =
 
                     Glide
                         .with(image)
-                        .load(item.anime.logoUrl)
+                        .load(item.logoUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.ic_search_placeholder)
                         .into(image)
                 }
             }
         }
     )
 
-fun relatesAdapterListDelegate() =
+fun relatesAdapterListDelegate(actionListener: ActionListener) =
     adapterDelegateViewBinding<RelatedItemListUiModel, AdapterItem, ItemRelatedListBinding>(
         modelClass = RelatedItemListUiModel::class.java,
         viewBinding = { layoutInflater, parent ->
@@ -52,7 +53,7 @@ fun relatesAdapterListDelegate() =
         },
         block = {
 
-            binding.relates.adapter = SingleListAdapter(relatesAdapterDelegate())
+            binding.relates.adapter = SingleListAdapter(relatesAdapterDelegate(actionListener))
             binding.relates.addItemDecoration(SingleLineSpacingItemDecoration())
 
             bind {
