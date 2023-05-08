@@ -36,4 +36,26 @@ class AnimeDetailsRemote : AnimeBriefRemote() {
 
     @field:Json(name = "user_rate")
     val userRate: UserRateRemote? = null
+
+    @field:Json(name = "rates_scores_stats")
+    val ratesScoresStats: List<ScoreStatsItem>? = null
+
+    @field:Json(name = "rates_statuses_stats")
+    val ratesStatusesStats: List<StatusStatsItem>? = null
 }
+
+data class ScoreStatsItem(
+    @field:Json(name = "name")
+    val name: String,
+
+    @field:Json(name = "value")
+    val value: Int,
+)
+
+data class StatusStatsItem(
+    @field:Json(name = "name")
+    val name: String,
+
+    @field:Json(name = "value")
+    val value: Int,
+)

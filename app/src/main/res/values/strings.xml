@@ -37,6 +37,7 @@
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>
     <string name="stats_header_types">Типы</string>
+    <string name="stats_header_lists">Списки</string>
 
     <string name="anime_details_description_title">Описание</string>
     <string name="anime_details_related_title">Связанное</string>

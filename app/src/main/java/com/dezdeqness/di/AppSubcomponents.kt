@@ -8,6 +8,7 @@ import dagger.Module
         AnimeComponent::class,
         AnimeDetailsComponent::class,
         AnimeSearchFilterComponent::class,
+        AnimeStatsComponent::class,
         AuthorizationComponent::class,
         ProfileComponent::class,
         PersonalListComponent::class,

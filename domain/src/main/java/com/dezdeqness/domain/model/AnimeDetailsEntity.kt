@@ -24,6 +24,8 @@ data class AnimeDetailsEntity(
     val videoList: List<VideoEntity>,
     val nextEpisodeAt: String,
     val userRate: UserRateEntity?,
+    val scoresStats: List<StatsItemEntity>,
+    val statusesStats: List<StatsItemEntity>,
 ) : AnimeBriefEntity(
     id = id,
     name = name,

@@ -70,6 +70,18 @@ class AnimeMapper @Inject constructor(
                     updatedAt = userRate.updatedAt,
                 )
             },
+            scoresStats = item.ratesScoresStats?.map { score ->
+                StatsItemEntity(
+                    name = score.name,
+                    value = score.value,
+                )
+            } ?: listOf(),
+            statusesStats = item.ratesStatusesStats?.map { status ->
+                StatsItemEntity(
+                    name = status.name,
+                    value = status.value,
+                )
+            } ?: listOf(),
         )
 
     fun toDatabase(item: AnimeBriefEntity?): AnimeLocal? {

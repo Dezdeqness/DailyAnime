@@ -56,6 +56,8 @@ interface AppComponent {
 
     fun statsComponent(): StatsComponent.Factory
 
+    fun animeStatsComponent(): AnimeStatsComponent.Builder
+
     fun settingsRepository(): SettingsRepository
 
 }
