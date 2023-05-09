@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.event
 
+import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import java.util.*
@@ -50,3 +51,10 @@ object NavigateToProfile : Event()
 data class SwitchDarkTheme(val isEnabled: Boolean) : Event()
 
 data class ShareUrl(val url: String) : Event()
+
+data class NavigateToAnimeState(
+    val scoreList: List<AnimeStatsTransferModel>,
+    val statusesList: List<AnimeStatsTransferModel>,
+) : Event()
+
+data class NavigateToSimilar(val animeId: Long) : Event()
