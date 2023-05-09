@@ -1,7 +1,6 @@
 package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.modules.AnimeDetailsModule
-import com.dezdeqness.presentation.animestats.AnimeStatsFragment
 import com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment
 import dagger.Module
 import dagger.Provides
@@ -20,7 +19,6 @@ interface AnimeDetailsComponent {
     }
 
     fun inject(fragment: AnimeDetailsFragment)
-    fun inject(fragment: AnimeStatsFragment)
 }
 
 @Module
