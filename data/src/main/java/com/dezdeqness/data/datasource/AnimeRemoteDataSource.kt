@@ -32,4 +32,8 @@ interface AnimeRemoteDataSource {
         id: Long,
     ): Result<List<RoleEntity>>
 
+    fun getDetailsAnimeSimilar(
+        id: Long,
+    ): Result<List<AnimeBriefEntity>>
+
 }

@@ -14,6 +14,7 @@ import dagger.Module
         PersonalListComponent::class,
         EditRateComponent::class,
         CalendarComponent::class,
+        AnimeSimilarComponent::class,
         UnauthorizedHostComponent::class,
         UnauthorizedComponent::class,
     ]

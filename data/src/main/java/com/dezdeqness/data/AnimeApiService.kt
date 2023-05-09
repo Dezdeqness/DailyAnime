@@ -54,4 +54,8 @@ interface AnimeApiService {
         @Path(value = "id") id: Long,
     ): Call<List<RoleRemote>>
 
+    @GET("animes/{id}/similar")
+    fun getDetailsAnimeSimilar(
+        @Path(value = "id") id: Long,
+    ): Call<List<AnimeBriefRemote>>
 }

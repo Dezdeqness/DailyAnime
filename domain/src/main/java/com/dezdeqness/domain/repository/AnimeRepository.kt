@@ -16,6 +16,8 @@ interface AnimeRepository {
 
     fun getRoles(id: Long): Result<List<RoleEntity>>
 
+    fun getSimilar(id: Long): Result<List<AnimeBriefEntity>>
+
     fun getListWithFilter(
         queryMap: Map<String, String>,
         pageNumber: Int,
