@@ -1,14 +1,11 @@
 package com.dezdeqness.presentation.features.animedetails.recyclerview
 
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.databinding.ItemAnimeHeaderBinding
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import jp.wasabeef.glide.transformations.BlurTransformation

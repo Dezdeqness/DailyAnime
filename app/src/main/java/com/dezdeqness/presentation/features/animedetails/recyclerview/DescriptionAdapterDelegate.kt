@@ -19,7 +19,7 @@ fun descriptionAdapterDelegate() =
                     description.text = HtmlCompat.fromHtml(
                         item.content,
                         HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_DIV
-                    )
+                    ).toString()
                 }
             }
         }

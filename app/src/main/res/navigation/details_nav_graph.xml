@@ -11,6 +11,10 @@
 
     <fragment
         android:id="@+id/animeStatsFragment"
-        android:name="com.dezdeqness.presentation.animestats.AnimeStatsFragment" />
+        android:name="com.dezdeqness.presentation.features.animestats.AnimeStatsFragment" />
+
+    <fragment
+        android:id="@+id/animeSimilarFragment"
+        android:name="com.dezdeqness.presentation.features.animesimilar.AnimeSimilarFragment" />
 
 </navigation>
