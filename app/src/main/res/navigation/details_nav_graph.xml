@@ -17,4 +17,8 @@
         android:id="@+id/animeSimilarFragment"
         android:name="com.dezdeqness.presentation.features.animesimilar.AnimeSimilarFragment" />
 
+    <fragment
+        android:id="@+id/animeChronologyFragment"
+        android:name="com.dezdeqness.presentation.features.animechronology.AnimeChronologyFragment" />
+
 </navigation>

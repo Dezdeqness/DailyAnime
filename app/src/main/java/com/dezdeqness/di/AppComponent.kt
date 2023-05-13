@@ -60,6 +60,8 @@ interface AppComponent {
 
     fun animeSimilarComponent(): AnimeSimilarComponent.Builder
 
+    fun animeChronologyComponent(): AnimeChronologyComponent.Builder
+
     fun settingsRepository(): SettingsRepository
 
 }

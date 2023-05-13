@@ -58,3 +58,5 @@ data class NavigateToAnimeState(
 ) : Event()
 
 data class NavigateToSimilar(val animeId: Long) : Event()
+
+data class NavigateToChronology(val animeId: Long) : Event()

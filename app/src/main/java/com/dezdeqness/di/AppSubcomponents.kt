@@ -7,6 +7,7 @@ import dagger.Module
     subcomponents = [
         AnimeComponent::class,
         AnimeDetailsComponent::class,
+        AnimeChronologyComponent::class,
         AnimeSearchFilterComponent::class,
         AnimeStatsComponent::class,
         AuthorizationComponent::class,

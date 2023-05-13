@@ -8,6 +8,7 @@ import okhttp3.internal.notify
 
 fun moreInfoAdapterDelegate(
     onSimilarClicked: () -> Unit,
+    onChronologyClicked: () -> Unit,
     onStatsClicked: () -> Unit,
 ) =
     adapterDelegateViewBinding<MoreInfoUiModel, AdapterItem, ItemMoreInfoBinding>(
@@ -22,7 +23,7 @@ fun moreInfoAdapterDelegate(
             }
 
             binding.chronology.setOnClickListener {
-
+                onChronologyClicked.invoke()
             }
 
             binding.stats.setOnClickListener {

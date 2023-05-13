@@ -17,6 +17,7 @@ import com.dezdeqness.presentation.models.AdapterItem
 class AnimeDetailsAdapter(
     actionListener: ActionListener,
     onStatsClicked: () -> Unit,
+    onChronologyClicked: () -> Unit,
     onSimilarClicked: () -> Unit,
 ) : DelegateAdapter<AdapterItem>(
     adapterDelegateList = listOf(
@@ -31,6 +32,7 @@ class AnimeDetailsAdapter(
         spacerAdapterDelegate(),
         moreInfoAdapterDelegate(
             onStatsClicked = onStatsClicked,
+            onChronologyClicked = onChronologyClicked,
             onSimilarClicked = onSimilarClicked,
         ),
     )
