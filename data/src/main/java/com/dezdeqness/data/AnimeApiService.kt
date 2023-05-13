@@ -2,6 +2,8 @@ package com.dezdeqness.data
 
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
+import com.dezdeqness.data.model.AnimeChronologyRemote
+import com.dezdeqness.data.model.AnimeChronologyResponseRemote
 import com.dezdeqness.data.model.RelatedItemRemote
 import com.dezdeqness.data.model.RoleRemote
 import com.dezdeqness.data.model.ScreenshotRemote
@@ -58,4 +60,10 @@ interface AnimeApiService {
     fun getDetailsAnimeSimilar(
         @Path(value = "id") id: Long,
     ): Call<List<AnimeBriefRemote>>
+
+    @GET("animes/{id}/franchise")
+    fun getDetailsAnimeChronology(
+        @Path(value = "id") id: Long,
+    ): Call<AnimeChronologyResponseRemote>
+
 }

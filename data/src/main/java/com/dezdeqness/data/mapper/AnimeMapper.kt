@@ -2,6 +2,7 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
+import com.dezdeqness.data.model.AnimeChronologyRemote
 import com.dezdeqness.data.model.db.AnimeLocal
 import com.dezdeqness.domain.model.*
 import javax.inject.Inject
@@ -116,6 +117,16 @@ class AnimeMapper @Inject constructor(
             episodesAired = item.episodesAired,
             airedOn = item.airedOn.orEmpty(),
             releasedOn = item.releasedOn.orEmpty(),
+        )
+
+    fun fromResponse(item: AnimeChronologyRemote) =
+        AnimeChronologyEntity(
+            id = item.id,
+            name = item.name,
+            imageUrl = item.imageUrl,
+            url = item.url,
+            kind = item.kind.orEmpty(),
+            year = item.year.orEmpty(),
         )
 
 }
