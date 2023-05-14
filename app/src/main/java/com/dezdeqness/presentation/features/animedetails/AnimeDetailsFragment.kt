@@ -263,7 +263,7 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
 
     private fun setupToolbarVisibility(state: AnimeDetailsState) {
         if (state.isToolbarVisible) {
-            binding.toolbar.setBackgroundResource(android.R.color.white)
+            binding.toolbar.setBackgroundResource(R.color.details_toolbar_color_expand)
             binding.toolbar.title = title
         } else {
             binding.toolbar.setBackgroundResource(android.R.color.transparent)

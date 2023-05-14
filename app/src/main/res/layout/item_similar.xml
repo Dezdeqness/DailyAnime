@@ -10,7 +10,7 @@
     app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/black"
+    app:strokeColor="@color/text_primary"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +61,7 @@
             android:layout_marginRight="12dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

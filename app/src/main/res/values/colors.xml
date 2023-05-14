@@ -25,6 +25,8 @@
     <color name="chip_background">#ffffffff</color>
     <color name="chip_stroke">#ff000000</color>
 
+    <color name="details_toolbar_color_expand">#FFFFFFFF</color>
+
     <color name="filter_divider">#14000000</color>
     <color name="profile_background_label">#FFFFFFFF</color>
 </resources>
