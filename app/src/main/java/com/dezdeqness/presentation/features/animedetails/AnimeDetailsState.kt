@@ -5,9 +5,9 @@ import com.dezdeqness.presentation.models.AdapterItem
 
 data class AnimeDetailsState(
     val title: String = "",
-    val imageUrl: String = "",
-    val ratingScore: Float = 0.0f,
     val uiModels: List<AdapterItem> = listOf(),
-    val isEditUserRateShowing: Boolean = false,
+    val isEditRateFabShown: Boolean = false,
     val events: List<Event> = listOf(),
+    val isInitialLoadingIndicatorShowing: Boolean = false,
+    val isToolbarVisible: Boolean = false,
 )

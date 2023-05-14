@@ -1,11 +1,14 @@
 package com.dezdeqness.presentation.features.animedetails
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.core.view.isVisible
+import androidx.core.app.ShareCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -13,44 +16,68 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.RequestOptions
+import androidx.recyclerview.widget.RecyclerView
+import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
+import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.databinding.FragmentAnimeDetailsBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ArgsModule
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.EventConsumer
+import com.dezdeqness.presentation.event.NavigateToAnimeState
+import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToSimilar
+import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
-import com.google.android.material.appbar.AppBarLayout
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 
-class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
+class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), ActionListener {
 
     private var onBackPressedCallback: OnBackPressedCallback? = null
 
     private val adapter: AnimeDetailsAdapter by lazy {
-        AnimeDetailsAdapter()
+        AnimeDetailsAdapter(
+            actionListener = this,
+            onStatsClicked = {
+                viewModel.onStatsClicked()
+            },
+            onChronologyClicked = {
+                viewModel.onChronologyClicked()
+            },
+            onSimilarClicked = {
+                viewModel.onSimilarClicked()
+            }
+        )
     }
 
-    private val viewModel: AnimeDetailsViewModel by viewModels(factoryProducer = { viewModelFactory })
+    private val eventConsumer: EventConsumer by lazy {
+        EventConsumer(
+            fragment = this,
+        )
+    }
 
-    private var title = "Аниме"
+    private val viewModel: AnimeDetailsViewModel by viewModels(
+        factoryProducer = { viewModelFactory },
+    )
+
+    private var title = ""
 
     override fun getFragmentBinding(layoutInflater: LayoutInflater) =
         FragmentAnimeDetailsBinding.inflate(layoutInflater)
 
-    override fun setupScreenComponent(component: AppComponent) =
+    override fun setupScreenComponent(component: AppComponent) {
         component
             .animeDetailsComponent()
             .argsModule(module = ArgsModule(requireArguments().getLong("animeId")))
             .build()
             .inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,37 +93,68 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.appBarLayout.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
-            override fun onStateChanged(
-                appBarLayout: AppBarLayout?,
-                state: State?
-            ) {
-                if (state == State.COLLAPSED) {
-                    binding.toolbar.title = title
-                    binding.toolbar.setBackgroundResource(android.R.color.white)
-
-                } else if (state == State.EXPANDED) {
-                    binding.toolbar.title = ""
-                    binding.toolbar.setBackgroundResource(android.R.color.transparent)
-                }
-            }
-        })
 
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedCallback?.handleOnBackPressed()
         }
 
-        binding.animeChangeRate.setOnClickListener {
+        binding.editRate.setOnClickListener {
             viewModel.onEditRateClicked()
         }
 
         setupRecyclerView()
         setupObservers()
+        setupScrollListener()
+        setupMenu()
+    }
+
+    private fun setupMenu() {
+        binding.toolbar.apply {
+            inflateMenu(R.menu.menu_anime)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_share -> {
+                        viewModel.onShareButtonClicked()
+                    }
+                }
+                true
+            }
+            menu?.findItem(R.id.action_share)?.isVisible = false
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
+    }
+
+    override fun onActionReceive(action: Action) {
+        viewModel.onActionReceive(action)
+    }
+
+    private fun setupScrollListener() {
+        val titleFrame = Rect()
+        val recyclerFrame = Rect()
+        var targetView: View? = null
+
+        binding.content.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (targetView == null) {
+                    targetView = getTargetView() ?: return
+                }
+
+                targetView?.getGlobalVisibleRect(titleFrame)
+                recyclerView.getGlobalVisibleRect(recyclerFrame)
+
+                if (recyclerFrame.contains(titleFrame) && targetView?.isShown == true) {
+                    viewModel.onToolbarVisibilityOff()
+                } else {
+                    viewModel.onToolbarVisibilityOn()
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -107,34 +165,14 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.animeDetailsStateFlow.collect { state ->
-                    binding.nameView.text = state.title
                     title = state.title
-                    binding.ratingValueView.text = state.ratingScore.toString()
-                    binding.ratingView.rating = state.ratingScore / 2
-                    binding.animeChangeRate.isVisible = state.isEditUserRateShowing
 
-                    if (state.uiModels.isNotEmpty()) {
-                        adapter.submitList(state.uiModels)
-                    }
+                    setupLoadingState(state = state)
+                    setupList(state = state)
+                    setupShareButton(state = state)
+                    setupToolbarVisibility(state = state)
+                    setupEditRateFabVisibility(state = state)
 
-                    Glide
-                        .with(requireContext())
-                        .load(state.imageUrl)
-                        .apply(
-                            RequestOptions.bitmapTransform(
-                                MultiTransformation(
-                                    CenterCrop(),
-                                    BlurTransformation(25)
-                                ),
-                            )
-                        )
-                        .into(binding.backgroundImage)
-
-                    Glide
-                        .with(requireContext())
-                        .load(state.imageUrl)
-                        .centerCrop()
-                        .into(binding.imageView)
                     state.events.forEach { event ->
                         when (event) {
                             is NavigateToEditRate -> {
@@ -148,6 +186,49 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
                                 )
                             }
 
+                            is ShareUrl -> {
+                                val url = if (event.url.startsWith(BuildConfig.BASE_URL).not()) {
+                                    BuildConfig.BASE_URL + event.url
+                                } else {
+                                    event.url
+                                }
+                                ShareCompat.IntentBuilder(requireContext())
+                                    .setType("text/plain")
+                                    .setText(url)
+                                    .startChooser()
+                            }
+
+                            is NavigateToAnimeState -> {
+                                findNavController()
+                                    .navigate(
+                                        R.id.animeStatsFragment,
+                                        bundleOf(
+                                            "animeScores" to event.scoreList,
+                                            "animeStatuses" to event.statusesList,
+                                        ),
+                                    )
+                            }
+
+                            is NavigateToSimilar -> {
+                                findNavController()
+                                    .navigate(
+                                        R.id.animeSimilarFragment,
+                                        bundleOf("animeId" to event.animeId),
+                                    )
+                            }
+
+                            is NavigateToChronology -> {
+                                findNavController()
+                                    .navigate(
+                                        R.id.animeChronologyFragment,
+                                        bundleOf("animeId" to event.animeId),
+                                    )
+                            }
+
+                            is ConsumableEvent -> {
+                                eventConsumer.consume(event)
+                            }
+
                             else -> {}
                         }
 
@@ -158,28 +239,51 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>() {
         }
     }
 
-    abstract class AppBarStateChangeListener : AppBarLayout.OnOffsetChangedListener {
-        enum class State {
-            EXPANDED, COLLAPSED, IDLE
+    private fun setupLoadingState(state: AnimeDetailsState) {
+        binding.content.setLoadingState(
+            isLoadingStateShowing = state.isInitialLoadingIndicatorShowing,
+        )
+    }
+
+    private fun setupList(state: AnimeDetailsState) {
+        if (state.uiModels.isNotEmpty()) {
+            adapter.submitList(state.uiModels)
         }
+    }
 
-        private var currentState = State.IDLE
-
-        override fun onOffsetChanged(appBarLayout: AppBarLayout, i: Int) {
-            currentState = if (abs(i) >= appBarLayout.totalScrollRange * 0.99) {
-                if (currentState != State.COLLAPSED) {
-                    onStateChanged(appBarLayout, State.COLLAPSED)
+    private fun setupShareButton(state: AnimeDetailsState) {
+        if (state.uiModels.isNotEmpty()) {
+            binding.toolbar.menu?.findItem(R.id.action_share)?.let { menuItem ->
+                if (menuItem.isVisible.not()) {
+                    menuItem.isVisible = true
                 }
-                State.COLLAPSED
-            } else {
-                if (currentState != State.EXPANDED) {
-                    onStateChanged(appBarLayout, State.EXPANDED)
-                }
-                State.EXPANDED
             }
         }
+    }
 
-        abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State?)
+    private fun setupToolbarVisibility(state: AnimeDetailsState) {
+        if (state.isToolbarVisible) {
+            binding.toolbar.setBackgroundResource(R.color.details_toolbar_color_expand)
+            binding.toolbar.title = title
+        } else {
+            binding.toolbar.setBackgroundResource(android.R.color.transparent)
+            binding.toolbar.title = ""
+        }
+    }
+
+    private fun getTargetView(): View? {
+        binding.content.recyclerView.apply {
+            if (this.childCount == 0 || getChildAt(0) !is ViewGroup) return null
+            return (getChildAt(0) as ViewGroup).findViewWithTag("tag")
+        }
+    }
+
+    private fun setupEditRateFabVisibility(state: AnimeDetailsState) {
+        if (state.isEditRateFabShown) {
+            binding.editRate.show()
+        } else {
+            binding.editRate.hide()
+        }
     }
 
     companion object {

@@ -21,7 +21,7 @@ open class AnimeBriefRemote : DataModel.Api {
     val url: String = ""
 
     @field:Json(name = "kind")
-    val kind: String = ""
+    val kind: String? = null
 
     @field:Json(name = "score")
     val score: Float = 0.0f

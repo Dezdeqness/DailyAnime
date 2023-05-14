@@ -7,7 +7,8 @@ import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
-@Subcomponent(modules = [AnimeDetailsModule::class, ArgsModule::class])
+@Subcomponent(modules = [
+    AnimeDetailsModule::class, ArgsModule::class])
 interface AnimeDetailsComponent {
     @Subcomponent.Builder
     interface Builder {
@@ -28,3 +29,4 @@ class ArgsModule( @Named("animeId") private val id: Long) {
     fun provideAnimeId() = id
 
 }
+

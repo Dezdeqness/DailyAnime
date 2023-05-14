@@ -23,8 +23,11 @@ class AnimeUiMapper @Inject constructor(
 
     fun map(relatedItemUiModel: RelatedItemEntity) =
         RelatedItemUiModel(
-            title = relatedItemUiModel.relationTitleRussian,
-            anime = map(relatedItemUiModel.animeBriefEntity)
+            id = relatedItemUiModel.animeBriefEntity.id,
+            type = relatedItemUiModel.takeIf { it.relationTitleRussian.isNotEmpty() }?.relationTitleRussian
+                ?: relatedItemUiModel.relationTitle,
+            briefInfo = relatedItemUiModel.animeBriefEntity.kind.name + " • " + relatedItemUiModel.animeBriefEntity.airedOn.split("-").firstOrNull().orEmpty(),
+            logoUrl = imageUrlUtils.getImageWithBaseUrl(relatedItemUiModel.animeBriefEntity.image.original),
         )
 
 }

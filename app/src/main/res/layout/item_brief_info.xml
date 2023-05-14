@@ -6,15 +6,20 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="6 апр - 28 сентября" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         tools:text="Дата выхода" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        android:textSize="16sp"
+        tools:text="6 апр - 28 сентября" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

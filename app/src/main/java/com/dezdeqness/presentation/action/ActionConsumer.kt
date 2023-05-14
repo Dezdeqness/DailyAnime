@@ -2,6 +2,7 @@ package com.dezdeqness.presentation.action
 
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.OpenVideo
 
 class ActionConsumer {
 
@@ -14,10 +15,14 @@ class ActionConsumer {
     fun detachListener() {
         this.eventListener = null
     }
+
     fun consume(action: Action) {
         when (action) {
             is Action.AnimeClick -> {
                 eventListener?.onEventReceive(AnimeDetails(animeId = action.animeId))
+            }
+            is Action.VideoClick -> {
+                eventListener?.onEventReceive(OpenVideo(url = action.url))
             }
         }
     }

@@ -1,8 +1,10 @@
 package com.dezdeqness.presentation.models
 
 data class RelatedItemUiModel(
-    val title: String,
-    val anime: AnimeUiModel,
+    val id: Long,
+    val type: String,
+    val briefInfo: String,
+    val logoUrl: String,
 ) : AdapterItem()
 
 data class RelatedItemListUiModel(

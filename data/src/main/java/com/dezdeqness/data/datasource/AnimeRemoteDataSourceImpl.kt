@@ -7,6 +7,8 @@ import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
+import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.domain.model.AnimeChronologyEntity
 import javax.inject.Inject
 
 class AnimeRemoteDataSourceImpl @Inject constructor(
@@ -110,4 +112,34 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             throw ApiException(response.code(), response.errorBody().toString())
         }
     }
+
+    override fun getDetailsAnimeSimilar(id: Long) = tryWithCatch {
+        val response = apiService.getDetailsAnimeSimilar(id).execute()
+
+        val responseBody = response.body()
+
+        if (response.isSuccessful && responseBody != null) {
+            val list = responseBody.map { item -> animeMapper.fromResponse(item) }
+            Result.success(list)
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+
+    }
+
+    override fun getDetailsChronology(id: Long) = tryWithCatch {
+        val response = apiService.getDetailsAnimeChronology(id = id).execute()
+
+        val responseBody = response.body()
+
+        if (response.isSuccessful && responseBody != null) {
+            val list =
+                responseBody.nodes?.map { item -> animeMapper.fromResponse(item) } ?: listOf()
+            Result.success(list)
+        } else {
+            throw ApiException(response.code(), response.errorBody().toString())
+        }
+
+    }
+
 }

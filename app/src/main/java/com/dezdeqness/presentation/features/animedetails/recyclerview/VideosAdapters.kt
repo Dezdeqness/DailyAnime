@@ -1,18 +1,24 @@
 package com.dezdeqness.presentation.features.animedetails.recyclerview
 
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
 import com.dezdeqness.core.SingleListAdapter
 import com.dezdeqness.databinding.ItemVideoBinding
 import com.dezdeqness.databinding.ItemVideoListBinding
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.dezdeqness.ui.SingleLineSpacingItemDecoration
 
-fun videosAdapterDelegate() =
+
+fun videosAdapterDelegate(actionListener: ActionListener) =
     adapterDelegateViewBinding<VideoUiModel, AdapterItem, ItemVideoBinding>(
         modelClass = VideoUiModel::class.java,
         viewBinding = { layoutInflater, parent ->
@@ -21,7 +27,7 @@ fun videosAdapterDelegate() =
         block = {
 
             binding.root.setOnClickListener {
-                Toast.makeText(binding.root.context, item.name, Toast.LENGTH_SHORT).show()
+                actionListener.onActionReceive(Action.VideoClick(item.sourceUrl))
             }
 
             bind {
@@ -37,14 +43,14 @@ fun videosAdapterDelegate() =
                         .with(video)
                         .load(item.imageUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.ic_search_placeholder)
                         .into(video)
                 }
             }
         }
     )
 
-fun videosAdapterListDelegate() =
+fun videosAdapterListDelegate(actionListener: ActionListener) =
     adapterDelegateViewBinding<VideoUiModelList, AdapterItem, ItemVideoListBinding>(
         modelClass = VideoUiModelList::class.java,
         viewBinding = { layoutInflater, parent ->
@@ -52,7 +58,7 @@ fun videosAdapterListDelegate() =
         },
         block = {
 
-            binding.videos.adapter = SingleListAdapter(videosAdapterDelegate())
+            binding.videos.adapter = SingleListAdapter(videosAdapterDelegate(actionListener))
             binding.videos.addItemDecoration(SingleLineSpacingItemDecoration())
 
             bind {

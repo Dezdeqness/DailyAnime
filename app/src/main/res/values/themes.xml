@@ -56,6 +56,12 @@
         <item name="android:src">@drawable/filter_list</item>
     </style>
 
+    <style name="DetailsFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/purple_500</item>
+        <item name="tint">@color/white</item>
+        <item name="android:src">@drawable/ic_edit</item>
+    </style>
+
     <style name="SearchItemLabel">
         <item name="android:background">@color/background_shadow</item>
         <item name="android:padding">4dp</item>
@@ -122,5 +128,28 @@
     <style name="StatsValue">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CircleButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="backgroundTint">#AACACACA</item>
+        <item name="iconTint">@color/chip_stroke</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="shapeAppearance">@style/CircleShapeAppearance</item>
+    </style>
+
+    <style name="CircleShapeAppearance" parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerSizeBottomLeft">24dp</item>
+        <item name="cornerSizeBottomRight">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
     </style>
 </resources>

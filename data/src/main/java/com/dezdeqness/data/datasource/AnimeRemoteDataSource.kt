@@ -2,6 +2,7 @@ package com.dezdeqness.data.datasource
 
 import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.domain.model.AnimeChronologyEntity
 import com.dezdeqness.domain.model.RelatedItemEntity
 import com.dezdeqness.domain.model.RoleEntity
 import com.dezdeqness.domain.model.ScreenshotEntity
@@ -31,5 +32,13 @@ interface AnimeRemoteDataSource {
     fun getDetailsAnimeRoles(
         id: Long,
     ): Result<List<RoleEntity>>
+
+    fun getDetailsAnimeSimilar(
+        id: Long,
+    ): Result<List<AnimeBriefEntity>>
+
+    fun getDetailsChronology(
+        id: Long
+    ): Result<List<AnimeChronologyEntity>>
 
 }

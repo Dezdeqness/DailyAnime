@@ -12,8 +12,6 @@
         android:id="@+id/personalUnauthorized"
         android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment" />
 
-    <fragment
-        android:id="@+id/animeDetailsFragment"
-        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment" />
+    <include app:graph="@navigation/details_nav_graph" />
 
 </navigation>

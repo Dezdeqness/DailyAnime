@@ -7,8 +7,15 @@ import com.dezdeqness.domain.model.AnimeDetailsFullEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
+import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.NavigateToAnimeState
+import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToSimilar
+import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,12 +28,13 @@ class AnimeDetailsViewModel @Inject constructor(
     private val animeDetailsComposer: AnimeDetailsComposer,
     private val createOrUpdateUserRateUseCase: CreateOrUpdateUserRateUseCase,
     private val accountRepository: AccountRepository,
+    private val actionConsumer: ActionConsumer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded {
+), BaseViewModel.InitialLoaded, EventListener {
 
     private val _animeDetailsStateFlow: MutableStateFlow<AnimeDetailsState> =
         MutableStateFlow(AnimeDetailsState())
@@ -35,24 +43,33 @@ class AnimeDetailsViewModel @Inject constructor(
     private var animeDetails: AnimeDetailsFullEntity? = null
 
     init {
+        actionConsumer.attachListener(this)
         launchOnIo {
             onInitialLoad(
                 action = { getAnimeDetailsUseCase.invoke(animeId) },
                 onSuccess = { details ->
                     animeDetails = details
-                    val state = animeDetailsComposer.compose(details)
                     val isAuthorized = accountRepository.isAuthorized()
-                    _animeDetailsStateFlow.value = state.copy(
-                        isEditUserRateShowing = isAuthorized,
+                    val uiItems = animeDetailsComposer.compose(details)
+                    _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                        title = details.animeDetailsEntity.russian,
+                        uiModels = uiItems,
+                        isEditRateFabShown = isAuthorized,
                     )
 
                     logInfo(message = details.toString())
+                },
+                onFailure = {
+                    _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                        isEditRateFabShown = false,
+                    )
                 }
             )
         }
     }
 
     override fun viewModelTag() = "ItemDetailsViewModel"
+
     override fun onEventConsumed(event: Event) {
         val value = _animeDetailsStateFlow.value
         _animeDetailsStateFlow.value = value.copy(
@@ -61,7 +78,28 @@ class AnimeDetailsViewModel @Inject constructor(
     }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        // TODO: shimmer?
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            isInitialLoadingIndicatorShowing = isVisible,
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        actionConsumer.detachListener()
+    }
+
+    override fun onEventReceive(event: Event) {
+        val events = _animeDetailsStateFlow.value.events
+
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            events = events + event,
+        )
+    }
+
+    fun onActionReceive(action: Action) {
+        launchOnIo {
+            actionConsumer.consume(action)
+        }
     }
 
     fun onEditRateClicked() {
@@ -87,6 +125,70 @@ class AnimeDetailsViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun onShareButtonClicked() {
+        val events = _animeDetailsStateFlow.value.events
+
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            events = events + ShareUrl(
+                url = animeDetails?.animeDetailsEntity?.url.orEmpty()
+            )
+        )
+    }
+
+    fun onToolbarVisibilityOn() {
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            isToolbarVisible = true
+        )
+    }
+
+    fun onToolbarVisibilityOff() {
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            isToolbarVisible = false
+        )
+    }
+
+    fun onStatsClicked() {
+        val details = animeDetails?.animeDetailsEntity ?: return
+        val events = _animeDetailsStateFlow.value.events
+
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            events = events + NavigateToAnimeState(
+                scoreList = details.scoresStats.map { score ->
+                    AnimeStatsTransferModel(
+                        score.name,
+                        score.value,
+                    )
+                },
+                statusesList = details.statusesStats.map { status ->
+                    AnimeStatsTransferModel(
+                        status.name,
+                        status.value,
+                    )
+                },
+            )
+        )
+    }
+
+    fun onSimilarClicked() {
+        val details = animeDetails?.animeDetailsEntity ?: return
+
+        val events = _animeDetailsStateFlow.value.events
+
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            events = events + NavigateToSimilar(animeId = details.id),
+        )
+    }
+
+    fun onChronologyClicked() {
+        val details = animeDetails?.animeDetailsEntity ?: return
+
+        val events = _animeDetailsStateFlow.value.events
+
+        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+            events = events + NavigateToChronology(animeId = details.id),
+        )
     }
 
 }

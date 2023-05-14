@@ -2,6 +2,7 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
+import com.dezdeqness.data.model.AnimeChronologyRemote
 import com.dezdeqness.data.model.db.AnimeLocal
 import com.dezdeqness.domain.model.*
 import javax.inject.Inject
@@ -49,7 +50,8 @@ class AnimeMapper @Inject constructor(
             status = AnimeStatus.fromString(item.status),
             episodesAired = item.episodesAired,
             image = imageMapper.fromResponse(item.image),
-            description = item.descriptionHTML,
+            descriptionHTML = item.descriptionHTML,
+            description = item.description,
             studioList = item.studios.map(studioMapper::fromResponse),
             genreList = item.genres.map(genreMapper::fromResponse),
             videoList = item.videos.map(videoMapper::fromResponse),
@@ -69,6 +71,18 @@ class AnimeMapper @Inject constructor(
                     updatedAt = userRate.updatedAt,
                 )
             },
+            scoresStats = item.ratesScoresStats?.map { score ->
+                StatsItemEntity(
+                    name = score.name,
+                    value = score.value,
+                )
+            } ?: listOf(),
+            statusesStats = item.ratesStatusesStats?.map { status ->
+                StatsItemEntity(
+                    name = status.name,
+                    value = status.value,
+                )
+            } ?: listOf(),
         )
 
     fun toDatabase(item: AnimeBriefEntity?): AnimeLocal? {
@@ -103,6 +117,16 @@ class AnimeMapper @Inject constructor(
             episodesAired = item.episodesAired,
             airedOn = item.airedOn.orEmpty(),
             releasedOn = item.releasedOn.orEmpty(),
+        )
+
+    fun fromResponse(item: AnimeChronologyRemote) =
+        AnimeChronologyEntity(
+            id = item.id,
+            name = item.name,
+            imageUrl = item.imageUrl,
+            url = item.url,
+            kind = item.kind.orEmpty(),
+            year = item.year.orEmpty(),
         )
 
 }
