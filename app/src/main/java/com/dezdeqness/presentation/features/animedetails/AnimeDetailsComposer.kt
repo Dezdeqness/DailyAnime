@@ -1,5 +1,7 @@
 package com.dezdeqness.presentation.features.animedetails
 
+import com.dezdeqness.R
+import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
 import com.dezdeqness.domain.model.AnimeStatus
@@ -10,93 +12,166 @@ import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.BriefInfoUiModel
 import com.dezdeqness.presentation.models.BriefInfoUiModelList
 import com.dezdeqness.presentation.models.DescriptionUiModel
+import com.dezdeqness.presentation.models.HeaderItemUiModel
+import com.dezdeqness.presentation.models.MoreInfoUiModel
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
 import com.dezdeqness.presentation.models.ScreenshotUiModel
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
+import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class AnimeDetailsComposer @Inject constructor(
     private val animeUiMapper: AnimeUiMapper,
     private val imageUrlUtils: ImageUrlUtils,
+    private val resourceProvider: ResourceProvider,
 ) {
 
-    fun compose(animeDetailsFullEntity: AnimeDetailsFullEntity): AnimeDetailsState {
+    fun compose(
+        animeDetailsFullEntity: AnimeDetailsFullEntity,
+    ): List<AdapterItem> {
         val details = animeDetailsFullEntity.animeDetailsEntity
         val uiItems = mutableListOf<AdapterItem>()
 
+        uiItems.add(
+            HeaderItemUiModel(
+                title = details.russian,
+                imageUrl = imageUrlUtils.getImageWithBaseUrl(details.image.original),
+                ratingScore = details.score,
+            )
+        )
+
+        uiItems.add(composeBriefInfoList(details))
+
+        uiItems.add(MoreInfoUiModel)
+
+        if (details.description != null) {
+            uiItems.add(DescriptionUiModel(content = details.descriptionHTML))
+        }
+
         if (details.genreList.isNotEmpty() || details.studioList.isNotEmpty()) {
             uiItems.add(AnimeCellList(
-                list = details.studioList.map { studio ->
-                    AnimeCell(
-                        id = studio.id.toString(),
-                        displayName = studio.name,
-                    )
-                }.take(1) + details.genreList.map { genre ->
-                    AnimeCell(
-                        id = genre.id,
-                        displayName = genre.name,
-                    )
-                }
+                list = details
+                    .genreList
+                    .map { genre ->
+                        AnimeCell(
+                            id = genre.id,
+                            displayName = genre.name,
+                        )
+                    }
+                    .sortedBy { it.displayName }
             ))
         }
 
-        uiItems.add(composeBriefInfoList(details))
-        uiItems.add(
-            DescriptionUiModel(
-                content = animeDetailsFullEntity.animeDetailsEntity.description,
-            )
-        )
-        uiItems.add(
-            RelatedItemListUiModel(
-                list = animeDetailsFullEntity.relates.map(animeUiMapper::map)
-            )
-        )
-        uiItems.add(
-            RoleUiModelList(list = animeDetailsFullEntity.roles.map {
-                RoleUiModel(
-                    name = it.character.russian.ifEmpty {
-                        it.character.name
-                    },
-                    imageUrl = imageUrlUtils.getImageWithBaseUrl(it.character.image.preview),
-                )
-            })
+        addRelatesIfNotEmpty(
+            animeDetailsFullEntity = animeDetailsFullEntity,
+            uiItems = uiItems,
         )
 
-        uiItems.add(
-            ScreenshotUiModelList(
-                list = animeDetailsFullEntity
-                    .screenshots
-                    .map { ScreenshotUiModel(imageUrlUtils.getImageWithBaseUrl(it.preview)) }
-            )
+        addRolesIfNotEmpty(
+            animeDetailsFullEntity = animeDetailsFullEntity,
+            uiItems = uiItems,
         )
 
-        uiItems.add(
-            VideoUiModelList(
-                list = animeDetailsFullEntity.animeDetailsEntity.videoList.map { video ->
-                    VideoUiModel(
-                        source = video.hosting,
-                        imageUrl = imageUrlUtils.getSecurityUrl(video.imageUrl),
-                        name = video.name,
-                        sourceUrl = video.playerUrl,
-                    )
-                }
-            )
+        addScreenshotsIfNotEmpty(
+            animeDetailsFullEntity = animeDetailsFullEntity,
+            uiItems = uiItems,
         )
 
-        return AnimeDetailsState(
-            title = details.russian,
-            imageUrl = imageUrlUtils.getImageWithBaseUrl(details.image.original),
-            ratingScore = details.score,
-            uiModels = uiItems,
+        addVideosIfNotEmpty(
+            animeDetailsFullEntity = animeDetailsFullEntity,
+            uiItems = uiItems,
         )
+
+        uiItems.add(SpacerUiItem)
+
+        return uiItems
     }
+
+    private fun addRelatesIfNotEmpty(
+        animeDetailsFullEntity: AnimeDetailsFullEntity,
+        uiItems: MutableList<AdapterItem>,
+    ) =
+        animeDetailsFullEntity
+            .relates
+            .map(animeUiMapper::map)
+            .takeIf { it.isNotEmpty() }
+            ?.let { list ->
+                uiItems.add(
+                    RelatedItemListUiModel(
+                        list = list
+                    )
+                )
+            }
+
+    private fun addVideosIfNotEmpty(
+        animeDetailsFullEntity: AnimeDetailsFullEntity,
+        uiItems: MutableList<AdapterItem>,
+    ) =
+        animeDetailsFullEntity
+            .animeDetailsEntity
+            .videoList
+            .filterNot { it.hosting == EXCLUDED_HOSTING }
+            .map { video ->
+                VideoUiModel(
+                    source = video.hosting,
+                    imageUrl = imageUrlUtils.getSecurityUrl(video.imageUrl),
+                    name = video.name,
+                    sourceUrl = video.playerUrl,
+                )
+            }.takeIf { it.isNotEmpty() }
+            ?.let { list ->
+                uiItems.add(
+                    VideoUiModelList(
+                        list = list
+                    )
+                )
+            }
+
+    private fun addRolesIfNotEmpty(
+        animeDetailsFullEntity: AnimeDetailsFullEntity,
+        uiItems: MutableList<AdapterItem>,
+    ) = animeDetailsFullEntity
+        .roles
+        .map {
+            RoleUiModel(
+                name = it.character.russian.ifEmpty {
+                    it.character.name
+                },
+                imageUrl = imageUrlUtils.getImageWithBaseUrl(it.character.image.preview),
+            )
+        }
+        .takeIf { it.isNotEmpty() }
+        ?.let { list ->
+            uiItems.add(
+                RoleUiModelList(
+                    list = list
+                )
+            )
+        }
+
+    private fun addScreenshotsIfNotEmpty(
+        animeDetailsFullEntity: AnimeDetailsFullEntity,
+        uiItems: MutableList<AdapterItem>,
+    ) = animeDetailsFullEntity
+        .screenshots
+        .map { ScreenshotUiModel(imageUrlUtils.getImageWithBaseUrl(it.preview)) }
+        .takeIf { it.isNotEmpty() }
+        ?.let { list ->
+            uiItems.add(
+                ScreenshotUiModelList(
+                    list = list
+                )
+            )
+        }
+
 
     private fun composeBriefInfoList(details: AnimeDetailsEntity): AdapterItem {
         val list = mutableListOf<BriefInfoUiModel>()
@@ -104,8 +179,8 @@ class AnimeDetailsComposer @Inject constructor(
         if (details.status == AnimeStatus.ANONS || details.status == AnimeStatus.ONGOING) {
             list.add(
                 BriefInfoUiModel(
-                    info = details.status.status,
-                    title = "Статус"
+                    info = resourceProvider.getString(PREFIX_STATUS + details.status.status),
+                    title = resourceProvider.getString(R.string.anime_details_status)
                 )
             )
         }
@@ -114,7 +189,7 @@ class AnimeDetailsComposer @Inject constructor(
             list.add(
                 BriefInfoUiModel(
                     info = details.airedOn + "\n" + details.releasedOn,
-                    title = "Дата выхода"
+                    title = resourceProvider.getString(R.string.anime_details_date),
                 )
             )
         } else if (details.status == AnimeStatus.ONGOING) {
@@ -129,14 +204,16 @@ class AnimeDetailsComposer @Inject constructor(
 
             }
 
-
             val currentDate = Date()
 
             if (currentDate.time - (date?.time ?: 0) < 0) {
                 list.add(
                     BriefInfoUiModel(
-                        info = "Несколько мгновений",
-                        title = "До ${details.episodesAired + 1} эпизода"
+                        info = resourceProvider.getString(R.string.anime_details_episode_date),
+                        title = resourceProvider.getString(
+                            R.string.anime_details_date_next_episode,
+                            details.episodesAired + 1
+                        ),
                     )
                 )
             }
@@ -145,8 +222,8 @@ class AnimeDetailsComposer @Inject constructor(
 
         list.add(
             BriefInfoUiModel(
-                info = details.kind.kind,
-                title = "Тип"
+                info = details.kind.kind.uppercase(Locale.getDefault()),
+                title = resourceProvider.getString(R.string.anime_details_type_title),
             )
         )
 
@@ -159,14 +236,17 @@ class AnimeDetailsComposer @Inject constructor(
             list.add(
                 BriefInfoUiModel(
                     info = episodes,
-                    title = "Эпизоды"
+                    title = resourceProvider.getString(R.string.anime_details_episodes_title),
                 )
             )
 
             list.add(
                 BriefInfoUiModel(
-                    info = "${details.duration} мин",
-                    title = "Время эпизода"
+                    info = resourceProvider.getString(
+                        R.string.anime_details_episode_time,
+                        details.duration,
+                    ),
+                    title = resourceProvider.getString(R.string.anime_details_episode_time_title),
                 )
             )
         }
@@ -174,13 +254,19 @@ class AnimeDetailsComposer @Inject constructor(
         if (details.rating.isNotEmpty()) {
             list.add(
                 BriefInfoUiModel(
-                    info = details.rating,
-                    title = "Возрастной рейтинг"
+                    info = resourceProvider.getString(PREFIX_AGE_RATING + details.rating),
+                    title = resourceProvider.getString(R.string.anime_details_age_rating_title),
                 )
             )
         }
 
         return BriefInfoUiModelList(list)
+    }
+
+    companion object {
+        private const val EXCLUDED_HOSTING = "vk"
+        private const val PREFIX_STATUS = "anime_status_"
+        private const val PREFIX_AGE_RATING = "anime_details_age_rating_"
     }
 
 }
