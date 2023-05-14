@@ -44,5 +44,21 @@
     <string name="anime_details_characters_title">Персонажи</string>
     <string name="anime_details_screenshots_title">Кадры</string>
     <string name="anime_details_video_title">Видео</string>
+    <string name="anime_details_date">Дата выхода</string>
+    <string name="anime_details_status">Статус</string>
+    <string name="anime_details_episodes_title">Эпизоды</string>
+    <string name="anime_details_type_title">Тип</string>
+    <string name="anime_details_episode_date">Несколько мгновений</string>
+    <string name="anime_details_episode_time_title">Время эпизода</string>
+    <string name="anime_details_episode_time">%1$s мин</string>
+    <string name="anime_details_date_next_episode">До %1$d эпизода</string>
+    <string name="anime_details_age_rating_title">Возрастной рейтинг</string>
+
+    <string name="anime_details_age_rating_g">Для всех</string>
+    <string name="anime_details_age_rating_pg">Для детей</string>
+    <string name="anime_details_age_rating_pg_13">13+</string>
+    <string name="anime_details_age_rating_r">17+</string>
+    <string name="anime_details_age_rating_r_plus">18+</string>
+    <string name="anime_details_age_rating_rx">Хентай</string>
 
 </resources>
