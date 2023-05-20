@@ -61,4 +61,26 @@
     <string name="anime_details_age_rating_r_plus">18+</string>
     <string name="anime_details_age_rating_rx">Хентай</string>
 
+    <string name="anime_personal_list_ribbon_status_planned">Запланировано</string>
+    <string name="anime_personal_list_ribbon_status_watching">Смотрю</string>
+    <string name="anime_personal_list_ribbon_status_rewatching">Пересмотр</string>
+    <string name="anime_personal_list_ribbon_status_completed">Завершено</string>
+    <string name="anime_personal_list_ribbon_status_on_hold">Отложено</string>
+    <string name="anime_personal_list_ribbon_status_dropped">Брошено</string>
+    <string name="personal_list_popup_menu_filter_name">Имя</string>
+    <string name="personal_list_popup_menu_filter_progress">Прогресс</string>
+    <string name="personal_list_popup_menu_filter_score">Оценка</string>
+    <string name="personal_list_popup_menu_filter_episodes">Эпизоды</string>
+    <string name="edit_rate_status_watching">Смотрю</string>
+    <string name="edit_rate_status_planned">В планах</string>
+    <string name="edit_rate_status_rewatching">Пересмотр</string>
+    <string name="edit_rate_status_completed">Просмотрено</string>
+    <string name="edit_rate_status_on_hold">Отложено</string>
+    <string name="edit_rate_status_dropped">Брошено</string>
+    <string name="edit_rate_status_none">Статус отсутствует</string>
+    <string name="edit_rate_episodes_title">Просмотрено:</string>
+    <string name="edit_rate_episodes_header">Эпизоды</string>
+    <string name="edit_rate_score_header">Оценка</string>
+
 </resources>
+

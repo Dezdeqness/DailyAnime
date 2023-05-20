@@ -15,6 +15,7 @@ import javax.inject.Named
 
 class EditRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
+    private val editRateStatusMapper: EditRateStatusMapper,
     @Named("rateId") private val rateId: Long,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -43,9 +44,10 @@ class EditRateViewModel @Inject constructor(
         )
     }
 
-    fun onRatingChanged(rating: Long) {
+    fun onRatingChanged(position: Int) {
+        val score = _editRateStateFlow.value.carouselUiModels[position].value
         _editRateStateFlow.value = _editRateStateFlow.value.copy(
-            score = rating,
+            score = score,
         )
 
         checkIsContentChanged()
@@ -83,9 +85,10 @@ class EditRateViewModel @Inject constructor(
         }
     }
 
-    fun onStatusChanged(status: UserRateStatusEntity) {
+    fun onStatusChanged(statusEntity: UserRateStatusEntity) {
+        val modelStatus = editRateStatusMapper.map(status = statusEntity.status)
         _editRateStateFlow.value = _editRateStateFlow.value.copy(
-            status = status,
+            status = modelStatus,
         )
 
         checkIsContentChanged()
@@ -95,7 +98,7 @@ class EditRateViewModel @Inject constructor(
         if (_editRateStateFlow.value.isUserRateChanged) {
             val uiModel = EditRateUiModel(
                 rateId = _editRateStateFlow.value.rateId,
-                status = _editRateStateFlow.value.status.status,
+                status = _editRateStateFlow.value.status.id,
                 episodes = _editRateStateFlow.value.episode,
                 score = _editRateStateFlow.value.score.toFloat(),
             )
@@ -120,21 +123,35 @@ class EditRateViewModel @Inject constructor(
             val userRate = userRatesRepository.getLocalUserRate(rateId = rateId)
             localUserRate = userRate ?: UserRateEntity.EMPTY_USER_RATE
 
+            emitDefaultState()
+
             userRate?.let {
                 emitEditRateState(userRate)
             }
         }
     }
 
+    private fun emitDefaultState() {
+        val modelStatus = editRateStatusMapper.map(status = UserRateStatusEntity.UNKNOWN.status)
+        _editRateStateFlow.value = _editRateStateFlow.value.copy(
+            status = modelStatus,
+            carouselUiModels = generateSequence(0L) { it + 1 }
+                .take(n = 11)
+                .map { CarouselUiModel(value = it) }
+                .toList(),
+        )
+    }
+
     private fun emitEditRateState(userRate: UserRateEntity, isUserRateChanged: Boolean = false) {
         val title = userRate.anime?.russian.orEmpty()
-        val status = UserRateStatusEntity.fromString(userRate.status)
+        val modelStatus = editRateStatusMapper.map(status = userRate.status)
         val score = userRate.score
         val episode = userRate.episodes
+
         _editRateStateFlow.value = _editRateStateFlow.value.copy(
             rateId = userRate.id,
             title = title,
-            status = status,
+            status = modelStatus,
             score = score,
             episode = episode,
             isUserRateChanged = isUserRateChanged,
@@ -143,7 +160,7 @@ class EditRateViewModel @Inject constructor(
 
     private fun isUserRateChanged(): Boolean {
         val uiEditRate = _editRateStateFlow.value
-        return uiEditRate.status.status != localUserRate?.status ||
+        return uiEditRate.status.id != localUserRate?.status ||
                 uiEditRate.episode != localUserRate?.episodes ||
                 uiEditRate.score != localUserRate?.score
     }

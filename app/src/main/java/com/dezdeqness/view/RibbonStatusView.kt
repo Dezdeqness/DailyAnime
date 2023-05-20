@@ -11,13 +11,15 @@ import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import com.dezdeqness.R
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class RibbonStatusView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : HorizontalScrollView(context, attrs, defStyleAttr) {
-    private val ribbonLayout: LinearLayoutCompat
+    private val ribbonLayout: ChipGroup
 
     init {
         LayoutInflater.from(context).inflate(R.layout.ribbon_status_view, this, true)
@@ -53,21 +55,17 @@ class RibbonStatusView @JvmOverloads constructor(
         ribbonLayout.removeAllViews()
 
         list.forEach { uiModel ->
-            val button = LayoutInflater.from(context)
-                .inflate(R.layout.item_ribbon_button, ribbonLayout, false)
-            val tagText = button.findViewById<TextView>(R.id.tag_text)
-            with(tagText) {
+            val chip = LayoutInflater
+                .from(context)
+                .inflate(R.layout.item_ribbon_button, ribbonLayout, false) as Chip
+            with(chip) {
                 text = uiModel.displayName
-                if (uiModel.isSelected) {
-                    setBackgroundColor(Color.LTGRAY)
-                } else {
-                    setBackgroundColor(Color.WHITE)
-                }
+                isChecked = uiModel.isSelected
                 setOnClickListener {
                     listener.invoke(uiModel.id)
                 }
             }
-            ribbonLayout.addView(button)
+            ribbonLayout.addView(chip)
         }
     }
 }

@@ -34,8 +34,6 @@ data class ApplyFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event(
 
 data class NavigateToFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
 
-data class NavigateToSortFilter(val currentSort: String) : Event()
-
 data class NavigateToEditRate(val rateId: Long) : Event()
 
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
@@ -60,3 +58,5 @@ data class NavigateToAnimeState(
 data class NavigateToSimilar(val animeId: Long) : Event()
 
 data class NavigateToChronology(val animeId: Long) : Event()
+
+object OpenMenuPopupFilter : Event()

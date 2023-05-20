@@ -7,7 +7,7 @@ enum class UserRateStatusEntity(val status: String) {
     PLANNED("planned"),
     ON_HOLD("on_hold"),
     DROPPED("dropped"),
-    UNKNOWN("");
+    UNKNOWN("none");
 
     companion object {
         fun fromString(value: String) = values().find { item -> item.status == value } ?: UNKNOWN

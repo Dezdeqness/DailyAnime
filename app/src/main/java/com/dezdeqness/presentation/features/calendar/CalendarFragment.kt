@@ -107,14 +107,18 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
                             binding.recycler.scrollToPosition(0)
                             viewModel.onEventConsumed(ScrollToTop)
                         }
-                        state.events.forEach { event ->
-                            when (event) {
-                                is ConsumableEvent -> {
-                                    eventConsumer.consume(event)
-                                }
 
-                                else -> {}
+                    }
+
+                    state.events.forEach { event ->
+                        when (event) {
+                            is ConsumableEvent -> {
+                                eventConsumer.consume(event)
                             }
+
+                            else -> {}
+                        }
+                        if (event !is ScrollToTop) {
                             viewModel.onEventConsumed(event)
                         }
                     }

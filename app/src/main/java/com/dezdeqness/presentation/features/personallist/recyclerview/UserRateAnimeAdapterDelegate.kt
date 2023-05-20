@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.personallist.recyclerview
 
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
@@ -34,6 +35,7 @@ fun userRateAnimeAdapterDelegate(
                         animeTitle.text = item.name
                         animeBriefInfo.text = item.briefInfo
                         animeProgress.text = item.progress
+                        animeProgress.isVisible = item.isAnimeInProgress
                         animeScore.text = item.score
 
                         Glide.with(root)
@@ -43,7 +45,7 @@ fun userRateAnimeAdapterDelegate(
                             .with(root)
                             .load(item.logoUrl)
                             .centerCrop()
-                            .placeholder(R.drawable.ic_launcher_background)
+                            .placeholder(R.drawable.ic_search_placeholder)
                             .into(animeLogo)
                     } else {
                         payloads
@@ -57,11 +59,11 @@ fun userRateAnimeAdapterDelegate(
                                 }
                                 payload.progress?.let {
                                     animeProgress.text = item.progress
+                                    animeProgress.isVisible = item.isAnimeInProgress
                                 }
                                 payload.score?.let {
                                     animeScore.text = item.score
                                 }
-
                             }
                     }
                 }

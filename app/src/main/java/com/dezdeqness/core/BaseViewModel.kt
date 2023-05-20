@@ -50,7 +50,7 @@ abstract class BaseViewModel(
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) {
+    ) =
         makeRequest(
             action = action,
             onSuccess = onSuccess,
@@ -58,14 +58,13 @@ abstract class BaseViewModel(
             errorMessage = errorMessage,
             isPullDownRefresh = true,
         )
-    }
 
     protected fun <T> onPullDownRefreshed(
         collector: Flow<Result<T>>,
         onSuccess: suspend (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) {
+    ) =
         makeRequest(
             collector = collector,
             onSuccess = onSuccess,
@@ -73,28 +72,27 @@ abstract class BaseViewModel(
             errorMessage = errorMessage,
             isPullDownRefresh = true,
         )
-    }
+
 
     protected fun <T> onLoadMore(
         action: () -> (Result<T>),
         onSuccess: (T) -> (Boolean),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) {
+    ) =
         makeRequest(
             action = action,
             onSuccess = onSuccess,
             onFailure = onFailure,
             errorMessage = errorMessage,
         )
-    }
 
     protected fun <T> onInitialLoad(
         action: () -> (Result<T>),
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) {
+    ) =
         makeRequest(
             action = action,
             onSuccess = onSuccess,
@@ -102,14 +100,13 @@ abstract class BaseViewModel(
             errorMessage = errorMessage,
             isInitialLoad = true,
         )
-    }
 
     protected fun <T> onInitialLoad(
         collector: Flow<Result<T>>,
         onSuccess: suspend (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) {
+    ) =
         makeRequest(
             collector = collector,
             onSuccess = onSuccess,
@@ -117,7 +114,6 @@ abstract class BaseViewModel(
             errorMessage = errorMessage,
             isInitialLoad = true,
         )
-    }
 
     private fun <T> makeRequest(
         action: () -> (Result<T>),
@@ -126,7 +122,7 @@ abstract class BaseViewModel(
         isPullDownRefresh: Boolean = false,
         isInitialLoad: Boolean = false,
         errorMessage: String = "",
-    ) {
+    ) =
         launchOnIo {
             if (isPullDownRefresh) {
                 refreshable.setPullDownIndicatorVisible(isVisible = true)
@@ -159,14 +155,13 @@ abstract class BaseViewModel(
                     )
                 }
         }
-    }
 
     private fun <T> makeRequest(
         action: () -> (Result<T>),
         onSuccess: (T) -> (Boolean),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) {
+    ) =
         launchOnIo {
             action.invoke()
                 .onSuccess { value ->
@@ -183,7 +178,7 @@ abstract class BaseViewModel(
                     )
                 }
         }
-    }
+
 
     private fun <T> makeRequest(
         collector: Flow<Result<T>>,
@@ -193,7 +188,7 @@ abstract class BaseViewModel(
         isInitialLoad: Boolean = false,
         isLoadMore: Boolean = false,
         errorMessage: String = "",
-    ) {
+    ) =
         launchOnIo {
             if (isPullDownRefresh) {
                 refreshable.setPullDownIndicatorVisible(isVisible = true)
@@ -231,7 +226,6 @@ abstract class BaseViewModel(
                     }
             }
         }
-    }
 
     fun logInfo(message: String) {
         appLogger.logInfo(

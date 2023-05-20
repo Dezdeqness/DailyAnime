@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.FrameLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -12,15 +14,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewpager.widget.ViewPager
+import com.dezdeqness.R
 import com.dezdeqness.databinding.BottomSheetDialogEditRateBinding
 import com.dezdeqness.di.subcomponents.UserRateModule
 import com.dezdeqness.domain.model.UserRateStatusEntity
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.EditUserRate
-import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.features.editrate.CarouselPicker.CarouselItem
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
 
@@ -35,6 +41,8 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
             viewModelFactory
         }
     )
+
+    private var carouselAdapter: CarouselViewAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,22 +70,59 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
 
         setupListeners()
         setupObservers()
+        setupDialogLayout()
+        setupScoreCarousel()
+        setupMenu()
+        setupToolbar()
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.setNavigationOnClickListener {
+            requireDialog().cancel()
+        }
+    }
+    private fun setupMenu() {
+        binding.toolbar.apply {
+            inflateMenu(R.menu.menu_edit_rate)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_accept -> {
+                        viewModel.onApplyButtonClicked()
+                    }
+
+                    R.id.action_reset -> {
+                        viewModel.onResetButtonClicked()
+                    }
+                }
+                true
+            }
+        }
+    }
+
+    private fun setupScoreCarousel() {
+        binding.scoreCarousel.addOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {}
+
+                override fun onPageSelected(position: Int) {
+                    viewModel.onRatingChanged(position)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {}
+            }
+        )
     }
 
     private fun setupListeners() {
-        binding.ratingView.setOnRatingBarChangeListener { _, rating, fromUser ->
-            if (fromUser) {
-                viewModel.onRatingChanged((rating * 2).toLong())
-            }
-        }
         binding.rateEpisodeMinus.setOnClickListener {
             viewModel.onEpisodesMinusClicked()
         }
         binding.rateEpisodePlus.setOnClickListener {
             viewModel.onEpisodesPlusClicked()
-        }
-        binding.rateResetChanges.setOnClickListener {
-            viewModel.onResetButtonClicked()
         }
         binding.rateStatusPlanned.setOnClickListener {
             viewModel.onStatusChanged(UserRateStatusEntity.PLANNED)
@@ -97,8 +142,15 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
         binding.rateStatusWatching.setOnClickListener {
             viewModel.onStatusChanged(UserRateStatusEntity.WATCHING)
         }
-        binding.rateEdit.setOnClickListener {
-            viewModel.onApplyButtonClicked()
+    }
+
+    private fun setupDialogLayout() {
+        with(requireDialog().findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)) {
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+            with(BottomSheetBehavior.from(this)) {
+                state = BottomSheetBehavior.STATE_EXPANDED
+                skipCollapsed = true
+            }
         }
     }
 
@@ -106,11 +158,21 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.editRateStateFlow.collect { state ->
-                    binding.toolbar.title = state.title
-                    binding.ratingView.rating = state.score / 2f
+                    binding.animeName.text = state.title
                     binding.rateWatches.text = state.episode.toString()
-                    binding.currentStatus.text = state.status.status
-                    binding.rateEdit.isEnabled = state.isUserRateChanged
+                    binding.currentStatus.text = state.status.displayName
+
+                    setupAcceptButton(state = state)
+
+                    if (carouselAdapter == null && state.carouselUiModels.isNotEmpty()) {
+                        carouselAdapter = CarouselViewAdapter(
+                            context = requireContext(),
+                            items = state.carouselUiModels.map { CarouselItem(it.value.toString()) }
+                        )
+                        binding.scoreCarousel.adapter = carouselAdapter
+                    }
+
+                    binding.scoreCarousel.currentItem = state.score.toInt()
 
                     state.events.forEach { event ->
                         when (event) {
@@ -129,6 +191,13 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setupAcceptButton(state: EditRateState) {
+        binding.toolbar.menu?.findItem(R.id.action_accept)?.let {
+            it.isEnabled = state.isUserRateChanged
+            it.icon?.alpha = if (state.isUserRateChanged) 255 else 100
         }
     }
 
