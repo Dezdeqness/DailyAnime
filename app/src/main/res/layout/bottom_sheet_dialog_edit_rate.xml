@@ -9,33 +9,14 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/text_primary"
-            app:title="Аниме"
-            app:titleTextColor="@color/black">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/rate_reset_changes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
-                android:text="Сбросить"
-                android:textSize="12sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/rate_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
-                android:text="Применить"
-                android:textSize="12sp" />
+            app:navigationIcon="@drawable/ic_close">
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -50,109 +31,208 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/anime_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:paddingVertical="8dp"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Я требую яоя" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/filter_divider"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/current_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:paddingVertical="8dp"
                 android:textAlignment="center"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                tools:text="watching" />
+                tools:text="Смотрю" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rate_status_watching"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.3"
-                    android:text="Смотрю" />
+                    android:text="@string/edit_rate_status_watching"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/drawable_icon" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rate_status_planned"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.3"
-                    android:text="В планах" />
+                    android:text="@string/edit_rate_status_planned"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/drawable_icon" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rate_status_rewatching"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.3"
-                    android:text="Пересмотр" />
+                    android:text="@string/edit_rate_status_rewatching"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/drawable_icon" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rate_status_watched"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="Просмотрено" />
+                    android:layout_margin="4dp"
+                    android:text="@string/edit_rate_status_completed"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/drawable_icon" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rate_status_hold"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.3"
-                    android:text="Отложено" />
+                    android:text="@string/edit_rate_status_on_hold"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/drawable_icon" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rate_status_throwed"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:layout_weight="0.3"
-                    android:text="Брошено" />
+                    android:text="@string/edit_rate_status_dropped"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/drawable_icon" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/ratingView"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/filter_divider"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:isIndicator="false"
-                android:stepSize="0.5"
-                android:numStars="5" />
+                android:text="@string/edit_rate_score_header"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.dezdeqness.presentation.features.editrate.CarouselPicker
+                android:id="@+id/scoreCarousel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/filter_divider"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/edit_rate_episodes_header"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/edit_rate_episodes_title"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/rate_watches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
                     android:textAlignment="center"
+                    android:textColor="@color/text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="10" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/rate_episode_minus"
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="Минус" />
+                    android:gravity="end"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/rate_episode_plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="Плюс" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/rate_episode_minus"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginVertical="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        app:srcCompat="@drawable/ic_minus" />
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/rate_episode_plus"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginVertical="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        app:srcCompat="@drawable/ic_add" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
