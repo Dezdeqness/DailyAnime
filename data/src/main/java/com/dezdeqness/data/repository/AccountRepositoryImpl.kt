@@ -69,6 +69,8 @@ class AccountRepositoryImpl @Inject constructor(
             return@flow
         }
 
+        emit(Result.success(profile))
+
         val detailsAccountInfo = accountRemoteDataSource.getDetailsAccountInfo(
             token = tokenData.accessToken,
             userId = profile.id,
