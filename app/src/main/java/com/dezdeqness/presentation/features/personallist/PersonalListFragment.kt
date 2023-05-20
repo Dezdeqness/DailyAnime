@@ -1,8 +1,10 @@
 package com.dezdeqness.presentation.features.personallist
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
@@ -10,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalListBinding
 import com.dezdeqness.di.AppComponent
@@ -18,12 +21,12 @@ import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
-import com.dezdeqness.presentation.event.NavigateToSortFilter
+import com.dezdeqness.presentation.event.OpenMenuPopupFilter
 import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
-import com.dezdeqness.presentation.features.sortdialog.SortBottomSheetDialog
 import kotlinx.coroutines.launch
+
 
 class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), ActionListener {
 
@@ -55,17 +58,10 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(SortBottomSheetDialog.TAG) { _, bundle ->
-            val sort = bundle.getString((SortBottomSheetDialog.RESULT))
-            viewModel.onSortChanged(sort)
-        }
-
         setFragmentResultListener(EDIT_RATE_DIALOG_TAG) { _, bundle ->
             val userRate = bundle.getParcelable<EditRateUiModel>(EditRateBottomSheetDialog.RESULT)
             viewModel.onUserRateChanged(userRate)
         }
-
-        viewModel.loadPersonalList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,11 +71,11 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
         setupRecyclerView()
         setupSearchView()
         setupObservers()
+        setupMenu()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        clearFragmentResultListener(SortBottomSheetDialog.TAG)
         clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
@@ -96,7 +92,6 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             override fun onQueryTextChange(newText: String): Boolean {
                 viewModel.onQueryChanged(newText)
                 return true
-
             }
 
         })
@@ -105,6 +100,20 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     private fun setupRefreshLayout() {
         binding.refresh.setOnRefreshListener {
             viewModel.onPullDownRefreshed()
+        }
+    }
+
+    private fun setupMenu() {
+        binding.toolbar.apply {
+            inflateMenu(R.menu.menu_personal_list)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_filter -> {
+                        viewModel.onFilterButtonClicked()
+                    }
+                }
+                true
+            }
         }
     }
 
@@ -146,15 +155,6 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
                     state.events.forEach { event ->
                         when (event) {
-                            is NavigateToSortFilter -> {
-                                val dialog =
-                                    SortBottomSheetDialog.newInstance(event.currentSort)
-                                dialog.show(
-                                    parentFragmentManager,
-                                    SortBottomSheetDialog.TAG
-                                )
-                            }
-
                             is NavigateToEditRate -> {
                                 val dialog =
                                     EditRateBottomSheetDialog.newInstance(
@@ -166,6 +166,11 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                                     EDIT_RATE_DIALOG_TAG,
                                 )
                             }
+
+                            is OpenMenuPopupFilter -> {
+                               openPopupMenu()
+                            }
+
                             is ConsumableEvent -> {
                                 eventConsumer.consume(event)
                             }
@@ -173,11 +178,24 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                             else -> {}
                         }
 
-                        viewModel.onEventConsumed(event)
+                        if (event !is ScrollToTop) {
+                            viewModel.onEventConsumed(event)
+                        }
 
                     }
                 }
             }
+        }
+    }
+
+    private fun openPopupMenu() {
+       PopupMenu(requireContext(), binding.toolbar, Gravity.END).apply {
+            menuInflater.inflate(R.menu.menu_popup_filter, menu)
+            setOnMenuItemClickListener { menuItem ->
+                viewModel.onSortChanged(menuItem.titleCondensed.toString())
+                true
+            }
+            show()
         }
     }
 

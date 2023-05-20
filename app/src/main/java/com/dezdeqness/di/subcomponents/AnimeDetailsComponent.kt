@@ -22,7 +22,7 @@ interface AnimeDetailsComponent {
 }
 
 @Module
-class ArgsModule( @Named("animeId") private val id: Long) {
+class ArgsModule(private val id: Long) {
 
     @Named("animeId")
     @Provides

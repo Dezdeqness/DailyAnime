@@ -8,6 +8,7 @@ data class UserRateUiModel(
     val score: String,
     val progress: String,
     val logoUrl: String,
+    val isAnimeInProgress: Boolean,
 ) : AdapterItem() {
 
     override fun id() = (rateId + id).toString()

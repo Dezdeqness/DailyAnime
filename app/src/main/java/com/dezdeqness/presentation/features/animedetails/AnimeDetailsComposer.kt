@@ -251,7 +251,7 @@ class AnimeDetailsComposer @Inject constructor(
             )
         }
 
-        if (details.rating.isNotEmpty()) {
+        if (details.rating.isNotEmpty() && details.rating != "none") {
             list.add(
                 BriefInfoUiModel(
                     info = resourceProvider.getString(PREFIX_AGE_RATING + details.rating),

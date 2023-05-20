@@ -13,9 +13,10 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.NavigateToEditRate
-import com.dezdeqness.presentation.event.NavigateToSortFilter
+import com.dezdeqness.presentation.event.OpenMenuPopupFilter
+import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
-import com.dezdeqness.presentation.models.PersonalListFilterUiModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -41,38 +42,48 @@ class PersonalListViewModel @Inject constructor(
 
     private var userRatesList: List<UserRateEntity> = listOf()
 
+    private var workerJob: Job? = null
+
     private val _personalListStateFlow: MutableStateFlow<PersonalListState> =
         MutableStateFlow(PersonalListState())
     val personalListStateFlow: StateFlow<PersonalListState> get() = _personalListStateFlow
 
     init {
+        initialLoad()
         actionConsumer.attachListener(this)
     }
 
     override fun viewModelTag() = "PersonalListViewModel"
+
     override fun onPullDownRefreshed() {
-        currentRibbonId?.let { status ->
-            onPullDownRefreshed(
-                collector = userRatesRepository.getUserRates(
-                    status = status,
-                    page = INITIAL_PAGE,
-                    onlyRemote = true,
-                ),
-                onSuccess = { list ->
-                    userRatesList = list
+        if (currentRibbonId != null) {
+            currentRibbonId?.let { status ->
+                cancelJobIfActive()
 
-                    val uiItems = personalListComposer.compose(
-                        filter = personalListFilterRepository.getFilter(),
-                        entityList = list,
-                        query = query,
-                    )
+                workerJob = onPullDownRefreshed(
+                    collector = userRatesRepository.getUserRates(
+                        status = status,
+                        page = INITIAL_PAGE,
+                        onlyRemote = true,
+                    ),
+                    onSuccess = { list ->
+                        userRatesList = list
 
-                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                        items = uiItems,
-                        isEmptyStateShowing = userRatesList.isEmpty(),
-                    )
-                },
-            )
+                        val uiItems = personalListComposer.compose(
+                            filter = personalListFilterRepository.getFilter(),
+                            entityList = list,
+                            query = query,
+                        )
+
+                        _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                            items = uiItems,
+                            isEmptyStateShowing = userRatesList.isEmpty(),
+                        )
+                    },
+                )
+            }
+        } else {
+            initialLoad()
         }
     }
 
@@ -113,69 +124,26 @@ class PersonalListViewModel @Inject constructor(
         }
     }
 
-    // TODO: Add fetching when app from foreground
-    fun loadPersonalList() {
-        launchOnIo {
-            accountRepository.getProfileDetails().collect { result ->
-                result.onSuccess { details ->
-
-                    ribbonRaw = details.fullAnimeStatusesEntity
-
-                    val ribbon = personalListComposer.composeStatuses(ribbonRaw, currentRibbonId)
-
-                    if (currentRibbonId == null) {
-                        if (ribbon.isEmpty()) {
-                            return@onSuccess
-                        }
-                        currentRibbonId = ribbon.first().id
-                    }
-
-                    if (ribbon.isEmpty()) {
-                        // TODO: Empty state
-                    } else {
-                        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                            ribbon = ribbon,
-                        )
-                        currentRibbonId?.let { status ->
-                            initialLoad(status = status)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     fun onRibbonItemSelected(id: String) {
         if (_personalListStateFlow.value.ribbon.find { it.id == id }?.isSelected == true) {
             return
         }
         currentRibbonId = id
-        val ribbon = personalListComposer.composeStatuses(ribbonRaw, id)
+        var ribbon = personalListComposer.composeStatuses(ribbonRaw)
+
+        ribbon = personalListComposer.applySelected(
+            items = ribbon,
+            currentId = currentRibbonId
+        )
+
         _personalListStateFlow.value = _personalListStateFlow.value.copy(
             ribbon = ribbon,
             items = listOf(),
         )
         launchOnIo {
             currentRibbonId?.let { status ->
-                initialLoad(status = status)
+                fetchCategory(status = status)
             }
-        }
-    }
-
-    fun onOrderChanged(isAscending: Boolean) {
-        launchOnIo {
-            val order = !isAscending
-            personalListFilterRepository.setOrder(order)
-
-            val uiItems = personalListComposer.compose(
-                filter = personalListFilterRepository.getFilter(),
-                entityList = userRatesList,
-                query = query,
-            )
-
-            _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                items = uiItems,
-            )
         }
     }
 
@@ -193,19 +161,17 @@ class PersonalListViewModel @Inject constructor(
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
+                events = _personalListStateFlow.value.events + ScrollToTop,
             )
         }
     }
 
-    fun onSortClicked() {
+    fun onFilterButtonClicked() {
         launchOnIo {
-            val filter = personalListFilterRepository.getFilter()
             val events = _personalListStateFlow.value.events
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                events = events + NavigateToSortFilter(
-                    currentSort = filter.sort.sort,
-                ),
+                events = events + OpenMenuPopupFilter,
             )
         }
     }
@@ -224,11 +190,10 @@ class PersonalListViewModel @Inject constructor(
                 query = query,
             )
 
-            val isEmpty = uiItems.filterNot { it is PersonalListFilterUiModel }.isEmpty()
-
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
-                isEmptyStateShowing = isEmpty,
+                isEmptyStateShowing = uiItems.isEmpty(),
+                events = _personalListStateFlow.value.events + ScrollToTop,
             )
         }
     }
@@ -258,16 +223,63 @@ class PersonalListViewModel @Inject constructor(
                 )
             },
             onSuccess = {
-                currentRibbonId?.let { status ->
-                    initialLoad(status = status)
+                initialLoad()
+            }
+        )
+    }
+
+    // TODO: Add fetching when app from foreground
+    private fun initialLoad() {
+        onInitialLoad(
+            collector = accountRepository.getProfileDetails(),
+            onSuccess = { details ->
+                ribbonRaw = details.fullAnimeStatusesEntity
+
+                var ribbon = personalListComposer.composeStatuses(ribbonRaw)
+
+                if (ribbon.isEmpty()) {
+                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                        isEmptyStateShowing = true,
+                    )
+                } else {
+                    if (currentRibbonId == null) {
+                        currentRibbonId = ribbon.first().id
+                    }
+
+                    if (ribbon.none { it.id == currentRibbonId }) {
+                        currentRibbonId = ribbon.first().id
+                    }
+
+                    ribbon = personalListComposer.applySelected(
+                        items = ribbon,
+                        currentId = currentRibbonId,
+                    )
+
+                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                        ribbon = ribbon,
+                        isEmptyStateShowing = false,
+                    )
+                    currentRibbonId?.let { status ->
+                        fetchCategory(status = status)
+                    }
                 }
+            },
+            onFailure = {
 
             }
         )
     }
 
-    private fun initialLoad(status: String) {
-        onInitialLoad(
+    private fun cancelJobIfActive() {
+        if (workerJob != null && workerJob?.isActive == true) {
+            workerJob?.cancel()
+        }
+    }
+
+    private fun fetchCategory(status: String) {
+        cancelJobIfActive()
+
+        workerJob = onInitialLoad(
             collector = userRatesRepository.getUserRates(status = status, page = INITIAL_PAGE),
             onSuccess = { list ->
                 userRatesList = list
