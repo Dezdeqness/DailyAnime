@@ -89,23 +89,30 @@ class PersonalListComposer @Inject constructor(
             // Fix issue with different sorting from DB and API
             .sortedByDescending { it.anime?.russian }
 
-        val sort = personalListFilterEntity.sort
-        val isAscending = personalListFilterEntity.isAscending
-        val sortedList = when (sort) {
-            Sort.NAME -> { list.sortedByDescending { it.anime?.russian } }
-            Sort.SCORE -> { list.sortedByDescending { it.score } }
-            Sort.PROGRESS -> { list.sortedByDescending { it.episodes } }
-            Sort.EPISODES -> { list.sortedByDescending { it.anime?.episodes } }
-            else -> { list }
+
+        val sortedList = when (personalListFilterEntity.sort) {
+            Sort.NAME -> {
+                list.sortedBy { it.anime?.russian }
+            }
+
+            Sort.SCORE -> {
+                list.sortedByDescending { it.score }
+            }
+
+            Sort.PROGRESS -> {
+                list.sortedByDescending { it.episodes }
+            }
+
+            Sort.EPISODES -> {
+                list.sortedByDescending { it.anime?.episodes }
+            }
+
+            else -> {
+                list
+            }
         }
 
-        val orderList = if (isAscending) {
-            sortedList.reversed()
-        } else {
-            sortedList
-        }
-
-        return orderList
+        return sortedList
     }
 
     private fun convert(item: UserRateEntity): UserRateUiModel? {

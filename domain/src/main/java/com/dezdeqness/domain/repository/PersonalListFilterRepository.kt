@@ -8,8 +8,6 @@ interface PersonalListFilterRepository {
 
     suspend fun setFilter(personalListFilterEntity: PersonalListFilterEntity)
 
-    suspend fun setOrder(isAscending: Boolean)
-
     suspend fun setSort(sort: String)
 
 }

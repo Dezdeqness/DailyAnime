@@ -1,13 +1,11 @@
 package com.dezdeqness.domain.model
 
 data class PersonalListFilterEntity(
-    val isAscending: Boolean,
     val sort: Sort,
 ) {
     companion object {
-        fun createFilter(isAscending: Boolean, sort: String): PersonalListFilterEntity {
+        fun createFilter(sort: String): PersonalListFilterEntity {
             return PersonalListFilterEntity(
-                isAscending = isAscending,
                 sort = Sort.fromString(sort),
             )
         }

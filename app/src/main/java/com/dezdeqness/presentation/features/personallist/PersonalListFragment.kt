@@ -30,12 +30,6 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     private val adapter: PersonalListAdapter by lazy {
         PersonalListAdapter(
             actionListener = this,
-            onSortClicked = {
-                viewModel.onSortClicked()
-            },
-            onOrderClicked = { order ->
-                viewModel.onOrderChanged(order)
-            },
             onEditRateClicked = { editRate ->
                 viewModel.onEditRateClicked(editRate)
             }
