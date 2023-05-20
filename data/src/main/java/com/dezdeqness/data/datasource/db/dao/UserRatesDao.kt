@@ -28,4 +28,12 @@ interface UserRatesDao {
     @Query("DELETE FROM 'user_rate' WHERE status = :status")
     fun deleteUserRatesByStatus(status: String)
 
+    @Query("UPDATE 'user_rate' SET score = :score, status = :status,  episodes = :episodes WHERE id =:rateId")
+    fun updateUserRate(
+        rateId: Int,
+        score: Int,
+        status: String,
+        episodes: Int,
+    )
+
 }
