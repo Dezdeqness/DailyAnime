@@ -4,9 +4,7 @@
 ## Plans
 - Finish POC stage (Q4 2022)
 - Make components generic for futures features (Q1 2023)
-- Theming, redesign UI components (Q1-Q2 2023)
-- Manga and Ranobe functionality (Q2 2023)
-- Video player (???)
+- Redesign UI components (Q1-Q3 2023)
 
 
 ## First stage(POC)
@@ -28,9 +26,11 @@
 
 ## Third stage(Improvements and enhancements)
 - [ ] Splash screen
-- [ ] Night theme
-- [ ] Redesign personal list screen(cell, order, sort, change ribbon)
+- [x] Night theme
+- [x] Redesign personal list screen(cell, order, sort, change ribbon)
 - [x] Redesign search screen(fab, cell, placeholders, filter dialog)
 - [x] Redesign profile
-- [ ] Redesign calendar
-- [ ] Redesign details screen
+- [x] Redesign calendar
+- [x] Redesign details screen
+- [ ] App icons
+- [ ] Error handling
