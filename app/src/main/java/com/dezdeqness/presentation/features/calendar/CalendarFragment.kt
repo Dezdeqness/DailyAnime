@@ -102,6 +102,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
                         isEmptyStateShowing = state.isEmptyStateShowing,
                     )
 
+                    binding.recycler.setErrorState(
+                        isErrorStateShowing = state.isErrorStateShowing,
+                    )
+
                     adapter.submitList(state.items) {
                         if (state.events.contains(ScrollToTop)) {
                             binding.recycler.scrollToPosition(0)

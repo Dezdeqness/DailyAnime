@@ -9,4 +9,5 @@ data class CalendarState(
     val events: List<Event> = listOf(),
     val isInitialLoadingIndicatorShowing: Boolean = false,
     val isEmptyStateShowing: Boolean = false,
+    val isErrorStateShowing: Boolean = false,
 )
