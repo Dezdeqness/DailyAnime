@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -16,8 +16,10 @@ import com.dezdeqness.R
 import com.dezdeqness.databinding.ActivityAuthorizationBinding
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.getComponent
+import com.dezdeqness.utils.isInternetAvailable
 import java.util.regex.Pattern
 import javax.inject.Inject
+
 
 class AuthorizationActivity : AppCompatActivity() {
 
@@ -36,6 +38,16 @@ class AuthorizationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (isInternetAvailable(this).not()) {
+            Toast.makeText(
+                this@AuthorizationActivity,
+                R.string.general_no_internet_error,
+                Toast.LENGTH_LONG
+            )
+                .show()
+            finish()
+        }
 
         setupWebView()
 
@@ -90,24 +102,6 @@ class AuthorizationActivity : AppCompatActivity() {
                             accountRepository.getAuthorizationCodeUrl().getOrNull().orEmpty(),
                         )
                     }
-                }
-
-                override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
-                ) {
-                    super.onReceivedError(view, request, error)
-                    view?.stopLoading()
-
-                    Toast.makeText(
-                        this@AuthorizationActivity,
-                        R.string.general_no_internet_error,
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                    finish()
-
                 }
 
                 private fun interceptCode(url: String) {
