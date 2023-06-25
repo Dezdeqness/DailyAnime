@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.animelist
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
@@ -11,6 +12,7 @@ import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.NavigateToFilter
+import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +24,8 @@ class AnimeViewModel @Inject constructor(
     private val animeUiMapper: AnimeUiMapper,
     private val animeFilterResponseConverter: AnimeFilterResponseConverter,
     private val actionConsumer: ActionConsumer,
+    private val messageConsumer: MessageConsumer,
+    private val messageProvider: MessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -68,6 +72,7 @@ class AnimeViewModel @Inject constructor(
                 _animeStateFlow.value = _animeStateFlow.value.copy(
                     list = state.list.map { animeUiMapper.map(it) },
                     hasNextPage = state.hasNextPage,
+                    isErrorStateShowing = false,
                 )
             }
         )
@@ -151,6 +156,9 @@ class AnimeViewModel @Inject constructor(
                 )
                 hasNextPage
             },
+            onFailure = {
+                onErrorMessage()
+            }
         )
     }
 
@@ -173,9 +181,25 @@ class AnimeViewModel @Inject constructor(
                     list = list,
                     hasNextPage = state.hasNextPage,
                     isEmptyStateShowing = list.isEmpty(),
+                    isErrorStateShowing = false,
                 )
             },
+            onFailure = {
+                if (_animeStateFlow.value.list.isNotEmpty()) {
+                    onErrorMessage()
+                } else {
+                    _animeStateFlow.value = _animeStateFlow.value.copy(
+                        isErrorStateShowing = true,
+                    )
+                }
+            }
         )
+    }
+
+    private fun onErrorMessage() {
+        launchOnIo {
+            messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
+        }
     }
 
     private fun filterSelectedCells() =
