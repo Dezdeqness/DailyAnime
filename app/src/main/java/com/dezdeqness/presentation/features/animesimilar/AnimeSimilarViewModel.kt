@@ -64,6 +64,7 @@ class AnimeSimilarViewModel @Inject constructor(
 
                 _similarStateFlow.value = _similarStateFlow.value.copy(
                     list = list,
+                    isErrorStateShowing = false,
                 )
             }
         )
@@ -99,8 +100,14 @@ class AnimeSimilarViewModel @Inject constructor(
                 _similarStateFlow.value = _similarStateFlow.value.copy(
                     list = list,
                     isEmptyStateShowing = list.isEmpty(),
+                    isErrorStateShowing = false,
                 )
             },
+            onFailure = {
+                _similarStateFlow.value = _similarStateFlow.value.copy(
+                    isErrorStateShowing = true,
+                )
+            }
         )
     }
 }

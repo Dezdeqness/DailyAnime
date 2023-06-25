@@ -21,6 +21,9 @@ class RecyclerViewWithState @JvmOverloads constructor(
     val recyclerView: RecyclerView
         get() = recyclerLayout as RecyclerView
 
+    val errorLayout: View
+        get() = errorView as View
+
     private var emptyStateView: View? = null
     private var loadingView: View? = null
     private var errorView: View? = null
@@ -32,6 +35,7 @@ class RecyclerViewWithState @JvmOverloads constructor(
 
     private var isLoadingStateShowing: Boolean = false
     private var isEmptyStateShowing: Boolean = false
+    private var isErrorStateShowing: Boolean = false
 
     var layoutManager: RecyclerView.LayoutManager?
         get() = recyclerView.layoutManager
@@ -56,14 +60,19 @@ class RecyclerViewWithState @JvmOverloads constructor(
 
         recyclerViewId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_recycleViewLayout, 0)
         loadingStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_loadingStateLayout, R.layout.state_loading)
-        emptyStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_emptyStateLayout, R.layout.state_empty)
-        errorStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_errorStateLayout, 0)
+        emptyStateId = typedArray.getResourceId(
+            R.styleable.RecyclerViewWithState_emptyStateLayout,
+            R.layout.state_empty
+        )
+        errorStateId = typedArray.getResourceId(
+            R.styleable.RecyclerViewWithState_errorStateLayout,
+            R.layout.state_error
+        )
 
         recyclerLayout = LayoutInflater.from(context).inflate(recyclerViewId, this, false) as ViewGroup
         loadingView = LayoutInflater.from(context).inflate(loadingStateId, this, false)
         emptyStateView = LayoutInflater.from(context).inflate(emptyStateId, this, false)
-        // TODO: For future implementations
-//        errorView = LayoutInflater.from(context).inflate(errorStateId, this, false)
+        errorView = LayoutInflater.from(context).inflate(errorStateId, this, false)
 
         addView(recyclerLayout)
 
@@ -100,6 +109,18 @@ class RecyclerViewWithState @JvmOverloads constructor(
 
         if (isEmptyStateShowing) {
             addView(emptyStateView)
+        }
+    }
+
+    fun setErrorState(isErrorStateShowing: Boolean) {
+        if (this.isErrorStateShowing == isErrorStateShowing) {
+            return
+        }
+        this.isErrorStateShowing = isErrorStateShowing
+        removeView(errorView)
+
+        if (isErrorStateShowing) {
+            addView(errorView)
         }
     }
 

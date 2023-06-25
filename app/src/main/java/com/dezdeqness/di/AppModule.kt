@@ -5,6 +5,7 @@ import android.content.res.AssetManager
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.CoroutineDispatcherProviderImpl
+import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.data.manager.PersonalListFilterManager
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.mapper.FilterMapper
@@ -16,6 +17,7 @@ import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.message.MessageConsumer
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -76,6 +78,15 @@ class AppModule {
 
     @Provides
     fun provideActionConsumer() = ActionConsumer()
+
+    @Singleton
+    @Provides
+    fun provideMessageConsumer() = MessageConsumer()
+
+    @Singleton
+    @Provides
+    fun provideMessageProvider(resourceProvider: ResourceProvider) =
+        MessageProvider(resourceProvider = resourceProvider)
 
     @Singleton
     @Provides

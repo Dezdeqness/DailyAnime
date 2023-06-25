@@ -43,8 +43,14 @@ class CalendarViewModel @Inject constructor(
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
                     items = uiItems,
                     isEmptyStateShowing = uiItems.isEmpty(),
+                    isErrorStateShowing = false,
                 )
             },
+            onFailure = {
+                _calendarStateFlow.value = _calendarStateFlow.value.copy(
+                    isErrorStateShowing = true,
+                )
+            }
         )
     }
 
@@ -78,6 +84,7 @@ class CalendarViewModel @Inject constructor(
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
                     items = uiItems,
                     isEmptyStateShowing = uiItems.isEmpty(),
+                    isErrorStateShowing = false
                 )
             },
         )
@@ -107,6 +114,10 @@ class CalendarViewModel @Inject constructor(
         }
 
         this.query = query
+
+        if (_calendarStateFlow.value.isErrorStateShowing) {
+            return
+        }
 
         launchOnIo {
             val uiItems = calendarComposer.compose(items = calendarItems, query = query)

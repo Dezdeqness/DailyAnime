@@ -18,6 +18,7 @@ import dagger.Module
         AnimeSimilarComponent::class,
         UnauthorizedHostComponent::class,
         UnauthorizedComponent::class,
+        MainComponent::class,
     ]
 )
 class AppSubcomponents

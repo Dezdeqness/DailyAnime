@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.personallist
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.AccountRepository
@@ -16,6 +17,7 @@ import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.OpenMenuPopupFilter
 import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +29,8 @@ class PersonalListViewModel @Inject constructor(
     private val personalListFilterRepository: PersonalListFilterRepository,
     private val accountRepository: AccountRepository,
     private val actionConsumer: ActionConsumer,
+    private val messageConsumer: MessageConsumer,
+    private val messageProvider: MessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -223,9 +227,25 @@ class PersonalListViewModel @Inject constructor(
                 )
             },
             onSuccess = {
+                onEditSuccessMessage()
                 initialLoad()
+            },
+            onFailure = {
+                onEditErrorMessage()
             }
         )
+    }
+
+    private fun onEditErrorMessage() {
+        launchOnIo {
+            messageConsumer.onErrorMessage(messageProvider.getAnimeEditRateErrorMessage())
+        }
+    }
+
+    private fun onEditSuccessMessage() {
+        launchOnIo {
+            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditCreateSuccessMessage())
+        }
     }
 
     // TODO: Add fetching when app from foreground
@@ -240,6 +260,7 @@ class PersonalListViewModel @Inject constructor(
                 if (ribbon.isEmpty()) {
                     _personalListStateFlow.value = _personalListStateFlow.value.copy(
                         isEmptyStateShowing = true,
+                        isPullDownRefreshing = false,
                     )
                 } else {
                     if (currentRibbonId == null) {

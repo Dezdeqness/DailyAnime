@@ -4,17 +4,22 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.dezdeqness.R
 import com.dezdeqness.databinding.ActivityAuthorizationBinding
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.getComponent
+import com.dezdeqness.utils.isInternetAvailable
 import java.util.regex.Pattern
 import javax.inject.Inject
+
 
 class AuthorizationActivity : AppCompatActivity() {
 
@@ -33,6 +38,16 @@ class AuthorizationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (isInternetAvailable(this).not()) {
+            Toast.makeText(
+                this@AuthorizationActivity,
+                R.string.general_no_internet_error,
+                Toast.LENGTH_LONG
+            )
+                .show()
+            finish()
+        }
 
         setupWebView()
 

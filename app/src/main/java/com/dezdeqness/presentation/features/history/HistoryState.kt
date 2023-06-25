@@ -8,4 +8,5 @@ data class HistoryState(
     val isEmptyStateShowing: Boolean = false,
     val isPullDownRefreshing: Boolean = false,
     val hasNextPage: Boolean = false,
+    val isErrorStateShowing: Boolean = false,
 )

@@ -3,8 +3,10 @@ package com.dezdeqness.presentation.features.history
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -12,6 +14,8 @@ import javax.inject.Inject
 class HistoryViewModel @Inject constructor(
     private val getHistoryUseCase: GetHistoryUseCase,
     private val historyCompose: HistoryCompose,
+    private val messageConsumer: MessageConsumer,
+    private val messageProvider: MessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -65,6 +69,7 @@ class HistoryViewModel @Inject constructor(
                 _historyStateFlow.value = _historyStateFlow.value.copy(
                     list = list,
                     hasNextPage = state.hasNextPage,
+                    isErrorStateShowing = false,
                 )
             }
         )
@@ -88,6 +93,9 @@ class HistoryViewModel @Inject constructor(
                 )
                 hasNextPage
             },
+            onFailure = {
+                onErrorMessage()
+            }
         )
     }
 
@@ -106,9 +114,21 @@ class HistoryViewModel @Inject constructor(
                     list = list,
                     hasNextPage = state.hasNextPage,
                     isEmptyStateShowing = list.isEmpty(),
+                    isErrorStateShowing = false,
                 )
             },
+            onFailure = {
+                _historyStateFlow.value = _historyStateFlow.value.copy(
+                    isErrorStateShowing = true,
+                )
+            }
         )
+    }
+
+    private fun onErrorMessage() {
+        launchOnIo {
+            messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
+        }
     }
 
     companion object {
