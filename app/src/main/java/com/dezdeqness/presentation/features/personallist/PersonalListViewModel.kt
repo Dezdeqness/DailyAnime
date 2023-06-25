@@ -260,6 +260,7 @@ class PersonalListViewModel @Inject constructor(
                 if (ribbon.isEmpty()) {
                     _personalListStateFlow.value = _personalListStateFlow.value.copy(
                         isEmptyStateShowing = true,
+                        isPullDownRefreshing = false,
                     )
                 } else {
                     if (currentRibbonId == null) {
