@@ -9,4 +9,5 @@ data class AnimeSimilarState(
     val isEmptyStateShowing: Boolean = false,
     val isPullDownRefreshing: Boolean = false,
     val events: List<Event> = listOf(),
+    val isErrorStateShowing: Boolean = false,
 )
