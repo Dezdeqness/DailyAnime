@@ -17,4 +17,7 @@ class MessageProvider @Inject constructor(
     fun getAnimeEditRateErrorMessage() =
         resourceProvider.getString(R.string.edit_rate_error)
 
+    fun getGeneralErrorMessage() =
+        resourceProvider.getString(R.string.general_error)
+
 }

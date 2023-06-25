@@ -60,6 +60,7 @@
     <string name="anime_details_age_rating_r">17+</string>
     <string name="anime_details_age_rating_r_plus">18+</string>
     <string name="anime_details_age_rating_rx">Хентай</string>
+    <string name="anime_details_state_error_title">Попробовать еще раз</string>
 
     <string name="anime_personal_list_ribbon_status_planned">Запланировано</string>
     <string name="anime_personal_list_ribbon_status_watching">Смотрю</string>
@@ -84,6 +85,10 @@
     <string name="edit_rate_create_success">Аниме было успешно обновлено!</string>
     <string name="edit_rate_update_success">Аниме было успешно добавлено!</string>
     <string name="edit_rate_error">Произошла ошибка :(</string>
+
+    <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
+    <string name="general_error">Произошла ошибка</string>
+    <string name="general_no_internet_error">Интернет отстуствует. Проверь интернет подключение</string>
 
 </resources>
 
