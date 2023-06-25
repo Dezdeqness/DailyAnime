@@ -1,22 +1,43 @@
 package com.dezdeqness.presentation
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
+import com.dezdeqness.ui.ShikimoriSnackbar
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: ActivityMainBinding
+
+    private val mainViewModel by viewModels<MainViewModel>(
+        factoryProducer = {
+            viewModelFactory
+        }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        application
+            .getComponent()
+            .mainComponent()
+            .create()
+            .inject(this)
+
         lifecycleScope.launch {
             val status = application.getComponent().settingsRepository().getNightThemeStatus()
             if (status) {
@@ -33,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
 
+        setupObservers()
     }
 
     override fun onBackPressed() {
@@ -74,6 +96,21 @@ class MainActivity : AppCompatActivity() {
             intent = intent
         )
 
+    }
+
+    private fun setupObservers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.messageState.collect { event ->
+                    ShikimoriSnackbar
+                        .showSnackbarShort(
+                            view = binding.root,
+                            anchorView = binding.navigation,
+                            event = event,
+                        )
+                }
+            }
+        }
     }
 
 }

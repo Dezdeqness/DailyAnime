@@ -81,6 +81,9 @@
     <string name="edit_rate_episodes_title">Просмотрено:</string>
     <string name="edit_rate_episodes_header">Эпизоды</string>
     <string name="edit_rate_score_header">Оценка</string>
+    <string name="edit_rate_create_success">Аниме было успешно обновлено!</string>
+    <string name="edit_rate_update_success">Аниме было успешно добавлено!</string>
+    <string name="edit_rate_error">Произошла ошибка :(</string>
 
 </resources>
 

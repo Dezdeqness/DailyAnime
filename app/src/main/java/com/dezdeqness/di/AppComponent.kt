@@ -62,6 +62,8 @@ interface AppComponent {
 
     fun animeChronologyComponent(): AnimeChronologyComponent.Builder
 
+    fun mainComponent(): MainComponent.Factory
+
     fun settingsRepository(): SettingsRepository
 
 }
