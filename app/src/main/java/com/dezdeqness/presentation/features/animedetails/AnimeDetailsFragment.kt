@@ -159,6 +159,9 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
 
     private fun setupRecyclerView() {
         binding.content.adapter = adapter
+        binding.content.errorLayout.findViewById<View>(R.id.retry)?.setOnClickListener {
+            viewModel.onRetryButtonClicked()
+        }
     }
 
     private fun setupObservers() {
@@ -172,6 +175,7 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                     setupShareButton(state = state)
                     setupToolbarVisibility(state = state)
                     setupEditRateFabVisibility(state = state)
+                    setupErrorStateVisibility(state = state)
 
                     state.events.forEach { event ->
                         when (event) {
@@ -242,6 +246,12 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
     private fun setupLoadingState(state: AnimeDetailsState) {
         binding.content.setLoadingState(
             isLoadingStateShowing = state.isInitialLoadingIndicatorShowing,
+        )
+    }
+
+    private fun setupErrorStateVisibility(state: AnimeDetailsState) {
+        binding.content.setErrorState(
+            isErrorStateShowing = state.isErrorStateShowing,
         )
     }
 

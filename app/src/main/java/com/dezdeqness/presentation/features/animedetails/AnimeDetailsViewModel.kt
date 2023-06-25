@@ -48,28 +48,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
     init {
         actionConsumer.attachListener(this)
-        launchOnIo {
-            onInitialLoad(
-                action = { getAnimeDetailsUseCase.invoke(animeId) },
-                onSuccess = { details ->
-                    animeDetails = details
-                    val isAuthorized = accountRepository.isAuthorized()
-                    val uiItems = animeDetailsComposer.compose(details)
-                    _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-                        title = details.animeDetailsEntity.russian,
-                        uiModels = uiItems,
-                        isEditRateFabShown = isAuthorized,
-                    )
-
-                    logInfo(message = details.toString())
-                },
-                onFailure = {
-                    _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-                        isEditRateFabShown = false,
-                    )
-                }
-            )
-        }
+        initialLoad()
     }
 
     override fun viewModelTag() = "ItemDetailsViewModel"
@@ -205,10 +184,47 @@ class AnimeDetailsViewModel @Inject constructor(
         )
     }
 
+    fun onRetryButtonClicked() {
+        if (animeDetailsStateFlow.value.isInitialLoadingIndicatorShowing) {
+            return
+        }
+        hideErrorScreen()
+        initialLoad()
+    }
+
+    private fun hideErrorScreen() {
+        _animeDetailsStateFlow.value = animeDetailsStateFlow.value.copy(isErrorStateShowing = false)
+    }
+
     private fun onEditErrorMessage() {
         launchOnIo {
             messageConsumer.onErrorMessage(messageProvider.getAnimeEditRateErrorMessage())
         }
+    }
+
+    private fun initialLoad() {
+        onInitialLoad(
+            action = { getAnimeDetailsUseCase.invoke(animeId) },
+            onSuccess = { details ->
+                animeDetails = details
+                val isAuthorized = accountRepository.isAuthorized()
+                val uiItems = animeDetailsComposer.compose(details)
+                _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                    title = details.animeDetailsEntity.russian,
+                    uiModels = uiItems,
+                    isEditRateFabShown = isAuthorized,
+                    isErrorStateShowing = false,
+                )
+
+                logInfo(message = details.toString())
+            },
+            onFailure = {
+                _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                    isEditRateFabShown = false,
+                    isErrorStateShowing = true,
+                )
+            }
+        )
     }
 
     private fun onEditCreateSuccessMessage() {

@@ -21,6 +21,9 @@ class RecyclerViewWithState @JvmOverloads constructor(
     val recyclerView: RecyclerView
         get() = recyclerLayout as RecyclerView
 
+    val errorLayout: View
+        get() = errorView as View
+
     private var emptyStateView: View? = null
     private var loadingView: View? = null
     private var errorView: View? = null

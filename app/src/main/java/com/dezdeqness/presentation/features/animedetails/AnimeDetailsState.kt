@@ -10,4 +10,5 @@ data class AnimeDetailsState(
     val events: List<Event> = listOf(),
     val isInitialLoadingIndicatorShowing: Boolean = false,
     val isToolbarVisible: Boolean = false,
+    val isErrorStateShowing: Boolean = false,
 )

@@ -2,9 +2,10 @@
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/background_tint"
     android:gravity="center"
     android:paddingHorizontal="16dp"
     android:text="@string/error_state_title"
+    android:textColor="@color/list_title_primary"
     android:textSize="18sp"
     android:textStyle="bold" />
