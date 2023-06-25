@@ -89,6 +89,11 @@ class AnimeChronologyFragment : BaseFragment<FragmentAnimeChronologyBinding>(), 
                     binding.recycler.setEmptyState(
                         isEmptyStateShowing = state.isEmptyStateShowing,
                     )
+
+                    binding.recycler.setErrorState(
+                        isErrorStateShowing = state.isErrorStateShowing,
+                    )
+
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
                     adapter.submitList(state.list)
 
