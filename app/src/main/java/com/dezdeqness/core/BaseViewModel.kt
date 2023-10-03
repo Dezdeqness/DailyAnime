@@ -41,7 +41,7 @@ abstract class BaseViewModel(
             return this
         }
 
-    abstract fun viewModelTag(): String
+    abstract val viewModelTag: String
 
     abstract fun onEventConsumed(event: Event)
 
@@ -149,7 +149,7 @@ abstract class BaseViewModel(
                         initialLoaded.setLoadingIndicatorVisible(isVisible = false)
                     }
                     appLogger.logInfo(
-                        tag = viewModelTag(),
+                        tag = viewModelTag,
                         message = errorMessage,
                         throwable = throwable,
                     )
@@ -165,14 +165,13 @@ abstract class BaseViewModel(
         launchOnIo {
             action.invoke()
                 .onSuccess { value ->
-                    onSuccess.invoke(value)
                     val hasNextPage = onSuccess.invoke(value)
                     loadMore.setLoadMoreIndicator(isVisible = hasNextPage)
                 }
                 .onFailure { throwable ->
                     onFailure?.invoke(throwable)
                     appLogger.logInfo(
-                        tag = viewModelTag(),
+                        tag = viewModelTag,
                         message = errorMessage,
                         throwable = throwable,
                     )
@@ -219,7 +218,7 @@ abstract class BaseViewModel(
                             loadMore.setLoadMoreIndicator(isVisible = false)
                         }
                         appLogger.logInfo(
-                            tag = viewModelTag(),
+                            tag = viewModelTag,
                             message = errorMessage,
                             throwable = throwable,
                         )
@@ -229,14 +228,14 @@ abstract class BaseViewModel(
 
     fun logInfo(message: String) {
         appLogger.logInfo(
-            tag = viewModelTag(),
+            tag = viewModelTag,
             message = message,
         )
     }
 
     fun logInfo(message: String, throwable: Throwable) {
         appLogger.logInfo(
-            tag = viewModelTag(),
+            tag = viewModelTag,
             message = message,
             throwable = throwable,
         )

@@ -33,7 +33,7 @@ class AnimeSimilarViewModel @Inject constructor(
         initialPageLoad()
     }
 
-    override fun viewModelTag() = "AnimeSimilarViewModel"
+    override val viewModelTag = "AnimeSimilarViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _similarStateFlow.value

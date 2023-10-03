@@ -15,7 +15,7 @@ class UnauthorizedViewModel @Inject constructor(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
 ) {
-    override fun viewModelTag() = "UnauthorizedViewModel"
+    override val viewModelTag = "UnauthorizedViewModel"
 
     override fun onEventConsumed(event: Event) {
 
@@ -24,7 +24,7 @@ class UnauthorizedViewModel @Inject constructor(
     fun onAuthorizationCodeReceived(code: String?) {
         if (code.isNullOrEmpty()) {
             // TODO: error prompt
-            appLogger.logInfo(viewModelTag(), "code is empty")
+            appLogger.logInfo(viewModelTag, "code is empty")
             return
         }
         launchOnIo {
@@ -32,7 +32,7 @@ class UnauthorizedViewModel @Inject constructor(
                 .invoke(code)
                 .onFailure {
                     appLogger.logInfo(
-                        tag = viewModelTag(),
+                        tag = viewModelTag,
                         throwable = it,
                         message = "login failed",
                     )

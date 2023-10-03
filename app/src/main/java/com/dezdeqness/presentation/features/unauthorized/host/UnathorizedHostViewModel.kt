@@ -51,7 +51,7 @@ class UnathorizedHostViewModel @Inject constructor(
         }
     }
 
-    override fun viewModelTag() = "PersonalListHostViewModel"
+    override val viewModelTag = "PersonalListHostViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _hostStateFlow.value

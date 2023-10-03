@@ -47,7 +47,7 @@ class AnimeViewModel @Inject constructor(
         initialPageLoad()
     }
 
-    override fun viewModelTag() = "SearchListViewModel"
+    override val viewModelTag = "SearchListViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _animeStateFlow.value

@@ -35,7 +35,7 @@ class EditRateViewModel @Inject constructor(
         fetchUserRate()
     }
 
-    override fun viewModelTag() = "EditRateViewModel"
+    override val viewModelTag = "EditRateViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _editRateStateFlow.value

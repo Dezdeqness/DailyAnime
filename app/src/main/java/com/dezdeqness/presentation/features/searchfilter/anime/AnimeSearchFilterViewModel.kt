@@ -42,7 +42,7 @@ class AnimeSearchFilterViewModel @Inject constructor(
         }
     }
 
-    override fun viewModelTag() = "AnimeSearchFilterViewModel"
+    override val viewModelTag = "AnimeSearchFilterViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _animeSearchFilterStateFlow.value
