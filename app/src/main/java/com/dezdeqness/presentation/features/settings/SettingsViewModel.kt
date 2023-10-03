@@ -31,7 +31,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    override fun viewModelTag() = "SettingsViewModel"
+    override val viewModelTag = "SettingsViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _settingsStateFlow.value

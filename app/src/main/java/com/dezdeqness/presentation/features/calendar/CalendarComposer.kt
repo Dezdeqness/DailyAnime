@@ -5,11 +5,15 @@ import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.CalendarListUiModel
 import com.dezdeqness.presentation.models.CalendarUiModel
 import com.dezdeqness.utils.ImageUrlUtils
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class CalendarComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
 ) {
+
+    private val dateFormatter = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault())
 
     fun compose(items: List<AnimeCalendarEntity>, query: String): List<AdapterItem> {
         val filteredList = if (query.isEmpty()) items else items.filter {
@@ -17,8 +21,7 @@ class CalendarComposer @Inject constructor(
         }
         val map = linkedMapOf<String, MutableList<AnimeCalendarEntity>>()
         filteredList.forEach { item ->
-            // TODO: Refactor time management
-            val key = item.nextEpisodeAt.take(10)
+            val key = dateFormatter.format(item.nextEpisodeAtTimestamp)
             if (map.contains(key)) {
                 map[key]?.add(item)
             } else {

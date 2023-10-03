@@ -11,12 +11,16 @@ import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
 import com.dezdeqness.utils.ImageUrlUtils
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class PersonalListComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
     private val resourceProvider: ResourceProvider,
 ) {
+
+    private val yearDateFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
     fun compose(
         filter: PersonalListFilterEntity,
@@ -121,11 +125,12 @@ class PersonalListComposer @Inject constructor(
             stringBuilder.append(anime.status.status)
         }
 
-        if (anime.airedOn.isNotEmpty()) {
+        if (anime.airedOnTimestamp != 0L) {
             if (stringBuilder.isNotEmpty()) {
                 stringBuilder.append(SEPARATOR)
             }
-            stringBuilder.append(anime.airedOn)
+            val year = yearDateFormatter.format(anime.airedOnTimestamp)
+            stringBuilder.append(year)
         }
 
         if (anime.kind != AnimeKind.UNKNOWN) {

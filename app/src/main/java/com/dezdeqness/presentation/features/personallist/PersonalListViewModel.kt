@@ -57,7 +57,7 @@ class PersonalListViewModel @Inject constructor(
         actionConsumer.attachListener(this)
     }
 
-    override fun viewModelTag() = "PersonalListViewModel"
+    override val viewModelTag = "PersonalListViewModel"
 
     override fun onPullDownRefreshed() {
         if (currentRibbonId != null) {

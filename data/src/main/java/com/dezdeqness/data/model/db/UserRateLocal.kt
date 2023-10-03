@@ -35,10 +35,10 @@ data class UserRateLocal(
     val rewatches: Long,
 
     @ColumnInfo(name = "created_at")
-    val createdAt: String,
+    val createdAtTimestamp: Long,
 
     @ColumnInfo(name = "updated_at")
-    val updatedAt: String,
+    val updatedAtTimestamp: Long,
 
     @Embedded
     val anime: AnimeLocal?,
@@ -76,10 +76,10 @@ data class AnimeLocal(
     val episodesAired: Int,
 
     @ColumnInfo(name = "aired_on")
-    val airedOn: String?,
+    val airedOnTimestamp: Long,
 
     @ColumnInfo(name = "released_on")
-    val releasedOn: String,
+    val releasedOnTimestamp: Long,
 )
 
 data class ImageLocal(

@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
 
     val messageState = messageConsumer.messageState
 
-    override fun viewModelTag() = "MainViewModel"
+    override val viewModelTag = "MainViewModel"
 
     override fun onEventConsumed(event: Event) {}
 }

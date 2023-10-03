@@ -11,8 +11,8 @@ open class AnimeBriefEntity(
     open val status: AnimeStatus,
     open val episodes: Int,
     open val episodesAired: Int,
-    open val airedOn: String,
-    open val releasedOn: String,
+    open val airedOnTimestamp: Long,
+    open val releasedOnTimestamp: Long,
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -29,8 +29,8 @@ open class AnimeBriefEntity(
         if (status != other.status) return false
         if (episodes != other.episodes) return false
         if (episodesAired != other.episodesAired) return false
-        if (airedOn != other.airedOn) return false
-        if (releasedOn != other.releasedOn) return false
+        if (airedOnTimestamp != other.airedOnTimestamp) return false
+        if (releasedOnTimestamp != other.releasedOnTimestamp) return false
 
         return true
     }
@@ -46,12 +46,12 @@ open class AnimeBriefEntity(
         result = 31 * result + status.hashCode()
         result = 31 * result + episodes
         result = 31 * result + episodesAired
-        result = 31 * result + airedOn.hashCode()
-        result = 31 * result + releasedOn.hashCode()
+        result = 31 * result + airedOnTimestamp.hashCode()
+        result = 31 * result + releasedOnTimestamp.hashCode()
         return result
     }
 
     override fun toString() =
-        "AnimeBriefEntity(id=$id, name='$name', russian='$russian', images=$image, url='$url', kind=$kind, score=$score, status=$status, episodes=$episodes, episodesAired=$episodesAired, airedOn='$airedOn', releasedOn='$releasedOn')"
+        "AnimeBriefEntity(id=$id, name='$name', russian='$russian', images=$image, url='$url', kind=$kind, score=$score, status=$status, episodes=$episodes, episodesAired=$episodesAired, airedOn='$airedOnTimestamp', releasedOn='$releasedOnTimestamp')"
 
 }

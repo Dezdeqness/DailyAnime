@@ -27,7 +27,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    override fun viewModelTag() = "ProfileViewModel"
+    override val viewModelTag = "ProfileViewModel"
 
     override fun onEventConsumed(event: Event) {
         // TODO

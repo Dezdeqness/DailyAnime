@@ -5,11 +5,15 @@ import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.presentation.models.SimilarUiModel
 import com.dezdeqness.utils.ImageUrlUtils
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class AnimeSimilarUiMapper @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
 ) {
+
+    private val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
     fun map(item: AnimeBriefEntity): SimilarUiModel {
         val stringBuilder = StringBuilder()
@@ -18,11 +22,11 @@ class AnimeSimilarUiMapper @Inject constructor(
             stringBuilder.append(item.status.status)
         }
 
-        if (item.airedOn.isNotEmpty()) {
+        if (item.airedOnTimestamp != 0L) {
             if (stringBuilder.isNotEmpty()) {
                 stringBuilder.append(SEPARATOR)
             }
-            stringBuilder.append(item.airedOn)
+            stringBuilder.append(yearFormatter.format(item.airedOnTimestamp))
         }
 
         if (item.kind != AnimeKind.UNKNOWN) {

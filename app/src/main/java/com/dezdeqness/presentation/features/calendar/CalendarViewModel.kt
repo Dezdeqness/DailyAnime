@@ -54,7 +54,7 @@ class CalendarViewModel @Inject constructor(
         )
     }
 
-    override fun viewModelTag() = "CalendarViewModel"
+    override val viewModelTag = "CalendarViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _calendarStateFlow.value

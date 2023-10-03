@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "812c7b71110900fb01d9a4220c4766ce",
+    "identityHash": "b7c1fa11b84cc1800d7e76cb2760add7",
     "entities": [
       {
         "tableName": "account",
@@ -74,7 +74,7 @@
       },
       {
         "tableName": "user_rate",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `score` INTEGER NOT NULL, `status` TEXT NOT NULL, `text` TEXT NOT NULL, `episodes` INTEGER NOT NULL, `chapters` INTEGER NOT NULL, `volumes` INTEGER NOT NULL, `text_html` TEXT NOT NULL, `rewatches` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL, `anime_id` INTEGER, `name` TEXT, `russian` TEXT, `url` TEXT, `kind` TEXT, `anime_score` REAL, `anime_status` TEXT, `anime_episodes` INTEGER, `anime_episodes_aired` INTEGER, `aired_on` TEXT, `released_on` TEXT, `original` TEXT, `preview` TEXT, `x96` TEXT, `x48` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `score` INTEGER NOT NULL, `status` TEXT NOT NULL, `text` TEXT NOT NULL, `episodes` INTEGER NOT NULL, `chapters` INTEGER NOT NULL, `volumes` INTEGER NOT NULL, `text_html` TEXT NOT NULL, `rewatches` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, `anime_id` INTEGER, `name` TEXT, `russian` TEXT, `url` TEXT, `kind` TEXT, `anime_score` REAL, `anime_status` TEXT, `anime_episodes` INTEGER, `anime_episodes_aired` INTEGER, `aired_on` INTEGER, `released_on` INTEGER, `original` TEXT, `preview` TEXT, `x96` TEXT, `x48` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -131,15 +131,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "createdAt",
+            "fieldPath": "createdAtTimestamp",
             "columnName": "created_at",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "updatedAt",
+            "fieldPath": "updatedAtTimestamp",
             "columnName": "updated_at",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -199,13 +199,13 @@
           {
             "fieldPath": "anime.airedOn",
             "columnName": "aired_on",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
             "fieldPath": "anime.releasedOn",
             "columnName": "released_on",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -246,7 +246,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '812c7b71110900fb01d9a4220c4766ce')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b7c1fa11b84cc1800d7e76cb2760add7')"
     ]
   }
 }

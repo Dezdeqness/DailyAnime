@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.history
 
+import android.util.Log
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
@@ -32,7 +33,7 @@ class HistoryViewModel @Inject constructor(
         initialPageLoad()
     }
 
-    override fun viewModelTag() = "HistoryViewModel"
+    override val viewModelTag = "HistoryViewModel"
 
     override fun onEventConsumed(event: Event) {
 
@@ -83,6 +84,7 @@ class HistoryViewModel @Inject constructor(
                 )
             },
             onSuccess = { state ->
+                Log.d("onLoadMore", state.currentPage.toString())
                 currentPage = state.currentPage
                 val hasNextPage = state.hasNextPage
                 val list = historyCompose.compose(state.list)

@@ -10,8 +10,8 @@ data class UserRateEntity(
     val volumes: Long,
     val textHTML: String,
     val rewatches: Long,
-    val createdAt: String,
-    val updatedAt: String,
+    val createdAtTimestamp: Long,
+    val updatedAtTimestamp: Long,
     val anime: AnimeBriefEntity? = null
 ) {
 
@@ -29,8 +29,8 @@ data class UserRateEntity(
             volumes = 0,
             textHTML = "",
             rewatches = 0,
-            updatedAt = "",
-            createdAt = "",
+            updatedAtTimestamp = 0,
+            createdAtTimestamp = 0,
         )
     }
 }

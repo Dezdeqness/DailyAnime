@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.core.converter.TimestampConverter
 import com.dezdeqness.data.model.UserRateRemote
 import com.dezdeqness.data.model.db.UserRateLocal
 import com.dezdeqness.domain.model.UserRateEntity
@@ -9,6 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class UserRatesMapper @Inject constructor(
     private val animeMapper: AnimeMapper,
+    private val timestampConverter: TimestampConverter,
 ) {
 
     fun fromResponse(item: UserRateRemote) =
@@ -22,8 +24,8 @@ class UserRatesMapper @Inject constructor(
             volumes = item.volumes ?: 0,
             textHTML = item.textHTML,
             rewatches = item.rewatches,
-            createdAt = item.createdAt,
-            updatedAt = item.updatedAt,
+            createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(item.createdAt),
+            updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(item.updatedAt),
             anime = item.anime?.let
             { animeMapper.fromResponse(it) },
         )
@@ -39,8 +41,8 @@ class UserRatesMapper @Inject constructor(
             volumes = item.volumes,
             textHTML = item.textHTML,
             rewatches = item.rewatches,
-            createdAt = item.createdAt,
-            updatedAt = item.updatedAt,
+            createdAtTimestamp = item.createdAtTimestamp,
+            updatedAtTimestamp = item.updatedAtTimestamp,
             anime = item.anime?.let { animeMapper.fromDatabase(it) },
         )
 
@@ -55,8 +57,8 @@ class UserRatesMapper @Inject constructor(
             volumes = item.volumes,
             textHTML = item.textHTML,
             rewatches = item.rewatches,
-            createdAt = item.createdAt,
-            updatedAt = item.updatedAt,
+            createdAtTimestamp = item.createdAtTimestamp,
+            updatedAtTimestamp = item.updatedAtTimestamp,
             anime = animeMapper.toDatabase(item.anime),
         )
 

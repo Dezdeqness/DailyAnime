@@ -51,7 +51,7 @@ class AnimeDetailsViewModel @Inject constructor(
         initialLoad()
     }
 
-    override fun viewModelTag() = "ItemDetailsViewModel"
+    override val viewModelTag = "ItemDetailsViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _animeDetailsStateFlow.value

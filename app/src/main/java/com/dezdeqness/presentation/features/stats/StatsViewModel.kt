@@ -36,7 +36,7 @@ class StatsViewModel @Inject constructor(
         }
     }
 
-    override fun viewModelTag() = "StatsViewModel"
+    override val viewModelTag = "StatsViewModel"
 
     override fun onEventConsumed(event: Event) {
 

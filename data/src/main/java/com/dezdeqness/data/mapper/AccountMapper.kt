@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.core.converter.TimestampConverter
 import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import com.dezdeqness.data.model.db.AccountLocal
@@ -14,7 +15,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AccountMapper @Inject constructor() {
+class AccountMapper @Inject constructor(
+    private val timestampConverter: TimestampConverter,
+) {
 
     fun fromResponse(item: AccountRemote) =
         AccountEntity(
@@ -116,7 +119,7 @@ class AccountMapper @Inject constructor() {
         HistoryEntity(
             id = item.id,
             description = item.description,
-            createdAt = item.createdAt,
+            createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(item.createdAt),
             itemId = item.historyItem?.id ?: 0,
             itemName = item.historyItem?.name.orEmpty(),
             itemRussian = item.historyItem?.russian.orEmpty(),
