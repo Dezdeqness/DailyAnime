@@ -5,5 +5,4 @@ data class AnimeUiModel(
     val title: String,
     val kind: String,
     val logoUrl: String,
-    val airedYear: String,
 ) : AdapterItem()

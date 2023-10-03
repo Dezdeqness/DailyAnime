@@ -4,6 +4,7 @@ import com.dezdeqness.R
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
+import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
@@ -24,7 +25,9 @@ import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
+import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
 
@@ -33,6 +36,10 @@ class AnimeDetailsComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
     private val resourceProvider: ResourceProvider,
 ) {
+
+    private val dateFormatter = SimpleDateFormat("dd MMM", Locale.getDefault())
+    private val fullDateFormatter = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    private val shortDateFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
     fun compose(
         animeDetailsFullEntity: AnimeDetailsFullEntity,
@@ -186,27 +193,71 @@ class AnimeDetailsComposer @Inject constructor(
         }
 
         if (details.status == AnimeStatus.RELEASED || details.status == AnimeStatus.LATEST) {
+            val releasedYear = GregorianCalendar().apply {
+                time = Date(details.releasedOnTimestamp)
+            }.get(Calendar.YEAR)
+
+            val airedYear = GregorianCalendar().apply {
+                time = Date(details.airedOnTimestamp)
+            }.get(Calendar.YEAR)
+
+            val isSameYear = releasedYear == airedYear
+
+            val stringBuilder = StringBuilder()
+
+            var releasedDate = ""
+            if (details.releasedOnTimestamp != 0L) {
+                releasedDate = if (isSameYear) {
+                    dateFormatter.format(details.releasedOnTimestamp)
+                } else {
+                    fullDateFormatter.format(details.releasedOnTimestamp)
+                }
+            }
+
+            val airedDate = if (details.kind != AnimeKind.TV && details.episodes < 2) {
+                shortDateFormatter.format(details.airedOnTimestamp)
+            } else {
+                if (isSameYear) {
+                    dateFormatter.format(details.airedOnTimestamp)
+                } else {
+                    fullDateFormatter.format(details.airedOnTimestamp)
+                }
+            }
+
+            stringBuilder.append(airedDate)
+
+            if (releasedDate.isNotEmpty()) {
+                if (isSameYear) {
+                    stringBuilder.append(" - ")
+                } else {
+                    stringBuilder.append("\n")
+                }
+                stringBuilder.append(releasedDate)
+                if (isSameYear) {
+                    stringBuilder.append(" ")
+                    stringBuilder.append(releasedYear)
+                }
+            } else {
+                if (isSameYear) {
+                    stringBuilder.append(" ")
+                    stringBuilder.append(airedYear)
+                }
+            }
+
             list.add(
                 BriefInfoUiModel(
-                    info = details.airedOn + "\n" + details.releasedOn,
+                    info = stringBuilder.toString(),
                     title = resourceProvider.getString(R.string.anime_details_date),
                 )
             )
         } else if (details.status == AnimeStatus.ONGOING) {
 
-            val pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
-            val simpleDateFormat = SimpleDateFormat(pattern)
 
-            var date: Date? = null
-            try {
-                date = simpleDateFormat.parse(details.nextEpisodeAt)
-            } catch (_: Exception) {
-
-            }
+            val date = Date(details.nextEpisodeAtTimestamp)
 
             val currentDate = Date()
 
-            if (currentDate.time - (date?.time ?: 0) < 0) {
+            if (currentDate.time - date.time < 0) {
                 list.add(
                     BriefInfoUiModel(
                         info = resourceProvider.getString(R.string.anime_details_episode_date),

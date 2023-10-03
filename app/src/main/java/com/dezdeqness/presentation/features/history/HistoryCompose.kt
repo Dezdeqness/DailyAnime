@@ -4,15 +4,19 @@ import com.dezdeqness.domain.model.HistoryEntity
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.HistoryHeaderUiModel
 import com.dezdeqness.presentation.models.HistoryUiModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class HistoryCompose @Inject constructor() {
+
+    private val dateFormatter = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
 
     fun compose(items: List<HistoryEntity>): List<AdapterItem> {
         val uiItems = mutableListOf<AdapterItem>()
         var previousHeader = ""
         items.forEach { item ->
-            val header = item.createdAt.take(10)
+            val header = dateFormatter.format(item.createdAtTimestamp)
 
             if (previousHeader != header) {
                 previousHeader = header

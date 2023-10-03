@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.core.converter.TimestampConverter
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyRemote
@@ -14,6 +15,7 @@ class AnimeMapper @Inject constructor(
     private val studioMapper: StudioMapper,
     private val videoMapper: VideoMapper,
     private val imageMapper: ImageMapper,
+    private val timestampConverter: TimestampConverter,
 ) {
 
     fun fromResponse(item: AnimeBriefRemote) =
@@ -28,8 +30,8 @@ class AnimeMapper @Inject constructor(
             status = AnimeStatus.fromString(item.status),
             episodes = item.episodes,
             episodesAired = item.episodesAired,
-            airedOn = item.airedOn.orEmpty(),
-            releasedOn = item.releasedOn.orEmpty(),
+            airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
+            releasedOnTimestamp =  timestampConverter.convertToTimeStamp(item.releasedOn)
         )
 
     fun fromResponse(item: AnimeDetailsRemote) =
@@ -43,8 +45,8 @@ class AnimeMapper @Inject constructor(
             kind = AnimeKind.fromString(item.kind),
             duration = item.duration,
             rating = item.rating,
-            airedOn = item.airedOn.orEmpty(),
-            releasedOn = item.releasedOn.orEmpty(),
+            airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
+            releasedOnTimestamp =  timestampConverter.convertToTimeStamp(item.releasedOn),
             episodes = item.episodes,
             url = item.url,
             status = AnimeStatus.fromString(item.status),
@@ -55,7 +57,7 @@ class AnimeMapper @Inject constructor(
             studioList = item.studios.map(studioMapper::fromResponse),
             genreList = item.genres.map(genreMapper::fromResponse),
             videoList = item.videos.map(videoMapper::fromResponse),
-            nextEpisodeAt = item.nextEpisodeAt.orEmpty(),
+            nextEpisodeAtTimestamp = timestampConverter.convertToTimeStamp(item.nextEpisodeAt),
             userRate = item.userRate?.let { userRate ->
                 UserRateEntity(
                     id = userRate.id,
@@ -67,8 +69,8 @@ class AnimeMapper @Inject constructor(
                     volumes = userRate.volumes ?: 0,
                     textHTML = userRate.textHTML,
                     rewatches = userRate.rewatches,
-                    createdAt = userRate.createdAt,
-                    updatedAt = userRate.updatedAt,
+                    createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.createdAt),
+                    updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.updatedAt),
                 )
             },
             scoresStats = item.ratesScoresStats?.map { score ->
@@ -98,8 +100,8 @@ class AnimeMapper @Inject constructor(
             status = item.status.status,
             episodes = item.episodes,
             episodesAired = item.episodesAired,
-            airedOn = item.airedOn,
-            releasedOn = item.releasedOn,
+            airedOnTimestamp = item.airedOnTimestamp,
+            releasedOnTimestamp = item.releasedOnTimestamp,
         )
     }
 
@@ -115,8 +117,8 @@ class AnimeMapper @Inject constructor(
             status = AnimeStatus.fromString(item.status),
             episodes = item.episodes,
             episodesAired = item.episodesAired,
-            airedOn = item.airedOn.orEmpty(),
-            releasedOn = item.releasedOn.orEmpty(),
+            airedOnTimestamp = item.airedOnTimestamp,
+            releasedOnTimestamp = item.releasedOnTimestamp,
         )
 
     fun fromResponse(item: AnimeChronologyRemote) =
