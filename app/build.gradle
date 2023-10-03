@@ -65,5 +65,6 @@ dependencies {
     implementation project(path: ':advanced_recycler')
     implementation project(path: ':data')
     implementation project(path: ':domain')
+    implementation project(path: ':core')
 
 }
