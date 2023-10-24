@@ -3,13 +3,11 @@ package com.dezdeqness.presentation.features.animechronology
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventListener
-import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -20,8 +18,6 @@ class AnimeChronologyViewModel @Inject constructor(
     private val animeRepository: AnimeRepository,
     private val animeChronologyUiMapper: AnimeChronologyUiMapper,
     private val actionConsumer: ActionConsumer,
-    private val messageConsumer: MessageConsumer,
-    private val messageProvider: MessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(

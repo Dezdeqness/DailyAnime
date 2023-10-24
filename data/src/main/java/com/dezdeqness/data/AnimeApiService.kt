@@ -2,13 +2,16 @@ package com.dezdeqness.data
 
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
-import com.dezdeqness.data.model.AnimeChronologyRemote
 import com.dezdeqness.data.model.AnimeChronologyResponseRemote
 import com.dezdeqness.data.model.RelatedItemRemote
 import com.dezdeqness.data.model.RoleRemote
 import com.dezdeqness.data.model.ScreenshotRemote
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Path
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface AnimeApiService {
 

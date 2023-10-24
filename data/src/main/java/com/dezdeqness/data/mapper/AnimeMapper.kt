@@ -5,7 +5,13 @@ import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyRemote
 import com.dezdeqness.data.model.db.AnimeLocal
-import com.dezdeqness.domain.model.*
+import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.domain.model.AnimeChronologyEntity
+import com.dezdeqness.domain.model.AnimeDetailsEntity
+import com.dezdeqness.domain.model.AnimeKind
+import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.StatsItemEntity
+import com.dezdeqness.domain.model.UserRateEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

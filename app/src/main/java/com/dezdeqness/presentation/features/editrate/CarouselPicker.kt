@@ -28,7 +28,7 @@ class CarouselPicker @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             override fun onPageSelected(position: Int) {
-                (adapter as? CarouselViewAdapter)?.applyOpacity(position)
+                (adapter as? CarouselAdapter)?.applyOpacity(position)
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
@@ -57,7 +57,7 @@ class CarouselPicker @JvmOverloads constructor(context: Context, attrs: Attribut
         super.setAdapter(adapter)
         this.offscreenPageLimit = adapter?.count ?: 5
 
-        (adapter as? CarouselViewAdapter)?.apply {
+        (adapter as? CarouselAdapter)?.apply {
             setOpacity(opacity)
         }
     }

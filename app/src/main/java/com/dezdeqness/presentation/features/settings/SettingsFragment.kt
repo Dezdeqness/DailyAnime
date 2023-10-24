@@ -30,7 +30,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
 
     @Inject
-    protected lateinit var settingsRepository: SettingsRepository
+    lateinit var settingsRepository: SettingsRepository
 
     override fun setupScreenComponent(component: AppComponent) {
         component

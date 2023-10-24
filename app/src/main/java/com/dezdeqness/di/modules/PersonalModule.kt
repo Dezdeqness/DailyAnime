@@ -30,15 +30,23 @@ abstract class PersonalModule {
     }
 
     @Binds
-    abstract fun bindUserRatesRemoteDataSource(userRatesRemoteDataSource: UserRatesRemoteDataSourceImpl): UserRatesRemoteDataSource
+    abstract fun bindUserRatesRemoteDataSource(
+        userRatesRemoteDataSource: UserRatesRemoteDataSourceImpl,
+        ): UserRatesRemoteDataSource
 
     @Binds
-    abstract fun bindUserRatesLocalDataSource(userRatesLocalDataSource: UserRatesLocalDataSourceImpl): UserRatesLocalDataSource
+    abstract fun bindUserRatesLocalDataSource(
+        userRatesLocalDataSource: UserRatesLocalDataSourceImpl,
+        ): UserRatesLocalDataSource
 
     @Binds
-    abstract fun bindUserRatesRepository(userRatesRepositoryImpl: UserRatesRepositoryImpl): UserRatesRepository
+    abstract fun bindUserRatesRepository(
+        userRatesRepositoryImpl: UserRatesRepositoryImpl,
+        ): UserRatesRepository
 
     @Binds
-    abstract fun bindPersonalListFilterRepository(userRatesRepositoryImpl: PersonalListFilterRepositoryImpl): PersonalListFilterRepository
+    abstract fun bindPersonalListFilterRepository(
+        userRatesRepositoryImpl: PersonalListFilterRepositoryImpl,
+        ): PersonalListFilterRepository
 
 }

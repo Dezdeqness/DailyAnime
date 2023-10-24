@@ -19,7 +19,6 @@ class ConfigurationProvider(
     private val moshi: Moshi,
 ) {
 
-    // TODO: Make remote
     fun getListGenre(): List<GenreEntity> {
         val inputStream = assetManager.open(FILENAME_GENRE_JSON)
         val type = Types.newParameterizedType(List::class.java, GenreRemote::class.java)

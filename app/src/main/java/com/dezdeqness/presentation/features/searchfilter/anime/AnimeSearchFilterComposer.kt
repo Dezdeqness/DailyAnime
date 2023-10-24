@@ -3,7 +3,8 @@ package com.dezdeqness.presentation.features.searchfilter.anime
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.FilterType
-import com.dezdeqness.presentation.models.*
+import com.dezdeqness.presentation.models.AnimeCell
+import com.dezdeqness.presentation.models.AnimeSearchFilter
 import javax.inject.Inject
 
 

@@ -26,7 +26,7 @@ class AuthorizationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizationBinding
 
     @Inject
-    protected lateinit var accountRepository: AccountRepository
+    lateinit var accountRepository: AccountRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         application

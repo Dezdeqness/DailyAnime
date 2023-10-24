@@ -13,7 +13,7 @@ plugins {
     id 'com.android.application' version '8.0.0' apply false
     id 'com.android.library' version '8.0.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
-    id 'io.gitlab.arturbosch.detekt' version '1.21.0-RC2'
+    id 'io.gitlab.arturbosch.detekt' version '1.23.0'
 }
 
 allprojects {
@@ -21,11 +21,9 @@ allprojects {
 }
 
 detekt {
-    buildUponDefaultConfig = true // preconfigure defaults
+    buildUponDefaultConfig = true
     parallel = true
-    allRules = false // activate all available (even unstable) rules.
-//    config = files("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
-//    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+    allRules = false
 }
 
 tasks.named("detekt").configure {

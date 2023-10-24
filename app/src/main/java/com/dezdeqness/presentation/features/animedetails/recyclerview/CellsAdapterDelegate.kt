@@ -22,13 +22,10 @@ fun cellsAdapterDelegate() =
                         chipGroup.addView(
                             Chip(chipGroup.context).apply {
                                 text = it.displayName
-//                            chipBackgroundColor = ColorStateList.valueOf(context.getColor(R.color.background_color_primary))
                                 chipStrokeWidth = 1F
                                 chipStrokeColor =
                                     ColorStateList.valueOf(context.getColor(android.R.color.black))
                                 isCloseIconVisible = false
-//                            setTextAppearance(R.style.Reuters_TextView_NativeArticle_Tags)
-//                            setSingleClickListener { handleAction(Action.TagClick(tag.apiPath, tag.value)) }
                             }
                         )
                     }

@@ -14,7 +14,7 @@ class SearchFilterRepositoryImpl @Inject constructor(
 
     override fun getFilterConfiguration(): List<FilterEntity> {
         val filters = configurationProvider.getFilters()
-        // TODO: Extract it from there
+
         val genres = configurationProvider.getListGenre().filter { it.type == TypeEntity.ANIME }
             .map { filterMapper.fromResponse(it) }
         return genres + filters

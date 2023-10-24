@@ -15,7 +15,9 @@ class ApiErrorMapper @Inject constructor() : ErrorMapper {
                 ErrorEntity.UnknownErrorEntity("Code: ${exception.code}, message=${exception.message}")
             }
             else -> {
-                ErrorEntity.UnknownErrorEntity("Message: ${exception.message}, stack: ${exception.stackTraceToString()}")
+                ErrorEntity.UnknownErrorEntity(
+                    "Message: ${exception.message}, stack: ${exception.stackTraceToString()}",
+                )
             }
         }
 

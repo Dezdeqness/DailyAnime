@@ -59,7 +59,10 @@ class RecyclerViewWithState @JvmOverloads constructor(
         )
 
         recyclerViewId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_recycleViewLayout, 0)
-        loadingStateId = typedArray.getResourceId(R.styleable.RecyclerViewWithState_loadingStateLayout, R.layout.state_loading)
+        loadingStateId = typedArray.getResourceId(
+            R.styleable.RecyclerViewWithState_loadingStateLayout,
+            R.layout.state_loading,
+            )
         emptyStateId = typedArray.getResourceId(
             R.styleable.RecyclerViewWithState_emptyStateLayout,
             R.layout.state_empty

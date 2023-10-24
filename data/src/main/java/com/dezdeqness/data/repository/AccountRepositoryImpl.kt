@@ -59,13 +59,13 @@ class AccountRepositoryImpl @Inject constructor(
     override fun getProfileDetails() = flow {
         val tokenData = tokenManager.getTokenData()
         if (tokenData.accessToken.isEmpty()) {
-            emit(Result.failure(Exception()))
+            emit(Result.failure(Exception("Token failure")))
             return@flow
         }
 
         val profile = getProfileLocal()
         if (profile == null) {
-            emit(Result.failure(Exception()))
+            emit(Result.failure(Exception("Profile failure")))
             return@flow
         }
 
@@ -84,7 +84,7 @@ class AccountRepositoryImpl @Inject constructor(
     override fun getProfileLocal() = accountLocalDataSource.getAccount()
 
     override fun getUserHistory(page: Int, limit: Int): Result<List<HistoryEntity>> {
-        val userId = getProfileLocal()?.id ?: return Result.failure(Throwable())
+        val userId = getProfileLocal()?.id ?: return Result.failure(Throwable("Local profile failure"))
 
         return accountRemoteDataSource.getHistory(
             userId = userId,

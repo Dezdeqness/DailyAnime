@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'io.gitlab.arturbosch.detekt'
+    id 'io.gitlab.arturbosch.detekt' version "1.23.0"
 }
 
 android {
@@ -42,6 +42,13 @@ android {
     namespace 'com.dezdeqness'
 
 }
+detekt {
+    toolVersion = "1.23.0"
+    config = files("${project.rootDir.absolutePath}/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+
+}
+
 
 dependencies {
 

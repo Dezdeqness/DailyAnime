@@ -52,6 +52,18 @@ open class AnimeBriefEntity(
     }
 
     override fun toString() =
-        "AnimeBriefEntity(id=$id, name='$name', russian='$russian', images=$image, url='$url', kind=$kind, score=$score, status=$status, episodes=$episodes, episodesAired=$episodesAired, airedOn='$airedOnTimestamp', releasedOn='$releasedOnTimestamp')"
+        "AnimeBriefEntity(" +
+                "id=$id, " +
+                "name='$name', " +
+                "russian='$russian', " +
+                "images=$image, " +
+                "url='$url', " +
+                "kind=$kind, " +
+                "score=$score, " +
+                "status=$status, " +
+                "episodes=$episodes, " +
+                "episodesAired=$episodesAired, " +
+                "airedOn='$airedOnTimestamp', " +
+                "releasedOn='$releasedOnTimestamp')"
 
 }

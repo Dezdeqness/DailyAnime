@@ -22,7 +22,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         flow {
             val profile = accountRepository.getProfileLocal()
             if (profile == null) {
-                emit(Result.failure(Exception()))
+                emit(Result.failure(Exception("Local profile failure")))
                 return@flow
             }
             val token = tokenManager.getTokenData()
@@ -63,7 +63,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         val tokenData = tokenManager.getTokenData()
 
         val localUserRate = userRatesLocalDataSource.getUserRate(rateId)
-            ?: return Result.failure(Exception())
+            ?: return Result.failure(Exception("Local user rate failure"))
 
         val result = userRatesRemoteDataSource.updateUserRate(
             rateId = rateId,
@@ -82,7 +82,7 @@ class UserRatesRepositoryImpl @Inject constructor(
     override fun createUserRate(targetId: String, status: String, episodes: Long, score: Float): Result<Boolean> {
         val tokenData = tokenManager.getTokenData()
 
-        val profile = accountRepository.getProfileLocal() ?: return Result.failure(Exception())
+        val profile = accountRepository.getProfileLocal() ?: return Result.failure(Exception("Profile local failure"))
 
         val result = userRatesRemoteDataSource.createUserRate(
             userId = profile.id,

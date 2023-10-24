@@ -52,7 +52,7 @@ class TokenManager @Inject constructor(context: Context) {
 
     fun isTokenExpired(): Boolean {
         val tokenData = getTokenData()
-        val currentTime = System.currentTimeMillis() / 1000
+        val currentTime = System.currentTimeMillis() / DIVIDE_VALUE
         return currentTime >= tokenData.createdIn + tokenData.expiresIn + TIME_SHIFT
     }
 
@@ -81,6 +81,7 @@ class TokenManager @Inject constructor(context: Context) {
         private const val KEY_EXPIRES_IN = "expires_in"
 
         private const val TIME_SHIFT = 60
+        private const val DIVIDE_VALUE = 1000
     }
 
 }

@@ -29,7 +29,10 @@ class AnimeUiMapper @Inject constructor(
             id = relatedItemUiModel.animeBriefEntity.id,
             type = relatedItemUiModel.takeIf { it.relationTitleRussian.isNotEmpty() }?.relationTitleRussian
                 ?: relatedItemUiModel.relationTitle,
-            briefInfo = relatedItemUiModel.animeBriefEntity.kind.name + " • " + yearFormatter.format(relatedItemUiModel.animeBriefEntity.airedOnTimestamp),
+            briefInfo =
+            relatedItemUiModel.animeBriefEntity.kind.name
+                    + " • "
+                    + yearFormatter.format(relatedItemUiModel.animeBriefEntity.airedOnTimestamp),
             logoUrl = imageUrlUtils.getImageWithBaseUrl(relatedItemUiModel.animeBriefEntity.image.original),
         )
 

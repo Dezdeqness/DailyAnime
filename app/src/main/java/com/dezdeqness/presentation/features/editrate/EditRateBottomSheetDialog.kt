@@ -42,7 +42,7 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
         }
     )
 
-    private var carouselAdapter: CarouselViewAdapter? = null
+    private var carouselAdapter: CarouselAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -165,7 +165,7 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
                     setupAcceptButton(state = state)
 
                     if (carouselAdapter == null && state.carouselUiModels.isNotEmpty()) {
-                        carouselAdapter = CarouselViewAdapter(
+                        carouselAdapter = CarouselAdapter(
                             context = requireContext(),
                             items = state.carouselUiModels.map { CarouselItem(it.value.toString()) }
                         )

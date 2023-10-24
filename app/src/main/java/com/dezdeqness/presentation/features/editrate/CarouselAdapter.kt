@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.dezdeqness.databinding.ItemCarouselBinding
 
-class CarouselViewAdapter(
+class CarouselAdapter(
     private val context: Context,
     private var items: List<CarouselPicker.CarouselItem>
 ) : PagerAdapter() {
