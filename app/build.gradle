@@ -19,6 +19,21 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            def props = new Properties()
+            if (rootProject.file("build.jenkins.properties").exists()) {
+                props.load(new FileInputStream(rootProject.file("build.jenkins.properties")))
+            } else {
+                props.load(new FileInputStream(rootProject.file("build.properties")))
+            }
+            keyAlias props['keystore.key.alias']
+            keyPassword props['keystore.key.password']
+            storeFile file(props['keystore.release'])
+            storePassword props['keystore.password']
+        }
+    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -28,10 +43,12 @@ android {
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
             debuggable true
+            applicationIdSuffix '.debug'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,7 +65,6 @@ detekt {
     buildUponDefaultConfig = true
 
 }
-
 
 dependencies {
 
