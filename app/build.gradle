@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'io.gitlab.arturbosch.detekt' version "1.23.0"
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -69,6 +71,8 @@ detekt {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.5.1'
+    implementation 'com.google.firebase:firebase-analytics:21.5.0'
     room()
     dagger()
     network()
