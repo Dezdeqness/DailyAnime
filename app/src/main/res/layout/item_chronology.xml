@@ -32,7 +32,7 @@
                 android:id="@+id/anime_logo"
                 android:layout_width="96dp"
                 android:layout_height="120dp"
-                tools:src="@drawable/ic_search_placeholder" />
+                tools:src="@drawable/ic_placeholder" />
 
         </com.google.android.material.card.MaterialCardView>
 

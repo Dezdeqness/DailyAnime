@@ -38,7 +38,7 @@ fun relatesAdapterDelegate(actionListener: ActionListener) =
                         .with(image)
                         .load(item.logoUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_search_placeholder)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(image)
                 }
             }

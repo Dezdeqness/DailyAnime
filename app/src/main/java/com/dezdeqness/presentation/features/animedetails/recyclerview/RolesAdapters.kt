@@ -32,7 +32,7 @@ fun roleAdapterDelegate() =
                         .with(roleImage)
                         .load(item.imageUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_search_placeholder)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(roleImage)
                 }
             }

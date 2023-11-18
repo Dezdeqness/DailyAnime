@@ -35,7 +35,7 @@ fun similarAdapterDelegate(actionListener: ActionListener) =
                         .with(root)
                         .load(item.logoUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_search_placeholder)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(animeLogo)
 
                 }

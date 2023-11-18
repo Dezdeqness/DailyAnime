@@ -79,7 +79,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                         .with(binding.avatar)
                         .load(state.avatar)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(binding.avatar)
                 }
             }

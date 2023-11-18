@@ -29,7 +29,7 @@ fun screenshotsAdapterDelegate() =
                         .with(this)
                         .load(item.url)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_search_placeholder)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(this)
                 }
             }

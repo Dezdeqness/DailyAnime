@@ -1,9 +1,5 @@
 package com.dezdeqness.presentation.features.animedetails.recyclerview
 
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.dezdeqness.R
 import com.dezdeqness.advancedrecycler.adapterDelegateViewBinding
@@ -43,7 +39,7 @@ fun videosAdapterDelegate(actionListener: ActionListener) =
                         .with(video)
                         .load(item.imageUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_search_placeholder)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(video)
                 }
             }
