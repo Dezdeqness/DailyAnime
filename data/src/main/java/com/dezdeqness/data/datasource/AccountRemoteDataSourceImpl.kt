@@ -16,7 +16,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
 ) : AccountRemoteDataSource, BaseDataSource() {
 
     override fun getAuthorizationCodeUrl(): Result<String> {
-        val url = HttpUrl.Builder().scheme("https").host("shikimori.me").addPathSegment("oauth")
+        val url = HttpUrl.Builder().scheme("https").host("shikimori.one").addPathSegment("oauth")
             .addPathSegment("authorize").addQueryParameter("client_id", CLIENT_ID)
             .addQueryParameter("redirect_uri", REDIRECT_URI)
             .addQueryParameter("response_type", RESPONSE_TYPE).addQueryParameter("scope", SCOPE)

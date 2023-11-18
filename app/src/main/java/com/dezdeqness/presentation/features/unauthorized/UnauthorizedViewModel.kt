@@ -8,7 +8,6 @@ import com.dezdeqness.presentation.event.Event
 import javax.inject.Inject
 
 class UnauthorizedViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -28,15 +27,6 @@ class UnauthorizedViewModel @Inject constructor(
             return
         }
         launchOnIo {
-            loginUseCase
-                .invoke(code)
-                .onFailure {
-                    appLogger.logInfo(
-                        tag = viewModelTag,
-                        throwable = it,
-                        message = "login failed",
-                    )
-                }
         }
     }
 
