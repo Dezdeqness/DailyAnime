@@ -4,62 +4,102 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.databinding.ActivityAuthorizationBinding
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.di.subcomponents.AuthorizationArgsModule
 import com.dezdeqness.getComponent
-import com.dezdeqness.utils.isInternetAvailable
-import java.util.regex.Pattern
+import com.dezdeqness.presentation.event.AuthorizationSuccess
+import com.dezdeqness.presentation.event.CloseAuthorization
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class AuthorizationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAuthorizationBinding
-
     @Inject
-    lateinit var accountRepository: AccountRepository
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val authorizationViewModel by viewModels<AuthorizationViewModel>(
+        factoryProducer = {
+            viewModelFactory
+        }
+    )
+
+    private lateinit var binding: ActivityAuthorizationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         application
             .getComponent()
             .authorizationComponent()
-            .create()
+            .argsModule(
+                AuthorizationArgsModule(
+                    isLogin = intent.getBooleanExtra(
+                        KEY_IS_LOGIN_FLOW,
+                        true
+                    )
+                )
+            )
+            .build()
             .inject(this)
 
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (isInternetAvailable(this).not()) {
-            Toast.makeText(
-                this@AuthorizationActivity,
-                R.string.general_no_internet_error,
-                Toast.LENGTH_LONG
-            )
-                .show()
-            finish()
-        }
-
         setupWebView()
+        setupObservers()
+    }
 
-        val isLoginFlow = intent.getBooleanExtra(KEY_IS_LOGIN_FLOW, true)
+    private fun setupObservers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                authorizationViewModel.authorizationStateFlow.collect { state ->
 
-        val url = if (isLoginFlow) {
-            SHIKIMORI_SIGN_IN_URL
-        } else {
-            SHIKIMORI_SIGN_UP_URL
+                    binding.loading.isVisible = state.isLoading
+                    binding.webView.isVisible = state.isLoading.not()
+
+                    if (state.url.isNotEmpty() && binding.webView.url != state.url) {
+                        binding.webView.loadUrl(state.url)
+                    }
+
+                    state.events.forEach { event ->
+                        when (event) {
+                            is CloseAuthorization -> {
+                                Toast.makeText(
+                                    this@AuthorizationActivity,
+                                    R.string.general_no_internet_error,
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                                finish()
+                            }
+                            is AuthorizationSuccess -> {
+                                setResult(Activity.RESULT_OK, intent)
+                                finish()
+                            }
+
+                            else -> {}
+                        }
+
+                        authorizationViewModel.onEventConsumed(event)
+                    }
+                }
+
+            }
         }
-
-        binding.webView.loadUrl(url)
     }
 
     override fun onBackPressed() {
@@ -91,33 +131,14 @@ class AuthorizationActivity : AppCompatActivity() {
                     view: WebView?,
                     request: WebResourceRequest?,
                 ): Boolean {
-                    interceptCode(request?.url?.toString().orEmpty())
+                    authorizationViewModel.onShouldOverrideUrlLoading(request?.url?.toString().orEmpty())
                     return false
                 }
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
                     if (url == com.dezdeqness.data.BuildConfig.BASE_AUTHORIZATION_URL) {
-                        view?.loadUrl(
-                            accountRepository.getAuthorizationCodeUrl().getOrNull().orEmpty(),
-                        )
-                    }
-                }
-
-                private fun interceptCode(url: String) {
-                    val matcher = Pattern.compile(SHIKIMORI_PATTERN).matcher(url)
-                    if (matcher.find()) {
-                        val authCode =
-                            if (matcher.group().isNullOrEmpty()) ""
-                            else url
-                                .substring(url.lastIndexOf("/"))
-                                .replaceFirst("/", "")
-
-                        val intent = Intent().apply {
-                            putExtra(KEY_AUTHORIZATION_CODE, authCode)
-                        }
-                        setResult(Activity.RESULT_OK, intent)
-                        finish()
+                        authorizationViewModel.onPageStarted()
                     }
                 }
 
@@ -126,13 +147,6 @@ class AuthorizationActivity : AppCompatActivity() {
     }
 
     companion object {
-
-        private const val SHIKIMORI_PATTERN =
-            "https?://(?:www\\.)?shikimori\\.me/oauth/authorize/(?:.*)"
-        private const val SHIKIMORI_SIGN_UP_URL = "https://shikimori.me/users/sign_up"
-        private const val SHIKIMORI_SIGN_IN_URL = "https://shikimori.me/users/sign_in"
-
-        const val KEY_AUTHORIZATION_CODE = "authorization_code"
 
         private const val KEY_IS_LOGIN_FLOW = "is_login_flow"
 

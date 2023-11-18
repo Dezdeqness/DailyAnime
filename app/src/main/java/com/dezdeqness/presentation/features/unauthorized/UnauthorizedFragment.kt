@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentUnauthorizedBinding
@@ -24,8 +23,7 @@ class UnauthorizedFragment : BaseFragment<FragmentUnauthorizedBinding>() {
     private val authorizationObserver =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val code = result.data?.getStringExtra(AuthorizationActivity.KEY_AUTHORIZATION_CODE)
-                viewModel.onAuthorizationCodeReceived(code)
+
             }
         }
 

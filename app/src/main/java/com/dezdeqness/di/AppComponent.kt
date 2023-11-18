@@ -50,7 +50,7 @@ interface AppComponent {
 
     fun profileComponent(): ProfileComponent.Factory
 
-    fun authorizationComponent(): AuthorizationComponent.Factory
+    fun authorizationComponent(): AuthorizationComponent.Builder
 
     fun animeDetailsComponent(): AnimeDetailsComponent.Builder
 

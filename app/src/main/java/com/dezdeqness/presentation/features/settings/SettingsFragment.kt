@@ -77,9 +77,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun setupViews() {
-        binding.toggle.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.toggle.setOnCheckedChangeListener { _, isChecked ->
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.onNightThemeToggleChecked(isChecked)
+            }
+        }
+
+        binding.settingsLabel.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+               binding.toggle.isChecked =  binding.toggle.isChecked.not()
             }
         }
     }

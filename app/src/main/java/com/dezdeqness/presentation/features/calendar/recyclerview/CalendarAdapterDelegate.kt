@@ -39,7 +39,7 @@ fun calendarAdapterDelegate(
                         .with(context)
                         .load(item.logoUrl)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.ic_placeholder)
                         .into(image)
 
                     calendarName.text = item.name

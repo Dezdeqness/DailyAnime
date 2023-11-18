@@ -60,3 +60,7 @@ data class NavigateToSimilar(val animeId: Long) : Event()
 data class NavigateToChronology(val animeId: Long) : Event()
 
 object OpenMenuPopupFilter : Event()
+
+object CloseAuthorization: Event()
+
+object AuthorizationSuccess : Event()

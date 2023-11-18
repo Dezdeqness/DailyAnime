@@ -6,4 +6,4 @@
     android:layout_width="120dp"
     android:layout_height="80dp"
     app:shapeAppearance="@style/CustomShapeOverlay"
-    tools:src="@drawable/ic_search_placeholder" />
+    tools:src="@drawable/ic_placeholder" />
