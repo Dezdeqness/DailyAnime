@@ -114,6 +114,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                 }
                 true
             }
+            menu?.findItem(R.id.action_filter)?.isVisible = false
         }
     }
 
@@ -122,6 +123,8 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.personalListStateFlow.collect { state ->
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
+
+                    setupShareButton(state = state)
 
                     val isLoadingStateShowing =
                         if (state.items.isEmpty() && state.isEmptyStateShowing.not()) {
@@ -183,6 +186,15 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                         }
 
                     }
+                }
+            }
+        }
+    }
+    private fun setupShareButton(state: PersonalListState) {
+        if (state.items.isNotEmpty()) {
+            binding.toolbar.menu?.findItem(R.id.action_filter)?.let { menuItem ->
+                if (menuItem.isVisible.not()) {
+                    menuItem.isVisible = true
                 }
             }
         }
