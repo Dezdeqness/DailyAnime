@@ -89,6 +89,10 @@ class AuthorizationViewModel @Inject constructor(
                 return
             }
 
+            if (_authorizationStateFlow.value.isLoading) {
+                return
+            }
+
             _authorizationStateFlow.value = _authorizationStateFlow.value.copy(
                 isLoading = true,
             )
@@ -100,6 +104,7 @@ class AuthorizationViewModel @Inject constructor(
                         val value = _authorizationStateFlow.value
                         _authorizationStateFlow.value =
                             value.copy(
+                                isLoading = false,
                                 events = value.events.toMutableList() + AuthorizationSuccess
                             )
                     }

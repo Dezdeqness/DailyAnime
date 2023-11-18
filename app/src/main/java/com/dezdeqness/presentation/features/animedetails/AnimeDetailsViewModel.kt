@@ -51,7 +51,7 @@ class AnimeDetailsViewModel @Inject constructor(
         initialLoad()
     }
 
-    override val viewModelTag = "ItemDetailsViewModel"
+    override val viewModelTag = "AnimeDetailsViewModel"
 
     override fun onEventConsumed(event: Event) {
         val value = _animeDetailsStateFlow.value
@@ -215,8 +215,6 @@ class AnimeDetailsViewModel @Inject constructor(
                     isEditRateFabShown = isAuthorized,
                     isErrorStateShowing = false,
                 )
-
-                logInfo(message = details.toString())
             },
             onFailure = {
                 _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
