@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shikimori</string>
+    <string name="app_name">Daily Anime</string>
 
     <string name="search_filter_title">Фильтр</string>
     <string name="search_filter_reset">Сбросить</string>
