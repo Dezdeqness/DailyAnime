@@ -15,7 +15,7 @@ android {
         applicationId "com.dezdeqness"
         minSdk 24
         targetSdk 33
-        versionCode 4
+        versionCode 5
         versionName "0.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
