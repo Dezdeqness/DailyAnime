@@ -1,36 +1,46 @@
-# Shikimori App for Android(POC stage)
+<h1 align="center" id="title">Daily Anime</h1>
 
+<p align="center"><img src="app/src/main/ic_launcher-playstore.png" alt="project-image" width="100" height="100"></p>
 
-## Plans
-- Finish POC stage (Q4 2022)
-- Make components generic for futures features (Q1 2023)
-- Redesign UI components (Q1-Q3 2023)
+<h2>Features</h2>
 
+- Search anime by query and different filters
+- Track your current progress of viewing anime
+- Calendar of upcoming anime
+- Discovery anime details and related things
+- User statistic and history
+- Night theme
 
-## First stage(POC)
-- [x] Authorization
-- [x] Anime list
-- [x] Anime details
-- [x] Anime filter
-- [x] Anime search
-- [x] Calendar
-- [x] Personal list
+<h2>Libraries that used</h2>
 
-## Second stage(Theming, redesign)
-- [x] Fragment core
-- [x] Anime core
-- [x] Actions core
-- [x] User rate from details
-- [x] Payloads issue
-- [x] Viewmodel core
+- Kotlin
+- Coroutines
+- Dagger 2
+- Glide
+- Retrofit
+- Okhttp
+- Room
+- Firebase
+- Android Architecture Components
+- detekt
 
-## Third stage(Improvements and enhancements)
-- [ ] Splash screen
-- [x] Night theme
-- [x] Redesign personal list screen(cell, order, sort, change ribbon)
-- [x] Redesign search screen(fab, cell, placeholders, filter dialog)
-- [x] Redesign profile
-- [x] Redesign calendar
-- [x] Redesign details screen
-- [ ] App icons
-- [ ] Error handling
+<h2>Future plans</h2>
+
+- Home page
+- Advanced preferences
+- Onboarding
+- Manga/Ranobe functionality
+- Recap
+- Achievements
+
+<h2>Project Screenshots:</h2>
+
+<p align="center">
+  <img src="images/search.png" width="300" />
+  <img src="images/calendar.png" width="300" />
+  <img src="images/details_1.png" width="300" />
+  <img src="images/details_2.png" width="300" />
+  <img src="images/details_3.png" width="300" />
+  <img src="images/personal_list.png" width="300" />
+  <img src="images/stats.png" width="300" />
+</p>
