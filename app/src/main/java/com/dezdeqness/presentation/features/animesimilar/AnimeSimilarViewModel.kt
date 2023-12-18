@@ -6,8 +6,6 @@ import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.event.EventListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -23,7 +21,7 @@ class AnimeSimilarViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, EventListener {
+), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable {
 
     private val _similarStateFlow = MutableStateFlow(AnimeSimilarState())
     val similarStateFlow: StateFlow<AnimeSimilarState> get() = _similarStateFlow
@@ -34,13 +32,6 @@ class AnimeSimilarViewModel @Inject constructor(
     }
 
     override val viewModelTag = "AnimeSimilarViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _similarStateFlow.value
-        _similarStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
 
     override fun setPullDownIndicatorVisible(isVisible: Boolean) {
         _similarStateFlow.value = _similarStateFlow.value.copy(
@@ -73,14 +64,6 @@ class AnimeSimilarViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         actionConsumer.detachListener()
-    }
-
-    override fun onEventReceive(event: Event) {
-        val events = _similarStateFlow.value.events
-
-        _similarStateFlow.value = _similarStateFlow.value.copy(
-            events = events + event,
-        )
     }
 
     fun onActionReceive(action: Action) {

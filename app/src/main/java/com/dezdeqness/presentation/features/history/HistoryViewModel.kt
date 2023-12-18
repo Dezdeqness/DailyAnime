@@ -6,7 +6,6 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.usecases.GetHistoryUseCase
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,10 +33,6 @@ class HistoryViewModel @Inject constructor(
     }
 
     override val viewModelTag = "HistoryViewModel"
-
-    override fun onEventConsumed(event: Event) {
-
-    }
 
     override fun setPullDownIndicatorVisible(isVisible: Boolean) {
         _historyStateFlow.value = _historyStateFlow.value.copy(

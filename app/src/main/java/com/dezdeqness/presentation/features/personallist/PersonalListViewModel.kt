@@ -11,8 +11,6 @@ import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.OpenMenuPopupFilter
 import com.dezdeqness.presentation.event.ScrollToTop
@@ -21,6 +19,7 @@ import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class PersonalListViewModel @Inject constructor(
@@ -36,7 +35,7 @@ class PersonalListViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.Refreshable, BaseViewModel.InitialLoaded, EventListener {
+), BaseViewModel.Refreshable, BaseViewModel.InitialLoaded {
 
     private var currentRibbonId: String? = null
 
@@ -103,23 +102,18 @@ class PersonalListViewModel @Inject constructor(
         )
     }
 
-    override fun onEventConsumed(event: Event) {
-        val value = _personalListStateFlow.value
-        _personalListStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
-
     override fun onCleared() {
         super.onCleared()
         actionConsumer.detachListener()
     }
 
-    override fun onEventReceive(event: Event) {
-        val events = _personalListStateFlow.value.events
-        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-            events = events + event,
-        )
+    fun onScrollNeed() {
+        if (personalListStateFlow.value.isScrollNeed) {
+            _personalListStateFlow.update {
+                _personalListStateFlow.value.copy(isScrollNeed = false)
+            }
+            onEventReceive(ScrollToTop)
+        }
     }
 
     fun onActionReceive(action: Action) {
@@ -165,18 +159,14 @@ class PersonalListViewModel @Inject constructor(
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
-                events = _personalListStateFlow.value.events + ScrollToTop,
+                isScrollNeed = true,
             )
         }
     }
 
     fun onFilterButtonClicked() {
         launchOnIo {
-            val events = _personalListStateFlow.value.events
-
-            _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                events = events + OpenMenuPopupFilter,
-            )
+            onEventReceive(OpenMenuPopupFilter)
         }
     }
 
@@ -197,19 +187,13 @@ class PersonalListViewModel @Inject constructor(
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
                 isEmptyStateShowing = uiItems.isEmpty(),
-                events = _personalListStateFlow.value.events + ScrollToTop,
+                isScrollNeed = true,
             )
         }
     }
 
     fun onEditRateClicked(editRateId: Long) {
-        val events = _personalListStateFlow.value.events
-
-        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-            events = events + NavigateToEditRate(
-                rateId = editRateId,
-            ),
-        )
+        onEventReceive(NavigateToEditRate(rateId = editRateId))
     }
 
     fun onUserRateChanged(userRate: EditRateUiModel?) {

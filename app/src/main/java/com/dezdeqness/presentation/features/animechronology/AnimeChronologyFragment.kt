@@ -19,7 +19,6 @@ import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.features.animechronology.recyclerview.AnimeChronologyAdapter
-import com.dezdeqness.presentation.features.animesimilar.recyclerview.AnimeSimilarAdapter
 import kotlinx.coroutines.launch
 
 class AnimeChronologyFragment : BaseFragment<FragmentAnimeChronologyBinding>(), ActionListener {
@@ -96,17 +95,18 @@ class AnimeChronologyFragment : BaseFragment<FragmentAnimeChronologyBinding>(), 
 
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
                     adapter.submitList(state.list)
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
-
-                            else -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
                         }
 
-                        viewModel.onEventConsumed(event)
+                        else -> {}
                     }
                 }
             }

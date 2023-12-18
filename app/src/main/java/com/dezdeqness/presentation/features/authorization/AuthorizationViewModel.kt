@@ -7,7 +7,6 @@ import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.utils.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +18,7 @@ class AuthorizationViewModel @Inject constructor(
     @Named("isLogin") private val isLogin: Boolean,
     private val loginUseCase: LoginUseCase,
     private val accountRepository: AccountRepository,
-    private val networkUtils: NetworkUtils,
+    networkUtils: NetworkUtils,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -45,22 +44,11 @@ class AuthorizationViewModel @Inject constructor(
             _authorizationStateFlow.value = AuthorizationState(url = url)
 
         } else {
-            val value = _authorizationStateFlow.value
-            _authorizationStateFlow.value =
-                value.copy(
-                    events = value.events.toMutableList() + CloseAuthorization
-                )
+            onEventReceive(CloseAuthorization)
         }
     }
 
     override val viewModelTag = "AuthorizationViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _authorizationStateFlow.value
-        _authorizationStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
 
     fun onPageStarted() {
         accountRepository
@@ -103,10 +91,8 @@ class AuthorizationViewModel @Inject constructor(
                     .onSuccess {
                         val value = _authorizationStateFlow.value
                         _authorizationStateFlow.value =
-                            value.copy(
-                                isLoading = true,
-                                events = value.events.toMutableList() + AuthorizationSuccess
-                            )
+                            value.copy(isLoading = true)
+                        onEventReceive(AuthorizationSuccess)
                     }
                     .onFailure {
                         appLogger.logInfo(

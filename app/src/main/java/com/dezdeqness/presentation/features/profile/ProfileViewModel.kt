@@ -4,7 +4,6 @@ import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.usecases.GetProfileUseCase
-import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -28,10 +27,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     override val viewModelTag = "ProfileViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        // TODO
-    }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
         // TODO

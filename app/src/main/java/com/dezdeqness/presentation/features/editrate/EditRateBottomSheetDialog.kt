@@ -173,21 +173,24 @@ class EditRateBottomSheetDialog : BottomSheetDialogFragment() {
                     }
 
                     binding.scoreCarousel.currentItem = state.score.toInt()
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is EditUserRate -> {
-                                setFragmentResult(
-                                    requestKey = requireArguments().getString(TAG).orEmpty(),
-                                    result = bundleOf(
-                                        RESULT to event.userRateUiModel,
-                                    ),
-                                )
-                                dismiss()
-                            }
-
-                            else -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is EditUserRate -> {
+                            setFragmentResult(
+                                requestKey = requireArguments().getString(TAG).orEmpty(),
+                                result = bundleOf(
+                                    RESULT to event.userRateUiModel,
+                                ),
+                            )
+                            dismiss()
                         }
+
+                        else -> {}
                     }
                 }
             }

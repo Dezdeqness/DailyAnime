@@ -5,7 +5,6 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.SearchFilterRepository
 import com.dezdeqness.presentation.event.ApplyFilter
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AnimeCell
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
@@ -15,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AnimeSearchFilterViewModel @Inject constructor(
-    private val animeSearchFilterComposer: AnimeSearchFilterComposer,
+    animeSearchFilterComposer: AnimeSearchFilterComposer,
     @Named("searchFiltersList") private val list: List<AnimeSearchFilter>,
     searchFilterRepository: SearchFilterRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -43,13 +42,6 @@ class AnimeSearchFilterViewModel @Inject constructor(
     }
 
     override val viewModelTag = "AnimeSearchFilterViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _animeSearchFilterStateFlow.value
-        _animeSearchFilterStateFlow.value = value.copy(
-            listEvents = value.listEvents.toMutableList() - event
-        )
-    }
 
     fun onCellClicked(item: AnimeCell) {
         when (item.state) {
@@ -108,12 +100,7 @@ class AnimeSearchFilterViewModel @Inject constructor(
     }
 
     private fun applyFilter(animeSearchFilters: List<AnimeSearchFilter>) {
-        _animeSearchFilterStateFlow.value =
-            _animeSearchFilterStateFlow.value.copy(
-                listEvents = _animeSearchFilterStateFlow.value.listEvents + ApplyFilter(
-                    filters = animeSearchFilters
-                )
-            )
+        onEventReceive(ApplyFilter(filters = animeSearchFilters))
     }
 
 }

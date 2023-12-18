@@ -12,9 +12,6 @@ import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentStatsBinding
 import com.dezdeqness.di.AppComponent
-import com.dezdeqness.presentation.event.ScrollToTop
-import com.dezdeqness.presentation.features.history.HistoryListAdapter
-import com.dezdeqness.presentation.features.profile.ProfileViewModel
 import kotlinx.coroutines.launch
 
 class StatsFragment : BaseFragment<FragmentStatsBinding>() {

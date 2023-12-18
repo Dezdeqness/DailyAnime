@@ -7,11 +7,10 @@ import com.dezdeqness.domain.model.AnimeCalendarEntity
 import com.dezdeqness.domain.repository.CalendarRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.ScrollToTop
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class CalendarViewModel @Inject constructor(
@@ -23,7 +22,7 @@ class CalendarViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, EventListener {
+), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable {
 
     private val _calendarStateFlow: MutableStateFlow<CalendarState> =
         MutableStateFlow(CalendarState())
@@ -55,13 +54,6 @@ class CalendarViewModel @Inject constructor(
     }
 
     override val viewModelTag = "CalendarViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _calendarStateFlow.value
-        _calendarStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
 
     override fun setPullDownIndicatorVisible(isVisible: Boolean) {
         _calendarStateFlow.value = _calendarStateFlow.value.copy(
@@ -95,16 +87,17 @@ class CalendarViewModel @Inject constructor(
         actionConsumer.detachListener()
     }
 
-    override fun onEventReceive(event: Event) {
-        val events = _calendarStateFlow.value.events
-        _calendarStateFlow.value = _calendarStateFlow.value.copy(
-            events = events + event,
-        )
-    }
-
     fun onActionReceive(action: Action) {
         launchOnIo {
             actionConsumer.consume(action)
+        }
+    }
+    fun onScrollNeed() {
+        if (calendarStateFlow.value.isScrollNeed) {
+            _calendarStateFlow.update {
+                _calendarStateFlow.value.copy(isScrollNeed = false)
+            }
+            onEventReceive(ScrollToTop)
         }
     }
 
@@ -123,8 +116,8 @@ class CalendarViewModel @Inject constructor(
             val uiItems = calendarComposer.compose(items = calendarItems, query = query)
             _calendarStateFlow.value = _calendarStateFlow.value.copy(
                 items = uiItems,
-                events = _calendarStateFlow.value.events + ScrollToTop,
                 isEmptyStateShowing = uiItems.isEmpty(),
+                isScrollNeed = true,
             )
         }
     }

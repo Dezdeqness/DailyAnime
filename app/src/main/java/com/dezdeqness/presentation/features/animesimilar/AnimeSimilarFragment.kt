@@ -95,17 +95,18 @@ class AnimeSimilarFragment : BaseFragment<FragmentAnimeSimilarBinding>(), Action
 
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
                     adapter.submitList(state.list)
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
-
-                            else -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
                         }
 
-                        viewModel.onEventConsumed(event)
+                        else -> {}
                     }
                 }
             }

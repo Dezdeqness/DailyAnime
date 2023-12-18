@@ -7,7 +7,6 @@ import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.model.UserRateStatusEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.event.EditUserRate
-import com.dezdeqness.presentation.event.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -36,13 +35,6 @@ class EditRateViewModel @Inject constructor(
     }
 
     override val viewModelTag = "EditRateViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _editRateStateFlow.value
-        _editRateStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
 
     fun onRatingChanged(position: Int) {
         val score = _editRateStateFlow.value.carouselUiModels[position].value
@@ -102,13 +94,8 @@ class EditRateViewModel @Inject constructor(
                 episodes = _editRateStateFlow.value.episode,
                 score = _editRateStateFlow.value.score.toFloat(),
             )
-            val events = _editRateStateFlow.value.events
 
-            _editRateStateFlow.value = _editRateStateFlow.value.copy(
-                events = events + EditUserRate(
-                    userRateUiModel = uiModel,
-                ),
-            )
+            onEventReceive(EditUserRate(userRateUiModel = uiModel))
         }
     }
 

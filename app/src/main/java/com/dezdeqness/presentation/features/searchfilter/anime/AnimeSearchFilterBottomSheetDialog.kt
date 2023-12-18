@@ -64,21 +64,23 @@ class AnimeSearchFilterBottomSheetDialog : BaseSearchFilterBottomSheetDialog() {
                     binding.resetFilter.isVisible = isSelected
 
                     viewModel.nullifyCurrentCell()
-                    state.listEvents.forEach { event ->
-                        when (event) {
-                            is ApplyFilter -> {
-                                setFragmentResult(
-                                    TAG, bundleOf(
-                                        RESULT to event.filters,
-                                    )
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is ApplyFilter -> {
+                            setFragmentResult(
+                                TAG, bundleOf(
+                                    RESULT to event.filters,
                                 )
-                                this@AnimeSearchFilterBottomSheetDialog.dismiss()
-                            }
-
-                            else -> {}
+                            )
+                            this@AnimeSearchFilterBottomSheetDialog.dismiss()
                         }
 
-                        viewModel.onEventConsumed(event)
+                        else -> {}
                     }
                 }
             }

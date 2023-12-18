@@ -3,9 +3,7 @@ package com.dezdeqness.presentation.features.animestats
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
-import com.dezdeqness.presentation.features.stats.StatsState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -33,8 +31,6 @@ class AnimeStatsViewModel @Inject constructor(
     }
 
     override val viewModelTag = "AnimeStatsViewModel"
-
-    override fun onEventConsumed(event: Event) {}
 
 }
 

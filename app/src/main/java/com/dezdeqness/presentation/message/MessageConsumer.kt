@@ -1,17 +1,18 @@
 package com.dezdeqness.presentation.message
 
 import com.dezdeqness.presentation.models.MessageEvent
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 class MessageConsumer @Inject constructor() {
 
-    private val _messageState: MutableSharedFlow<MessageEvent> = MutableSharedFlow()
-    val messageState: SharedFlow<MessageEvent> = _messageState
+    private val _messageState: Channel<MessageEvent> = Channel()
+    val messageState: Flow<MessageEvent> = _messageState.receiveAsFlow()
 
     suspend fun onSuccessMessage(text: String) {
-        _messageState.emit(
+        _messageState.send(
             MessageEvent.SuccessMessageEvent(
                 successText = text
             )
@@ -19,7 +20,7 @@ class MessageConsumer @Inject constructor() {
     }
 
     suspend fun onErrorMessage(text: String) {
-        _messageState.emit(
+        _messageState.send(
             MessageEvent.ErrorMessageEvent(
                 errorText = text
             )

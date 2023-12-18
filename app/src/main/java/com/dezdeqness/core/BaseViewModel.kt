@@ -3,16 +3,23 @@ package com.dezdeqness.core
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.EventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel(
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     val appLogger: AppLogger,
-) : ViewModel(), CoroutineScope {
+) : ViewModel(), CoroutineScope, EventListener {
+
+    private val _events = Channel<Event>()
+    val events = _events.receiveAsFlow()
+
     override val coroutineContext: CoroutineContext
         get() = viewModelScope.coroutineContext
 
@@ -43,7 +50,11 @@ abstract class BaseViewModel(
 
     abstract val viewModelTag: String
 
-    abstract fun onEventConsumed(event: Event)
+    override fun onEventReceive(event: Event) {
+        launchOnMain {
+            _events.send(event)
+        }
+    }
 
     protected fun <T> onPullDownRefreshed(
         action: () -> (Result<T>),

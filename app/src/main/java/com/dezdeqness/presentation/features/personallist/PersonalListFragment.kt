@@ -150,46 +150,49 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                         )
                     }
                     adapter.submitList(state.items) {
-                        if (state.events.contains(ScrollToTop)) {
-                            binding.recycler.scrollToPosition(0)
-                            viewModel.onEventConsumed(ScrollToTop)
+                        if (state.isScrollNeed) {
+                            viewModel.onScrollNeed()
                         }
-                    }
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is NavigateToEditRate -> {
-                                val dialog =
-                                    EditRateBottomSheetDialog.newInstance(
-                                        rateId = event.rateId,
-                                        tag = EDIT_RATE_DIALOG_TAG,
-                                    )
-                                dialog.show(
-                                    parentFragmentManager,
-                                    EDIT_RATE_DIALOG_TAG,
-                                )
-                            }
-
-                            is OpenMenuPopupFilter -> {
-                               openPopupMenu()
-                            }
-
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
-
-                            else -> {}
-                        }
-
-                        if (event !is ScrollToTop) {
-                            viewModel.onEventConsumed(event)
-                        }
-
                     }
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is ScrollToTop -> {
+                            binding.recycler.scrollToPosition(0)
+                        }
+                        is NavigateToEditRate -> {
+                            val dialog =
+                                EditRateBottomSheetDialog.newInstance(
+                                    rateId = event.rateId,
+                                    tag = EDIT_RATE_DIALOG_TAG,
+                                )
+                            dialog.show(
+                                parentFragmentManager,
+                                EDIT_RATE_DIALOG_TAG,
+                            )
+                        }
+
+                        is OpenMenuPopupFilter -> {
+                            openPopupMenu()
+                        }
+
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
+                        }
+
+                        else -> {}
+                    }
+
+                }
+            }
+        }
     }
+
     private fun setupShareButton(state: PersonalListState) {
         if (state.items.isNotEmpty()) {
             binding.toolbar.menu?.findItem(R.id.action_filter)?.let { menuItem ->
@@ -201,7 +204,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     }
 
     private fun openPopupMenu() {
-       PopupMenu(requireContext(), binding.toolbar, Gravity.END).apply {
+        PopupMenu(requireContext(), binding.toolbar, Gravity.END).apply {
             menuInflater.inflate(R.menu.menu_popup_filter, menu)
             setOnMenuItemClickListener { menuItem ->
                 viewModel.onSortChanged(menuItem.titleCondensed.toString())

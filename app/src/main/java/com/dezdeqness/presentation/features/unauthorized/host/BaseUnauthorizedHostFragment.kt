@@ -9,7 +9,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.navArgs
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalHostFragmentBinding
@@ -64,15 +63,17 @@ abstract class BaseUnauthorizedHostFragment : BaseFragment<FragmentPersonalHostF
 
                     navGraph.setStartDestination(startDestination)
                     navController.setGraph(navGraph, getPageArguments())
-
-                    state.events.forEach { event ->
-                        consumeEvent(event)
-
-                        viewModel.onEventConsumed(event)
-                    }
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    consumeEvent(event)
+                }
+            }
+        }
+
     }
 
 }

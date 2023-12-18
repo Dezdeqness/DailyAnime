@@ -9,7 +9,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -74,34 +73,36 @@ class AuthorizationActivity : AppCompatActivity() {
                     if (state.url.isNotEmpty() && binding.webView.url != state.url) {
                         binding.webView.loadUrl(state.url)
                     }
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is CloseAuthorization -> {
-                                Toast.makeText(
-                                    this@AuthorizationActivity,
-                                    R.string.general_no_internet_error,
-                                    Toast.LENGTH_LONG
-                                )
-                                    .show()
-                                finish()
-                            }
-                            is AuthorizationSuccess -> {
-                                setResult(Activity.RESULT_OK, intent)
-                                finish()
-                            }
-
-                            else -> {}
-                        }
-
-                        authorizationViewModel.onEventConsumed(event)
-                    }
                 }
 
             }
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                authorizationViewModel.events.collect { event ->
+                    when (event) {
+                        is CloseAuthorization -> {
+                            Toast.makeText(
+                                this@AuthorizationActivity,
+                                R.string.general_no_internet_error,
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                            finish()
+                        }
+                        is AuthorizationSuccess -> {
+                            setResult(Activity.RESULT_OK, intent)
+                            finish()
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+        }
     }
 
+    // TODO: Back dispatcher
     override fun onBackPressed() {
         super.onBackPressed()
         val webView = binding.webView
@@ -151,14 +152,13 @@ class AuthorizationActivity : AppCompatActivity() {
         private const val KEY_IS_LOGIN_FLOW = "is_login_flow"
 
         fun startActivity(
-            authorizationObserver: ActivityResultLauncher<Intent>,
             context: Context,
             isLogin: Boolean,
         ) {
             val intent = Intent(context, AuthorizationActivity::class.java).apply {
                 putExtra(KEY_IS_LOGIN_FLOW, isLogin)
             }
-            authorizationObserver.launch(intent)
+            context.startActivity(intent)
         }
     }
 

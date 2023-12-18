@@ -28,7 +28,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
     )
 
-
     @Inject
     lateinit var settingsRepository: SettingsRepository
 
@@ -55,21 +54,23 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.settingsStateFlow.collect { state ->
                     binding.toggle.isChecked = state.isDarkThemeEnabled
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is SwitchDarkTheme -> {
-                                val themeMode = if (event.isEnabled) {
-                                    MODE_NIGHT_YES
-                                } else {
-                                    MODE_NIGHT_NO
-                                }
-                                AppCompatDelegate.setDefaultNightMode(themeMode)
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is SwitchDarkTheme -> {
+                            val themeMode = if (event.isEnabled) {
+                                MODE_NIGHT_YES
+                            } else {
+                                MODE_NIGHT_NO
                             }
-
-                            else -> {}
+                            AppCompatDelegate.setDefaultNightMode(themeMode)
                         }
-                        viewModel.onEventConsumed(event)
+
+                        else -> {}
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.features.animechronology
 
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AdapterItem
 
 data class AnimeChronologyState(
@@ -8,6 +7,5 @@ data class AnimeChronologyState(
     val isInitialLoadingIndicatorShowing: Boolean = false,
     val isEmptyStateShowing: Boolean = false,
     val isPullDownRefreshing: Boolean = false,
-    val events: List<Event> = listOf(),
     val isErrorStateShowing: Boolean = false,
 )
