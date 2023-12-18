@@ -12,7 +12,6 @@ import com.dezdeqness.di.subcomponents.EditRateComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.MainComponent
-import com.dezdeqness.di.subcomponents.UnauthorizedComponent
 import com.dezdeqness.di.subcomponents.UnauthorizedHostComponent
 import dagger.Module
 
@@ -30,7 +29,6 @@ import dagger.Module
         CalendarComponent::class,
         AnimeSimilarComponent::class,
         UnauthorizedHostComponent::class,
-        UnauthorizedComponent::class,
         MainComponent::class,
     ]
 )
