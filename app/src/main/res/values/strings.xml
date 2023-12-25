@@ -33,6 +33,7 @@
 
     <string name="settings_toolbar_title">Настройки</string>
     <string name="settings_dark_theme">Включить темную тему</string>
+    <string name="settings_version_name">Версия:</string>
 
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>
@@ -89,6 +90,9 @@
     <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
     <string name="general_error">Произошла ошибка</string>
     <string name="general_no_internet_error">Интернет отстуствует. Проверь интернет подключение</string>
+
+    <string name="anime_chronology_title">Хронология</string>
+    <string name="anime_similar_title">Похожее</string>
 
 </resources>
 

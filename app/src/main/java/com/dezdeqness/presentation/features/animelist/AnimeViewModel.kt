@@ -7,16 +7,16 @@ import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.NavigateToFilter
+import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class AnimeViewModel @Inject constructor(
@@ -31,7 +31,7 @@ class AnimeViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, BaseViewModel.LoadMore, EventListener {
+), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, BaseViewModel.LoadMore {
 
     private val _animeStateFlow: MutableStateFlow<AnimeState> = MutableStateFlow(AnimeState())
     val animeStateFlow: StateFlow<AnimeState> get() = _animeStateFlow
@@ -48,13 +48,6 @@ class AnimeViewModel @Inject constructor(
     }
 
     override val viewModelTag = "SearchListViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _animeStateFlow.value
-        _animeStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
 
     override fun onPullDownRefreshed() {
         onPullDownRefreshed(
@@ -94,16 +87,18 @@ class AnimeViewModel @Inject constructor(
         // TODO:
     }
 
-    override fun onEventReceive(event: Event) {
-        val events = _animeStateFlow.value.events
-        _animeStateFlow.value = _animeStateFlow.value.copy(
-            events = events + event,
-        )
-    }
-
     override fun onCleared() {
         super.onCleared()
         actionConsumer.detachListener()
+    }
+
+    fun onScrollNeed() {
+        if (animeStateFlow.value.isScrollNeed) {
+            _animeStateFlow.update {
+                _animeStateFlow.value.copy(isScrollNeed = false)
+            }
+            onEventReceive(ScrollToTop)
+        }
     }
 
     fun onActionReceive(action: Action) {
@@ -113,20 +108,17 @@ class AnimeViewModel @Inject constructor(
     }
 
     fun onFabClicked() {
-        val events = _animeStateFlow.value.events
-        _animeStateFlow.value = _animeStateFlow.value.copy(
-            events = events + NavigateToFilter(filters = filtersList),
-        )
+        onEventReceive(NavigateToFilter(filters = filtersList))
     }
 
     fun applyFilter(filtersList: List<AnimeSearchFilter>) {
         this.filtersList = filtersList
-        initialPageLoad()
+        initialPageLoad(isScrollNeed = true)
     }
 
     fun onQueryChanged(query: String) {
         this.query = query
-        initialPageLoad()
+        initialPageLoad(isScrollNeed = true)
     }
 
     fun onQueryEmpty() {
@@ -162,7 +154,7 @@ class AnimeViewModel @Inject constructor(
         )
     }
 
-    private fun initialPageLoad() {
+    private fun initialPageLoad(isScrollNeed: Boolean = false) {
         onInitialLoad(
             action = {
                 getAnimeListUseCase.invoke(
@@ -182,6 +174,7 @@ class AnimeViewModel @Inject constructor(
                     hasNextPage = state.hasNextPage,
                     isEmptyStateShowing = list.isEmpty(),
                     isErrorStateShowing = false,
+                    isScrollNeed = isScrollNeed,
                 )
             },
             onFailure = {
@@ -190,6 +183,7 @@ class AnimeViewModel @Inject constructor(
                 } else {
                     _animeStateFlow.value = _animeStateFlow.value.copy(
                         isErrorStateShowing = true,
+                        isScrollNeed = false,
                     )
                 }
             }

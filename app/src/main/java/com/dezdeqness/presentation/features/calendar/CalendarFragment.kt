@@ -107,24 +107,26 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
                     )
 
                     adapter.submitList(state.items) {
-                        if (state.events.contains(ScrollToTop)) {
-                            binding.recycler.scrollToPosition(0)
-                            viewModel.onEventConsumed(ScrollToTop)
+                        if (state.isScrollNeed) {
+                            viewModel.onScrollNeed()
                         }
-
                     }
+                }
+            }
+        }
 
-                    state.events.forEach { event ->
-                        when (event) {
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is ScrollToTop -> {
+                            binding.recycler.scrollToPosition(0)
+                        }
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
+                        }
 
-                            else -> {}
-                        }
-                        if (event !is ScrollToTop) {
-                            viewModel.onEventConsumed(event)
-                        }
+                        else -> {}
                     }
                 }
             }

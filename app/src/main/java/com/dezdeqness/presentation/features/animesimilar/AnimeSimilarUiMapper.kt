@@ -3,6 +3,8 @@ package com.dezdeqness.presentation.features.animesimilar
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.Entity
+import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.SimilarUiModel
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
@@ -11,11 +13,12 @@ import javax.inject.Inject
 
 class AnimeSimilarUiMapper @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
-) {
+): GenericListableUiMapper {
 
     private val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
-    fun map(item: AnimeBriefEntity): SimilarUiModel {
+    override fun map(item: Entity): SimilarUiModel? {
+        if (item !is AnimeBriefEntity) return null
         val stringBuilder = StringBuilder()
 
         if (item.status == AnimeStatus.ONGOING || item.status == AnimeStatus.ANONS) {

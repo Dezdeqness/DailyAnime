@@ -2,22 +2,21 @@ package com.dezdeqness.di.modules
 
 import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.usecases.BaseListableUseCase
-import com.dezdeqness.domain.usecases.GetSimilarListUseCase
-import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarUiMapper
+import com.dezdeqness.domain.usecases.GetChronologyUseCase
+import com.dezdeqness.presentation.features.animechronology.AnimeChronologyUiMapper
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
-import com.dezdeqness.utils.ImageUrlUtils
 import dagger.Module
 import dagger.Provides
 
 @Module(includes = [AnimeModule::class])
-class AnimeSimilarModule {
+class AnimeChronologyModule {
 
     @Provides
-    fun provideAnimeSimilarUiMapper(imageUrlUtils: ImageUrlUtils): GenericListableUiMapper =
-        AnimeSimilarUiMapper(imageUrlUtils)
+    fun provideAnimeSimilarUiMapper(): GenericListableUiMapper =
+        AnimeChronologyUiMapper()
 
     @Provides
     fun provideGetSimilarListUseCase(animeRepository: AnimeRepository): BaseListableUseCase =
-        GetSimilarListUseCase(animeRepository = animeRepository)
+        GetChronologyUseCase(animeRepository = animeRepository)
 
 }

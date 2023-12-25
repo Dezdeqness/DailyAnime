@@ -4,8 +4,6 @@ import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
-import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.features.history.HistoryState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -37,9 +35,5 @@ class StatsViewModel @Inject constructor(
     }
 
     override val viewModelTag = "StatsViewModel"
-
-    override fun onEventConsumed(event: Event) {
-
-    }
 
 }

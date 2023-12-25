@@ -20,7 +20,6 @@ import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
-import com.dezdeqness.di.subcomponents.UnauthorizedComponent
 import com.dezdeqness.di.subcomponents.UnauthorizedHostComponent
 import com.dezdeqness.domain.repository.SettingsRepository
 import dagger.BindsInstance
@@ -63,8 +62,6 @@ interface AppComponent {
     fun calendarComponent(): CalendarComponent.Factory
 
     fun unauthorizedHostComponent(): UnauthorizedHostComponent.Factory
-
-    fun unauthorizedComponent(): UnauthorizedComponent.Factory
 
     fun historyComponent(): HistoryComponent.Factory
 

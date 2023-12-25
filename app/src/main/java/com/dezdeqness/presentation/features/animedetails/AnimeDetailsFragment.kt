@@ -176,67 +176,68 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                     setupToolbarVisibility(state = state)
                     setupEditRateFabVisibility(state = state)
                     setupErrorStateVisibility(state = state)
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is NavigateToEditRate -> {
-                                val dialog = EditRateBottomSheetDialog.newInstance(
-                                    rateId = event.rateId,
-                                    tag = EDIT_RATE_DIALOG_TAG,
-                                )
-                                dialog.show(
-                                    parentFragmentManager,
-                                    EDIT_RATE_DIALOG_TAG,
-                                )
-                            }
-
-                            is ShareUrl -> {
-                                val url = if (event.url.startsWith(BuildConfig.BASE_URL).not()) {
-                                    BuildConfig.BASE_URL + event.url
-                                } else {
-                                    event.url
-                                }
-                                ShareCompat.IntentBuilder(requireContext())
-                                    .setType("text/plain")
-                                    .setText(url)
-                                    .startChooser()
-                            }
-
-                            is NavigateToAnimeState -> {
-                                findNavController()
-                                    .navigate(
-                                        R.id.animeStatsFragment,
-                                        bundleOf(
-                                            "animeScores" to event.scoreList,
-                                            "animeStatuses" to event.statusesList,
-                                        ),
-                                    )
-                            }
-
-                            is NavigateToSimilar -> {
-                                findNavController()
-                                    .navigate(
-                                        R.id.animeSimilarFragment,
-                                        bundleOf("animeId" to event.animeId),
-                                    )
-                            }
-
-                            is NavigateToChronology -> {
-                                findNavController()
-                                    .navigate(
-                                        R.id.animeChronologyFragment,
-                                        bundleOf("animeId" to event.animeId),
-                                    )
-                            }
-
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
-
-                            else -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is NavigateToEditRate -> {
+                            val dialog = EditRateBottomSheetDialog.newInstance(
+                                rateId = event.rateId,
+                                tag = EDIT_RATE_DIALOG_TAG,
+                            )
+                            dialog.show(
+                                parentFragmentManager,
+                                EDIT_RATE_DIALOG_TAG,
+                            )
                         }
 
-                        viewModel.onEventConsumed(event)
+                        is ShareUrl -> {
+                            val url = if (event.url.startsWith(BuildConfig.BASE_URL).not()) {
+                                BuildConfig.BASE_URL + event.url
+                            } else {
+                                event.url
+                            }
+                            ShareCompat.IntentBuilder(requireContext())
+                                .setType("text/plain")
+                                .setText(url)
+                                .startChooser()
+                        }
+
+                        is NavigateToAnimeState -> {
+                            findNavController()
+                                .navigate(
+                                    R.id.animeStatsFragment,
+                                    bundleOf(
+                                        "animeScores" to event.scoreList,
+                                        "animeStatuses" to event.statusesList,
+                                    ),
+                                )
+                        }
+
+                        is NavigateToSimilar -> {
+                            findNavController()
+                                .navigate(
+                                    R.id.animeSimilarFragment,
+                                    bundleOf("animeId" to event.animeId),
+                                )
+                        }
+
+                        is NavigateToChronology -> {
+                            findNavController()
+                                .navigate(
+                                    R.id.animeChronologyFragment,
+                                    bundleOf("animeId" to event.animeId),
+                                )
+                        }
+
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
+                        }
+
+                        else -> {}
                     }
                 }
             }

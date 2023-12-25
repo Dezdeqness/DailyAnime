@@ -171,32 +171,34 @@ class AnimeListFragment :
                     binding.refresh.isRefreshing = state.isPullDownRefreshing
 
                     adapter.submitList(state.list, state.hasNextPage) {
-                        if (state.events.contains(ScrollToTop)) {
-                            binding.recycler.scrollToPosition(0)
-                            viewModel.onEventConsumed(ScrollToTop)
+                        if (state.isScrollNeed) {
+                            viewModel.onScrollNeed()
                         }
                     }
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is NavigateToFilter -> {
-                                val dialog =
-                                    AnimeSearchFilterBottomSheetDialog.newInstance(event.filters)
-                                dialog.show(
-                                    parentFragmentManager,
-                                    AnimeSearchFilterBottomSheetDialog.TAG
-                                )
-                            }
-
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
-
-                            else -> {}
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is ScrollToTop -> {
+                            binding.recycler.scrollToPosition(0)
+                        }
+                        is NavigateToFilter -> {
+                            val dialog =
+                                AnimeSearchFilterBottomSheetDialog.newInstance(event.filters)
+                            dialog.show(
+                                parentFragmentManager,
+                                AnimeSearchFilterBottomSheetDialog.TAG
+                            )
                         }
 
-                        viewModel.onEventConsumed(event)
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
+                        }
 
+                        else -> {}
                     }
                 }
             }

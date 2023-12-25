@@ -3,7 +3,6 @@ package com.dezdeqness.presentation
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.message.MessageConsumer
 import javax.inject.Inject
 
@@ -20,5 +19,4 @@ class MainViewModel @Inject constructor(
 
     override val viewModelTag = "MainViewModel"
 
-    override fun onEventConsumed(event: Event) {}
 }

@@ -10,8 +10,6 @@ import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.NavigateToAnimeState
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
@@ -38,7 +36,7 @@ class AnimeDetailsViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, EventListener {
+), BaseViewModel.InitialLoaded {
 
     private val _animeDetailsStateFlow: MutableStateFlow<AnimeDetailsState> =
         MutableStateFlow(AnimeDetailsState())
@@ -53,13 +51,6 @@ class AnimeDetailsViewModel @Inject constructor(
 
     override val viewModelTag = "AnimeDetailsViewModel"
 
-    override fun onEventConsumed(event: Event) {
-        val value = _animeDetailsStateFlow.value
-        _animeDetailsStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
-
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
         _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
             isInitialLoadingIndicatorShowing = isVisible,
@@ -71,14 +62,6 @@ class AnimeDetailsViewModel @Inject constructor(
         actionConsumer.detachListener()
     }
 
-    override fun onEventReceive(event: Event) {
-        val events = _animeDetailsStateFlow.value.events
-
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            events = events + event,
-        )
-    }
-
     fun onActionReceive(action: Action) {
         launchOnIo {
             actionConsumer.consume(action)
@@ -86,14 +69,13 @@ class AnimeDetailsViewModel @Inject constructor(
     }
 
     fun onEditRateClicked() {
-        val events = _animeDetailsStateFlow.value.events
-
         val rateId = animeDetails?.animeDetailsEntity?.userRate?.id ?: -1
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            events = events + NavigateToEditRate(
+        onEventReceive(
+            NavigateToEditRate(
                 rateId = rateId,
-            ),
+            )
         )
+
     }
 
     fun onUserRateChanged(userRate: EditRateUiModel?) {
@@ -121,10 +103,8 @@ class AnimeDetailsViewModel @Inject constructor(
     }
 
     fun onShareButtonClicked() {
-        val events = _animeDetailsStateFlow.value.events
-
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            events = events + ShareUrl(
+        onEventReceive(
+            ShareUrl(
                 url = animeDetails?.animeDetailsEntity?.url.orEmpty()
             )
         )
@@ -144,10 +124,10 @@ class AnimeDetailsViewModel @Inject constructor(
 
     fun onStatsClicked() {
         val details = animeDetails?.animeDetailsEntity ?: return
-        val events = _animeDetailsStateFlow.value.events
 
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            events = events + NavigateToAnimeState(
+
+        onEventReceive(
+            NavigateToAnimeState(
                 scoreList = details.scoresStats.map { score ->
                     AnimeStatsTransferModel(
                         score.name,
@@ -167,21 +147,13 @@ class AnimeDetailsViewModel @Inject constructor(
     fun onSimilarClicked() {
         val details = animeDetails?.animeDetailsEntity ?: return
 
-        val events = _animeDetailsStateFlow.value.events
-
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            events = events + NavigateToSimilar(animeId = details.id),
-        )
+        onEventReceive(NavigateToSimilar(animeId = details.id))
     }
 
     fun onChronologyClicked() {
         val details = animeDetails?.animeDetailsEntity ?: return
 
-        val events = _animeDetailsStateFlow.value.events
-
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            events = events + NavigateToChronology(animeId = details.id),
-        )
+        onEventReceive(NavigateToChronology(animeId = details.id))
     }
 
     fun onRetryButtonClicked() {

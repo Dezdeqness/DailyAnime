@@ -5,7 +5,6 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.AuthorizationState
 import com.dezdeqness.domain.repository.AccountRepository
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.NavigateToPersonalList
 import com.dezdeqness.presentation.event.NavigateToUnauthorized
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,21 +42,14 @@ class UnathorizedHostViewModel @Inject constructor(
 
                 launchOnMain {
                     _hostStateFlow.value = UnauthorizedHostState(
-                        events = listOf(event),
                         isAuthorized = isAuthorized,
                     )
+                    onEventReceive(event)
                 }
             }
         }
     }
 
     override val viewModelTag = "PersonalListHostViewModel"
-
-    override fun onEventConsumed(event: Event) {
-        val value = _hostStateFlow.value
-        _hostStateFlow.value = value.copy(
-            events = value.events.toMutableList() - event
-        )
-    }
 
 }

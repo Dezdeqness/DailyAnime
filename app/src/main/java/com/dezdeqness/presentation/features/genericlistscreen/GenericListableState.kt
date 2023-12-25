@@ -1,13 +1,11 @@
-package com.dezdeqness.presentation.features.animesimilar
+package com.dezdeqness.presentation.features.genericlistscreen
 
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.models.AdapterItem
 
-data class AnimeSimilarState(
+data class GenericListableState(
     val list: List<AdapterItem> = listOf(),
     val isInitialLoadingIndicatorShowing: Boolean = false,
     val isEmptyStateShowing: Boolean = false,
     val isPullDownRefreshing: Boolean = false,
-    val events: List<Event> = listOf(),
     val isErrorStateShowing: Boolean = false,
 )

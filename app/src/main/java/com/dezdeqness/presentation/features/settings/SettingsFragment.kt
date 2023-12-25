@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentSettingsBinding
@@ -27,7 +28,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             viewModelFactory
         }
     )
-
 
     @Inject
     lateinit var settingsRepository: SettingsRepository
@@ -47,7 +47,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
         setupToolbar()
         setupViews()
+        setupVersion()
         setupObservers()
+    }
+
+    private fun setupVersion() {
+        with(binding) {
+            version.text = BuildConfig.VERSION_NAME
+        }
     }
 
     private fun setupObservers() {
@@ -55,21 +62,23 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.settingsStateFlow.collect { state ->
                     binding.toggle.isChecked = state.isDarkThemeEnabled
-
-                    state.events.forEach { event ->
-                        when (event) {
-                            is SwitchDarkTheme -> {
-                                val themeMode = if (event.isEnabled) {
-                                    MODE_NIGHT_YES
-                                } else {
-                                    MODE_NIGHT_NO
-                                }
-                                AppCompatDelegate.setDefaultNightMode(themeMode)
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is SwitchDarkTheme -> {
+                            val themeMode = if (event.isEnabled) {
+                                MODE_NIGHT_YES
+                            } else {
+                                MODE_NIGHT_NO
                             }
-
-                            else -> {}
+                            AppCompatDelegate.setDefaultNightMode(themeMode)
                         }
-                        viewModel.onEventConsumed(event)
+
+                        else -> {}
                     }
                 }
             }
