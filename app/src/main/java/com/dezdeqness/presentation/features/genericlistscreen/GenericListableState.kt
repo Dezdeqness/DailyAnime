@@ -1,8 +1,8 @@
-package com.dezdeqness.presentation.features.animechronology
+package com.dezdeqness.presentation.features.genericlistscreen
 
 import com.dezdeqness.presentation.models.AdapterItem
 
-data class AnimeChronologyState(
+data class GenericListableState(
     val list: List<AdapterItem> = listOf(),
     val isInitialLoadingIndicatorShowing: Boolean = false,
     val isEmptyStateShowing: Boolean = false,

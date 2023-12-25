@@ -91,5 +91,8 @@
     <string name="general_error">Произошла ошибка</string>
     <string name="general_no_internet_error">Интернет отстуствует. Проверь интернет подключение</string>
 
+    <string name="anime_chronology_title">Хронология</string>
+    <string name="anime_similar_title">Похожее</string>
+
 </resources>
 

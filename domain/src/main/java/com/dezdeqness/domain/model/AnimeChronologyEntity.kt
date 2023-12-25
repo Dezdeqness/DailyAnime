@@ -7,4 +7,4 @@ data class AnimeChronologyEntity(
     val url: String,
     val kind: String,
     val year: String,
-)
+): Entity

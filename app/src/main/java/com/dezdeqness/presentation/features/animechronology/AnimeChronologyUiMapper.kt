@@ -1,18 +1,24 @@
 package com.dezdeqness.presentation.features.animechronology
 
 import com.dezdeqness.domain.model.AnimeChronologyEntity
+import com.dezdeqness.domain.model.Entity
+import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
+import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.ChronologyUiModel
 import javax.inject.Inject
 
-class AnimeChronologyUiMapper @Inject constructor() {
+class AnimeChronologyUiMapper @Inject constructor() : GenericListableUiMapper {
 
-    fun map(item: AnimeChronologyEntity) =
-        ChronologyUiModel(
+    override fun map(item: Entity): AdapterItem? {
+        if (item !is AnimeChronologyEntity) return null
+
+        return ChronologyUiModel(
             id = item.id,
             name = item.name,
             imageUrl = item.imageUrl.replace(IMAGE_QUALITY_X96, IMAGE_QUALITY_ORIGINAL),
             briefInfo = createBriefInfoOrEmpty(item = item),
         )
+    }
 
     private fun createBriefInfoOrEmpty(item: AnimeChronologyEntity): String {
         val builder = StringBuilder()

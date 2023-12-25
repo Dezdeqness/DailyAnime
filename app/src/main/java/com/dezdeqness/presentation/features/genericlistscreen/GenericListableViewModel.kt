@@ -1,9 +1,9 @@
-package com.dezdeqness.presentation.features.animesimilar
+package com.dezdeqness.presentation.features.genericlistscreen
 
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.domain.repository.AnimeRepository
+import com.dezdeqness.domain.usecases.BaseListableUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,49 +11,52 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Named
 
-class AnimeSimilarViewModel @Inject constructor(
+class GenericListableViewModel @Inject constructor(
     @Named("animeId") private val animeId: Long,
-    private val animeRepository: AnimeRepository,
-    private val animeSimilarUiMapper: AnimeSimilarUiMapper,
+    private val genericMapper: GenericListableUiMapper,
+    private val baseListableUseCase: BaseListableUseCase,
     private val actionConsumer: ActionConsumer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
-    coroutineDispatcherProvider = coroutineDispatcherProvider,
-    appLogger = appLogger,
+coroutineDispatcherProvider = coroutineDispatcherProvider,
+appLogger = appLogger,
 ), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable {
 
-    private val _similarStateFlow = MutableStateFlow(AnimeSimilarState())
-    val similarStateFlow: StateFlow<AnimeSimilarState> get() = _similarStateFlow
+    private val _genericListableStateFlow = MutableStateFlow(GenericListableState())
+    val genericListableStateFlow: StateFlow<GenericListableState> get() = _genericListableStateFlow
 
     init {
         actionConsumer.attachListener(this)
         initialPageLoad()
     }
 
-    override val viewModelTag = "AnimeSimilarViewModel"
+    override val viewModelTag: String
+        get() = "GenericListableViewModel"
+
 
     override fun setPullDownIndicatorVisible(isVisible: Boolean) {
-        _similarStateFlow.value = _similarStateFlow.value.copy(
+        _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
             isPullDownRefreshing = isVisible,
         )
     }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        _similarStateFlow.value = _similarStateFlow.value.copy(
+        _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
             isInitialLoadingIndicatorShowing = isVisible,
         )
     }
 
+
     override fun onPullDownRefreshed() {
         onPullDownRefreshed(
             action = {
-                animeRepository.getSimilar(id = animeId)
+                baseListableUseCase.invoke(id = animeId)
             },
             onSuccess = { state ->
-                val list = state.map(animeSimilarUiMapper::map)
+                val list = state.mapNotNull(genericMapper::map)
 
-                _similarStateFlow.value = _similarStateFlow.value.copy(
+                _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
                     list = list,
                     isErrorStateShowing = false,
                 )
@@ -75,22 +78,23 @@ class AnimeSimilarViewModel @Inject constructor(
     private fun initialPageLoad() {
         onInitialLoad(
             action = {
-                animeRepository.getSimilar(id = animeId)
+                baseListableUseCase.invoke(id = animeId)
             },
             onSuccess = { state ->
-                val list = state.map(animeSimilarUiMapper::map)
+                val list = state.mapNotNull(genericMapper::map)
 
-                _similarStateFlow.value = _similarStateFlow.value.copy(
+                _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
                     list = list,
                     isEmptyStateShowing = list.isEmpty(),
                     isErrorStateShowing = false,
                 )
             },
             onFailure = {
-                _similarStateFlow.value = _similarStateFlow.value.copy(
+                _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
                     isErrorStateShowing = true,
                 )
             }
         )
     }
+
 }

@@ -13,7 +13,7 @@ open class AnimeBriefEntity(
     open val episodesAired: Int,
     open val airedOnTimestamp: Long,
     open val releasedOnTimestamp: Long,
-) {
+): Entity {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
