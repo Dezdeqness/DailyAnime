@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentSettingsBinding
@@ -46,7 +47,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
         setupToolbar()
         setupViews()
+        setupVersion()
         setupObservers()
+    }
+
+    private fun setupVersion() {
+        with(binding) {
+            version.text = BuildConfig.VERSION_NAME
+        }
     }
 
     private fun setupObservers() {

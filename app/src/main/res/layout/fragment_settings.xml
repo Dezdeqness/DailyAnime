@@ -59,11 +59,37 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="8dp"
-            app:trackTint="@color/settings_switch_background"
             app:thumbTint="@color/settings_switch_foreground"
+            app:trackTint="@color/settings_switch_background"
             tools:checked="true" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/version_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/profile_background_label"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/VersionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/settings_version_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/version"
+            style="@style/Version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
