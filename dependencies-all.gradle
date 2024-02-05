@@ -73,6 +73,16 @@ ext.deps = [
         'room'            : [
                 room        : "androidx.room:room-runtime:$versions.room",
                 roomCompiler: "androidx.room:room-compiler:$versions.room",
-        ]
-
+        ],
+        'compose'         : [
+                ui       : "androidx.compose.ui:ui",
+                util     : "androidx.compose.ui:ui-util",
+                graphics : "androidx.compose.ui:ui-graphics",
+                preview  : "androidx.compose.ui:ui-tooling-preview",
+                material3: "androidx.compose.material3:material3",
+                bom      : "androidx.compose:compose-bom:$versions.composeBom",
+                activity : "androidx.activity:activity-compose:$versions.composeActivity",
+                tooling  : "androidx.compose.ui:ui-tooling",
+                coil     : "io.coil-kt:coil-compose:$versions.coil"
+        ],
 ]

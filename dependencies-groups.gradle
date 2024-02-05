@@ -81,4 +81,15 @@ ext {
         kapt deps.room.roomCompiler
     }
 
+    composer = Group {
+        implementation deps.compose.ui
+        implementation deps.compose.util
+        implementation deps.compose.graphics
+        implementation deps.compose.preview
+        implementation deps.compose.material3
+        implementation platform(deps.compose.bom)
+        implementation deps.compose.activity
+        debugImplementation deps.compose.tooling
+        implementation deps.compose.coil
+    }
 }
