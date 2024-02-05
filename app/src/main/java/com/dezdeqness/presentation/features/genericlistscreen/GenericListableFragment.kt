@@ -31,6 +31,7 @@ abstract class GenericListableFragment :
     private val eventConsumer: EventConsumer by lazy {
         EventConsumer(
             fragment = this,
+            context = this.requireContext(),
         )
     }
 

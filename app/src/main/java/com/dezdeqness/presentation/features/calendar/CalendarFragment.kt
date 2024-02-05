@@ -31,6 +31,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(), ActionListener
     private val eventConsumer: EventConsumer by lazy {
         EventConsumer(
             fragment = this,
+            context = this.requireContext(),
         )
     }
 
