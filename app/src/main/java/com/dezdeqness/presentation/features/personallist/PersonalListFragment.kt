@@ -42,6 +42,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     private val eventConsumer: EventConsumer by lazy {
         EventConsumer(
             fragment = this,
+            context = this.requireContext(),
         )
     }
 

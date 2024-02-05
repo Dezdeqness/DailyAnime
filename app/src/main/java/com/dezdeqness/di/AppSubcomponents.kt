@@ -12,6 +12,7 @@ import com.dezdeqness.di.subcomponents.EditRateComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.MainComponent
+import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.UnauthorizedHostComponent
 import dagger.Module
 
@@ -30,6 +31,7 @@ import dagger.Module
         AnimeSimilarComponent::class,
         UnauthorizedHostComponent::class,
         MainComponent::class,
+        ScreenshotsViewerComponent::class,
     ]
 )
 class AppSubcomponents

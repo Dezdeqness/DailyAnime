@@ -13,12 +13,15 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeState
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
+import com.dezdeqness.utils.ImageUrlUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.util.ArrayList
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -31,6 +34,7 @@ class AnimeDetailsViewModel @Inject constructor(
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: MessageProvider,
+    private val imageUrlUtils: ImageUrlUtils,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -162,6 +166,27 @@ class AnimeDetailsViewModel @Inject constructor(
         }
         hideErrorScreen()
         initialLoad()
+    }
+
+    fun onScreenShotClicked(previewUrl: String) {
+        animeDetails
+            ?.screenshots
+            ?.indexOfFirst { previewUrl.contains(it.preview) }
+            ?.let { index ->
+                val list = ArrayList(
+                    animeDetails
+                        ?.screenshots
+                        ?.map { imageUrlUtils.getImageWithBaseUrl(it.original) }
+                        .orEmpty()
+                )
+
+                onEventReceive(
+                    NavigateToScreenshotViewer(
+                        currentIndex = index,
+                        screenshots = list,
+                    )
+                )
+            }
     }
 
     private fun hideErrorScreen() {

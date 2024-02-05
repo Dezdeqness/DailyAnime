@@ -18,6 +18,7 @@ import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
+import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.UnauthorizedHostComponent
@@ -78,5 +79,7 @@ interface AppComponent {
     fun mainComponent(): MainComponent.Factory
 
     fun settingsRepository(): SettingsRepository
+
+    fun screenshotsViewerComponent(): ScreenshotsViewerComponent.Builder
 
 }

@@ -19,13 +19,14 @@ class AnimeDetailsAdapter(
     onStatsClicked: () -> Unit,
     onChronologyClicked: () -> Unit,
     onSimilarClicked: () -> Unit,
+    onScreenShotClicked: (String) -> Unit,
 ) : DelegateAdapter<AdapterItem>(
     adapterDelegateList = listOf(
         headerItemAdapterDelegate(),
         briefInfoAdapterListDelegate(),
         relatesAdapterListDelegate(actionListener),
         roleAdapterListDelegate(),
-        screenshotsAdapterListDelegate(),
+        screenshotsAdapterListDelegate(onScreenShotClicked),
         videosAdapterListDelegate(actionListener),
         descriptionAdapterDelegate(),
         cellsAdapterDelegate(),

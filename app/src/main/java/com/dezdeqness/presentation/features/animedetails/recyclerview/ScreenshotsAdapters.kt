@@ -11,13 +11,19 @@ import com.dezdeqness.presentation.models.ScreenshotUiModel
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
 import com.dezdeqness.ui.SingleLineSpacingItemDecoration
 
-fun screenshotsAdapterDelegate() =
+fun screenshotsAdapterDelegate(
+    onScreenshotClicked: (String) -> Unit,
+) =
     adapterDelegateViewBinding<ScreenshotUiModel, AdapterItem, ItemScreenshotBinding>(
         modelClass = ScreenshotUiModel::class.java,
         viewBinding = { layoutInflater, parent ->
             ItemScreenshotBinding.inflate(layoutInflater, parent, false)
         },
         block = {
+            binding.screenshot.setOnClickListener {
+                onScreenshotClicked(item.url)
+            }
+
             bind {
                 with(binding.screenshot) {
 
@@ -36,7 +42,9 @@ fun screenshotsAdapterDelegate() =
         }
     )
 
-fun screenshotsAdapterListDelegate() =
+fun screenshotsAdapterListDelegate(
+    onScreenshotClicked: (String) -> Unit,
+) =
     adapterDelegateViewBinding<ScreenshotUiModelList, AdapterItem, ItemScreenshotListBinding>(
         modelClass = ScreenshotUiModelList::class.java,
         viewBinding = { layoutInflater, parent ->
@@ -44,7 +52,10 @@ fun screenshotsAdapterListDelegate() =
         },
         block = {
 
-            binding.screenshots.adapter = SingleListAdapter(screenshotsAdapterDelegate())
+            binding.screenshots.adapter =
+                SingleListAdapter(
+                    screenshotsAdapterDelegate(onScreenshotClicked),
+                )
             binding.screenshots.addItemDecoration(SingleLineSpacingItemDecoration())
 
             bind {

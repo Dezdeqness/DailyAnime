@@ -30,10 +30,11 @@ import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeState
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
+import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
-import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerActivity
 import kotlinx.coroutines.launch
 
 
@@ -52,6 +53,9 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
             },
             onSimilarClicked = {
                 viewModel.onSimilarClicked()
+            },
+            onScreenShotClicked = { url ->
+                viewModel.onScreenShotClicked(url)
             }
         )
     }
@@ -59,6 +63,7 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
     private val eventConsumer: EventConsumer by lazy {
         EventConsumer(
             fragment = this,
+            context = this.requireContext(),
         )
     }
 
@@ -194,18 +199,6 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                             )
                         }
 
-                        is ShareUrl -> {
-                            val url = if (event.url.startsWith(BuildConfig.BASE_URL).not()) {
-                                BuildConfig.BASE_URL + event.url
-                            } else {
-                                event.url
-                            }
-                            ShareCompat.IntentBuilder(requireContext())
-                                .setType("text/plain")
-                                .setText(url)
-                                .startChooser()
-                        }
-
                         is NavigateToAnimeState -> {
                             findNavController()
                                 .navigate(
@@ -231,6 +224,14 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                                     R.id.animeChronologyFragment,
                                     bundleOf("animeId" to event.animeId),
                                 )
+                        }
+
+                        is NavigateToScreenshotViewer -> {
+                            ScreenshotsViewerActivity.startActivity(
+                                context = requireContext(),
+                                currentIndex = event.currentIndex,
+                                screenshots = event.screenshots,
+                            )
                         }
 
                         is ConsumableEvent -> {
