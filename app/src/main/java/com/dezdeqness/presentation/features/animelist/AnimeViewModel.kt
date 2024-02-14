@@ -63,7 +63,7 @@ class AnimeViewModel @Inject constructor(
             onSuccess = { state ->
                 currentPage = state.currentPage
                 _animeStateFlow.value = _animeStateFlow.value.copy(
-                    list = state.list.map { animeUiMapper.map(it) },
+                    list = animeUiMapper.map(state.list),
                     hasNextPage = state.hasNextPage,
                     isErrorStateShowing = false,
                 )
@@ -140,7 +140,7 @@ class AnimeViewModel @Inject constructor(
             onSuccess = { state ->
                 val hasNextPage = state.hasNextPage
                 currentPage = state.currentPage
-                val list = state.list.map { animeUiMapper.map(it) }
+                val list = animeUiMapper.map(state.list)
 
                 _animeStateFlow.value = _animeStateFlow.value.copy(
                     list = _animeStateFlow.value.list + list,
@@ -167,7 +167,7 @@ class AnimeViewModel @Inject constructor(
             },
             onSuccess = { state ->
                 currentPage = state.currentPage
-                val list = state.list.map { animeUiMapper.map(it) }
+                val list = animeUiMapper.map(state.list)
 
                 _animeStateFlow.value = _animeStateFlow.value.copy(
                     list = list,
