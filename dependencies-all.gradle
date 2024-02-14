@@ -55,7 +55,10 @@ ext.deps = [
         ],
 
         'unitTesting'     : [
-                junit: "junit:junit:$versions.junit"
+                junitCore    : "junit:junit:$versions.junitCore",
+                junitLauncher: "org.junit.platform:junit-platform-launcher:$versions.junit",
+                junitApi     : "org.junit.jupiter:junit-jupiter-api:$versions.junit",
+                junitEngine  : "org.junit.jupiter:junit-jupiter-engine:$versions.junit",
         ],
 
         'androidTesting'  : [
