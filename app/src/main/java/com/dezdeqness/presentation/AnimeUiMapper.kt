@@ -15,7 +15,9 @@ class AnimeUiMapper @Inject constructor(
 
     private val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
-    fun map(animeBriefEntity: AnimeBriefEntity) =
+    fun map(items: List<AnimeBriefEntity>) = items.map(::mapAnimeBrief)
+
+    private fun mapAnimeBrief(animeBriefEntity: AnimeBriefEntity) =
         AnimeUiModel(
             id = animeBriefEntity.id,
             title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
