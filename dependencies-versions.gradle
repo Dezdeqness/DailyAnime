@@ -1,7 +1,7 @@
 ext.versions = [
         javaVersion         : JavaVersion.VERSION_17,
-        kotlin              : "1.9.20",
-        detekt              : "1.21.0-RC2",
+        kotlin              : "1.9.22",
+        detekt              : "1.23.5",
         gradle              : "8.2.0",
         retrofit            : "2.9.0",
         dagger              : "2.50",
@@ -24,6 +24,6 @@ ext.versions = [
         swipeRefresh        : "1.1.0",
         room                : "2.4.3",
         composeActivity     : "1.8.2",
-        composeBom          : "2023.10.01",
+        composeBom          : "2024.02.00",
         coil                : "2.5.0",
 ]
