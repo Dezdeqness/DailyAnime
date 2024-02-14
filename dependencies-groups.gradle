@@ -59,7 +59,10 @@ ext {
     }
 
     unitTesting = Group {
-        implementation deps.unitTesting.junit
+        testImplementation deps.unitTesting.junitCore
+        testImplementation deps.unitTesting.junitApi
+        testImplementation deps.unitTesting.junitLauncher
+        testRuntimeOnly deps.unitTesting.junitEngine
     }
 
     androidTesting = Group {

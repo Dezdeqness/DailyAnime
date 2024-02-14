@@ -54,12 +54,12 @@ dependencies {
     implementation project(path: ':domain')
     implementation 'androidx.security:security-crypto:1.1.0-alpha01'
     implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
-    implementation 'androidx.core:core-ktx:1.9.0'
     implementation project(path: ':core')
 
     coroutines()
     network()
     dagger()
     room()
+    core()
 
 }
