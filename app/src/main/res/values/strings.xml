@@ -17,8 +17,8 @@
     <string name="anime_status_released">Вышедшее</string>
     <string name="anime_status_latest">Вышло недавно</string>
 
-    <string name="unauthorized_title_default">Залогинься, ну че ты *__*</string>
     <string name="unauthorized_title_profile">Войдите в аккаунт чтобы получить доступ к дополнительным функциям</string>
+    <string name="unauthorized_title_personal_list">Войдите в аккаунт чтобы иметь возможность следить за вашим прогрессом</string>
     <string name="unauthorized_sign_in">Авторизация</string>
     <string name="unauthorized_sign_up">Регистрация</string>
 

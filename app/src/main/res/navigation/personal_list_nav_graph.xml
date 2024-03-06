@@ -10,7 +10,12 @@
 
     <fragment
         android:id="@+id/personalUnauthorized"
-        android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment" />
+        android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment">
+        <argument
+            android:name="titleResId"
+            android:defaultValue="@string/unauthorized_title_personal_list"
+            app:argType="reference" />
+    </fragment>
 
     <include app:graph="@navigation/details_nav_graph" />
 

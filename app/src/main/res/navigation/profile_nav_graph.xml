@@ -12,7 +12,7 @@
         android:id="@+id/profileUnauthorized"
         android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment">
         <argument
-            android:name="titleRedId"
+            android:name="titleResId"
             android:defaultValue="@string/unauthorized_title_profile"
             app:argType="reference" />
     </fragment>
