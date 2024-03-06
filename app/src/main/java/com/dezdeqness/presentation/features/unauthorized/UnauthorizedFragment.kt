@@ -1,51 +1,39 @@
 package com.dezdeqness.presentation.features.unauthorized
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import com.dezdeqness.R
-import com.dezdeqness.core.BaseFragment
-import com.dezdeqness.databinding.FragmentUnauthorizedBinding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.dezdeqness.core.BaseComposeFragment
+import com.dezdeqness.core_ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
 
-class UnauthorizedFragment : BaseFragment<FragmentUnauthorizedBinding>() {
+class UnauthorizedFragment : BaseComposeFragment() {
 
-    override fun setupScreenComponent(component: AppComponent) {
-    }
+    override fun setupScreenComponent(component: AppComponent) = Unit
 
-    override fun getFragmentBinding(layoutInflater: LayoutInflater) =
-        FragmentUnauthorizedBinding.inflate(layoutInflater)
+    @Composable
+    override fun FragmentContent() {
+        AppTheme {
+            UnauthorizedScreen(
+                title = stringResource(requireArguments().getInt("titleResId")),
+                actions = object : UnauthorizedActions {
+                    override fun onSignInClicked() {
+                        AuthorizationActivity.startActivity(
+                            requireContext(),
+                            isLogin = true,
+                        )
+                    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupView()
-        setupListeners()
-    }
-
-    private fun setupView() {
-        arguments
-            ?.getInt("titleResId", R.string.unauthorized_title_default)
-            ?.let {
-                binding.title.text = getString(it)
-            }
-    }
-
-    private fun setupListeners() {
-        binding.signIn.setOnClickListener {
-            AuthorizationActivity.startActivity(
-                requireContext(),
-                isLogin = true
+                    override fun onSignUpClicked() {
+                        AuthorizationActivity.startActivity(
+                            requireContext(),
+                            isLogin = false,
+                        )
+                    }
+                }
             )
         }
 
-        binding.signUp.setOnClickListener {
-            AuthorizationActivity.startActivity(
-                requireContext(),
-                isLogin = false
-            )
-        }
     }
 
 }
