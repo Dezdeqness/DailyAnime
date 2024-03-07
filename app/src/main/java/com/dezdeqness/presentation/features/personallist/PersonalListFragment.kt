@@ -1,11 +1,13 @@
 package com.dezdeqness.presentation.features.personallist
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.forEach
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -48,6 +50,8 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     private val viewModel: PersonalListViewModel by viewModels(factoryProducer = { viewModelFactory })
 
+    private var sortPopUpMenu: PopupMenu? = null
+
     override fun getFragmentBinding(layoutInflater: LayoutInflater) =
         FragmentPersonalListBinding.inflate(layoutInflater)
 
@@ -73,6 +77,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
         setupSearchView()
         setupObservers()
         setupMenu()
+        setupSortMenu()
     }
 
     override fun onDestroy() {
@@ -116,6 +121,17 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                 true
             }
             menu?.findItem(R.id.action_filter)?.isVisible = false
+        }
+    }
+
+    private fun setupSortMenu() {
+        val con = ContextThemeWrapper(requireContext(), R.style.SortPopUpMenu)
+        sortPopUpMenu = PopupMenu(con, binding.toolbar, Gravity.END).apply {
+            menuInflater.inflate(R.menu.menu_popup_filter, menu)
+            setOnMenuItemClickListener { menuItem ->
+                viewModel.onSortChanged(menuItem.titleCondensed.toString())
+                true
+            }
         }
     }
 
@@ -179,7 +195,7 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                         }
 
                         is OpenMenuPopupFilter -> {
-                            openPopupMenu()
+                            openPopupMenu(event.sort)
                         }
 
                         is ConsumableEvent -> {
@@ -204,14 +220,15 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
         }
     }
 
-    private fun openPopupMenu() {
-        PopupMenu(requireContext(), binding.toolbar, Gravity.END).apply {
-            menuInflater.inflate(R.menu.menu_popup_filter, menu)
-            setOnMenuItemClickListener { menuItem ->
-                viewModel.onSortChanged(menuItem.titleCondensed.toString())
-                true
+    private fun openPopupMenu(sort: String) {
+        sortPopUpMenu?.let {
+            it.menu.forEach {
+                if (it.titleCondensed == sort) {
+                    it.isChecked = true
+                    return@forEach
+                }
             }
-            show()
+            it.show()
         }
     }
 
