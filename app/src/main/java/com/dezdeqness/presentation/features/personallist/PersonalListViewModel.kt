@@ -166,7 +166,8 @@ class PersonalListViewModel @Inject constructor(
 
     fun onFilterButtonClicked() {
         launchOnIo {
-            onEventReceive(OpenMenuPopupFilter)
+            val sort = personalListFilterRepository.getFilter().sort.sort
+            onEventReceive(OpenMenuPopupFilter(sort))
         }
     }
 

@@ -25,6 +25,10 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
     </style>
 
+    <style name="SortPopUpMenu">
+        <item name="colorControlActivated">@color/purple_500</item>
+    </style>
+
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorPrimary">@color/background_tint</item>
     </style>

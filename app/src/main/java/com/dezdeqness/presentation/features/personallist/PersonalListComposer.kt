@@ -78,11 +78,11 @@ class PersonalListComposer @Inject constructor(
             }
 
             Sort.SCORE -> {
-                list.sortedByDescending { it.score }
+                list.sortedByDescending { it.anime?.score }
             }
 
             Sort.PROGRESS -> {
-                list.sortedByDescending { it.episodes }
+                list.sortedWith(compareByDescending<UserRateEntity> { it.episodes }.thenBy { it.anime?.russian })
             }
 
             Sort.EPISODES -> {

@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/name"
-        android:titleCondensed="name"
-        android:title="@string/personal_list_popup_menu_filter_name" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/name"
+            android:titleCondensed="name"
+            android:title="@string/personal_list_popup_menu_filter_name" />
 
-    <item
-        android:id="@+id/progress"
-        android:titleCondensed="progress"
-        android:title="@string/personal_list_popup_menu_filter_progress" />
+        <item
+            android:id="@+id/progress"
+            android:titleCondensed="progress"
+            android:title="@string/personal_list_popup_menu_filter_progress" />
 
-    <item
-        android:id="@+id/score"
-        android:titleCondensed="score"
-        android:title="@string/personal_list_popup_menu_filter_score" />
+        <item
+            android:id="@+id/score"
+            android:titleCondensed="score"
+            android:title="@string/personal_list_popup_menu_filter_score" />
 
-    <item
-        android:id="@+id/episodes"
-        android:titleCondensed="episodes"
-        android:title="@string/personal_list_popup_menu_filter_episodes" />
+        <item
+            android:id="@+id/episodes"
+            android:titleCondensed="episodes"
+            android:title="@string/personal_list_popup_menu_filter_episodes" />
+    </group>
 </menu>
