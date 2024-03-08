@@ -16,7 +16,7 @@ android {
         minSdk 24
         targetSdk 34
         versionCode System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
-        versionName "0.1.0"
+        versionName "0.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
