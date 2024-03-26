@@ -67,3 +67,5 @@ data class OpenMenuPopupFilter(val sort: String) : Event()
 object CloseAuthorization: Event()
 
 object AuthorizationSuccess : Event()
+
+object NavigateToMainFlow : Event()

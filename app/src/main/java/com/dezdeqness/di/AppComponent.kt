@@ -18,6 +18,7 @@ import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
+import com.dezdeqness.di.subcomponents.RoutingComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
@@ -77,6 +78,8 @@ interface AppComponent {
     fun animeChronologyComponent(): AnimeChronologyComponent.Builder
 
     fun mainComponent(): MainComponent.Factory
+
+    fun routingComponent(): RoutingComponent.Factory
 
     fun settingsRepository(): SettingsRepository
 

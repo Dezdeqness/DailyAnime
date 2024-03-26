@@ -55,7 +55,7 @@ class AppColors(
 fun lightColors(
     onPrimary: Color = white,
     onSecondary: Color = white,
-    textPrimary: Color = white,
+    textPrimary: Color = black,
     textSecondary: Color = white,
     error: Color = white,
 ): AppColors = AppColors(
@@ -70,7 +70,7 @@ fun lightColors(
 fun darkColors(
     onPrimary: Color = gray800,
     onSecondary: Color = black,
-    textPrimary: Color = black,
+    textPrimary: Color = white,
     textSecondary: Color = black,
     error: Color = black,
 ): AppColors = AppColors(
