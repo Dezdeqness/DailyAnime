@@ -31,6 +31,8 @@ class RoutingViewModel @Inject constructor(
                     .onFailure {
                         // TODO: Retry
                     }
+            } else {
+                onEventReceive(NavigateToMainFlow)
             }
         }
     }
