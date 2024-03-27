@@ -2,20 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile_nav_graph"
-    app:startDestination="@id/profileUnauthorized">
+    app:startDestination="@id/profile">
 
     <fragment
         android:id="@+id/profile"
         android:name="com.dezdeqness.presentation.features.profile.ProfileFragment" />
-
-    <fragment
-        android:id="@+id/profileUnauthorized"
-        android:name="com.dezdeqness.presentation.features.unauthorized.UnauthorizedFragment">
-        <argument
-            android:name="titleResId"
-            android:defaultValue="@string/unauthorized_title_profile"
-            app:argType="reference" />
-    </fragment>
 
     <fragment
         android:id="@+id/history"

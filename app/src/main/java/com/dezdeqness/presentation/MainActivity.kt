@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             R.navigation.personal_host_nav_graph,
             R.navigation.calendar_nav_graph,
             R.navigation.search_nav_graph,
-            R.navigation.profile_host_nav_graph,
+            R.navigation.profile_nav_graph,
         )
 
         bottomVav.setupWithNavController(

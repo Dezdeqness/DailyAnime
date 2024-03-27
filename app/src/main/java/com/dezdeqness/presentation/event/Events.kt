@@ -47,8 +47,6 @@ object NavigateToPersonalList : Event()
 
 object NavigateToUnauthorized : Event()
 
-object NavigateToProfile : Event()
-
 data class SwitchDarkTheme(val isEnabled: Boolean) : Event()
 
 data class ShareUrl(val url: String) : ConsumableEvent()
