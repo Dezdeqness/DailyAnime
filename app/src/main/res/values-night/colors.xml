@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_tint">#3D000000</color>
+    <color name="background_tint">#201F1F</color>
 
-    <color name="drawable_icon">#FFFFFFFF</color>
+    <color name="drawable_icon">#FFFFFF</color>
 
-    <color name="text_primary">#FFFFFFFF</color>
-    <color name="list_title_primary">#FFFFFFFF</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="list_title_primary">#FFFFFF</color>
 
-    <color name="loading_indicator">#FFFFFFFF</color>
+    <color name="loading_indicator">#FFFFFF</color>
 
-    <color name="chip_background">#00000000</color>
-    <color name="chip_stroke">#ffffffff</color>
+    <color name="chip_background">#000000</color>
+    <color name="chip_stroke">#ffffff</color>
 
-    <color name="profile_background_label">#2AAAA8A8</color>
+    <color name="profile_background_label">#221F1F</color>
 
-    <color name="details_toolbar_color_expand">#FF000000</color>
-
+    <color name="details_toolbar_color_expand">#000000</color>
 
 </resources>
