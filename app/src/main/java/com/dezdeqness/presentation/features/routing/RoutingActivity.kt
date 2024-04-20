@@ -68,7 +68,7 @@ class RoutingActivity : AppCompatActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(AppTheme.colors.onSecondary)
+                        .background(AppTheme.colors.onPrimary)
                         .padding(horizontal = 8.dp)
                 ) {
                     Text(

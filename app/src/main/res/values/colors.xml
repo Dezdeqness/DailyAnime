@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#018786</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
-    <color name="drawable_icon">#FF000000</color>
-    <color name="pure_white">#FFFFFFFF</color>
+    <color name="drawable_icon">#000000</color>
+    <color name="pure_white">#FFFFFF</color>
 
-    <color name="text_primary">#FF000000</color>
-    <color name="search_label">#FFFFFFFF</color>
+    <color name="text_primary">#000000</color>
+    <color name="search_label">#FFFFFF</color>
 
-    <color name="list_title_primary">#FF000000</color>
+    <color name="list_title_primary">#000000</color>
 
     <color name="background_shadow">#AA000000</color>
-    <color name="profile_divider">#AACACACA</color>
+    <color name="profile_divider">#615C5C</color>
 
-    <color name="background_tint">#ffffffff</color>
+    <color name="background_tint">#ffffff</color>
 
-    <color name="loading_indicator">#FF000000</color>
-    <color name="chip_background">#ffffffff</color>
-    <color name="chip_stroke">#ff000000</color>
+    <color name="loading_indicator">#000000</color>
+    <color name="chip_background">#ffffff</color>
+    <color name="chip_stroke">#000000</color>
 
-    <color name="details_toolbar_color_expand">#FFFFFFFF</color>
+    <color name="details_toolbar_color_expand">#FFFFFF</color>
 
-    <color name="filter_divider">#14000000</color>
-    <color name="profile_background_label">#FFFFFFFF</color>
+    <color name="filter_divider">#838383</color>
+    <color name="profile_background_label">#FFFFFF</color>
 </resources>
