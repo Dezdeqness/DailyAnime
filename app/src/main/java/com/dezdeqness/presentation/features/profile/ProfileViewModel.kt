@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.profile
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,6 +11,7 @@ import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
+    private val accountRepository: AccountRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -22,8 +24,27 @@ class ProfileViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            fetchProfile()
+            val isAuthorized = accountRepository.isAuthorized()
+            if (isAuthorized) {
+                fetchProfile()
+            } else {
+                _profileStateFlow.value = _profileStateFlow.value.copy(
+                    isAuthorized = false,
+                )
+            }
         }
+
+        launchOnIo {
+            accountRepository.authorizationState().collect { state ->
+                appLogger.logInfo(TAG, state.toString())
+                val isAuthorized = accountRepository.isAuthorized()
+
+                if (isAuthorized) {
+                    fetchProfile()
+                }
+            }
+        }
+
     }
 
     override val viewModelTag = "ProfileViewModel"
@@ -37,11 +58,16 @@ class ProfileViewModel @Inject constructor(
             collector = getProfileUseCase.invoke(),
             onSuccess = { account ->
                 _profileStateFlow.value = _profileStateFlow.value.copy(
+                    isAuthorized = true,
                     avatar = account.avatar,
                     nickname = account.nickname,
                 )
             },
         )
+    }
+
+    companion object {
+        private const val TAG = "ProfileViewModel"
     }
 
 }

@@ -151,7 +151,15 @@ class AuthorizationActivity : AppCompatActivity() {
 
         private const val KEY_IS_LOGIN_FLOW = "is_login_flow"
 
-        fun startActivity(
+        fun startLoginFlow(context: Context) {
+            startActivity(context, true)
+        }
+
+        fun startSignUpFlow(context: Context) {
+            startActivity(context, false)
+        }
+
+        private fun startActivity(
             context: Context,
             isLogin: Boolean,
         ) {
