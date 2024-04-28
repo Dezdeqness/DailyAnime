@@ -11,6 +11,7 @@ class AppColors(
     onSecondary: Color,
     textPrimary: Color,
     textSecondary: Color,
+    rippleColor: Color,
     error: Color,
     isLight: Boolean
 ) {
@@ -22,6 +23,8 @@ class AppColors(
         private set
     var textSecondary by mutableStateOf(textSecondary)
         private set
+    var rippleColor by mutableStateOf(rippleColor)
+        private set
     var error by mutableStateOf(error)
         private set
     var isLight by mutableStateOf(isLight)
@@ -32,6 +35,7 @@ class AppColors(
         onSecondary: Color = this.onSecondary,
         textPrimary: Color = this.textPrimary,
         textSecondary: Color = this.textSecondary,
+        rippleColor: Color = this.rippleColor,
         error: Color = this.error,
         isLight: Boolean = this.isLight
     ): AppColors = AppColors(
@@ -39,6 +43,7 @@ class AppColors(
         onSecondary,
         textPrimary,
         textSecondary,
+        rippleColor,
         error,
         isLight
     )
@@ -48,6 +53,7 @@ class AppColors(
         onSecondary = other.onSecondary
         textPrimary = other.textPrimary
         textSecondary = other.textSecondary
+        rippleColor = other.rippleColor
         error = other.error
     }
 }
@@ -57,12 +63,14 @@ fun lightColors(
     onSecondary: Color = black,
     textPrimary: Color = black,
     textSecondary: Color = white,
+    rippleColor: Color = black,
     error: Color = white,
 ): AppColors = AppColors(
     onPrimary = onPrimary,
     onSecondary = onSecondary,
     textPrimary = textPrimary,
     textSecondary = textSecondary,
+    rippleColor = rippleColor,
     error = error,
     isLight = true
 )
@@ -72,12 +80,14 @@ fun darkColors(
     onSecondary: Color = white,
     textPrimary: Color = white,
     textSecondary: Color = black,
+    rippleColor: Color = white,
     error: Color = black,
 ): AppColors = AppColors(
     onPrimary = onPrimary,
     onSecondary = onSecondary,
     textPrimary = textPrimary,
     textSecondary = textSecondary,
+    rippleColor = rippleColor,
     error = error,
     isLight = false
 )
