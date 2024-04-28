@@ -54,7 +54,6 @@ fun ProfileScreen(
                 .padding(padding)
                 .fillMaxSize()
                 .background(AppTheme.colors.onPrimary)
-                .padding(horizontal = 16.dp)
         ) {
             val isAuthorized = state.isAuthorized
 
@@ -62,12 +61,18 @@ fun ProfileScreen(
                 ProfileCard(
                     nickname = state.nickname,
                     avatar = state.avatar,
-                    modifier = Modifier,
+                    onStatsClicked = {
+                        actions.onStatsIconClicked()
+                    },
+                    onHistoryClicked = {
+                        actions.onHistoryIconClicked()
+                    }
                 )
             } else {
                 UnauthorizedCard(
                     onLoginClick = actions::onLoginCLicked,
                     onRegisterClick = actions::onRegistrationClicked,
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
             }
         }

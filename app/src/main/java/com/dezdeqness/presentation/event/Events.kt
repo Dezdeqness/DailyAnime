@@ -3,8 +3,7 @@ package com.dezdeqness.presentation.event
 import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
 import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.models.AnimeSearchFilter
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.UUID
 
 sealed class Event {
     val id: String = UUID.randomUUID().toString()
@@ -44,6 +43,16 @@ data class PagerScrollToPage(val index: Int) : Event()
 object ScrollToTop : Event()
 
 object NavigateToPersonalList : Event()
+
+object NavigateToStats : Event()
+
+object NavigateToSettings : Event()
+
+object NavigateToHistory : Event()
+
+object NavigateToLoginPage : Event()
+
+object NavigateToSignUp : Event()
 
 object NavigateToUnauthorized : Event()
 
