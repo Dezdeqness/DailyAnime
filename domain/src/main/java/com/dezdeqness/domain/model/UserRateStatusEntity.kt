@@ -10,6 +10,6 @@ enum class UserRateStatusEntity(val status: String) {
     UNKNOWN("none");
 
     companion object {
-        fun fromString(value: String) = values().find { item -> item.status == value } ?: UNKNOWN
+        fun fromString(value: String) = entries.find { item -> item.status == value } ?: UNKNOWN
     }
 }

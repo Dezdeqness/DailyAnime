@@ -10,6 +10,6 @@ enum class AnimeKind(val kind: String) {
     UNKNOWN("");
 
     companion object {
-        fun fromString(value: String?) = values().find { it.kind == value } ?: UNKNOWN
+        fun fromString(value: String?) = entries.find { it.kind == value } ?: UNKNOWN
     }
 }

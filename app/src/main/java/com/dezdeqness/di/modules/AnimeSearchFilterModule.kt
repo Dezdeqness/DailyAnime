@@ -30,7 +30,9 @@ abstract class AnimeSearchFilterModule {
             )
 
         @Provides
-        fun providesAnimeSeasonCellComposer() = AnimeSeasonCellComposer()
+        fun providesAnimeSeasonCellComposer(
+            resourceManager: ResourceProvider,
+        ) = AnimeSeasonCellComposer(resourceManager)
 
     }
 

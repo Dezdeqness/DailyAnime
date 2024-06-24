@@ -21,6 +21,6 @@ enum class Sort(val sort: String) {
     UPDATED_TIME("updated_time");
 
     companion object {
-        fun fromString(value: String) = Sort.values().find { it.sort == value } ?: NAME
+        fun fromString(value: String) = entries.find { it.sort == value } ?: NAME
     }
 }
