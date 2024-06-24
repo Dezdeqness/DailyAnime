@@ -52,15 +52,17 @@ fun UnauthorizedScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AppButton(
-                title = "Логин",
+                title = stringResource(id = R.string.unauthorized_sign_in),
                 onClick = {
                     actions.onSignInClicked()
                 },
-                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp)
             )
 
             AppOutlinedButton(
-                title = "Регистрация",
+                title = stringResource(id = R.string.unauthorized_sign_up),
                 onClick = {
                     actions.onSignUpClicked()
                 },

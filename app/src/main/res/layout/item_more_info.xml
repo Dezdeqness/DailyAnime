@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:text="Похожее"
+                android:text="@string/anime_toolbar_similar"
                 android:textSize="12sp"
                 app:strokeColor="@color/text_primary" />
 
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:text="Хронология"
+                android:text="@string/anime_toolbar_chronology"
                 android:textSize="12sp"
                 app:strokeColor="@color/text_primary" />
 
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="4dp"
-                android:text="Статистика"
+                android:text="@string/anime_toolbar_stats"
                 android:textSize="12sp"
                 app:strokeColor="@color/text_primary" />
 
