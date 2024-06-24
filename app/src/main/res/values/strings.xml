@@ -93,5 +93,20 @@
     <string name="anime_chronology_title">Хронология</string>
     <string name="anime_similar_title">Похожее</string>
 
+    <string name="filter_cell_season_old_enough">Более старые</string>
+
+    <string name="bottom_navigation_personal_lists">Списки</string>
+    <string name="bottom_navigation_calendar">Календарь</string>
+    <string name="bottom_navigation_search">Поиск</string>
+    <string name="bottom_navigation_profile">Профиль</string>
+    <string name="personal_list_empty_state">Категория не имеет элементов</string>
+    <string name="search_placeholder_hint">Восстание Лелуша</string>
+    <string name="anime_toolbar_similar">Похожее</string>
+    <string name="anime_toolbar_chronology">Хронология</string>
+    <string name="anime_toolbar_stats">Статистика</string>
+    <string name="toolbar_title_similar">Похожее</string>
+    <string name="calendar_search_placeholder_hint">Выходящие аниме</string>
+    <string name="personal_list_search_placeholder_hint">Аниме</string>
+
 </resources>
 

@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@color/background_tint"
-    android:text="Категория не имеет элементов"
+    android:text="@string/personal_list_empty_state"
     android:textSize="18sp"
     android:textStyle="bold" />

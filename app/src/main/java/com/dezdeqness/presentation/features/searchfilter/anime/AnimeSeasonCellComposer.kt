@@ -1,10 +1,14 @@
 package com.dezdeqness.presentation.features.searchfilter.anime
 
+import com.dezdeqness.R
+import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AnimeCell
 import java.util.*
 import javax.inject.Inject
 
-class AnimeSeasonCellComposer @Inject constructor() {
+class AnimeSeasonCellComposer @Inject constructor(
+    private val resourceProvider: ResourceProvider,
+) {
 
     fun composeSeasonCells(): List<AnimeCell> {
         val cells = mutableListOf<AnimeCell>()
@@ -83,7 +87,7 @@ class AnimeSeasonCellComposer @Inject constructor() {
         cells.add(
             AnimeCell(
                 id = "${MILESTONE_1950}_$currentYear",
-                displayName = "Более старые",
+                displayName = resourceProvider.getString(R.string.filter_cell_season_old_enough),
             )
         )
 
@@ -130,6 +134,7 @@ class AnimeSeasonCellComposer @Inject constructor() {
                     )
                 )
             }
+
             SPRING_SEASON -> {
                 val cellPastYear = year - 1
                 cells.add(
@@ -157,6 +162,7 @@ class AnimeSeasonCellComposer @Inject constructor() {
                     )
                 )
             }
+
             SUMMER_SEASON -> {
                 cells.add(
                     AnimeCell(
@@ -183,6 +189,7 @@ class AnimeSeasonCellComposer @Inject constructor() {
                     )
                 )
             }
+
             else -> {
                 val cellNewYear = year + 1
                 cells.add(
@@ -219,6 +226,7 @@ class AnimeSeasonCellComposer @Inject constructor() {
             11, 0, 1 -> {
                 WINTER_SEASON
             }
+
             else -> {
                 (month + 1) / 3
             }

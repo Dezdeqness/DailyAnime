@@ -12,6 +12,6 @@
     android:maxWidth="1000dp"
     app:iconifiedByDefault="true"
     app:queryBackground="@android:color/transparent"
-    app:queryHint="Восстание Лелуша"
+    app:queryHint="@string/search_placeholder_hint"
     app:searchHintIcon="@null"
     app:searchIcon="@null" />

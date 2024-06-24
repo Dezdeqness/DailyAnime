@@ -32,7 +32,7 @@
                     android:background="@android:color/transparent"
                     app:iconifiedByDefault="false"
                     app:queryBackground="@android:color/transparent"
-                    app:queryHint="Аниме" />
+                    app:queryHint="@string/personal_list_search_placeholder_hint" />
 
             </com.google.android.material.appbar.MaterialToolbar>
 

@@ -26,7 +26,7 @@
                 android:background="@android:color/transparent"
                 app:iconifiedByDefault="false"
                 app:queryBackground="@android:color/transparent"
-                app:queryHint="Выходящие аниме" />
+                app:queryHint="@string/calendar_search_placeholder_hint" />
 
             <com.dezdeqness.ui.RecyclerViewWithState
                 android:id="@+id/recycler"

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/background_tint"
             app:navigationIcon="@drawable/ic_back"
-            app:title="Похожее"
+            app:title="@string/toolbar_title_similar"
             app:titleTextColor="@color/text_primary" />
 
     </com.google.android.material.appbar.AppBarLayout>
