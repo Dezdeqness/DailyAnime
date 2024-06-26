@@ -88,4 +88,8 @@ ext.deps = [
                 tooling  : "androidx.compose.ui:ui-tooling",
                 coil     : "io.coil-kt:coil-compose:$versions.coil"
         ],
+        'chucker'         : [
+                chucker    : "com.github.chuckerteam.chucker:library:$versions.chucker",
+                chuckerNoOp: "com.github.chuckerteam.chucker:library-no-op:$versions.chucker",
+        ]
 ]

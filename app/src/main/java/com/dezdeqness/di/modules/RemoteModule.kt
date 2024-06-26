@@ -1,5 +1,7 @@
 package com.dezdeqness.di.modules
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.BuildConfig
@@ -20,6 +22,7 @@ import javax.inject.Singleton
 @Module
 class RemoteModule {
 
+    @Named("logging")
     @Singleton
     @Provides
     fun providesLoggingInterceptor(): Interceptor =
@@ -27,18 +30,28 @@ class RemoteModule {
             level = HttpLoggingInterceptor.Level.BASIC
         }
 
+    @Named("chucker")
     @Singleton
     @Provides
-    fun providesHttpClient(interceptor: Interceptor): OkHttpClient =
+    fun provideChuckerInterceptor(context: Context): Interceptor =
+        ChuckerInterceptor(context)
+
+    @Singleton
+    @Provides
+    fun providesHttpClient(
+        @Named("logging") loggingInterceptor: Interceptor,
+        @Named("chucker") chuckerInterceptor: Interceptor,
+    ): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(interceptor)
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
 
     @Singleton
     @Provides
-    fun providesRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient) =
+    fun providesRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(MoshiConverterFactory.create())
@@ -48,7 +61,7 @@ class RemoteModule {
     @Named("Authorization")
     @Singleton
     @Provides
-    fun providesAuthorizationRetrofit(okHttpClient: OkHttpClient) =
+    fun providesAuthorizationRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_AUTHORIZATION_URL)
             .addConverterFactory(MoshiConverterFactory.create())
@@ -58,7 +71,7 @@ class RemoteModule {
     @Named("Account")
     @Singleton
     @Provides
-    fun providesAccountRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient) =
+    fun providesAccountRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(MoshiConverterFactory.create())
@@ -69,19 +82,22 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providesHttpClientWithRefreshToken(
-        interceptorRefresh: RefreshTokenInterceptor,
-        interceptor: Interceptor,
+        @Named("refresh") refreshInterceptor: Interceptor,
+        @Named("logging") loggingInterceptor: Interceptor,
+        @Named("chucker") chuckerInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(interceptorRefresh)
-            .addInterceptor(interceptor)
+            .addInterceptor(refreshInterceptor)
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
 
+    @Named("refresh")
     @Singleton
     @Provides
-    fun provideRefreshTokenInterceptor(refreshTokenUseCase: Lazy<RefreshTokenUseCase>): RefreshTokenInterceptor =
+    fun provideRefreshTokenInterceptor(refreshTokenUseCase: Lazy<RefreshTokenUseCase>): Interceptor =
         RefreshTokenInterceptor(refreshTokenUseCase = refreshTokenUseCase)
 
     @Singleton
