@@ -18,6 +18,11 @@ ext {
 
     }
 
+    chucker = Group {
+        debugImplementation deps.chucker.chucker
+        releaseImplementation deps.chucker.chuckerNoOp
+    }
+
     glide = Group {
         implementation deps.glide.glide
         kapt deps.glide.glideCompiler

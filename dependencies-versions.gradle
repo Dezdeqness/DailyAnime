@@ -26,4 +26,5 @@ ext.versions = [
         composeActivity     : "1.8.2",
         composeBom          : "2024.02.00",
         coil                : "2.5.0",
+        chucker: "4.0.0",
 ]
