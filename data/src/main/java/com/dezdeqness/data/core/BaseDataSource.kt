@@ -6,7 +6,7 @@ import javax.inject.Inject
 abstract class BaseDataSource {
 
     @Inject
-    protected lateinit var errorMapper: ErrorMapper
+    lateinit var errorMapper: ErrorMapper
 
     fun <T> tryWithCatch(block: () -> Result<T>) = try {
         block()

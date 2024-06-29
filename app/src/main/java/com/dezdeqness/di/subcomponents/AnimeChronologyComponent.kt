@@ -8,7 +8,13 @@ import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
-@Subcomponent(modules = [AnimeChronologyModule::class, ChronologyArgsModule::class, GenericListableViewModelModule::class])
+@Subcomponent(
+    modules = [
+        AnimeChronologyModule::class,
+        ChronologyArgsModule::class,
+        GenericListableViewModelModule::class
+    ]
+)
 interface AnimeChronologyComponent {
     @Subcomponent.Builder
     interface Builder {

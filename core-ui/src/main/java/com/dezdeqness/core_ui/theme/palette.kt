@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.dezdeqness.core_ui.theme
 
 import androidx.compose.foundation.background
@@ -12,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 
 val red50 = Color(0xFFFFEBEE)
 val red100 = Color(0xFFFFCDD2)
@@ -286,55 +289,55 @@ private fun ColorBox(color: Color) {
 
 @Preview(name = "Red palette")
 @Composable
-fun previewRedPalette() {
+fun PreviewRedPalette() {
     ColorsList(colors = redPaletteList)
 }
 
 @Preview(name = "Purple palette")
 @Composable
-fun previewPurplePalette() {
+fun PreviewPurplePalette() {
     ColorsList(colors = purplePaletteList)
 }
 
 @Preview(name = "Deep purple palette")
 @Composable
-fun previewDeepPurplePalette() {
+fun PreviewDeepPurplePalette() {
     ColorsList(colors = deepPurplePaletteList)
 }
 
 @Preview(name = "Blue palette")
 @Composable
-fun previewBluePalette() {
+fun PreviewBluePalette() {
     ColorsList(colors = bluePaletteList)
 }
 
 @Preview(name = "Green palette")
 @Composable
-fun previewGreenPalette() {
+fun PreviewGreenPalette() {
     ColorsList(colors = greenPaletteList)
 }
 
 @Preview(name = "Yellow palette")
 @Composable
-fun previewYellowPalette() {
+fun PreviewYellowPalette() {
     ColorsList(colors = yellowPaletteList)
 }
 
 @Preview(name = "Orange palette")
 @Composable
-fun previewOrangePalette() {
+fun PreviewOrangePalette() {
     ColorsList(colors = orangePaletteList)
 }
 
 @Preview(name = "Gray palette")
 @Composable
-fun previewGrayPalette() {
+fun PreviewGrayPalette() {
     ColorsList(colors = grayPaletteList)
 }
 
 @Preview(name = "Black&White palette")
 @Composable
-fun previewBlackAndWhitePalette() {
+fun PreviewBlackAndWhitePalette() {
     ColorsList(
         colors = listOf(
             black,

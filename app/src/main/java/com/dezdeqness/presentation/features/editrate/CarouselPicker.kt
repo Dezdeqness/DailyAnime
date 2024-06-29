@@ -12,9 +12,9 @@ import kotlin.math.abs
 class CarouselPicker @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ViewPager(context, attrs) {
 
-    private var itemsVisible = 7
+    private var itemsVisible = DEFAULT_ITEM_VISIBLE
     private var divisor = 0f
-    private var opacity = 0.5f
+    private var opacity = DEFAULT_OPACITY
 
     init {
         divisor = 1 + 1f / (itemsVisible - 1)
@@ -55,7 +55,7 @@ class CarouselPicker @JvmOverloads constructor(context: Context, attrs: Attribut
 
     override fun setAdapter(adapter: PagerAdapter?) {
         super.setAdapter(adapter)
-        this.offscreenPageLimit = adapter?.count ?: 5
+        this.offscreenPageLimit = adapter?.count ?: DEFAULT_OFFSCREEN_LIMIT
 
         (adapter as? CarouselAdapter)?.apply {
             setOpacity(opacity)
@@ -73,8 +73,15 @@ class CarouselPicker @JvmOverloads constructor(context: Context, attrs: Attribut
     class CustomPageTransformer : PageTransformer {
 
         override fun transformPage(view: View, position: Float) {
-            view.scaleY = 1 - abs(position) * 1.5f
-            view.scaleX = 1 - abs(position) * 1.5f
+            view.scaleY = 1 - abs(position) * SCALE_MULTIPLIER
+            view.scaleX = 1 - abs(position) * SCALE_MULTIPLIER
         }
+    }
+
+    companion object {
+        private const val SCALE_MULTIPLIER = 1.5F
+        private const val DEFAULT_ITEM_VISIBLE = 7
+        private const val DEFAULT_OPACITY = 0.5F
+        private const val DEFAULT_OFFSCREEN_LIMIT = 5
     }
 }

@@ -10,6 +10,8 @@ import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import jp.wasabeef.glide.transformations.BlurTransformation
 
+private const val BLUR_RADIUS = 25
+
 fun headerItemAdapterDelegate() =
     adapterDelegateViewBinding<HeaderItemUiModel, AdapterItem, ItemAnimeHeaderBinding>(
         modelClass = HeaderItemUiModel::class.java,
@@ -33,7 +35,7 @@ fun headerItemAdapterDelegate() =
                             RequestOptions.bitmapTransform(
                                 MultiTransformation(
                                     CenterCrop(),
-                                    BlurTransformation(25),
+                                    BlurTransformation(BLUR_RADIUS),
                                 ),
                             )
                         )

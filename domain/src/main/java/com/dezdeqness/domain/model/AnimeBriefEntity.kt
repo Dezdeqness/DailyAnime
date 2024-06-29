@@ -15,6 +15,7 @@ open class AnimeBriefEntity(
     open val releasedOnTimestamp: Long,
 ): Entity {
 
+    @Suppress("CyclomaticComplexMethod")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is AnimeBriefEntity) return false

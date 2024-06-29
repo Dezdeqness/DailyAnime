@@ -26,6 +26,7 @@ import com.dezdeqness.di.subcomponents.ArgsModule
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeState
 import com.dezdeqness.presentation.event.NavigateToChronology
@@ -187,61 +188,65 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
-                    when (event) {
-                        is NavigateToEditRate -> {
-                            val dialog = EditRateBottomSheetDialog.newInstance(
-                                rateId = event.rateId,
-                                tag = EDIT_RATE_DIALOG_TAG,
-                            )
-                            dialog.show(
-                                parentFragmentManager,
-                                EDIT_RATE_DIALOG_TAG,
-                            )
-                        }
-
-                        is NavigateToAnimeState -> {
-                            findNavController()
-                                .navigate(
-                                    R.id.animeStatsFragment,
-                                    bundleOf(
-                                        "animeScores" to event.scoreList,
-                                        "animeStatuses" to event.statusesList,
-                                    ),
-                                )
-                        }
-
-                        is NavigateToSimilar -> {
-                            findNavController()
-                                .navigate(
-                                    R.id.animeSimilarFragment,
-                                    bundleOf("animeId" to event.animeId),
-                                )
-                        }
-
-                        is NavigateToChronology -> {
-                            findNavController()
-                                .navigate(
-                                    R.id.animeChronologyFragment,
-                                    bundleOf("animeId" to event.animeId),
-                                )
-                        }
-
-                        is NavigateToScreenshotViewer -> {
-                            ScreenshotsViewerActivity.startActivity(
-                                context = requireContext(),
-                                currentIndex = event.currentIndex,
-                                screenshots = event.screenshots,
-                            )
-                        }
-
-                        is ConsumableEvent -> {
-                            eventConsumer.consume(event)
-                        }
-
-                        else -> {}
-                    }
+                    onEvent(event)
                 }
             }
+        }
+    }
+
+    private fun onEvent(event: Event) {
+        when (event) {
+            is NavigateToEditRate -> {
+                val dialog = EditRateBottomSheetDialog.newInstance(
+                    rateId = event.rateId,
+                    tag = EDIT_RATE_DIALOG_TAG,
+                )
+                dialog.show(
+                    parentFragmentManager,
+                    EDIT_RATE_DIALOG_TAG,
+                )
+            }
+
+            is NavigateToAnimeState -> {
+                findNavController()
+                    .navigate(
+                        R.id.animeStatsFragment,
+                        bundleOf(
+                            "animeScores" to event.scoreList,
+                            "animeStatuses" to event.statusesList,
+                        ),
+                    )
+            }
+
+            is NavigateToSimilar -> {
+                findNavController()
+                    .navigate(
+                        R.id.animeSimilarFragment,
+                        bundleOf("animeId" to event.animeId),
+                    )
+            }
+
+            is NavigateToChronology -> {
+                findNavController()
+                    .navigate(
+                        R.id.animeChronologyFragment,
+                        bundleOf("animeId" to event.animeId),
+                    )
+            }
+
+            is NavigateToScreenshotViewer -> {
+                ScreenshotsViewerActivity.startActivity(
+                    context = requireContext(),
+                    currentIndex = event.currentIndex,
+                    screenshots = event.screenshots,
+                )
+            }
+
+            is ConsumableEvent -> {
+                eventConsumer.consume(event)
+            }
+
+            else -> {}
         }
     }
 
