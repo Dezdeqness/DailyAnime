@@ -5,99 +5,121 @@ def Group(closure) {
 
 ext {
     dagger = Group {
-        implementation deps.dagger.dagger
-        kapt deps.dagger.daggerCompiler
+        implementation(libs.dagger.dagger)
+        kapt(libs.dagger.compilier)
     }
 
     network = Group {
-        implementation deps.retrofit.retrofit
-        implementation deps.retrofit.retrofitMoshi
-
-        implementation deps.okhttp.okhttp
-        implementation deps.okhttp.okhttpLogInterceptor
-
+        implementation(libs.square.okhttp)
+        implementation(libs.square.logging)
+        implementation(libs.square.retrofit)
+        implementation(libs.square.moshi)
     }
 
     chucker = Group {
-        debugImplementation deps.chucker.chucker
-        releaseImplementation deps.chucker.chuckerNoOp
+        debugImplementation(libs.chucker.library)
+        releaseImplementation(libs.chucker.noop)
     }
 
     glide = Group {
-        implementation deps.glide.glide
-        kapt deps.glide.glideCompiler
-        implementation deps.glide.glideTransformations
+        implementation(libs.bumptech.glide)
+        kapt(libs.bumptech.compiler)
+        implementation(libs.wasabeef.transformation)
     }
 
     coroutines = Group {
-        implementation deps.coroutines.coroutines
-        implementation deps.coroutines.coroutinesAndroid
+        implementation(libs.kotlinx.coroutines)
+        implementation(libs.kotlinx.coroutinesAndroid)
     }
 
     lifecycle = Group {
-        implementation deps.lifecycle.runtime
-        implementation deps.lifecycle.viewmodel
+        implementation(libs.androidx.lifecycle.runtime)
+        implementation(libs.androidx.lifecycle.viewmodel)
+        implementation(libs.androidx.lifecycle.compose)
     }
 
     material = Group {
-        implementation deps.material.material
+        implementation(libs.google.material)
     }
 
     constraintLayout = Group {
-        implementation deps.constraintLayout.constraintLayout
+        implementation(libs.androidx.constraintlayout)
     }
 
     core = Group {
-        implementation deps.core.core
+        implementation(libs.androidx.core)
     }
 
     appcompat = Group {
-        implementation deps.appcompat.appcompat
+        implementation(libs.androidx.appcompat)
     }
 
     fragment = Group {
-        implementation deps.fragment.fragment
+        implementation(libs.androidx.fragment)
     }
 
     collection = Group {
-        implementation deps.collection.collection
+        implementation(libs.androidx.collection)
     }
 
     unitTesting = Group {
-        testImplementation deps.unitTesting.junitCore
-        testImplementation deps.unitTesting.junitApi
-        testImplementation deps.unitTesting.junitLauncher
-        testRuntimeOnly deps.unitTesting.junitEngine
+        testImplementation(libs.junit.api)
+        testImplementation(libs.junit.engine)
     }
 
     androidTesting = Group {
-        implementation deps.androidTesting.androidJunit
-        implementation deps.androidTesting.espresso
+        implementation(libs.androidx.test.junit)
+        implementation(libs.androidx.test.espresso)
     }
 
     swipe = Group {
-        implementation deps.swipeRefresh.swipeLayout
+        implementation(libs.androidx.swiperefreshlayout)
     }
 
     navigation = Group {
-        implementation deps.navigation.navigationFragment
-        implementation deps.navigation.navigationCore
+        implementation(libs.androidx.navigation.fragment)
+        implementation(libs.androidx.navigation.ui)
     }
 
     room = Group {
-        implementation deps.room.room
-        kapt deps.room.roomCompiler
+        implementation(libs.androidx.room.runtime)
+        kapt(libs.androidx.room.compilier)
     }
 
     composer = Group {
-        implementation deps.compose.ui
-        implementation deps.compose.util
-        implementation deps.compose.graphics
-        implementation deps.compose.preview
-        implementation deps.compose.material3
-        implementation platform(deps.compose.bom)
-        implementation deps.compose.activity
-        debugImplementation deps.compose.tooling
-        implementation deps.compose.coil
+        implementation platform(libs.androidx.compose.bom)
+        implementation(libs.androidx.compose.ui.ui)
+        implementation(libs.androidx.compose.ui.util)
+        implementation(libs.androidx.compose.ui.graphics)
+        implementation(libs.androidx.compose.ui.preview)
+        implementation(libs.androidx.compose.ui.tooling)
+        implementation(libs.androidx.compose.material)
+        implementation(libs.androidx.activity.compose)
+    }
+
+    mock = Group {
+        testImplementation(libs.mockk.mockk)
+    }
+
+    zoomable = Group {
+        implementation(libs.engawapg.zoomable)
+    }
+
+    firebase = Group {
+        implementation(libs.google.firebase.bom)
+        implementation(libs.google.firebase.analytics)
+        implementation(libs.google.firebase.crashlytics)
+    }
+
+    coil = Group {
+        implementation(libs.coil.compose)
+    }
+
+    datastore = Group {
+        implementation libs.androidx.datastore.preferences
+    }
+
+    crypto = Group {
+        implementation libs.androidx.security.crypto
     }
 }

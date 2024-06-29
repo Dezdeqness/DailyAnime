@@ -1,11 +1,12 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'io.gitlab.arturbosch.detekt' version "1.23.0"
     id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
+    alias(libs.plugins.arturbosch.detekt)
+    alias(libs.plugins.google.firebase.crashlytics)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -41,9 +42,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.9"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion
     }
 
     buildTypes {
@@ -68,18 +70,16 @@ android {
 
 }
 detekt {
-    toolVersion = "1.23.0"
+    toolVersion = libs.versions.detektVersion
     config = files("${project.rootDir.absolutePath}/config/detekt/detekt.yml")
     buildUponDefaultConfig = true
 }
 
 dependencies {
 
-    implementation 'com.google.firebase:firebase-crashlytics:18.6.2'
-    implementation 'com.google.firebase:firebase-analytics:21.5.1'
-    implementation "net.engawapg.lib:zoomable:1.5.3"
-    testImplementation "io.mockk:mockk:1.13.9"
-
+    firebase()
+    zoomable()
+    mock()
     chucker()
     room()
     dagger()
@@ -97,6 +97,7 @@ dependencies {
     navigation()
     swipe()
     composer()
+    coil()
     implementation project(path: ':advanced_recycler')
     implementation project(path: ':data')
     implementation project(path: ':domain')
