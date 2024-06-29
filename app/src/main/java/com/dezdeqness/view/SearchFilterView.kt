@@ -27,9 +27,6 @@ class SearchFilterView @JvmOverloads constructor(
 
     private var animeSearchFilter: AnimeSearchFilter? = null
 
-    private val filterId: String
-        get(): String = animeSearchFilter?.innerId.orEmpty()
-
     private var binding = ViewFilterContainerBinding.inflate(
         LayoutInflater.from(context),
         this,

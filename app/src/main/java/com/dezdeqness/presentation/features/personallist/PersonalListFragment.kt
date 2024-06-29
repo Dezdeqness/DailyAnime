@@ -21,6 +21,7 @@ import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.OpenMenuPopupFilter
@@ -143,29 +144,12 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
                     setupShareButton(state = state)
 
-                    val isLoadingStateShowing =
-                        if (state.items.isEmpty() && state.isEmptyStateShowing.not()) {
-                            state.isInitialLoadingIndicatorShowing
-                        } else {
-                            false
-                        }
-
-                    binding.recycler.setLoadingState(
-                        isLoadingStateShowing = isLoadingStateShowing,
-                    )
-
+                    setupLoadingState(state = state)
                     binding.recycler.setEmptyState(
                         isEmptyStateShowing = state.isEmptyStateShowing,
                     )
 
-                    if (state.ribbon.isNotEmpty()) {
-                        binding.ribbon.populate(
-                            list = state.ribbon,
-                            listener = { id ->
-                                viewModel.onRibbonItemSelected(id = id)
-                            }
-                        )
-                    }
+                    setupRibbon(state = state)
                     adapter.submitList(state.items) {
                         if (state.isScrollNeed) {
                             viewModel.onScrollNeed()
@@ -178,35 +162,50 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
-                    when (event) {
-                        is ScrollToTop -> {
-                            binding.recycler.scrollToPosition(0)
-                        }
-                        is NavigateToEditRate -> {
-                            val dialog =
-                                EditRateBottomSheetDialog.newInstance(
-                                    rateId = event.rateId,
-                                    tag = EDIT_RATE_DIALOG_TAG,
-                                )
-                            dialog.show(
-                                parentFragmentManager,
-                                EDIT_RATE_DIALOG_TAG,
-                            )
-                        }
-
-                        is OpenMenuPopupFilter -> {
-                            openPopupMenu(event.sort)
-                        }
-
-                        is ConsumableEvent -> {
-                            eventConsumer.consume(event)
-                        }
-
-                        else -> {}
-                    }
-
+                    onEvent(event)
                 }
             }
+        }
+    }
+
+    private fun setupRibbon(state: PersonalListState) {
+        if (state.ribbon.isNotEmpty()) {
+            binding.ribbon.populate(
+                list = state.ribbon,
+                listener = { id ->
+                    viewModel.onRibbonItemSelected(id = id)
+                }
+            )
+        }
+    }
+
+    private fun onEvent(event: Event) {
+        when (event) {
+            is ScrollToTop -> {
+                binding.recycler.scrollToPosition(0)
+            }
+
+            is NavigateToEditRate -> {
+                val dialog =
+                    EditRateBottomSheetDialog.newInstance(
+                        rateId = event.rateId,
+                        tag = EDIT_RATE_DIALOG_TAG,
+                    )
+                dialog.show(
+                    parentFragmentManager,
+                    EDIT_RATE_DIALOG_TAG,
+                )
+            }
+
+            is OpenMenuPopupFilter -> {
+                openPopupMenu(event.sort)
+            }
+
+            is ConsumableEvent -> {
+                eventConsumer.consume(event)
+            }
+
+            else -> {}
         }
     }
 
@@ -218,6 +217,19 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                 }
             }
         }
+    }
+
+    private fun setupLoadingState(state: PersonalListState) {
+        val isLoadingStateShowing =
+            if (state.items.isEmpty() && state.isEmptyStateShowing.not()) {
+                state.isInitialLoadingIndicatorShowing
+            } else {
+                false
+            }
+
+        binding.recycler.setLoadingState(
+            isLoadingStateShowing = isLoadingStateShowing,
+        )
     }
 
     private fun openPopupMenu(sort: String) {

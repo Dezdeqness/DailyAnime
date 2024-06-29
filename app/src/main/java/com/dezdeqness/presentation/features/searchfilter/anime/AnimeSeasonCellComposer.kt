@@ -46,42 +46,16 @@ class AnimeSeasonCellComposer @Inject constructor(
             counter++
         }
 
-        if (currentYear > MILESTONE_2016) {
-            cells.add(
-                AnimeCell(
-                    id = "${MILESTONE_2016}_$currentYear",
-                    displayName = "${MILESTONE_2016}-$currentYear",
+        MILESTONES.forEach { milestoneYear ->
+            if (currentYear > milestoneYear) {
+                cells.add(
+                    AnimeCell(
+                        id = "$milestoneYear}_$currentYear",
+                        displayName = "$milestoneYear-$currentYear",
+                    )
                 )
-            )
-            currentYear = MILESTONE_2016 - 1
-        }
-
-        if (currentYear > MILESTONE_2011) {
-            cells.add(
-                AnimeCell(
-                    id = "${MILESTONE_2011}_$currentYear",
-                    displayName = "${MILESTONE_2011}-$currentYear",
-                )
-            )
-            currentYear = MILESTONE_2011 - 1
-        }
-        if (currentYear > MILESTONE_2000) {
-            cells.add(
-                AnimeCell(
-                    id = "${MILESTONE_2000}_$currentYear",
-                    displayName = "${MILESTONE_2000}-$currentYear",
-                )
-            )
-            currentYear = MILESTONE_2000 - 1
-        }
-        if (currentYear > MILESTONE_1990) {
-            cells.add(
-                AnimeCell(
-                    id = "${MILESTONE_1990}_$currentYear",
-                    displayName = "${MILESTONE_1990}-$currentYear",
-                )
-            )
-            currentYear = MILESTONE_1990 - 1
+                currentYear = milestoneYear - 1
+            }
         }
 
         cells.add(
@@ -92,7 +66,6 @@ class AnimeSeasonCellComposer @Inject constructor(
         )
 
         return cells
-
     }
 
     private fun getFutureAndCurrentYear(): List<AnimeCell> {
@@ -255,12 +228,20 @@ class AnimeSeasonCellComposer @Inject constructor(
         private const val SUMMER_SEASON = 2
         private const val FALL_SEASON = 3
 
+        private const val MILESTONE_2021 = 2021
         private const val MILESTONE_2016 = 2016
         private const val MILESTONE_2011 = 2011
         private const val MILESTONE_2000 = 2000
         private const val MILESTONE_1990 = 1990
         private const val MILESTONE_1950 = 1950
 
+        private val MILESTONES = listOf(
+            MILESTONE_2021,
+            MILESTONE_2016,
+            MILESTONE_2011,
+            MILESTONE_2000,
+            MILESTONE_1990,
+        )
     }
 
 }
