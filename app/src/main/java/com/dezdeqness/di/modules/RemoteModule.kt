@@ -7,6 +7,7 @@ import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.domain.usecases.RefreshTokenUseCase
+import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
@@ -51,30 +52,36 @@ class RemoteModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient): Retrofit =
+    fun providesRetrofit(
+        @Named("okhttp_refresh") okHttpClient: OkHttpClient,
+        moshi: Moshi
+    ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
 
     @Named("Authorization")
     @Singleton
     @Provides
-    fun providesAuthorizationRetrofit(okHttpClient: OkHttpClient): Retrofit =
+    fun providesAuthorizationRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_AUTHORIZATION_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
 
     @Named("Account")
     @Singleton
     @Provides
-    fun providesAccountRetrofit(@Named("okhttp_refresh") okHttpClient: OkHttpClient): Retrofit =
+    fun providesAccountRetrofit(
+        @Named("okhttp_refresh") okHttpClient: OkHttpClient,
+        moshi: Moshi
+    ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
 

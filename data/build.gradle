@@ -1,16 +1,16 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'io.gitlab.arturbosch.detekt'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.arturbosch.detekt)
     id 'kotlin-kapt'
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 34
 
         buildConfigField "String", "BASE_API_URL", "\"https://shikimori.one/api/\""
         buildConfigField "String", "BASE_AUTHORIZATION_URL", "\"https://shikimori.one/\""
@@ -20,6 +20,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig true
     }
 
     buildTypes {
@@ -43,19 +44,19 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
     }
 }
 dependencies {
     implementation project(path: ':domain')
-    implementation 'androidx.security:security-crypto:1.1.0-alpha01'
-    implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
     implementation project(path: ':core')
 
+    crypto()
+    datastore()
     coroutines()
     network()
     dagger()
