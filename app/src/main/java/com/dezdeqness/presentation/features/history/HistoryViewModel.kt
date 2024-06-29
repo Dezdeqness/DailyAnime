@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.features.history
 
-import android.util.Log
 import com.dezdeqness.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
@@ -67,6 +66,9 @@ class HistoryViewModel @Inject constructor(
                     hasNextPage = state.hasNextPage,
                     isErrorStateShowing = false,
                 )
+            },
+            onFailure = {
+                logInfo("Error during pull down of history list", it)
             }
         )
     }
@@ -79,7 +81,6 @@ class HistoryViewModel @Inject constructor(
                 )
             },
             onSuccess = { state ->
-                Log.d("onLoadMore", state.currentPage.toString())
                 currentPage = state.currentPage
                 val hasNextPage = state.hasNextPage
                 val list = historyCompose.compose(state.list)
@@ -91,6 +92,8 @@ class HistoryViewModel @Inject constructor(
                 hasNextPage
             },
             onFailure = {
+                logInfo("Error during load more of history list", it)
+
                 onErrorMessage()
             }
         )
@@ -115,6 +118,8 @@ class HistoryViewModel @Inject constructor(
                 )
             },
             onFailure = {
+                logInfo("Error during initial loading of state of history list", it)
+
                 _historyStateFlow.value = _historyStateFlow.value.copy(
                     isErrorStateShowing = true,
                 )

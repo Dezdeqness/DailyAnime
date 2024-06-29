@@ -100,6 +100,7 @@ class AnimeDetailsViewModel @Inject constructor(
                         }
                     }
                     .onFailure {
+                        logInfo("Something wrong with user rate changes", it)
                         onEditErrorMessage()
                     }
             }
@@ -214,6 +215,8 @@ class AnimeDetailsViewModel @Inject constructor(
                 )
             },
             onFailure = {
+                logInfo("Error during initial load of details with $animeId", it)
+
                 _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
                     isEditRateFabShown = false,
                     isErrorStateShowing = true,

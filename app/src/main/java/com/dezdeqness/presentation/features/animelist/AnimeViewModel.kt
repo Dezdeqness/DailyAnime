@@ -67,6 +67,9 @@ class AnimeViewModel @Inject constructor(
                     hasNextPage = state.hasNextPage,
                     isErrorStateShowing = false,
                 )
+            },
+            onFailure = {
+                logInfo("Error during pull down of search list", it)
             }
         )
     }
@@ -149,6 +152,7 @@ class AnimeViewModel @Inject constructor(
                 hasNextPage
             },
             onFailure = {
+                logInfo("Error during load more of search list", it)
                 onErrorMessage()
             }
         )
@@ -186,6 +190,7 @@ class AnimeViewModel @Inject constructor(
                         isScrollNeed = false,
                     )
                 }
+                logInfo("Error during loading of initial of state of search list", it)
             }
         )
     }
