@@ -19,7 +19,6 @@ interface AccountApiService {
     @GET("users/{id}")
     fun getProfileDetails(
         @Path(value = "id") id: Long,
-        @Header(value = "Authorization") token: String,
         @Header(value = "User-Agent") agent: String = "Shikimori Android APP"
     ): Call<AccountRemote>
 

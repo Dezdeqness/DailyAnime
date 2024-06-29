@@ -1,6 +1,7 @@
 package com.dezdeqness.data.core
 
 import com.dezdeqness.domain.mapper.ErrorMapper
+import retrofit2.Response
 import javax.inject.Inject
 
 abstract class BaseDataSource {
@@ -15,3 +16,6 @@ abstract class BaseDataSource {
     }
 
 }
+
+fun <T> Response<T>.createApiException() =
+    ApiException(code(), errorBody()?.string() ?: "No mappable error")

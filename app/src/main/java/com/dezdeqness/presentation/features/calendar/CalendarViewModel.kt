@@ -49,6 +49,7 @@ class CalendarViewModel @Inject constructor(
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
                     isErrorStateShowing = true,
                 )
+                logInfo("Error during loading of initial of state of calendar list", it)
             }
         )
     }
@@ -79,6 +80,9 @@ class CalendarViewModel @Inject constructor(
                     isErrorStateShowing = false
                 )
             },
+            onFailure = {
+                logInfo("Error during pull down of calendar list", it)
+            }
         )
     }
 

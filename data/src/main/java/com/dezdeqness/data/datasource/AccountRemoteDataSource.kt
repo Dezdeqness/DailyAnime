@@ -14,7 +14,7 @@ interface AccountRemoteDataSource {
 
     fun getBriefAccountInfo(token: String): Result<AccountEntity>
 
-    fun getDetailsAccountInfo(userId: Long, token: String): Result<AccountEntity>
+    fun getDetailsAccountInfo(userId: Long): Result<AccountEntity>
 
     fun getHistory(userId: Long, page: Int, limit: Int): Result<List<HistoryEntity>>
 

@@ -4,6 +4,7 @@ import com.dezdeqness.data.AnimeApiService
 import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
@@ -49,7 +50,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
                 val list = responseBody.map { item -> animeMapper.fromResponse(item) }
                 Result.success(list)
             } else {
-                throw ApiException(response.code(), response.errorBody().toString())
+                throw response.createApiException()
             }
 
         }
@@ -70,7 +71,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             val details = animeMapper.fromResponse(responseBody)
             Result.success(details)
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -83,7 +84,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             val screenshots = responseBody.map(screenshotMapper::fromResponse)
             Result.success(screenshots)
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -96,7 +97,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             val relates = responseBody.mapNotNull(relatedItemMapper::fromResponse)
             Result.success(relates)
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -109,7 +110,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             val roles = roleMapper.fromResponse(responseBody)
             Result.success(roles)
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -122,7 +123,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
             val list = responseBody.map { item -> animeMapper.fromResponse(item) }
             Result.success(list)
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
 
     }
@@ -137,7 +138,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
                 responseBody.nodes?.map { item -> animeMapper.fromResponse(item) } ?: listOf()
             Result.success(list)
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
 
     }
