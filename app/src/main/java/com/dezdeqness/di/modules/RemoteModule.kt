@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -59,6 +60,7 @@ class RemoteModule {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
             .build()
 
@@ -69,6 +71,7 @@ class RemoteModule {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_AUTHORIZATION_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
             .build()
 
@@ -82,6 +85,7 @@ class RemoteModule {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_API_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
             .build()
 

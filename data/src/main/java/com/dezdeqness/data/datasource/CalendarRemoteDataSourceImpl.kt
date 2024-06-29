@@ -3,6 +3,7 @@ package com.dezdeqness.data.datasource
 import com.dezdeqness.data.CalendarApiService
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.CalendarMapper
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class CalendarRemoteDataSourceImpl @Inject constructor(
                 responseBody.mapNotNull(calendarMapper::fromResponse)
             )
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 }

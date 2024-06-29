@@ -63,6 +63,7 @@ wasabeef-transformation = { group = "jp.wasabeef", name = "glide-transformations
 
 square-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 square-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "moshiVersion" }
+square-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofitVersion" }
 
 square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 square-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingVersion" }

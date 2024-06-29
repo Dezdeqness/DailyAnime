@@ -14,6 +14,7 @@ ext {
         implementation(libs.square.logging)
         implementation(libs.square.retrofit)
         implementation(libs.square.moshi)
+        implementation(libs.square.scalars)
     }
 
     chucker = Group {

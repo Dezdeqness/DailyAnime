@@ -3,6 +3,7 @@ package com.dezdeqness.data.datasource
 import com.dezdeqness.data.UserRatesApiService
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.UserRatesMapper
 import com.dezdeqness.data.model.requet.PostUserRate
 import com.dezdeqness.data.model.requet.PostUserRateRequestBody
@@ -31,7 +32,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
                     responseBody.map(userRatesMapper::fromResponse)
                 )
             } else {
-                throw ApiException(response.code(), response.errorBody().toString())
+                throw response.createApiException()
             }
         }
 
@@ -67,7 +68,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         if (response.isSuccessful && responseBody != null) {
             Result.success(userRatesMapper.fromResponse(responseBody))
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -107,7 +108,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         if (response.isSuccessful && responseBody != null) {
             Result.success(userRatesMapper.fromResponse(responseBody))
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 

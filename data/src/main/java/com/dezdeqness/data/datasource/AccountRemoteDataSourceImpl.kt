@@ -4,9 +4,11 @@ import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
 import com.dezdeqness.domain.model.TokenEntity
 import okhttp3.HttpUrl
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class AccountRemoteDataSourceImpl @Inject constructor(
@@ -44,7 +46,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                 )
             )
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -59,15 +61,12 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                 accountMapper.fromResponse(responseBody)
             )
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
-    override fun getDetailsAccountInfo(userId: Long, token: String) = tryWithCatch {
-        val response = accountApiService.getProfileDetails(
-            id = userId,
-            token = "Bearer $token",
-        ).execute()
+    override fun getDetailsAccountInfo(userId: Long) = tryWithCatch {
+        val response = accountApiService.getProfileDetails(id = userId).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
@@ -75,7 +74,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                 accountMapper.fromResponse(responseBody)
             )
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -92,7 +91,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                 responseBody.map(accountMapper::fromResponse)
             )
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
@@ -115,7 +114,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                 )
             )
         } else {
-            throw ApiException(response.code(), response.errorBody().toString())
+            throw response.createApiException()
         }
     }
 
