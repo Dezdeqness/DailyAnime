@@ -30,6 +30,8 @@ class RoutingViewModel @Inject constructor(
                     }
                     .onFailure {
                         // TODO: Retry
+                        logInfo("Error during fetch of profile on splash page", it)
+
                     }
             } else {
                 onEventReceive(NavigateToMainFlow)

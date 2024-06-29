@@ -57,12 +57,6 @@ class AccountRepositoryImpl @Inject constructor(
     }
 
     override fun getProfileDetails() = flow {
-        val tokenData = tokenManager.getTokenData()
-        if (tokenData.accessToken.isEmpty()) {
-            emit(Result.failure(Exception("Token failure")))
-            return@flow
-        }
-
         val profile = getProfileLocal()
         if (profile == null) {
             emit(Result.failure(Exception("Profile failure")))
@@ -72,7 +66,6 @@ class AccountRepositoryImpl @Inject constructor(
         emit(Result.success(profile))
 
         val detailsAccountInfo = accountRemoteDataSource.getDetailsAccountInfo(
-            token = tokenData.accessToken,
             userId = profile.id,
         ).onSuccess {
             saveProfileLocal(it)

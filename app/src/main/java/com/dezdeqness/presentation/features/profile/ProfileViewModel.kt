@@ -36,7 +36,6 @@ class ProfileViewModel @Inject constructor(
 
         launchOnIo {
             accountRepository.authorizationState().collect { state ->
-                appLogger.logInfo(TAG, state.toString())
                 val isAuthorized = accountRepository.isAuthorized()
 
                 if (isAuthorized) {
@@ -63,6 +62,9 @@ class ProfileViewModel @Inject constructor(
                     nickname = account.nickname,
                 )
             },
+            onFailure = {
+                logInfo("Error during fetch of profile on profile page", it)
+            }
         )
     }
 

@@ -60,6 +60,9 @@ appLogger = appLogger,
                     list = list,
                     isErrorStateShowing = false,
                 )
+            },
+            onFailure = {
+                logInfo("Error during pull down of generic list", it)
             }
         )
     }
@@ -90,6 +93,8 @@ appLogger = appLogger,
                 )
             },
             onFailure = {
+                logInfo("Error during initial loading of state of generic list", it)
+
                 _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
                     isErrorStateShowing = true,
                 )

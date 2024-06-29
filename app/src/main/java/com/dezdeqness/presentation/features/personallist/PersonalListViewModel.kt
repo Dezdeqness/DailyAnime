@@ -83,6 +83,12 @@ class PersonalListViewModel @Inject constructor(
                             isEmptyStateShowing = userRatesList.isEmpty(),
                         )
                     },
+                    onFailure = {
+                        logInfo(
+                            "Error during pull down of personal list",
+                            it,
+                        )
+                    }
                 )
             }
         } else {
@@ -216,6 +222,8 @@ class PersonalListViewModel @Inject constructor(
                 initialLoad()
             },
             onFailure = {
+                logInfo("Error during user rate changes of personal list", it)
+
                 onEditErrorMessage()
             }
         )
@@ -271,7 +279,7 @@ class PersonalListViewModel @Inject constructor(
                 }
             },
             onFailure = {
-
+                logInfo("Error during initial loading of state of personal list", it)
             }
         )
     }
@@ -301,6 +309,9 @@ class PersonalListViewModel @Inject constructor(
                     isEmptyStateShowing = userRatesList.isEmpty(),
                 )
             },
+            onFailure = {
+                logInfo("Error during fetch of category with status: $status of personal list", it)
+            }
         )
     }
 

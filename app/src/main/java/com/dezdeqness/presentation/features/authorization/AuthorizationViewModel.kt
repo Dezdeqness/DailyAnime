@@ -73,7 +73,7 @@ class AuthorizationViewModel @Inject constructor(
 
             if (authCode.isEmpty()) {
                 // TODO: error prompt
-                appLogger.logInfo(viewModelTag, "code is empty")
+                logInfo("Code is empty")
                 return
             }
 
@@ -95,11 +95,7 @@ class AuthorizationViewModel @Inject constructor(
                         onEventReceive(AuthorizationSuccess)
                     }
                     .onFailure {
-                        appLogger.logInfo(
-                            tag = viewModelTag,
-                            throwable = it,
-                            message = "login failed",
-                        )
+                        logInfo("Sign in/Sign up is failed", it)
                     }
             }
         }
