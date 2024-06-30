@@ -1,0 +1,4 @@
+-dontwarn com.dezdeqness.advancedrecycler.AdapterDelegateManager
+-dontwarn com.dezdeqness.advancedrecycler.AdapterDelegateViewBindingViewHolder
+-dontwarn com.dezdeqness.advancedrecycler.BaseAdapterDelegate
+-dontwarn com.dezdeqness.advancedrecycler.DslAdapterDelegate

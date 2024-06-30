@@ -15,16 +15,26 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
-    buildFeatures {
-        viewBinding = true
+    compileOptions {
+        sourceCompatibility versions.javaVersion
+        targetCompatibility versions.javaVersion
     }
 
     buildTypes {
         release {
+            minifyEnabled true
+            debuggable false
+        }
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion

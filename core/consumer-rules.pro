@@ -1,0 +1,2 @@
+-dontwarn com.dezdeqness.core.activity.ActivityExtKt
+-dontwarn com.dezdeqness.core.converter.TimestampConverter_Factory

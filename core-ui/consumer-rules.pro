@@ -1,0 +1,6 @@
+-dontwarn com.dezdeqness.core_ui.theme.AppColors
+-dontwarn com.dezdeqness.core_ui.theme.AppShapes
+-dontwarn com.dezdeqness.core_ui.theme.AppTheme
+-dontwarn com.dezdeqness.core_ui.theme.AppThemeKt
+-dontwarn com.dezdeqness.core_ui.theme.AppTypography
+-dontwarn com.dezdeqness.core_ui.views.ButtonsKt

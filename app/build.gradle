@@ -52,14 +52,14 @@ android {
         release {
             minifyEnabled true
             debuggable false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
         debug {
             minifyEnabled false
             debuggable true
             applicationIdSuffix '.debug'
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles 'proguard-rules.pro'
         }
     }
     compileOptions {

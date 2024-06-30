@@ -16,6 +16,8 @@ android {
         buildConfigField "String", "BASE_AUTHORIZATION_URL", "\"https://shikimori.one/\""
         buildConfigField "String", "BASE_URL", "\"https://shikimori.one\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildFeatures {
@@ -26,11 +28,11 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
         }
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
         }
     }
 
