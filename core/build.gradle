@@ -21,17 +21,6 @@ android {
         targetCompatibility versions.javaVersion
     }
     namespace 'com.dezdeqness.common'
-
-    buildTypes {
-        release {
-            minifyEnabled true
-            debuggable false
-        }
-        debug {
-            minifyEnabled false
-            debuggable true
-        }
-    }
 }
 
 dependencies {

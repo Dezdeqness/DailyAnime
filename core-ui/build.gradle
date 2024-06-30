@@ -16,17 +16,6 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            debuggable false
-        }
-        debug {
-            minifyEnabled false
-            debuggable true
-        }
-    }
-
     compileOptions {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion

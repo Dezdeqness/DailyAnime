@@ -20,17 +20,6 @@ android {
         targetCompatibility versions.javaVersion
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            debuggable false
-        }
-        debug {
-            minifyEnabled false
-            debuggable true
-        }
-    }
-
     buildFeatures {
         viewBinding = true
     }

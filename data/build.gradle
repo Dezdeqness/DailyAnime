@@ -25,17 +25,6 @@ android {
         buildConfig true
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            debuggable false
-        }
-        debug {
-            minifyEnabled false
-            debuggable true
-        }
-    }
-
     compileOptions {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion
