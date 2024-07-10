@@ -5,7 +5,10 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.BuildConfig
+import com.dezdeqness.data.core.AuthorizationTokenInterceptor
 import com.dezdeqness.data.core.RefreshTokenInterceptor
+import com.dezdeqness.data.core.UserAgentTokenInterceptor
+import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import com.squareup.moshi.Moshi
 import dagger.Lazy
@@ -41,10 +44,12 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providesHttpClient(
+        @Named("user_agent") userAgentTokenInterceptor: Interceptor,
         @Named("logging") loggingInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(userAgentTokenInterceptor)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(chuckerInterceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -93,11 +98,15 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providesHttpClientWithRefreshToken(
+        @Named("authorization") authorizationInterceptor: Interceptor,
+        @Named("user_agent") userAgentTokenInterceptor: Interceptor,
         @Named("refresh") refreshInterceptor: Interceptor,
         @Named("logging") loggingInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(authorizationInterceptor)
+            .addInterceptor(userAgentTokenInterceptor)
             .addInterceptor(refreshInterceptor)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(chuckerInterceptor)
@@ -110,6 +119,18 @@ class RemoteModule {
     @Provides
     fun provideRefreshTokenInterceptor(refreshTokenUseCase: Lazy<RefreshTokenUseCase>): Interceptor =
         RefreshTokenInterceptor(refreshTokenUseCase = refreshTokenUseCase)
+
+    @Named("authorization")
+    @Singleton
+    @Provides
+    fun provideAuthorizationTokenInterceptor(tokenManager: TokenManager): Interceptor =
+        AuthorizationTokenInterceptor(tokenManager = tokenManager)
+
+    @Named("user_agent")
+    @Singleton
+    @Provides
+    fun provideUserAgentTokenInterceptor(): Interceptor =
+        UserAgentTokenInterceptor()
 
     @Singleton
     @Provides
