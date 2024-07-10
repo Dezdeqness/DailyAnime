@@ -9,7 +9,7 @@ import com.dezdeqness.domain.model.ScreenshotEntity
 
 interface AnimeRepository {
 
-    fun getDetails(id: Long, token: String): Result<AnimeDetailsEntity>
+    fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity>
 
     fun getScreenshots(id: Long): Result<List<ScreenshotEntity>>
 

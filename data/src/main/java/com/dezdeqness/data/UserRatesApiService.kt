@@ -1,5 +1,6 @@
 package com.dezdeqness.data
 
+import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.UserRateRemote
 import com.dezdeqness.data.model.requet.PostUserRateRequestBody
 import com.dezdeqness.data.model.requet.UpdateUserRateRequestBody
@@ -20,23 +21,19 @@ interface UserRatesApiService {
         @Query(value = "limit") limit: Int,
         @Query(value = "page") page: Int,
         @Query(value = "status") status: String,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP",
-        @Header(value = "Authorization") token: String,
     ): Call<List<UserRateRemote>>
 
+    @NeedAuthorization
     @PATCH("v2/user_rates/{id}")
     fun updateUserRate(
         @Path(value = "id") id: Long,
         @Body body: UpdateUserRateRequestBody,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP",
-        @Header(value = "Authorization") token: String,
     ): Call<UserRateRemote>
 
+    @NeedAuthorization
     @POST("v2/user_rates")
     fun createUserRate(
         @Body body: PostUserRateRequestBody,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP",
-        @Header(value = "Authorization") token: String,
     ): Call<UserRateRemote>
 
 }

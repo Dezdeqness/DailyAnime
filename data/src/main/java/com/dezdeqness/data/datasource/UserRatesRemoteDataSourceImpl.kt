@@ -16,14 +16,13 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
     private val userRatesMapper: UserRatesMapper,
 ) : UserRatesRemoteDataSource, BaseDataSource() {
 
-    override fun getUserRates(userId: Long, status: String, page: Int, token: String) =
+    override fun getUserRates(userId: Long, status: String, page: Int) =
         tryWithCatch {
             val response = apiService.getUserRates(
                 status = status,
                 id = userId,
                 page = page,
                 limit = 1000,
-                token = "Bearer $token",
             ).execute()
 
             val responseBody = response.body()
@@ -45,7 +44,6 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         episodes: Long,
         chapters: Long,
         comment: String,
-        token: String,
     ) = tryWithCatch {
         val body = UpdateUserRateRequestBody(
             userRate = UpdateUserRate(
@@ -61,7 +59,6 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         val response = apiService.updateUserRate(
             id = rateId,
             body = body,
-            token = "Bearer $token",
         ).execute()
 
         val responseBody = response.body()
@@ -83,7 +80,6 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         episodes: Long,
         chapters: Long,
         comment: String,
-        token: String
     ) = tryWithCatch {
         val body = PostUserRateRequestBody(
             userRate = PostUserRate(
@@ -99,10 +95,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
                 volumes = volumes.toString(),
             )
         )
-        val response = apiService.createUserRate(
-            body = body,
-            token = "Bearer $token",
-        ).execute()
+        val response = apiService.createUserRate(body = body).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {

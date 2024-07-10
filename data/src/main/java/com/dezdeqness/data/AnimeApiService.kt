@@ -1,5 +1,6 @@
 package com.dezdeqness.data
 
+import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyResponseRemote
@@ -37,11 +38,10 @@ interface AnimeApiService {
         @Path(value = "id") id: Long,
     ): Call<AnimeDetailsRemote>
 
+    @NeedAuthorization
     @GET("animes/{id}")
-    fun getDetailsAnimeMainInfo(
+    fun getDetailsAnimeMainInfoWithAuth(
         @Path(value = "id") id: Long,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP",
-        @Header(value = "Authorization") token: String,
     ): Call<AnimeDetailsRemote>
 
     @GET("animes/{id}/screenshots")

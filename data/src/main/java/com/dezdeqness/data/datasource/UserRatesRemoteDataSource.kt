@@ -8,7 +8,6 @@ interface UserRatesRemoteDataSource {
         userId: Long,
         status: String,
         page: Int,
-        token: String,
     ): Result<List<UserRateEntity>>
 
     fun updateUserRate(
@@ -20,7 +19,6 @@ interface UserRatesRemoteDataSource {
         episodes: Long,
         chapters: Long,
         comment: String,
-        token: String,
     ): Result<UserRateEntity>
 
     fun createUserRate(
@@ -34,7 +32,6 @@ interface UserRatesRemoteDataSource {
         episodes: Long,
         chapters: Long,
         comment: String,
-        token: String,
     ): Result<UserRateEntity>
 
 }

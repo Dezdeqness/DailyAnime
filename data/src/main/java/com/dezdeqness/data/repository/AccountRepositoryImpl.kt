@@ -52,8 +52,7 @@ class AccountRepositoryImpl @Inject constructor(
     }
 
     override fun getProfileRemote(): Result<AccountEntity> {
-        val tokenData = tokenManager.getTokenData()
-        return accountRemoteDataSource.getBriefAccountInfo(tokenData.accessToken)
+        return accountRemoteDataSource.getBriefAccountInfo()
     }
 
     override fun getProfileDetails() = flow {

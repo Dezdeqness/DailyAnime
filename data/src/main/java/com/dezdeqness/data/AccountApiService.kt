@@ -1,5 +1,6 @@
 package com.dezdeqness.data
 
+import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import retrofit2.Call
@@ -10,16 +11,13 @@ import retrofit2.http.Query
 
 interface AccountApiService {
 
+    @NeedAuthorization
     @GET("users/whoami")
-    fun getProfile(
-        @Header(value = "Authorization") token: String,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP"
-    ): Call<AccountRemote>
+    fun getProfile(): Call<AccountRemote>
 
     @GET("users/{id}")
     fun getProfileDetails(
         @Path(value = "id") id: Long,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP"
     ): Call<AccountRemote>
 
     @GET("users/{id}/history")

@@ -50,10 +50,8 @@ class AccountRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getBriefAccountInfo(token: String) = tryWithCatch {
-        val response = accountApiService.getProfile(
-            token = "Bearer $token",
-        ).execute()
+    override fun getBriefAccountInfo() = tryWithCatch {
+        val response = accountApiService.getProfile().execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
