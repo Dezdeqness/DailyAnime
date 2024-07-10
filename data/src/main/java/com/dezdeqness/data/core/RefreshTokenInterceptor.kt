@@ -5,7 +5,6 @@ import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ class RefreshTokenInterceptor @Inject constructor(
 
         val token: String
 
-        if (request.header("Authorization") != null) {
+        if (request.header(AUTHORIZATION_HEADER) != null) {
             synchronized(this) {
                 val tokenResult = runBlocking(Dispatchers.IO) {
                     refreshTokenUseCase.get().invoke()
@@ -32,18 +31,11 @@ class RefreshTokenInterceptor @Inject constructor(
             }
 
             if (token.isNotEmpty()) {
-                request = request.withAccessToken("Bearer $token")
+                request = request.withAccessToken("$AUTHORIZATION_BEARER$token")
             }
         }
 
         return chain.proceed(request)
-    }
-
-    private fun Request.withAccessToken(token: String): Request {
-        return newBuilder()
-            .removeHeader("Authorization")
-            .addHeader("Authorization", token)
-            .build()
     }
 
 }
