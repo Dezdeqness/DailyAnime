@@ -18,7 +18,7 @@ interface AnimeRemoteDataSource {
 
     fun getDetailsAnimeMainInfo(
         id: Long,
-        token: String,
+        isAuthorized: Boolean,
     ): Result<AnimeDetailsEntity>
 
     fun getDetailsAnimeScreenshots(

@@ -12,9 +12,9 @@ class GetAnimeDetailsUseCase(
 ) {
 
     operator fun invoke(id: Long): Result<AnimeDetailsFullEntity> {
-        val token = accountRepository.getToken().accessToken
+        val isAuthorized = accountRepository.isAuthorized()
 
-        val detailsResult = animeRepository.getDetails(id = id, token = token)
+        val detailsResult = animeRepository.getDetails(id = id, isAuthorized = isAuthorized)
         detailsResult.onFailure { exception ->
             return Result.failure(exception)
         }
@@ -41,7 +41,7 @@ class GetAnimeDetailsUseCase(
         val relates = relatedItemsResult.getOrNull() ?: listOf()
         val roles = rolesResult.getOrNull() ?: listOf()
 
-        if (token.isNotEmpty()) {
+        if (isAuthorized) {
             animeDetails.userRate?.let { userRatesRepository.updateLocalUserRate(it) }
         }
 

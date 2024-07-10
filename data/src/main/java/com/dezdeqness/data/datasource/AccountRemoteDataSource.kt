@@ -12,7 +12,7 @@ interface AccountRemoteDataSource {
 
     fun refresh(token: String): Result<TokenEntity>
 
-    fun getBriefAccountInfo(token: String): Result<AccountEntity>
+    fun getBriefAccountInfo(): Result<AccountEntity>
 
     fun getDetailsAccountInfo(userId: Long): Result<AccountEntity>
 

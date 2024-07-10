@@ -2,7 +2,6 @@ package com.dezdeqness.data.repository
 
 import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
-import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
@@ -15,7 +14,6 @@ class UserRatesRepositoryImpl @Inject constructor(
     private val accountRepository: AccountRepository,
     private val userRatesRemoteDataSource: UserRatesRemoteDataSource,
     private val userRatesLocalDataSource: UserRatesLocalDataSource,
-    private val tokenManager: TokenManager,
 ) : UserRatesRepository {
 
     override fun getUserRates(status: String, page: Int, onlyRemote: Boolean): Flow<Result<List<UserRateEntity>>> =
@@ -25,7 +23,6 @@ class UserRatesRepositoryImpl @Inject constructor(
                 emit(Result.failure(Exception("Local profile failure")))
                 return@flow
             }
-            val token = tokenManager.getTokenData()
 
             if (onlyRemote.not()) {
                 val localList = userRatesLocalDataSource.getUserRatesByStatus(status = status)
@@ -38,7 +35,6 @@ class UserRatesRepositoryImpl @Inject constructor(
             emit(
                 userRatesRemoteDataSource
                     .getUserRates(
-                        token = token.accessToken,
                         userId = profile.id,
                         page = page,
                         status = status,
@@ -60,14 +56,11 @@ class UserRatesRepositoryImpl @Inject constructor(
         episodes: Long,
         score: Float
     ): Result<Boolean> {
-        val tokenData = tokenManager.getTokenData()
-
         val localUserRate = userRatesLocalDataSource.getUserRate(rateId)
             ?: return Result.failure(Exception("Local user rate failure"))
 
         val result = userRatesRemoteDataSource.updateUserRate(
             rateId = rateId,
-            token = tokenData.accessToken,
             score = score,
             status = status,
             episodes = episodes,
@@ -80,15 +73,12 @@ class UserRatesRepositoryImpl @Inject constructor(
     }
 
     override fun createUserRate(targetId: String, status: String, episodes: Long, score: Float): Result<Boolean> {
-        val tokenData = tokenManager.getTokenData()
-
         val profile = accountRepository.getProfileLocal() ?: return Result.failure(Exception("Profile local failure"))
 
         val result = userRatesRemoteDataSource.createUserRate(
             userId = profile.id,
             targetId = targetId,
             targetType = "Anime",
-            token = tokenData.accessToken,
             score = score,
             status = status,
             episodes = episodes,

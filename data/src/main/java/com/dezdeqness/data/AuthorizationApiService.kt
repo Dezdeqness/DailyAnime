@@ -15,7 +15,6 @@ interface AuthorizationApiService {
         @Query(value = "code") code: String,
         @Query(value = "client_secret") secret: String,
         @Query(value = "client_id") id: String,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP"
     ): Call<TokenRemote>
 
     @POST("oauth/token")
@@ -25,7 +24,6 @@ interface AuthorizationApiService {
         @Query(value = "refresh_token") token: String,
         @Query(value = "client_secret") secret: String,
         @Query(value = "client_id") id: String,
-        @Header(value = "User-Agent") agent: String = "Shikimori Android APP"
     ): Call<TokenRemote>
 
 }

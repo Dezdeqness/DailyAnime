@@ -14,9 +14,9 @@ class AnimeRepositoryImpl @Inject constructor(
     private val animeRemoteDataSource: AnimeRemoteDataSource,
 ) : AnimeRepository {
 
-    override fun getDetails(id: Long, token: String): Result<AnimeDetailsEntity> =
+    override fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity> =
         animeRemoteDataSource
-            .getDetailsAnimeMainInfo(id, token)
+            .getDetailsAnimeMainInfo(id, isAuthorized)
             .onFailure { return Result.failure(it) }
 
     override fun getScreenshots(id: Long): Result<List<ScreenshotEntity>> =
