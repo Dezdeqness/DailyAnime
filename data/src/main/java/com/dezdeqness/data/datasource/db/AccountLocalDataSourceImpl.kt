@@ -22,4 +22,8 @@ class AccountLocalDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun deleteAccount() {
+        accountDao.deleteAccount()
+    }
+
 }

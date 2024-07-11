@@ -2,13 +2,11 @@ package com.dezdeqness.data.datasource
 
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
-import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
 import com.dezdeqness.domain.model.TokenEntity
 import okhttp3.HttpUrl
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class AccountRemoteDataSourceImpl @Inject constructor(
@@ -45,6 +43,17 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                     expiresIn = responseBody.expiresIn,
                 )
             )
+        } else {
+            throw response.createApiException()
+        }
+    }
+
+    override fun logout() = tryWithCatch {
+        val response = accountApiService.logout().execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            Result.success(responseBody)
         } else {
             throw response.createApiException()
         }
