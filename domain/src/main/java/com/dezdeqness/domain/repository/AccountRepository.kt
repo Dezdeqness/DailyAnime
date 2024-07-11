@@ -39,6 +39,10 @@ interface AccountRepository {
 
     fun saveProfileLocal(accountEntity: AccountEntity)
 
+    fun deleteAccountLocal()
+
+    fun clearUserCookie()
+
     suspend fun emitAuthorizationState(state: AuthorizationState)
 
 }
