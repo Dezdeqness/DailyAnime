@@ -1,5 +1,6 @@
 package com.dezdeqness.di.modules
 
+import com.dezdeqness.data.core.CookieCleaner
 import com.dezdeqness.data.database.ShikimoriDatabase
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.AccountRemoteDataSourceImpl
@@ -10,6 +11,7 @@ import com.dezdeqness.data.repository.AccountRepositoryImpl
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
 import com.dezdeqness.domain.usecases.LoginUseCase
+import com.dezdeqness.domain.usecases.LogoutUseCase
 import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import dagger.Binds
 import dagger.Module
@@ -26,17 +28,24 @@ abstract class AccountModule {
             accountRepository = accountRepository
         )
 
+        @Provides
+        fun provideLogoutUseCase(accountRepository: AccountRepository) = LogoutUseCase(
+            accountRepository = accountRepository
+        )
+
         @Singleton
         @Provides
         fun bindAccountRepository(
             accountRemoteDataSource: AccountRemoteDataSource,
             accountLocalDataSource: AccountLocalDataSource,
             tokenManager: TokenManager,
+            cookieCleaner: CookieCleaner,
         ): AccountRepository =
             AccountRepositoryImpl(
                 accountRemoteDataSource = accountRemoteDataSource,
                 accountLocalDataSource = accountLocalDataSource,
                 tokenManager = tokenManager,
+                cookieCleaner = cookieCleaner,
             )
 
         @Provides
