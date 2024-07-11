@@ -10,6 +10,8 @@ interface AccountRemoteDataSource {
 
     fun login(code: String): Result<TokenEntity>
 
+    fun logout(): Result<String>
+
     fun refresh(token: String): Result<TokenEntity>
 
     fun getBriefAccountInfo(): Result<AccountEntity>
