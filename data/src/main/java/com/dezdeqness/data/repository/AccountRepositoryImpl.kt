@@ -1,5 +1,7 @@
 package com.dezdeqness.data.repository
 
+import android.webkit.CookieManager
+import com.dezdeqness.data.core.CookieCleaner
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.manager.TokenManager
@@ -18,6 +20,7 @@ class AccountRepositoryImpl @Inject constructor(
     private val accountRemoteDataSource: AccountRemoteDataSource,
     private val accountLocalDataSource: AccountLocalDataSource,
     private val tokenManager: TokenManager,
+    private val cookieCleaner: CookieCleaner,
 ) : AccountRepository {
 
     private val _authorizationState: MutableSharedFlow<AuthorizationState> = MutableSharedFlow()
@@ -47,9 +50,7 @@ class AccountRepositoryImpl @Inject constructor(
         return accountRemoteDataSource.refresh(tokenData.refreshToken)
     }
 
-    override fun logout(): Result<String> {
-        TODO("Not yet implemented")
-    }
+    override fun logout() = accountRemoteDataSource.logout()
 
     override fun getProfileRemote(): Result<AccountEntity> {
         return accountRemoteDataSource.getBriefAccountInfo()
@@ -76,7 +77,8 @@ class AccountRepositoryImpl @Inject constructor(
     override fun getProfileLocal() = accountLocalDataSource.getAccount()
 
     override fun getUserHistory(page: Int, limit: Int): Result<List<HistoryEntity>> {
-        val userId = getProfileLocal()?.id ?: return Result.failure(Throwable("Local profile failure"))
+        val userId =
+            getProfileLocal()?.id ?: return Result.failure(Throwable("Local profile failure"))
 
         return accountRemoteDataSource.getHistory(
             userId = userId,
@@ -87,6 +89,14 @@ class AccountRepositoryImpl @Inject constructor(
 
     override fun saveProfileLocal(accountEntity: AccountEntity) {
         accountLocalDataSource.saveAccount(accountEntity)
+    }
+
+    override fun deleteAccountLocal() {
+        accountLocalDataSource.deleteAccount()
+    }
+
+    override fun clearUserCookie() {
+        cookieCleaner.clear()
     }
 
     override suspend fun emitAuthorizationState(state: AuthorizationState) {
