@@ -5,7 +5,7 @@ import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -27,5 +27,8 @@ interface AccountApiService {
         @Query(value = "page") page: Int,
         @Query(value = "target_type") type: String = "Anime",
     ): Call<List<HistoryRemote>>
+
+    @POST("users/sign_out")
+    fun logout(): Call<String>
 
 }
