@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,12 +31,16 @@ fun ProfileCard(
     avatar: String,
     onHistoryClicked: () -> Unit,
     onStatsClicked: () -> Unit,
+    onLogoutClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(AppTheme.colors.onPrimary),
+            .background(AppTheme.colors.onPrimary)
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AsyncImage(
@@ -68,6 +74,11 @@ fun ProfileCard(
             icon = R.drawable.ic_profile_label_history,
             onClick = onHistoryClicked,
         )
+        ProfileButton(
+            title = stringResource(id = R.string.profile_logout),
+            icon = R.drawable.ic_logout,
+            onClick = onLogoutClicked,
+        )
     }
 
 }
@@ -81,7 +92,8 @@ fun ProfileCardPreview() {
             nickname = "Staria",
             "no_url",
             onHistoryClicked = {},
-            onStatsClicked = {}
+            onStatsClicked = {},
+            onLogoutClicked = {},
         )
     }
 }

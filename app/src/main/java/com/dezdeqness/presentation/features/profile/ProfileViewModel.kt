@@ -5,12 +5,14 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
+import com.dezdeqness.domain.usecases.LogoutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
+    private val logoutUseCase: LogoutUseCase,
     private val accountRepository: AccountRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -24,32 +26,45 @@ class ProfileViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            val isAuthorized = accountRepository.isAuthorized()
-            if (isAuthorized) {
-                fetchProfile()
-            } else {
-                _profileStateFlow.value = _profileStateFlow.value.copy(
-                    isAuthorized = false,
-                )
-            }
+            handleProfileState()
         }
 
         launchOnIo {
             accountRepository.authorizationState().collect { state ->
-                val isAuthorized = accountRepository.isAuthorized()
-
-                if (isAuthorized) {
-                    fetchProfile()
-                }
+                handleProfileState()
             }
         }
 
     }
 
-    override val viewModelTag = "ProfileViewModel"
+    private fun handleProfileState() {
+        val isAuthorized = accountRepository.isAuthorized()
+        if (isAuthorized) {
+            fetchProfile()
+        } else {
+            _profileStateFlow.value = _profileStateFlow.value.copy(
+                isAuthorized = false,
+            )
+        }
+    }
+
+    override val viewModelTag = TAG
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
         // TODO
+    }
+
+    fun onLogoutClicked() {
+        launchOnIo {
+            logoutUseCase
+                .invoke()
+                .onSuccess {
+
+                }
+                .onFailure {
+
+                }
+        }
     }
 
     private fun fetchProfile() {

@@ -5,5 +5,6 @@ interface ProfileActions {
     fun onStatsIconClicked()
     fun onHistoryIconClicked()
     fun onLoginCLicked()
+    fun onLogoutClicked()
     fun onRegistrationClicked()
 }

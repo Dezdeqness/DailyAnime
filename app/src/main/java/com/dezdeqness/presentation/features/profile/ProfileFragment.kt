@@ -55,6 +55,10 @@ class ProfileFragment : BaseComposeFragment() {
 
                     override fun onLoginCLicked() = viewModel.onEventReceive(NavigateToLoginPage)
 
+                    override fun onLogoutClicked() {
+                        viewModel.onLogoutClicked()
+                    }
+
                     override fun onRegistrationClicked() =
                         viewModel.onEventReceive(NavigateToSignUp)
                 })
