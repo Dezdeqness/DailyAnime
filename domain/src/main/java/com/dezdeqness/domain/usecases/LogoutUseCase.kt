@@ -6,7 +6,7 @@ import com.dezdeqness.domain.repository.AccountRepository
 class LogoutUseCase(
     private val accountRepository: AccountRepository,
 ) {
-    suspend operator fun invoke(): Result<String> {
+    suspend operator fun invoke(): Result<Boolean> {
         val logoutResult = accountRepository.logout()
         if (logoutResult.isFailure) {
             return Result.failure(
