@@ -66,6 +66,9 @@ fun ProfileScreen(
                     },
                     onHistoryClicked = {
                         actions.onHistoryIconClicked()
+                    },
+                    onLogoutClicked = {
+                        actions.onLogoutClicked()
                     }
                 )
             } else {
@@ -93,6 +96,7 @@ fun ProfileScreenPreview() {
                 override fun onHistoryIconClicked() = Unit
                 override fun onLoginCLicked() = Unit
                 override fun onRegistrationClicked() = Unit
+                override fun onLogoutClicked() = Unit
             }
         )
     }
