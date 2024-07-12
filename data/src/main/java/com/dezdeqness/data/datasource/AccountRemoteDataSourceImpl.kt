@@ -53,7 +53,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
-            Result.success(responseBody)
+            Result.success(true)
         } else {
             throw response.createApiException()
         }

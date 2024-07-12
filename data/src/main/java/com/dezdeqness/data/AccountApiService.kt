@@ -3,7 +3,9 @@ package com.dezdeqness.data
 import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
+import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -28,7 +30,8 @@ interface AccountApiService {
         @Query(value = "target_type") type: String = "Anime",
     ): Call<List<HistoryRemote>>
 
+    @NeedAuthorization
     @POST("users/sign_out")
-    fun logout(): Call<String>
+    fun logout(): Call<ResponseBody>
 
 }

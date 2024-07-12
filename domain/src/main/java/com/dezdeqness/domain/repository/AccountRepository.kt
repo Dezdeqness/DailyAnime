@@ -27,7 +27,7 @@ interface AccountRepository {
 
     fun refresh(): Result<TokenEntity>
 
-    fun logout(): Result<String>
+    fun logout(): Result<Boolean>
 
     fun getProfileRemote(): Result<AccountEntity>
 
