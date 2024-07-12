@@ -42,8 +42,6 @@ data class PagerScrollToPage(val index: Int) : Event()
 
 object ScrollToTop : Event()
 
-object NavigateToPersonalList : Event()
-
 object NavigateToStats : Event()
 
 object NavigateToSettings : Event()
@@ -53,8 +51,6 @@ object NavigateToHistory : Event()
 object NavigateToLoginPage : Event()
 
 object NavigateToSignUp : Event()
-
-object NavigateToUnauthorized : Event()
 
 data class SwitchDarkTheme(val isEnabled: Boolean) : Event()
 
