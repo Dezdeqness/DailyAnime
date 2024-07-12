@@ -13,7 +13,7 @@ import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
-import com.dezdeqness.di.subcomponents.UnauthorizedHostComponent
+import com.dezdeqness.di.subcomponents.PersonalListHostComponent
 import dagger.Module
 
 @Module(
@@ -29,7 +29,7 @@ import dagger.Module
         EditRateComponent::class,
         CalendarComponent::class,
         AnimeSimilarComponent::class,
-        UnauthorizedHostComponent::class,
+        PersonalListHostComponent::class,
         MainComponent::class,
         ScreenshotsViewerComponent::class,
     ]
