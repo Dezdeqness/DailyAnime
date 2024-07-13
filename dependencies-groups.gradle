@@ -6,7 +6,7 @@ def Group(closure) {
 ext {
     dagger = Group {
         implementation(libs.dagger.dagger)
-        kapt(libs.dagger.compilier)
+        ksp(libs.dagger.compilier)
     }
 
     network = Group {
@@ -24,7 +24,7 @@ ext {
 
     glide = Group {
         implementation(libs.bumptech.glide)
-        kapt(libs.bumptech.compiler)
+        ksp(libs.bumptech.compiler)
         implementation(libs.wasabeef.transformation)
     }
 
@@ -84,7 +84,7 @@ ext {
 
     room = Group {
         implementation(libs.androidx.room.runtime)
-        kapt(libs.androidx.room.compilier)
+        ksp(libs.androidx.room.compilier)
     }
 
     composer = Group {

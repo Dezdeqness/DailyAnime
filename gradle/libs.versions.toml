@@ -36,6 +36,7 @@ composeBomVersion = "2024.06.00"
 googleServicesVersion = "4.4.2"
 gradleVersion = "8.4.2"
 detektVersion = "1.23.5"
+kspVersion = "2.0.0-1.0.21"
 
 androidVersion = "8.2.2"
 kotlinAndroidVersion = "2.0.0"
@@ -125,3 +126,4 @@ google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroidVersion" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinAndroidVersion" }
 arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
