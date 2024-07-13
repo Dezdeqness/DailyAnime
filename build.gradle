@@ -59,6 +59,30 @@ tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
 
+tasks.register("copyGitHooks", Copy) {
+    description = "Copies the git hooks from /git-hooks to the .git folder."
+    group = "git hooks"
+    from("$rootDir/scripts/pre-commit")
+    from("$rootDir/scripts/pre-push")
+    into("$rootDir/.git/hooks/")
+}
+
+tasks.register("installGitHooks", Exec) {
+    description = "Installs the pre-check git hooks from /git-hooks."
+    group = "git hooks"
+    workingDir = rootDir
+    commandLine "chmod", "-R", "+x", ".git/hooks/"
+    dependsOn "copyGitHooks"
+    doLast {
+        logger.info("Git hook installed successfully.")
+    }
+}
+
+afterEvaluate {
+    tasks.getByPath(':clean').dependsOn installGitHooks
+    tasks.getByPath(':app:preBuild').dependsOn installGitHooks
+}
+
 //subprojects {
 //    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 //        kotlinOptions {
