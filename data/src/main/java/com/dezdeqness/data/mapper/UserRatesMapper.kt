@@ -1,6 +1,6 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.core.converter.TimestampConverter
+import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.UserRateRemote
 import com.dezdeqness.data.model.db.UserRateLocal
 import com.dezdeqness.domain.model.UserRateEntity

@@ -1,6 +1,6 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.core.converter.TimestampConverter
+import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyRemote
