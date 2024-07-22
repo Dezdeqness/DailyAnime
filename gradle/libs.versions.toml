@@ -1,4 +1,6 @@
 [versions]
+supportCoreUiVersion = "0.1.0"
+supportCoreVersion = "0.1.0"
 coreVersion = "1.13.1"
 appCompatVersion = "1.7.0"
 daggerVersion = "2.51.1"
@@ -55,6 +57,8 @@ androidx-security-crypto = { module = "androidx.security:security-crypto", versi
 chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chuckerVersion" }
 chucker-noop = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chuckerVersion" }
 
+core-ui = { module = "com.dezdeqness.support:core-ui", version.ref = "supportCoreUiVersion" }
+core = { module = "com.dezdeqness.support:core", version.ref = "supportCoreVersion" }
 dagger-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "daggerVersion" }
 dagger-compilier = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVersion" }
 
