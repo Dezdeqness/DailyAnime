@@ -1,6 +1,6 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.core.converter.TimestampConverter
+import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import com.dezdeqness.data.model.db.AccountLocal
