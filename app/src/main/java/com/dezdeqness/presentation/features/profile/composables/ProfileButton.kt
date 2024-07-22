@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core_ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
 fun ProfileButton(
@@ -34,7 +34,7 @@ fun ProfileButton(
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(color = AppTheme.colors.rippleColor)
+                indication = rememberRipple(color = AppTheme.colors.ripple)
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,

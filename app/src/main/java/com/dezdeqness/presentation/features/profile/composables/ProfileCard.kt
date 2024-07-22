@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dezdeqness.R
-import com.dezdeqness.core_ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
 fun ProfileCard(
