@@ -5,11 +5,22 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+def props = new Properties()
+props.load(new FileInputStream('local.properties'))
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://maven.pkg.github.com/Dezdeqness/Android-Support-Things"
+            credentials {
+                username = props['github.username']
+                password = props['github.token']
+            }
+        }
     }
 }
 rootProject.name = "Daily Anime"
@@ -18,5 +29,3 @@ include ':app'
 include ':advanced_recycler'
 include ':data'
 include ':domain'
-include ':core'
-include ':core-ui'
