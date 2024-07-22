@@ -41,7 +41,6 @@ android {
 }
 dependencies {
     implementation project(path: ':domain')
-    implementation project(path: ':core')
 
     crypto()
     datastore()
