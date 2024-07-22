@@ -12,7 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseComposeFragment
-import com.dezdeqness.core_ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.event.NavigateToHistory
 import com.dezdeqness.presentation.event.NavigateToLoginPage

@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.unauthorized
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.core.BaseComposeFragment
-import com.dezdeqness.core_ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
 

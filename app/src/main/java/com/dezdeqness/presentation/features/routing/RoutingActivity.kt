@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
-import com.dezdeqness.core_ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.MainActivity
