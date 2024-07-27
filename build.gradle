@@ -72,7 +72,11 @@ tasks.register("installGitHooks", Exec) {
     description = "Installs the pre-check git hooks from /git-hooks."
     group = "git hooks"
     workingDir = rootDir
-    commandLine "chmod", "-R", "+x", ".git/hooks/"
+    if (!org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine "chmod", "-R", "+x", ".git/hooks/"
+    } else {
+        commandLine 'powershell', '-Command', 'Get-ChildItem -Path .git/hooks/* -Recurse | ForEach-Object { $_.Attributes = "Normal" }'
+    }
     dependsOn "copyGitHooks"
     doLast {
         logger.info("Git hook installed successfully.")
