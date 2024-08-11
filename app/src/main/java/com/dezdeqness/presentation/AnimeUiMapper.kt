@@ -17,7 +17,7 @@ class AnimeUiMapper @Inject constructor(
 
     fun map(items: List<AnimeBriefEntity>) = items.map(::mapAnimeBrief)
 
-    private fun mapAnimeBrief(animeBriefEntity: AnimeBriefEntity) =
+    fun mapAnimeBrief(animeBriefEntity: AnimeBriefEntity) =
         AnimeUiModel(
             id = animeBriefEntity.id,
             title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
