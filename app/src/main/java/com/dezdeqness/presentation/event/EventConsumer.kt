@@ -5,14 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.R
-import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.data.BuildConfig
 
 
 class EventConsumer(
-    val fragment: BaseFragment<*>? = null,
+    val fragment: Fragment? = null,
     val context: Context,
 ) {
 
