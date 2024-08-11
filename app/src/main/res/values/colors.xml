@@ -20,6 +20,7 @@
     <color name="profile_divider">#615C5C</color>
 
     <color name="background_tint">#ffffff</color>
+    <color name="search_container">#F8F8F8</color>
 
     <color name="loading_indicator">#000000</color>
     <color name="chip_background">#ffffff</color>

@@ -15,5 +15,7 @@
     <color name="profile_background_label">#221F1F</color>
 
     <color name="details_toolbar_color_expand">#000000</color>
+    <color name="search_container">#000000</color>
+
 
 </resources>
