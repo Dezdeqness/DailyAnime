@@ -33,8 +33,9 @@ class AnimeViewModel @Inject constructor(
     appLogger = appLogger,
 ), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, BaseViewModel.LoadMore {
 
-    private val _animeStateFlow: MutableStateFlow<AnimeState> = MutableStateFlow(AnimeState())
-    val animeStateFlow: StateFlow<AnimeState> get() = _animeStateFlow
+    private val _animeSearchStateFlow: MutableStateFlow<AnimeSearchState> =
+        MutableStateFlow(AnimeSearchState())
+    val animeSearchStateFlow: StateFlow<AnimeSearchState> get() = _animeSearchStateFlow
 
     private var filtersList: List<AnimeSearchFilter> = emptyList()
 
@@ -44,7 +45,6 @@ class AnimeViewModel @Inject constructor(
 
     init {
         actionConsumer.attachListener(this)
-        initialPageLoad()
     }
 
     override val viewModelTag = "SearchListViewModel"
@@ -62,7 +62,7 @@ class AnimeViewModel @Inject constructor(
             },
             onSuccess = { state ->
                 currentPage = state.currentPage
-                _animeStateFlow.value = _animeStateFlow.value.copy(
+                _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
                     list = animeUiMapper.map(state.list),
                     hasNextPage = state.hasNextPage,
                     isErrorStateShowing = false,
@@ -75,19 +75,21 @@ class AnimeViewModel @Inject constructor(
     }
 
     override fun setPullDownIndicatorVisible(isVisible: Boolean) {
-        _animeStateFlow.value = _animeStateFlow.value.copy(
+        _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
             isPullDownRefreshing = isVisible,
         )
     }
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        _animeStateFlow.value = _animeStateFlow.value.copy(
+        _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
             isInitialLoadingIndicatorShowing = isVisible,
         )
     }
 
     override fun setLoadMoreIndicator(isVisible: Boolean) {
-        // TODO:
+//        _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
+//            isLoadMoreLoading = isVisible,
+//        )
     }
 
     override fun onCleared() {
@@ -95,12 +97,11 @@ class AnimeViewModel @Inject constructor(
         actionConsumer.detachListener()
     }
 
-    fun onScrollNeed() {
-        if (animeStateFlow.value.isScrollNeed) {
-            _animeStateFlow.update {
-                _animeStateFlow.value.copy(isScrollNeed = false)
+    fun onScrolled() {
+        if (animeSearchStateFlow.value.isScrollNeed) {
+            _animeSearchStateFlow.update {
+                _animeSearchStateFlow.value.copy(isScrollNeed = false)
             }
-            onEventReceive(ScrollToTop)
         }
     }
 
@@ -114,19 +115,19 @@ class AnimeViewModel @Inject constructor(
         onEventReceive(NavigateToFilter(filters = filtersList))
     }
 
-    fun applyFilter(filtersList: List<AnimeSearchFilter>) {
+    fun onFilterChanged(filtersList: List<AnimeSearchFilter>) {
         this.filtersList = filtersList
-        initialPageLoad(isScrollNeed = true)
+        onInitialLoad(isScrollNeed = true)
     }
 
     fun onQueryChanged(query: String) {
         this.query = query
-        initialPageLoad(isScrollNeed = true)
+        onInitialLoad(isScrollNeed = true)
     }
 
     fun onQueryEmpty() {
         this.query = ""
-        initialPageLoad()
+        onInitialLoad()
     }
 
     fun onLoadMore() {
@@ -145,8 +146,8 @@ class AnimeViewModel @Inject constructor(
                 currentPage = state.currentPage
                 val list = animeUiMapper.map(state.list)
 
-                _animeStateFlow.value = _animeStateFlow.value.copy(
-                    list = _animeStateFlow.value.list + list,
+                _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
+                    list = _animeSearchStateFlow.value.list + list,
                     hasNextPage = hasNextPage,
                 )
                 hasNextPage
@@ -158,7 +159,7 @@ class AnimeViewModel @Inject constructor(
         )
     }
 
-    private fun initialPageLoad(isScrollNeed: Boolean = false) {
+    fun onInitialLoad(isScrollNeed: Boolean = false) {
         onInitialLoad(
             action = {
                 getAnimeListUseCase.invoke(
@@ -173,7 +174,7 @@ class AnimeViewModel @Inject constructor(
                 currentPage = state.currentPage
                 val list = animeUiMapper.map(state.list)
 
-                _animeStateFlow.value = _animeStateFlow.value.copy(
+                _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
                     list = list,
                     hasNextPage = state.hasNextPage,
                     isEmptyStateShowing = list.isEmpty(),
@@ -182,10 +183,10 @@ class AnimeViewModel @Inject constructor(
                 )
             },
             onFailure = {
-                if (_animeStateFlow.value.list.isNotEmpty()) {
+                if (_animeSearchStateFlow.value.list.isNotEmpty()) {
                     onErrorMessage()
                 } else {
-                    _animeStateFlow.value = _animeStateFlow.value.copy(
+                    _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
                         isErrorStateShowing = true,
                         isScrollNeed = false,
                     )
