@@ -117,7 +117,8 @@ androidx-compose-ui-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-compose-material = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
