@@ -46,6 +46,8 @@ class AnimeViewModelTest {
     @MockK
     private lateinit var appLogger: AppLogger
 
+    private lateinit var viewModel: AnimeViewModel
+
     @Before
     fun setup() {
         MockKAnnotations.init(this)
@@ -54,6 +56,17 @@ class AnimeViewModelTest {
 
         every { appLogger.logInfo(any(), any()) } returns Unit
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
+
+        viewModel = AnimeViewModel(
+            getAnimeListUseCase = getAnimeListUseCase,
+            animeUiMapper = animeUiMapper,
+            animeFilterResponseConverter = animeFilterResponseConverter,
+            actionConsumer = actionConsumer,
+            messageConsumer = messageConsumer,
+            messageProvider = messageProvider,
+            coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
+            appLogger = appLogger,
+        )
     }
 
     @Test
@@ -77,13 +90,12 @@ class AnimeViewModelTest {
             animeUiMapper.map(successListEntity)
         } returns exceptedUiList
 
+        viewModel.onInitialLoad()
 
-        val viewModel = createViewModel()
-
-        val uiState = viewModel.animeStateFlow.value
+        val uiState = viewModel.animeSearchStateFlow.value
 
         assertAll(
-            { assertFalse(uiState.isInitialLoadingIndicatorShowing) },
+            { assertFalse(uiState.isLoadingStateShowing) },
             { assertEquals(exceptedUiList, uiState.list) },
         )
     }
@@ -102,27 +114,14 @@ class AnimeViewModelTest {
                 )
             } returns Result.failure(Exception())
 
-            val viewModel = createViewModel()
+            viewModel.onInitialLoad()
 
-            val uiState = viewModel.animeStateFlow.value
+            val uiState = viewModel.animeSearchStateFlow.value
 
             assertAll(
-                { assertFalse(uiState.isInitialLoadingIndicatorShowing) },
+                { assertFalse(uiState.isLoadingStateShowing) },
                 { assertTrue(uiState.isErrorStateShowing) },
             )
         }
-
-
-    private fun createViewModel() =
-        AnimeViewModel(
-            getAnimeListUseCase = getAnimeListUseCase,
-            animeUiMapper = animeUiMapper,
-            animeFilterResponseConverter = animeFilterResponseConverter,
-            actionConsumer = actionConsumer,
-            messageConsumer = messageConsumer,
-            messageProvider = messageProvider,
-            coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
-            appLogger = appLogger,
-        )
 
 }
