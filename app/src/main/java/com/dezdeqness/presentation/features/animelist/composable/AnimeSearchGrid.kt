@@ -14,8 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.models.AnimeUiModel
+import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 
 private const val PAGINATION_LOAD_FACTOR = 0.75
 
@@ -42,7 +43,6 @@ fun AnimeSearchGrid(
     LaunchedEffect(isScrollNeed) {
         if (isScrollNeed) {
             onNeedScroll(gridState)
-
         }
     }
 
@@ -83,8 +83,8 @@ fun AnimeSearchGrid(
         }
 
         if (hasNextPage) {
-            item { AnimeSearchLoading(modifier = Modifier.fillMaxWidth()) }
-            item { AnimeSearchLoading(modifier = Modifier.fillMaxWidth()) }
+            item { GeneralLoading(modifier = Modifier.fillMaxWidth()) }
+            item { GeneralLoading(modifier = Modifier.fillMaxWidth()) }
         }
 
     }

@@ -30,7 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.models.AnimeUiModel
+import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 
 @Composable
 fun AnimeItem(

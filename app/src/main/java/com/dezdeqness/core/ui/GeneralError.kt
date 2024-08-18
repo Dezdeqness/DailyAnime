@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animelist.composable
+package com.dezdeqness.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,12 +21,12 @@ import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
-fun AnimeSearchEmpty(modifier: Modifier = Modifier) {
+fun GeneralError(modifier: Modifier = Modifier) {
     Box(modifier = modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())) {
         Text(
-            text = stringResource(id = R.string.search_empty_state_title),
+            text = stringResource(id = R.string.error_state_title),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .align(Alignment.Center)
@@ -40,9 +40,9 @@ fun AnimeSearchEmpty(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun AnimeSearchEmptyPreview() {
+fun GeneralErrorPreview() {
     AppTheme {
-        AnimeSearchEmpty(
+        GeneralError(
             modifier = Modifier.background(AppTheme.colors.onPrimary).size(300.dp)
         )
     }

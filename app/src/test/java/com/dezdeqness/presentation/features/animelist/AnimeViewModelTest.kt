@@ -8,7 +8,6 @@ import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
-import com.dezdeqness.presentation.models.AnimeUiModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
