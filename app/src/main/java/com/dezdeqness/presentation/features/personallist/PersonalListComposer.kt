@@ -10,6 +10,7 @@ import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
+import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class PersonalListComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
     private val resourceProvider: ResourceProvider,
+    private val animeKindUtils: AnimeKindUtils,
 ) {
 
     private val yearDateFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
@@ -137,7 +139,7 @@ class PersonalListComposer @Inject constructor(
             if (stringBuilder.isNotEmpty()) {
                 stringBuilder.append(SEPARATOR)
             }
-            stringBuilder.append(anime.kind.kind)
+            stringBuilder.append(animeKindUtils.mapKind(anime.kind))
         }
 
         when {

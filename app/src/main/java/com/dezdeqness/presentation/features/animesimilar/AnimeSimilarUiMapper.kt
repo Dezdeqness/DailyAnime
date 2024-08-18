@@ -6,6 +6,7 @@ import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.domain.model.Entity
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.SimilarUiModel
+import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class AnimeSimilarUiMapper @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
-): GenericListableUiMapper {
+    private val animeKindUtils: AnimeKindUtils,
+) : GenericListableUiMapper {
 
     private val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
@@ -36,7 +38,7 @@ class AnimeSimilarUiMapper @Inject constructor(
             if (stringBuilder.isNotEmpty()) {
                 stringBuilder.append(SEPARATOR)
             }
-            stringBuilder.append(item.kind.kind)
+            stringBuilder.append(animeKindUtils.mapKind(item.kind))
         }
 
         if (stringBuilder.isNotEmpty()) {
