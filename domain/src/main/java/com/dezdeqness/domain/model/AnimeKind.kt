@@ -6,7 +6,10 @@ enum class AnimeKind(val kind: String) {
     OVA("ova"),
     ONA("ona"),
     SPECIAL("special"),
+    TV_SPECIAL("tv_special"),
     MUSIC("music"),
+    PROMO("pv"),
+    AD("cm"),
     UNKNOWN("");
 
     companion object {
