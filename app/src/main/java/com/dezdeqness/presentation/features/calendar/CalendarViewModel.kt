@@ -7,7 +7,6 @@ import com.dezdeqness.domain.model.AnimeCalendarEntity
 import com.dezdeqness.domain.repository.CalendarRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.ScrollToTop
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -34,13 +33,16 @@ class CalendarViewModel @Inject constructor(
 
     init {
         actionConsumer.attachListener(this)
+    }
+
+    fun onInitialLoad() {
         onInitialLoad(
             action = { calendarRepository.getCalendar() },
             onSuccess = { items ->
                 calendarItems = items
                 val uiItems = calendarComposer.compose(items, query = query)
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
-                    items = uiItems,
+                    list = uiItems,
                     isEmptyStateShowing = uiItems.isEmpty(),
                     isErrorStateShowing = false,
                 )
@@ -75,7 +77,7 @@ class CalendarViewModel @Inject constructor(
                 calendarItems = items
                 val uiItems = calendarComposer.compose(items = items, query = query)
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
-                    items = uiItems,
+                    list = uiItems,
                     isEmptyStateShowing = uiItems.isEmpty(),
                     isErrorStateShowing = false
                 )
@@ -96,12 +98,11 @@ class CalendarViewModel @Inject constructor(
             actionConsumer.consume(action)
         }
     }
-    fun onScrollNeed() {
+    fun onScrolled() {
         if (calendarStateFlow.value.isScrollNeed) {
             _calendarStateFlow.update {
                 _calendarStateFlow.value.copy(isScrollNeed = false)
             }
-            onEventReceive(ScrollToTop)
         }
     }
 
@@ -119,7 +120,7 @@ class CalendarViewModel @Inject constructor(
         launchOnIo {
             val uiItems = calendarComposer.compose(items = calendarItems, query = query)
             _calendarStateFlow.value = _calendarStateFlow.value.copy(
-                items = uiItems,
+                list = uiItems,
                 isEmptyStateShowing = uiItems.isEmpty(),
                 isScrollNeed = true,
             )
