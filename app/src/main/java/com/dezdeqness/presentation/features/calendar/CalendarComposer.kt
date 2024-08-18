@@ -1,9 +1,6 @@
 package com.dezdeqness.presentation.features.calendar
 
 import com.dezdeqness.domain.model.AnimeCalendarEntity
-import com.dezdeqness.presentation.models.AdapterItem
-import com.dezdeqness.presentation.models.CalendarListUiModel
-import com.dezdeqness.presentation.models.CalendarUiModel
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -14,8 +11,9 @@ class CalendarComposer @Inject constructor(
 ) {
 
     private val dateFormatter = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault())
+    private val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-    fun compose(items: List<AnimeCalendarEntity>, query: String): List<AdapterItem> {
+    fun compose(items: List<AnimeCalendarEntity>, query: String): List<CalendarListUiModel> {
         val filteredList = if (query.isEmpty()) items else items.filter {
             it.anime.russian.contains(query, ignoreCase = true)
         }
@@ -28,7 +26,7 @@ class CalendarComposer @Inject constructor(
                 map[key] = mutableListOf(item)
             }
         }
-        val uiItems = mutableListOf<AdapterItem>()
+        val uiItems = mutableListOf<CalendarListUiModel>()
 
         map.entries.forEach { entry ->
 
@@ -37,9 +35,12 @@ class CalendarComposer @Inject constructor(
                 calendarItems.add(
                     CalendarUiModel(
                         id = it.anime.id,
-                        name = it.anime.russian,
-                        episodeInfo = "${it.nextEpisode} эп.",
+                        name = it.anime.russian.ifEmpty { it.anime.name },
+                        ongoingEpisode = it.nextEpisode,
                         logoUrl = imageUrlUtils.getImageWithBaseUrl(it.anime.image.preview),
+                        type = it.anime.kind.name,
+                        score = it.anime.score.toString(),
+                        time = timeFormatter.format(it.nextEpisodeAtTimestamp)
                     )
                 )
             }
@@ -47,7 +48,7 @@ class CalendarComposer @Inject constructor(
             uiItems.add(
                 CalendarListUiModel(
                     header = entry.key,
-                    items = calendarItems.sortedBy { it.name },
+                    items = calendarItems,
                 )
             )
         }

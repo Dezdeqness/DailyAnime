@@ -109,5 +109,7 @@
     <string name="calendar_search_placeholder_hint">Выходящие аниме</string>
     <string name="personal_list_search_placeholder_hint">Аниме</string>
 
+    <string name="cell_episode">Эпизод %d</string>
+
 </resources>
 

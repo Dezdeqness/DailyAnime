@@ -1,9 +1,7 @@
 package com.dezdeqness.presentation.features.calendar
 
-import com.dezdeqness.presentation.models.AdapterItem
-
 data class CalendarState(
-    val items: List<AdapterItem> = listOf(),
+    val list: List<CalendarListUiModel> = listOf(),
     val isPullDownRefreshing: Boolean = false,
     val isInitialLoadingIndicatorShowing: Boolean = false,
     val isEmptyStateShowing: Boolean = false,
