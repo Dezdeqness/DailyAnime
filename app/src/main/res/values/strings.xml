@@ -111,5 +111,15 @@
 
     <string name="cell_episode">Эпизод %d</string>
 
+    <string name="anime_kind_tv">ТВ</string>
+    <string name="anime_kind_film">Фильм</string>
+    <string name="anime_kind_ova">Ova</string>
+    <string name="anime_kind_ona">Ona</string>
+    <string name="anime_kind_special">Спэшел</string>
+    <string name="anime_kind_tv_special">ТВ спэшел</string>
+    <string name="anime_kind_music">Клип</string>
+    <string name="anime_kind_promo">Промо</string>
+    <string name="anime_kind_ad">Реклама</string>
+
 </resources>
 
