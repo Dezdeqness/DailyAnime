@@ -38,6 +38,10 @@ class UserRatesLocalDataSourceImpl @Inject constructor(
         userRatesDao.deleteUserRatesByStatus(status)
     }
 
+    override fun deleteUserRatesByRateId(rateId: Long) {
+        userRatesDao.deleteUserRateByRateId(rateId)
+    }
+
     override fun updateUserRate(userRateEntity: UserRateEntity) {
         userRatesDao.updateUserRate(
             rateId = userRateEntity.id.toInt(),

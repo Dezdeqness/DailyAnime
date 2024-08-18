@@ -17,6 +17,8 @@ interface UserRatesLocalDataSource {
 
     fun deleteUserRatesByStatus(status: String)
 
+    fun deleteUserRatesByRateId(rateId: Long)
+
     fun updateUserRate(userRateEntity: UserRateEntity)
 
 }

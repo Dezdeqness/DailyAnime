@@ -34,4 +34,6 @@ interface UserRatesRemoteDataSource {
         comment: String,
     ): Result<UserRateEntity>
 
+    fun deleteUserRateByRateId(rateId: Long): Result<Boolean>
+
 }
