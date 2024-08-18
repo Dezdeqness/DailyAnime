@@ -22,6 +22,9 @@ interface UserRatesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUserRates(list: List<UserRateLocal>)
 
+    @Query("DELETE FROM 'user_rate' WHERE id = :rateId")
+    fun deleteUserRateByRateId(rateId: Long)
+
     @Query("DELETE FROM 'user_rate'")
     fun deleteUserRates()
 

@@ -1,7 +1,6 @@
 package com.dezdeqness.data.datasource
 
 import com.dezdeqness.data.UserRatesApiService
-import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.UserRatesMapper
@@ -100,6 +99,17 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
             Result.success(userRatesMapper.fromResponse(responseBody))
+        } else {
+            throw response.createApiException()
+        }
+    }
+
+    override fun deleteUserRateByRateId(rateId: Long) = tryWithCatch {
+        val response = apiService.deleteUserRate(rateId).execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            Result.success(true)
         } else {
             throw response.createApiException()
         }
