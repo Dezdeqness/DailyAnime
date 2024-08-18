@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearch
-import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchEmpty
-import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchError
+import com.dezdeqness.core.ui.GeneralEmpty
+import com.dezdeqness.core.ui.GeneralError
+import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchGrid
-import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchLoading
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -86,11 +86,15 @@ fun AnimeSearchPage(
             contentAlignment = Alignment.Center,
         ) {
             if (state.isLoadingStateShowing) {
-                AnimeSearchLoading(modifier = Modifier.align(Alignment.Center))
+                GeneralLoading(modifier = Modifier.align(Alignment.Center))
             }
 
             if (state.isErrorStateShowing) {
-                AnimeSearchError(modifier = Modifier.align(Alignment.Center))
+                GeneralError(modifier = Modifier.align(Alignment.Center))
+            }
+
+            if (state.isEmptyStateShowing) {
+                GeneralEmpty(modifier = Modifier.align(Alignment.Center))
             }
 
             if (state.list.isNotEmpty()) {
@@ -123,10 +127,6 @@ fun AnimeSearchPage(
                         actions.onActionReceived(action)
                     }
                 )
-            }
-
-            if (state.isEmptyStateShowing) {
-                AnimeSearchEmpty(modifier = Modifier.align(Alignment.Center))
             }
 
             PullRefreshIndicator(

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animelist.composable
+package com.dezdeqness.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
-fun AnimeSearchLoading(modifier: Modifier = Modifier) {
+fun GeneralLoading(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
@@ -26,7 +26,7 @@ fun AnimeSearchLoading(modifier: Modifier = Modifier) {
 @Composable
 fun AnimeSearchLoadingPreview() {
     AppTheme {
-        AnimeSearchLoading(
+        GeneralLoading(
             modifier = Modifier.background(AppTheme.colors.onPrimary).size(300.dp)
         )
     }

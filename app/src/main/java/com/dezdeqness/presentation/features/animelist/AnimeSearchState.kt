@@ -1,7 +1,5 @@
 package com.dezdeqness.presentation.features.animelist
 
-import com.dezdeqness.presentation.models.AnimeUiModel
-
 data class AnimeSearchState(
     val list: List<AnimeUiModel> = listOf(),
     val isEmptyStateShowing: Boolean = false,
@@ -14,7 +12,4 @@ data class AnimeSearchState(
 
     val isLoadingStateShowing get() =
         list.isEmpty() && isEmptyStateShowing.not() && isInitialLoadingIndicatorShowing
-
-//    val isPageLoading get() =
-//        isLoadingStateShowing || isPullDownRefreshing || isLoadMoreLoading
 }

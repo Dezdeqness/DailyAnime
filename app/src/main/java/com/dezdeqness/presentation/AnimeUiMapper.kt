@@ -2,7 +2,7 @@ package com.dezdeqness.presentation
 
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.RelatedItemEntity
-import com.dezdeqness.presentation.models.AnimeUiModel
+import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
