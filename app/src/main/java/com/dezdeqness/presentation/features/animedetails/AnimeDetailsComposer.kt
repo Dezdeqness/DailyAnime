@@ -23,6 +23,7 @@ import com.dezdeqness.presentation.models.ScreenshotUiModelList
 import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
+import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,6 +36,7 @@ class AnimeDetailsComposer @Inject constructor(
     private val animeUiMapper: AnimeUiMapper,
     private val imageUrlUtils: ImageUrlUtils,
     private val resourceProvider: ResourceProvider,
+    private val animeKindUtils: AnimeKindUtils,
 ) {
 
     private val dateFormatter = SimpleDateFormat("dd MMM", Locale.getDefault())
@@ -273,7 +275,7 @@ class AnimeDetailsComposer @Inject constructor(
 
         list.add(
             BriefInfoUiModel(
-                info = details.kind.kind.uppercase(Locale.getDefault()),
+                info = animeKindUtils.mapKind(details.kind),
                 title = resourceProvider.getString(R.string.anime_details_type_title),
             )
         )

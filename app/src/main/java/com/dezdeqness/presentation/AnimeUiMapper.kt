@@ -4,6 +4,7 @@ import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.RelatedItemEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
+import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 class AnimeUiMapper @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
+    private val animeKindUtils: AnimeKindUtils,
 ) {
 
     private val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
@@ -22,7 +24,7 @@ class AnimeUiMapper @Inject constructor(
             id = animeBriefEntity.id,
             title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
                 ?: animeBriefEntity.name,
-            kind = animeBriefEntity.kind.name,
+            kind = animeKindUtils.mapKind(animeBriefEntity.kind),
             logoUrl = imageUrlUtils.getImageWithBaseUrl(animeBriefEntity.image.original),
         )
 
