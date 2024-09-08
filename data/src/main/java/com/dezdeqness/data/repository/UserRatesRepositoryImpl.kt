@@ -54,7 +54,8 @@ class UserRatesRepositoryImpl @Inject constructor(
         rateId: Long,
         status: String,
         episodes: Long,
-        score: Float
+        score: Float,
+        comment: String,
     ): Result<Boolean> {
         val localUserRate = userRatesLocalDataSource.getUserRate(rateId)
             ?: return Result.failure(Exception("Local user rate failure"))
@@ -67,12 +68,18 @@ class UserRatesRepositoryImpl @Inject constructor(
             volumes = localUserRate.volumes,
             rewatches = localUserRate.rewatches,
             chapters = localUserRate.chapters,
-            comment = localUserRate.text,
+            comment = comment,
         )
         return result.map { true }
     }
 
-    override fun createUserRate(targetId: String, status: String, episodes: Long, score: Float): Result<Boolean> {
+    override fun createUserRate(
+        targetId: String,
+        status: String,
+        episodes: Long,
+        score: Float,
+        comment: String,
+        ): Result<Boolean> {
         val profile = accountRepository.getProfileLocal() ?: return Result.failure(Exception("Profile local failure"))
 
         val result = userRatesRemoteDataSource.createUserRate(
@@ -85,7 +92,7 @@ class UserRatesRepositoryImpl @Inject constructor(
             volumes = 0,
             rewatches = 0,
             chapters = 0,
-            comment = "",
+            comment = comment,
         )
         return result.map { true }
     }

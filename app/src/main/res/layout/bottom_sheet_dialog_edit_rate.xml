@@ -29,120 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/anime_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="Я требую яоя" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/filter_divider"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/current_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="Смотрю" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rate_status_watching"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="0.3"
-                    android:text="@string/edit_rate_status_watching"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/drawable_icon" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rate_status_planned"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="0.3"
-                    android:text="@string/edit_rate_status_planned"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/drawable_icon" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rate_status_rewatching"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="0.3"
-                    android:text="@string/edit_rate_status_rewatching"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/drawable_icon" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rate_status_watched"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:text="@string/edit_rate_status_completed"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/drawable_icon" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rate_status_hold"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="0.3"
-                    android:text="@string/edit_rate_status_on_hold"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/drawable_icon" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/rate_status_throwed"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="0.3"
-                    android:text="@string/edit_rate_status_dropped"
-                    android:textAllCaps="false"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/drawable_icon" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
+            
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -158,11 +45,6 @@
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <com.dezdeqness.presentation.features.editrate.CarouselPicker
-                android:id="@+id/scoreCarousel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"

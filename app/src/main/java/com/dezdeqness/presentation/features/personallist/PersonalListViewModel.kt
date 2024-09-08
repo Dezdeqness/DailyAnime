@@ -14,8 +14,9 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.OpenMenuPopupFilter
 import com.dezdeqness.presentation.event.ScrollToTop
-import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
+import com.dezdeqness.presentation.models.UserRateUiModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -200,7 +201,21 @@ class PersonalListViewModel @Inject constructor(
     }
 
     fun onEditRateClicked(editRateId: Long) {
-        onEventReceive(NavigateToEditRate(rateId = editRateId))
+        personalListStateFlow
+            .value
+            .items
+            .filterIsInstance<UserRateUiModel>()
+            .first { it.rateId == editRateId }
+            .let {
+                onEventReceive(
+                    NavigateToEditRate(
+                        rateId = editRateId,
+                        title = it.name,
+                        overallEpisodes = it.overallEpisodes,
+                    )
+                )
+            }
+
     }
 
     fun onUserRateChanged(userRate: EditRateUiModel?) {
@@ -215,6 +230,7 @@ class PersonalListViewModel @Inject constructor(
                     status = userRate.status,
                     episodes = userRate.episodes,
                     score = userRate.score,
+                    comment = userRate.comment,
                 )
             },
             onSuccess = {

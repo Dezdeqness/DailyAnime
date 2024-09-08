@@ -9,9 +9,9 @@ interface UserRatesRepository {
 
     fun getLocalUserRate(rateId: Long): UserRateEntity?
 
-    fun updateUserRate(rateId: Long, status: String, episodes: Long, score: Float): Result<Boolean>
+    fun updateUserRate(rateId: Long, status: String, episodes: Long, score: Float, comment: String): Result<Boolean>
 
-    fun createUserRate(targetId: String, status: String, episodes: Long, score: Float): Result<Boolean>
+    fun createUserRate(targetId: String, status: String, episodes: Long, score: Float, comment: String): Result<Boolean>
 
     fun updateLocalUserRate(userRateEntity: UserRateEntity)
 
