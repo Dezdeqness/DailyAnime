@@ -39,6 +39,11 @@
             android:theme="@style/Theme.DailyAnime.Dark"
             android:windowSoftInputMode="adjustNothing" />
 
+        <activity
+            android:name=".presentation.features.userrate.UserRateActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -14,7 +14,6 @@ import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
-import com.dezdeqness.di.subcomponents.EditRateComponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
@@ -24,6 +23,7 @@ import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.PersonalListHostComponent
+import com.dezdeqness.di.subcomponents.UserRateComponent
 import com.dezdeqness.domain.repository.SettingsRepository
 import dagger.BindsInstance
 import dagger.Component
@@ -60,7 +60,7 @@ interface AppComponent {
 
     fun personalListComponent(): PersonalListComponent.Factory
 
-    fun editRateComponent(): EditRateComponent.Builder
+    fun editRateComponent(): UserRateComponent.Builder
 
     fun calendarComponent(): CalendarComponent.Factory
 

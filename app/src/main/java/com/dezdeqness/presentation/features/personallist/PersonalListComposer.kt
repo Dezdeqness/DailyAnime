@@ -186,6 +186,7 @@ class PersonalListComposer @Inject constructor(
             progress = progress,
             isAnimeInProgress = isAnimeInProgress,
             logoUrl = imageUrlUtils.getImageWithBaseUrl(anime.image.preview),
+            overallEpisodes = item.episodes.toInt(),
         )
     }
 

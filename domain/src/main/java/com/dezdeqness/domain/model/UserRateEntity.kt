@@ -14,10 +14,10 @@ data class UserRateEntity(
     val updatedAtTimestamp: Long,
     val anime: AnimeBriefEntity? = null
 ) {
+    fun isEmptyUserRate() = id == NO_ID
 
     companion object {
         private const val NO_ID = -1L
-        fun isEmptyUserRate(id: Long) = id == NO_ID
 
         val EMPTY_USER_RATE = UserRateEntity(
             id = NO_ID,

@@ -8,8 +8,6 @@ import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.forEach
-import androidx.fragment.app.clearFragmentResultListener
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,8 +24,7 @@ import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.OpenMenuPopupFilter
 import com.dezdeqness.presentation.event.ScrollToTop
-import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
-import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.features.userrate.UserRateActivity
 import kotlinx.coroutines.launch
 
 
@@ -36,8 +33,8 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
     private val adapter: PersonalListAdapter by lazy {
         PersonalListAdapter(
             actionListener = this,
-            onEditRateClicked = { editRate ->
-                viewModel.onEditRateClicked(editRate)
+            onEditRateClicked = { editRateId ->
+                viewModel.onEditRateClicked(editRateId)
             }
         )
     }
@@ -47,6 +44,10 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             fragment = this,
             context = this.requireContext(),
         )
+    }
+
+    private val editRateResult = registerForActivityResult(UserRateActivity.UserRate()) { userRate ->
+        viewModel.onUserRateChanged(userRate)
     }
 
     private val viewModel: PersonalListViewModel by viewModels(factoryProducer = { viewModelFactory })
@@ -62,14 +63,6 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             .create()
             .inject(this)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener(EDIT_RATE_DIALOG_TAG) { _, bundle ->
-            val userRate = bundle.getParcelable<EditRateUiModel>(EditRateBottomSheetDialog.RESULT)
-            viewModel.onUserRateChanged(userRate)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -79,11 +72,6 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
         setupObservers()
         setupMenu()
         setupSortMenu()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
     override fun onActionReceive(action: Action) {
@@ -186,14 +174,12 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
             }
 
             is NavigateToEditRate -> {
-                val dialog =
-                    EditRateBottomSheetDialog.newInstance(
-                        rateId = event.rateId,
-                        tag = EDIT_RATE_DIALOG_TAG,
+                editRateResult.launch(
+                    UserRateActivity.UserRateParams(
+                        userRateId = event.rateId,
+                        title = event.title,
+                        overallEpisodes = event.overallEpisodes,
                     )
-                dialog.show(
-                    parentFragmentManager,
-                    EDIT_RATE_DIALOG_TAG,
                 )
             }
 
@@ -246,10 +232,6 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
     private fun setupRecyclerView() {
         binding.recycler.adapter = adapter
-    }
-
-    companion object {
-        private const val EDIT_RATE_DIALOG_TAG = "personal_list_edit_rate_dialog"
     }
 
 }

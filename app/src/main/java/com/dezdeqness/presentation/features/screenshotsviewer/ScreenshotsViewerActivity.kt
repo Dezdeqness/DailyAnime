@@ -40,6 +40,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.activity.hideSystemUI
 import com.dezdeqness.core.activity.showSystemUI
+import com.dezdeqness.core.collectEvents
 import com.dezdeqness.di.subcomponents.ScreenshotsArgsModule
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.ConsumableEvent
@@ -188,21 +189,4 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
         }
     }
 
-}
-
-@Composable
-fun <T> Flow<T>.collectEvents(
-    lifecycleState: Lifecycle.State = Lifecycle.State.STARTED,
-    sideEffect: (suspend (event: T) -> Unit)
-) {
-    val sideEffectFlow = this
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    LaunchedEffect(sideEffectFlow, lifecycleOwner) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(lifecycleState) {
-            sideEffectFlow.collect {
-                sideEffect(it)
-            }
-        }
-    }
 }

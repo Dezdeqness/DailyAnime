@@ -8,12 +8,12 @@ import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
-import com.dezdeqness.di.subcomponents.EditRateComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.PersonalListHostComponent
+import com.dezdeqness.di.subcomponents.UserRateComponent
 import dagger.Module
 
 @Module(
@@ -26,7 +26,7 @@ import dagger.Module
         AuthorizationComponent::class,
         ProfileComponent::class,
         PersonalListComponent::class,
-        EditRateComponent::class,
+        UserRateComponent::class,
         CalendarComponent::class,
         AnimeSimilarComponent::class,
         PersonalListHostComponent::class,

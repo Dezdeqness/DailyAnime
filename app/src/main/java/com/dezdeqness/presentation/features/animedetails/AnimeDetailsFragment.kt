@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.clearFragmentResultListener
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
-import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.databinding.FragmentAnimeDetailsBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ArgsModule
@@ -33,9 +29,8 @@ import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
-import com.dezdeqness.presentation.features.editrate.EditRateBottomSheetDialog
-import com.dezdeqness.presentation.features.editrate.EditRateUiModel
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerActivity
+import com.dezdeqness.presentation.features.userrate.UserRateActivity
 import kotlinx.coroutines.launch
 
 
@@ -72,6 +67,10 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
         factoryProducer = { viewModelFactory },
     )
 
+    private val editRateResult = registerForActivityResult(UserRateActivity.UserRate()) { userRate ->
+        viewModel.onUserRateChanged(userRate)
+    }
+
     private var title = ""
 
     override fun getFragmentBinding(layoutInflater: LayoutInflater) =
@@ -89,11 +88,6 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
         super.onCreate(savedInstanceState)
         onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().popBackStack()
-        }
-
-        setFragmentResultListener(EDIT_RATE_DIALOG_TAG) { _, bundle ->
-            val userRate = bundle.getParcelable<EditRateUiModel>(EditRateBottomSheetDialog.RESULT)
-            viewModel.onUserRateChanged(userRate)
         }
     }
 
@@ -131,7 +125,7 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
 
     override fun onDestroy() {
         super.onDestroy()
-        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
+//        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
     override fun onActionReceive(action: Action) {
@@ -197,13 +191,12 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
     private fun onEvent(event: Event) {
         when (event) {
             is NavigateToEditRate -> {
-                val dialog = EditRateBottomSheetDialog.newInstance(
-                    rateId = event.rateId,
-                    tag = EDIT_RATE_DIALOG_TAG,
-                )
-                dialog.show(
-                    parentFragmentManager,
-                    EDIT_RATE_DIALOG_TAG,
+                editRateResult.launch(
+                    UserRateActivity.UserRateParams(
+                        userRateId = event.rateId,
+                        title = event.title,
+                        overallEpisodes = event.overallEpisodes,
+                    )
                 )
             }
 

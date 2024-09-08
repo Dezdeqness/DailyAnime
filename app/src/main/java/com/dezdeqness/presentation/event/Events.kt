@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.event
 
 import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
-import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import java.util.UUID
 
@@ -32,7 +32,11 @@ data class ApplyFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event(
 
 data class NavigateToFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
 
-data class NavigateToEditRate(val rateId: Long) : Event()
+data class NavigateToEditRate(
+    val rateId: Long,
+    val title: String,
+    val overallEpisodes: Int,
+) : Event()
 
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 

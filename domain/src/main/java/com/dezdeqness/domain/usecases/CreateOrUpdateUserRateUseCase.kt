@@ -11,7 +11,8 @@ class CreateOrUpdateUserRateUseCase(
         targetId: String,
         status: String,
         episodes: Long,
-        score: Float
+        score: Float,
+        comment: String,
     ): Result<Boolean> {
         val localUserRate = userRatesRepository.getLocalUserRate(rateId = rateId)
         return if (localUserRate == null) {
@@ -20,6 +21,7 @@ class CreateOrUpdateUserRateUseCase(
                 status = status,
                 episodes = episodes,
                 score = score,
+                comment = comment,
             )
         } else {
             userRatesRepository.updateUserRate(
@@ -27,6 +29,7 @@ class CreateOrUpdateUserRateUseCase(
                 status = status,
                 episodes = episodes,
                 score = score,
+                comment = comment,
             )
         }
     }

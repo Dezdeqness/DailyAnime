@@ -8,6 +8,7 @@ data class UserRateUiModel(
     val score: String,
     val progress: String,
     val logoUrl: String,
+    val overallEpisodes: Int,
     val isAnimeInProgress: Boolean,
 ) : AdapterItem() {
 

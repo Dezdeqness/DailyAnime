@@ -16,7 +16,7 @@ import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
-import com.dezdeqness.presentation.features.editrate.EditRateUiModel
+import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.utils.ImageUrlUtils
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,9 +74,13 @@ class AnimeDetailsViewModel @Inject constructor(
 
     fun onEditRateClicked() {
         val rateId = animeDetails?.animeDetailsEntity?.userRate?.id ?: -1
+        val title = animeDetails?.animeDetailsEntity?.russian ?: ""
+        val overallEpisodes = animeDetails?.animeDetailsEntity?.episodes ?: -1
         onEventReceive(
             NavigateToEditRate(
                 rateId = rateId,
+                title = title,
+                overallEpisodes = overallEpisodes,
             )
         )
 
@@ -91,12 +95,13 @@ class AnimeDetailsViewModel @Inject constructor(
                     status = userRate.status,
                     episodes = userRate.episodes,
                     score = userRate.score,
+                    comment = userRate.comment,
                 )
                     .onSuccess {
-                        if (userRate.rateId.toInt() == -1) {
-                            onEditCreateSuccessMessage()
-                        } else {
+                        if (userRate.isUserRateExist) {
                             onEditUpdateSuccessMessage()
+                        } else {
+                            onEditCreateSuccessMessage()
                         }
                     }
                     .onFailure {

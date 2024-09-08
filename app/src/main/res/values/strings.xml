@@ -82,10 +82,17 @@
     <string name="edit_rate_status_none">Статус отсутствует</string>
     <string name="edit_rate_episodes_title">Просмотрено:</string>
     <string name="edit_rate_episodes_header">Эпизоды</string>
+    <string name="edit_rate_comment_header">Комментарий</string>
     <string name="edit_rate_score_header">Оценка</string>
     <string name="edit_rate_create_success">Аниме было успешно обновлено!</string>
     <string name="edit_rate_update_success">Аниме было успешно добавлено!</string>
     <string name="edit_rate_error">Произошла ошибка :(</string>
+    <string name="edit_rate_reset_title">Сбросить</string>
+    <string name="edit_rate_create_title">Создать</string>
+    <string name="edit_rate_update_title">Обновить</string>
+    <string name="edit_rate_status_title">Статус</string>
+    <string name="edit_rate_score_title">Оценка</string>
+    <string name="edit_rate_status_no_status">Выбрать</string>
 
     <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
     <string name="general_error">Произошла ошибка</string>
@@ -120,6 +127,7 @@
     <string name="anime_kind_music">Клип</string>
     <string name="anime_kind_promo">Промо</string>
     <string name="anime_kind_ad">Реклама</string>
+    <string name="select_status_dialog_title">Выберите статус</string>
 
 </resources>
 

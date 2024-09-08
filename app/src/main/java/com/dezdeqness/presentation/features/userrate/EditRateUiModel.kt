@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.editrate
+package com.dezdeqness.presentation.features.userrate
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -9,4 +9,7 @@ data class EditRateUiModel(
     val status: String,
     val episodes: Long,
     val score: Float,
-) : Parcelable
+    val comment: String,
+) : Parcelable {
+    val isUserRateExist get() = rateId != -1L
+}
