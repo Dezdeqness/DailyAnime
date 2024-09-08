@@ -63,15 +63,17 @@ class AccountRepositoryImpl @Inject constructor(
             return@flow
         }
 
-        emit(Result.success(profile))
-
         val detailsAccountInfo = accountRemoteDataSource.getDetailsAccountInfo(
             userId = profile.id,
         ).onSuccess {
             saveProfileLocal(it)
         }
 
-        emit(detailsAccountInfo)
+        if (detailsAccountInfo.isFailure) {
+            emit(Result.success(profile))
+        } else {
+            emit(detailsAccountInfo)
+        }
     }
 
     override fun getProfileLocal() = accountLocalDataSource.getAccount()
