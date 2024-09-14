@@ -31,8 +31,25 @@ class SettingsProvider @Inject constructor(
             .first()
             ?: false
 
+    suspend fun setLanguageDisclaimerShown(isShown: Boolean) {
+        context.dataStore.edit { settings ->
+            settings[IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN] = isShown
+        }
+    }
+
+    suspend fun isLanguageDisclaimerShown() =
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN] }
+            .first()
+            ?: false
+
+
+
     companion object {
         private val IS_NIGHT_THEME = booleanPreferencesKey("nightTheme")
+        private val IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN = booleanPreferencesKey("languageDisclaimerShown")
     }
 
 }

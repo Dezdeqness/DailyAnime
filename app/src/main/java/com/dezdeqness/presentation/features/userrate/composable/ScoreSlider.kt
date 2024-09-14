@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,16 +52,16 @@ fun ScoreSlider(
 
         Text(
             text = when (score.toInt()) {
-                1 -> "Хуже некуда"
-                2 -> "Ужасно"
-                3 -> "Очень плохо"
-                4 -> "Плохо"
-                5 -> "Более-менее"
-                6 -> "Нормально"
-                7 -> "Хорошо"
-                8 -> "Отлично"
-                9 -> "Великолепно"
-                10 -> "Эпик вин!"
+                1 -> stringResource(R.string.anime_score_1)
+                2 -> stringResource(R.string.anime_score_2)
+                3 -> stringResource(R.string.anime_score_3)
+                4 -> stringResource(R.string.anime_score_4)
+                5 -> stringResource(R.string.anime_score_5)
+                6 -> stringResource(R.string.anime_score_6)
+                7 -> stringResource(R.string.anime_score_7)
+                8 -> stringResource(R.string.anime_score_8)
+                9 -> stringResource(R.string.anime_score_9)
+                10 -> stringResource(R.string.anime_score_10)
                 else -> ""
             },
             style = AppTheme.typography.titleMedium,
