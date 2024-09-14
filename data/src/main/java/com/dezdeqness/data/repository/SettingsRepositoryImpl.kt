@@ -14,4 +14,10 @@ class SettingsRepositoryImpl @Inject constructor(
         settingsProvider.setNightThemeStatus(status = status)
     }
 
+    override suspend fun isLanguageDisclaimerShown() = settingsProvider.isLanguageDisclaimerShown()
+
+    override suspend fun setLanguageDisclaimerShown(isShown: Boolean) {
+        settingsProvider.setLanguageDisclaimerShown(isShown = isShown)
+    }
+
 }

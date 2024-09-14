@@ -2,6 +2,7 @@ package com.dezdeqness.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
@@ -13,7 +14,10 @@ import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
+import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.ui.ShikimoriSnackbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -111,6 +115,31 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.events.collect { event ->
+                    when (event) {
+                        is LanguageDisclaimer -> {
+                            showLanguageDisclaimer()
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showLanguageDisclaimer() {
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.language_disclaimer_title))
+            .setMessage(resources.getString(R.string.language_disclaimer_description))
+            .setPositiveButton(resources.getString(R.string.language_disclaimer_positive)) { _, _ ->
+
+            }
+            .show()
+        dialog.setCanceledOnTouchOutside(false)
     }
 
 }

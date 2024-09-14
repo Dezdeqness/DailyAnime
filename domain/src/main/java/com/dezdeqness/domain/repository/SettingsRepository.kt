@@ -6,4 +6,7 @@ interface SettingsRepository {
 
     suspend fun setNightThemeStatus(status: Boolean)
 
+    suspend fun isLanguageDisclaimerShown(): Boolean
+
+    suspend fun setLanguageDisclaimerShown(isShown: Boolean)
 }

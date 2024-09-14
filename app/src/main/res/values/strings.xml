@@ -1,133 +1,148 @@
 <resources>
-    <string name="app_name">Daily Anime</string>
+    <string name="app_name" translatable="false">Daily Anime</string>
 
-    <string name="search_filter_title">Фильтр</string>
-    <string name="search_filter_reset">Сбросить</string>
-    <string name="search_filter_apply">Применить</string>
+    <string name="search_filter_title">Filter</string>
+    <string name="search_filter_reset">Reset</string>
+    <string name="search_filter_apply">Apply</string>
 
-    <string name="anime_search_filter_genre">Жанр</string>
-    <string name="anime_search_filter_season">Сезон</string>
-    <string name="anime_search_filter_status">Статус</string>
-    <string name="anime_search_filter_kind">Тип</string>
-    <string name="anime_search_filter_duration">Продолжительность эпизода</string>
-    <string name="anime_search_filter_rating">Возрастной рейтинг</string>
+    <string name="anime_search_filter_genre">Genre</string>
+    <string name="anime_search_filter_season">Season</string>
+    <string name="anime_search_filter_status">Status</string>
+    <string name="anime_search_filter_kind">Type</string>
+    <string name="anime_search_filter_duration">Episode duration</string>
+    <string name="anime_search_filter_rating">Age rating</string>
 
-    <string name="anime_status_anons">Анонсировано</string>
-    <string name="anime_status_ongoing">Выходящее</string>
-    <string name="anime_status_released">Вышедшее</string>
-    <string name="anime_status_latest">Вышло недавно</string>
+    <string name="anime_status_anons">Announced</string>
+    <string name="anime_status_ongoing">Ongoing</string>
+    <string name="anime_status_released">Released</string>
+    <string name="anime_status_latest">Release recently</string>
 
-    <string name="unauthorized_title_profile">Войдите в аккаунт чтобы получить доступ к дополнительным функциям</string>
-    <string name="unauthorized_title_personal_list">Войдите в аккаунт чтобы иметь возможность следить за вашим прогрессом</string>
-    <string name="unauthorized_sign_in">Авторизация</string>
-    <string name="unauthorized_sign_up">Регистрация</string>
+    <string name="unauthorized_title_profile">Login to account for receiving additional features</string>
+    <string name="unauthorized_title_personal_list">Login to account to follow your progress</string>
+    <string name="unauthorized_sign_in">Log In</string>
+    <string name="unauthorized_sign_up">Sign Up</string>
 
-    <string name="search_empty_state_title">По запросу ничего не найдено, сэнпай >__&lt;</string>
+    <string name="search_empty_state_title">Nothing found matching your request, senpai >__&lt;</string>
 
-    <string name="profile_history">История</string>
-    <string name="profile_statistics">Статистика</string>
-    <string name="profile_logout">Выход из аккаунта</string>
+    <string name="profile_history">History</string>
+    <string name="profile_statistics">Statistics</string>
+    <string name="profile_logout">Log Out</string>
 
-    <string name="history_empty_state">Ваша история пуста</string>
-    <string name="history_toolbar_title">История</string>
+    <string name="history_empty_state">Your history is empty</string>
+    <string name="history_toolbar_title">History</string>
 
-    <string name="settings_toolbar_title">Настройки</string>
-    <string name="settings_dark_theme">Включить темную тему</string>
-    <string name="settings_version_name">Версия:</string>
+    <string name="settings_toolbar_title">Settings</string>
+    <string name="settings_dark_theme">Enable dark theme</string>
+    <string name="settings_version_name">Version:</string>
 
-    <string name="stats_toolbar_title">Статистика</string>
-    <string name="stats_header_scores">Оценки</string>
-    <string name="stats_header_types">Типы</string>
-    <string name="stats_header_lists">Списки</string>
+    <string name="stats_toolbar_title">Statistics</string>
+    <string name="stats_header_scores">Scores</string>
+    <string name="stats_header_types">Types</string>
+    <string name="stats_header_lists">Lists</string>
 
-    <string name="anime_details_description_title">Описание</string>
-    <string name="anime_details_related_title">Связанное</string>
-    <string name="anime_details_characters_title">Персонажи</string>
-    <string name="anime_details_screenshots_title">Кадры</string>
-    <string name="anime_details_video_title">Видео</string>
-    <string name="anime_details_date">Дата выхода</string>
-    <string name="anime_details_status">Статус</string>
-    <string name="anime_details_episodes_title">Эпизоды</string>
-    <string name="anime_details_type_title">Тип</string>
-    <string name="anime_details_episode_date">Несколько мгновений</string>
-    <string name="anime_details_episode_time_title">Время эпизода</string>
-    <string name="anime_details_episode_time">%1$s мин</string>
-    <string name="anime_details_date_next_episode">До %1$d эпизода</string>
-    <string name="anime_details_age_rating_title">Возрастной рейтинг</string>
+    <string name="anime_details_description_title">Description</string>
+    <string name="anime_details_related_title">Related</string>
+    <string name="anime_details_characters_title">Characters</string>
+    <string name="anime_details_screenshots_title">Screenshots</string>
+    <string name="anime_details_video_title">Video</string>
+    <string name="anime_details_date">Release date</string>
+    <string name="anime_details_status">Status</string>
+    <string name="anime_details_episodes_title">Episodes</string>
+    <string name="anime_details_type_title">Type</string>
+    <string name="anime_details_episode_date">A few moments</string>
+    <string name="anime_details_episode_time_title">Episode time</string>
+    <string name="anime_details_episode_time">%1$s min</string>
+    <string name="anime_details_date_next_episode">Up to %1$d episode</string>
+    <string name="anime_details_age_rating_title">Age rating</string>
 
-    <string name="anime_details_age_rating_g">Для всех</string>
-    <string name="anime_details_age_rating_pg">Для детей</string>
+    <string name="anime_details_age_rating_g">All ages</string>
+    <string name="anime_details_age_rating_pg">For children</string>
     <string name="anime_details_age_rating_pg_13">13+</string>
     <string name="anime_details_age_rating_r">17+</string>
     <string name="anime_details_age_rating_r_plus">18+</string>
-    <string name="anime_details_age_rating_rx">Хентай</string>
-    <string name="anime_details_state_error_title">Попробовать еще раз</string>
+    <string name="anime_details_age_rating_rx">Hentai</string>
+    <string name="anime_details_state_error_title">Try again</string>
 
-    <string name="anime_personal_list_ribbon_status_planned">Запланировано</string>
-    <string name="anime_personal_list_ribbon_status_watching">Смотрю</string>
-    <string name="anime_personal_list_ribbon_status_rewatching">Пересмотр</string>
-    <string name="anime_personal_list_ribbon_status_completed">Завершено</string>
-    <string name="anime_personal_list_ribbon_status_on_hold">Отложено</string>
-    <string name="anime_personal_list_ribbon_status_dropped">Брошено</string>
-    <string name="personal_list_popup_menu_filter_name">Имя</string>
-    <string name="personal_list_popup_menu_filter_progress">Прогресс</string>
-    <string name="personal_list_popup_menu_filter_score">Оценка</string>
-    <string name="personal_list_popup_menu_filter_episodes">Эпизоды</string>
-    <string name="edit_rate_status_watching">Смотрю</string>
-    <string name="edit_rate_status_planned">В планах</string>
-    <string name="edit_rate_status_rewatching">Пересмотр</string>
-    <string name="edit_rate_status_completed">Просмотрено</string>
-    <string name="edit_rate_status_on_hold">Отложено</string>
-    <string name="edit_rate_status_dropped">Брошено</string>
-    <string name="edit_rate_status_none">Статус отсутствует</string>
-    <string name="edit_rate_episodes_title">Просмотрено:</string>
-    <string name="edit_rate_episodes_header">Эпизоды</string>
-    <string name="edit_rate_comment_header">Комментарий</string>
-    <string name="edit_rate_score_header">Оценка</string>
-    <string name="edit_rate_create_success">Аниме было успешно обновлено!</string>
-    <string name="edit_rate_update_success">Аниме было успешно добавлено!</string>
-    <string name="edit_rate_error">Произошла ошибка :(</string>
-    <string name="edit_rate_reset_title">Сбросить</string>
-    <string name="edit_rate_create_title">Создать</string>
-    <string name="edit_rate_update_title">Обновить</string>
-    <string name="edit_rate_status_title">Статус</string>
-    <string name="edit_rate_score_title">Оценка</string>
-    <string name="edit_rate_status_no_status">Выбрать</string>
+    <string name="anime_personal_list_ribbon_status_planned">Planned</string>
+    <string name="anime_personal_list_ribbon_status_watching">Watching</string>
+    <string name="anime_personal_list_ribbon_status_rewatching">Re-watching</string>
+    <string name="anime_personal_list_ribbon_status_completed">Completed</string>
+    <string name="anime_personal_list_ribbon_status_on_hold">Hold on</string>
+    <string name="anime_personal_list_ribbon_status_dropped">Abandoned</string>
+    <string name="personal_list_popup_menu_filter_name">Name</string>
+    <string name="personal_list_popup_menu_filter_progress">Progress</string>
+    <string name="personal_list_popup_menu_filter_score">Score</string>
+    <string name="personal_list_popup_menu_filter_episodes">Episodes</string>
+    <string name="edit_rate_status_watching">Watching</string>
+    <string name="edit_rate_status_planned">Planned</string>
+    <string name="edit_rate_status_rewatching">Re-watching</string>
+    <string name="edit_rate_status_completed">Watched</string>
+    <string name="edit_rate_status_on_hold">Hold on</string>
+    <string name="edit_rate_status_dropped">Abandoned</string>
+    <string name="edit_rate_status_none">Status absent</string>
+    <string name="edit_rate_episodes_title">Watched:</string>
+    <string name="edit_rate_episodes_header">Episodes</string>
+    <string name="edit_rate_comment_header">Comment</string>
+    <string name="edit_rate_score_header">Score</string>
+    <string name="edit_rate_create_success">Anime has been created successfully!</string>
+    <string name="edit_rate_update_success">Anime has been updated successfully!</string>
+    <string name="edit_rate_error">Error is present :(</string>
+    <string name="edit_rate_reset_title">Reset</string>
+    <string name="edit_rate_create_title">Create</string>
+    <string name="edit_rate_update_title">Update</string>
+    <string name="edit_rate_status_title">Status</string>
+    <string name="edit_rate_score_title">Score</string>
+    <string name="edit_rate_status_no_status">Select</string>
 
-    <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
-    <string name="general_error">Произошла ошибка</string>
-    <string name="general_no_internet_error">Интернет отстуствует. Проверь интернет подключение</string>
+    <string name="error_state_title">Internet connection is absent or error is present</string>
+    <string name="general_error">Something went wrong</string>
+    <string name="general_no_internet_error">No internet. Check your connection</string>
 
-    <string name="anime_chronology_title">Хронология</string>
-    <string name="anime_similar_title">Похожее</string>
+    <string name="anime_chronology_title">Chronology</string>
+    <string name="anime_similar_title">Similar</string>
 
-    <string name="filter_cell_season_old_enough">Более старые</string>
+    <string name="filter_cell_season_old_enough">More old</string>
 
-    <string name="bottom_navigation_personal_lists">Списки</string>
-    <string name="bottom_navigation_calendar">Календарь</string>
-    <string name="bottom_navigation_search">Поиск</string>
-    <string name="bottom_navigation_profile">Профиль</string>
-    <string name="personal_list_empty_state">Категория не имеет элементов</string>
-    <string name="search_placeholder_hint">Восстание Лелуша</string>
-    <string name="anime_toolbar_similar">Похожее</string>
-    <string name="anime_toolbar_chronology">Хронология</string>
-    <string name="anime_toolbar_stats">Статистика</string>
-    <string name="toolbar_title_similar">Похожее</string>
-    <string name="calendar_search_placeholder_hint">Выходящие аниме</string>
-    <string name="personal_list_search_placeholder_hint">Аниме</string>
+    <string name="bottom_navigation_personal_lists">Lists</string>
+    <string name="bottom_navigation_calendar">Calendar</string>
+    <string name="bottom_navigation_search">Search</string>
+    <string name="bottom_navigation_profile">Profile</string>
+    <string name="personal_list_empty_state">Category has no elements</string>
+    <string name="search_placeholder_hint">Code Geass</string>
+    <string name="anime_toolbar_similar">Similar</string>
+    <string name="anime_toolbar_chronology">Chronology</string>
+    <string name="anime_toolbar_stats">Stats</string>
+    <string name="toolbar_title_similar">Similar</string>
+    <string name="calendar_search_placeholder_hint">Upcoming anime</string>
+    <string name="personal_list_search_placeholder_hint">Anime</string>
 
-    <string name="cell_episode">Эпизод %d</string>
+    <string name="cell_episode">Episode %d</string>
 
-    <string name="anime_kind_tv">ТВ</string>
-    <string name="anime_kind_film">Фильм</string>
+    <string name="anime_kind_tv">TV</string>
+    <string name="anime_kind_film">Movie</string>
     <string name="anime_kind_ova">Ova</string>
     <string name="anime_kind_ona">Ona</string>
-    <string name="anime_kind_special">Спэшел</string>
-    <string name="anime_kind_tv_special">ТВ спэшел</string>
-    <string name="anime_kind_music">Клип</string>
-    <string name="anime_kind_promo">Промо</string>
-    <string name="anime_kind_ad">Реклама</string>
-    <string name="select_status_dialog_title">Выберите статус</string>
+    <string name="anime_kind_special">Special</string>
+    <string name="anime_kind_tv_special">TV special</string>
+    <string name="anime_kind_music">Music</string>
+    <string name="anime_kind_promo">Promo</string>
+    <string name="anime_kind_ad">Ad</string>
+    <string name="select_status_dialog_title">Select status</string>
+
+    <string name="anime_score_1">It couldn\'t be worse</string>
+    <string name="anime_score_2">Terrible</string>
+    <string name="anime_score_3">Very bad</string>
+    <string name="anime_score_4">Badly</string>
+    <string name="anime_score_5">More or less</string>
+    <string name="anime_score_6">Fine</string>
+    <string name="anime_score_7">Good</string>
+    <string name="anime_score_8">Great</string>
+    <string name="anime_score_9">Fabulous</string>
+    <string name="anime_score_10">Epic win!</string>
+
+    <string name="language_disclaimer_title" translatable="false">Language disclaimer</string>
+    <string name="language_disclaimer_description" translatable="false">While using app you can see that content has no translations. It`s expected behavior, only russian translation is supported by API.\nThanks for attention</string>
+    <string name="language_disclaimer_positive" translatable="false">Ok</string>
 
 </resources>
 

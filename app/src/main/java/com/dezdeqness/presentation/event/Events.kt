@@ -38,6 +38,8 @@ data class NavigateToEditRate(
     val overallEpisodes: Int,
 ) : Event()
 
+data object LanguageDisclaimer : Event()
+
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
 data class NavigateToScreenshotViewer(val currentIndex: Int, val screenshots: ArrayList<String>) : Event()
