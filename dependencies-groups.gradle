@@ -20,6 +20,7 @@ ext {
     chucker = Group {
         debugImplementation(libs.chucker.library)
         releaseImplementation(libs.chucker.noop)
+        qaImplementation(libs.chucker.library)
     }
 
     glide = Group {

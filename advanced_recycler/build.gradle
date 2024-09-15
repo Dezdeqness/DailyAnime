@@ -24,6 +24,10 @@ android {
         viewBinding = true
     }
 
+    buildTypes {
+        qa {}
+    }
+
     compileOptions {
         sourceCompatibility versions.javaVersion
         targetCompatibility versions.javaVersion
