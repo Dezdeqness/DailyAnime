@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.animelist
 
-import com.dezdeqness.core.AppLogger
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
