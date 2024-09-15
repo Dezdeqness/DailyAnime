@@ -15,22 +15,23 @@ glideVersion = "4.16.0"
 securityCryptoVersion = "1.1.0-alpha06"
 transformationVersion = "4.3.0"
 coroutinesVersion = "1.7.3"
-lifecycleVersion = "2.8.2"
+lifecycleVersion = "2.8.5"
 roomVersion = "2.6.1"
 materialVersion = "1.12.0"
 constraintVersion = "2.1.4"
-fragmentVersion = "1.8.1"
-collectionVersion = "1.4.0"
+fragmentVersion = "1.8.3"
+collectionVersion = "1.4.3"
 junitVersion = "5.10.0"
 mockkVersion = "1.13.10"
 zoomableVersion = "1.5.3"
 swipeRefreshVersion = "1.1.0"
-navigationVersion = "2.7.7"
+navigationVersion = "2.8.0"
 androidJunitVersion = "1.2.1"
 espressoVersion = "3.6.1"
-firebaseBomVersion = "33.1.1"
-firebaseCrashlyticsVersion = "19.0.2"
-firebaseAnalyticsVersion = "22.0.2"
+firebaseBomVersion = "33.3.0"
+firebaseCrashlyticsVersion = "19.1.0"
+firebaseAnalyticsVersion = "22.1.0"
+firebaseConfigVersion = "22.0.0"
 coilVersion = "2.5.0"
 composeActivityVersion = "1.9.0"
 composeBomVersion = "2024.06.00"
@@ -107,6 +108,7 @@ androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-co
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBomVersion" }
 google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
 google-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalyticsVersion" }
+google-firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigVersion" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 

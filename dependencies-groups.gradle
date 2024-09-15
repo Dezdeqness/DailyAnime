@@ -111,6 +111,7 @@ ext {
         implementation(libs.google.firebase.bom)
         implementation(libs.google.firebase.analytics)
         implementation(libs.google.firebase.crashlytics)
+        implementation(libs.google.firebase.config)
     }
 
     coil = Group {

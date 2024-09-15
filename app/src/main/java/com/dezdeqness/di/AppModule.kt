@@ -7,6 +7,9 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.CoroutineDispatcherProviderImpl
 import com.dezdeqness.core.MessageProvider
+import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.data.core.config.local.DebugConfigProvider
+import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
 import com.dezdeqness.data.manager.PersonalListFilterManager
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.mapper.FilterMapper
@@ -98,6 +101,7 @@ class AppModule {
 
     @Singleton
     @Provides
+    // TODO: Fancy but no so useful, provide manager with both classes
     fun provideConfigManager(
         remoteConfigProvider: RemoteConfigProvider,
         debugConfigProvider: DebugConfigProvider,
