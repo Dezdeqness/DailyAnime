@@ -6,12 +6,13 @@ import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
 import com.dezdeqness.domain.model.TokenEntity
+import dagger.Lazy
 import okhttp3.HttpUrl
 import javax.inject.Inject
 
 class AccountRemoteDataSourceImpl @Inject constructor(
-    private val accountApiService: AccountApiService,
-    private val authorizationApiService: AuthorizationApiService,
+    private val accountApiService: Lazy<AccountApiService>,
+    private val authorizationApiService: Lazy<AuthorizationApiService>,
     private val accountMapper: AccountMapper,
 ) : AccountRemoteDataSource, BaseDataSource() {
 
@@ -26,7 +27,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun login(code: String) = tryWithCatch {
-        val response = authorizationApiService.login(
+        val response = authorizationApiService.get().login(
             code = code,
             secret = CLIENT_CODE,
             id = CLIENT_ID,
@@ -49,7 +50,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun logout() = tryWithCatch {
-        val response = accountApiService.logout().execute()
+        val response = accountApiService.get().logout().execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
@@ -60,7 +61,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getBriefAccountInfo() = tryWithCatch {
-        val response = accountApiService.getProfile().execute()
+        val response = accountApiService.get().getProfile().execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
@@ -73,7 +74,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getDetailsAccountInfo(userId: Long) = tryWithCatch {
-        val response = accountApiService.getProfileDetails(id = userId).execute()
+        val response = accountApiService.get().getProfileDetails(id = userId).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
@@ -86,7 +87,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getHistory(userId: Long, page: Int, limit: Int) = tryWithCatch {
-        val response = accountApiService.getUserHistory(
+        val response = accountApiService.get().getUserHistory(
             id = userId,
             page = page,
             limit = limit
@@ -103,7 +104,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun refresh(token: String) = tryWithCatch {
-        val response = authorizationApiService.refresh(
+        val response = authorizationApiService.get().refresh(
             token = token,
             secret = CLIENT_CODE,
             id = CLIENT_ID,

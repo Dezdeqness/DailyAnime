@@ -8,16 +8,17 @@ import com.dezdeqness.data.model.requet.PostUserRate
 import com.dezdeqness.data.model.requet.PostUserRateRequestBody
 import com.dezdeqness.data.model.requet.UpdateUserRate
 import com.dezdeqness.data.model.requet.UpdateUserRateRequestBody
+import dagger.Lazy
 import javax.inject.Inject
 
 class UserRatesRemoteDataSourceImpl @Inject constructor(
-    private val apiService: UserRatesApiService,
+    private val apiService: Lazy<UserRatesApiService>,
     private val userRatesMapper: UserRatesMapper,
 ) : UserRatesRemoteDataSource, BaseDataSource() {
 
     override fun getUserRates(userId: Long, status: String, page: Int) =
         tryWithCatch {
-            val response = apiService.getUserRates(
+            val response = apiService.get().getUserRates(
                 status = status,
                 id = userId,
                 page = page,
@@ -55,7 +56,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
                 volumes = volumes.toString()
             )
         )
-        val response = apiService.updateUserRate(
+        val response = apiService.get().updateUserRate(
             id = rateId,
             body = body,
         ).execute()
@@ -94,7 +95,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
                 volumes = volumes.toString(),
             )
         )
-        val response = apiService.createUserRate(body = body).execute()
+        val response = apiService.get().createUserRate(body = body).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
@@ -105,7 +106,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun deleteUserRateByRateId(rateId: Long) = tryWithCatch {
-        val response = apiService.deleteUserRate(rateId).execute()
+        val response = apiService.get().deleteUserRate(rateId).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {

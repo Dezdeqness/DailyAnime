@@ -2,18 +2,16 @@ package com.dezdeqness.data.datasource
 
 import com.dezdeqness.data.AnimeApiService
 import com.dezdeqness.data.mapper.AnimeMapper
-import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.AnimeChronologyEntity
+import dagger.Lazy
 import javax.inject.Inject
 
 class AnimeRemoteDataSourceImpl @Inject constructor(
-    private val apiService: AnimeApiService,
+    private val apiService: Lazy<AnimeApiService>,
     private val animeMapper: AnimeMapper,
     private val screenshotMapper: ScreenshotMapper,
     private val roleMapper: RoleMapper,
@@ -28,13 +26,13 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     ) =
         tryWithCatch {
             val call = if (searchQuery.isEmpty()) {
-                apiService.getListAnime(
+                apiService.get().getListAnime(
                     limit = sizeOfPage,
                     page = pageNumber,
                     options = queryMap,
                 )
             } else {
-                apiService.getListAnimeWithSearchQuery(
+                apiService.get().getListAnimeWithSearchQuery(
                     limit = sizeOfPage,
                     page = pageNumber,
                     options = queryMap,
@@ -57,9 +55,9 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
 
     override fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean) = tryWithCatch {
         val response = if (isAuthorized) {
-            apiService.getDetailsAnimeMainInfoWithAuth(id = id).execute()
+            apiService.get().getDetailsAnimeMainInfoWithAuth(id = id).execute()
         } else {
-            apiService.getDetailsAnimeMainInfo(id).execute()
+            apiService.get().getDetailsAnimeMainInfo(id).execute()
         }
 
         val responseBody = response.body()
@@ -73,7 +71,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getDetailsAnimeScreenshots(id: Long) = tryWithCatch {
-        val response = apiService.getDetailsAnimeScreenshots(id).execute()
+        val response = apiService.get().getDetailsAnimeScreenshots(id).execute()
 
         val responseBody = response.body()
 
@@ -86,7 +84,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getDetailsAnimeRelated(id: Long) = tryWithCatch {
-        val response = apiService.getDetailsAnimeRelated(id).execute()
+        val response = apiService.get().getDetailsAnimeRelated(id).execute()
 
         val responseBody = response.body()
 
@@ -99,7 +97,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getDetailsAnimeRoles(id: Long) = tryWithCatch {
-        val response = apiService.getDetailsAnimeRoles(id).execute()
+        val response = apiService.get().getDetailsAnimeRoles(id).execute()
 
         val responseBody = response.body()
 
@@ -112,7 +110,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getDetailsAnimeSimilar(id: Long) = tryWithCatch {
-        val response = apiService.getDetailsAnimeSimilar(id).execute()
+        val response = apiService.get().getDetailsAnimeSimilar(id).execute()
 
         val responseBody = response.body()
 
@@ -126,7 +124,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getDetailsChronology(id: Long) = tryWithCatch {
-        val response = apiService.getDetailsAnimeChronology(id = id).execute()
+        val response = apiService.get().getDetailsAnimeChronology(id = id).execute()
 
         val responseBody = response.body()
 
