@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.databinding.ActivityAuthorizationBinding
 import com.dezdeqness.di.subcomponents.AuthorizationArgsModule
 import com.dezdeqness.getComponent
@@ -30,6 +31,9 @@ class AuthorizationActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var configManager: ConfigManager
 
     private val authorizationViewModel by viewModels<AuthorizationViewModel>(
         factoryProducer = {
@@ -138,7 +142,7 @@ class AuthorizationActivity : AppCompatActivity() {
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
-                    if (url == com.dezdeqness.data.BuildConfig.BASE_AUTHORIZATION_URL) {
+                    if (url == configManager.baseUrl) {
                         authorizationViewModel.onPageStarted()
                     }
                 }

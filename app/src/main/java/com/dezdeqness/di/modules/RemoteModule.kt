@@ -4,10 +4,10 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
-import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.data.core.AuthorizationTokenInterceptor
 import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import com.squareup.moshi.Moshi
@@ -60,10 +60,11 @@ class RemoteModule {
     @Provides
     fun providesRetrofit(
         @Named("okhttp_refresh") okHttpClient: OkHttpClient,
-        moshi: Moshi
+        moshi: Moshi,
+        configManager: ConfigManager,
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_API_URL)
+            .baseUrl(configManager.baseUrl + "api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
@@ -72,9 +73,13 @@ class RemoteModule {
     @Named("Authorization")
     @Singleton
     @Provides
-    fun providesAuthorizationRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =
+    fun providesAuthorizationRetrofit(
+        okHttpClient: OkHttpClient,
+        moshi: Moshi,
+        configManager: ConfigManager,
+    ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_AUTHORIZATION_URL)
+            .baseUrl(configManager.baseUrl)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
@@ -85,10 +90,11 @@ class RemoteModule {
     @Provides
     fun providesAccountRetrofit(
         @Named("okhttp_refresh") okHttpClient: OkHttpClient,
-        moshi: Moshi
+        moshi: Moshi,
+        configManager: ConfigManager,
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_API_URL)
+            .baseUrl(configManager.baseUrl + "api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
