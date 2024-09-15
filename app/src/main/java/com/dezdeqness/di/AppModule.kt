@@ -2,7 +2,8 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
-import com.dezdeqness.core.AppLogger
+import com.dezdeqness.BuildConfig
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.CoroutineDispatcherProviderImpl
 import com.dezdeqness.core.MessageProvider
@@ -82,6 +83,33 @@ class AppModule {
     @Singleton
     @Provides
     fun provideMessageConsumer() = MessageConsumer()
+
+    @Singleton
+    @Provides
+    fun provideRemoteConfigProvider(appLogger: AppLogger) = RemoteConfigProvider(
+        appLogger = appLogger,
+    )
+
+    @Singleton
+    @Provides
+    fun provideDebugConfigProvider(context: Context) = DebugConfigProvider(
+        context = context,
+    )
+
+    @Singleton
+    @Provides
+    fun provideConfigManager(
+        remoteConfigProvider: RemoteConfigProvider,
+        debugConfigProvider: DebugConfigProvider,
+        appLogger: AppLogger,
+    ) = ConfigManager(
+        appLogger = appLogger,
+        configProvider = if (BuildConfig.DEBUG) {
+            debugConfigProvider
+        } else {
+            remoteConfigProvider
+        }
+    )
 
     @Singleton
     @Provides

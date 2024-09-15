@@ -1,4 +1,4 @@
-package com.dezdeqness.core
+package com.dezdeqness.data.core
 
 import android.util.Log
 import com.google.firebase.crashlytics.ktx.crashlytics

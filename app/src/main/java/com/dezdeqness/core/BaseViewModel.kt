@@ -2,6 +2,7 @@ package com.dezdeqness.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventListener
 import kotlinx.coroutines.CoroutineScope

@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.animelist
 
-import com.dezdeqness.core.AppLogger
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.MessageProvider
@@ -10,7 +10,6 @@ import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToFilter
-import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState

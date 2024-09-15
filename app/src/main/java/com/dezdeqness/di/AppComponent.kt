@@ -1,7 +1,7 @@
 package com.dezdeqness.di
 
 import android.content.Context
-import com.dezdeqness.core.AppLogger
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule

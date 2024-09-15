@@ -1,18 +1,16 @@
 package com.dezdeqness.utils
 
+import com.dezdeqness.data.core.config.ConfigManager
 import javax.inject.Inject
 
-class ImageUrlUtils @Inject constructor() {
+class ImageUrlUtils @Inject constructor(
+    private val configManager: ConfigManager,
+) {
 
     fun getImageWithBaseUrl(url: String) =
-        BASE_URL + url
+        configManager.baseUrl + url
 
     fun getSecurityUrl(url: String) =
         url.replace("http", "https")
-
-
-    companion object {
-        private const val BASE_URL = "https://shikimori.one/"
-    }
 
 }

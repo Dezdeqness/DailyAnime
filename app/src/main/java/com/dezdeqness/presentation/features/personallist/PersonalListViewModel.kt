@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.personallist
 
-import com.dezdeqness.core.AppLogger
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.MessageProvider
