@@ -61,6 +61,11 @@ android {
             applicationIdSuffix '.debug'
             proguardFiles 'proguard-rules.pro'
         }
+        qa {
+            initWith debug
+            applicationIdSuffix '.qa'
+            signingConfig signingConfigs.release
+        }
     }
     compileOptions {
         sourceCompatibility versions.javaVersion

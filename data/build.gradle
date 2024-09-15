@@ -36,6 +36,9 @@ android {
             arg("room.expandProjection", "true")
         }
     }
+    buildTypes {
+        qa {}
+    }
 }
 dependencies {
     implementation project(path: ':domain')
