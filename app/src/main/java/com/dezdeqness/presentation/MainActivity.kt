@@ -2,7 +2,6 @@ package com.dezdeqness.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
@@ -14,7 +13,6 @@ import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.ui.ShikimoriSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
