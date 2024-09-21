@@ -201,17 +201,14 @@ class PersonalListViewModel @Inject constructor(
     }
 
     fun onEditRateClicked(editRateId: Long) {
-        personalListStateFlow
-            .value
-            .items
-            .filterIsInstance<UserRateUiModel>()
-            .first { it.rateId == editRateId }
+        userRatesList
+            .first { it.id == editRateId  }
             .let {
                 onEventReceive(
                     NavigateToEditRate(
                         rateId = editRateId,
-                        title = it.name,
-                        overallEpisodes = it.overallEpisodes,
+                        title = it.anime?.russian.orEmpty(),
+                        overallEpisodes = it.anime?.episodesAired ?: 0,
                     )
                 )
             }
