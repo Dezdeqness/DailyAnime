@@ -2,38 +2,43 @@
 
 <p align="center"><img src="app/src/main/ic_launcher-playstore.png" alt="project-image" width="100" height="100"></p>
 
-<h2>Features</h2>
+<h2>⚙️Features</h2>
 
 - Search anime by query and different filters
-- Track your current progress of viewing anime
+- Track your current progress in viewing anime
 - Calendar of upcoming anime
-- Discovery anime details and related things
-- User statistic and history
+- Discovery of anime details and related info
+- User statistics and history
 - Night theme
 
-<h2>Libraries that used</h2>
+<h2>🛠️Tech stack</h2>
 
 - Kotlin
 - Coroutines
-- Dagger 2
+- Dagger2
+- Room
+- Android Architecture Components
 - Glide
 - Retrofit
 - Okhttp
-- Room
+- Jetpack
+- Compose
 - Firebase
-- Android Architecture Components
-- detekt
 
-<h2>Future plans</h2>
+<h2>🔮Future plans</h2>
 
-- Home page
-- Advanced preferences
-- Onboarding
-- Manga/Ranobe functionality
-- Recap
-- Achievements
+- [x] Support of English localization
+- [x] Migration profile and search to Compose
+- [ ] Home page
+- [ ] Onboarding
+- [ ] Migration to Material3
+- [ ] Achievements
+- [ ] Manga/Ranobe functionality
+- [ ] Widget
+- [ ] User recap
+- [ ] Tech improvements
 
-<h2>Project Screenshots:</h2>
+<h2>🎨Project Screenshots:</h2>
 
 <p align="center">
   <img src="images/search.png" width="300" />
