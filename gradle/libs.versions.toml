@@ -46,7 +46,7 @@ kotlinAndroidVersion = "2.0.0"
 firebaseCrashlyticsGradleVersion = "3.0.2"
 
 kotlinCompilerExtensionVersion = "1.5.14"
-
+podCoreVersion = "0.1.1"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
@@ -125,6 +125,8 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
+
+pod-core = { module = "com.dezdeqness.pod:core", version.ref = "podCoreVersion" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidVersion" }

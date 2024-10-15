@@ -105,6 +105,7 @@ dependencies {
     coil()
     implementation(libs.core.ui)
     implementation(libs.core)
+    implementation(libs.pod.core)
 
     implementation project(path: ':advanced_recycler')
     implementation project(path: ':data')
