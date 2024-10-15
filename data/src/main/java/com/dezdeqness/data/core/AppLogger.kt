@@ -11,7 +11,7 @@ class AppLogger {
         Firebase.crashlytics.log("$tag: $message")
     }
 
-    fun logInfo(tag: String, message: String, throwable: Throwable) {
+    fun logInfo(tag: String, message: String = "Error has happen", throwable: Throwable) {
         Firebase.crashlytics.log("$tag: $message")
         Firebase.crashlytics.recordException(throwable)
         Firebase.crashlytics.sendUnsentReports()

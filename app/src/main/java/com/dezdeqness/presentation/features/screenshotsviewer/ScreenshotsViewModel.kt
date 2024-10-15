@@ -3,17 +3,17 @@ package com.dezdeqness.presentation.features.screenshotsviewer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.presentation.event.PagerScrollToPage
-import com.dezdeqness.presentation.event.ShareUrl
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.dezdeqness.pod.core.store.internal.PlantStore
+import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Effect
+import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Event
+import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.State
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Named
 
 class ScreenshotsViewModel @Inject constructor(
-    @Named("index") val index: Int,
-    @Named("screenshots") val screenshots: List<String>,
+    private val store: PlantStore<Event, State, Effect>,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -22,36 +22,20 @@ class ScreenshotsViewModel @Inject constructor(
 ) {
     override val viewModelTag = "ScreenshotsViewModel"
 
-    private val _screenshotState: MutableStateFlow<ScreenshotViewerState> =
-        MutableStateFlow(ScreenshotViewerState())
-    val screenshotState: StateFlow<ScreenshotViewerState> = _screenshotState
+    val state: StateFlow<State> = store.state
+
+    val effects: Flow<Effect> = store.effects
 
     init {
-        _screenshotState.update {
-            it.copy(
-                screenshots = screenshots,
-                currentIndex = index,
-            )
-        }
-
-        onEventReceive(PagerScrollToPage(index))
+        store.onEvent(Event.Init)
     }
 
     fun onShareButtonClicked() {
-        val state = _screenshotState.value
-        val url = state.screenshots[state.currentIndex]
-        onEventReceive(
-            ShareUrl(
-                url = url
-            )
-        )
+        store.onEvent(event = Event.ShareUrlClicked)
     }
 
     fun onScreenShotChanged(index: Int) {
-        _screenshotState.update {
-            it.copy(
-                currentIndex = index,
-            )
-        }
+        store.onEvent(event = Event.IndexChanged(index))
     }
+
 }
