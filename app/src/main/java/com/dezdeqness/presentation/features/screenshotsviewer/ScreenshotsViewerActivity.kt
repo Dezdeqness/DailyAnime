@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,22 +31,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.lifecycle.Lifecycle
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.activity.hideSystemUI
 import com.dezdeqness.core.activity.showSystemUI
 import com.dezdeqness.core.collectEvents
 import com.dezdeqness.di.subcomponents.ScreenshotsArgsModule
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.event.ConsumableEvent
-import com.dezdeqness.presentation.event.EventConsumer
-import com.dezdeqness.presentation.event.PagerScrollToPage
 import com.dezdeqness.presentation.features.screenshotsviewer.composables.ScreenshotPager
-import kotlinx.coroutines.flow.Flow
+import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace
+import kotlinx.coroutines.flow.filterIsInstance
 import javax.inject.Inject
 
 class ScreenshotsViewerActivity : AppCompatActivity() {
@@ -60,11 +56,6 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
             viewModelFactory
         }
     )
-
-    private val eventConsumer: EventConsumer by lazy {
-        EventConsumer(context = this,)
-    }
-
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,9 +76,10 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
         setContent {
             MaterialTheme {
                 Box(modifier = Modifier.background(Color.Black)) {
+                    val context = LocalContext.current
 
-                    val state by viewModel.screenshotState.collectAsState()
-                    val pagerState = rememberPagerState { state.screenshots.size }
+                    val state by viewModel.state.collectAsState()
+                    val pagerState = rememberPagerState { state.screenshotsList.size }
 
                     var isToolbarVisible by remember {
                         mutableStateOf(true)
@@ -95,7 +87,7 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
 
                     ScreenshotPager(
                         state = pagerState,
-                        items = state.screenshots,
+                        items = state.screenshotsList,
                         onShow = {
                             isToolbarVisible = true
                             showSystemUI()
@@ -106,17 +98,23 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                         }
                     )
 
-                    viewModel.events.collectEvents { event ->
-                        when (event) {
-                            is PagerScrollToPage -> {
-                                pagerState.scrollToPage(event.index)
-                            }
-                            is ConsumableEvent -> {
-                                eventConsumer.consume(event)
-                            }
-                            else -> {}
+                    viewModel
+                        .effects
+                        .filterIsInstance<ScreenshotsNamespace.Effect.ScrollToPage>()
+                        .collectEvents { effect ->
+                            pagerState.scrollToPage(effect.index)
                         }
-                    }
+
+                    viewModel
+                        .effects
+                        .filterIsInstance<ScreenshotsNamespace.Effect.ShareUrl>()
+                        .collectEvents { effect ->
+                            val url = effect.url
+                            ShareCompat.IntentBuilder(context)
+                                .setType("text/plain")
+                                .setText(url)
+                                .startChooser()
+                        }
 
                     LaunchedEffect(pagerState) {
                         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -131,7 +129,7 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                     ) {
                         TopAppBar(
                             title = {
-                                Text(text = "${state.currentIndex + 1}/${state.screenshots.size}")
+                                Text(text = "${state.index + 1}/${state.screenshotsList.size}")
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 titleContentColor = Color.White,
