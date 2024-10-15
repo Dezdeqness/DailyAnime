@@ -232,13 +232,13 @@ class AnimeDetailsViewModel @Inject constructor(
 
     private fun onEditCreateSuccessMessage() {
         launchOnIo {
-            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditUpdateSuccessMessage())
+            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditCreateSuccessMessage())
         }
     }
 
     private fun onEditUpdateSuccessMessage() {
         launchOnIo {
-            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditCreateSuccessMessage())
+            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditUpdateSuccessMessage())
         }
     }
 
