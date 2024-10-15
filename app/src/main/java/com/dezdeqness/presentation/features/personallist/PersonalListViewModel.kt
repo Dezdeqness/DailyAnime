@@ -250,7 +250,7 @@ class PersonalListViewModel @Inject constructor(
 
     private fun onEditSuccessMessage() {
         launchOnIo {
-            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditCreateSuccessMessage())
+            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditUpdateSuccessMessage())
         }
     }
 
