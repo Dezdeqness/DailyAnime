@@ -1,5 +1,7 @@
 package com.dezdeqness.presentation
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -138,6 +140,10 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
         dialog.setCanceledOnTouchOutside(false)
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
 }

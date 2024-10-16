@@ -90,7 +90,7 @@ class RoutingActivity : AppCompatActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is NavigateToMainFlow -> {
-                            startActivity(Intent(this@RoutingActivity, MainActivity::class.java))
+                            startActivity(MainActivity.newIntent(context = this@RoutingActivity))
                             finish()
                         }
 

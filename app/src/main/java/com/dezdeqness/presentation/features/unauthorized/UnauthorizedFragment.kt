@@ -18,11 +18,11 @@ class UnauthorizedFragment : BaseComposeFragment() {
                 title = stringResource(requireArguments().getInt("titleResId")),
                 actions = object : UnauthorizedActions {
                     override fun onSignInClicked() {
-                        AuthorizationActivity.startLoginFlow(requireContext())
+                        startActivity(AuthorizationActivity.loginIntent(requireContext()))
                     }
 
                     override fun onSignUpClicked() {
-                        AuthorizationActivity.startSignUpFlow(requireContext())
+                        startActivity(AuthorizationActivity.signUpIntent(requireContext()))
                     }
                 }
             )

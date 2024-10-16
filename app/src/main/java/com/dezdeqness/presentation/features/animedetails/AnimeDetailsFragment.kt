@@ -67,9 +67,10 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
         factoryProducer = { viewModelFactory },
     )
 
-    private val editRateResult = registerForActivityResult(UserRateActivity.UserRate()) { userRate ->
-        viewModel.onUserRateChanged(userRate)
-    }
+    private val editRateResult =
+        registerForActivityResult(UserRateActivity.UserRate()) { userRate ->
+            viewModel.onUserRateChanged(userRate)
+        }
 
     private var title = ""
 
@@ -228,10 +229,12 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
             }
 
             is NavigateToScreenshotViewer -> {
-                ScreenshotsViewerActivity.startActivity(
-                    context = requireContext(),
-                    currentIndex = event.currentIndex,
-                    screenshots = event.screenshots,
+                startActivity(
+                    ScreenshotsViewerActivity.newIntent(
+                        context = requireContext(),
+                        currentIndex = event.currentIndex,
+                        screenshots = event.screenshots,
+                    )
                 )
             }
 

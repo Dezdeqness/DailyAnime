@@ -136,7 +136,9 @@ class AuthorizationActivity : AppCompatActivity() {
                     view: WebView?,
                     request: WebResourceRequest?,
                 ): Boolean {
-                    authorizationViewModel.onShouldOverrideUrlLoading(request?.url?.toString().orEmpty())
+                    authorizationViewModel.onShouldOverrideUrlLoading(
+                        request?.url?.toString().orEmpty()
+                    )
                     return false
                 }
 
@@ -155,23 +157,14 @@ class AuthorizationActivity : AppCompatActivity() {
 
         private const val KEY_IS_LOGIN_FLOW = "is_login_flow"
 
-        fun startLoginFlow(context: Context) {
-            startActivity(context, true)
-        }
+        fun loginIntent(context: Context) = newIntent(context, isLogin = true)
 
-        fun startSignUpFlow(context: Context) {
-            startActivity(context, false)
-        }
+        fun signUpIntent(context: Context) = newIntent(context, isLogin = false)
 
-        private fun startActivity(
-            context: Context,
-            isLogin: Boolean,
-        ) {
-            val intent = Intent(context, AuthorizationActivity::class.java).apply {
+        private fun newIntent(context: Context, isLogin: Boolean) =
+            Intent(context, AuthorizationActivity::class.java).apply {
                 putExtra(KEY_IS_LOGIN_FLOW, isLogin)
             }
-            context.startActivity(intent)
-        }
     }
 
 }

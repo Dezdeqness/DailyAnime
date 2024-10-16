@@ -11,7 +11,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.pager.rememberPagerState
@@ -57,7 +56,7 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
         }
     )
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -174,17 +173,15 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
         private const val KEY_CURRENT_INDEX = "current_index"
         private const val KEY_SCREENSHOTS = "screenshots"
 
-        fun startActivity(
+        fun newIntent(
             context: Context,
             currentIndex: Int,
             screenshots: ArrayList<String>,
-        ) {
-            val intent = Intent(context, ScreenshotsViewerActivity::class.java).apply {
-                putExtra(KEY_CURRENT_INDEX, currentIndex)
-                putStringArrayListExtra(KEY_SCREENSHOTS, screenshots)
-            }
-            context.startActivity(intent)
+        ) = Intent(context, ScreenshotsViewerActivity::class.java).apply {
+            putExtra(KEY_CURRENT_INDEX, currentIndex)
+            putStringArrayListExtra(KEY_SCREENSHOTS, screenshots)
         }
+
     }
 
 }
