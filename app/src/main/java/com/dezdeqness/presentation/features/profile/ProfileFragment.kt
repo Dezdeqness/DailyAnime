@@ -92,11 +92,11 @@ class ProfileFragment : BaseComposeFragment() {
                         }
 
                         NavigateToLoginPage -> {
-                            AuthorizationActivity.startLoginFlow(requireContext())
+                            startActivity(AuthorizationActivity.loginIntent(requireContext()))
                         }
 
                         NavigateToSignUp -> {
-                            AuthorizationActivity.startSignUpFlow(requireContext())
+                            startActivity(AuthorizationActivity.signUpIntent(requireContext()))
                         }
 
                         else -> Unit
