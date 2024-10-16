@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,7 +33,7 @@ fun StatusRibbon(
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(color = AppTheme.colors.ripple)
+                indication = ripple(color = AppTheme.colors.ripple)
             )
             .background(AppTheme.colors.onPrimary.copy(alpha = 0f))
             .padding(vertical = 12.dp, horizontal = 8.dp),
