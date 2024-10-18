@@ -5,11 +5,15 @@ import androidx.compose.ui.res.stringResource
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
-import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
+import com.dezdeqness.presentation.routing.ApplicationRouter
 
 class UnauthorizedFragment : BaseComposeFragment() {
 
-    override fun setupScreenComponent(component: AppComponent) = Unit
+    lateinit var applicationRouter: ApplicationRouter
+
+    override fun setupScreenComponent(component: AppComponent) {
+        applicationRouter = component.applicationRouter
+    }
 
     @Composable
     override fun FragmentContent() {
@@ -18,11 +22,11 @@ class UnauthorizedFragment : BaseComposeFragment() {
                 title = stringResource(requireArguments().getInt("titleResId")),
                 actions = object : UnauthorizedActions {
                     override fun onSignInClicked() {
-                        startActivity(AuthorizationActivity.loginIntent(requireContext()))
+                        applicationRouter.navigateToLoginScreen(requireContext())
                     }
 
                     override fun onSignUpClicked() {
-                        startActivity(AuthorizationActivity.signUpIntent(requireContext()))
+                        applicationRouter.navigateToSignUpScreen(requireContext())
                     }
                 }
             )

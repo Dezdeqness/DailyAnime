@@ -25,6 +25,7 @@ import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.PersonalListHostComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 import com.dezdeqness.domain.repository.SettingsRepository
+import com.dezdeqness.presentation.routing.ApplicationRouter
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -87,5 +88,7 @@ interface AppComponent {
     fun screenshotsViewerComponent(): ScreenshotsViewerComponent.Builder
 
     val appLogger: AppLogger
+
+    val applicationRouter: ApplicationRouter
 
 }

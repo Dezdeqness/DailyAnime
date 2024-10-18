@@ -19,10 +19,14 @@ import com.dezdeqness.presentation.event.NavigateToLoginPage
 import com.dezdeqness.presentation.event.NavigateToSettings
 import com.dezdeqness.presentation.event.NavigateToSignUp
 import com.dezdeqness.presentation.event.NavigateToStats
-import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
+import com.dezdeqness.presentation.routing.ApplicationRouter
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class ProfileFragment : BaseComposeFragment() {
+
+    @Inject
+    lateinit var applicationRouter: ApplicationRouter
 
     private val viewModel: ProfileViewModel by viewModels(
         factoryProducer = {
@@ -92,11 +96,11 @@ class ProfileFragment : BaseComposeFragment() {
                         }
 
                         NavigateToLoginPage -> {
-                            startActivity(AuthorizationActivity.loginIntent(requireContext()))
+                            applicationRouter.navigateToLoginScreen(requireContext())
                         }
 
                         NavigateToSignUp -> {
-                            startActivity(AuthorizationActivity.signUpIntent(requireContext()))
+                            applicationRouter.navigateToSignUpScreen(requireContext())
                         }
 
                         else -> Unit

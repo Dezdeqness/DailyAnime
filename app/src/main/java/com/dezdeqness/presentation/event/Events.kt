@@ -42,7 +42,7 @@ data object LanguageDisclaimer : Event()
 
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
-data class NavigateToScreenshotViewer(val currentIndex: Int, val screenshots: ArrayList<String>) : Event()
+data class NavigateToScreenshotViewer(val currentIndex: Int, val screenshots: List<String>) : Event()
 
 data class PagerScrollToPage(val index: Int) : Event()
 
