@@ -176,10 +176,10 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
         fun newIntent(
             context: Context,
             currentIndex: Int,
-            screenshots: ArrayList<String>,
+            screenshots: List<String>,
         ) = Intent(context, ScreenshotsViewerActivity::class.java).apply {
             putExtra(KEY_CURRENT_INDEX, currentIndex)
-            putStringArrayListExtra(KEY_SCREENSHOTS, screenshots)
+            putStringArrayListExtra(KEY_SCREENSHOTS, ArrayList(screenshots))
         }
 
     }

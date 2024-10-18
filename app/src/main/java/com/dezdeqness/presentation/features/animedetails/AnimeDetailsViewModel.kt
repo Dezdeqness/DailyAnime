@@ -21,7 +21,6 @@ import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.utils.ImageUrlUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.util.ArrayList
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -179,12 +178,11 @@ class AnimeDetailsViewModel @Inject constructor(
             ?.screenshots
             ?.indexOfFirst { previewUrl.contains(it.preview) }
             ?.let { index ->
-                val list = ArrayList(
+                val list =
                     animeDetails
                         ?.screenshots
                         ?.map { imageUrlUtils.getImageWithBaseUrl(it.original) }
                         .orEmpty()
-                )
 
                 onEventReceive(
                     NavigateToScreenshotViewer(

@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.features.routing
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -26,8 +25,8 @@ import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.MainActivity
 import com.dezdeqness.presentation.event.NavigateToMainFlow
+import com.dezdeqness.presentation.routing.ApplicationRouter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,6 +37,9 @@ class RoutingActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var applicationRouter: ApplicationRouter
 
     private val viewModel: RoutingViewModel by viewModels(
         factoryProducer = {
@@ -84,13 +86,12 @@ class RoutingActivity : AppCompatActivity() {
             }
         }
 
-
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
                     when (event) {
                         is NavigateToMainFlow -> {
-                            startActivity(MainActivity.newIntent(context = this@RoutingActivity))
+                            applicationRouter.navigateToMainScreen(this@RoutingActivity)
                             finish()
                         }
 

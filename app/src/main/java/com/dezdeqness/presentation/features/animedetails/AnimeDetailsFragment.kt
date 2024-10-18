@@ -29,12 +29,16 @@ import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
-import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerActivity
 import com.dezdeqness.presentation.features.userrate.UserRateActivity
+import com.dezdeqness.presentation.routing.ApplicationRouter
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), ActionListener {
+
+    @Inject
+    lateinit var applicationRouter: ApplicationRouter
 
     private var onBackPressedCallback: OnBackPressedCallback? = null
 
@@ -122,11 +126,6 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
             }
             menu?.findItem(R.id.action_share)?.isVisible = false
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        clearFragmentResultListener(EDIT_RATE_DIALOG_TAG)
     }
 
     override fun onActionReceive(action: Action) {
@@ -229,12 +228,10 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
             }
 
             is NavigateToScreenshotViewer -> {
-                startActivity(
-                    ScreenshotsViewerActivity.newIntent(
-                        context = requireContext(),
-                        currentIndex = event.currentIndex,
-                        screenshots = event.screenshots,
-                    )
+                applicationRouter.navigateToScreenshotViewerScreen(
+                    context = requireContext(),
+                    screenshots = event.screenshots,
+                    index = event.currentIndex,
                 )
             }
 

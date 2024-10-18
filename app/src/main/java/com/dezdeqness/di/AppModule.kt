@@ -22,6 +22,7 @@ import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
+import com.dezdeqness.presentation.routing.ApplicationRouter
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -131,5 +132,9 @@ class AppModule {
     @Provides
     fun provideSettingsRepository(settingsProvider: SettingsProvider): SettingsRepository =
         SettingsRepositoryImpl(settingsProvider = settingsProvider)
+
+    @Singleton
+    @Provides
+    fun provideApplicationRouter() = ApplicationRouter()
 
 }
