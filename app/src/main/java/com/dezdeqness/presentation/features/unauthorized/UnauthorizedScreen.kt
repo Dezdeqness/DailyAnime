@@ -44,6 +44,7 @@ fun UnauthorizedScreen(
         Text(
             text = title,
             style = AppTheme.typography.titleMedium,
+            color = AppTheme.colors.textPrimary,
             textAlign = TextAlign.Center,
         )
 
