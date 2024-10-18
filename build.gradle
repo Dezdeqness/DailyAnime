@@ -3,6 +3,7 @@ buildscript {
         apply from: 'dependencies-versions.gradle'
         classpath libs.gradle
         classpath libs.google.services
+        classpath libs.androidx.navigation.safeargs
     }
     repositories {
         mavenCentral()

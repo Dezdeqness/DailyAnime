@@ -2,12 +2,15 @@ package com.dezdeqness.presentation.features.unauthorized
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.fragment.navArgs
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.routing.ApplicationRouter
 
 class UnauthorizedFragment : BaseComposeFragment() {
+
+    private val args by navArgs<UnauthorizedFragmentArgs>()
 
     lateinit var applicationRouter: ApplicationRouter
 
