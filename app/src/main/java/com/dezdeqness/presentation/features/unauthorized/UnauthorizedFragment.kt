@@ -22,7 +22,7 @@ class UnauthorizedFragment : BaseComposeFragment() {
     override fun FragmentContent() {
         AppTheme {
             UnauthorizedScreen(
-                title = stringResource(requireArguments().getInt("titleResId")),
+                title = stringResource(args.titleResId),
                 actions = object : UnauthorizedActions {
                     override fun onSignInClicked() {
                         applicationRouter.navigateToLoginScreen(requireContext())
