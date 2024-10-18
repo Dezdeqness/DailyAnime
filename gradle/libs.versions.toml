@@ -47,12 +47,14 @@ firebaseCrashlyticsGradleVersion = "3.0.2"
 
 kotlinCompilerExtensionVersion = "1.5.14"
 podCoreVersion = "0.1.1"
+navigationSafeArgsVersion = "2.8.3"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompatVersion" }
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
+androidx-navigation-safeargs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsVersion" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCryptoVersion" }
 
 chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chuckerVersion" }
