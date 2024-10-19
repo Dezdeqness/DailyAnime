@@ -111,6 +111,5 @@ dependencies {
     implementation project(path: ':advanced_recycler')
     implementation project(path: ':data')
     implementation project(path: ':domain')
-    implementation("com.github.terrakok:cicerone:7.1")
 
 }
