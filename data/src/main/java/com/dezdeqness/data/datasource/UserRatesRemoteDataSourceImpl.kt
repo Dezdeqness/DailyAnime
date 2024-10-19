@@ -105,6 +105,17 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun incrementUserRate(rateId: Long) = tryWithCatch {
+        val response = apiService.get().incrementUserRate(id = rateId).execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            Result.success(userRatesMapper.fromResponse(responseBody))
+        } else {
+            throw response.createApiException()
+        }
+    }
+
     override fun deleteUserRateByRateId(rateId: Long) = tryWithCatch {
         val response = apiService.get().deleteUserRate(rateId).execute()
 

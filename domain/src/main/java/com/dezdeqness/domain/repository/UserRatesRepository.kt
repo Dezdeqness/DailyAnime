@@ -13,6 +13,8 @@ interface UserRatesRepository {
 
     fun createUserRate(targetId: String, status: String, episodes: Long, score: Float, comment: String): Result<Boolean>
 
+    fun incrementUserRate(rateId: Long): Result<Boolean>
+
     fun updateLocalUserRate(userRateEntity: UserRateEntity)
 
 }

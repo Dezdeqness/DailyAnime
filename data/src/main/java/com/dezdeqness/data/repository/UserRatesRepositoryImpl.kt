@@ -73,6 +73,13 @@ class UserRatesRepositoryImpl @Inject constructor(
         return result.map { true }
     }
 
+    override fun incrementUserRate(rateId: Long): Result<Boolean> {
+        val result = userRatesRemoteDataSource.incrementUserRate(
+            rateId = rateId,
+        )
+        return result.map { true }
+    }
+
     override fun createUserRate(
         targetId: String,
         status: String,
