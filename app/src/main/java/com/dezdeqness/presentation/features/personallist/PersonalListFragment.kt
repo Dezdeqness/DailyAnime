@@ -12,12 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalListBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
@@ -185,6 +187,12 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
 
             is OpenMenuPopupFilter -> {
                 openPopupMenu(event.sort)
+            }
+
+            is AnimeDetails -> {
+                findNavController().navigate(
+                        PersonalListFragmentDirections.navigateToAnimeDetails(event.animeId)
+                    )
             }
 
             is ConsumableEvent -> {

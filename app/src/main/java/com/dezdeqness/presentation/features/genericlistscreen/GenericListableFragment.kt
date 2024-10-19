@@ -17,6 +17,7 @@ import com.dezdeqness.databinding.FragmentGenericListableBinding
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.ConsumableEvent
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.models.AdapterItem
 import kotlinx.coroutines.launch
@@ -43,6 +44,8 @@ abstract class GenericListableFragment :
     abstract fun getTitleRes(): Int
 
     abstract fun delegateAdapter(): DelegateAdapter<AdapterItem>
+
+    open fun onEvent(event: Event) = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +101,11 @@ abstract class GenericListableFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
+                    val isConsumed = onEvent(event)
+                    if (isConsumed) {
+                        return@collect
+                    }
+
                     when (event) {
                         is ConsumableEvent -> {
                             eventConsumer.consume(event)

@@ -8,16 +8,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentAnimeStatsBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
-import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
 import com.dezdeqness.presentation.features.stats.StatsListAdapter
 import kotlinx.coroutines.launch
 
 class AnimeStatsFragment : BaseFragment<FragmentAnimeStatsBinding>() {
+
+    private val args by navArgs<AnimeStatsFragmentArgs>()
 
     private val viewModel: AnimeStatsViewModel by viewModels(
         factoryProducer = { viewModelFactory },
@@ -33,12 +35,8 @@ class AnimeStatsFragment : BaseFragment<FragmentAnimeStatsBinding>() {
             .argsModule(
                 AnimeStatsArgsModule(
                     AnimeStatsArguments(
-                        scoresArgument = requireArguments().getParcelableArrayList<AnimeStatsTransferModel>(
-                            "animeScores"
-                        ).orEmpty(),
-                        statusesArgument = requireArguments().getParcelableArrayList<AnimeStatsTransferModel>(
-                            "animeStatuses"
-                        ).orEmpty(),
+                        scoresArgument = args.animeScores.toList(),
+                        statusesArgument = args.animeStatuses.toList(),
                     )
                 )
             )

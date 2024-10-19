@@ -6,7 +6,17 @@
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.dezdeqness.presentation.features.profile.ProfileFragment" />
+        android:name="com.dezdeqness.presentation.features.profile.ProfileFragment" >
+        <action
+            android:id="@+id/navigateToSettings"
+            app:destination="@id/settings" />
+        <action
+            android:id="@+id/navigateToStatistics"
+            app:destination="@id/statistics" />
+        <action
+            android:id="@+id/navigateToHistory"
+            app:destination="@id/history" />
+    </fragment>
 
     <fragment
         android:id="@+id/history"

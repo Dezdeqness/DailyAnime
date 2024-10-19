@@ -24,7 +24,7 @@ sealed class Event {
 
 sealed class ConsumableEvent : Event()
 
-data class AnimeDetails(val animeId: Long) : ConsumableEvent()
+data class AnimeDetails(val animeId: Long) : Event()
 
 data class OpenVideo(val url: String) : ConsumableEvent()
 
@@ -43,8 +43,6 @@ data object LanguageDisclaimer : Event()
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
 data class NavigateToScreenshotViewer(val currentIndex: Int, val screenshots: List<String>) : Event()
-
-data class PagerScrollToPage(val index: Int) : Event()
 
 object ScrollToTop : Event()
 

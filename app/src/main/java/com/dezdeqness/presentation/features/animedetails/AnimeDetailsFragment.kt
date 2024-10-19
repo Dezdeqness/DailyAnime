@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -201,30 +200,21 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
             }
 
             is NavigateToAnimeState -> {
-                findNavController()
-                    .navigate(
-                        R.id.animeStatsFragment,
-                        bundleOf(
-                            "animeScores" to event.scoreList,
-                            "animeStatuses" to event.statusesList,
-                        ),
-                    )
+                val action = AnimeDetailsFragmentDirections.navigateToAnimeStatsAction(
+                    event.scoreList.toTypedArray(),
+                    event.statusesList.toTypedArray(),
+                )
+                findNavController().navigate(action)
             }
 
             is NavigateToSimilar -> {
-                findNavController()
-                    .navigate(
-                        R.id.animeSimilarFragment,
-                        bundleOf("animeId" to event.animeId),
-                    )
+                val action = AnimeDetailsFragmentDirections.navigateToAnimeSimilarAction(event.animeId)
+                findNavController().navigate(action)
             }
 
             is NavigateToChronology -> {
-                findNavController()
-                    .navigate(
-                        R.id.animeChronologyFragment,
-                        bundleOf("animeId" to event.animeId),
-                    )
+                val action = AnimeDetailsFragmentDirections.navigateToAnimeChronologyAction(event.animeId)
+                findNavController().navigate(action)
             }
 
             is NavigateToScreenshotViewer -> {
