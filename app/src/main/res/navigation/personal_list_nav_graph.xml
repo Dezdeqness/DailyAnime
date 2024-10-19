@@ -6,7 +6,16 @@
 
     <fragment
         android:id="@+id/personalList"
-        android:name="com.dezdeqness.presentation.features.personallist.PersonalListFragment" />
+        android:name="com.dezdeqness.presentation.features.personallist.PersonalListFragment">
+
+        <action
+            android:id="@+id/navigateToAnimeDetails"
+            app:destination="@id/details">
+            <argument
+                android:name="animeId"
+                app:argType="long" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/personalUnauthorized"

@@ -6,7 +6,16 @@
 
     <fragment
         android:id="@+id/calendar"
-        android:name="com.dezdeqness.presentation.features.calendar.CalendarFragment" />
+        android:name="com.dezdeqness.presentation.features.calendar.CalendarFragment">
+
+        <action
+            android:id="@+id/navigateToAnimeDetails"
+            app:destination="@id/details">
+            <argument
+                android:name="animeId"
+                app:argType="long" />
+        </action>
+    </fragment>
 
     <include app:graph="@navigation/details_nav_graph" />
 

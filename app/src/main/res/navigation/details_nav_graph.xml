@@ -7,18 +7,79 @@
 
     <fragment
         android:id="@+id/animeDetailsFragment"
-        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment" />
+        tools:layout="@layout/fragment_anime_details"
+        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment">
+
+        <argument
+            android:name="animeId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/navigateToAnimeChronologyAction"
+            app:destination="@id/animeChronologyFragment">
+
+            <argument
+                android:name="animeId"
+                app:argType="long" />
+        </action>
+
+        <action
+            android:id="@+id/navigateToAnimeSimilarAction"
+            app:destination="@id/animeSimilarFragment">
+
+            <argument
+                android:name="animeId"
+                app:argType="long" />
+        </action>
+
+        <action
+            android:id="@+id/navigateToAnimeStatsAction"
+            app:destination="@id/animeStatsFragment">
+
+            <argument
+                android:name="animeScores"
+                app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+            <argument
+                android:name="animeStatuses"
+                app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/animeStatsFragment"
-        android:name="com.dezdeqness.presentation.features.animestats.AnimeStatsFragment" />
+        android:name="com.dezdeqness.presentation.features.animestats.AnimeStatsFragment">
+
+
+        <argument
+            android:name="animeScores"
+            app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+        <argument
+            android:name="animeStatuses"
+            app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+    </fragment>
 
     <fragment
         android:id="@+id/animeSimilarFragment"
-        android:name="com.dezdeqness.presentation.features.animesimilar.AnimeSimilarFragment" />
+        android:name="com.dezdeqness.presentation.features.animesimilar.AnimeSimilarFragment">
+
+        <argument
+            android:name="animeId"
+            app:argType="long" />
+        <action
+            android:id="@+id/animeDetailsFragment"
+            app:destination="@id/animeDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/animeChronologyFragment"
-        android:name="com.dezdeqness.presentation.features.animechronology.AnimeChronologyFragment" />
+        android:name="com.dezdeqness.presentation.features.animechronology.AnimeChronologyFragment">
+
+        <argument
+            android:name="animeId"
+            app:argType="long" />
+        <action
+            android:id="@+id/animeDetailsFragment"
+            app:destination="@id/animeDetailsFragment" />
+    </fragment>
 
 </navigation>

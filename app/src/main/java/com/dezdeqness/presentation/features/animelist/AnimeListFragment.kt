@@ -11,12 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.features.searchfilter.anime.AnimeSearchFilterBottomSheetDialog
@@ -123,6 +125,12 @@ class AnimeListFragment : BaseComposeFragment(), ActionListener {
                             val dialog =
                                 AnimeSearchFilterBottomSheetDialog.newInstance(event.filters)
                             dialog.show(parentFragmentManager, TAG)
+                        }
+
+                        is AnimeDetails -> {
+                            findNavController().navigate(
+                                AnimeListFragmentDirections.navigateToAnimeDetails(event.animeId)
+                            )
                         }
 
                         is ConsumableEvent -> {

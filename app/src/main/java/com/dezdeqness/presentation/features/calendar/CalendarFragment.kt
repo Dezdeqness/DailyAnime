@@ -9,11 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import kotlinx.coroutines.launch
@@ -83,6 +85,11 @@ class CalendarFragment : BaseComposeFragment(), ActionListener {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
                     when (event) {
+                        is AnimeDetails -> {
+                            findNavController().navigate(
+                                CalendarFragmentDirections.navigateToAnimeDetails(event.animeId)
+                            )
+                        }
                         is ConsumableEvent -> {
                             eventConsumer.consume(event)
                         }

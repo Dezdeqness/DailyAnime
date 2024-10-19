@@ -10,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.dezdeqness.R
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
@@ -80,19 +79,19 @@ class ProfileFragment : BaseComposeFragment() {
                         NavigateToHistory -> {
                             this@ProfileFragment
                                 .findNavController()
-                                .navigate(R.id.history)
+                                .navigate(ProfileFragmentDirections.navigateToHistory())
                         }
 
                         NavigateToSettings -> {
                             this@ProfileFragment
                                 .findNavController()
-                                .navigate(R.id.settings)
+                                .navigate(ProfileFragmentDirections.navigateToSettings())
                         }
 
                         NavigateToStats -> {
                             this@ProfileFragment
                                 .findNavController()
-                                .navigate(R.id.statistics)
+                                .navigate(ProfileFragmentDirections.navigateToStatistics())
                         }
 
                         NavigateToLoginPage -> {
