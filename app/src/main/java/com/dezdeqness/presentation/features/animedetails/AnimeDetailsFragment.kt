@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -195,7 +196,8 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                         userRateId = event.rateId,
                         title = event.title,
                         overallEpisodes = event.overallEpisodes,
-                    )
+                    ),
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()),
                 )
             }
 

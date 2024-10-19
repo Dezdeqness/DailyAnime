@@ -15,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.ViewModelProvider
 import com.dezdeqness.core.collectEvents
 import com.dezdeqness.core.ui.theme.AppTheme
@@ -75,8 +74,6 @@ class UserRateActivity : AppCompatActivity() {
             .inject(this)
 
         setContent {
-            val focusManager = LocalFocusManager.current
-
             val state by viewModel.userRateStateFlow.collectAsState()
 
             AppTheme {
