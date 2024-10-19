@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -181,7 +182,8 @@ class PersonalListFragment : BaseFragment<FragmentPersonalListBinding>(), Action
                         userRateId = event.rateId,
                         title = event.title,
                         overallEpisodes = event.overallEpisodes,
-                    )
+                    ),
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()),
                 )
             }
 
