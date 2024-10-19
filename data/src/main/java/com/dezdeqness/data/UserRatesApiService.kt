@@ -32,6 +32,10 @@ interface UserRatesApiService {
     ): Call<UserRateRemote>
 
     @NeedAuthorization
+    @POST("v2/user_rates/{id}/increment")
+    fun incrementUserRate(@Path(value = "id") id: Long): Call<UserRateRemote>
+
+    @NeedAuthorization
     @POST("v2/user_rates")
     fun createUserRate(
         @Body body: PostUserRateRequestBody,
