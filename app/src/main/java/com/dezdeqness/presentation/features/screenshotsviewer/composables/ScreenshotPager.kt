@@ -1,7 +1,6 @@
 package com.dezdeqness.presentation.features.screenshotsviewer.composables
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -24,7 +23,6 @@ import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.toggleScale
 import net.engawapg.lib.zoomable.zoomable
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScreenshotPager(
     items: List<String>,
@@ -33,6 +31,8 @@ fun ScreenshotPager(
     onShow: () -> Unit,
     onHide: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     val scope = rememberCoroutineScope()
 
     var isUiVisible by remember { mutableStateOf(true) }
@@ -46,12 +46,16 @@ fun ScreenshotPager(
             mutableStateOf<ContentScale>(ContentScale.None)
         }
 
-        val zoomState = rememberZoomState()
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
+        val model = remember {
+            ImageRequest.Builder(context)
                 .data(items[page])
                 .crossfade(true)
-                .build(),
+                .build()
+        }
+
+        val zoomState = rememberZoomState()
+        AsyncImage(
+            model = model,
             contentDescription = null,
             contentScale = scale,
             onSuccess = { state ->

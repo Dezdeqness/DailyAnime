@@ -38,6 +38,8 @@ fun AnimeItem(
     item: AnimeUiModel,
     onClick: (Long) -> Unit,
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -51,11 +53,15 @@ fun AnimeItem(
             ),
     ) {
         Box {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
+            val model = remember {
+                ImageRequest.Builder(context)
                     .data(item.logoUrl)
                     .crossfade(true)
-                    .build(),
+                    .build()
+            }
+
+            AsyncImage(
+                model = model,
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 placeholder = painterResource(id = R.drawable.ic_placeholder),
