@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +35,8 @@ fun ProfileCard(
     onLogoutClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     val scrollState = rememberScrollState()
 
     Column(
@@ -43,11 +46,15 @@ fun ProfileCard(
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
+        val model = remember {
+            ImageRequest.Builder(context)
                 .data(avatar)
                 .crossfade(true)
-                .build(),
+                .build()
+        }
+
+        AsyncImage(
+            model = model,
             contentDescription = nickname,
             placeholder = painterResource(id = R.drawable.ic_placeholder),
             error = painterResource(id = R.drawable.ic_placeholder),
