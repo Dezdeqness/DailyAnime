@@ -36,7 +36,7 @@ fun AnimeSearch(
         trailingIcon = {
             IconButton(
                 onClick = {
-                    searchState.query = ""
+                    searchState.updateQuery("")
                     onQueryChanged(searchState.query)
                 },
             ) {

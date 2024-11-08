@@ -27,7 +27,9 @@ fun PersonalListSearch(
     val searchState = rememberSearchState()
 
     LaunchedEffect(searchState.query) {
-        onQueryChanged(searchState.query)
+        if (searchState.hasUserInteracted) {
+            onQueryChanged(searchState.query)
+        }
     }
 
     SearchTextField(
@@ -46,7 +48,7 @@ fun PersonalListSearch(
         trailingIcon = {
             IconButton(
                 onClick = {
-                    searchState.query = ""
+                    searchState.updateQuery("")
                     onQueryChanged(searchState.query)
                 },
             ) {
