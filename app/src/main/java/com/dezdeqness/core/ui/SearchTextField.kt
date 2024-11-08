@@ -61,7 +61,9 @@ fun SearchTextField(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors().copy(
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
-    )
+        disabledIndicatorColor = Color.Transparent,
+    ),
+    isEnabled: Boolean = true,
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -78,7 +80,7 @@ fun SearchTextField(
     OutlinedTextField(
         value = state.query,
         onValueChange = {
-            state.query = it
+            state.updateQuery(it)
         },
         placeholder = if (editTextFocused) {
             placeholder
@@ -107,18 +109,28 @@ fun SearchTextField(
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         colors = colors,
+        enabled = isEnabled,
     )
 }
 
 class SearchState {
     var query by mutableStateOf("")
+    private set
+
+    var hasUserInteracted = false
+
+    fun updateQuery(query: String) {
+        hasUserInteracted = true
+        this.query = query
+    }
 
     companion object {
         val Saver: Saver<SearchState, *> = listSaver(
-            save = { listOf(it.query) },
+            save = { listOf(it.query, it.hasUserInteracted) },
             restore = {
                 SearchState().apply {
-                    query = it[0]
+                    query = it[0] as String
+                    hasUserInteracted = it[1] as Boolean
                 }
             }
         )
