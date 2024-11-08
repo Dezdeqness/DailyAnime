@@ -5,10 +5,6 @@
         <attr name="filterTitle" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="RibbonStatusView">
-
-    </declare-styleable>
-
     <declare-styleable name="RecyclerViewWithState">
         <attr name="recycleViewLayout" format="reference" />
         <attr name="loadingStateLayout" format="reference" />

@@ -10,7 +10,4 @@ class AdapterItemDiffUtil: DiffUtil.ItemCallback<AdapterItem>() {
 
     override fun areContentsTheSame(oldItem: AdapterItem, newItem: AdapterItem) =
         oldItem == newItem
-
-    override fun getChangePayload(oldItem: AdapterItem, newItem: AdapterItem) =
-        oldItem.payload(newItem)
 }

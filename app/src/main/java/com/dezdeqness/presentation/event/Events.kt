@@ -44,8 +44,6 @@ data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
 data class NavigateToScreenshotViewer(val currentIndex: Int, val screenshots: List<String>) : Event()
 
-object ScrollToTop : Event()
-
 object NavigateToStats : Event()
 
 object NavigateToSettings : Event()
@@ -68,8 +66,6 @@ data class NavigateToAnimeState(
 data class NavigateToSimilar(val animeId: Long) : Event()
 
 data class NavigateToChronology(val animeId: Long) : Event()
-
-data class OpenMenuPopupFilter(val sort: String) : Event()
 
 object CloseAuthorization: Event()
 
