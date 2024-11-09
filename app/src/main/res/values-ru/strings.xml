@@ -138,5 +138,8 @@
     <string name="anime_score_9">Великолепно</string>
     <string name="anime_score_10">Эпик вин!</string>
 
+    <string name="ribbon_empty_state_description">Перейдите на экран поиска, чтобы увидеть доступные для отслеживания аниме.</string>
+    <string name="ribbon_empty_state_title">Ваш список пуст</string>
+
 </resources>
 

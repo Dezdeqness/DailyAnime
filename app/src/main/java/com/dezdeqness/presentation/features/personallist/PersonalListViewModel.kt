@@ -142,7 +142,7 @@ class PersonalListViewModel @Inject constructor(
                     )
                 } else {
                     if (currentRibbonId == null) {
-                        currentRibbonId = ribbon[1].id
+                        currentRibbonId = ribbon[0].id
                     }
 
                     if (ribbon.none { it.id == currentRibbonId }) {
@@ -335,6 +335,30 @@ class PersonalListViewModel @Inject constructor(
                 _personalListStateFlow.value = _personalListStateFlow.value.copy(
                     placeholder = Placeholder.UserRate.Error,
                 )
+            }
+        )
+    }
+
+    private fun onUserRateIncrement(editRateId: Long) {
+        makeRequest(
+            action = {
+                userRatesRepository.incrementUserRate(
+                    rateId = editRateId,
+                )
+            },
+            onLoading = { isLoading ->
+                _personalListStateFlow.update {
+                    it.copy(isPullDownRefreshing = isLoading)
+                }
+            },
+            onSuccess = {
+                onEditSuccessMessage()
+                onInitialLoad()
+            },
+            onFailure = {
+                logInfo("Error during user rate changes of personal list(increment)", it)
+
+                onEditErrorMessage()
             }
         )
     }

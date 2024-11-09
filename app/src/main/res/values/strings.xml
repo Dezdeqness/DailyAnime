@@ -144,5 +144,8 @@
     <string name="language_disclaimer_description" translatable="false">While using app you can see that content has no translations. It`s expected behavior, only russian translation is supported by API.\nThanks for attention</string>
     <string name="language_disclaimer_positive" translatable="false">Ok</string>
 
+    <string name="ribbon_empty_state_description">Navigate to search screen to see available animes for tracking</string>
+    <string name="ribbon_empty_state_title">You have no anime to track</string>
+
 </resources>
 
