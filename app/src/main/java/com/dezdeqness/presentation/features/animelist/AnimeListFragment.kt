@@ -17,7 +17,6 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
@@ -27,7 +26,7 @@ import com.dezdeqness.presentation.models.AnimeSearchFilter
 import kotlinx.coroutines.launch
 
 
-class AnimeListFragment : BaseComposeFragment(), ActionListener {
+class AnimeListFragment : BaseComposeFragment() {
 
     private val eventConsumer: EventConsumer by lazy {
         EventConsumer(
@@ -110,10 +109,6 @@ class AnimeListFragment : BaseComposeFragment(), ActionListener {
     override fun onDestroy() {
         super.onDestroy()
         clearFragmentResultListener(TAG)
-    }
-
-    override fun onActionReceive(action: Action) {
-        viewModel.onActionReceive(action)
     }
 
     private fun setupObservers() {

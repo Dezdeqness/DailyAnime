@@ -40,7 +40,10 @@ fun CalendarList(
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }
-            items(section.items.size) { index ->
+            items(
+                count = section.items.size,
+                key = { index -> section.items[index].id },
+            ) { index ->
                 CalendarItem(
                     item = section.items[index],
                     modifier = Modifier.padding(
