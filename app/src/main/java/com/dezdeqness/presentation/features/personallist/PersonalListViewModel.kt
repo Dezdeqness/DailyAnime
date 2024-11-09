@@ -12,11 +12,8 @@ import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
-import com.dezdeqness.presentation.event.OpenMenuPopupFilter
-import com.dezdeqness.presentation.event.ScrollToTop
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
-import com.dezdeqness.presentation.models.UserRateUiModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -53,14 +50,15 @@ class PersonalListViewModel @Inject constructor(
     val personalListStateFlow: StateFlow<PersonalListState> get() = _personalListStateFlow
 
     init {
-        initialLoad()
         actionConsumer.attachListener(this)
     }
 
     override val viewModelTag = "PersonalListViewModel"
 
     override fun onPullDownRefreshed() {
-        if (currentRibbonId != null) {
+        val state = _personalListStateFlow.value
+
+        if (state.placeholder is Placeholder.UserRate || currentRibbonId != null) {
             currentRibbonId?.let { status ->
                 cancelJobIfActive()
 
@@ -81,7 +79,11 @@ class PersonalListViewModel @Inject constructor(
 
                         _personalListStateFlow.value = _personalListStateFlow.value.copy(
                             items = uiItems,
-                            isEmptyStateShowing = userRatesList.isEmpty(),
+                            placeholder = if (userRatesList.isEmpty()) {
+                                Placeholder.Ribbon.Empty
+                            } else {
+                                Placeholder.None
+                            },
                         )
                     },
                     onFailure = {
@@ -89,11 +91,14 @@ class PersonalListViewModel @Inject constructor(
                             "Error during pull down of personal list",
                             it,
                         )
+                        _personalListStateFlow.update { state ->
+                            state.copy(placeholder = Placeholder.Ribbon.Error)
+                        }
                     }
                 )
             }
         } else {
-            initialLoad()
+            onInitialLoad()
         }
     }
 
@@ -114,47 +119,99 @@ class PersonalListViewModel @Inject constructor(
         actionConsumer.detachListener()
     }
 
-    fun onScrollNeed() {
+    // TODO: Add fetching when app from foreground
+    fun onInitialLoad() {
+        launchOnIo {
+            val sortId = personalListFilterRepository.getFilter().sort.sort
+            _personalListStateFlow.update {
+                it.copy(currentSortId = sortId)
+            }
+        }
+
+        onInitialLoad(
+            collector = accountRepository.getProfileDetails(),
+            onSuccess = { details ->
+                ribbonRaw = details.fullAnimeStatusesEntity
+
+                val ribbon = personalListComposer.composeStatuses(ribbonRaw)
+
+                if (ribbon.isEmpty()) {
+                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                        placeholder = Placeholder.Ribbon.Empty,
+                        isPullDownRefreshing = false,
+                    )
+                } else {
+                    if (currentRibbonId == null) {
+                        currentRibbonId = ribbon[1].id
+                    }
+
+                    if (ribbon.none { it.id == currentRibbonId }) {
+                        currentRibbonId = ribbon.first().id
+                    }
+
+                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                        ribbon = ribbon,
+                        currentRibbonId = currentRibbonId.orEmpty(),
+                        placeholder = Placeholder.None,
+                    )
+                    currentRibbonId?.let { status ->
+                        fetchCategory(status = status)
+                    }
+                }
+            },
+            onFailure = {
+                logInfo("Error during initial loading of state of personal list", it)
+                _personalListStateFlow.update { state ->
+                    state.copy(
+                        placeholder = Placeholder.Ribbon.Error,
+                    )
+                }
+            }
+        )
+    }
+
+    fun onScrolled() {
         if (personalListStateFlow.value.isScrollNeed) {
             _personalListStateFlow.update {
                 _personalListStateFlow.value.copy(isScrollNeed = false)
             }
-            onEventReceive(ScrollToTop)
         }
     }
 
     fun onActionReceive(action: Action) {
         launchOnIo {
-            actionConsumer.consume(action)
-        }
-    }
+            when (action) {
+                is Action.EditRateClicked -> {
+                    onEditRateClicked(action.editRateId)
+                }
 
-    fun onRibbonItemSelected(id: String) {
-        if (_personalListStateFlow.value.ribbon.find { it.id == id }?.isSelected == true) {
-            return
-        }
-        currentRibbonId = id
-        var ribbon = personalListComposer.composeStatuses(ribbonRaw)
+                is Action.UserRateIncrement -> {
+                    onUserRateIncrement(action.editRateId)
+                }
 
-        ribbon = personalListComposer.applySelected(
-            items = ribbon,
-            currentId = currentRibbonId
-        )
-
-        _personalListStateFlow.value = _personalListStateFlow.value.copy(
-            ribbon = ribbon,
-            items = listOf(),
-        )
-        launchOnIo {
-            currentRibbonId?.let { status ->
-                fetchCategory(status = status)
+                else -> {
+                    actionConsumer.consume(action)
+                }
             }
         }
     }
 
-    fun onSortChanged(sort: String?) {
-        if (sort == null) return
+    fun onRibbonItemSelected(id: String) {
+        if (_personalListStateFlow.value.currentRibbonId == id) {
+            return
+        }
+        currentRibbonId = id
 
+        _personalListStateFlow.value = _personalListStateFlow.value.copy(
+            currentRibbonId = id,
+            items = listOf(),
+        )
+        launchOnIo {
+            fetchCategory(status = id)
+        }
+    }
+
+    fun onSortChanged(sort: String) {
         launchOnIo {
             personalListFilterRepository.setSort(sort)
 
@@ -167,14 +224,8 @@ class PersonalListViewModel @Inject constructor(
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
                 isScrollNeed = true,
+                currentSortId = sort,
             )
-        }
-    }
-
-    fun onFilterButtonClicked() {
-        launchOnIo {
-            val sort = personalListFilterRepository.getFilter().sort.sort
-            onEventReceive(OpenMenuPopupFilter(sort))
         }
     }
 
@@ -194,16 +245,16 @@ class PersonalListViewModel @Inject constructor(
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
                 items = uiItems,
-                isEmptyStateShowing = uiItems.isEmpty(),
+                placeholder = if (uiItems.isEmpty()) Placeholder.UserRate.Empty else Placeholder.None,
                 isScrollNeed = true,
             )
         }
     }
 
-    fun onEditRateClicked(editRateId: Long) {
+    private fun onEditRateClicked(editRateId: Long) {
         userRatesList
-            .first { it.id == editRateId  }
-            .let {
+            .firstOrNull { it.id == editRateId }
+            ?.let {
                 onEventReceive(
                     NavigateToEditRate(
                         rateId = editRateId,
@@ -232,7 +283,7 @@ class PersonalListViewModel @Inject constructor(
             },
             onSuccess = {
                 onEditSuccessMessage()
-                initialLoad()
+                onInitialLoad()
             },
             onFailure = {
                 logInfo("Error during user rate changes of personal list", it)
@@ -252,49 +303,6 @@ class PersonalListViewModel @Inject constructor(
         launchOnIo {
             messageConsumer.onSuccessMessage(messageProvider.getAnimeEditUpdateSuccessMessage())
         }
-    }
-
-    // TODO: Add fetching when app from foreground
-    private fun initialLoad() {
-        onInitialLoad(
-            collector = accountRepository.getProfileDetails(),
-            onSuccess = { details ->
-                ribbonRaw = details.fullAnimeStatusesEntity
-
-                var ribbon = personalListComposer.composeStatuses(ribbonRaw)
-
-                if (ribbon.isEmpty()) {
-                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                        isEmptyStateShowing = true,
-                        isPullDownRefreshing = false,
-                    )
-                } else {
-                    if (currentRibbonId == null) {
-                        currentRibbonId = ribbon.first().id
-                    }
-
-                    if (ribbon.none { it.id == currentRibbonId }) {
-                        currentRibbonId = ribbon.first().id
-                    }
-
-                    ribbon = personalListComposer.applySelected(
-                        items = ribbon,
-                        currentId = currentRibbonId,
-                    )
-
-                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                        ribbon = ribbon,
-                        isEmptyStateShowing = false,
-                    )
-                    currentRibbonId?.let { status ->
-                        fetchCategory(status = status)
-                    }
-                }
-            },
-            onFailure = {
-                logInfo("Error during initial loading of state of personal list", it)
-            }
-        )
     }
 
     private fun cancelJobIfActive() {
@@ -319,11 +327,14 @@ class PersonalListViewModel @Inject constructor(
 
                 _personalListStateFlow.value = _personalListStateFlow.value.copy(
                     items = uiItems,
-                    isEmptyStateShowing = userRatesList.isEmpty(),
+                    placeholder = if (uiItems.isEmpty()) Placeholder.UserRate.Empty else Placeholder.None,
                 )
             },
             onFailure = {
                 logInfo("Error during fetch of category with status: $status of personal list", it)
+                _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                    placeholder = Placeholder.UserRate.Error,
+                )
             }
         )
     }

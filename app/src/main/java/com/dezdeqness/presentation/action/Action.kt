@@ -6,4 +6,7 @@ interface Action {
 
     data class VideoClick(val url: String) : Action
 
+    data class EditRateClicked(val editRateId: Long) : Action
+
+    data class UserRateIncrement(val editRateId: Long) : Action
 }
