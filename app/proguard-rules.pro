@@ -489,3 +489,4 @@ public static java.lang.String TABLENAME;
 -keep interface com.huawei.hms.analytics.type.HAParamType{*;}
 -keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
 -keep class com.google.android.gms.measurement.internal.** { *; }
+-keep class com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
