@@ -54,7 +54,7 @@ fun PersonalRibbon(
 
             Box(
                 modifier = Modifier
-                    .padding(horizontal = 4.dp)
+                    .padding(horizontal = 8.dp)
                     .clip(AppTheme.shapes.large)
                     .clickable(
                         onClick = {
