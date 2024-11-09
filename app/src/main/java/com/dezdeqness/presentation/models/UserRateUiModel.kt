@@ -19,4 +19,7 @@ data class UserRateUiModel(
 
     val isAnimeInProgress: Boolean
         get() = episodes != 0 && overallEpisodes != 0
+
+    val isFinished: Boolean
+        get() = overallEpisodes != 0 && overallEpisodes == episodes
 }

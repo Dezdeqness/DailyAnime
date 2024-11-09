@@ -137,17 +137,18 @@ fun PersonalListAnimeItem(
                         }
 
                         Row(horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
-                            // buttons
-                            IconButton(
-                                onClick = {
-                                    onActionReceive(Action.UserRateIncrement(userRateUiModel.rateId))
+                            if (userRateUiModel.isFinished.not()) {
+                                IconButton(
+                                    onClick = {
+                                        onActionReceive(Action.UserRateIncrement(userRateUiModel.rateId))
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_plus),
+                                        contentDescription = null,
+                                        tint = AppTheme.colors.onSecondary
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_plus),
-                                    contentDescription = null,
-                                    tint = AppTheme.colors.onSecondary
-                                )
                             }
 
                             IconButton(
