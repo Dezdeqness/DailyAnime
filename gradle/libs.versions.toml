@@ -49,6 +49,8 @@ kotlinCompilerExtensionVersion = "1.5.14"
 podCoreVersion = "0.1.1"
 navigationSafeArgsVersion = "2.8.3"
 
+apollo = "4.0.0"
+
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompatVersion" }
@@ -130,6 +132,8 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersi
 
 pod-core = { module = "com.dezdeqness.pod:core", version.ref = "podCoreVersion" }
 
+apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
+
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidVersion" }
 android-application = { id = "com.android.application", version.ref = "androidVersion" }
@@ -138,3 +142,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAnd
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinAndroidVersion" }
 arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
