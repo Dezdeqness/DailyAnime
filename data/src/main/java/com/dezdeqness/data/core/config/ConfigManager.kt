@@ -12,6 +12,9 @@ class ConfigManager(
     val electGenresCounter: Int
         get() = getValue(ConfigKeys.SELECT_GENRES_COUNTER)
 
+    val baseGraphqlUrl: String
+        get() = getValue(ConfigKeys.BASE_GRAPHQL_URL)
+
     suspend fun invalidate() {
         configProvider.setDefaults()
         configProvider.refresh()

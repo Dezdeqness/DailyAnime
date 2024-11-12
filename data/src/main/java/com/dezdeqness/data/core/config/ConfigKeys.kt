@@ -8,6 +8,10 @@ enum class ConfigKeys(
         key = "base_url",
         defaultValue = "https://shikimori.one/",
     ),
+    BASE_GRAPHQL_URL(
+        key = "base_graphql_url",
+        defaultValue = "https://shikimori.one/api/graphql"
+    ),
     SELECT_GENRES_COUNTER(
         key = "select_genres_counter",
         defaultValue = 3,
