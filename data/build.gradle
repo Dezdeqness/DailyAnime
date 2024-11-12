@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -52,4 +53,11 @@ dependencies {
     room()
     core()
 
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.dezdeqness.data")
+        schemaFile.set(file("src/main/graphql/schema.graphqls"))
+    }
 }
