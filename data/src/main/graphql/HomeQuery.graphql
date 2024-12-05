@@ -1,0 +1,11 @@
+query Home($genre1: String!, $genre2: String!, $genre3: String!, $limit: PositiveInt!, $order: OrderEnum!) {
+    q1:animes(limit: $limit, genre: $genre1, order: $order) {
+        ...HomeAnime
+    }
+    q2:animes(limit: $limit, genre: $genre2, order: $order) {
+        ...HomeAnime
+    }
+    q3:animes(limit: $limit, genre: $genre3, order: $order) {
+        ...HomeAnime
+    }
+}
