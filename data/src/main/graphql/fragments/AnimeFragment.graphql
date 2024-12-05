@@ -5,6 +5,7 @@ fragment HomeAnime on Anime {
     english
     url
     kind
+    status
     score
     episodes
     episodesAired
