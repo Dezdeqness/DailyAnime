@@ -1,0 +1,14 @@
+fragment HomeAnime on Anime {
+    id
+    name
+    russian
+    english
+    url
+    kind
+    score
+    episodes
+    episodesAired
+    airedOn { date }
+    releasedOn { date }
+    poster { id originalUrl mainUrl }
+}
