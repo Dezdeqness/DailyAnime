@@ -1,10 +1,14 @@
 package com.dezdeqness.di.modules
 
 import android.content.Context
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.interceptor.ApolloInterceptor
+import com.apollographql.apollo.network.okHttpClient
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.AuthorizationTokenInterceptor
+import com.dezdeqness.data.core.GraphqlOperationNameInterceptor
 import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
 import com.dezdeqness.data.core.config.ConfigManager
@@ -120,6 +124,33 @@ class RemoteModule {
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
 
+
+    @Named("graphql")
+    @Singleton
+    @Provides
+    fun providesGraphqlHttpClient(
+        @Named("user_agent") userAgentTokenInterceptor: Interceptor,
+        @Named("chucker") chuckerInterceptor: Interceptor,
+    ): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(userAgentTokenInterceptor)
+            .addInterceptor(chuckerInterceptor)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .build()
+
+    @Singleton
+    @Provides
+    fun provideGraphqlClient(
+        @Named("graphql_operation_name") nameInterceptor: ApolloInterceptor,
+        @Named("graphql") okHttpClient: OkHttpClient,
+        configManager: ConfigManager,
+    ): ApolloClient = ApolloClient.Builder()
+        .serverUrl(configManager.baseGraphqlUrl)
+        .addInterceptor(nameInterceptor)
+        .okHttpClient(okHttpClient)
+        .build()
+
     @Named("refresh")
     @Singleton
     @Provides
@@ -131,6 +162,12 @@ class RemoteModule {
     @Provides
     fun provideAuthorizationTokenInterceptor(tokenManager: TokenManager): Interceptor =
         AuthorizationTokenInterceptor(tokenManager = tokenManager)
+
+    @Named("graphql_operation_name")
+    @Singleton
+    @Provides
+    fun provideGraphqlOperationNameInterceptor(): ApolloInterceptor =
+        GraphqlOperationNameInterceptor()
 
     @Named("user_agent")
     @Singleton

@@ -1,10 +1,13 @@
 package com.dezdeqness.data.repository
 
-import android.webkit.CookieManager
+import com.apollographql.apollo.ApolloClient
+import com.dezdeqness.data.HomeQuery
 import com.dezdeqness.data.core.CookieCleaner
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.manager.TokenManager
+import com.dezdeqness.data.type.OrderEnum
+import com.dezdeqness.data.type.PositiveInt
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.AuthorizationState
 import com.dezdeqness.domain.model.HistoryEntity
@@ -21,6 +24,7 @@ class AccountRepositoryImpl @Inject constructor(
     private val accountLocalDataSource: AccountLocalDataSource,
     private val tokenManager: TokenManager,
     private val cookieCleaner: CookieCleaner,
+    private val apolloClient: ApolloClient,
 ) : AccountRepository {
 
     private val _authorizationState: MutableSharedFlow<AuthorizationState> = MutableSharedFlow()
@@ -53,6 +57,7 @@ class AccountRepositoryImpl @Inject constructor(
     override fun logout() = accountRemoteDataSource.logout()
 
     override fun getProfileRemote(): Result<AccountEntity> {
+
         return accountRemoteDataSource.getBriefAccountInfo()
     }
 
@@ -99,6 +104,17 @@ class AccountRepositoryImpl @Inject constructor(
 
     override fun clearUserCookie() {
         cookieCleaner.clear()
+    }
+
+    override suspend fun test() {
+        val result = apolloClient.query(HomeQuery(
+            genre1 = "2",
+            genre2 = "30",
+            genre3 = "140",
+            limit = 5,
+            order = OrderEnum.popularity,
+            )).execute()
+        result
     }
 
     override suspend fun emitAuthorizationState(state: AuthorizationState) {
