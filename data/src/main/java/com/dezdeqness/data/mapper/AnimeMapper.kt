@@ -1,6 +1,7 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.core.TimestampConverter
+import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyRemote
@@ -10,6 +11,7 @@ import com.dezdeqness.domain.model.AnimeChronologyEntity
 import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.ImageEntity
 import com.dezdeqness.domain.model.StatsItemEntity
 import com.dezdeqness.domain.model.UserRateEntity
 import javax.inject.Inject
@@ -37,7 +39,26 @@ class AnimeMapper @Inject constructor(
             episodes = item.episodes,
             episodesAired = item.episodesAired,
             airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
-            releasedOnTimestamp =  timestampConverter.convertToTimeStamp(item.releasedOn)
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn)
+        )
+
+    fun fromResponse(item: HomeAnime) =
+        AnimeBriefEntity(
+            id = item.id.toLong(),
+            name = item.name,
+            russian = item.russian.orEmpty(),
+            image = ImageEntity(
+                preview = item.poster?.mainUrl.orEmpty(),
+                original = item.poster?.originalUrl.orEmpty(),
+            ),
+            url = item.url,
+            kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
+            score = item.score?.toFloat() ?: 0f,
+            status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
+            episodes = item.episodes,
+            episodesAired = item.episodesAired,
+            airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn?.date.toString()),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn?.date.toString())
         )
 
     fun fromResponse(item: AnimeDetailsRemote) =
@@ -52,7 +73,7 @@ class AnimeMapper @Inject constructor(
             duration = item.duration,
             rating = item.rating,
             airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
-            releasedOnTimestamp =  timestampConverter.convertToTimeStamp(item.releasedOn),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn),
             episodes = item.episodes,
             url = item.url,
             status = AnimeStatus.fromString(item.status),
