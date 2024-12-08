@@ -10,6 +10,8 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+apply from: "$rootDir/scripts/versioning.gradle"
+
 android {
     compileSdk 34
 
@@ -17,8 +19,8 @@ android {
         applicationId "com.dezdeqness"
         minSdk 24
         targetSdk 34
-        versionCode System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
-        versionName "0.4.0"
+        versionCode getVersionCode(project.name)
+        versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
