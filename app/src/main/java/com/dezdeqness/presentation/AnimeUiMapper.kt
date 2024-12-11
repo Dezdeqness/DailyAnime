@@ -3,6 +3,7 @@ package com.dezdeqness.presentation
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.RelatedItemEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
+import com.dezdeqness.presentation.features.home.SectionAnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
 import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
@@ -38,6 +39,14 @@ class AnimeUiMapper @Inject constructor(
                     + " • "
                     + yearFormatter.format(relatedItemUiModel.animeBriefEntity.airedOnTimestamp),
             logoUrl = imageUrlUtils.getImageWithBaseUrl(relatedItemUiModel.animeBriefEntity.image.original),
+        )
+
+    fun mapSectionAnimeModel(animeBriefEntity: AnimeBriefEntity) =
+        SectionAnimeUiModel(
+            id = animeBriefEntity.id,
+            title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
+                ?: animeBriefEntity.name,
+            logoUrl = animeBriefEntity.image.preview,
         )
 
 }

@@ -264,6 +264,31 @@ abstract class BaseViewModel(
             }
         }
 
+    protected fun <T> onInitialLoad(
+        action: suspend () -> (Result<T>),
+        onSuccess: (T) -> (Unit),
+        onLoading: (Boolean) -> Unit,
+        onFailure: ((Throwable) -> (Unit))? = null,
+        errorMessage: String = "",
+    ) =
+        launchOnIo {
+            onLoading(true)
+            action.invoke()
+                .onSuccess { value ->
+                    onSuccess.invoke(value)
+                    onLoading(false)
+                }
+                .onFailure { throwable ->
+                    onFailure?.invoke(throwable)
+                    onLoading(false)
+                    appLogger.logInfo(
+                        tag = viewModelTag,
+                        message = errorMessage,
+                        throwable = throwable,
+                    )
+                }
+        }
+
     fun logInfo(message: String) {
         appLogger.logInfo(
             tag = viewModelTag,
