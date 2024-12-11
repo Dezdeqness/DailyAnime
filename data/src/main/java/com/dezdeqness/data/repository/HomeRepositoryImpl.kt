@@ -13,12 +13,13 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun getHomeSections() =
         homeRemoteDatasource.getHomeSections(
-            genres = homeGenresProvider.getHomeSectionGenresIds(),
+            genres = homeGenresProvider.getHomeSectionGenres(),
             limit = SECTION_ITEM_LIMIT,
-            order = SECTION_ITEM_ORDER)
+            order = SECTION_ITEM_ORDER,
+        )
 
     private companion object {
-        private const val SECTION_ITEM_LIMIT = 5
+        private const val SECTION_ITEM_LIMIT = 10
         private val SECTION_ITEM_ORDER = OrderEnum.popularity
     }
 
