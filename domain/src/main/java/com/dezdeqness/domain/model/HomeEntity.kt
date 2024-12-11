@@ -1,5 +1,5 @@
 package com.dezdeqness.domain.model
 
 data class HomeEntity(
-    val sections: LinkedHashSet<List<AnimeBriefEntity>>,
+    val sections: LinkedHashMap<GenreEntity, List<AnimeBriefEntity>>,
 )

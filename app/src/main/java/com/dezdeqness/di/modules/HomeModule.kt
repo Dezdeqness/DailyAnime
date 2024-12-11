@@ -2,6 +2,7 @@ package com.dezdeqness.di.modules
 
 import com.dezdeqness.data.datasource.HomeRemoteDatasource
 import com.dezdeqness.data.datasource.HomeRemoteDatasourceImpl
+import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.repository.HomeRepositoryImpl
 import com.dezdeqness.domain.repository.HomeRepository
@@ -15,7 +16,8 @@ abstract class HomeModule {
     companion object {
 
         @Provides
-        fun provideHomeGenresProvider() = HomeGenresProvider()
+        fun provideHomeGenresProvider(configurationProvider: ConfigurationProvider) =
+            HomeGenresProvider(configurationProvider = configurationProvider)
     }
 
     @Binds
