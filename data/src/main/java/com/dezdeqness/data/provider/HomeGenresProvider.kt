@@ -7,13 +7,13 @@ class HomeGenresProvider(
 ) {
 
     fun getHomeSectionGenresIds() =
-        getHomeSectionGenres().map { it.id }
+        getHomeSectionGenres().map { it.numericId }
 
     fun getHomeSectionGenres() =
         configurationProvider
             .getListGenre()
             .filter { it.type == TypeEntity.ANIME }
-            .filter { item -> GENRE_ID_LIST.contains(item.id) }
+            .filter { item -> GENRE_ID_LIST.contains(item.numericId) }
 
     companion object {
         private const val GENRE_ID_ADVENTURE = "2"
