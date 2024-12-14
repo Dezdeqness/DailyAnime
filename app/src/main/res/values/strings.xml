@@ -104,6 +104,7 @@
     <string name="filter_cell_season_old_enough">More old</string>
 
     <string name="bottom_navigation_personal_lists">Lists</string>
+    <string name="bottom_navigation_home">Home</string>
     <string name="bottom_navigation_calendar">Calendar</string>
     <string name="bottom_navigation_search">Search</string>
     <string name="bottom_navigation_profile">Profile</string>
