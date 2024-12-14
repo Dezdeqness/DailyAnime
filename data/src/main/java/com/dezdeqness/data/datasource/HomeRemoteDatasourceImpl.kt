@@ -2,6 +2,8 @@ package com.dezdeqness.data.datasource
 
 import com.apollographql.apollo.ApolloClient
 import com.dezdeqness.data.HomeQuery
+import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.createGraphqlException
 import com.dezdeqness.data.mapper.AnimeMapper
 
 import com.dezdeqness.data.type.OrderEnum
@@ -11,13 +13,13 @@ import javax.inject.Inject
 class HomeRemoteDatasourceImpl @Inject constructor(
     private val apolloClient: ApolloClient,
     private val animeMapper: AnimeMapper,
-) : HomeRemoteDatasource {
+) : HomeRemoteDatasource, BaseDataSource() {
 
     override suspend fun getHomeSections(
         genreIds: List<String>,
         limit: Int,
         order: OrderEnum
-    ): Result<HomeEntity> {
+    ) = tryWithCatchSuspend {
         val response = apolloClient.query(
             HomeQuery(
                 genre1 = genreIds[0],
@@ -30,7 +32,7 @@ class HomeRemoteDatasourceImpl @Inject constructor(
 
         val data = response.data
 
-        return if (data != null && response.hasErrors().not()) {
+        if (data != null && response.hasErrors().not()) {
             val sectionQ1 = data.q1.map { animeMapper.fromResponse(it.homeAnime) }
             val sectionQ2 = data.q2.map { animeMapper.fromResponse(it.homeAnime) }
             val sectionQ3 = data.q3.map { animeMapper.fromResponse(it.homeAnime) }
@@ -45,7 +47,7 @@ class HomeRemoteDatasourceImpl @Inject constructor(
                 )
             )
         } else {
-            Result.failure(response.exception?.cause ?: Throwable("error"))
+            throw response.createGraphqlException()
         }
     }
 }
