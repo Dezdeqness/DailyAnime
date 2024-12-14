@@ -3,7 +3,7 @@ package com.dezdeqness.presentation
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.RelatedItemEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
-import com.dezdeqness.presentation.features.home.SectionAnimeUiModel
+import com.dezdeqness.presentation.features.home.composable.SectionAnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
 import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils

@@ -147,5 +147,8 @@
     <string name="ribbon_empty_state_description">Navigate to search screen to see available animes for tracking</string>
     <string name="ribbon_empty_state_title">You have no anime to track</string>
 
+    <string name="home_title">Welcome back</string>
+    <string name="home_title_authorized">Welcome back,\n%s</string>
+
 </resources>
 

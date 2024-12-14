@@ -15,6 +15,7 @@ import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
+import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
@@ -86,6 +87,8 @@ interface AppComponent {
     fun settingsRepository(): SettingsRepository
 
     fun screenshotsViewerComponent(): ScreenshotsViewerComponent.Builder
+
+    fun homeComponent(): HomeComponent.Factory
 
     val appLogger: AppLogger
 
