@@ -36,9 +36,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         actionConsumer.attachListener(this)
-        launchOnIo {
-            handleProfileState()
-        }
 
         launchOnIo {
             accountRepository.authorizationState().collect { _ ->
@@ -56,6 +53,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onInitialLoad() {
+        launchOnIo {
+            handleProfileState()
+        }
+
         onInitialLoad(
             action = {
                 homeRepository.getHomeSections(homeGenresProvider.getHomeSectionGenresIds())
@@ -102,7 +103,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             },
-            onFailure = {
+            onFailure = { throwable ->
                 _homeStateFlow.update {
                     it.copy(
                         sectionsState = it.sectionsState.copy(
@@ -112,6 +113,7 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
+                logInfo("Error during load home page", throwable)
             }
         )
     }
