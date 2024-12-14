@@ -102,6 +102,7 @@
     <string name="filter_cell_season_old_enough">Более старые</string>
 
     <string name="bottom_navigation_personal_lists">Списки</string>
+    <string name="bottom_navigation_home">Главная</string>
     <string name="bottom_navigation_calendar">Календарь</string>
     <string name="bottom_navigation_search">Поиск</string>
     <string name="bottom_navigation_profile">Профиль</string>
