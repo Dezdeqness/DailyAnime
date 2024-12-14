@@ -12,7 +12,7 @@ ext.getVersionCode = { p ->
     def minor = Integer.parseInt(parts[1])
     def patch = Integer.parseInt(parts[2])
 
-    def incrementPostfixNumber = System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
+    def incrementPostfixNumber = System.getenv("RELEASE_VERSION_CODE")?.toInteger() ?: 999
 
     println "Version is $version"
     println("Major: $major")
