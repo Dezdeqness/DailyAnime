@@ -141,5 +141,8 @@
     <string name="ribbon_empty_state_description">Перейдите на экран поиска, чтобы увидеть доступные для отслеживания аниме.</string>
     <string name="ribbon_empty_state_title">Ваш список пуст</string>
 
+    <string name="home_title">Добро пожаловать</string>
+    <string name="home_title_authorized">Добро пожаловать,\n%s</string>
+
 </resources>
 
