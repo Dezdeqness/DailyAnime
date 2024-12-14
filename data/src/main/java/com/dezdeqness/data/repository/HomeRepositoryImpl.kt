@@ -1,19 +1,17 @@
 package com.dezdeqness.data.repository
 
 import com.dezdeqness.data.datasource.HomeRemoteDatasource
-import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.type.OrderEnum
 import com.dezdeqness.domain.repository.HomeRepository
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
     private val homeRemoteDatasource: HomeRemoteDatasource,
-    private val homeGenresProvider: HomeGenresProvider,
 ) : HomeRepository {
 
-    override suspend fun getHomeSections() =
+    override suspend fun getHomeSections(genreIds: List<String>) =
         homeRemoteDatasource.getHomeSections(
-            genres = homeGenresProvider.getHomeSectionGenres(),
+            genreIds = genreIds,
             limit = SECTION_ITEM_LIMIT,
             order = SECTION_ITEM_ORDER,
         )

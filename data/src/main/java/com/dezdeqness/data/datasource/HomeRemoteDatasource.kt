@@ -7,7 +7,7 @@ import com.dezdeqness.domain.model.HomeEntity
 interface HomeRemoteDatasource {
 
     suspend fun getHomeSections(
-        genres: List<GenreEntity>,
+        genreIds: List<String>,
         limit: Int,
         order: OrderEnum,
     ): Result<HomeEntity>

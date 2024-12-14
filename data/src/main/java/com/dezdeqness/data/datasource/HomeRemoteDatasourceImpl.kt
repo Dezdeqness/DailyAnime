@@ -5,7 +5,6 @@ import com.dezdeqness.data.HomeQuery
 import com.dezdeqness.data.mapper.AnimeMapper
 
 import com.dezdeqness.data.type.OrderEnum
-import com.dezdeqness.domain.model.GenreEntity
 import com.dezdeqness.domain.model.HomeEntity
 import javax.inject.Inject
 
@@ -15,15 +14,15 @@ class HomeRemoteDatasourceImpl @Inject constructor(
 ) : HomeRemoteDatasource {
 
     override suspend fun getHomeSections(
-        genres: List<GenreEntity>,
+        genreIds: List<String>,
         limit: Int,
         order: OrderEnum
     ): Result<HomeEntity> {
         val response = apolloClient.query(
             HomeQuery(
-                genre1 = genres[0].id,
-                genre2 = genres[1].id,
-                genre3 = genres[2].id,
+                genre1 = genreIds[0],
+                genre2 = genreIds[1],
+                genre3 = genreIds[2],
                 limit = limit,
                 order = order
             )
@@ -38,10 +37,10 @@ class HomeRemoteDatasourceImpl @Inject constructor(
 
             Result.success(
                 HomeEntity(
-                    linkedMapOf(
-                        genres[0] to sectionQ1,
-                        genres[1] to sectionQ2,
-                        genres[2] to sectionQ3,
+                    mapOf(
+                        genreIds[0] to sectionQ1,
+                        genreIds[1] to sectionQ2,
+                        genreIds[2] to sectionQ3,
                     )
                 )
             )

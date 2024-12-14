@@ -11,9 +11,10 @@ class GenreMapper @Inject constructor() {
 
     fun fromResponse(item: GenreRemote) =
         GenreEntity(
+            numericId = item.id.toString(),
             id = "${item.id}-${item.name}",
             name = item.russian,
-            type = TypeEntity.fromString(item.kind)
+            type = TypeEntity.fromString(item.type)
         )
 
 }

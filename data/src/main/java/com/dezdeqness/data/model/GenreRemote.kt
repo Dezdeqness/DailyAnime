@@ -9,6 +9,6 @@ data class GenreRemote(
     val name: String,
     @field:Json(name = "russian")
     val russian: String,
-    @field:Json(name = "kind")
-    val kind: String,
+    @field:Json(name = "entry_type")
+    val type: String,
 )
