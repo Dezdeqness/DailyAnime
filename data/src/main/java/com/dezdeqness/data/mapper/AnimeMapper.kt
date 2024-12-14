@@ -57,8 +57,8 @@ class AnimeMapper @Inject constructor(
             status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
             episodes = item.episodes,
             episodesAired = item.episodesAired,
-            airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn?.date.toString()),
-            releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn?.date.toString())
+            airedOnTimestamp = timestampConverter.convertToTimeStamp((item.airedOn?.date ?: "").toString()),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp((item.releasedOn?.date ?: "").toString())
         )
 
     fun fromResponse(item: AnimeDetailsRemote) =
