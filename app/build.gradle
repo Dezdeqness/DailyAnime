@@ -25,7 +25,7 @@ android {
         applicationId "com.dezdeqness"
         minSdk 24
         targetSdk 34
-        System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
+        versionCode System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
         versionName appVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
