@@ -25,7 +25,7 @@ android {
         applicationId "com.dezdeqness"
         minSdk 24
         targetSdk 34
-        versionCode appVersionCode
+        System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
         versionName appVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -121,19 +121,3 @@ dependencies {
     implementation project(path: ':domain')
 
 }
-
-//tasks.register('versionName') {
-//    def versionName = version
-//
-//    doLast {
-//        println("versionName=$versionName")
-//    }
-//}
-//
-//tasks.register('versionCode') {
-//    def versionName = getVersionCode(project.name)
-//    doLast {
-//        println("versionCode=$versionName")
-//    }
-//}
-//
