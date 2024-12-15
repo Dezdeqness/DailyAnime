@@ -10,7 +10,13 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
-apply from: "$rootDir/scripts/versioning.gradle"
+apply from: "versioning.gradle"
+
+def appVersionCode = getVersionCode(project.name)
+def appVersionName = version
+
+println("Version name: $appVersionName")
+println("Version code: $appVersionCode")
 
 android {
     compileSdk 34
@@ -19,8 +25,8 @@ android {
         applicationId "com.dezdeqness"
         minSdk 24
         targetSdk 34
-        versionCode getVersionCode(project.name)
-        versionName version
+        versionCode appVersionCode
+        versionName appVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -115,3 +121,19 @@ dependencies {
     implementation project(path: ':domain')
 
 }
+
+//tasks.register('versionName') {
+//    def versionName = version
+//
+//    doLast {
+//        println("versionName=$versionName")
+//    }
+//}
+//
+//tasks.register('versionCode') {
+//    def versionName = getVersionCode(project.name)
+//    doLast {
+//        println("versionCode=$versionName")
+//    }
+//}
+//
