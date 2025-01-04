@@ -7,6 +7,13 @@ plugins {
 java {
     sourceCompatibility = versions.javaVersion
     targetCompatibility = versions.javaVersion
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 dependencies {
