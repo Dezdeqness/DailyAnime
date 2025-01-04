@@ -29,7 +29,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.GeneralError
-import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.personallist.composable.PersonalList
 import com.dezdeqness.presentation.features.personallist.composable.UserRateEmptyState
@@ -37,6 +36,7 @@ import com.dezdeqness.presentation.features.personallist.composable.PersonalList
 import com.dezdeqness.presentation.features.personallist.composable.PersonalListSelectOrderDialog
 import com.dezdeqness.presentation.features.personallist.composable.PersonalRibbon
 import com.dezdeqness.presentation.features.personallist.composable.RibbonEmptyState
+import com.dezdeqness.presentation.features.personallist.composable.ShimmerPersonalLoading
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -140,7 +140,13 @@ fun PersonalListPage(
                 }
 
                 if (state.isLoadingStateShowing) {
-                    GeneralLoading(modifier = localModifier)
+                    ShimmerPersonalLoading(
+                        modifier = localModifier
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
+                            ),
+                    )
                 }
 
                 when (state.placeholder) {
