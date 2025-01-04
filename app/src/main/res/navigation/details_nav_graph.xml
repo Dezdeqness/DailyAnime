@@ -43,6 +43,14 @@
                 android:name="animeStatuses"
                 app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
         </action>
+
+        <action
+            android:id="@+id/navigateToAnimeDetails"
+            app:destination="@id/details">
+            <argument
+                android:name="animeId"
+                app:argType="long" />
+        </action>
     </fragment>
 
     <fragment

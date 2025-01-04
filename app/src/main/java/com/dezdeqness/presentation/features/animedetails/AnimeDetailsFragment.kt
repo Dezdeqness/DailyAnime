@@ -21,6 +21,7 @@ import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ArgsModule
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
+import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
@@ -224,6 +225,11 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                     context = requireContext(),
                     screenshots = event.screenshots,
                     index = event.currentIndex,
+                )
+            }
+            is AnimeDetails -> {
+                findNavController().navigate(
+                    AnimeDetailsFragmentDirections.navigateToAnimeDetails(event.animeId)
                 )
             }
 
