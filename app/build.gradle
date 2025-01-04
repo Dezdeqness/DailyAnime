@@ -18,13 +18,23 @@ def appVersionName = version
 println("Version name: $appVersionName")
 println("Version code: $appVersionCode")
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
+}
+
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.dezdeqness"
         minSdk 24
-        targetSdk 34
+        targetSdk 35
         versionCode System.getenv("RELEASE_VERSION_CODE") as Integer ?: 999
         versionName appVersionName
 
@@ -84,7 +94,7 @@ android {
 
 }
 detekt {
-    toolVersion = "1.23.0"
+    toolVersion = "1.23.7"
     config = files("${project.rootDir.absolutePath}/config/detekt/detekt.yml")
     buildUponDefaultConfig = true
 }
