@@ -42,14 +42,16 @@ fun CalendarList(
             }
             items(
                 count = section.items.size,
-                key = { index -> section.items[index].id },
+                key = { index -> section.items[index].id + section.items[index].name.hashCode() },
             ) { index ->
                 CalendarItem(
                     item = section.items[index],
-                    modifier = Modifier.padding(
-                        vertical = 4.dp,
-                        horizontal = 16.dp,
-                    ),
+                    modifier = Modifier
+                        .animateItem()
+                        .padding(
+                            vertical = 4.dp,
+                            horizontal = 16.dp,
+                        ),
                     onClick = { id ->
                         onActionReceive(Action.AnimeClick(id))
                     },

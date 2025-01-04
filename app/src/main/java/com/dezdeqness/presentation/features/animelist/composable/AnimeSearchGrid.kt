@@ -73,11 +73,13 @@ fun AnimeSearchGrid(
 
             AnimeItem(
                 item = item,
-                modifier = Modifier.padding(
-                    start = left, end = right, top = 8.dp
-                ),
+                modifier = Modifier
+                    .animateItem()
+                    .padding(
+                        start = left, end = right, top = 8.dp
+                    ),
                 onClick = { id ->
-                    onActionReceive(Action.AnimeClick(animeId = item.id))
+                    onActionReceive(Action.AnimeClick(animeId = id))
                 }
             )
         }
