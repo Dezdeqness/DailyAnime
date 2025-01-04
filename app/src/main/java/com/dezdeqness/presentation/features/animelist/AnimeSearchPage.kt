@@ -27,8 +27,8 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearch
 import com.dezdeqness.core.ui.GeneralEmpty
 import com.dezdeqness.core.ui.GeneralError
-import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchGrid
+import com.dezdeqness.presentation.features.animelist.composable.ShimmerSearchLoading
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -86,7 +86,11 @@ fun AnimeSearchPage(
             contentAlignment = Alignment.Center,
         ) {
             if (state.isLoadingStateShowing) {
-                GeneralLoading(modifier = Modifier.align(Alignment.Center))
+                ShimmerSearchLoading(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 8.dp),
+                )
             }
 
             if (state.isErrorStateShowing) {

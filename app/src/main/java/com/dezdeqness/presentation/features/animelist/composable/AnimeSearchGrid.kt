@@ -1,7 +1,6 @@
 package com.dezdeqness.presentation.features.animelist.composable
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -14,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
-import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 
@@ -85,8 +83,20 @@ fun AnimeSearchGrid(
         }
 
         if (hasNextPage) {
-            item { GeneralLoading(modifier = Modifier.fillMaxWidth()) }
-            item { GeneralLoading(modifier = Modifier.fillMaxWidth()) }
+            item {
+                ShimmerSearchItemLoading(
+                    modifier = Modifier
+                        .padding(start = 8.dp, end = 4.dp)
+                        .padding(vertical = 8.dp),
+                )
+            }
+            item {
+                ShimmerSearchItemLoading(
+                    modifier = Modifier
+                        .padding(start = 4.dp, end = 8.dp)
+                        .padding(vertical = 8.dp),
+                )
+            }
         }
 
     }
