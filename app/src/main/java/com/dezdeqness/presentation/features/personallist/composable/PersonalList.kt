@@ -33,14 +33,16 @@ fun PersonalList(
     ) {
         items(
             count = list.size,
-            key = { index -> list[index] },
+            key = { index -> list[index].id + list[index].name.hashCode() },
         ) { index ->
             PersonalListAnimeItem(
                 userRateUiModel = list[index],
-                modifier = Modifier.padding(
-                    vertical = 4.dp,
-                    horizontal = 16.dp,
-                ),
+                modifier = Modifier
+                    .animateItem()
+                    .padding(
+                        vertical = 4.dp,
+                        horizontal = 16.dp,
+                    ),
                 onActionReceive = onActionReceive,
             )
         }
