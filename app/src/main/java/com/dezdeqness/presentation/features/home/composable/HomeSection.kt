@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.GeneralError
-import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.presentation.action.Action
 
 @Composable
@@ -32,14 +31,6 @@ fun HomeSection(
             modifier = modifier.wrapContentHeight()
         ) {
             when (status) {
-                SectionStatus.Loading -> {
-                    GeneralLoading(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(120.dp)
-                    )
-                }
-
                 SectionStatus.Error -> {
                     GeneralError(
                         modifier = Modifier
@@ -66,7 +57,7 @@ fun HomeSection(
 
                     SectionAnimeItem(
                         modifier = Modifier.padding(start = paddingStart, end = paddingEnd),
-                        item =item,
+                        item = item,
                         onClick = {
                             onActionReceive(Action.AnimeClick(animeId = item.id))
                         },
