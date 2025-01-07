@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.GeneralEmpty
 import com.dezdeqness.core.ui.GeneralError
-import com.dezdeqness.core.ui.GeneralLoading
 import com.dezdeqness.presentation.features.calendar.composable.CalendarList
 import com.dezdeqness.presentation.features.calendar.composable.CalendarSearch
+import com.dezdeqness.presentation.features.calendar.composable.ShimmerCalendarLoading
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -64,7 +64,7 @@ fun CalendarPage(
             contentAlignment = Alignment.Center,
         ) {
             if (state.isInitialLoadingIndicatorShowing) {
-                GeneralLoading(modifier = Modifier.align(Alignment.Center))
+                ShimmerCalendarLoading(modifier = Modifier.align(Alignment.Center))
             }
 
             if (state.isErrorStateShowing) {
