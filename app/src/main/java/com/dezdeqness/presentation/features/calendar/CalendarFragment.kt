@@ -3,8 +3,6 @@ package com.dezdeqness.presentation.features.calendar
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -40,10 +38,8 @@ class CalendarFragment : BaseComposeFragment(), ActionListener {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            val state by viewModel.calendarStateFlow.collectAsState()
-
             CalendarPage(
-                state = state,
+                stateFlow = viewModel.calendarStateFlow,
                 actions = object : CalendarActions {
                     override fun onInitialLoad() {
                         viewModel.onInitialLoad()

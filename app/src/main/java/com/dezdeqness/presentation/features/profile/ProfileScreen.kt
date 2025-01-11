@@ -12,6 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,14 +22,18 @@ import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.profile.composables.ProfileCard
 import com.dezdeqness.presentation.features.profile.composables.UnauthorizedCard
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    state: ProfileState,
+    stateFlow: StateFlow<ProfileState>,
     actions: ProfileActions,
     modifier: Modifier = Modifier,
 ) {
+    val state by stateFlow.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -89,7 +95,7 @@ fun ProfileScreen(
 fun ProfileScreenPreview() {
     AppTheme {
         ProfileScreen(
-            state = ProfileState(),
+            stateFlow = MutableStateFlow(ProfileState()),
             actions = object : ProfileActions {
                 override fun onSettingIconClicked() = Unit
                 override fun onStatsIconClicked() = Unit

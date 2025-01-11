@@ -1,9 +1,11 @@
 package com.dezdeqness.presentation.features.personallist
 
+import androidx.compose.runtime.Immutable
 import com.dezdeqness.domain.model.Sort
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
 
+@Immutable
 data class PersonalListState(
     val ribbon: List<RibbonStatusUiModel> = listOf(),
     val currentRibbonId: String = "",

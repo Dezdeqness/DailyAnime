@@ -3,8 +3,6 @@ package com.dezdeqness.presentation.features.personallist
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -42,10 +40,8 @@ class PersonalListFragment : BaseComposeFragment() {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            val state by viewModel.personalListStateFlow.collectAsState()
-
             PersonalListPage(
-                state = state,
+                stateFlow = viewModel.personalListStateFlow,
                 actions = object : PersonalListActions {
                     override fun onPullDownRefreshed() {
                         viewModel.onPullDownRefreshed()

@@ -16,6 +16,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,15 +38,19 @@ import com.dezdeqness.presentation.features.personallist.composable.PersonalList
 import com.dezdeqness.presentation.features.personallist.composable.PersonalRibbon
 import com.dezdeqness.presentation.features.personallist.composable.RibbonEmptyState
 import com.dezdeqness.presentation.features.personallist.composable.ShimmerPersonalLoading
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PersonalListPage(
-    state: PersonalListState,
+    stateFlow: StateFlow<PersonalListState>,
     actions: PersonalListActions,
     modifier: Modifier = Modifier,
 ) {
+
+    val state by stateFlow.collectAsState()
+
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {

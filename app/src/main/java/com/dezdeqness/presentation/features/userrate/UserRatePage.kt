@@ -27,6 +27,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -48,15 +50,19 @@ import com.dezdeqness.presentation.features.userrate.composable.ScoreSlider
 import com.dezdeqness.presentation.features.userrate.composable.SelectStatusDialog
 import com.dezdeqness.presentation.features.userrate.composable.SelectStatusItem
 import com.dezdeqness.presentation.features.userrate.composable.rememberCommentState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserRatePage(
     modifier: Modifier = Modifier,
-    state: UserRateState,
+    stateFlow: StateFlow<UserRateState>,
     actions: UserRateActions,
 ) {
+    val state by stateFlow.collectAsState()
+
     val context = LocalContext.current
 
     val scope = rememberCoroutineScope()
@@ -345,8 +351,10 @@ fun UserRatePage(
 fun UserRatePagePreview() {
     AppTheme {
         UserRatePage(
-            state = UserRateState(
-                title = "Восстание Лелуша"
+            stateFlow = MutableStateFlow(
+                UserRateState(
+                    title = "Восстание Лелуша"
+                )
             ),
             actions = object : UserRateActions {
                 override fun onStatusChanged(id: String) = Unit

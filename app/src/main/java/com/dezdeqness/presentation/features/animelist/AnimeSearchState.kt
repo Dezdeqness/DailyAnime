@@ -1,5 +1,8 @@
 package com.dezdeqness.presentation.features.animelist
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class AnimeSearchState(
     val list: List<AnimeUiModel> = listOf(),
     val isEmptyStateShowing: Boolean = false,
