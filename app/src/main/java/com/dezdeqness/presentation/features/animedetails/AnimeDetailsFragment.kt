@@ -294,7 +294,4 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
         }
     }
 
-    companion object {
-        private const val EDIT_RATE_DIALOG_TAG = "anime_details_edit_rate_dialog"
-    }
 }

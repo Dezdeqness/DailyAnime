@@ -74,11 +74,9 @@ class UserRateActivity : AppCompatActivity() {
             .inject(this)
 
         setContent {
-            val state by viewModel.userRateStateFlow.collectAsState()
-
             AppTheme {
                 UserRatePage(
-                    state = state,
+                    stateFlow = viewModel.userRateStateFlow,
                     actions = object : UserRateActions {
                         override fun onStatusChanged(id: String) {
                             viewModel.onStatusChanged(id)

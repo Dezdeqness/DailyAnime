@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,16 +30,19 @@ import com.dezdeqness.core.ui.GeneralEmpty
 import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchGrid
 import com.dezdeqness.presentation.features.animelist.composable.ShimmerSearchLoading
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AnimeSearchPage(
     modifier: Modifier = Modifier,
-    state: AnimeSearchState,
+    stateFlow: StateFlow<AnimeSearchState>,
     actions: AnimeSearchActions,
 ) {
     val scope = rememberCoroutineScope()
+
+    val state by stateFlow.collectAsState()
 
     LaunchedEffect(Unit) {
         actions.onInitialLoad()

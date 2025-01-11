@@ -1,5 +1,8 @@
 package com.dezdeqness.presentation.features.calendar
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class CalendarState(
     val list: List<CalendarListUiModel> = listOf(),
     val isPullDownRefreshing: Boolean = false,

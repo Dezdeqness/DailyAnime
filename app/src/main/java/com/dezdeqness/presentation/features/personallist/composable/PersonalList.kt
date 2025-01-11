@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.models.UserRateUiModel
+import recomposeHighlighter
 
 @Composable
 fun PersonalList(
@@ -42,7 +43,9 @@ fun PersonalList(
                     .padding(
                         vertical = 4.dp,
                         horizontal = 16.dp,
-                    ),
+                    )
+                    .recomposeHighlighter()
+                ,
                 onActionReceive = onActionReceive,
             )
         }

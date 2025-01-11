@@ -3,8 +3,6 @@ package com.dezdeqness.presentation.features.animelist
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -46,10 +44,8 @@ class AnimeListFragment : BaseComposeFragment() {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            val state by viewModel.animeSearchStateFlow.collectAsState()
-
             AnimeSearchPage(
-                state = state,
+                stateFlow = viewModel.animeSearchStateFlow,
                 actions = object : AnimeSearchActions {
                     override fun onPullDownRefreshed() {
                         viewModel.onPullDownRefreshed()

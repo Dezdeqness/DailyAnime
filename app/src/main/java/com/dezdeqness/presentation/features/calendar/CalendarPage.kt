@@ -11,6 +11,8 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,16 +24,19 @@ import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.presentation.features.calendar.composable.CalendarList
 import com.dezdeqness.presentation.features.calendar.composable.CalendarSearch
 import com.dezdeqness.presentation.features.calendar.composable.ShimmerCalendarLoading
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CalendarPage(
     modifier: Modifier = Modifier,
-    state: CalendarState,
+    stateFlow: StateFlow<CalendarState>,
     actions: CalendarActions,
 ) {
     val scope = rememberCoroutineScope()
+
+    val state by stateFlow.collectAsState()
 
     LaunchedEffect(Unit) {
         actions.onInitialLoad()

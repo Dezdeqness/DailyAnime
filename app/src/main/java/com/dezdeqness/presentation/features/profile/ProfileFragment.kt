@@ -3,8 +3,6 @@ package com.dezdeqness.presentation.features.profile
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -42,10 +40,8 @@ class ProfileFragment : BaseComposeFragment() {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            val state by viewModel.profileStateFlow.collectAsState()
-
             ProfileScreen(
-                state = state,
+                stateFlow = viewModel.profileStateFlow,
                 actions = object : ProfileActions {
                     override fun onSettingIconClicked() =
                         viewModel.onEventReceive(NavigateToSettings)

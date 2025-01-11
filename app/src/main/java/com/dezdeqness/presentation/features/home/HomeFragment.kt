@@ -3,8 +3,6 @@ package com.dezdeqness.presentation.features.home
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -38,10 +36,8 @@ class HomeFragment : BaseComposeFragment() {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            val state by viewModel.homeStateFlow.collectAsState()
-
             HomePage(
-                state = state,
+                stateFlow = viewModel.homeStateFlow,
                 actions = object : HomeActions {
                     override fun onInitialLoad() {
                         viewModel.onInitialLoad()
