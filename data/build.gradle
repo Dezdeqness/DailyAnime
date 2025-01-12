@@ -52,7 +52,7 @@ dependencies {
     dagger()
     room()
     core()
-
+    appcompat()
 }
 
 apollo {
