@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SearchFilterView">
-        <attr name="filterTitle" format="string" />
-    </declare-styleable>
-
     <declare-styleable name="RecyclerViewWithState">
         <attr name="recycleViewLayout" format="reference" />
         <attr name="loadingStateLayout" format="reference" />

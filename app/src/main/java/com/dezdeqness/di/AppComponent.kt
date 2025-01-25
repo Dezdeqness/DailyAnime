@@ -58,7 +58,7 @@ interface AppComponent {
 
     fun animeDetailsComponent(): AnimeDetailsComponent.Builder
 
-    fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Builder
+    fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Factory
 
     fun personalListComponent(): PersonalListComponent.Factory
 

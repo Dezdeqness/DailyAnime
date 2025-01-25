@@ -30,8 +30,6 @@ data class OpenVideo(val url: String) : ConsumableEvent()
 
 data class ApplyFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
 
-data class NavigateToFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
-
 data class NavigateToEditRate(
     val rateId: Long,
     val title: String,

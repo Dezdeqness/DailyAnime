@@ -9,7 +9,6 @@ import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.AnimeSearchFilter
 import com.dezdeqness.presentation.models.CellState
@@ -111,7 +110,7 @@ class AnimeViewModel @Inject constructor(
     }
 
     fun onFabClicked() {
-        onEventReceive(NavigateToFilter(filters = filtersList))
+//        onEventReceive(NavigateToFilter(filters = filtersList))
     }
 
     fun onFilterChanged(filtersList: List<AnimeSearchFilter>) {

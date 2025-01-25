@@ -34,24 +34,6 @@
         <item name="colorPrimary">@color/background_tint</item>
     </style>
 
-    <style name="SearchFilterView">
-        <item name="filterTitle">Placeholder</item>
-    </style>
-
-    <style name="SearchFilter.Title" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="SearchFilter.Chip" parent="Base.Widget.MaterialComponents.Chip">
-        <item name="android:stateListAnimator">@null</item>
-        <item name="chipStrokeWidth">1dp</item>
-        <item name="rippleColor">@null</item>
-        <item name="android:textSize">14sp</item>
-        <item name="chipStrokeColor">@color/chip_stroke</item>
-    </style>
-
     <style name="AnimeImageView">
         <item name="cornerSize">15dp</item>
     </style>
