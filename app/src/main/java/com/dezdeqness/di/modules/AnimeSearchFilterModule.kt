@@ -13,7 +13,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
-@Module()
+@Module
 abstract class AnimeSearchFilterModule {
 
     companion object {
