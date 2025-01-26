@@ -9,7 +9,6 @@ import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
 import com.dezdeqness.di.subcomponents.AnimeComponent
 import com.dezdeqness.di.subcomponents.AnimeDetailsComponent
-import com.dezdeqness.di.subcomponents.AnimeSearchFilterComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
@@ -57,8 +56,6 @@ interface AppComponent {
     fun authorizationComponent(): AuthorizationComponent.Builder
 
     fun animeDetailsComponent(): AnimeDetailsComponent.Builder
-
-    fun animeSearchFilterComponent(): AnimeSearchFilterComponent.Factory
 
     fun personalListComponent(): PersonalListComponent.Factory
 
