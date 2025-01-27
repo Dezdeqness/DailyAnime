@@ -1,12 +1,12 @@
 package com.dezdeqness.presentation
 
-import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.SearchSectionUiModel
 import com.dezdeqness.presentation.models.CellState
 import javax.inject.Inject
 
 class AnimeFilterResponseConverter @Inject constructor(){
 
-    fun convertSearchFilterToQueryMap(list: Collection<AnimeSearchFilter>): Map<String, String> {
+    fun convertSearchFilterToQueryMap(list: Collection<SearchSectionUiModel>): Map<String, String> {
         val map = mutableMapOf<String, String>()
         list.forEach { filter ->
             val stringBuilder = StringBuilder()

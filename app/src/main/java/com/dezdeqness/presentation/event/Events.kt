@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.event
 
 import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
-import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.SearchSectionUiModel
 import java.util.UUID
 
 sealed class Event {
@@ -28,7 +28,9 @@ data class AnimeDetails(val animeId: Long) : Event()
 
 data class OpenVideo(val url: String) : ConsumableEvent()
 
-data class ApplyFilter(val filters: List<AnimeSearchFilter> = listOf()) : Event()
+data class NavigateToFilter(val filters: List<SearchSectionUiModel> = listOf()) : Event()
+
+data class ApplyFilter(val filters: List<SearchSectionUiModel> = listOf()) : Event()
 
 data class NavigateToEditRate(
     val rateId: Long,

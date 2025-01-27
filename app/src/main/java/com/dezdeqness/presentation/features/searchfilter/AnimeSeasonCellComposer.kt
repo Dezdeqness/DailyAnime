@@ -1,8 +1,9 @@
-package com.dezdeqness.presentation.features.searchfilter.anime
+package com.dezdeqness.presentation.features.searchfilter
 
 import com.dezdeqness.R
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AnimeCell
+import com.google.common.collect.ImmutableList
 import java.util.*
 import javax.inject.Inject
 
@@ -10,13 +11,13 @@ class AnimeSeasonCellComposer @Inject constructor(
     private val resourceProvider: ResourceProvider,
 ) {
 
-    fun composeSeasonCells(): List<AnimeCell> {
+    fun composeSeasonCells(): ImmutableList<AnimeCell> {
         val cells = mutableListOf<AnimeCell>()
 
         cells += getFutureAndCurrentYear()
         cells += getPastYears()
 
-        return cells
+        return ImmutableList.copyOf(cells)
     }
 
     private fun getPastYears(): List<AnimeCell> {

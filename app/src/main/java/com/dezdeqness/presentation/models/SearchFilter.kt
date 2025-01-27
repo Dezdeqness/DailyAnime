@@ -1,29 +1,34 @@
 package com.dezdeqness.presentation.models
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.google.common.collect.ImmutableList
 
-@Parcelize
-data class AnimeSearchFilter(
+
+data class SearchSectionUiModel(
     val innerId: String,
     val displayName: String,
-    val items: List<AnimeCell>
-) : Parcelable
+    val items: ImmutableList<AnimeCell>,
+    val isExpandable: Boolean = false,
+    val sectionType: SectionType = SectionType.ChipMultipleChoice,
+)
 
-@Parcelize
 data class AnimeCell(
     val id: String,
     val displayName: String,
     var state: CellState = CellState.NONE,
-) : Parcelable
+)
 
 data class AnimeCellList(
     val list: List<AnimeCell>
 ) : AdapterItem()
 
-@Parcelize
-enum class CellState : Parcelable {
+enum class CellState {
     INCLUDE,
     EXCLUDE,
     NONE,
+}
+
+enum class SectionType {
+    CheckBox,
+    ChipSingleChoice,
+    ChipMultipleChoice,
 }
