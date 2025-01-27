@@ -9,8 +9,9 @@ import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.message.MessageConsumer
-import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.SearchSectionUiModel
 import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +36,7 @@ class AnimeViewModel @Inject constructor(
         MutableStateFlow(AnimeSearchState())
     val animeSearchStateFlow: StateFlow<AnimeSearchState> get() = _animeSearchStateFlow
 
-    private var filtersList: List<AnimeSearchFilter> = emptyList()
+    private var filtersList: List<SearchSectionUiModel> = emptyList()
 
     private var query: String = ""
 
@@ -110,10 +111,10 @@ class AnimeViewModel @Inject constructor(
     }
 
     fun onFabClicked() {
-//        onEventReceive(NavigateToFilter(filters = filtersList))
+        onEventReceive(NavigateToFilter(filters = filtersList))
     }
 
-    fun onFilterChanged(filtersList: List<AnimeSearchFilter>) {
+    fun onFilterChanged(filtersList: List<SearchSectionUiModel>) {
         this.filtersList = filtersList
         onInitialLoad(isScrollNeed = true)
     }

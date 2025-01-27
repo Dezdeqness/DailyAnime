@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.animelist
 
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.SearchSectionUiModel
 
 interface AnimeSearchActions {
     fun onPullDownRefreshed()
@@ -11,5 +11,5 @@ interface AnimeSearchActions {
     fun onActionReceived(action: Action)
     fun onFabClicked()
     fun onQueryChanged(query: String)
-    fun onFilterChanged(filtersList: List<AnimeSearchFilter>)
+    fun onFilterChanged(filtersList: List<SearchSectionUiModel>)
 }

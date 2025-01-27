@@ -1,10 +1,12 @@
-package com.dezdeqness.presentation.features.searchfilter.anime
+package com.dezdeqness.presentation.features.searchfilter
 
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.FilterType
 import com.dezdeqness.presentation.models.AnimeCell
-import com.dezdeqness.presentation.models.AnimeSearchFilter
+import com.dezdeqness.presentation.models.SearchSectionUiModel
+import com.dezdeqness.presentation.models.SectionType
+import com.google.common.collect.ImmutableList
 import javax.inject.Inject
 
 
@@ -13,12 +15,14 @@ class AnimeSearchFilterComposer @Inject constructor(
     private val animeSeasonCellComposer: AnimeSeasonCellComposer,
 ) {
 
-    fun compose(filters: List<FilterEntity>): List<AnimeSearchFilter> {
-        val animeFilters = mutableListOf<AnimeSearchFilter>()
+    fun compose(filters: List<FilterEntity>): List<SearchSectionUiModel> {
+        val animeFilters = mutableListOf<SearchSectionUiModel>()
         animeFilters.add(
             composeFilter(
                 filters.filter { it.type == FilterType.GENRE }.sortedBy { it.name },
-                FilterType.GENRE.filterName
+                FilterType.GENRE.filterName,
+                isExpandable = true,
+                sectionType = SectionType.CheckBox,
             )
         )
         animeFilters.add(composeSeasonFilter())
@@ -51,22 +55,31 @@ class AnimeSearchFilterComposer @Inject constructor(
     }
 
     private fun composeSeasonFilter() =
-        AnimeSearchFilter(
+        SearchSectionUiModel(
             innerId = FilterType.SEASON.filterName,
             displayName = resourceManager.getString(PREFIX + FilterType.SEASON.filterName),
             items = animeSeasonCellComposer.composeSeasonCells(),
         )
 
-    private fun composeFilter(filter: List<FilterEntity>, id: String) =
-        AnimeSearchFilter(
+    private fun composeFilter(
+        filter: List<FilterEntity>,
+        id: String,
+        isExpandable: Boolean = false,
+        sectionType: SectionType = SectionType.ChipMultipleChoice,
+    ) =
+        SearchSectionUiModel(
             innerId = id,
             displayName = resourceManager.getString(PREFIX + id),
-            items = filter.map { item ->
-                AnimeCell(
-                    id = item.id,
-                    displayName = item.name
-                )
-            }
+            items = ImmutableList.copyOf(
+                filter.map { item ->
+                    AnimeCell(
+                        id = item.id,
+                        displayName = item.name
+                    )
+                }
+            ),
+            isExpandable = isExpandable,
+            sectionType = sectionType,
         )
 
     companion object {
