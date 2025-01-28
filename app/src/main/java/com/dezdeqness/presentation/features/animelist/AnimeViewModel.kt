@@ -12,7 +12,6 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.SearchSectionUiModel
-import com.dezdeqness.presentation.models.CellState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -53,9 +52,7 @@ class AnimeViewModel @Inject constructor(
             action = {
                 getAnimeListUseCase.invoke(
                     pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filterSelectedCells()
-                    ),
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(filtersList),
                     searchQuery = query,
                 )
             },
@@ -134,9 +131,7 @@ class AnimeViewModel @Inject constructor(
             action = {
                 getAnimeListUseCase.invoke(
                     pageNumber = currentPage,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filterSelectedCells()
-                    ),
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(filtersList),
                     searchQuery = query,
                 )
             },
@@ -163,9 +158,7 @@ class AnimeViewModel @Inject constructor(
             action = {
                 getAnimeListUseCase.invoke(
                     pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filterSelectedCells()
-                    ),
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(filtersList),
                     searchQuery = query,
                 )
             },
@@ -200,10 +193,6 @@ class AnimeViewModel @Inject constructor(
             messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
         }
     }
-
-    private fun filterSelectedCells() =
-        filtersList.map { it.copy(items = it.items.filterNot { cellState -> cellState.state == CellState.NONE }) }
-            .filter { it.items.isNotEmpty() }
 
     companion object {
         private const val INITIAL_PAGE = 1

@@ -1,32 +1,28 @@
 package com.dezdeqness.presentation
 
 import com.dezdeqness.presentation.models.SearchSectionUiModel
-import com.dezdeqness.presentation.models.CellState
 import javax.inject.Inject
 
 class AnimeFilterResponseConverter @Inject constructor(){
 
     fun convertSearchFilterToQueryMap(list: Collection<SearchSectionUiModel>): Map<String, String> {
-        val map = mutableMapOf<String, String>()
-        list.forEach { filter ->
-            val stringBuilder = StringBuilder()
-            filter.items.forEachIndexed { index, animeCell ->
-                val value = if (animeCell.state == CellState.EXCLUDE) {
-                    "!${animeCell.id}"
-                } else {
-                    animeCell.id
-                }
-                stringBuilder.append(value)
-                if (filter.items.size - 1 != index) {
-                    stringBuilder.append(",")
-                }
+        return list
+            .mapNotNull { filter ->
+                val selectedIds = filter.items
+                    .filter { it.id in filter.selectedCells }
+                    .joinToString(separator = ",") { animeCell ->
+                        // Currently disabled
+                        if (false /*animeCell.state == CellState.EXCLUDE*/) {
+                            "!${animeCell.id}"
+                        } else {
+                            animeCell.id
+                        }
+                    }
+
+                // Add to map only if there are selected IDs
+                if (selectedIds.isNotEmpty()) filter.innerId to selectedIds else null
             }
-            map[filter.innerId] = stringBuilder.toString()
-
-        }
-
-
-        return map
+            .toMap() // Convert the resulting list to a map
     }
 
 }

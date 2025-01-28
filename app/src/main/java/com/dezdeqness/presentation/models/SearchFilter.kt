@@ -7,6 +7,7 @@ data class SearchSectionUiModel(
     val innerId: String,
     val displayName: String,
     val items: ImmutableList<AnimeCell>,
+    val selectedCells: Set<String> = setOf(),
     val isExpandable: Boolean = false,
     val sectionType: SectionType = SectionType.ChipMultipleChoice,
 )
@@ -14,7 +15,6 @@ data class SearchSectionUiModel(
 data class AnimeCell(
     val id: String,
     val displayName: String,
-    var state: CellState = CellState.NONE,
 )
 
 data class AnimeCellList(
