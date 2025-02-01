@@ -15,6 +15,7 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
+import com.dezdeqness.presentation.event.ApplyFilter
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToFilter
@@ -94,8 +95,24 @@ class AnimeListFragment : BaseComposeFragment() {
                             filterViewModel.onDismissed()
                         }
 
-                        override fun onCellClicked(innerId: String, cellId: String) {
-                            filterViewModel.onCellClicked(innerId = innerId, cellId = cellId)
+                        override fun onCellClicked(
+                            innerId: String,
+                            cellId: String,
+                            isSelected: Boolean
+                        ) {
+                            filterViewModel.onCellClicked(
+                                innerId = innerId,
+                                cellId = cellId,
+                                isSelected = isSelected,
+                            )
+                        }
+
+                        override fun onApplyFilter() {
+                            filterViewModel.onApplyButtonClicked()
+                        }
+
+                        override fun onResetFilter() {
+                            filterViewModel.onResetButtonClicked()
                         }
 
                     }
@@ -118,6 +135,30 @@ class AnimeListFragment : BaseComposeFragment() {
                     when (event) {
                         is NavigateToFilter -> {
                             filterViewModel.onFiltersReceived(event.filters)
+                        }
+
+                        is AnimeDetails -> {
+                            findNavController().navigate(
+                                AnimeListFragmentDirections.navigateToAnimeDetails(event.animeId)
+                            )
+                        }
+
+                        is ConsumableEvent -> {
+                            eventConsumer.consume(event)
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                filterViewModel.events.collect { event ->
+                    when (event) {
+                        is ApplyFilter -> {
+                            viewModel.onFilterChanged(event.filters)
                         }
 
                         is AnimeDetails -> {

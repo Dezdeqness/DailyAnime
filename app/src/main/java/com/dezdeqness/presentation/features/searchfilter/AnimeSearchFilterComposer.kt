@@ -19,7 +19,7 @@ class AnimeSearchFilterComposer @Inject constructor(
         val animeFilters = mutableListOf<SearchSectionUiModel>()
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.GENRE }.sortedBy { it.name },
+                filters.filter { it.type == FilterType.GENRE },
                 FilterType.GENRE.filterName,
                 isExpandable = true,
                 sectionType = SectionType.CheckBox,
