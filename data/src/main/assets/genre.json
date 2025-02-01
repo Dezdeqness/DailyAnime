@@ -1,190 +1,8 @@
 [
     {
-        "id": 89,
-        "name": "Police",
-        "russian": "Полиция",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
         "id": 8,
         "name": "Drama",
         "russian": "Драма",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 11,
-        "name": "Game",
-        "russian": "Игры",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 40,
-        "name": "Psychological",
-        "russian": "Психологическое",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 67,
-        "name": "Psychological",
-        "russian": "Психологическое",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 72,
-        "name": "Demons",
-        "russian": "Демоны",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 79,
-        "name": "Game",
-        "russian": "Игры",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 87,
-        "name": "Josei",
-        "russian": "Дзёсей",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 75,
-        "name": "Yuri",
-        "russian": "Юри",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 47,
-        "name": "Shounen",
-        "russian": "Сёнен",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 49,
-        "name": "Comedy",
-        "russian": "Комедия",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 48,
-        "name": "Supernatural",
-        "russian": "Сверхъестественное",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 50,
-        "name": "Drama",
-        "russian": "Драма",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 51,
-        "name": "Ecchi",
-        "russian": "Этти",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 63,
-        "name": "Shoujo",
-        "russian": "Сёдзе",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 64,
-        "name": "Vampire",
-        "russian": "Вампиры",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 65,
-        "name": "Yaoi",
-        "russian": "Яой",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 19,
-        "name": "Music",
-        "russian": "Музыка",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 88,
-        "name": "Samurai",
-        "russian": "Самураи",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 56,
-        "name": "Action",
-        "russian": "Экшен",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 86,
-        "name": "Parody",
-        "russian": "Пародия",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 54,
-        "name": "Slice of Life",
-        "russian": "Повседневность",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 78,
-        "name": "Music",
-        "russian": "Музыка",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 83,
-        "name": "Mecha",
-        "russian": "Меха",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 62,
-        "name": "Romance",
-        "russian": "Романтика",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 69,
-        "name": "Historical",
-        "russian": "Исторический",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 1,
-        "name": "Action",
-        "russian": "Экшен",
         "kind": "genre",
         "entry_type": "Anime"
     },
@@ -196,114 +14,9 @@
         "entry_type": "Anime"
     },
     {
-        "id": 6,
-        "name": "Demons",
-        "russian": "Демоны",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 39,
-        "name": "Police",
-        "russian": "Полиция",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 57,
-        "name": "Fantasy",
-        "russian": "Фэнтези",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 58,
-        "name": "Magic",
-        "russian": "Магия",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 71,
-        "name": "Harem",
-        "russian": "Гарем",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 76,
-        "name": "Sports",
-        "russian": "Спорт",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 59,
-        "name": "Hentai",
-        "russian": "Хентай",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 60,
-        "name": "School",
-        "russian": "Школа",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 9,
-        "name": "Ecchi",
-        "russian": "Этти",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 10,
-        "name": "Fantasy",
-        "russian": "Фэнтези",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 12,
-        "name": "Hentai",
-        "russian": "Хентай",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 13,
-        "name": "Historical",
-        "russian": "Исторический",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 16,
-        "name": "Magic",
-        "russian": "Магия",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 18,
-        "name": "Mecha",
-        "russian": "Меха",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 20,
-        "name": "Parody",
-        "russian": "Пародия",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 21,
-        "name": "Samurai",
-        "russian": "Самураи",
+        "id": 2,
+        "name": "Adventure",
+        "russian": "Приключения",
         "kind": "genre",
         "entry_type": "Anime"
     },
@@ -315,107 +28,9 @@
         "entry_type": "Anime"
     },
     {
-        "id": 23,
-        "name": "School",
-        "russian": "Школа",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
         "id": 27,
         "name": "Shounen",
         "russian": "Сёнен",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 32,
-        "name": "Vampire",
-        "russian": "Вампиры",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 33,
-        "name": "Yaoi",
-        "russian": "Яой",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 34,
-        "name": "Yuri",
-        "russian": "Юри",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 35,
-        "name": "Harem",
-        "russian": "Гарем",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 53,
-        "name": "Sci-Fi",
-        "russian": "Фантастика",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 36,
-        "name": "Slice of Life",
-        "russian": "Повседневность",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 26,
-        "name": "Shoujo Ai",
-        "russian": "Сёдзё-ай",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 43,
-        "name": "Josei",
-        "russian": "Дзёсей",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 74,
-        "name": "Gender Bender",
-        "russian": "Смена пола",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 61,
-        "name": "Doujinshi",
-        "russian": "Додзинси",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 81,
-        "name": "Thriller",
-        "russian": "Триллер",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 37,
-        "name": "Supernatural",
-        "russian": "Сверхъестественное",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 41,
-        "name": "Thriller",
-        "russian": "Триллер",
         "kind": "genre",
         "entry_type": "Anime"
     },
@@ -427,79 +42,30 @@
         "entry_type": "Anime"
     },
     {
-        "id": 25,
-        "name": "Shoujo",
-        "russian": "Сёдзё",
+        "id": 23,
+        "name": "School",
+        "russian": "Школа",
         "kind": "genre",
         "entry_type": "Anime"
     },
     {
-        "id": 31,
-        "name": "Super Power",
-        "russian": "Супер сила",
+        "id": 1,
+        "name": "Action",
+        "russian": "Экшен",
         "kind": "genre",
         "entry_type": "Anime"
     },
     {
-        "id": 82,
-        "name": "Super Power",
-        "russian": "Супер сила",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 46,
-        "name": "Mystery",
-        "russian": "Детектив",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 38,
-        "name": "Military",
-        "russian": "Военное",
+        "id": 5,
+        "name": "Dementia",
+        "russian": "Безумие",
         "kind": "genre",
         "entry_type": "Anime"
     },
     {
-        "id": 7,
-        "name": "Mystery",
-        "russian": "Детектив",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 70,
-        "name": "Military",
-        "russian": "Военное",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 15,
-        "name": "Kids",
-        "russian": "Детское",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 77,
-        "name": "Kids",
-        "russian": "Детское",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 3,
-        "name": "Cars",
-        "russian": "Машины",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 84,
-        "name": "Cars",
-        "russian": "Машины",
+        "id": 90,
+        "name": "Dementia",
+        "russian": "Безумие",
         "kind": "genre",
         "entry_type": "Manga"
     },
@@ -518,60 +84,46 @@
         "entry_type": "Manga"
     },
     {
-        "id": 5,
-        "name": "Dementia",
-        "russian": "Безумие",
-        "kind": "genre",
-        "entry_type": "Anime"
-    },
-    {
-        "id": 90,
-        "name": "Dementia",
-        "russian": "Безумие",
+        "id": 64,
+        "name": "Vampire",
+        "russian": "Вампиры",
         "kind": "genre",
         "entry_type": "Manga"
     },
     {
-        "id": 30,
-        "name": "Sports",
-        "russian": "Спорт",
+        "id": 32,
+        "name": "Vampire",
+        "russian": "Вампиры",
         "kind": "genre",
         "entry_type": "Anime"
     },
     {
-        "id": 42,
-        "name": "Seinen",
-        "russian": "Сэйнэн",
+        "id": 38,
+        "name": "Military",
+        "russian": "Военное",
         "kind": "genre",
         "entry_type": "Anime"
     },
     {
-        "id": 28,
-        "name": "Shounen Ai",
-        "russian": "Сёнен-ай",
+        "id": 70,
+        "name": "Military",
+        "russian": "Военное",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 71,
+        "name": "Harem",
+        "russian": "Гарем",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 35,
+        "name": "Harem",
+        "russian": "Гарем",
         "kind": "genre",
         "entry_type": "Anime"
-    },
-    {
-        "id": 73,
-        "name": "Shoujo Ai",
-        "russian": "Сёдзе-ай",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 55,
-        "name": "Shounen Ai",
-        "russian": "Сёнен-ай",
-        "kind": "genre",
-        "entry_type": "Manga"
-    },
-    {
-        "id": 52,
-        "name": "Seinen",
-        "russian": "Сэйнэн",
-        "kind": "genre",
-        "entry_type": "Manga"
     },
     {
         "id": 543,
@@ -584,6 +136,111 @@
         "id": 544,
         "name": "Gourmet",
         "russian": "Гурман",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 72,
+        "name": "Demons",
+        "russian": "Демоны",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 6,
+        "name": "Demons",
+        "russian": "Демоны",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 46,
+        "name": "Mystery",
+        "russian": "Детектив",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 7,
+        "name": "Mystery",
+        "russian": "Детектив",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 15,
+        "name": "Kids",
+        "russian": "Детское",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 77,
+        "name": "Kids",
+        "russian": "Детское",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 87,
+        "name": "Josei",
+        "russian": "Дзёсей",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 43,
+        "name": "Josei",
+        "russian": "Дзёсей",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 61,
+        "name": "Doujinshi",
+        "russian": "Додзинси",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 50,
+        "name": "Drama",
+        "russian": "Драма",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 11,
+        "name": "Game",
+        "russian": "Игры",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 79,
+        "name": "Game",
+        "russian": "Игры",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 69,
+        "name": "Historical",
+        "russian": "Исторический",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 13,
+        "name": "Historical",
+        "russian": "Исторический",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 49,
+        "name": "Comedy",
+        "russian": "Комедия",
         "kind": "genre",
         "entry_type": "Manga"
     },
@@ -602,6 +259,125 @@
         "entry_type": "Anime"
     },
     {
+        "id": 58,
+        "name": "Magic",
+        "russian": "Магия",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 16,
+        "name": "Magic",
+        "russian": "Магия",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 3,
+        "name": "Cars",
+        "russian": "Машины",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 84,
+        "name": "Cars",
+        "russian": "Машины",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 83,
+        "name": "Mecha",
+        "russian": "Меха",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 18,
+        "name": "Mecha",
+        "russian": "Меха",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 19,
+        "name": "Music",
+        "russian": "Музыка",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 78,
+        "name": "Music",
+        "russian": "Музыка",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 86,
+        "name": "Parody",
+        "russian": "Пародия",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 20,
+        "name": "Parody",
+        "russian": "Пародия",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 54,
+        "name": "Slice of Life",
+        "russian": "Повседневность",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 36,
+        "name": "Slice of Life",
+        "russian": "Повседневность",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 89,
+        "name": "Police",
+        "russian": "Полиция",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 39,
+        "name": "Police",
+        "russian": "Полиция",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 68,
+        "name": "Adventure",
+        "russian": "Приключения",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 40,
+        "name": "Psychological",
+        "russian": "Психологическое",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 67,
+        "name": "Psychological",
+        "russian": "Психологическое",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
         "id": 541,
         "name": "Work Life",
         "russian": "Работа",
@@ -616,18 +392,165 @@
         "entry_type": "Manga"
     },
     {
+        "id": 62,
+        "name": "Romance",
+        "russian": "Романтика",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 22,
+        "name": "Romance",
+        "russian": "Романтика",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 88,
+        "name": "Samurai",
+        "russian": "Самураи",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 21,
+        "name": "Samurai",
+        "russian": "Самураи",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 48,
+        "name": "Supernatural",
+        "russian": "Сверхъестественное",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 37,
+        "name": "Supernatural",
+        "russian": "Сверхъестественное",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 74,
+        "name": "Gender Bender",
+        "russian": "Смена пола",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 76,
+        "name": "Sports",
+        "russian": "Спорт",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 30,
+        "name": "Sports",
+        "russian": "Спорт",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 31,
+        "name": "Super Power",
+        "russian": "Супер сила",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 82,
+        "name": "Super Power",
+        "russian": "Супер сила",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 42,
+        "name": "Seinen",
+        "russian": "Сэйнэн",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 52,
+        "name": "Seinen",
+        "russian": "Сэйнэн",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 63,
+        "name": "Shoujo",
+        "russian": "Сёдзе",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 73,
+        "name": "Shoujo Ai",
+        "russian": "Сёдзе-ай",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 25,
+        "name": "Shoujo",
+        "russian": "Сёдзё",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 26,
+        "name": "Shoujo Ai",
+        "russian": "Сёдзё-ай",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 47,
+        "name": "Shounen",
+        "russian": "Сёнен",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 28,
+        "name": "Shounen Ai",
+        "russian": "Сёнен-ай",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 55,
+        "name": "Shounen Ai",
+        "russian": "Сёнен-ай",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 81,
+        "name": "Thriller",
+        "russian": "Триллер",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 41,
+        "name": "Thriller",
+        "russian": "Триллер",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
         "id": 14,
         "name": "Horror",
         "russian": "Ужасы",
         "kind": "genre",
         "entry_type": "Anime"
-    },
-    {
-        "id": 68,
-        "name": "Adventure",
-        "russian": "Приключения",
-        "kind": "genre",
-        "entry_type": "Manga"
     },
     {
         "id": 80,
@@ -637,9 +560,58 @@
         "entry_type": "Manga"
     },
     {
-        "id": 2,
-        "name": "Adventure",
-        "russian": "Приключения",
+        "id": 53,
+        "name": "Sci-Fi",
+        "russian": "Фантастика",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 57,
+        "name": "Fantasy",
+        "russian": "Фэнтези",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 10,
+        "name": "Fantasy",
+        "russian": "Фэнтези",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 59,
+        "name": "Hentai",
+        "russian": "Хентай",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 12,
+        "name": "Hentai",
+        "russian": "Хентай",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 60,
+        "name": "School",
+        "russian": "Школа",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 56,
+        "name": "Action",
+        "russian": "Экшен",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 1,
+        "name": "Action",
+        "russian": "Экшен",
         "kind": "genre",
         "entry_type": "Anime"
     },
@@ -656,5 +628,47 @@
         "russian": "Эротика",
         "kind": "genre",
         "entry_type": "Manga"
+    },
+    {
+        "id": 51,
+        "name": "Ecchi",
+        "russian": "Этти",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 9,
+        "name": "Ecchi",
+        "russian": "Этти",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 75,
+        "name": "Yuri",
+        "russian": "Юри",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 34,
+        "name": "Yuri",
+        "russian": "Юри",
+        "kind": "genre",
+        "entry_type": "Anime"
+    },
+    {
+        "id": 65,
+        "name": "Yaoi",
+        "russian": "Яой",
+        "kind": "genre",
+        "entry_type": "Manga"
+    },
+    {
+        "id": 33,
+        "name": "Yaoi",
+        "russian": "Яой",
+        "kind": "genre",
+        "entry_type": "Anime"
     }
 ]
