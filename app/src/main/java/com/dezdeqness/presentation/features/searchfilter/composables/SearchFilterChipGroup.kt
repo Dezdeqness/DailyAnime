@@ -13,7 +13,7 @@ import com.dezdeqness.presentation.models.SearchSectionUiModel
 fun SearchFilterChipGroup(
     modifier: Modifier = Modifier,
     section: SearchSectionUiModel,
-    onClick: (String) -> Unit,
+    onClick: (String,String, Boolean) -> Unit,
 ) {
     val items = section.items
     val selectedItems = section.selectedCells
@@ -27,8 +27,8 @@ fun SearchFilterChipGroup(
                 displayName = item.displayName,
                 id = item.id,
                 isSelected = selectedItems.contains(item.id),
-                onClick = { id ->
-                    onClick.invoke(id)
+                onClick = { id, isSelected ->
+                    onClick.invoke(section.innerId, id, isSelected)
                 }
             )
         }

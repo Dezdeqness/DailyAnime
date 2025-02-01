@@ -1,7 +1,6 @@
 package com.dezdeqness.presentation.features.searchfilter.composables
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Text
@@ -18,14 +17,13 @@ fun SearchFilterChip(
     displayName: String,
     id: String,
     isSelected: Boolean,
-    onClick: (String) -> Unit,
+    onClick: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MaterialTheme {  }
     FilterChip(
         modifier = modifier,
         onClick = {
-            onClick(id)
+            onClick(id, isSelected)
         },
         label = {
             Text(
