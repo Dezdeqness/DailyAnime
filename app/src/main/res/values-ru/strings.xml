@@ -2,6 +2,8 @@
     <string name="search_filter_title">Фильтр</string>
     <string name="search_filter_reset">Сбросить</string>
     <string name="search_filter_apply">Применить</string>
+    <string name="search_filter_show_more_title">Показать еще</string>
+    <string name="search_filter_collapse_title">Свернуть</string>
 
     <string name="anime_search_filter_genre">Жанр</string>
     <string name="anime_search_filter_season">Сезон</string>
