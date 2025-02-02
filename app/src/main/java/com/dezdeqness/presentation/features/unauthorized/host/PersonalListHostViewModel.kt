@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.unauthorized.host
 
+import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
@@ -25,7 +26,13 @@ class PersonalListHostViewModel @Inject constructor(
         launchOnIo {
             val isAuthorized = accountRepository.isAuthorized()
             launchOnMain {
-                _hostStateFlow.value = UnauthorizedHostState(isAuthorized = isAuthorized)
+                _hostStateFlow.value = UnauthorizedHostState(
+                    authorizedState = if (isAuthorized) {
+                        AuthorizedUiState.Authorized
+                    } else {
+                        AuthorizedUiState.Unauthorized
+                    }
+                )
             }
         }
 
@@ -34,7 +41,11 @@ class PersonalListHostViewModel @Inject constructor(
                 val isAuthorized = accountRepository.isAuthorized()
                 launchOnMain {
                     _hostStateFlow.value = UnauthorizedHostState(
-                        isAuthorized = isAuthorized,
+                        authorizedState = if (isAuthorized) {
+                            AuthorizedUiState.Authorized
+                        } else {
+                            AuthorizedUiState.Unauthorized
+                        }
                     )
                 }
             }

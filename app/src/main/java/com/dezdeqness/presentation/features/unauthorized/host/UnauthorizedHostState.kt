@@ -1,6 +1,8 @@
 package com.dezdeqness.presentation.features.unauthorized.host
 
+import com.dezdeqness.core.AuthorizedUiState
+
 
 data class UnauthorizedHostState(
-    val isAuthorized: Boolean = false,
+    val authorizedState: AuthorizedUiState = AuthorizedUiState.Pending,
 )

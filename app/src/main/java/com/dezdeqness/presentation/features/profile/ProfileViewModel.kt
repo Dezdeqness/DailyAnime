@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.profile
 
+import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
@@ -43,7 +44,7 @@ class ProfileViewModel @Inject constructor(
             fetchProfile()
         } else {
             _profileStateFlow.value = _profileStateFlow.value.copy(
-                isAuthorized = false,
+                authorizedState = AuthorizedUiState.Unauthorized,
             )
         }
     }
@@ -72,7 +73,7 @@ class ProfileViewModel @Inject constructor(
             collector = getProfileUseCase.invoke(),
             onSuccess = { account ->
                 _profileStateFlow.value = _profileStateFlow.value.copy(
-                    isAuthorized = true,
+                    authorizedState = AuthorizedUiState.Authorized,
                     avatar = account.avatar,
                     nickname = account.nickname,
                 )
