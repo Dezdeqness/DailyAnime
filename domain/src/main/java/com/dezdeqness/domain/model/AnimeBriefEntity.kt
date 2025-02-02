@@ -13,6 +13,7 @@ open class AnimeBriefEntity(
     open val episodesAired: Int,
     open val airedOnTimestamp: Long,
     open val releasedOnTimestamp: Long,
+    open val nextEpisodeTimestamp: Long = 0,
 ): Entity {
 
     @Suppress("CyclomaticComplexMethod")
@@ -32,6 +33,7 @@ open class AnimeBriefEntity(
         if (episodesAired != other.episodesAired) return false
         if (airedOnTimestamp != other.airedOnTimestamp) return false
         if (releasedOnTimestamp != other.releasedOnTimestamp) return false
+        if (nextEpisodeTimestamp != other.nextEpisodeTimestamp) return false
 
         return true
     }
@@ -49,6 +51,7 @@ open class AnimeBriefEntity(
         result = 31 * result + episodesAired
         result = 31 * result + airedOnTimestamp.hashCode()
         result = 31 * result + releasedOnTimestamp.hashCode()
+        result = 31 * result + nextEpisodeTimestamp.hashCode()
         return result
     }
 
@@ -65,6 +68,7 @@ open class AnimeBriefEntity(
                 "episodes=$episodes, " +
                 "episodesAired=$episodesAired, " +
                 "airedOn='$airedOnTimestamp', " +
-                "releasedOn='$releasedOnTimestamp')"
+                "releasedOn='$releasedOnTimestamp')" +
+                "nextEpisodeTimestamp='$nextEpisodeTimestamp')"
 
 }

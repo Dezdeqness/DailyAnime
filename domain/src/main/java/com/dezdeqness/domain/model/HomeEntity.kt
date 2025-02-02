@@ -1,5 +1,6 @@
 package com.dezdeqness.domain.model
 
 data class HomeEntity(
-    val sections: Map<String, List<AnimeBriefEntity>>,
+    val calendarSection: List<HomeCalendarEntity>,
+    val genreSections: Map<String, List<AnimeBriefEntity>>,
 )

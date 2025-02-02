@@ -1,4 +1,7 @@
 query Home($genre1: String!, $genre2: String!, $genre3: String!, $limit: PositiveInt!, $order: OrderEnum!) {
+    c:animes(limit: 50, order: aired_on, status: "ongoing") {
+        ...HomeAnime
+    }
     q1:animes(limit: $limit, genre: $genre1, order: $order) {
         ...HomeAnime
     }

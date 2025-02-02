@@ -33,13 +33,21 @@ class HomeRemoteDatasourceImpl @Inject constructor(
         val data = response.data
 
         if (data != null && response.hasErrors().not()) {
+            val sectionCalendar = data
+                .c
+                .filter { it.homeAnime.nextEpisodeAt != null }
+                .map { animeMapper.fromResponseCalendar(it.homeAnime) }
+                .sortedByDescending { it.nextEpisodeTimestamp }
+                .take(5)
+
             val sectionQ1 = data.q1.map { animeMapper.fromResponse(it.homeAnime) }
             val sectionQ2 = data.q2.map { animeMapper.fromResponse(it.homeAnime) }
             val sectionQ3 = data.q3.map { animeMapper.fromResponse(it.homeAnime) }
 
             Result.success(
                 HomeEntity(
-                    mapOf(
+                    calendarSection = sectionCalendar,
+                    genreSections = mapOf(
                         genreIds[0] to sectionQ1,
                         genreIds[1] to sectionQ2,
                         genreIds[2] to sectionQ3,
