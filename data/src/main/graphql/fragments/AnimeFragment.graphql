@@ -9,7 +9,9 @@ fragment HomeAnime on Anime {
     score
     episodes
     episodesAired
+    nextEpisodeAt
     airedOn { date }
     releasedOn { date }
     poster { id originalUrl mainUrl }
+    description
 }

@@ -11,6 +11,7 @@ import com.dezdeqness.domain.model.AnimeChronologyEntity
 import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.ImageEntity
 import com.dezdeqness.domain.model.StatsItemEntity
 import com.dezdeqness.domain.model.UserRateEntity
@@ -58,7 +59,29 @@ class AnimeMapper @Inject constructor(
             episodes = item.episodes,
             episodesAired = item.episodesAired,
             airedOnTimestamp = timestampConverter.convertToTimeStamp((item.airedOn?.date ?: "").toString()),
-            releasedOnTimestamp = timestampConverter.convertToTimeStamp((item.releasedOn?.date ?: "").toString())
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp((item.releasedOn?.date ?: "").toString()),
+            nextEpisodeTimestamp = timestampConverter.convertToTimeStamp((item.nextEpisodeAt ?: "").toString())
+        )
+
+    fun fromResponseCalendar(item: HomeAnime) =
+        HomeCalendarEntity(
+            id = item.id.toLong(),
+            name = item.name,
+            russian = item.russian.orEmpty(),
+            image = ImageEntity(
+                preview = item.poster?.mainUrl.orEmpty(),
+                original = item.poster?.originalUrl.orEmpty(),
+            ),
+            url = item.url,
+            kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
+            score = item.score?.toFloat() ?: 0f,
+            status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
+            episodes = item.episodes,
+            episodesAired = item.episodesAired,
+            airedOnTimestamp = timestampConverter.convertToTimeStamp((item.airedOn?.date ?: "").toString()),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp((item.releasedOn?.date ?: "").toString()),
+            nextEpisodeTimestamp = timestampConverter.convertToTimeStamp((item.nextEpisodeAt ?: "").toString()),
+            description = item.description,
         )
 
     fun fromResponse(item: AnimeDetailsRemote) =
