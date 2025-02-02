@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.dezdeqness.R
+import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.core.BaseFragment
 import com.dezdeqness.databinding.FragmentPersonalHostFragmentBinding
 import com.dezdeqness.di.AppComponent
@@ -54,11 +55,14 @@ class PersonalHostFragment :  BaseFragment<FragmentPersonalHostFragmentBinding>(
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.hostStateFlow.collect { state ->
+                    if (state.authorizedState == AuthorizedUiState.Pending) return@collect
 
                     val navController = getNavController()
                     val navGraph = navController.navInflater.inflate(R.navigation.personal_list_nav_graph)
 
-                    val startDestination = getStartDestination(state.isAuthorized)
+                    val isAuthorized = state.authorizedState == AuthorizedUiState.Authorized
+
+                    val startDestination = getStartDestination(isAuthorized)
 
                     navGraph.setStartDestination(startDestination)
                     navController.setGraph(navGraph, bundleOf())
