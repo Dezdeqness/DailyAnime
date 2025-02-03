@@ -6,15 +6,17 @@ import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.HomeEntity
 import com.dezdeqness.domain.model.ImageEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.features.home.composable.SectionAnimeUiModel
-import com.dezdeqness.presentation.features.home.composable.SectionStatus
-import com.dezdeqness.presentation.features.home.composable.SectionUiModel
+import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
+import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
+import com.dezdeqness.presentation.features.home.model.SectionStatus
+import com.dezdeqness.presentation.features.home.model.SectionUiModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -64,7 +66,7 @@ class HomeViewModelTest {
 
         every { accountRepository.authorizationState() } returns MutableSharedFlow()
 
-        every { homeComposer.composeSectionsInitial() } returns SectionsState(sections = DEFAULT_SECTIONS)
+        every { homeComposer.composeSectionsInitial() } returns SectionsState(genreSections = DEFAULT_SECTIONS)
         every { homeGenresProvider.getHomeSectionGenresIds() } returns DEFAULT_SECTIONS_IDS
         every { accountRepository.isAuthorized() } returns true
 
@@ -89,18 +91,22 @@ class HomeViewModelTest {
     fun `WHEN home IS load success SHOULD show home sections`() = runBlocking {
         val homeEntity = mockk<HomeEntity>()
         val sectionAnimeUiModel = mockk<SectionAnimeUiModel>()
+        val sectionCalendarUiModel = mockk<HomeCalendarUiModel>()
         coEvery {
             homeRepository.getHomeSections(DEFAULT_SECTIONS_IDS)
         } returns Result.success(homeEntity)
         every { animeUiMapper.mapSectionAnimeModel(any()) } returns sectionAnimeUiModel
-        every { homeEntity.sections } returns DEFAULT_SECTIONS_MAP
+        every { animeUiMapper.mapHomeCalendarAnimeModel(any()) } returns sectionCalendarUiModel
+        every { homeEntity.genreSections } returns DEFAULT_SECTIONS_MAP
+        every { homeEntity.calendarSection } returns DEFAULT_CALENDAR_ENTITY_LIST
 
         viewModel.onInitialLoad()
 
         val uiState = viewModel.homeStateFlow.value
 
         assertAll(
-            { assertTrue(uiState.sectionsState.sections.any { it.status == SectionStatus.Loaded }) },
+            { assertTrue(uiState.sectionsState.genreSections.any { it.status == SectionStatus.Loaded }) },
+            { assertTrue(uiState.sectionsState.calendarSection.status == SectionStatus.Loaded) },
         )
 
     }
@@ -116,7 +122,7 @@ class HomeViewModelTest {
         val uiState = viewModel.homeStateFlow.value
 
         assertAll(
-            { assertTrue(uiState.sectionsState.sections.any { it.status == SectionStatus.Error }) },
+            { assertTrue(uiState.sectionsState.genreSections.any { it.status == SectionStatus.Error }) },
         )
 
     }
@@ -156,6 +162,25 @@ class HomeViewModelTest {
                 score = 0f,
                 status = AnimeStatus.LATEST,
                 url = "",
+            )
+        )
+
+        private val DEFAULT_CALENDAR_ENTITY_LIST = listOf(
+            HomeCalendarEntity(
+                id = 0,
+                name = "",
+                airedOnTimestamp = 0L,
+                episodes = 0,
+                episodesAired = 0,
+                image = ImageEntity(),
+                kind = AnimeKind.TV,
+                releasedOnTimestamp = 0L,
+                russian = "",
+                score = 0f,
+                status = AnimeStatus.LATEST,
+                url = "",
+                description = "",
+                nextEpisodeTimestamp = 100,
             )
         )
 
