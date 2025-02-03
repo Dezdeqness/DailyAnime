@@ -1,9 +1,13 @@
 package com.dezdeqness.presentation
 
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.RelatedItemEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
-import com.dezdeqness.presentation.features.home.composable.SectionAnimeUiModel
+import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
+import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
 import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
@@ -35,9 +39,9 @@ class AnimeUiMapper @Inject constructor(
             type = relatedItemUiModel.takeIf { it.relationTitleRussian.isNotEmpty() }?.relationTitleRussian
                 ?: relatedItemUiModel.relationTitle,
             briefInfo =
-            relatedItemUiModel.animeBriefEntity.kind.name
-                    + " • "
-                    + yearFormatter.format(relatedItemUiModel.animeBriefEntity.airedOnTimestamp),
+                relatedItemUiModel.animeBriefEntity.kind.name
+                        + " • "
+                        + yearFormatter.format(relatedItemUiModel.animeBriefEntity.airedOnTimestamp),
             logoUrl = imageUrlUtils.getImageWithBaseUrl(relatedItemUiModel.animeBriefEntity.image.original),
         )
 
@@ -47,6 +51,18 @@ class AnimeUiMapper @Inject constructor(
             title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
                 ?: animeBriefEntity.name,
             logoUrl = animeBriefEntity.image.preview,
+        )
+
+    fun mapHomeCalendarAnimeModel(homeCalendarEntity: HomeCalendarEntity) =
+        HomeCalendarUiModel(
+            id = homeCalendarEntity.id,
+            title = homeCalendarEntity.takeIf { it.russian.isNotEmpty() }?.russian
+                ?: homeCalendarEntity.name,
+            description = HtmlCompat.fromHtml(
+                homeCalendarEntity.description.orEmpty(),
+                FROM_HTML_MODE_COMPACT
+            ).toString(),
+            imageUrl = homeCalendarEntity.image.original,
         )
 
 }

@@ -35,7 +35,7 @@ class HomeRemoteDatasourceImpl @Inject constructor(
         if (data != null && response.hasErrors().not()) {
             val sectionCalendar = data
                 .c
-                .filter { it.homeAnime.nextEpisodeAt != null }
+                .filter { it.homeAnime.nextEpisodeAt != null && it.homeAnime.description != null }
                 .map { animeMapper.fromResponseCalendar(it.homeAnime) }
                 .sortedByDescending { it.nextEpisodeTimestamp }
                 .take(5)
