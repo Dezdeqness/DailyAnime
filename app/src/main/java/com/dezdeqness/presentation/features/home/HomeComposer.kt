@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.home
 
 import com.dezdeqness.data.provider.HomeGenresProvider
-import com.dezdeqness.presentation.features.home.composable.SectionUiModel
+import com.dezdeqness.presentation.features.home.model.SectionUiModel
 
 class HomeComposer(
     private val homeGenresProvider: HomeGenresProvider,
@@ -16,7 +16,7 @@ class HomeComposer(
             )
         }
 
-        return SectionsState(sections = sections)
+        return SectionsState(genreSections = sections)
     }
 
 }
