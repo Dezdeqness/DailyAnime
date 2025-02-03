@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.home.composable
+package com.dezdeqness.presentation.features.home.model
 
 data class SectionUiModel(
     val id: String,
@@ -13,10 +13,3 @@ data class SectionAnimeUiModel(
     val title: String,
     val logoUrl: String,
 )
-
-enum class SectionStatus {
-    Initial,
-    Loading,
-    Error,
-    Loaded,
-}

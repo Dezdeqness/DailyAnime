@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import com.dezdeqness.R
 import com.dezdeqness.presentation.features.home.composable.HomeBanner
+import com.dezdeqness.presentation.features.home.composable.HomeCalendarSection
 import com.dezdeqness.presentation.features.home.composable.HomeSection
-import com.dezdeqness.presentation.features.home.composable.SectionStatus
 import com.dezdeqness.presentation.features.home.composable.ShimmerHomeLoading
+import com.dezdeqness.presentation.features.home.model.SectionStatus
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -29,15 +30,21 @@ fun HomePage(
         actions.onInitialLoad()
     }
 
-    val sections = state.sectionsState.sections
+    val genreSections = state.sectionsState.genreSections
+    val calendarSection = state.sectionsState.calendarSection
     val authorizedState = state.authorizedState
 
-    val isLoadingVisible = remember(sections) {
-        sections.map { it.status }.any { it == SectionStatus.Initial || it == SectionStatus.Loading }
+    val isLoadingVisible = remember(genreSections, calendarSection) {
+        genreSections
+            .map { it.status }
+            .any { it == SectionStatus.Initial || it == SectionStatus.Loading } &&
+                calendarSection.status == SectionStatus.Initial
+                || calendarSection.status == SectionStatus.Loading
     }
 
-    val isEmptyContent = remember(sections) {
-        sections.map { it.items }.all { it.isEmpty() }
+    val isEmptyContent = remember(genreSections, calendarSection) {
+        genreSections.map { it.items }.all { it.isEmpty() } &&
+                calendarSection.items.isEmpty()
     }
 
     LazyColumn(
@@ -52,16 +59,25 @@ fun HomePage(
             )
         }
 
-        if (isLoadingVisible && isEmptyContent) {
+        if (isLoadingVisible || isEmptyContent) {
             item {
                 ShimmerHomeLoading()
             }
         } else {
+            if (calendarSection.items.isNotEmpty()) {
+                item {
+                    HomeCalendarSection(
+                        items = calendarSection.items,
+                        onActionReceive = actions::onActionReceived,
+                    )
+                }
+            }
+
             items(
-                count = sections.size,
-                key = { index -> sections[index].toString() },
+                count = genreSections.size,
+                key = { index -> genreSections[index].toString() },
             ) { index ->
-                val section = sections[index]
+                val section = genreSections[index]
                 HomeSection(
                     title = section.title,
                     items = section.items,

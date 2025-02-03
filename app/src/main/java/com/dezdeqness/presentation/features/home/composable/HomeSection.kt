@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
+import com.dezdeqness.presentation.features.home.model.SectionStatus
 
 @Composable
 fun HomeSection(

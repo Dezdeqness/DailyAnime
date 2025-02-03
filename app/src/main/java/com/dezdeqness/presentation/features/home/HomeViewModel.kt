@@ -9,8 +9,8 @@ import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.features.home.composable.SectionStatus
-import com.dezdeqness.presentation.features.home.composable.SectionUiModel
+import com.dezdeqness.presentation.features.home.model.SectionStatus
+import com.dezdeqness.presentation.features.home.model.SectionUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -66,23 +66,26 @@ class HomeViewModel @Inject constructor(
                     _homeStateFlow.update {
                         it.copy(
                             sectionsState = it.sectionsState.copy(
-                                sections = _homeStateFlow.value.sectionsState.sections.map { item ->
+                                genreSections = _homeStateFlow.value.sectionsState.genreSections.map { item ->
                                     item.copy(status = SectionStatus.Loading)
-                                }
+                                },
+                                calendarSection = _homeStateFlow.value.sectionsState.calendarSection.copy(
+                                    status = SectionStatus.Loading,
+                                )
                             )
                         )
                     }
                 }
             },
             onSuccess = {
-                val sections = it
-                    .sections
+                val genreSections = it
+                    .genreSections
                     .mapNotNull { item ->
                         val list = item.value.map(animeUiMapper::mapSectionAnimeModel)
                         val section = _homeStateFlow
                             .value
                             .sectionsState
-                            .sections
+                            .genreSections
                             .find { section -> section.numericId == item.key }
                             ?: return@mapNotNull null
 
@@ -95,10 +98,17 @@ class HomeViewModel @Inject constructor(
                         )
                     }
 
+                val calendarSection =
+                    it.calendarSection.map(animeUiMapper::mapHomeCalendarAnimeModel)
+
                 _homeStateFlow.update { state ->
                     state.copy(
                         sectionsState = state.sectionsState.copy(
-                            sections = sections,
+                            genreSections = genreSections,
+                            calendarSection = _homeStateFlow.value.sectionsState.calendarSection.copy(
+                                items = calendarSection,
+                                status = SectionStatus.Loaded,
+                            )
                         ),
                     )
                 }
@@ -107,9 +117,12 @@ class HomeViewModel @Inject constructor(
                 _homeStateFlow.update {
                     it.copy(
                         sectionsState = it.sectionsState.copy(
-                            sections = _homeStateFlow.value.sectionsState.sections.map { item ->
+                            genreSections = _homeStateFlow.value.sectionsState.genreSections.map { item ->
                                 item.copy(status = SectionStatus.Error)
-                            }
+                            },
+                            calendarSection = _homeStateFlow.value.sectionsState.calendarSection.copy(
+                                status = SectionStatus.Error,
+                            )
                         )
                     )
                 }

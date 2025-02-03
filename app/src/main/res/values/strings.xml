@@ -152,6 +152,7 @@
 
     <string name="home_title">Welcome back</string>
     <string name="home_title_authorized">Welcome back,\n%s</string>
+    <string name="home_calendar_title">New this week</string>
 
 </resources>
 

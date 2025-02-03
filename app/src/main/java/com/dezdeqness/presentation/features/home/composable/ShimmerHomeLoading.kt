@@ -18,7 +18,7 @@ import com.dezdeqness.core.ui.shimmer
 @Composable
 fun ShimmerHomeLoading(
     modifier: Modifier = Modifier,
-    times: Int = 3,
+    times: Int = 4,
 ) {
     Column(
         modifier = modifier
