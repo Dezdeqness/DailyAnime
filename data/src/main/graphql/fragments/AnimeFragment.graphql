@@ -14,4 +14,5 @@ fragment HomeAnime on Anime {
     releasedOn { date }
     poster { id originalUrl mainUrl }
     description
+    descriptionHtml
 }
