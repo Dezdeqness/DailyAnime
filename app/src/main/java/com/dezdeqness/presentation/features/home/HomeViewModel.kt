@@ -62,7 +62,7 @@ class HomeViewModel @Inject constructor(
                 homeRepository.getHomeSections(homeGenresProvider.getHomeSectionGenresIds())
             },
             onLoading = { isLoading ->
-                if (isLoading) {
+                if (isLoading && _homeStateFlow.value.sectionsState.genreSections.isEmpty()) {
                     _homeStateFlow.update {
                         it.copy(
                             sectionsState = it.sectionsState.copy(
