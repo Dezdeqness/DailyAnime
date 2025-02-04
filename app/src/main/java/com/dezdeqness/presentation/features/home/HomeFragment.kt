@@ -11,8 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
+import com.dezdeqness.presentation.TabSelection
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
+import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.presentation.features.animelist.AnimeListFragmentDirections
 import kotlinx.coroutines.launch
 
@@ -60,6 +62,10 @@ class HomeFragment : BaseComposeFragment() {
                             findNavController().navigate(
                                 AnimeListFragmentDirections.navigateToAnimeDetails(event.animeId)
                             )
+                        }
+
+                        is OpenCalendarTab -> {
+                            (requireActivity() as? TabSelection)?.navigateToCalendarTab()
                         }
 
                         else -> {}
