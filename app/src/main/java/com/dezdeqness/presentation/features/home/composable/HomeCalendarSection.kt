@@ -55,9 +55,10 @@ fun HomeCalendarSection(
                 indicatorScrollState.animateScrollToItem((currentPage - 1).coerceAtLeast(0))
             }
         }
-        SectionHeader(
+        SectionHeaderWithAction(
             title = stringResource(R.string.home_calendar_title),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
+            onActionReceive = onActionReceive,
         )
         HorizontalPager(state = pagerState) { index ->
             val currentItem = items[index]

@@ -16,12 +16,13 @@ import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
+import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.ui.ShikimoriSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TabSelection {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigationBar() {
-        val bottomVav = binding.navigation
+        val bottomNav = binding.navigation
 
         val navGraphIds = listOf(
             R.navigation.personal_host_nav_graph,
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             R.navigation.profile_nav_graph,
         )
 
-        bottomVav.setupWithNavController(
+        bottomNav.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
             containerId = R.id.container,
@@ -124,6 +125,9 @@ class MainActivity : AppCompatActivity() {
                         is LanguageDisclaimer -> {
                             showLanguageDisclaimer()
                         }
+                        is OpenCalendarTab -> {
+                            binding.navigation.selectedItemId = R.id.calendar_nav_graph
+                        }
 
                         else -> {}
                     }
@@ -141,6 +145,10 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
         dialog.setCanceledOnTouchOutside(false)
+    }
+
+    override fun navigateToCalendarTab() {
+        mainViewModel.onNavigateToCalendarTab()
     }
 
     companion object {

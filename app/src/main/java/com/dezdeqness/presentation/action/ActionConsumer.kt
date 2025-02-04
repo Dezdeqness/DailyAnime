@@ -2,6 +2,7 @@ package com.dezdeqness.presentation.action
 
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.presentation.event.OpenVideo
 
 class ActionConsumer {
@@ -23,6 +24,9 @@ class ActionConsumer {
             }
             is Action.VideoClick -> {
                 eventListener?.onEventReceive(OpenVideo(url = action.url))
+            }
+            is Action.CalendarHeaderClicked -> {
+                eventListener?.onEventReceive(OpenCalendarTab)
             }
         }
     }
