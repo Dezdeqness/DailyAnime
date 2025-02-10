@@ -4,9 +4,11 @@ import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.GetProfileUseCase
 import com.dezdeqness.domain.usecases.LogoutUseCase
+import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -15,6 +17,8 @@ class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val accountRepository: AccountRepository,
+    private val messageConsumer: MessageConsumer,
+    private val messageProvider: MessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -59,11 +63,8 @@ class ProfileViewModel @Inject constructor(
         launchOnIo {
             logoutUseCase
                 .invoke()
-                .onSuccess {
-
-                }
                 .onFailure {
-
+                    messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
                 }
         }
     }
@@ -79,6 +80,9 @@ class ProfileViewModel @Inject constructor(
                 )
             },
             onFailure = {
+                launchOnIo {
+                    messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
+                }
                 logInfo("Error during fetch of profile on profile page", it)
             }
         )

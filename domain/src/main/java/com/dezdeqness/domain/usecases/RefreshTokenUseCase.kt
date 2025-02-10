@@ -15,15 +15,16 @@ class RefreshTokenUseCase(
         }
 
         val refreshResult = accountRepository.refresh()
-        if (refreshResult.isFailure) {
-            return Result.failure(refreshResult.exceptionOrNull() ?: Throwable("Refresh failure"))
+        refreshResult.onFailure {
+            return Result.failure(it)
         }
 
-        val token = refreshResult.getOrNull() ?: return Result.failure(Throwable("Token failure"))
+        val token = refreshResult.getOrElse {
+            return Result.failure(it)
+        }
         val tokenResult = accountRepository.saveToken(token)
-
-        if (tokenResult.isFailure) {
-            return Result.failure(tokenResult.exceptionOrNull() ?: Throwable("Save token failure"))
+        tokenResult.onFailure {
+            return Result.failure(it)
         }
 
         return Result.success(token.accessToken)

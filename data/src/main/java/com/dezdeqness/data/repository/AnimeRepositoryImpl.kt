@@ -15,34 +15,22 @@ class AnimeRepositoryImpl @Inject constructor(
 ) : AnimeRepository {
 
     override fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity> =
-        animeRemoteDataSource
-            .getDetailsAnimeMainInfo(id, isAuthorized)
-            .onFailure { return Result.failure(it) }
+        animeRemoteDataSource.getDetailsAnimeMainInfo(id, isAuthorized)
 
     override fun getScreenshots(id: Long): Result<List<ScreenshotEntity>> =
-        animeRemoteDataSource
-            .getDetailsAnimeScreenshots(id)
-            .onFailure { return Result.failure(it) }
+        animeRemoteDataSource.getDetailsAnimeScreenshots(id)
 
     override fun getRelated(id: Long): Result<List<RelatedItemEntity>> =
-        animeRemoteDataSource
-            .getDetailsAnimeRelated(id)
-            .onFailure { return Result.failure(it) }
+        animeRemoteDataSource.getDetailsAnimeRelated(id)
 
     override fun getRoles(id: Long): Result<List<RoleEntity>> =
-        animeRemoteDataSource
-            .getDetailsAnimeRoles(id)
-            .onFailure { return Result.failure(it) }
+        animeRemoteDataSource.getDetailsAnimeRoles(id)
 
     override fun getSimilar(id: Long): Result<List<AnimeBriefEntity>> =
-        animeRemoteDataSource
-            .getDetailsAnimeSimilar(id = id)
-            .onFailure { return Result.failure(it) }
+        animeRemoteDataSource.getDetailsAnimeSimilar(id = id)
 
     override fun getChronology(id: Long): Result<List<AnimeChronologyEntity>> =
-        animeRemoteDataSource
-            .getDetailsChronology(id = id)
-            .onFailure { return Result.failure(it) }
+        animeRemoteDataSource.getDetailsChronology(id = id)
 
     override fun getListWithFilter(
         queryMap: Map<String, String>,

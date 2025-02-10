@@ -35,7 +35,7 @@ class GetAnimeDetailsUseCase(
         }
 
         val animeDetails = detailsResult.getOrElse {
-            return Result.failure(Throwable("Anime details failure"))
+            return Result.failure(it)
         }
         val screenshots = screenshotsResult.getOrNull() ?: listOf()
         val relates = relatedItemsResult.getOrNull() ?: listOf()
