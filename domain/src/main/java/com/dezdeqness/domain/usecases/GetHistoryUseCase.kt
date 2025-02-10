@@ -12,8 +12,8 @@ class GetHistoryUseCase(
             page = pageNumber,
             limit = PAGE_SIZE,
         )
-        if (result.isFailure) {
-            return Result.failure(result.exceptionOrNull() ?: Throwable("User history failure"))
+        result.onFailure {
+            return Result.failure(it)
         }
         val list = result.getOrDefault(listOf())
 

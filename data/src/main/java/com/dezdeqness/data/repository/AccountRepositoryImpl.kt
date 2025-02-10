@@ -3,6 +3,7 @@ package com.dezdeqness.data.repository
 import com.dezdeqness.data.core.CookieCleaner
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
+import com.dezdeqness.data.exception.UserLocalNotFound
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.AuthorizationState
@@ -12,7 +13,6 @@ import com.dezdeqness.domain.repository.AccountRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flow
-import java.lang.Exception
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
@@ -52,14 +52,13 @@ class AccountRepositoryImpl @Inject constructor(
     override fun logout() = accountRemoteDataSource.logout()
 
     override fun getProfileRemote(): Result<AccountEntity> {
-
         return accountRemoteDataSource.getBriefAccountInfo()
     }
 
     override fun getProfileDetails() = flow {
         val profile = getProfileLocal()
         if (profile == null) {
-            emit(Result.failure(Exception("Profile failure")))
+            emit(Result.failure(UserLocalNotFound()))
             return@flow
         }
 
@@ -79,8 +78,7 @@ class AccountRepositoryImpl @Inject constructor(
     override fun getProfileLocal() = accountLocalDataSource.getAccount()
 
     override fun getUserHistory(page: Int, limit: Int): Result<List<HistoryEntity>> {
-        val userId =
-            getProfileLocal()?.id ?: return Result.failure(Throwable("Local profile failure"))
+        val userId = getProfileLocal()?.id ?: return Result.failure(UserLocalNotFound())
 
         return accountRemoteDataSource.getHistory(
             userId = userId,

@@ -2,12 +2,12 @@ package com.dezdeqness.data.repository
 
 import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
+import com.dezdeqness.data.exception.UserLocalNotFound
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.lang.Exception
 import javax.inject.Inject
 
 class UserRatesRepositoryImpl @Inject constructor(
@@ -20,7 +20,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         flow {
             val profile = accountRepository.getProfileLocal()
             if (profile == null) {
-                emit(Result.failure(Exception("Local profile failure")))
+                emit(Result.failure(UserLocalNotFound()))
                 return@flow
             }
 
@@ -58,7 +58,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         comment: String,
     ): Result<Boolean> {
         val localUserRate = userRatesLocalDataSource.getUserRate(rateId)
-            ?: return Result.failure(Exception("Local user rate failure"))
+            ?: return Result.failure(UserLocalNotFound())
 
         val result = userRatesRemoteDataSource.updateUserRate(
             rateId = rateId,
@@ -86,8 +86,9 @@ class UserRatesRepositoryImpl @Inject constructor(
         episodes: Long,
         score: Float,
         comment: String,
-        ): Result<Boolean> {
-        val profile = accountRepository.getProfileLocal() ?: return Result.failure(Exception("Profile local failure"))
+    ): Result<Boolean> {
+        val profile = accountRepository.getProfileLocal()
+            ?: return Result.failure(UserLocalNotFound())
 
         val result = userRatesRemoteDataSource.createUserRate(
             userId = profile.id,
