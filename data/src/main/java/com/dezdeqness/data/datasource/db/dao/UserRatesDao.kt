@@ -15,7 +15,6 @@ interface UserRatesDao {
     @Query("SELECT * FROM 'user_rate' WHERE status = :status")
     fun getUserRates(status: String): List<UserRateLocal>
 
-
     @Query("SELECT * FROM 'user_rate' WHERE id = :rateId")
     fun getUserRateByRateId(rateId: Long): UserRateLocal?
 
@@ -31,12 +30,16 @@ interface UserRatesDao {
     @Query("DELETE FROM 'user_rate' WHERE status = :status")
     fun deleteUserRatesByStatus(status: String)
 
-    @Query("UPDATE 'user_rate' SET score = :score, status = :status,  episodes = :episodes WHERE id =:rateId")
+    @Query("UPDATE 'user_rate' SET score = :score, status = :status, episodes = :episodes, text = :text WHERE id = :rateId")
     fun updateUserRate(
         rateId: Int,
         score: Int,
         status: String,
         episodes: Int,
+        text: String,
     )
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUserRate(userRate: UserRateLocal)
 
 }

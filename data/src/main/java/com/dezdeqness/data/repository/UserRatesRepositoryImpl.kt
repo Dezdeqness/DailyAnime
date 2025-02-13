@@ -56,7 +56,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         episodes: Long,
         score: Float,
         comment: String,
-    ): Result<Boolean> {
+    ): Result<UserRateEntity> {
         val localUserRate = userRatesLocalDataSource.getUserRate(rateId)
             ?: return Result.failure(UserLocalNotFound())
 
@@ -70,14 +70,20 @@ class UserRatesRepositoryImpl @Inject constructor(
             chapters = localUserRate.chapters,
             comment = comment,
         )
-        return result.map { true }
+        return result
+            .onSuccess { entity ->
+                userRatesLocalDataSource.updateUserRate(entity)
+            }
     }
 
-    override fun incrementUserRate(rateId: Long): Result<Boolean> {
+    override fun incrementUserRate(rateId: Long): Result<UserRateEntity> {
         val result = userRatesRemoteDataSource.incrementUserRate(
             rateId = rateId,
         )
-        return result.map { true }
+        return result
+            .onSuccess { entity ->
+                userRatesLocalDataSource.updateUserRate(entity)
+            }
     }
 
     override fun createUserRate(
@@ -86,7 +92,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         episodes: Long,
         score: Float,
         comment: String,
-    ): Result<Boolean> {
+    ): Result<UserRateEntity> {
         val profile = accountRepository.getProfileLocal()
             ?: return Result.failure(UserLocalNotFound())
 
@@ -102,7 +108,10 @@ class UserRatesRepositoryImpl @Inject constructor(
             chapters = 0,
             comment = comment,
         )
-        return result.map { true }
+        return result
+            .onSuccess { entity ->
+                userRatesLocalDataSource.insertUserRate(entity)
+            }
     }
 
     override fun updateLocalUserRate(userRateEntity: UserRateEntity) {

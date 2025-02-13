@@ -21,4 +21,5 @@ interface UserRatesLocalDataSource {
 
     fun updateUserRate(userRateEntity: UserRateEntity)
 
+    fun insertUserRate(userRateEntity: UserRateEntity)
 }

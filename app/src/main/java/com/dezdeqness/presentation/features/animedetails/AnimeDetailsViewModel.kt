@@ -96,7 +96,15 @@ class AnimeDetailsViewModel @Inject constructor(
                     score = userRate.score,
                     comment = userRate.comment,
                 )
-                    .onSuccess {
+                    .onSuccess { result ->
+                        animeDetails?.let { details ->
+                            animeDetails = details.copy(
+                                animeDetailsEntity = details.animeDetailsEntity.copy(
+                                    userRate = result
+                                )
+                            )
+                        }
+
                         if (userRate.isUserRateExist) {
                             onEditUpdateSuccessMessage()
                         } else {

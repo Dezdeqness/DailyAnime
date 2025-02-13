@@ -7,6 +7,7 @@ enum class UserRateStatusEntity(val status: String) {
     PLANNED("planned"),
     ON_HOLD("on_hold"),
     DROPPED("dropped"),
+    NONE("none"),
     UNKNOWN("none");
 
     companion object {
