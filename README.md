@@ -27,16 +27,21 @@
 
 <h2>🔮Future plans</h2>
 
-- [x] Support of English localization
-- [x] Migration profile and search to Compose
-- [ ] Home page
+- [ ] Fancy stats
 - [ ] Onboarding
 - [ ] Migration to Material3
-- [ ] Achievements
 - [ ] Manga/Ranobe functionality
 - [ ] Widget
 - [ ] User recap
 - [ ] Tech improvements
+- [ ] Anilist API
+- [ ] News
+- [ ] Migrfate rest app to compose
+- [ ] Modularization
+- [ ] KMP
+- [ ] Favourites
+- [ ] Customization in settings
+- [ ] Achievements
 
 <h2>🎨Project Screenshots:</h2>
 
