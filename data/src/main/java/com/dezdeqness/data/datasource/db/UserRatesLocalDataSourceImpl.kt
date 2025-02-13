@@ -48,6 +48,11 @@ class UserRatesLocalDataSourceImpl @Inject constructor(
             score = userRateEntity.score.toInt(),
             status = userRateEntity.status,
             episodes = userRateEntity.episodes.toInt(),
+            text = userRateEntity.text,
         )
+    }
+
+    override fun insertUserRate(userRateEntity: UserRateEntity) {
+        userRatesDao.insertUserRate(userRatesMapper.toDatabase(userRateEntity))
     }
 }

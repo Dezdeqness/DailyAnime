@@ -1,5 +1,6 @@
 package com.dezdeqness.domain.usecases
 
+import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 
 class CreateOrUpdateUserRateUseCase(
@@ -13,7 +14,7 @@ class CreateOrUpdateUserRateUseCase(
         episodes: Long,
         score: Float,
         comment: String,
-    ): Result<Boolean> {
+    ): Result<UserRateEntity> {
         val localUserRate = userRatesRepository.getLocalUserRate(rateId = rateId)
         return if (localUserRate == null) {
             userRatesRepository.createUserRate(
