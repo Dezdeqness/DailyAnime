@@ -27,10 +27,6 @@ class HistoryViewModel @Inject constructor(
     private val _historyStateFlow: MutableStateFlow<HistoryState> = MutableStateFlow(HistoryState())
     val historyStateFlow: StateFlow<HistoryState> get() = _historyStateFlow
 
-    init {
-        initialPageLoad()
-    }
-
     override val viewModelTag = "HistoryViewModel"
 
     override fun setPullDownIndicatorVisible(isVisible: Boolean) {
@@ -86,7 +82,7 @@ class HistoryViewModel @Inject constructor(
                 val list = historyCompose.compose(state.list)
 
                 _historyStateFlow.value = _historyStateFlow.value.copy(
-                    list = _historyStateFlow.value.list + list,
+                    list = (_historyStateFlow.value.list + list).toSet().toList(),
                     hasNextPage = hasNextPage,
                 )
                 hasNextPage
@@ -99,7 +95,7 @@ class HistoryViewModel @Inject constructor(
         )
     }
 
-    private fun initialPageLoad() {
+    fun onInitialLoad() {
         onInitialLoad(
             action = {
                 getHistoryUseCase.invoke(
