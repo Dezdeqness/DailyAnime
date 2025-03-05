@@ -127,4 +127,9 @@ ext {
     crypto = Group {
         implementation libs.androidx.security.crypto
     }
+
+    leakCanary = Group {
+        debugImplementation libs.leak.canary
+        qaImplementation libs.leak.canary
+    }
 }

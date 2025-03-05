@@ -122,6 +122,7 @@ dependencies {
     swipe()
     composer()
     coil()
+    leakCanary()
     implementation(libs.core.ui)
     implementation(libs.core)
     implementation(libs.pod.core)

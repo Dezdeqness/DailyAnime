@@ -50,6 +50,7 @@ podCoreVersion = "0.1.1"
 navigationSafeArgsVersion = "2.8.5"
 
 apollo = "4.0.1"
+leakCanary = "2.14"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
@@ -133,6 +134,7 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersi
 pod-core = { module = "com.dezdeqness.pod:core", version.ref = "podCoreVersion" }
 
 apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
+leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary"}
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidVersion" }
