@@ -99,6 +99,7 @@ ext {
         implementation(libs.androidx.compose.material3)
         implementation(libs.androidx.compose.material)
         implementation(libs.androidx.activity.compose)
+        implementation(libs.lottie.compose)
     }
 
     mock = Group {
