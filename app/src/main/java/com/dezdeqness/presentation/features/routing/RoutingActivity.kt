@@ -9,18 +9,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.domain.repository.SettingsRepository
@@ -66,21 +72,28 @@ class RoutingActivity : AppCompatActivity() {
         setContent {
             AppTheme {
                 Column(
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .background(AppTheme.colors.onPrimary)
-                        .padding(horizontal = 8.dp)
                 ) {
+                    val compositionLoading by rememberLottieComposition(
+                        LottieCompositionSpec.RawRes(R.raw.loading)
+                    )
+
                     Text(
                         text = stringResource(id = R.string.app_name),
                         color = AppTheme.colors.textPrimary,
+                        fontFamily = FontFamily(Font(R.font.pacifico_regular)),
                         textAlign = TextAlign.Center,
                         style = AppTheme.typography.displayMedium,
                     )
-                    CircularProgressIndicator(
-                        modifier = Modifier.padding(top = 24.dp)
+
+                    LottieAnimation(
+                        composition = compositionLoading,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier.height(120.dp)
                     )
                 }
             }

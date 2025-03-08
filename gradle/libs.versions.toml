@@ -52,6 +52,8 @@ navigationSafeArgsVersion = "2.8.5"
 apollo = "4.0.1"
 leakCanary = "2.14"
 
+lottie = "6.6.2"
+
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompatVersion" }
@@ -118,6 +120,7 @@ google-firebase-config = { group = "com.google.firebase", name = "firebase-confi
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBomVersion" }
 androidx-compose-ui-ui = { group = "androidx.compose.ui", name = "ui" }
