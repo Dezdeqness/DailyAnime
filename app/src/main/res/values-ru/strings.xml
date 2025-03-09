@@ -34,6 +34,10 @@
     <string name="settings_toolbar_title">Настройки</string>
     <string name="settings_dark_theme">Включить темную тему</string>
     <string name="settings_version_name">Версия:</string>
+    <string name="settings_theme_section">Тема</string>
+    <string name="settings_dark_theme_title">Темная тема</string>
+    <string name="settings_about_section">О приложении</string>
+    <string name="settings_version_title">Версия</string>
 
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>

@@ -36,6 +36,10 @@
     <string name="settings_toolbar_title">Settings</string>
     <string name="settings_dark_theme">Enable dark theme</string>
     <string name="settings_version_name">Version:</string>
+    <string name="settings_theme_section">Theme</string>
+    <string name="settings_dark_theme_title">Dark mode</string>
+    <string name="settings_about_section">About</string>
+    <string name="settings_version_title">Version</string>
 
     <string name="stats_toolbar_title">Statistics</string>
     <string name="stats_header_scores">Scores</string>
