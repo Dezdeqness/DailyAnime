@@ -20,6 +20,7 @@ import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.ui.ShikimoriSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), TabSelection {
@@ -95,12 +96,19 @@ class MainActivity : AppCompatActivity(), TabSelection {
             R.navigation.profile_nav_graph,
         )
 
-        bottomNav.setupWithNavController(
-            navGraphIds = navGraphIds,
-            fragmentManager = supportFragmentManager,
-            containerId = R.id.container,
-            intent = intent
-        )
+        lifecycleScope.launch {
+            val id = withContext(application.getComponent().coroutineDispatcherProvider().io()) {
+                application.getComponent().settingsRepository().getSelectedInitialSection()
+            }
+
+            bottomNav.setupWithNavController(
+                navGraphIds = navGraphIds,
+                fragmentManager = supportFragmentManager,
+                containerId = R.id.container,
+                intent = intent,
+                selectedGraphId = id
+            )
+        }
 
     }
 
