@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity(), TabSelection {
             val id = withContext(application.getComponent().coroutineDispatcherProvider().io()) {
                 application.getComponent().settingsRepository().getSelectedInitialSection()
             }
+            binding.navigation.selectedItemId = id ?: R.id.home_nav_graph
 
             bottomNav.setupWithNavController(
                 navGraphIds = navGraphIds,
