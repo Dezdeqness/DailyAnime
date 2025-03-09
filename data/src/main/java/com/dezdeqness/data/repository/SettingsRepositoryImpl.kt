@@ -20,4 +20,10 @@ class SettingsRepositoryImpl @Inject constructor(
         settingsProvider.setLanguageDisclaimerShown(isShown = isShown)
     }
 
+    override suspend fun getSelectedInitialSection() = settingsProvider.getSelectedInitialSection()
+
+    override suspend fun setSelectedInitialSection(sectionId: Int) {
+        settingsProvider.setSelectedInitialSection(sectionId = sectionId)
+    }
+
 }

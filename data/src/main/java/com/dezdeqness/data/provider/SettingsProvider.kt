@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -45,11 +46,23 @@ class SettingsProvider @Inject constructor(
             .first()
             ?: false
 
+    suspend fun setSelectedInitialSection(sectionId: Int) {
+        context.dataStore.edit { settings ->
+            settings[SELECTED_INITIAL_SECTION] = sectionId
+        }
+    }
 
+    suspend fun getSelectedInitialSection() =
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[SELECTED_INITIAL_SECTION] }
+            .first()
 
     companion object {
         private val IS_NIGHT_THEME = booleanPreferencesKey("nightTheme")
         private val IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN = booleanPreferencesKey("languageDisclaimerShown")
+        private val SELECTED_INITIAL_SECTION = intPreferencesKey("selectedInitialSection")
     }
 
 }

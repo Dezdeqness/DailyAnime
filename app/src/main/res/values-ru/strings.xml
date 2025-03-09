@@ -38,6 +38,8 @@
     <string name="settings_dark_theme_title">Темная тема</string>
     <string name="settings_about_section">О приложении</string>
     <string name="settings_version_title">Версия</string>
+    <string name="settings_navigation_section">Навигация</string>
+    <string name="settings_initial_tab_page">Секция по умолчанию</string>
 
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>
@@ -133,6 +135,7 @@
     <string name="anime_kind_promo">Промо</string>
     <string name="anime_kind_ad">Реклама</string>
     <string name="select_status_dialog_title">Выберите статус</string>
+    <string name="select_section_dialog_title">Выберите секцию</string>
 
     <string name="anime_score_1">Хуже некуда</string>
     <string name="anime_score_2">Ужасно</string>
