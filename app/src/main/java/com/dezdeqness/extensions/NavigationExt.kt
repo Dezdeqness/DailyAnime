@@ -43,7 +43,6 @@ fun BottomNavigationView.setupWithNavController(
         graphIdToTagMap[graphId] = fragmentTag
 
         if (this.selectedItemId == graphId) {
-            this.selectedItemId = firstFragmentGraphId
             selectedNavController.value = navHostFragment.navController
             attachNavHostFragment(fragmentManager, navHostFragment, index == 0)
         } else {
