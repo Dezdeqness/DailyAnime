@@ -55,6 +55,18 @@ class SettingsFragment : BaseComposeFragment() {
                         viewModel.onNightThemeToggleChecked(isChecked)
                     }
 
+                    override fun onChangeInitialSectionClicked() {
+                        viewModel.onChangeInitialSectionClicked()
+                    }
+
+                    override fun onSelectedSectionChanged(sectionId: Int) {
+                        viewModel.onSelectedSectionChanged(sectionId)
+                    }
+
+                    override fun onSelectedSectionDialogClosed() {
+                        viewModel.onSelectedSectionDialogClosed()
+                    }
+
                 }
             )
         }

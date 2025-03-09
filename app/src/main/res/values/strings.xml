@@ -40,6 +40,8 @@
     <string name="settings_dark_theme_title">Dark mode</string>
     <string name="settings_about_section">About</string>
     <string name="settings_version_title">Version</string>
+    <string name="settings_navigation_section">Navigation</string>
+    <string name="settings_initial_tab_page">Section by default</string>
 
     <string name="stats_toolbar_title">Statistics</string>
     <string name="stats_header_scores">Scores</string>
@@ -135,6 +137,7 @@
     <string name="anime_kind_promo">Promo</string>
     <string name="anime_kind_ad">Ad</string>
     <string name="select_status_dialog_title">Select status</string>
+    <string name="select_section_dialog_title">Select section</string>
 
     <string name="anime_score_1">It couldn\'t be worse</string>
     <string name="anime_score_2">Terrible</string>

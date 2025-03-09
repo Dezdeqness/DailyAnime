@@ -9,4 +9,8 @@ interface SettingsRepository {
     suspend fun isLanguageDisclaimerShown(): Boolean
 
     suspend fun setLanguageDisclaimerShown(isShown: Boolean)
+
+    suspend fun getSelectedInitialSection(): Int?
+
+    suspend fun setSelectedInitialSection(sectionId: Int)
 }
