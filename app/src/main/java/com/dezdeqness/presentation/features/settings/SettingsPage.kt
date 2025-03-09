@@ -66,12 +66,12 @@ fun SettingsPage(
                 .fillMaxSize()
         ) {
             item {
-                HeaderSettingsView(title = "Theme")
+                HeaderSettingsView(title = stringResource(R.string.settings_theme_section))
             }
 
             item {
                 SwitchSettingsView(
-                    title = "Dark mode",
+                    title = stringResource(R.string.settings_dark_theme_title),
                     subtitle = stringResource(id = R.string.settings_dark_theme),
                     checked = state.isDarkThemeEnabled,
                 ) { isChecked ->
@@ -80,11 +80,11 @@ fun SettingsPage(
             }
 
             item {
-                HeaderSettingsView(title = "About")
+                HeaderSettingsView(title = stringResource(R.string.settings_about_section))
             }
             item {
                 TextSettingsView(
-                    title = "Version",
+                    title = stringResource(R.string.settings_version_title),
                     subtitle = BuildConfig.VERSION_NAME,
                 )
             }
