@@ -1,6 +1,7 @@
 package com.dezdeqness.di
 
 import android.content.Context
+import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
@@ -82,6 +83,8 @@ interface AppComponent {
     fun routingComponent(): RoutingComponent.Factory
 
     fun settingsRepository(): SettingsRepository
+
+    fun coroutineDispatcherProvider(): CoroutineDispatcherProvider
 
     fun screenshotsViewerComponent(): ScreenshotsViewerComponent.Builder
 

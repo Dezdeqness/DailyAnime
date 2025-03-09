@@ -15,12 +15,17 @@ fun BottomNavigationView.setupWithNavController(
     fragmentManager: FragmentManager,
     containerId: Int,
     intent: Intent,
+    selectedGraphId: Int? = null,
 ): LiveData<NavController> {
 
     val graphIdToTagMap = SparseArray<String>()
     val selectedNavController = MutableLiveData<NavController>()
 
     var firstFragmentGraphId = 0
+
+    if (selectedGraphId != null) {
+        firstFragmentGraphId = selectedGraphId
+    }
 
     navGraphIds.forEachIndexed { index, navGraphId ->
         val fragmentTag = getFragmentTag(index)
@@ -31,13 +36,14 @@ fun BottomNavigationView.setupWithNavController(
 
         val graphId = navHostFragment.navController.graph.id
 
-        if (index == 0) {
+        if (index == 0 && selectedGraphId == null) {
             firstFragmentGraphId = graphId
         }
 
         graphIdToTagMap[graphId] = fragmentTag
 
         if (this.selectedItemId == graphId) {
+            this.selectedItemId = firstFragmentGraphId
             selectedNavController.value = navHostFragment.navController
             attachNavHostFragment(fragmentManager, navHostFragment, index == 0)
         } else {
