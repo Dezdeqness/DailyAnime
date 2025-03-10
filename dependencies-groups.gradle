@@ -100,6 +100,7 @@ ext {
         implementation(libs.androidx.compose.material)
         implementation(libs.androidx.activity.compose)
         implementation(libs.lottie.compose)
+        implementation(libs.reorderable)
     }
 
     mock = Group {
