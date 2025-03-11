@@ -15,7 +15,8 @@ fun BottomNavigationView.setupWithNavController(
     fragmentManager: FragmentManager,
     containerId: Int,
     intent: Intent,
-    selectedGraphId: Int? = null,
+    selectedGraphId: Int,
+    isRestored: Boolean = false,
 ): LiveData<NavController> {
 
     val graphIdToTagMap = SparseArray<String>()
@@ -23,8 +24,10 @@ fun BottomNavigationView.setupWithNavController(
 
     var firstFragmentGraphId = 0
 
-    if (selectedGraphId != null) {
-        firstFragmentGraphId = selectedGraphId
+    firstFragmentGraphId = selectedGraphId
+
+    if (isRestored.not()) {
+        this.selectedItemId = selectedGraphId
     }
 
     navGraphIds.forEachIndexed { index, navGraphId ->
@@ -36,15 +39,11 @@ fun BottomNavigationView.setupWithNavController(
 
         val graphId = navHostFragment.navController.graph.id
 
-        if (index == 0 && selectedGraphId == null) {
-            firstFragmentGraphId = graphId
-        }
-
         graphIdToTagMap[graphId] = fragmentTag
 
         if (this.selectedItemId == graphId) {
             selectedNavController.value = navHostFragment.navController
-            attachNavHostFragment(fragmentManager, navHostFragment, index == 0)
+            attachNavHostFragment(fragmentManager, navHostFragment, firstFragmentGraphId == graphId)
         } else {
             detachNavHostFragment(fragmentManager, navHostFragment)
         }
