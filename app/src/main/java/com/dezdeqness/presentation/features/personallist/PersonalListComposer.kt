@@ -1,11 +1,9 @@
 package com.dezdeqness.presentation.features.personallist
 
-import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.PersonalListFilterEntity
 import com.dezdeqness.domain.model.Sort
 import com.dezdeqness.domain.model.UserRateEntity
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
 import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
@@ -13,8 +11,8 @@ import javax.inject.Inject
 
 class PersonalListComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils,
-    private val resourceProvider: ResourceProvider,
     private val animeKindUtils: AnimeKindUtils,
+    private val ribbonMapper: PersonalRibbonMapper,
 ) {
 
     fun compose(
@@ -36,12 +34,7 @@ class PersonalListComposer @Inject constructor(
     ) = fullAnimeStatusesEntity
         .list
         .filter { item -> item.size != 0L }
-        .map { statusEntity ->
-            RibbonStatusUiModel(
-                id = statusEntity.groupedId,
-                displayName = resourceProvider.getString(PREFIX_RIBBON_STATUS + statusEntity.name),
-            )
-        }
+        .map(ribbonMapper::map)
 
     private fun applyFilter(
         items: List<UserRateEntity>,
@@ -113,10 +106,6 @@ class PersonalListComposer @Inject constructor(
             logoUrl = imageUrlUtils.getImageWithBaseUrl(anime.image.preview),
             overallEpisodes = anime.episodes,
         )
-    }
-
-    companion object {
-        private const val PREFIX_RIBBON_STATUS = "anime_personal_list_ribbon_status_"
     }
 
 }

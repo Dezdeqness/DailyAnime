@@ -13,4 +13,8 @@ interface SettingsRepository {
     suspend fun getSelectedInitialSection(): Int?
 
     suspend fun setSelectedInitialSection(sectionId: Int)
+
+    suspend fun getStatusesOrder(): Set<String>
+
+    suspend fun setStatusesOrder(statuses: Set<String>)
 }

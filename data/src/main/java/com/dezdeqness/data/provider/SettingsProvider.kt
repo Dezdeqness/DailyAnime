@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -59,10 +60,24 @@ class SettingsProvider @Inject constructor(
             .map { preferences -> preferences[SELECTED_INITIAL_SECTION] }
             .first()
 
+    suspend fun setStatusesOrder(statuses: Set<String>) {
+        context.dataStore.edit { settings ->
+            settings[STATUSES_ORDER] = statuses
+        }
+    }
+
+    suspend fun getStatusesOrder() =
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[STATUSES_ORDER] }
+            .first()
+
     companion object {
         private val IS_NIGHT_THEME = booleanPreferencesKey("nightTheme")
         private val IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN = booleanPreferencesKey("languageDisclaimerShown")
         private val SELECTED_INITIAL_SECTION = intPreferencesKey("selectedInitialSection")
+        private val STATUSES_ORDER = stringSetPreferencesKey("statusOrder")
     }
 
 }
