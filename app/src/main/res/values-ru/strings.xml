@@ -40,6 +40,7 @@
     <string name="settings_version_title">Версия</string>
     <string name="settings_navigation_section">Навигация</string>
     <string name="settings_initial_tab_page">Секция по умолчанию</string>
+    <string name="settings_order_of_statuses">Порядок статусов</string>
 
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>
@@ -154,6 +155,9 @@
     <string name="home_title">Добро пожаловать</string>
     <string name="home_title_authorized">Добро пожаловать,\n%s</string>
     <string name="home_calendar_title">Новое на этой недели</string>
+
+    <string name="reorder_statuses_title">Изменить порядок</string>
+    <string name="reorder_statuses_button_save_title">Сохранить</string>
 
 </resources>
 

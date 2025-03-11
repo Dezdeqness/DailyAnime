@@ -24,6 +24,7 @@ import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.settings.composables.HeaderSettingsView
+import com.dezdeqness.presentation.features.settings.composables.SelectRibbonStatusReorderDialog
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionDialog
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
 import com.dezdeqness.presentation.features.settings.composables.SwitchSettingsView
@@ -92,6 +93,18 @@ fun SettingsPage(
                 )
             }
 
+            if (state.isAuthorized) {
+                item {
+                    TextSettingsView(
+                        title = stringResource(R.string.settings_order_of_statuses),
+                        subtitle = state.ribbonSettingsSubTitle,
+                        onSettingClick = {
+                            actions.onChangeRibbonStatusClicked()
+                        }
+                    )
+                }
+            }
+
             item {
                 HeaderSettingsView(title = stringResource(R.string.settings_theme_section))
             }
@@ -134,6 +147,20 @@ fun SettingsPage(
                 }
             )
         }
+
+        if (state.isStatusReorderDialogShown) {
+            SelectRibbonStatusReorderDialog(
+                onDismissRequest = {
+                    actions.onChangeRibbonStatusClosed()
+                },
+                onDoneClicked = {
+                    actions.onSelectedRibbonDataChanged(statuses = it)
+                    actions.onChangeRibbonStatusClosed()
+                },
+                statuses = state.personalRibbonStatuses,
+            )
+        }
+
 
     }
 }

@@ -42,6 +42,7 @@
     <string name="settings_version_title">Version</string>
     <string name="settings_navigation_section">Navigation</string>
     <string name="settings_initial_tab_page">Section by default</string>
+    <string name="settings_order_of_statuses">Order of statuses</string>
 
     <string name="stats_toolbar_title">Statistics</string>
     <string name="stats_header_scores">Scores</string>
@@ -160,6 +161,9 @@
     <string name="home_title">Welcome back</string>
     <string name="home_title_authorized">Welcome back,\n%s</string>
     <string name="home_calendar_title">New this week</string>
+
+    <string name="reorder_statuses_title">Change order</string>
+    <string name="reorder_statuses_button_save_title">Save</string>
 
 </resources>
 

@@ -17,6 +17,7 @@ import com.dezdeqness.data.manager.AppThemeManager
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.SwitchDarkTheme
+import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -65,6 +66,18 @@ class SettingsFragment : BaseComposeFragment() {
 
                     override fun onSelectedSectionDialogClosed() {
                         viewModel.onSelectedSectionDialogClosed()
+                    }
+
+                    override fun onChangeRibbonStatusClicked() {
+                        viewModel.onChangeRibbonStatusClicked()
+                    }
+
+                    override fun onSelectedRibbonDataChanged(statuses: List<RibbonStatusUiModel>) {
+                        viewModel.onSelectedRibbonDataChanged(statuses)
+                    }
+
+                    override fun onChangeRibbonStatusClosed() {
+                        viewModel.onChangeRibbonStatusClosed()
                     }
 
                 }
