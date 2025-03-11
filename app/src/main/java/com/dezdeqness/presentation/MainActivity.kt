@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), TabSelection {
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            setupBottomNavigationBar()
+            setupBottomNavigationBar(false)
         } // Else, need to wait for onRestoreInstanceState
 
         setupObservers()
@@ -82,10 +82,10 @@ class MainActivity : AppCompatActivity(), TabSelection {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        setupBottomNavigationBar()
+        setupBottomNavigationBar(true)
     }
 
-    private fun setupBottomNavigationBar() {
+    private fun setupBottomNavigationBar(isRestored: Boolean) {
         val bottomNav = binding.navigation
 
         val navGraphIds = listOf(
@@ -100,14 +100,13 @@ class MainActivity : AppCompatActivity(), TabSelection {
             val id = withContext(application.getComponent().coroutineDispatcherProvider().io()) {
                 application.getComponent().settingsRepository().getSelectedInitialSection()
             }
-            binding.navigation.selectedItemId = id ?: R.id.home_nav_graph
-
             bottomNav.setupWithNavController(
                 navGraphIds = navGraphIds,
                 fragmentManager = supportFragmentManager,
                 containerId = R.id.container,
                 intent = intent,
-                selectedGraphId = id
+                selectedGraphId = id ?: R.id.home_nav_graph,
+                isRestored = isRestored,
             )
         }
 
