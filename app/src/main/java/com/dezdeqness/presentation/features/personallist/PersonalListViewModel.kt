@@ -18,6 +18,7 @@ import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -53,6 +54,19 @@ class PersonalListViewModel @Inject constructor(
 
     init {
         actionConsumer.attachListener(this)
+
+        launchOnIo {
+            settingsRepository
+                .getStatusesOrderFlow()
+                .drop(1)
+                .collect {
+                    val ribbon = personalListComposer.composeStatuses(ribbonRaw)
+                    _personalListStateFlow.update {
+                        it.copy(ribbon = ribbon)
+                    }
+                }
+        }
+
     }
 
     override val viewModelTag = "PersonalListViewModel"

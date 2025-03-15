@@ -1,5 +1,7 @@
 package com.dezdeqness.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+
 interface SettingsRepository {
 
     suspend fun getNightThemeStatus(): Boolean
@@ -15,6 +17,8 @@ interface SettingsRepository {
     suspend fun setSelectedInitialSection(sectionId: Int)
 
     suspend fun getStatusesOrder(): List<String>
+
+    suspend fun getStatusesOrderFlow(): Flow<List<String>?>
 
     suspend fun setStatusesOrder(statuses: List<String>)
 }
