@@ -1,11 +1,14 @@
 package com.dezdeqness.data.provider
 
+import android.util.Log
 import com.dezdeqness.domain.model.StatusEntity
 import javax.inject.Inject
 
 class StatusesProvider @Inject constructor() {
 
     fun getStatuses(): List<StatusEntity> {
+        Log.d("test", "getStatuses")
+
         return listOf(
             StatusEntity(
                 id = 0,

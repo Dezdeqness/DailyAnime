@@ -30,9 +30,9 @@ class SettingsRepositoryImpl @Inject constructor(
 
     override suspend fun getStatusesOrder() =
         settingsProvider.getStatusesOrder()
-            ?: statusesProvider.getStatuses().map { it.groupedId }.toSet()
+            ?: statusesProvider.getStatuses().map { it.groupedId }
 
-    override suspend fun setStatusesOrder(statuses: Set<String>) {
+    override suspend fun setStatusesOrder(statuses: List<String>) {
         settingsProvider.setStatusesOrder(statuses)
     }
 

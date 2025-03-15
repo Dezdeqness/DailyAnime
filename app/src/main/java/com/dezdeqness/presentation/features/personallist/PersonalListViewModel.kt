@@ -8,6 +8,7 @@ import com.dezdeqness.domain.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.PersonalListFilterRepository
+import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
@@ -28,6 +29,7 @@ class PersonalListViewModel @Inject constructor(
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: MessageProvider,
+    private val settingsRepository: SettingsRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
