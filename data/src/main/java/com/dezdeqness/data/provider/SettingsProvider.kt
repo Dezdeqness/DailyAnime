@@ -71,11 +71,7 @@ class SettingsProvider @Inject constructor(
         context
             .dataStore
             .data
-            .map { preferences ->
-                val test = preferences[STATUSES_ORDER]?.split(SEPARATOR)
-                Log.d("test", "getStatusesOrder: " + test.toString())
-                test
-            }
+            .map { preferences -> preferences[STATUSES_ORDER]?.split(SEPARATOR) }
             .first()
 
     companion object {
@@ -84,7 +80,7 @@ class SettingsProvider @Inject constructor(
         private val SELECTED_INITIAL_SECTION = intPreferencesKey("selectedInitialSection")
         private val STATUSES_ORDER = stringPreferencesKey("statusOrder")
 
-        private val SEPARATOR = ","
+        private const val SEPARATOR = ","
     }
 
 }

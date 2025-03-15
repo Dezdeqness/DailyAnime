@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.features.settings
 
-import android.util.Log
 import com.dezdeqness.R
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
@@ -103,14 +102,11 @@ class SettingsViewModel @Inject constructor(
     fun onSelectedRibbonDataChanged(statuses: List<RibbonStatusUiModel>) {
         launchOnIo {
             val statusesIds = statuses.map { it.id }
-            Log.d("test", "onSelectedRibbonDataChanged $statusesIds")
 
             settingsRepository.setStatusesOrder(statusesIds)
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
-            Log.d("test", "statuses $statuses")
 
             val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
-            Log.d("test", "orderedStatuses $orderedStatuses")
 
             _settingsStateFlow.update {
                 it.copy(
