@@ -1,12 +1,18 @@
 package com.dezdeqness.presentation.features.settings
 
+import android.util.Log
 import com.dezdeqness.R
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.SwitchDarkTheme
+import com.dezdeqness.presentation.features.personallist.PersonalRibbonMapper
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
+import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -14,6 +20,9 @@ import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
+    private val accountRepository: AccountRepository,
+    private val statusesProvider: StatusesProvider,
+    private val ribbonMapper: PersonalRibbonMapper,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -26,15 +35,22 @@ class SettingsViewModel @Inject constructor(
     val settingsStateFlow: StateFlow<SettingsState> get() = _settingsStateFlow
 
     init {
-        launchOnMain {
+        launchOnIo {
             val themeStatus = settingsRepository.getNightThemeStatus()
             val sectionId = settingsRepository.getSelectedInitialSection() ?: R.id.home_nav_graph
+            val isAuthorized = accountRepository.isAuthorized()
+            val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
 
-            _settingsStateFlow.value =
-                _settingsStateFlow.value.copy(
+            val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
+
+            _settingsStateFlow.update {
+                it.copy(
                     isDarkThemeEnabled = themeStatus,
                     selectedSection = SelectSectionItem.getById(sectionId),
+                    isAuthorized = isAuthorized,
+                    personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map))
                 )
+            }
         }
     }
 
@@ -75,6 +91,38 @@ class SettingsViewModel @Inject constructor(
     fun onSelectedSectionDialogClosed() {
         _settingsStateFlow.update {
             it.copy(isSelectInitialSectionDialogShown = false)
+        }
+    }
+
+    fun onChangeRibbonStatusClicked() {
+        _settingsStateFlow.update {
+            it.copy(isStatusReorderDialogShown = true)
+        }
+    }
+
+    fun onSelectedRibbonDataChanged(statuses: List<RibbonStatusUiModel>) {
+        launchOnIo {
+            val statusesIds = statuses.map { it.id }
+            Log.d("test", "onSelectedRibbonDataChanged $statusesIds")
+
+            settingsRepository.setStatusesOrder(statusesIds)
+            val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
+            Log.d("test", "statuses $statuses")
+
+            val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
+            Log.d("test", "orderedStatuses $orderedStatuses")
+
+            _settingsStateFlow.update {
+                it.copy(
+                    personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map))
+                )
+            }
+        }
+    }
+
+    fun onChangeRibbonStatusClosed() {
+        _settingsStateFlow.update {
+            it.copy(isStatusReorderDialogShown = false)
         }
     }
 

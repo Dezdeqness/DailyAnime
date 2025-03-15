@@ -14,7 +14,7 @@ interface SettingsRepository {
 
     suspend fun setSelectedInitialSection(sectionId: Int)
 
-    suspend fun getStatusesOrder(): Set<String>
+    suspend fun getStatusesOrder(): List<String>
 
-    suspend fun setStatusesOrder(statuses: Set<String>)
+    suspend fun setStatusesOrder(statuses: List<String>)
 }
