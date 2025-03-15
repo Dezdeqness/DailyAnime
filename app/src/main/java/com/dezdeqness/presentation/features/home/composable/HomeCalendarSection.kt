@@ -46,7 +46,9 @@ fun HomeCalendarSection(
             val currentPage = pagerState.currentPage
             val size = indicatorScrollState.layoutInfo.visibleItemsInfo.size
             val lastVisibleIndex =
-                indicatorScrollState.layoutInfo.visibleItemsInfo.last().index
+                runCatching {
+                    indicatorScrollState.layoutInfo.visibleItemsInfo.last().index
+                }.getOrDefault(0)
             val firstVisibleItemIndex = indicatorScrollState.firstVisibleItemIndex
 
             if (currentPage > lastVisibleIndex - 1) {
