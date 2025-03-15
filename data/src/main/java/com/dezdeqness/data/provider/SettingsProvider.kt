@@ -74,6 +74,12 @@ class SettingsProvider @Inject constructor(
             .map { preferences -> preferences[STATUSES_ORDER]?.split(SEPARATOR) }
             .first()
 
+    suspend fun getStatusesOrderFlow() =
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[STATUSES_ORDER]?.split(SEPARATOR) }
+
     companion object {
         private val IS_NIGHT_THEME = booleanPreferencesKey("nightTheme")
         private val IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN = booleanPreferencesKey("languageDisclaimerShown")
