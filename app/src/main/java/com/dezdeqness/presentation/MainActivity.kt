@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.BackFragmentListener
+import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity(), TabSelection {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
+
     private lateinit var binding: ActivityMainBinding
 
     private val mainViewModel by viewModels<MainViewModel>(
@@ -35,6 +39,8 @@ class MainActivity : AppCompatActivity(), TabSelection {
             viewModelFactory
         }
     )
+
+    private var isFromHome = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +61,28 @@ class MainActivity : AppCompatActivity(), TabSelection {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.navigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.personal_host_nav_graph -> {
+                    analyticsManager.personalListTracked()
+                }
+                R.id.home_nav_graph -> {
+                    analyticsManager.homeTracked()
+                }
+                R.id.calendar_nav_graph -> {
+                    analyticsManager.calendarTracked(isFromHome)
+                    isFromHome = false
+                }
+                R.id.search_nav_graph -> {
+                    analyticsManager.searchTracked()
+                }
+                R.id.profile_nav_graph -> {
+                    analyticsManager.profileTracked()
+                }
+            }
+            true
+        }
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar(false)
@@ -156,6 +184,7 @@ class MainActivity : AppCompatActivity(), TabSelection {
     }
 
     override fun navigateToCalendarTab() {
+        isFromHome = true
         mainViewModel.onNavigateToCalendarTab()
     }
 

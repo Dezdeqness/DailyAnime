@@ -33,7 +33,7 @@ import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
 fun SectionAnimeItem(
     modifier: Modifier = Modifier,
     item: SectionAnimeUiModel,
-    onClick: (Long) -> Unit,
+    onClick: (Long, String) -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -43,7 +43,7 @@ fun SectionAnimeItem(
             .clip(RoundedCornerShape(6.dp))
             .clickable(
                 onClick = {
-                    onClick(item.id)
+                    onClick(item.id, item.title)
                 },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),

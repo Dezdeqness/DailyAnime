@@ -24,7 +24,7 @@ sealed class Event {
 
 sealed class ConsumableEvent : Event()
 
-data class AnimeDetails(val animeId: Long) : Event()
+data class AnimeDetails(val animeId: Long, val title: String) : Event()
 
 data class OpenVideo(val url: String) : ConsumableEvent()
 

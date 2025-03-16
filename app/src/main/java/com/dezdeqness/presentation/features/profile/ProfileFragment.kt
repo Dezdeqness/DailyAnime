@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.event.NavigateToHistory
 import com.dezdeqness.presentation.event.NavigateToLoginPage
@@ -24,6 +25,9 @@ class ProfileFragment : BaseComposeFragment() {
 
     @Inject
     lateinit var applicationRouter: ApplicationRouter
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     private val viewModel: ProfileViewModel by viewModels(
         factoryProducer = {
@@ -79,6 +83,8 @@ class ProfileFragment : BaseComposeFragment() {
                         }
 
                         NavigateToSettings -> {
+                            analyticsManager.settingsTracked()
+
                             this@ProfileFragment
                                 .findNavController()
                                 .navigate(ProfileFragmentDirections.navigateToSettings())
@@ -91,10 +97,12 @@ class ProfileFragment : BaseComposeFragment() {
                         }
 
                         NavigateToLoginPage -> {
+                            analyticsManager.authTracked()
                             applicationRouter.navigateToLoginScreen(requireContext())
                         }
 
                         NavigateToSignUp -> {
+                            analyticsManager.authTracked(isLogin = false)
                             applicationRouter.navigateToSignUpScreen(requireContext())
                         }
 

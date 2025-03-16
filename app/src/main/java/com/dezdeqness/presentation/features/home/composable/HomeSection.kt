@@ -60,8 +60,8 @@ fun HomeSection(
                     SectionAnimeItem(
                         modifier = Modifier.padding(start = paddingStart, end = paddingEnd),
                         item = item,
-                        onClick = {
-                            onActionReceive(Action.AnimeClick(animeId = item.id))
+                        onClick = { id, title ->
+                            onActionReceive(Action.AnimeClick(animeId = id, title = title))
                         },
                     )
                 }

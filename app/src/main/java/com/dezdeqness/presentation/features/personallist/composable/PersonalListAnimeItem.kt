@@ -56,7 +56,7 @@ fun PersonalListAnimeItem(
             .background(colorResource(id = R.color.search_container))
             .clickable(
                 onClick = {
-                    onActionReceive(Action.AnimeClick(userRateUiModel.id))
+                    onActionReceive(Action.AnimeClick(userRateUiModel.id, userRateUiModel.name))
                 },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),

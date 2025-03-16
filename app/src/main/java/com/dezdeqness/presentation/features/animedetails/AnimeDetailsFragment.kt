@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.dezdeqness.R
 import com.dezdeqness.core.BaseFragment
+import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.databinding.FragmentAnimeDetailsBinding
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ArgsModule
@@ -40,6 +41,9 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
 
     @Inject
     lateinit var applicationRouter: ApplicationRouter
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     private var onBackPressedCallback: OnBackPressedCallback? = null
 
@@ -228,6 +232,7 @@ class AnimeDetailsFragment : BaseFragment<FragmentAnimeDetailsBinding>(), Action
                 )
             }
             is AnimeDetails -> {
+                analyticsManager.detailsTracked(id = event.animeId.toString(), title = event.title)
                 findNavController().navigate(
                     AnimeDetailsFragmentDirections.navigateToAnimeDetails(event.animeId)
                 )

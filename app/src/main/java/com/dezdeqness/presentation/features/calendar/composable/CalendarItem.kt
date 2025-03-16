@@ -38,14 +38,14 @@ import com.dezdeqness.presentation.features.calendar.CalendarUiModel
 fun CalendarItem(
     modifier: Modifier = Modifier,
     item: CalendarUiModel,
-    onClick: (Long) -> Unit,
+    onClick: (Long, String) -> Unit,
 ) {
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
             .clickable(
                 onClick = {
-                    onClick(item.id)
+                    onClick(item.id, item.name)
                 },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),
@@ -142,7 +142,7 @@ fun CalendarItemPreview() {
                 time = "12:55",
                 logoUrl = "",
             ),
-            onClick = {},
+            onClick = {_, _ -> },
         )
     }
 }
