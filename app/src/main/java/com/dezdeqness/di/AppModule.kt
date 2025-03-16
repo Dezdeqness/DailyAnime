@@ -7,6 +7,8 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.CoroutineDispatcherProviderImpl
 import com.dezdeqness.core.MessageProvider
+import com.dezdeqness.data.analytics.AnalyticsManager
+import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.local.DebugConfigProvider
 import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
@@ -20,10 +22,12 @@ import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
+import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -143,5 +147,20 @@ class AppModule {
     @Singleton
     @Provides
     fun provideApplicationRouter() = ApplicationRouter()
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAnalytics(context: Context) = FirebaseAnalytics.getInstance(context)
+
+    @Singleton
+    @Provides
+    fun provideAnalyticsManager(
+        accountRepository: AccountRepository,
+        firebaseAnalytics: FirebaseAnalytics
+    ): AnalyticsManager =
+        AnalyticsManagerImpl(
+            accountRepository = accountRepository,
+            firebaseAnalytics = firebaseAnalytics
+        )
 
 }
