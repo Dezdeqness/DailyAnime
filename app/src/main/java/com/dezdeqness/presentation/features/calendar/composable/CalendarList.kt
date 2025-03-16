@@ -52,8 +52,8 @@ fun CalendarList(
                             vertical = 4.dp,
                             horizontal = 16.dp,
                         ),
-                    onClick = { id ->
-                        onActionReceive(Action.AnimeClick(id))
+                    onClick = { id, name ->
+                        onActionReceive(Action.AnimeClick(id,  title = name))
                     },
                 )
             }

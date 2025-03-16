@@ -19,7 +19,7 @@ fun chronologyAdapterDelegate(actionListener: ActionListener) =
         block = {
 
             binding.root.setOnClickListener {
-                actionListener.onActionReceive(Action.AnimeClick(animeId = item.id))
+                actionListener.onActionReceive(Action.AnimeClick(animeId = item.id, title = item.name))
             }
 
             bind {

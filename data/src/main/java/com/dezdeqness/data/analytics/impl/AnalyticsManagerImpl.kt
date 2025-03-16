@@ -8,6 +8,9 @@ import com.dezdeqness.data.analytics.model.AnalyticsEvent
 import com.dezdeqness.data.analytics.model.AnalyticsScreenName
 import com.dezdeqness.domain.repository.AccountRepository
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class AnalyticsManagerImpl(
     private val firebaseAnalytics: FirebaseAnalytics,
@@ -116,7 +119,9 @@ class AnalyticsManagerImpl(
         firebaseAnalytics.logEvent(event.screenName.name, event.data)
     }
 
-    private fun getUserId() = accountRepository.getProfileLocal()?.id?.toString() ?: ANONYMOUS_USER
+    private fun getUserId() = runBlocking(Dispatchers.IO) {
+        accountRepository.getProfileLocal()?.id?.toString() ?: ANONYMOUS_USER
+    }
 
     companion object {
         private const val ANONYMOUS_USER = "anonymous"

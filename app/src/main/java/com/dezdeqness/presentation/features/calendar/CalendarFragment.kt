@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionListener
@@ -17,8 +18,12 @@ import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class CalendarFragment : BaseComposeFragment(), ActionListener {
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     private val viewModel: CalendarViewModel by viewModels(factoryProducer = { viewModelFactory })
 
@@ -58,7 +63,7 @@ class CalendarFragment : BaseComposeFragment(), ActionListener {
                     }
 
                     override fun onQueryChanged(query: String) {
-                       viewModel.onQueryChanged(query)
+                        viewModel.onQueryChanged(query)
                     }
 
                 },
@@ -82,10 +87,15 @@ class CalendarFragment : BaseComposeFragment(), ActionListener {
                 viewModel.events.collect { event ->
                     when (event) {
                         is AnimeDetails -> {
+                            analyticsManager.detailsTracked(
+                                id = event.animeId.toString(),
+                                title = event.title
+                            )
                             findNavController().navigate(
                                 CalendarFragmentDirections.navigateToAnimeDetails(event.animeId)
                             )
                         }
+
                         is ConsumableEvent -> {
                             eventConsumer.consume(event)
                         }

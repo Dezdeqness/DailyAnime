@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
@@ -20,9 +21,13 @@ import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.features.userrate.UserRateActivity
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class PersonalListFragment : BaseComposeFragment() {
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     private val eventConsumer: EventConsumer by lazy {
         EventConsumer(
@@ -112,6 +117,10 @@ class PersonalListFragment : BaseComposeFragment() {
             }
 
             is AnimeDetails -> {
+                analyticsManager.detailsTracked(
+                    id = event.animeId.toString(),
+                    title = event.title
+                )
                 findNavController().navigate(
                         PersonalListFragmentDirections.navigateToAnimeDetails(event.animeId)
                     )

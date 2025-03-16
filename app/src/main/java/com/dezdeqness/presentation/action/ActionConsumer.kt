@@ -20,7 +20,12 @@ class ActionConsumer {
     fun consume(action: Action) {
         when (action) {
             is Action.AnimeClick -> {
-                eventListener?.onEventReceive(AnimeDetails(animeId = action.animeId))
+                eventListener?.onEventReceive(
+                    AnimeDetails(
+                        animeId = action.animeId,
+                        title = action.title
+                    )
+                )
             }
             is Action.VideoClick -> {
                 eventListener?.onEventReceive(OpenVideo(url = action.url))

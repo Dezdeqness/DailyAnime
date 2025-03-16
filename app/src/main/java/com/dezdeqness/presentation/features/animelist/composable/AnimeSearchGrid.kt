@@ -77,7 +77,7 @@ fun AnimeSearchGrid(
                         start = left, end = right, top = 8.dp
                     ),
                 onClick = { id ->
-                    onActionReceive(Action.AnimeClick(animeId = id))
+                    onActionReceive(Action.AnimeClick(animeId = id, title = item.title))
                 }
             )
         }
