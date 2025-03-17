@@ -129,7 +129,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     companion object {
         private const val CLIENT_ID = "9Hx5uIoQ_dBr2VTVGo5L2EH6FrizLkYgsO_Y-0CAyQk"
         private const val CLIENT_CODE = "mnEmuKPi5l5SIL2kwYcac0NcrHhH8FhW8TS0oHwEvT0"
-        private const val REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
+        private const val REDIRECT_URI = "dezdeqness://dailyAnime/auth"
         private const val RESPONSE_TYPE = "code"
         private const val SCOPE = "user_rates"
     }
