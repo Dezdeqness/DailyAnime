@@ -3,14 +3,12 @@ package com.dezdeqness.presentation.features.authorization
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +19,7 @@ import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.databinding.ActivityAuthorizationBinding
 import com.dezdeqness.di.subcomponents.AuthorizationArgsModule
 import com.dezdeqness.getComponent
+import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
 import kotlinx.coroutines.launch
@@ -62,21 +61,19 @@ class AuthorizationActivity : AppCompatActivity() {
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupWebView()
         setupObservers()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleDeepLink(intent)
     }
 
     private fun setupObservers() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 authorizationViewModel.authorizationStateFlow.collect { state ->
-
                     binding.loading.isVisible = state.isLoading
-                    binding.webView.isVisible = state.isLoading.not()
-
-                    if (state.url.isNotEmpty() && binding.webView.url != state.url) {
-                        binding.webView.loadUrl(state.url)
-                    }
                 }
 
             }
@@ -94,6 +91,13 @@ class AuthorizationActivity : AppCompatActivity() {
                                 .show()
                             finish()
                         }
+                        is AuthUrl -> {
+                            val customTabsIntent = CustomTabsIntent
+                                .Builder()
+                                .build()
+                            customTabsIntent.launchUrl(this@AuthorizationActivity, event.url.toUri())
+                        }
+
                         is AuthorizationSuccess -> {
                             setResult(Activity.RESULT_OK, intent)
                             finish()
@@ -106,50 +110,9 @@ class AuthorizationActivity : AppCompatActivity() {
         }
     }
 
-    // TODO: Back dispatcher
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val webView = binding.webView
-        if (webView.canGoBack()) {
-            webView.goBack()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        with(binding.webView) {
-            stopLoading()
-            destroy()
-        }
-    }
-
-    private fun setupWebView() {
-        with(binding.webView) {
-            settings.apply {
-                domStorageEnabled = true
-                javaScriptEnabled = true
-            }
-
-            webViewClient = object : WebViewClient() {
-
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                ): Boolean {
-                    authorizationViewModel.onShouldOverrideUrlLoading(
-                        request?.url?.toString().orEmpty()
-                    )
-                    return false
-                }
-
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    if (url == configManager.baseUrl) {
-                        authorizationViewModel.onPageStarted()
-                    }
-                }
-
-            }
+    private fun handleDeepLink(intent: Intent) {
+        intent.data?.let { uri ->
+            authorizationViewModel.onHandleDeeplink(uri.toString())
         }
     }
 

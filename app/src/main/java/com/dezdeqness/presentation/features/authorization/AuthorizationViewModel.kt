@@ -1,16 +1,18 @@
 package com.dezdeqness.presentation.features.authorization
 
+import androidx.core.net.toUri
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.LoginUseCase
+import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
 import com.dezdeqness.utils.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.util.regex.Pattern
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -36,12 +38,14 @@ class AuthorizationViewModel @Inject constructor(
         )
 
         if (networkUtils.isInternetAvailable()) {
-            val url = if (isLogin) {
-                SHIKIMORI_SIGN_IN_URL
-            } else {
-                SHIKIMORI_SIGN_UP_URL
-            }
-            _authorizationStateFlow.value = AuthorizationState(url = url)
+            accountRepository
+                .getAuthorizationCodeUrl()
+                .onSuccess { url ->
+                    onEventReceive(AuthUrl(url))
+                }
+                .onFailure {
+                    logInfo("Url is incorrect")
+                }
 
         } else {
             onEventReceive(CloseAuthorization)
@@ -50,63 +54,30 @@ class AuthorizationViewModel @Inject constructor(
 
     override val viewModelTag = "AuthorizationViewModel"
 
-    fun onPageStarted() {
-        accountRepository
-            .getAuthorizationCodeUrl()
-            .onSuccess { url ->
-                _authorizationStateFlow.value = _authorizationStateFlow.value.copy(
-                    url = url,
-                    isLoading = false,
-                )
+    fun onHandleDeeplink(data: String) {
+        val uri = data.toUri()
+        val code = uri.getQueryParameter(CODE_KEY)
+
+        if (code.isNullOrEmpty().not()) {
+            _authorizationStateFlow.update {
+                it.copy(isLoading = true)
             }
-    }
-
-
-    fun onShouldOverrideUrlLoading(url: String) {
-        val matcher = Pattern.compile(SHIKIMORI_PATTERN).matcher(url)
-        if (matcher.find()) {
-            val authCode =
-                if (matcher.group().isNullOrEmpty()) ""
-                else url
-                    .substring(url.lastIndexOf("/"))
-                    .replaceFirst("/", "")
-
-            if (authCode.isEmpty()) {
-                // TODO: error prompt
-                logInfo("Code is empty")
-                return
-            }
-
-            if (_authorizationStateFlow.value.isLoading) {
-                return
-            }
-
-            _authorizationStateFlow.value = _authorizationStateFlow.value.copy(
-                isLoading = true,
-            )
-
             launchOnIo {
                 loginUseCase
-                    .invoke(authCode)
+                    .invoke(code)
                     .onSuccess {
-                        val value = _authorizationStateFlow.value
-                        _authorizationStateFlow.value =
-                            value.copy(isLoading = true)
                         onEventReceive(AuthorizationSuccess)
                     }
                     .onFailure {
                         logInfo("Sign in/Sign up is failed", it)
                     }
             }
+
         }
     }
 
     private companion object {
-        private const val SHIKIMORI_SIGN_UP_URL = "https://shikimori.one/users/sign_up"
-        private const val SHIKIMORI_SIGN_IN_URL = "https://shikimori.one/users/sign_in"
-
-        private const val SHIKIMORI_PATTERN =
-            "https?:\\/\\/(?:www\\.)?shikimori\\.one\\/oauth\\/authorize\\/(?:.*)"
+        private const val CODE_KEY = "code"
     }
 
 }
