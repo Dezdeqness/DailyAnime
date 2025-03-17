@@ -32,7 +32,22 @@
 
         <activity
             android:name=".presentation.features.authorization.AuthorizationActivity"
-            android:configChanges="orientation" />
+            android:configChanges="orientation"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter android:autoVerify="true">
+                <data android:host="dailyAnime" />
+                <data android:scheme="https" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="dezdeqness" />
+                <data android:path="/auth" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerActivity"
@@ -41,8 +56,8 @@
 
         <activity
             android:name=".presentation.features.userrate.UserRateActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
 
