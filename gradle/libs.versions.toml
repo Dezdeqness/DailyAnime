@@ -56,6 +56,8 @@ reorderable = "2.4.3"
 
 lottie = "6.6.2"
 
+browser = "1.8.0"
+
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompatVersion" }
@@ -142,6 +144,8 @@ pod-core = { module = "com.dezdeqness.pod:core", version.ref = "podCoreVersion" 
 
 apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
 leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary"}
+
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidVersion" }
