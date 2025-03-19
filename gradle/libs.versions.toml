@@ -58,7 +58,7 @@ lottie = "6.6.2"
 
 browser = "1.8.0"
 
-tink = "1.15.0"
+tink = "1.17.0"
 protobuf = "4.28.3"
 
 [libraries]
