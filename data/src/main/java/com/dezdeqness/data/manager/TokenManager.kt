@@ -48,7 +48,7 @@ class TokenManager @Inject constructor(private val context: Context) {
 
     private val Context.tokenDataStore: DataStore<TokenEntityProto> by dataStore(
         fileName = "token_preferences.pb",
-        serializer = TokenSerializer
+        serializer = TokenSerializer(context)
     )
 
     fun setTokenData(tokenEntity: TokenEntity) {
