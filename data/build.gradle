@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.apollo)
+    id("com.google.protobuf").version("0.9.4")
 }
 
 android {
@@ -70,4 +71,20 @@ java {
 
 kotlin {
     jvmToolchain(21)
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.30.1"
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }

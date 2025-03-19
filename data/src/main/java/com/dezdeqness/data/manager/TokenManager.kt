@@ -4,15 +4,22 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKey.DEFAULT_AES_GCM_MASTER_KEY_SIZE
 import androidx.security.crypto.MasterKey.DEFAULT_MASTER_KEY_ALIAS
+import com.dezdeqness.data.TokenEntityProto
+import com.dezdeqness.data.serializer.TokenSerializer
 import com.dezdeqness.domain.model.TokenEntity
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import androidx.core.content.edit
 
 
-class TokenManager @Inject constructor(context: Context) {
+class TokenManager @Inject constructor(private val context: Context) {
 
     private var sharedPreferences: SharedPreferences
 
@@ -39,15 +46,22 @@ class TokenManager @Inject constructor(context: Context) {
         )
     }
 
+    private val Context.tokenDataStore: DataStore<TokenEntityProto> by dataStore(
+        fileName = "token_preferences.pb",
+        serializer = TokenSerializer
+    )
+
     fun setTokenData(tokenEntity: TokenEntity) {
-        val editor = sharedPreferences.edit()
+        val proto = TokenEntityProto.newBuilder()
+            .setAccessToken(tokenEntity.accessToken)
+            .setRefreshToken(tokenEntity.refreshToken)
+            .setCreatedIn(tokenEntity.createdIn)
+            .setExpiresIn(tokenEntity.expiresIn)
+            .build()
 
-        editor.putString(KEY_ACCESS_TOKEN, tokenEntity.accessToken)
-        editor.putString(KEY_REFRESH_TOKEN, tokenEntity.refreshToken)
-        editor.putLong(KEY_CREATED_AT, tokenEntity.createdIn)
-        editor.putLong(KEY_EXPIRES_IN, tokenEntity.expiresIn)
-
-        editor.apply()
+        runBlocking {
+            context.tokenDataStore.updateData { _ -> proto }
+        }
     }
 
     fun isTokenExpired(): Boolean {
@@ -57,21 +71,42 @@ class TokenManager @Inject constructor(context: Context) {
     }
 
     fun getTokenData(): TokenEntity {
-        val accessToken = sharedPreferences.getString(KEY_ACCESS_TOKEN, "").orEmpty()
-        val refreshToken = sharedPreferences.getString(KEY_REFRESH_TOKEN, "").orEmpty()
-        val createdIn = sharedPreferences.getLong(KEY_CREATED_AT, 0)
-        val expiresIn = sharedPreferences.getLong(KEY_EXPIRES_IN, 0)
+        val protoData = runBlocking { context.tokenDataStore.data.first() }
         return TokenEntity(
-            accessToken = accessToken,
-            refreshToken = refreshToken,
-            createdIn = createdIn,
-            expiresIn = expiresIn,
+            accessToken = protoData.accessToken,
+            refreshToken = protoData.refreshToken,
+            createdIn = protoData.createdIn,
+            expiresIn = protoData.expiresIn
         )
     }
 
     fun clear() {
-        sharedPreferences.edit().clear().apply()
+        runBlocking {
+            context.tokenDataStore.updateData { _ ->
+                TokenEntityProto.getDefaultInstance()
+            }
+        }
     }
+
+    fun migrateToProtoStore() {
+        val accessToken = sharedPreferences.getString(KEY_ACCESS_TOKEN, null)
+        val refreshToken = sharedPreferences.getString(KEY_REFRESH_TOKEN, null)
+        val createdAt = sharedPreferences.getLong(KEY_CREATED_AT, 0)
+        val expiresIn = sharedPreferences.getLong(KEY_EXPIRES_IN, 0)
+
+        if (accessToken != null && refreshToken != null) {
+            setTokenData(
+                TokenEntity(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken,
+                    createdIn = createdAt,
+                    expiresIn = expiresIn
+                )
+            )
+            sharedPreferences.edit { clear() }
+        }
+    }
+
 
     companion object {
         private const val FILENAME = "token_preferences"

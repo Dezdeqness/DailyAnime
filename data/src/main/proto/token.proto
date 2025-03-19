@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.dezdeqness.data";
+option java_multiple_files = true;
+
+message TokenEntityProto {
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 created_in = 3;
+  int64 expires_in = 4;
+}
