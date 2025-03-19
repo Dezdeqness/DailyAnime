@@ -58,6 +58,9 @@ lottie = "6.6.2"
 
 browser = "1.8.0"
 
+tink = "1.15.0"
+protobuf = "4.28.3"
+
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompatVersion" }
@@ -146,6 +149,8 @@ apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.r
 leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary"}
 
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
+google-tink = { module = "com.google.crypto.tink:tink-android", version.ref = "tink" }
+protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidVersion" }

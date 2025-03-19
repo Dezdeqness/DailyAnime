@@ -4,6 +4,7 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import javax.inject.Inject
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class RoutingViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val configManager: ConfigManager,
+    private val tokenManager: TokenManager,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -21,6 +23,7 @@ class RoutingViewModel @Inject constructor(
 
     init {
         launchOnIo {
+            tokenManager.migrateToProtoStore()
             configManager.invalidate()
 
             if (accountRepository.isAuthorized()) {
