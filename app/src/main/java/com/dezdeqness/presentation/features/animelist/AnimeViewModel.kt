@@ -62,6 +62,7 @@ class AnimeViewModel @Inject constructor(
                     list = animeUiMapper.map(state.list),
                     hasNextPage = state.hasNextPage,
                     isErrorStateShowing = false,
+                    isEmptyStateShowing = false,
                 )
             },
             onFailure = {
@@ -181,6 +182,7 @@ class AnimeViewModel @Inject constructor(
                     _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
                         isErrorStateShowing = true,
                         isScrollNeed = false,
+                        isEmptyStateShowing = false,
                     )
                 }
                 logInfo("Error during loading of initial of state of search list", it)
