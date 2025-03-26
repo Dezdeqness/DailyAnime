@@ -51,7 +51,7 @@ class AnimeSeasonCellComposer @Inject constructor(
             if (currentYear > milestoneYear) {
                 cells.add(
                     AnimeCell(
-                        id = "$milestoneYear}_$currentYear",
+                        id = "${milestoneYear}_$currentYear",
                         displayName = "$milestoneYear-$currentYear",
                     )
                 )
