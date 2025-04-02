@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.HapticFeedbackConstantsCompat
 import androidx.core.view.ViewCompat
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 @Composable
 fun WheelView(
@@ -34,7 +35,7 @@ fun WheelView(
     onItemSelected: (Int) -> Unit,
     userScrollEnabled: Boolean = true,
     lazyWheelState: LazyListState? = null,
-    content: @Composable LazyItemScope.(index: Int) -> Unit,
+    content: @Composable LazyItemScope.(index: Int, alpha: Float) -> Unit,
 ) {
     val view = LocalView.current
 
@@ -97,6 +98,8 @@ fun WheelView(
         ) {
             items(count) {
                 val rotateDegree = calculateIndexRotation(focusedIndex.value, it, rowOffset)
+                val distanceFromCenter = abs(focusedIndex.value - it)
+                val alpha = calculateAlpha(distanceFromCenter, rowOffsetCount)
 
                 Box(
                     modifier = Modifier
@@ -108,7 +111,7 @@ fun WheelView(
                     contentAlignment = Alignment.Center,
                 ) {
                     if (it >= rowOffsetCount && it < itemCount + rowOffsetCount) {
-                        content((it - rowOffsetCount) % itemCount)
+                        content((it - rowOffsetCount) % itemCount, alpha)
                     }
                 }
 
@@ -135,6 +138,6 @@ private fun calculateIndexRotation(focusedIndex: Int, index: Int, offset: Int): 
     return (6 * offset + 1).toFloat() * (focusedIndex - index)
 }
 
-data class WheelData(val value: Int) {
-    val displayName: String = if (value == -1) "" else value.toString().padStart(2, '0')
+private fun calculateAlpha(distance: Int, maxDistance: Int): Float {
+    return (1f - (distance.toFloat() / (maxDistance + 1))).coerceIn(0.3f, 1f)
 }
