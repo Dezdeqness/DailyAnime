@@ -1,112 +1,140 @@
 package com.dezdeqness.core.ui
 
-import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.view.HapticFeedbackConstantsCompat
 import androidx.core.view.ViewCompat
-import com.dezdeqness.core.ui.theme.AppTheme
-import kotlin.math.abs
-import kotlin.math.exp
-import kotlin.math.pow
+import kotlinx.coroutines.launch
 
 @Composable
 fun WheelView(
     modifier: Modifier = Modifier,
-    items: List<String> = emptyList(),
-    selectedItemIndex: Int = 0,
-    onItemSelected: (index: Int) -> Unit,
+    itemSize: DpSize = DpSize(256.dp, 256.dp),
+    selectedValue: Int = 0,
+    itemCount: Int,
+    rowOffset: Int = 3,
+    onItemSelected: (Int) -> Unit,
+    userScrollEnabled: Boolean = true,
+    lazyWheelState: LazyListState? = null,
+    content: @Composable LazyItemScope.(index: Int) -> Unit,
 ) {
     val view = LocalView.current
-    val itemHeight = 50.dp
 
-    val visibleItems = 5
+    val coroutineScope = rememberCoroutineScope()
 
-    val listState = rememberLazyListState(initialFirstVisibleItemIndex = selectedItemIndex)
-    val firstVisibleItemIndexState = remember { derivedStateOf { listState.firstVisibleItemIndex } }
+    val count = itemCount + 2 * rowOffset
+    val rowOffsetCount = maxOf(1, minOf(rowOffset, 4))
+    val rowCount = ((rowOffsetCount * 2) + 1)
+    val startIndex = selectedValue
 
-    val flingBehavior = rememberSnapFlingBehavior(listState)
+    val state = lazyWheelState ?: rememberLazyListState(startIndex)
 
-    val offset by remember {
-        derivedStateOf { listState.firstVisibleItemScrollOffset.toFloat() }
+    val size = DpSize(itemSize.width, itemSize.height * rowCount)
+
+    val isScrollInProgress = state.isScrollInProgress
+    val focusedIndex = remember {
+        derivedStateOf { state.firstVisibleItemIndex + rowOffsetCount }
     }
 
-    val centerIndex = firstVisibleItemIndexState.value + visibleItems / 2
-
-    var lastCenterIndex by remember { mutableIntStateOf(centerIndex) }
-
-    LaunchedEffect(centerIndex) {
-        if (centerIndex != lastCenterIndex) {
-            ViewCompat.performHapticFeedback(
-                view,
-                HapticFeedbackConstantsCompat.SEGMENT_FREQUENT_TICK
-            )
-            lastCenterIndex = centerIndex
-            onItemSelected(centerIndex)
+    LaunchedEffect(itemCount) {
+        coroutineScope.launch {
+            state.scrollToItem(startIndex)
         }
     }
 
-    Box(
-        modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = listState,
-            flingBehavior = flingBehavior,
-        ) {
-            itemsIndexed(items) { index, item ->
-                val distanceFromCenter = (index - centerIndex) - (offset / with(LocalDensity.current) { itemHeight.toPx() })
-                val alphaVal = exp(-distanceFromCenter.pow(2) / 2)
-                val scale = 1f - abs(distanceFromCenter) * 0.07f
-                val angle = distanceFromCenter * 15f
-                val translationY1 = distanceFromCenter *  with(LocalDensity.current) { itemHeight.toPx() } * 0.15f
+    LaunchedEffect(isScrollInProgress) {
+        if (!isScrollInProgress) {
+            calculateIndexToFocus(state, size.height).let {
+                val indexToFocus = ((it + rowOffsetCount) % count) - rowOffset
 
-                Row(
-                    modifier = Modifier
-                        .height(itemHeight)
-                        .fillMaxWidth()
-                        .graphicsLayer {
-                            scaleY = scale
-                            translationY = translationY1
-                            rotationX = angle
-                            alpha = alphaVal
-                            transformOrigin = TransformOrigin.Center
-                            cameraDistance = itemHeight.toPx() * density * 800
-                        },
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = item,
-                        textAlign = TextAlign.Center,
-                        color = AppTheme.colors.textPrimary.copy(alpha = alphaVal)
-                    )
+                onItemSelected(indexToFocus)
+                if (state.firstVisibleItemScrollOffset != 0) {
+                    coroutineScope.launch {
+                        state.animateScrollToItem(it, 0)
+                    }
                 }
             }
         }
     }
+
+    LaunchedEffect(state) {
+        snapshotFlow { state.firstVisibleItemIndex }.collect {
+            ViewCompat.performHapticFeedback(
+                view,
+                HapticFeedbackConstantsCompat.CLOCK_TICK
+            )
+        }
+    }
+
+    Box(modifier = modifier
+        .height(size.height)
+        .fillMaxWidth()
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .height(size.height)
+                .fillMaxWidth(),
+            state = state,
+            userScrollEnabled = userScrollEnabled,
+        ) {
+            items(count) {
+                val rotateDegree = calculateIndexRotation(focusedIndex.value, it, rowOffset)
+
+                Box(
+                    modifier = Modifier
+                        .height(size.height / rowCount)
+                        .fillMaxWidth()
+                        .graphicsLayer {
+                            this.rotationX = rotateDegree
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (it >= rowOffsetCount && it < itemCount + rowOffsetCount) {
+                        content((it - rowOffsetCount) % itemCount)
+                    }
+                }
+
+            }
+        }
+
+    }
+}
+
+private fun calculateIndexToFocus(listState: LazyListState, height: Dp): Int {
+    val currentItem = listState.layoutInfo.visibleItemsInfo.firstOrNull()
+    var index = currentItem?.index ?: 0
+
+    if (currentItem?.offset != 0) {
+        if (currentItem != null && currentItem.offset <= -height.value * 3 / 10) {
+            index++
+        }
+    }
+    return index
+}
+
+@Composable
+private fun calculateIndexRotation(focusedIndex: Int, index: Int, offset: Int): Float {
+    return (6 * offset + 1).toFloat() * (focusedIndex - index)
+}
+
+data class WheelData(val value: Int) {
+    val displayName: String = if (value == -1) "" else value.toString().padStart(2, '0')
 }
