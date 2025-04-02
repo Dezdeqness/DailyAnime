@@ -159,5 +159,6 @@
     <string name="reorder_statuses_title">Изменить порядок</string>
     <string name="reorder_statuses_button_save_title">Сохранить</string>
 
+    <string name="timepicker_save_title">Сохранить</string>
 </resources>
 

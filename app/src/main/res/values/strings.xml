@@ -165,5 +165,7 @@
     <string name="reorder_statuses_title">Change order</string>
     <string name="reorder_statuses_button_save_title">Save</string>
 
+    <string name="timepicker_save_title">Save</string>
+
 </resources>
 
