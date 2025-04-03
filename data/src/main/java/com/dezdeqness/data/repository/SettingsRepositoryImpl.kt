@@ -1,13 +1,16 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.domain.model.TimeEntity
 import com.dezdeqness.domain.repository.SettingsRepository
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
     private val settingsProvider: SettingsProvider,
     private val statusesProvider: StatusesProvider,
+    private val permissionCheckProvider: PermissionCheckProvider,
 ) : SettingsRepository {
 
     override suspend fun getNightThemeStatus() = settingsProvider.getNightThemeStatus()
@@ -37,6 +40,19 @@ class SettingsRepositoryImpl @Inject constructor(
 
     override suspend fun setStatusesOrder(statuses: List<String>) {
         settingsProvider.setStatusesOrder(statuses)
+    }
+
+    override suspend fun getNotificationsEnabled() =
+        permissionCheckProvider.isNotificationPermissionGranted() && settingsProvider.getNotificationsEnabled()
+
+    override suspend fun setNotificationsEnabled(enabled: Boolean) {
+        settingsProvider.setNotificationsEnabled(enabled = enabled)
+    }
+
+    override suspend fun getNotificationTime() = settingsProvider.getNotificationTime()
+
+    override suspend fun setNotificationTime(time: TimeEntity) {
+        settingsProvider.setNotificationTime(time = time)
     }
 
 }

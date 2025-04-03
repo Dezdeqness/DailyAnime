@@ -1,5 +1,6 @@
 package com.dezdeqness.domain.repository
 
+import com.dezdeqness.domain.model.TimeEntity
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsRepository {
@@ -21,4 +22,12 @@ interface SettingsRepository {
     suspend fun getStatusesOrderFlow(): Flow<List<String>?>
 
     suspend fun setStatusesOrder(statuses: List<String>)
+
+    suspend fun getNotificationsEnabled(): Boolean
+
+    suspend fun setNotificationsEnabled(status: Boolean)
+
+    suspend fun getNotificationTime(): TimeEntity
+
+    suspend fun setNotificationTime(time: TimeEntity)
 }
