@@ -4,7 +4,11 @@ import com.dezdeqness.R
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.WorkSchedulerManager
+import com.dezdeqness.core.ui.TimeData
+import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.domain.model.TimeEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.SwitchDarkTheme
@@ -22,6 +26,8 @@ class SettingsViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val statusesProvider: StatusesProvider,
     private val ribbonMapper: PersonalRibbonMapper,
+    private val permissionCheckProvider: PermissionCheckProvider,
+    private val workSchedulerManager: WorkSchedulerManager,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -39,6 +45,8 @@ class SettingsViewModel @Inject constructor(
             val sectionId = settingsRepository.getSelectedInitialSection() ?: R.id.home_nav_graph
             val isAuthorized = accountRepository.isAuthorized()
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
+            val isNotificationsTurnOn = settingsRepository.getNotificationsEnabled()
+            val notificationTime = settingsRepository.getNotificationTime()
 
             val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
 
@@ -47,6 +55,12 @@ class SettingsViewModel @Inject constructor(
                     isDarkThemeEnabled = themeStatus,
                     selectedSection = SelectSectionItem.getById(sectionId),
                     isAuthorized = isAuthorized,
+                    isNotificationsTurnOn = isNotificationsTurnOn,
+                    isNotificationsEnabled = permissionCheckProvider.isNotificationPermissionGranted(),
+                    notificationTimeData = TimeData(
+                        hours = notificationTime.hours,
+                        minutes = notificationTime.minutes
+                    ),
                     personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map))
                 )
             }
@@ -122,4 +136,38 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun onNotificationToggleClicked(isEnabled: Boolean) {
+        launchOnIo {
+            settingsRepository.setNotificationsEnabled(isEnabled)
+
+            _settingsStateFlow.update {
+                it.copy(isNotificationsTurnOn = isEnabled)
+            }
+        }
+    }
+
+    fun onNotificationTimeClicked() {
+        _settingsStateFlow.update {
+            it.copy(isNotificationTimePickerDialogShown = true)
+        }
+    }
+
+    fun onNotificationTimeSaved(hours: Int, minutes: Int) {
+        launchOnIo {
+            settingsRepository.setNotificationTime(TimeEntity(hours, minutes))
+            workSchedulerManager.scheduleDailyWork()
+            _settingsStateFlow.update {
+                it.copy(
+                    isNotificationTimePickerDialogShown = false,
+                    notificationTimeData = TimeData(hours = hours, minutes = minutes)
+                )
+            }
+        }
+    }
+
+    fun onNotificationTimePickerClosed() {
+        _settingsStateFlow.update {
+            it.copy(isNotificationTimePickerDialogShown = false)
+        }
+    }
 }
