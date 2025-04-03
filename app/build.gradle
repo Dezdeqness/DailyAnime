@@ -127,6 +127,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.pod.core)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.work.runtime)
 
     implementation project(path: ':advanced_recycler')
     implementation project(path: ':data')
