@@ -54,6 +54,8 @@ dependencies {
     room()
     core()
     appcompat()
+
+    implementation(libs.androidx.work.runtime)
 }
 
 apollo {
