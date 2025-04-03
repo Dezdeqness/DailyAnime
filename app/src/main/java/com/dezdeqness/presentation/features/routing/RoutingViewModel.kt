@@ -5,7 +5,9 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
+import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import javax.inject.Inject
 
@@ -13,6 +15,7 @@ class RoutingViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val configManager: ConfigManager,
     private val tokenManager: TokenManager,
+    permissionCheckProvider: PermissionCheckProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -22,6 +25,14 @@ class RoutingViewModel @Inject constructor(
     override val viewModelTag: String = TAG
 
     init {
+        if (permissionCheckProvider.isNotificationPermissionGranted()) {
+            fetchData()
+        } else {
+            onEventReceive(HandlePermission)
+        }
+    }
+
+    fun fetchData() {
         launchOnIo {
             tokenManager.migrateToProtoStore()
             configManager.invalidate()

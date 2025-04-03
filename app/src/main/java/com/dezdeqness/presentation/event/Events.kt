@@ -76,3 +76,5 @@ object AuthorizationSuccess : Event()
 object NavigateToMainFlow : Event()
 
 data class AuthUrl(val url: String) : Event()
+
+data object HandlePermission : Event()
