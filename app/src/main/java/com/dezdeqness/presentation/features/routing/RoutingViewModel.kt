@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.routing
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.provider.PermissionCheckProvider
@@ -15,6 +16,7 @@ class RoutingViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val configManager: ConfigManager,
     private val tokenManager: TokenManager,
+    private val workSchedulerManager: WorkSchedulerManager,
     permissionCheckProvider: PermissionCheckProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -34,6 +36,7 @@ class RoutingViewModel @Inject constructor(
 
     fun fetchData() {
         launchOnIo {
+            workSchedulerManager.scheduleDailyWork()
             tokenManager.migrateToProtoStore()
             configManager.invalidate()
 
