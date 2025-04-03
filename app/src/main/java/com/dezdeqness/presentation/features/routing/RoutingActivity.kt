@@ -1,7 +1,9 @@
 package com.dezdeqness.presentation.features.routing
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -31,6 +33,7 @@ import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.getComponent
+import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import kotlinx.coroutines.launch
@@ -46,6 +49,11 @@ class RoutingActivity : AppCompatActivity() {
 
     @Inject
     lateinit var applicationRouter: ApplicationRouter
+
+    private val pushNotificationPermissionLauncher =
+        registerForActivityResult(RequestPermission()) { granted ->
+            viewModel.fetchData()
+        }
 
     private val viewModel: RoutingViewModel by viewModels(
         factoryProducer = {
@@ -106,6 +114,14 @@ class RoutingActivity : AppCompatActivity() {
                         is NavigateToMainFlow -> {
                             applicationRouter.navigateToMainScreen(this@RoutingActivity)
                             finish()
+                        }
+
+                        is HandlePermission -> {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                            } else {
+                                viewModel.fetchData()
+                            }
                         }
 
                         else -> {}
