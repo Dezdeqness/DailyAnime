@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.AppButton
+import java.util.Locale
 
 private const val VISIBLE_ITEMS = 3
 
@@ -41,7 +42,7 @@ fun TimePickerDialog(
     modifier: Modifier = Modifier,
     time: TimeData,
     sheetState: SheetState,
-    onTimeSelected: (Int, Int) -> Unit,
+    onSaveTime: (Int, Int) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     var selectedTime by remember { mutableStateOf(time) }
@@ -132,13 +133,16 @@ fun TimePickerDialog(
                 title = stringResource(R.string.timepicker_save_title),
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                onTimeSelected(selectedTime.hours, selectedTime.minutes)
+                onSaveTime(selectedTime.hours, selectedTime.minutes)
             }
         }
     }
 }
 
-data class TimeData(val hours: Int, val minutes: Int)
+data class TimeData(val hours: Int, val minutes: Int) {
+    val formattedTime: String
+        get() = String.format(Locale.getDefault(), "%02d:%02d", hours, minutes)
+}
 
 @Composable
 private fun SelectorView(modifier: Modifier = Modifier, visibleItems: Int) {

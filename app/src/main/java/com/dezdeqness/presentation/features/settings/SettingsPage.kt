@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
+import com.dezdeqness.core.ui.TimePickerDialog
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.settings.composables.HeaderSettingsView
 import com.dezdeqness.presentation.features.settings.composables.SelectRibbonStatusReorderDialog
@@ -120,6 +121,32 @@ fun SettingsPage(
             }
 
             item {
+                HeaderSettingsView(title = stringResource(R.string.settings_notification_section))
+            }
+
+            item {
+                SwitchSettingsView(
+                    title = stringResource(R.string.settings_notification_title),
+                    subtitle = stringResource(R.string.settings_notification_subtitle),
+                    checked = state.isNotificationsTurnOn,
+                    enabled = state.isNotificationsEnabled,
+                ) { isChecked ->
+                    actions.onNotificationToggleClicked(isChecked)
+                }
+            }
+
+            item {
+                TextSettingsView(
+                    title = stringResource(R.string.settings_notification_time_title),
+                    subtitle = state.notificationTimeData.formattedTime,
+                    enabled = state.isNotificationsEnabled,
+                    onSettingClick = {
+                        actions.onNotificationTimePickerClicked()
+                    }
+                )
+            }
+
+            item {
                 HeaderSettingsView(title = stringResource(R.string.settings_about_section))
             }
             item {
@@ -161,6 +188,17 @@ fun SettingsPage(
             )
         }
 
-
+        if (state.isNotificationTimePickerDialogShown) {
+            TimePickerDialog(
+                time = state.notificationTimeData,
+                sheetState = sheetState,
+                onSaveTime = { hours, minutes ->
+                    actions.onNotificationTimeSaved(hours = hours, minutes = minutes)
+                },
+                onDismissRequest = {
+                    actions.onNotificationTimePickerClosed()
+                }
+            )
+        }
     }
 }

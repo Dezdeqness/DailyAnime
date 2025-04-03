@@ -80,6 +80,22 @@ class SettingsFragment : BaseComposeFragment() {
                         viewModel.onChangeRibbonStatusClosed()
                     }
 
+                    override fun onNotificationToggleClicked(isEnabled: Boolean) {
+                        viewModel.onNotificationToggleClicked(isEnabled = isEnabled)
+                    }
+
+                    override fun onNotificationTimePickerClicked() {
+                        viewModel.onNotificationTimeClicked()
+                    }
+
+                    override fun onNotificationTimeSaved(hours: Int, minutes: Int) {
+                        viewModel.onNotificationTimeSaved(hours, minutes)
+                    }
+
+                    override fun onNotificationTimePickerClosed() {
+                        viewModel.onNotificationTimePickerClosed()
+                    }
+
                 }
             )
         }
