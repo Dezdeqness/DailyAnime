@@ -41,6 +41,12 @@
     <string name="settings_navigation_section">Навигация</string>
     <string name="settings_initial_tab_page">Секция по умолчанию</string>
     <string name="settings_order_of_statuses">Порядок статусов</string>
+    <string name="settings_notification_section">Уведомления</string>
+    <string name="settings_notification_title">Включить уведомления</string>
+    <string name="settings_notification_subtitle">Уведомления будут приходить каждый день в определенное время</string>
+    <string name="settings_notification_time_title">Время уведомлений</string>
+
+    <string name="notification_daily_description">Не забудьте отслеживать свой прогресс в приложении!</string>
 
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>

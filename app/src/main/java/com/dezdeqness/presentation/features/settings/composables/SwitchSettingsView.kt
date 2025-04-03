@@ -18,6 +18,7 @@ fun SwitchSettingsView(
     title: String,
     subtitle: String? = null,
     icon: ImageVector? = null,
+    enabled: Boolean = true,
     checked: Boolean = false,
     onCheckedChanged: (Boolean) -> Unit,
 ) {
@@ -26,6 +27,7 @@ fun SwitchSettingsView(
         title = title,
         subtitle = subtitle,
         icon = icon,
+        enabled = enabled,
         widget = {
             Switch(
                 checked = checked,

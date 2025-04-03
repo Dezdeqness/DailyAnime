@@ -13,4 +13,10 @@ interface SettingActions {
     fun onChangeRibbonStatusClicked()
     fun onSelectedRibbonDataChanged(statuses: List<RibbonStatusUiModel>)
     fun onChangeRibbonStatusClosed()
+
+    fun onNotificationToggleClicked(isEnabled: Boolean)
+
+    fun onNotificationTimePickerClicked()
+    fun onNotificationTimeSaved(hours: Int, minutes: Int)
+    fun onNotificationTimePickerClosed()
 }
