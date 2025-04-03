@@ -1,10 +1,17 @@
 package com.dezdeqness
 
 import android.app.Application
+import android.content.Context
+import androidx.work.Configuration
+import androidx.work.ListenableWorker
+import androidx.work.Worker
+import androidx.work.WorkerFactory
+import androidx.work.WorkerParameters
+import com.dezdeqness.core.worker.NotificationDailyWorker
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
 
-class ShikimoriApp : Application() {
+class ShikimoriApp : Application(), Configuration.Provider {
 
     val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(applicationContext)
@@ -23,6 +30,33 @@ class ShikimoriApp : Application() {
                 )
             }
     }
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(object : WorkerFactory() {
+                override fun createWorker(
+                    appContext: Context,
+                    workerClassName: String,
+                    workerParameters: WorkerParameters
+                ): ListenableWorker? {
+                    val workerClass = try {
+                        Class.forName(workerClassName).asSubclass(Worker::class.java)
+                    } catch (_: ClassNotFoundException) {
+                        null
+                    }
+                    return if (workerClass == NotificationDailyWorker::class.java) {
+                        NotificationDailyWorker(
+                            settingsRepository = appComponent.settingsRepository,
+                            permissionCheckProvider = appComponent.permissionCheckProvider,
+                            appContext,
+                            workerParameters)
+                    } else {
+                        null
+                    }
+                }
+
+            })
+            .build()
 
 }
 
@@ -43,9 +77,9 @@ private class CustomUncaughtExceptionHandler(
             application
                 .getComponent()
                 .appLogger
-                .logInfo("ShikimoriApp", "Absord ${exception::class.simpleName}" ,exception)
+                .logInfo("ShikimoriApp", "Absord ${exception::class.simpleName}", exception)
 
-                return
+            return
         }
         uncaughtExceptionHandler.uncaughtException(thread, exception)
     }

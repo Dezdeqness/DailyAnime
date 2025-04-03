@@ -4,6 +4,7 @@ import android.content.Context
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule
@@ -97,4 +98,7 @@ interface AppComponent {
 
     val analyticsManager: AnalyticsManager
 
+    val settingsRepository: SettingsRepository
+
+    val permissionCheckProvider: PermissionCheckProvider
 }

@@ -18,6 +18,7 @@ import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
+import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.provider.StatusesProvider
@@ -138,10 +139,12 @@ class AppModule {
     fun provideSettingsRepository(
         settingsProvider: SettingsProvider,
         statusesProvider: StatusesProvider,
+        permissionCheckProvider: PermissionCheckProvider,
     ): SettingsRepository =
         SettingsRepositoryImpl(
             settingsProvider = settingsProvider,
             statusesProvider = statusesProvider,
+            permissionCheckProvider = permissionCheckProvider,
         )
 
     @Singleton
