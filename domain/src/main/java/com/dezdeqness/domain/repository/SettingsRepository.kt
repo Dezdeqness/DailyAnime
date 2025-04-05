@@ -1,5 +1,6 @@
 package com.dezdeqness.domain.repository
 
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.model.TimeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -13,9 +14,9 @@ interface SettingsRepository {
 
     suspend fun setLanguageDisclaimerShown(isShown: Boolean)
 
-    suspend fun getSelectedInitialSection(): Int?
+    suspend fun getSelectedInitialSection(): InitialSection
 
-    suspend fun setSelectedInitialSection(sectionId: Int)
+    suspend fun setSelectedInitialSection(section: InitialSection)
 
     suspend fun getStatusesOrder(): List<String>
 

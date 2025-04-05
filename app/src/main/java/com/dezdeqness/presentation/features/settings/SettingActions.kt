@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.settings
 
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 
 interface SettingActions {
@@ -7,7 +8,7 @@ interface SettingActions {
     fun onNightThemeToggleClicked(isChecked: Boolean)
 
     fun onChangeInitialSectionClicked()
-    fun onSelectedSectionChanged(sectionId: Int)
+    fun onSelectedSectionChanged(section: InitialSection)
     fun onSelectedSectionDialogClosed()
 
     fun onChangeRibbonStatusClicked()

@@ -159,7 +159,7 @@ fun SettingsPage(
 
         if (state.isSelectInitialSectionDialogShown) {
             SelectSectionDialog(
-                selectedId = state.selectedSection.id,
+                selectedId = state.selectedSection.section.id,
                 state = sheetState,
                 statuses = listSections,
                 onSelectedItem = {
