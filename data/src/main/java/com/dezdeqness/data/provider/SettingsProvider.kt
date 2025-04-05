@@ -1,7 +1,6 @@
 package com.dezdeqness.data.provider
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -9,6 +8,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.model.TimeEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -49,9 +49,9 @@ class SettingsProvider @Inject constructor(
             .first()
             ?: false
 
-    suspend fun setSelectedInitialSection(sectionId: Int) {
+    suspend fun setSelectedInitialSection(section: InitialSection) {
         context.dataStore.edit { settings ->
-            settings[SELECTED_INITIAL_SECTION] = sectionId
+            settings[SELECTED_INITIAL_SECTION] = section.id
         }
     }
 
@@ -59,7 +59,9 @@ class SettingsProvider @Inject constructor(
         context
             .dataStore
             .data
-            .map { preferences -> preferences[SELECTED_INITIAL_SECTION] }
+            .map { preferences ->
+                InitialSection.fromId(preferences[SELECTED_INITIAL_SECTION])
+            }
             .first()
 
     suspend fun setStatusesOrder(statuses: List<String>) {

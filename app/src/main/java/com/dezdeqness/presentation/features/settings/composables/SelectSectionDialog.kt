@@ -26,13 +26,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.domain.model.InitialSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectSectionDialog(
     state: SheetState,
     statuses: List<SelectSectionItem>,
-    onSelectedItem: (Int) -> Unit,
+    onSelectedItem: (InitialSection) -> Unit,
     onCloseClicked: () -> Unit,
     selectedId: Int,
 ) {
@@ -59,7 +60,7 @@ fun SelectSectionDialog(
                         .clip(RoundedCornerShape(8.dp))
                         .clickable(
                             onClick = {
-                                onSelectedItem(item.id)
+                                onSelectedItem(item.section)
                                 onCloseClicked()
                             },
                             interactionSource = remember { MutableInteractionSource() },
@@ -69,7 +70,7 @@ fun SelectSectionDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = item.id == selectedId,
+                        selected = item.section.id == selectedId,
                         onClick = null,
                         modifier = Modifier.padding(end = 12.dp)
                     )
@@ -91,30 +92,30 @@ fun SelectSectionDialog(
 }
 
 data class SelectSectionItem(
-    val id: Int,
+    val section: InitialSection,
     @StringRes val titleId: Int,
 ) {
     companion object {
         fun getSections() =
             listOf(
                 SelectSectionItem(
-                    id = R.id.home_nav_graph,
+                    section = InitialSection.HOME,
                     titleId = R.string.bottom_navigation_home
                 ),
                 SelectSectionItem(
-                    id = R.id.personal_host_nav_graph,
+                    section = InitialSection.FAVORITES,
                     titleId = R.string.bottom_navigation_personal_lists
                 ),
                 SelectSectionItem(
-                    id = R.id.calendar_nav_graph,
+                    section = InitialSection.CALENDAR,
                     titleId = R.string.bottom_navigation_calendar
                 ),
                 SelectSectionItem(
-                    id = R.id.profile_nav_graph,
+                    section = InitialSection.PROFILE,
                     titleId = R.string.bottom_navigation_profile
                 ),
                 SelectSectionItem(
-                    id = R.id.search_nav_graph,
+                    section = InitialSection.SEARCH,
                     titleId = R.string.bottom_navigation_search
                 ),
             )
@@ -122,7 +123,7 @@ data class SelectSectionItem(
         fun getById(sectionId: Int): SelectSectionItem{
             val items = getSections()
 
-            return items.find { it.id == sectionId } ?: items.first()
+            return items.find { it.section.id == sectionId } ?: items.first()
         }
     }
 }

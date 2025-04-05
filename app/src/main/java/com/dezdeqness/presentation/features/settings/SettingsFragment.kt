@@ -15,6 +15,7 @@ import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.data.manager.AppThemeManager
 import com.dezdeqness.di.AppComponent
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
@@ -60,8 +61,8 @@ class SettingsFragment : BaseComposeFragment() {
                         viewModel.onChangeInitialSectionClicked()
                     }
 
-                    override fun onSelectedSectionChanged(sectionId: Int) {
-                        viewModel.onSelectedSectionChanged(sectionId)
+                    override fun onSelectedSectionChanged(section: InitialSection) {
+                        viewModel.onSelectedSectionChanged(section)
                     }
 
                     override fun onSelectedSectionDialogClosed() {

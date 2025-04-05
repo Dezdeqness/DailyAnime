@@ -3,6 +3,7 @@ package com.dezdeqness.data.repository
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.model.TimeEntity
 import com.dezdeqness.domain.repository.SettingsRepository
 import javax.inject.Inject
@@ -27,8 +28,8 @@ class SettingsRepositoryImpl @Inject constructor(
 
     override suspend fun getSelectedInitialSection() = settingsProvider.getSelectedInitialSection()
 
-    override suspend fun setSelectedInitialSection(sectionId: Int) {
-        settingsProvider.setSelectedInitialSection(sectionId = sectionId)
+    override suspend fun setSelectedInitialSection(section: InitialSection) {
+        settingsProvider.setSelectedInitialSection(section = section)
     }
 
     override suspend fun getStatusesOrder() =

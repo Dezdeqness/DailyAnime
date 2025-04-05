@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.features.settings
 
-import com.dezdeqness.R
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
@@ -8,6 +7,7 @@ import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.ui.TimeData
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.model.TimeEntity
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.SettingsRepository
@@ -42,7 +42,7 @@ class SettingsViewModel @Inject constructor(
     init {
         launchOnIo {
             val themeStatus = settingsRepository.getNightThemeStatus()
-            val sectionId = settingsRepository.getSelectedInitialSection() ?: R.id.home_nav_graph
+            val section = settingsRepository.getSelectedInitialSection()
             val isAuthorized = accountRepository.isAuthorized()
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
             val isNotificationsTurnOn = settingsRepository.getNotificationsEnabled()
@@ -53,7 +53,7 @@ class SettingsViewModel @Inject constructor(
             _settingsStateFlow.update {
                 it.copy(
                     isDarkThemeEnabled = themeStatus,
-                    selectedSection = SelectSectionItem.getById(sectionId),
+                    selectedSection = SelectSectionItem.getById(section.id),
                     isAuthorized = isAuthorized,
                     isNotificationsTurnOn = isNotificationsTurnOn,
                     isNotificationsEnabled = permissionCheckProvider.isNotificationPermissionGranted(),
@@ -89,11 +89,11 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun onSelectedSectionChanged(sectionId: Int) {
+    fun onSelectedSectionChanged(section: InitialSection) {
         launchOnIo {
-            settingsRepository.setSelectedInitialSection(sectionId)
+            settingsRepository.setSelectedInitialSection(section)
 
-            val sectionItem = SelectSectionItem.getById(sectionId)
+            val sectionItem = SelectSectionItem.getById(section.id)
             _settingsStateFlow.update {
                 it.copy(selectedSection = sectionItem)
             }

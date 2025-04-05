@@ -14,6 +14,7 @@ import com.dezdeqness.R
 import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.databinding.ActivityMainBinding
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity(), TabSelection {
         )
 
         lifecycleScope.launch {
-            val id = withContext(application.getComponent().coroutineDispatcherProvider().io()) {
+            val section = withContext(application.getComponent().coroutineDispatcherProvider().io()) {
                 application.getComponent().settingsRepository().getSelectedInitialSection()
             }
             bottomNav.setupWithNavController(
@@ -133,12 +134,21 @@ class MainActivity : AppCompatActivity(), TabSelection {
                 fragmentManager = supportFragmentManager,
                 containerId = R.id.container,
                 intent = intent,
-                selectedGraphId = id ?: R.id.home_nav_graph,
+                selectedGraphId = sectionToGraph(section),
                 isRestored = isRestored,
             )
         }
 
     }
+
+    private fun sectionToGraph(section: InitialSection) =
+        when (section) {
+            InitialSection.FAVORITES -> R.id.personal_host_nav_graph
+            InitialSection.HOME -> R.id.home_nav_graph
+            InitialSection.CALENDAR -> R.id.calendar_nav_graph
+            InitialSection.SEARCH -> R.id.search_nav_graph
+            InitialSection.PROFILE -> R.id.profile_nav_graph
+        }
 
     private fun setupObservers() {
         lifecycleScope.launch {
