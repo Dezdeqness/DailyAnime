@@ -13,14 +13,13 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.action.ActionListener
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CalendarFragment : BaseComposeFragment(), ActionListener {
+class CalendarFragment : BaseComposeFragment() {
 
     @Inject
     lateinit var analyticsManager: AnalyticsManager
@@ -75,10 +74,6 @@ class CalendarFragment : BaseComposeFragment(), ActionListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
-    }
-
-    override fun onActionReceive(action: Action) {
-        viewModel.onActionReceive(action)
     }
 
     private fun setupObservers() {
