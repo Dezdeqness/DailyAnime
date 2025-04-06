@@ -25,6 +25,7 @@ import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.dezdeqness.utils.AnimeKindUtils
 import com.dezdeqness.utils.ImageUrlUtils
+import com.google.common.collect.ImmutableList
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -45,7 +46,7 @@ class AnimeDetailsComposer @Inject constructor(
 
     fun compose(
         animeDetailsFullEntity: AnimeDetailsFullEntity,
-    ): List<AdapterItem> {
+    ): ImmutableList<AdapterItem> {
         val details = animeDetailsFullEntity.animeDetailsEntity
         val uiItems = mutableListOf<AdapterItem>()
 
@@ -101,7 +102,7 @@ class AnimeDetailsComposer @Inject constructor(
 
         uiItems.add(SpacerUiItem)
 
-        return uiItems
+        return ImmutableList.copyOf(uiItems)
     }
 
     private fun addRelatesIfNotEmpty(
@@ -253,8 +254,6 @@ class AnimeDetailsComposer @Inject constructor(
                 )
             )
         } else if (details.status == AnimeStatus.ONGOING) {
-
-
             val date = Date(details.nextEpisodeAtTimestamp)
 
             val currentDate = Date()
