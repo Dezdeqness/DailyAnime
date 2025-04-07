@@ -18,7 +18,7 @@ data class AnimeCell(
 )
 
 data class AnimeCellList(
-    val list: List<AnimeCell>
+    val list: ImmutableList<AnimeCell>
 ) : AdapterItem()
 
 enum class CellState {

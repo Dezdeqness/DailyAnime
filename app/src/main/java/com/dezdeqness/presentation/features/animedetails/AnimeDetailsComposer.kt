@@ -67,17 +67,20 @@ class AnimeDetailsComposer @Inject constructor(
         }
 
         if (details.genreList.isNotEmpty() || details.studioList.isNotEmpty()) {
-            uiItems.add(AnimeCellList(
-                list = details
-                    .genreList
-                    .map { genre ->
-                        AnimeCell(
-                            id = genre.id,
-                            displayName = genre.name,
-                        )
-                    }
-                    .sortedBy { it.displayName }
-            ))
+            uiItems.add(
+                AnimeCellList(
+                    list = ImmutableList.copyOf(
+                        details
+                        .genreList
+                        .map { genre ->
+                            AnimeCell(
+                                id = genre.id,
+                                displayName = genre.name,
+                            )
+                        }
+                        .sortedBy { it.displayName })
+                )
+            )
         }
 
         addRelatesIfNotEmpty(
