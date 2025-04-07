@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -64,6 +66,29 @@ class AnimeDetailsFragment : BaseComposeFragment() {
             .inject(this)
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    override fun FragmentContent() {
+        AppTheme {
+            DetailsPage(
+                stateFlow = viewModel.animeDetailsStateFlow,
+                actions = object : DetailsActions {
+                    override fun onBackPressed() {
+                        findNavController().navigateUp()
+                    }
+
+                    override fun onSharePressed() {
+                        viewModel.onShareButtonClicked()
+                    }
+
+                    override fun onFabClicked() {
+                        viewModel.onEditRateClicked()
+                    }
+                }
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -76,46 +101,6 @@ class AnimeDetailsFragment : BaseComposeFragment() {
 
         setupObservers()
     }
-
-    private fun setupMenu() {
-//        binding.toolbar.apply {
-//            inflateMenu(R.menu.menu_anime)
-//            setOnMenuItemClickListener { item ->
-//                when (item.itemId) {
-//                    R.id.action_share -> {
-//                        viewModel.onShareButtonClicked()
-//                    }
-//                }
-//                true
-//            }
-//            menu?.findItem(R.id.action_share)?.isVisible = false
-//        }
-    }
-
-//    private fun setupScrollListener() {
-//        val titleFrame = Rect()
-//        val recyclerFrame = Rect()
-//        var targetView: View? = null
-//
-//        binding.content.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//
-//                if (targetView == null) {
-//                    targetView = getTargetView() ?: return
-//                }
-//
-//                targetView?.getGlobalVisibleRect(titleFrame)
-//                recyclerView.getGlobalVisibleRect(recyclerFrame)
-//
-//                if (recyclerFrame.contains(titleFrame) && targetView?.isShown == true) {
-//                    viewModel.onToolbarVisibilityOff()
-//                } else {
-//                    viewModel.onToolbarVisibilityOn()
-//                }
-//            }
-//        })
-//    }
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -149,12 +134,14 @@ class AnimeDetailsFragment : BaseComposeFragment() {
             }
 
             is NavigateToSimilar -> {
-                val action = AnimeDetailsFragmentDirections.navigateToAnimeSimilarAction(event.animeId)
+                val action =
+                    AnimeDetailsFragmentDirections.navigateToAnimeSimilarAction(event.animeId)
                 findNavController().navigate(action)
             }
 
             is NavigateToChronology -> {
-                val action = AnimeDetailsFragmentDirections.navigateToAnimeChronologyAction(event.animeId)
+                val action =
+                    AnimeDetailsFragmentDirections.navigateToAnimeChronologyAction(event.animeId)
                 findNavController().navigate(action)
             }
 
@@ -165,6 +152,7 @@ class AnimeDetailsFragment : BaseComposeFragment() {
                     index = event.currentIndex,
                 )
             }
+
             is AnimeDetails -> {
                 analyticsManager.detailsTracked(id = event.animeId.toString(), title = event.title)
                 findNavController().navigate(
@@ -179,22 +167,5 @@ class AnimeDetailsFragment : BaseComposeFragment() {
             else -> {}
         }
     }
-
-//    private fun setupToolbarVisibility(state: AnimeDetailsState) {
-//        if (state.isToolbarVisible) {
-//            binding.toolbar.setBackgroundResource(R.color.details_toolbar_color_expand)
-//            binding.toolbar.title = title
-//        } else {
-//            binding.toolbar.setBackgroundResource(android.R.color.transparent)
-//            binding.toolbar.title = ""
-//        }
-//    }
-//
-//    private fun getTargetView(): View? {
-//        binding.content.recyclerView.apply {
-//            if (this.childCount == 0 || getChildAt(0) !is ViewGroup) return null
-//            return (getChildAt(0) as ViewGroup).findViewWithTag("tag")
-//        }
-//    }
 
 }

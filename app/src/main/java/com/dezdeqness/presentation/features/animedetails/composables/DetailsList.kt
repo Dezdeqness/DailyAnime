@@ -1,12 +1,16 @@
 package com.dezdeqness.presentation.features.animedetails.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
 import com.dezdeqness.presentation.models.AdapterItem
+import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import com.google.common.collect.ImmutableList
 
@@ -19,7 +23,7 @@ fun DetailsList(
 
     LazyColumn(
         state = state,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().background(AppTheme.colors.onPrimary),
     ) {
         items(
             count = list.size,
@@ -33,6 +37,9 @@ fun DetailsList(
             when (item) {
                 is HeaderItemUiModel -> {
                     DetailsHeader(detailsHeader = item)
+                }
+                is AnimeCellList -> {
+                    DetailsGenres(genreCells = item)
                 }
                 else -> {
                 }
