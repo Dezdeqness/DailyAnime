@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.features.animedetails.BlurTransformation
+import com.dezdeqness.core.ui.BlurTransformation
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 
 @Composable
