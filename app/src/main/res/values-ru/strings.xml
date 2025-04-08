@@ -166,5 +166,7 @@
     <string name="reorder_statuses_button_save_title">Сохранить</string>
 
     <string name="timepicker_save_title">Сохранить</string>
+    <string name="details_synopsis_label_show_less">Показать меньше</string>
+    <string name="details_synopsis_label_show_more">… Показать больше</string>
 </resources>
 
