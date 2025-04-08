@@ -33,7 +33,7 @@ fun DetailsPage(
 
     val listState = rememberLazyListState()
     val scrollIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
-    val isScrolledPast = remember(scrollIndex) { scrollIndex > 5 }
+    val isScrolledPast = remember(scrollIndex) { scrollIndex >= 1 }
 
     val toolbarBackgroundColor =
         if (isScrolledPast) AppTheme.colors.onPrimary else Color.Transparent
@@ -42,6 +42,7 @@ fun DetailsPage(
 
         DetailsList(
             list = state.uiModels,
+            state = listState,
         )
 
         DetailsToolbar(

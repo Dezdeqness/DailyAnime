@@ -15,6 +15,7 @@ import com.dezdeqness.presentation.models.BriefInfoUiModelList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import com.dezdeqness.presentation.models.MoreInfoUiModel
+import com.dezdeqness.presentation.models.NameUiModel
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
@@ -52,19 +53,16 @@ class AnimeDetailsComposer @Inject constructor(
 
         uiItems.add(
             HeaderItemUiModel(
-                title = details.russian,
                 imageUrl = imageUrlUtils.getImageWithBaseUrl(details.image.original),
                 ratingScore = details.score,
             )
         )
 
-        uiItems.add(composeBriefInfoList(details))
+        uiItems.add(NameUiModel(title = details.russian))
 
-        uiItems.add(MoreInfoUiModel)
+//        uiItems.add(composeBriefInfoList(details))
 
-        if (details.description != null) {
-            uiItems.add(DescriptionUiModel(content = details.descriptionHTML))
-        }
+//        uiItems.add(MoreInfoUiModel)
 
         if (details.genreList.isNotEmpty() || details.studioList.isNotEmpty()) {
             uiItems.add(
@@ -81,6 +79,10 @@ class AnimeDetailsComposer @Inject constructor(
                         .sortedBy { it.displayName })
                 )
             )
+        }
+
+        if (details.description != null) {
+            uiItems.add(DescriptionUiModel(content = details.descriptionHTML))
         }
 
         addRelatesIfNotEmpty(
