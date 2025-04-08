@@ -30,11 +30,11 @@ fun DetailsDescription(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
             stringResource(R.string.anime_details_description_title),
-            style = AppTheme.typography.headlineMedium,
+            style = AppTheme.typography.headlineSmall,
             color = AppTheme.colors.textPrimary,
         )
 
