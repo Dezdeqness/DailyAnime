@@ -3,24 +3,28 @@ package com.dezdeqness.presentation.features.animedetails.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsTitle
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCellList
+import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
+import com.dezdeqness.presentation.models.NameUiModel
 import com.google.common.collect.ImmutableList
 
 @Composable
 fun DetailsList(
     modifier: Modifier = Modifier,
     list: ImmutableList<AdapterItem>,
+    state: LazyListState = rememberLazyListState(),
 ) {
-    val state = rememberLazyListState()
-
     LazyColumn(
         state = state,
         modifier = modifier.fillMaxSize().background(AppTheme.colors.onPrimary),
@@ -40,6 +44,12 @@ fun DetailsList(
                 }
                 is AnimeCellList -> {
                     DetailsGenres(genreCells = item)
+                }
+                is DescriptionUiModel -> {
+                    DetailsDescription(description = item)
+                }
+                is NameUiModel -> {
+                    DetailsTitle(title = item.title)
                 }
                 else -> {
                 }
