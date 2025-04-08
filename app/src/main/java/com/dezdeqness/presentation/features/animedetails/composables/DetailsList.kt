@@ -2,11 +2,14 @@ package com.dezdeqness.presentation.features.animedetails.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
@@ -27,7 +30,9 @@ fun DetailsList(
 ) {
     LazyColumn(
         state = state,
-        modifier = modifier.fillMaxSize().background(AppTheme.colors.onPrimary),
+        modifier = modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.onPrimary),
     ) {
         items(
             count = list.size,
@@ -46,10 +51,16 @@ fun DetailsList(
                     DetailsGenres(genreCells = item)
                 }
                 is DescriptionUiModel -> {
-                    DetailsDescription(description = item)
+                    DetailsDescription(
+                        description = item,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    )
                 }
                 is NameUiModel -> {
-                    DetailsTitle(title = item.title)
+                    DetailsTitle(
+                        title = item.title,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
                 else -> {
                 }
