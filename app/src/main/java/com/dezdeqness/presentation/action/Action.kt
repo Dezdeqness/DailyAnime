@@ -11,4 +11,6 @@ interface Action {
     data class UserRateIncrement(val editRateId: Long) : Action
 
     data object CalendarHeaderClicked : Action
+
+    data class ScreenShotClick(val screenshotUrl: String) : Action
 }

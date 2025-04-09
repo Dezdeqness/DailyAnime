@@ -17,6 +17,7 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ArgsModule
+import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event
@@ -83,6 +84,10 @@ class AnimeDetailsFragment : BaseComposeFragment() {
 
                     override fun onFabClicked() {
                         viewModel.onEditRateClicked()
+                    }
+
+                    override fun onActionReceive(action: Action) {
+                        viewModel.onActionReceive(action)
                     }
                 }
             )

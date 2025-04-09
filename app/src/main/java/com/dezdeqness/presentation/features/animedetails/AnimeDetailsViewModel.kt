@@ -67,7 +67,15 @@ class AnimeDetailsViewModel @Inject constructor(
 
     fun onActionReceive(action: Action) {
         launchOnIo {
-            actionConsumer.consume(action)
+            when (action) {
+                is Action.ScreenShotClick -> {
+                    onScreenShotClicked(action.screenshotUrl)
+                }
+
+                else -> {
+                    actionConsumer.consume(action)
+                }
+            }
         }
     }
 

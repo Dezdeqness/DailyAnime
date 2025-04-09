@@ -19,7 +19,6 @@ import com.dezdeqness.presentation.models.NameUiModel
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
-import com.dezdeqness.presentation.models.ScreenshotUiModel
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
 import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModel
@@ -177,14 +176,10 @@ class AnimeDetailsComposer @Inject constructor(
         uiItems: MutableList<AdapterItem>,
     ) = animeDetailsFullEntity
         .screenshots
-        .map { ScreenshotUiModel(imageUrlUtils.getImageWithBaseUrl(it.preview)) }
+        .map { imageUrlUtils.getImageWithBaseUrl(it.preview) }
         .takeIf { it.isNotEmpty() }
         ?.let { list ->
-            uiItems.add(
-                ScreenshotUiModelList(
-                    list = list
-                )
-            )
+            uiItems.add(ScreenshotUiModelList(list = ImmutableList.copyOf(list)))
         }
 
 
