@@ -1,9 +1,5 @@
 package com.dezdeqness.presentation.models
 
-data class ScreenshotUiModel(
-    val url: String,
-) : AdapterItem()
+import com.google.common.collect.ImmutableList
 
-data class ScreenshotUiModelList(
-    val list: List<ScreenshotUiModel>,
-) : AdapterItem()
+data class ScreenshotUiModelList(val list: ImmutableList<String>) : AdapterItem()

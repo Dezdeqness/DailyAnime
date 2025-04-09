@@ -43,6 +43,7 @@ fun DetailsPage(
         DetailsList(
             list = state.uiModels,
             state = listState,
+            onClick = { action -> actions.onActionReceive(action) }
         )
 
         DetailsToolbar(

@@ -11,15 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsScreenshots
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsTitle
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import com.dezdeqness.presentation.models.NameUiModel
+import com.dezdeqness.presentation.models.ScreenshotUiModelList
 import com.google.common.collect.ImmutableList
 
 @Composable
@@ -27,6 +30,7 @@ fun DetailsList(
     modifier: Modifier = Modifier,
     list: ImmutableList<AdapterItem>,
     state: LazyListState = rememberLazyListState(),
+    onClick: (Action) -> Unit
 ) {
     LazyColumn(
         state = state,
@@ -60,6 +64,14 @@ fun DetailsList(
                     DetailsTitle(
                         title = item.title,
                         modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+                is ScreenshotUiModelList -> {
+                    DetailsScreenshots(
+                        screenshots = item.list,
+                        onScreenshotClick = {
+                            onClick(Action.ScreenShotClick(it))
+                        }
                     )
                 }
                 else -> {
