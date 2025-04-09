@@ -32,7 +32,7 @@ firebaseBomVersion = "33.7.0"
 firebaseCrashlyticsVersion = "19.3.0"
 firebaseAnalyticsVersion = "22.1.2"
 firebaseConfigVersion = "22.0.1"
-coilVersion = "2.6.0"
+coilVersion = "2.7.0"
 composeActivityVersion = "1.9.3"
 composeBomVersion = "2025.03.01"
 
@@ -131,6 +131,7 @@ google-firebase-analytics = { group = "com.google.firebase", name = "firebase-an
 google-firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigVersion" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coilVersion" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }

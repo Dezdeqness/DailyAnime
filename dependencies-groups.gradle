@@ -122,6 +122,7 @@ ext {
 
     coil = Group {
         implementation(libs.coil.compose)
+        implementation(libs.coil)
     }
 
     datastore = Group {
