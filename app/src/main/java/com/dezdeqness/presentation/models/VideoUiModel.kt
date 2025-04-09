@@ -1,5 +1,7 @@
 package com.dezdeqness.presentation.models
 
+import com.google.common.collect.ImmutableList
+
 data class VideoUiModel(
     val sourceUrl: String,
     val imageUrl: String,
@@ -8,5 +10,5 @@ data class VideoUiModel(
 ) : AdapterItem()
 
 data class VideoUiModelList(
-    val list: List<VideoUiModel>
+    val list: ImmutableList<VideoUiModel>
 ) : AdapterItem()

@@ -17,12 +17,14 @@ import com.dezdeqness.presentation.features.animedetails.composables.list.Detail
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsScreenshots
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsTitle
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsVideos
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import com.dezdeqness.presentation.models.NameUiModel
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
+import com.dezdeqness.presentation.models.VideoUiModelList
 import com.google.common.collect.ImmutableList
 
 @Composable
@@ -72,6 +74,14 @@ fun DetailsList(
                         onScreenshotClick = {
                             onClick(Action.ScreenShotClick(it))
                         }
+                    )
+                }
+                is VideoUiModelList -> {
+                    DetailsVideos(
+                        videos = item.list,
+                        onVideoClick = {
+                            onClick(Action.VideoClick(it))
+                        },
                     )
                 }
                 else -> {

@@ -22,16 +22,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.google.common.collect.ImmutableList
 
 @Composable
 fun DetailsScreenshots(
     modifier: Modifier = Modifier,
-    screenshots: List<String>,
+    screenshots: ImmutableList<String>,
     onScreenshotClick: (String) -> Unit
 ) {
     val context = LocalContext.current
