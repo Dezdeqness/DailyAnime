@@ -152,19 +152,13 @@ class AnimeDetailsComposer @Inject constructor(
         .roles
         .map {
             RoleUiModel(
-                name = it.character.russian.ifEmpty {
-                    it.character.name
-                },
+                name = it.character.russian.ifEmpty { it.character.name },
                 imageUrl = imageUrlUtils.getImageWithBaseUrl(it.character.image.preview),
             )
         }
         .takeIf { it.isNotEmpty() }
         ?.let { list ->
-            uiItems.add(
-                RoleUiModelList(
-                    list = list
-                )
-            )
+            uiItems.add(RoleUiModelList(list = ImmutableList.copyOf(list)))
         }
 
     private fun addScreenshotsIfNotEmpty(
