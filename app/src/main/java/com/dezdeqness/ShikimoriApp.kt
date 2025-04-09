@@ -7,6 +7,9 @@ import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
+import coil.Coil
+import coil.ImageLoader
+import coil.util.DebugLogger
 import com.dezdeqness.core.worker.NotificationDailyWorker
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
@@ -29,6 +32,11 @@ class ShikimoriApp : Application(), Configuration.Provider {
                     )
                 )
             }
+        val imageLoader = ImageLoader.Builder(this)
+            .logger(DebugLogger())
+            .build()
+
+        Coil.setImageLoader(imageLoader)
     }
 
     override fun getWorkManagerConfiguration() =
