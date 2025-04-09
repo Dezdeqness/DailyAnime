@@ -2,10 +2,10 @@ package com.dezdeqness.presentation.event
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.dezdeqness.data.BuildConfig
+import androidx.core.net.toUri
 
 
 class EventConsumer(
@@ -19,7 +19,7 @@ class EventConsumer(
                 context.startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(event.url)
+                        event.url.toUri()
                     )
                 )
             }

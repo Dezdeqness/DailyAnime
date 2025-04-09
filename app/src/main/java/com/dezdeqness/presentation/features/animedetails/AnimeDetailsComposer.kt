@@ -142,11 +142,7 @@ class AnimeDetailsComposer @Inject constructor(
                 )
             }.takeIf { it.isNotEmpty() }
             ?.let { list ->
-                uiItems.add(
-                    VideoUiModelList(
-                        list = list
-                    )
-                )
+                uiItems.add(VideoUiModelList(list = ImmutableList.copyOf(list)))
             }
 
     private fun addRolesIfNotEmpty(
