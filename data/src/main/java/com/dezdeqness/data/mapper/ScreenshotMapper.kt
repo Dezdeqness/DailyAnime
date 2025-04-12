@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.ScreenshotRemote
 import com.dezdeqness.domain.model.ScreenshotEntity
 import javax.inject.Inject
@@ -13,6 +14,12 @@ class ScreenshotMapper @Inject constructor() {
         ScreenshotEntity(
             original = item.original,
             preview = item.preview,
+        )
+
+    fun fromResponse(item: DetailsQuery.Screenshot) =
+        ScreenshotEntity(
+            original = item.originalUrl,
+            preview = item.x332Url
         )
 
 }

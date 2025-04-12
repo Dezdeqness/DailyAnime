@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.RelatedItemRemote
 import com.dezdeqness.domain.model.RelatedItemEntity
 import javax.inject.Inject
@@ -20,6 +21,19 @@ class RelatedItemMapper @Inject constructor(
             animeBriefEntity = animeMapper.fromResponse(item.anime)
         )
     }
+
+    fun fromResponse(item: DetailsQuery.Related): RelatedItemEntity? {
+        if (item.anime == null) {
+            return null
+        }
+
+        return RelatedItemEntity(
+            relationTitle = item.relationKind.name,
+            relationTitleRussian = item.relationText,
+            animeBriefEntity = animeMapper.fromResponse(item.anime)
+        )
+    }
+
 
 
 }

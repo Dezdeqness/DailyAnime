@@ -40,4 +40,6 @@ class AnimeRepositoryImpl @Inject constructor(
     ) =
         animeRemoteDataSource.getListAnime(queryMap, pageNumber, sizeOfPage, searchQuery)
 
+    override suspend fun getAdditionalInfo(id: Long) = animeRemoteDataSource.getAdditionalInfo(id)
+
 }

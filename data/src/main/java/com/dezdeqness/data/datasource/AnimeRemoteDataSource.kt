@@ -1,5 +1,6 @@
 package com.dezdeqness.data.datasource
 
+import com.dezdeqness.domain.DetailsAdditionalInfo
 import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.AnimeChronologyEntity
@@ -41,4 +42,5 @@ interface AnimeRemoteDataSource {
         id: Long
     ): Result<List<AnimeChronologyEntity>>
 
+    suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo>
 }

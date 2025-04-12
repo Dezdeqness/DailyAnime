@@ -11,7 +11,7 @@ class GetAnimeDetailsUseCase(
     private val userRatesRepository: UserRatesRepository,
 ) {
 
-    operator fun invoke(id: Long): Result<AnimeDetailsFullEntity> {
+    suspend operator fun invoke(id: Long): Result<AnimeDetailsFullEntity> {
         val isAuthorized = accountRepository.isAuthorized()
 
         val detailsResult = animeRepository.getDetails(id = id, isAuthorized = isAuthorized)
@@ -19,27 +19,17 @@ class GetAnimeDetailsUseCase(
             return Result.failure(exception)
         }
 
-        val screenshotsResult = animeRepository.getScreenshots(id = id)
-        screenshotsResult.onFailure { exception ->
-            return Result.failure(exception)
-        }
-
-        val relatedItemsResult = animeRepository.getRelated(id = id)
-        relatedItemsResult.onFailure { exception ->
-            return Result.failure(exception)
-        }
-
-        val rolesResult = animeRepository.getRoles(id = id)
-        rolesResult.onFailure { exception ->
+        val additionalInfoResult = animeRepository.getAdditionalInfo(id = id)
+        additionalInfoResult.onFailure { exception ->
             return Result.failure(exception)
         }
 
         val animeDetails = detailsResult.getOrElse {
             return Result.failure(it)
         }
-        val screenshots = screenshotsResult.getOrNull() ?: listOf()
-        val relates = relatedItemsResult.getOrNull() ?: listOf()
-        val roles = rolesResult.getOrNull() ?: listOf()
+        val screenshots = additionalInfoResult.getOrNull()?.first ?: listOf()
+        val relates = additionalInfoResult.getOrNull()?.second ?: listOf()
+        val roles = additionalInfoResult.getOrNull()?.third ?: listOf()
 
         if (isAuthorized) {
             animeDetails.userRate?.let { userRatesRepository.updateLocalUserRate(it) }

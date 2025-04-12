@@ -1,17 +1,22 @@
 package com.dezdeqness.data.datasource
 
+import com.apollographql.apollo.ApolloClient
 import com.dezdeqness.data.AnimeApiService
+import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
+import com.dezdeqness.data.core.createGraphqlException
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
+import com.dezdeqness.domain.DetailsAdditionalInfo
 import dagger.Lazy
 import javax.inject.Inject
 
 class AnimeRemoteDataSourceImpl @Inject constructor(
     private val apiService: Lazy<AnimeApiService>,
+    private val apolloClient: ApolloClient,
     private val animeMapper: AnimeMapper,
     private val screenshotMapper: ScreenshotMapper,
     private val roleMapper: RoleMapper,
@@ -137,5 +142,26 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         }
 
     }
+
+    override suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo> =
+        tryWithCatchSuspend {
+            val response = apolloClient.query(DetailsQuery(id.toString())).execute()
+
+            val data = response.data
+
+            if (data != null && response.hasErrors().not()) {
+                val detailsData = data.animes.first()
+                val screenshots = detailsData.screenshots.map(screenshotMapper::fromResponse)
+                val related =
+                    detailsData.related?.mapNotNull(relatedItemMapper::fromResponse).orEmpty()
+                val characters = roleMapper.fromResponseGraphql(detailsData.characterRoles)
+
+                Result.success(
+                    Triple(screenshots, related, characters)
+                )
+            } else {
+                throw response.createGraphqlException()
+            }
+        }
 
 }
