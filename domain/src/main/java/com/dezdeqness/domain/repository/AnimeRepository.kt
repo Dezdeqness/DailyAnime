@@ -1,5 +1,6 @@
 package com.dezdeqness.domain.repository
 
+import com.dezdeqness.domain.DetailsAdditionalInfo
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.AnimeChronologyEntity
 import com.dezdeqness.domain.model.AnimeDetailsEntity
@@ -28,4 +29,5 @@ interface AnimeRepository {
         searchQuery: String
     ): Result<List<AnimeBriefEntity>>
 
+    suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo>
 }

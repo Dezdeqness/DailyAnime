@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeDetailsRemote
@@ -42,6 +43,26 @@ class AnimeMapper @Inject constructor(
             airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
             releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn)
         )
+
+    fun fromResponse(item: DetailsQuery.Anime1) =
+        AnimeBriefEntity(
+            id = item.id.toLong(),
+            name = item.name,
+            russian = item.russian.orEmpty(),
+            image = ImageEntity(
+                preview = item.poster?.mainUrl.orEmpty(),
+                original = item.poster?.originalUrl.orEmpty(),
+            ),
+            url = item.url,
+            kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
+            score = item.score?.toFloat() ?: 0f,
+            status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
+            episodes = item.episodes,
+            episodesAired = item.episodesAired,
+            airedOnTimestamp = timestampConverter.convertToTimeStamp((item.airedOn?.date ?: "").toString()),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp((item.releasedOn?.date ?: "").toString()),
+        )
+
 
     fun fromResponse(item: HomeAnime) =
         AnimeBriefEntity(

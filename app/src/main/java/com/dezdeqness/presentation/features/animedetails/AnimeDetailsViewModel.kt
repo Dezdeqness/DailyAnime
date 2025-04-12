@@ -21,6 +21,7 @@ import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.utils.ImageUrlUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -197,7 +198,7 @@ class AnimeDetailsViewModel @Inject constructor(
                 val list =
                     animeDetails
                         ?.screenshots
-                        ?.map { imageUrlUtils.getImageWithBaseUrl(it.original) }
+                        ?.map { it.original }
                         .orEmpty()
 
                 onEventReceive(
@@ -221,7 +222,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
     private fun initialLoad() {
         onInitialLoad(
-            action = { getAnimeDetailsUseCase.invoke(animeId) },
+            collector = flow { emit(getAnimeDetailsUseCase.invoke(animeId)) },
             onSuccess = { details ->
                 animeDetails = details
                 val isAuthorized = accountRepository.isAuthorized()

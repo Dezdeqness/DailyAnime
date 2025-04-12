@@ -153,7 +153,7 @@ class AnimeDetailsComposer @Inject constructor(
         .map {
             RoleUiModel(
                 name = it.character.russian.ifEmpty { it.character.name },
-                imageUrl = imageUrlUtils.getImageWithBaseUrl(it.character.image.preview),
+                imageUrl = it.character.image.preview,
             )
         }
         .takeIf { it.isNotEmpty() }
@@ -166,7 +166,7 @@ class AnimeDetailsComposer @Inject constructor(
         uiItems: MutableList<AdapterItem>,
     ) = animeDetailsFullEntity
         .screenshots
-        .map { imageUrlUtils.getImageWithBaseUrl(it.preview) }
+        .map { it.preview }
         .takeIf { it.isNotEmpty() }
         ?.let { list ->
             uiItems.add(ScreenshotUiModelList(list = ImmutableList.copyOf(list)))

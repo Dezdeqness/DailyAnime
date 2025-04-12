@@ -1,0 +1,52 @@
+query Details($id: String!) {
+    animes(ids: $id) {
+        characterRoles {
+            id
+            rolesEn
+            rolesRu
+            character {
+                id
+                isAnime
+                isManga
+                isRanobe
+                japanese
+                name
+                url
+                russian
+                poster {
+                    previewUrl
+                    originalUrl
+                }
+            }
+        }
+        screenshots {
+            id
+            originalUrl
+            x166Url
+            x332Url
+        }
+        related {
+            id
+            relationKind
+            relationText
+            anime {
+                id
+                name
+                russian
+                english
+                url
+                kind
+                status
+                score
+                episodes
+                episodesAired
+                nextEpisodeAt
+                airedOn { date }
+                releasedOn { date }
+                poster { id originalUrl mainUrl }
+                description
+                descriptionHtml
+            }
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.RoleRemote
 import com.dezdeqness.domain.model.RoleEntity
 import javax.inject.Inject
@@ -38,6 +39,41 @@ class RoleMapper @Inject constructor(
 
 
         return main + supporting
+    }
+
+    fun fromResponseGraphql(roles: List<DetailsQuery.CharacterRole>?): List<RoleEntity> {
+        if (roles == null || roles.isEmpty()) {
+            return listOf()
+        }
+
+        val list = roles
+            .filter { it.character.isAnime }
+            .filter { it.rolesEn.contains(MAIN_ROLE) || it.rolesEn.contains(SUPPORTING_ROLE) }
+            .map { item ->
+                RoleEntity(
+                    roles = item.rolesEn,
+                    rolesRussian = item.rolesRu,
+                    character = characterMapper.fromResponse(item.character)
+                )
+            }
+
+        val main = list
+            .filter { it.rolesRussian.contains(MAIN_ROLE) }
+            .sortedBy {
+                it.character.russian.ifEmpty {
+                    it.character.name
+                }
+            }
+        val supporting =
+            list.filter { it.rolesRussian.contains(SUPPORTING_ROLE) }.sortedBy {
+                it.character.russian.ifEmpty {
+                    it.character.name
+                }
+            }
+
+
+        return main + supporting
+
     }
 
     companion object {
