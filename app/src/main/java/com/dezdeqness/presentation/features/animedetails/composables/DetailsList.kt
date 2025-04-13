@@ -16,6 +16,7 @@ import com.dezdeqness.presentation.features.animedetails.composables.list.Detail
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsRelated
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsScreenshots
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsTitle
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsVideos
@@ -24,6 +25,7 @@ import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import com.dezdeqness.presentation.models.NameUiModel
+import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
 import com.dezdeqness.presentation.models.VideoUiModelList
@@ -88,6 +90,14 @@ fun DetailsList(
                 }
                 is RoleUiModelList -> {
                     DetailsCharacters(characters = item.list)
+                }
+                is RelatedItemListUiModel -> {
+                    DetailsRelated(
+                        relatedList = item.list,
+                        onRelatedClick = { id ->
+                            onClick(Action.AnimeClick(id))
+                        }
+                    )
                 }
                 else -> {
                 }

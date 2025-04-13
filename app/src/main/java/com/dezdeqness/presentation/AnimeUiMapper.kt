@@ -42,7 +42,7 @@ class AnimeUiMapper @Inject constructor(
                 relatedItemUiModel.animeBriefEntity.kind.name
                         + " • "
                         + yearFormatter.format(relatedItemUiModel.animeBriefEntity.airedOnTimestamp),
-            logoUrl = imageUrlUtils.getImageWithBaseUrl(relatedItemUiModel.animeBriefEntity.image.original),
+            logoUrl = relatedItemUiModel.animeBriefEntity.image.original,
         )
 
     fun mapSectionAnimeModel(animeBriefEntity: AnimeBriefEntity) =
