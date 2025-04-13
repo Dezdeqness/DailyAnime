@@ -18,10 +18,10 @@ import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
-import com.dezdeqness.utils.ImageUrlUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -34,7 +34,6 @@ class AnimeDetailsViewModel @Inject constructor(
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: MessageProvider,
-    private val imageUrlUtils: ImageUrlUtils,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -55,11 +54,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
     override val viewModelTag = "AnimeDetailsViewModel"
 
-    override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            isInitialLoadingIndicatorShowing = isVisible,
-        )
-    }
+    override fun setLoadingIndicatorVisible(isVisible: Boolean) {}
 
     override fun onCleared() {
         super.onCleared()
@@ -136,21 +131,8 @@ class AnimeDetailsViewModel @Inject constructor(
         )
     }
 
-    fun onToolbarVisibilityOn() {
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            isToolbarVisible = true
-        )
-    }
-
-    fun onToolbarVisibilityOff() {
-        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-            isToolbarVisible = false
-        )
-    }
-
     fun onStatsClicked() {
         val details = animeDetails?.animeDetailsEntity ?: return
-
 
         onEventReceive(
             NavigateToAnimeState(
@@ -183,10 +165,9 @@ class AnimeDetailsViewModel @Inject constructor(
     }
 
     fun onRetryButtonClicked() {
-        if (animeDetailsStateFlow.value.isInitialLoadingIndicatorShowing) {
+        if (animeDetailsStateFlow.value.status == DetailsStatus.Loading) {
             return
         }
-        hideErrorScreen()
         initialLoad()
     }
 
@@ -210,10 +191,6 @@ class AnimeDetailsViewModel @Inject constructor(
             }
     }
 
-    private fun hideErrorScreen() {
-        _animeDetailsStateFlow.value = animeDetailsStateFlow.value.copy(isErrorStateShowing = false)
-    }
-
     private fun onEditErrorMessage() {
         launchOnIo {
             messageConsumer.onErrorMessage(messageProvider.getAnimeEditRateErrorMessage())
@@ -221,6 +198,7 @@ class AnimeDetailsViewModel @Inject constructor(
     }
 
     private fun initialLoad() {
+        _animeDetailsStateFlow.update { it.copy(status = DetailsStatus.Loading) }
         onInitialLoad(
             collector = flow { emit(getAnimeDetailsUseCase.invoke(animeId)) },
             onSuccess = { details ->
@@ -231,7 +209,7 @@ class AnimeDetailsViewModel @Inject constructor(
                     title = details.animeDetailsEntity.russian,
                     uiModels = uiItems,
                     isEditRateFabShown = isAuthorized,
-                    isErrorStateShowing = false,
+                    status = DetailsStatus.Loaded,
                 )
             },
             onFailure = {
@@ -239,7 +217,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
                 _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
                     isEditRateFabShown = false,
-                    isErrorStateShowing = true,
+                    status = DetailsStatus.Error,
                 )
             }
         )
