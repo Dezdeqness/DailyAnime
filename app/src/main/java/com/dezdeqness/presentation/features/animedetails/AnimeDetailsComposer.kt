@@ -118,11 +118,7 @@ class AnimeDetailsComposer @Inject constructor(
             .map(animeUiMapper::map)
             .takeIf { it.isNotEmpty() }
             ?.let { list ->
-                uiItems.add(
-                    RelatedItemListUiModel(
-                        list = list
-                    )
-                )
+                uiItems.add(RelatedItemListUiModel(list = ImmutableList.copyOf(list)))
             }
 
     private fun addVideosIfNotEmpty(

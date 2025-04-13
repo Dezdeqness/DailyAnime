@@ -1,5 +1,7 @@
 package com.dezdeqness.presentation.models
 
+import com.google.common.collect.ImmutableList
+
 data class RelatedItemUiModel(
     val id: Long,
     val type: String,
@@ -8,5 +10,5 @@ data class RelatedItemUiModel(
 ) : AdapterItem()
 
 data class RelatedItemListUiModel(
-    val list: List<RelatedItemUiModel>
+    val list: ImmutableList<RelatedItemUiModel>
 ) : AdapterItem()
