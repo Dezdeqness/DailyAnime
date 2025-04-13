@@ -7,7 +7,12 @@ data class AnimeDetailsState(
     val title: String = "",
     val uiModels: ImmutableList<AdapterItem> = ImmutableList.of(),
     val isEditRateFabShown: Boolean = false,
-    val isInitialLoadingIndicatorShowing: Boolean = false,
-    val isToolbarVisible: Boolean = false,
-    val isErrorStateShowing: Boolean = false,
+    val status: DetailsStatus = DetailsStatus.Initial,
 )
+
+enum class DetailsStatus {
+    Initial,
+    Loading,
+    Error,
+    Loaded,
+}

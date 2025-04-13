@@ -21,6 +21,7 @@ import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.animedetails.composables.DetailsList
 import com.dezdeqness.presentation.features.animedetails.composables.DetailsToolbar
+import com.dezdeqness.presentation.features.animedetails.composables.ShimmerDetailsLoading
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -40,11 +41,23 @@ fun DetailsPage(
 
     Box(modifier = modifier.fillMaxSize()) {
 
-        DetailsList(
-            list = state.uiModels,
-            state = listState,
-            onClick = { action -> actions.onActionReceive(action) }
-        )
+        when (state.status) {
+            DetailsStatus.Loading, DetailsStatus.Initial -> {
+                ShimmerDetailsLoading(modifier = Modifier.fillMaxSize())
+            }
+
+            DetailsStatus.Loaded -> {
+                DetailsList(
+                    list = state.uiModels,
+                    state = listState,
+                    onClick = { action -> actions.onActionReceive(action) }
+                )
+            }
+
+            DetailsStatus.Error -> {
+
+            }
+        }
 
         DetailsToolbar(
             isLoaded = state.uiModels.isNotEmpty(),
