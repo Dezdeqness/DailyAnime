@@ -14,12 +14,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
-import javax.inject.Named
 
 class AuthorizationViewModel @Inject constructor(
-    @Named("isLogin") private val isLogin: Boolean,
     private val loginUseCase: LoginUseCase,
-    private val accountRepository: AccountRepository,
+    accountRepository: AccountRepository,
     networkUtils: NetworkUtils,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,

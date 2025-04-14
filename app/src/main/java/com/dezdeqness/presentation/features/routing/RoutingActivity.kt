@@ -118,7 +118,8 @@ class RoutingActivity : AppCompatActivity() {
 
                         is HandlePermission -> {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                pushNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                                pushNotificationPermissionLauncher
+                                    .launch(android.Manifest.permission.POST_NOTIFICATIONS)
                             } else {
                                 viewModel.fetchData()
                             }
