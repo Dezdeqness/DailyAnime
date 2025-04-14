@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailMoreInfo
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsCharacters
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
@@ -28,6 +29,7 @@ import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.BriefInfoUiModelList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
+import com.dezdeqness.presentation.models.MoreInfoUiModel
 import com.dezdeqness.presentation.models.NameUiModel
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
@@ -112,6 +114,9 @@ fun DetailsList(
                         moreInfoList = item.list,
                         modifier = Modifier.padding(vertical = 8.dp),
                     )
+                }
+                is MoreInfoUiModel -> {
+                    DetailMoreInfo(onAction = onClick)
                 }
                 else -> {
                 }

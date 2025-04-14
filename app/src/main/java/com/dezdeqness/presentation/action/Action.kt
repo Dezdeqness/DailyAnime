@@ -12,5 +12,11 @@ interface Action {
 
     data object CalendarHeaderClicked : Action
 
+    data object SimilarClicked : Action
+
+    data object StatsClicked : Action
+
+    data object ChronologyClicked : Action
+
     data class ScreenShotClick(val screenshotUrl: String) : Action
 }
