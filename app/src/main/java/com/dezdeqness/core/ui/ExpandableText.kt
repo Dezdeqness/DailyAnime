@@ -56,7 +56,9 @@ fun ExpandableText(
                 if (clickable) {
                     if (isExpanded) {
                         append(text)
-                        withStyle(style = labelStyle) { append(stringResource(R.string.details_synopsis_label_show_less)) }
+                        withStyle(style = labelStyle) {
+                            append(stringResource(R.string.details_synopsis_label_show_less))
+                        }
                     } else {
                         val showMore = stringResource(R.string.details_synopsis_label_show_more)
                         val adjustText = text.substring(startIndex = 0, endIndex = lastCharIndex)

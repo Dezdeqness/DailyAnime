@@ -82,7 +82,9 @@ fun SelectRibbonStatusReorderDialog(
                             Card(
                                 onClick = {},
                                 interactionSource = interactionSource,
-                                colors = CardDefaults.cardColors(containerColor = colorResource(R.color.background_tint))
+                                colors = CardDefaults.cardColors(
+                                    containerColor = colorResource(R.color.background_tint)
+                                )
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxSize(),
