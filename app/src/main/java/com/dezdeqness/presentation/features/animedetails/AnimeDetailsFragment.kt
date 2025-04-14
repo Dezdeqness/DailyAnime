@@ -89,6 +89,10 @@ class AnimeDetailsFragment : BaseComposeFragment() {
                     override fun onActionReceive(action: Action) {
                         viewModel.onActionReceive(action)
                     }
+
+                    override fun onRetryClicked() {
+                        viewModel.onRetryButtonClicked()
+                    }
                 }
             )
         }
