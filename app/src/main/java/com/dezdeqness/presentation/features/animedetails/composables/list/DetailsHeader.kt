@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -58,25 +59,43 @@ fun DetailsHeader(
                 )
         )
 
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 56.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            AsyncImage(
-                model = remember(detailsHeader.imageUrl) {
-                    ImageRequest.Builder(context)
-                        .data(detailsHeader.imageUrl)
-                        .crossfade(true)
-                        .build()
-                },
-                contentScale = ContentScale.FillBounds,
+            Box(
                 modifier = Modifier
                     .size(width = 200.dp, height = 264.dp)
                     .clip(RoundedCornerShape(15.dp)),
-                contentDescription = null,
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                AsyncImage(
+                    model = remember(detailsHeader.imageUrl) {
+                        ImageRequest.Builder(context)
+                            .data(detailsHeader.imageUrl)
+                            .crossfade(true)
+                            .build()
+                    },
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .size(width = 200.dp, height = 264.dp)
+                        .clip(RoundedCornerShape(15.dp)),
+                    contentDescription = null,
+                )
+
+                Text(
+                    detailsHeader.ratingScore.toString(),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .background(Color.Black.copy(alpha = 0.8f), RoundedCornerShape(8.dp))
+                        .padding(4.dp),
+                    color = Color.White,
+                    style = AppTheme.typography.headlineSmall,
+                )
+            }
         }
     }
 }

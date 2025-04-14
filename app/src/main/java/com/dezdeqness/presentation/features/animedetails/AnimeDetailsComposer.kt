@@ -61,8 +61,6 @@ class AnimeDetailsComposer @Inject constructor(
 
         uiItems.add(composeBriefInfoList(details))
 
-//        uiItems.add(MoreInfoUiModel)
-
         if (details.genreList.isNotEmpty() || details.studioList.isNotEmpty()) {
             uiItems.add(
                 AnimeCellList(
@@ -83,6 +81,8 @@ class AnimeDetailsComposer @Inject constructor(
         if (details.description != null) {
             uiItems.add(DescriptionUiModel(content = details.descriptionHTML))
         }
+
+        uiItems.add(MoreInfoUiModel)
 
         addRelatesIfNotEmpty(
             animeDetailsFullEntity = animeDetailsFullEntity,

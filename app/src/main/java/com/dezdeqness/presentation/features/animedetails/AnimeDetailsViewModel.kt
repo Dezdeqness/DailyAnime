@@ -67,7 +67,15 @@ class AnimeDetailsViewModel @Inject constructor(
                 is Action.ScreenShotClick -> {
                     onScreenShotClicked(action.screenshotUrl)
                 }
-
+                is Action.StatsClicked -> {
+                    onStatsClicked()
+                }
+                is Action.SimilarClicked -> {
+                    onSimilarClicked()
+                }
+                is Action.ChronologyClicked -> {
+                    onChronologyClicked()
+                }
                 else -> {
                     actionConsumer.consume(action)
                 }
