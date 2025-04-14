@@ -7,4 +7,5 @@ interface DetailsActions {
     fun onSharePressed()
     fun onFabClicked()
     fun onActionReceive(action: Action)
+    fun onRetryClicked()
 }

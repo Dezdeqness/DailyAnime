@@ -22,6 +22,7 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.animedetails.composables.DetailsList
 import com.dezdeqness.presentation.features.animedetails.composables.DetailsToolbar
 import com.dezdeqness.presentation.features.animedetails.composables.ShimmerDetailsLoading
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsError
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -55,7 +56,7 @@ fun DetailsPage(
             }
 
             DetailsStatus.Error -> {
-
+                DetailsError(onRetryClick = actions::onRetryClicked)
             }
         }
 
