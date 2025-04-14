@@ -59,7 +59,7 @@ class AnimeDetailsComposer @Inject constructor(
 
         uiItems.add(NameUiModel(title = details.russian))
 
-//        uiItems.add(composeBriefInfoList(details))
+        uiItems.add(composeBriefInfoList(details))
 
 //        uiItems.add(MoreInfoUiModel)
 
@@ -298,7 +298,7 @@ class AnimeDetailsComposer @Inject constructor(
             )
         }
 
-        return BriefInfoUiModelList(list)
+        return BriefInfoUiModelList(ImmutableList.copyOf(list))
     }
 
     companion object {

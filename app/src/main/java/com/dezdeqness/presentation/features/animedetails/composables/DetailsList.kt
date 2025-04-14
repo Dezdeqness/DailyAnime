@@ -1,8 +1,10 @@
 package com.dezdeqness.presentation.features.animedetails.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -16,18 +18,21 @@ import com.dezdeqness.presentation.features.animedetails.composables.list.Detail
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
+import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsMoreInfo
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsRelated
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsScreenshots
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsTitle
 import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsVideos
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCellList
+import com.dezdeqness.presentation.models.BriefInfoUiModelList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 import com.dezdeqness.presentation.models.NameUiModel
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
+import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.google.common.collect.ImmutableList
 
@@ -97,6 +102,15 @@ fun DetailsList(
                         onRelatedClick = { id ->
                             onClick(Action.AnimeClick(id))
                         }
+                    )
+                }
+                is SpacerUiItem -> {
+                    Spacer(modifier = Modifier.height(160.dp))
+                }
+                is BriefInfoUiModelList -> {
+                    DetailsMoreInfo(
+                        moreInfoList = item.list,
+                        modifier = Modifier.padding(vertical = 8.dp),
                     )
                 }
                 else -> {
