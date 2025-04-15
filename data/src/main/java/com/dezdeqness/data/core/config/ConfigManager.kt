@@ -13,7 +13,7 @@ class ConfigManager(
         get() = getValue(ConfigKeys.SELECT_GENRES_COUNTER)
 
     val baseGraphqlUrl: String
-        get() = getValue(ConfigKeys.BASE_GRAPHQL_URL)
+        get() = getValue(ConfigKeys.BASE_SHIKIMORI_GRAPHQL_URL)
 
     suspend fun invalidate() {
         configProvider.setDefaults()

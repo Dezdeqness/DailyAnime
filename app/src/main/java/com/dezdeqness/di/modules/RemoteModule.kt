@@ -125,10 +125,10 @@ class RemoteModule {
             .build()
 
 
-    @Named("graphql")
+    @Named("shikimori_graphql_okhttp")
     @Singleton
     @Provides
-    fun providesGraphqlHttpClient(
+    fun providesShikimoriGraphqlHttpClient(
         @Named("user_agent") userAgentTokenInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
     ): OkHttpClient =
@@ -139,11 +139,37 @@ class RemoteModule {
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
 
+    @Named("anilist_graphql_okhttp")
     @Singleton
     @Provides
-    fun provideGraphqlClient(
+    fun providesAnilistGraphqlHttpClient(
+        @Named("chucker") chuckerInterceptor: Interceptor,
+    ): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(chuckerInterceptor)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .build()
+
+    @Named("shikimori_graphql_client")
+    @Singleton
+    @Provides
+    fun provideShikimoriGraphqlClient(
         @Named("graphql_operation_name") nameInterceptor: ApolloInterceptor,
-        @Named("graphql") okHttpClient: OkHttpClient,
+        @Named("shikimori_graphql_okhttp") okHttpClient: OkHttpClient,
+        configManager: ConfigManager,
+    ): ApolloClient = ApolloClient.Builder()
+        .serverUrl(configManager.baseGraphqlUrl)
+        .addInterceptor(nameInterceptor)
+        .okHttpClient(okHttpClient)
+        .build()
+
+    @Named("anilist_graphql_client")
+    @Singleton
+    @Provides
+    fun provideAnilistGraphqlClient(
+        @Named("graphql_operation_name") nameInterceptor: ApolloInterceptor,
+        @Named("anilist_graphql_okhttp") okHttpClient: OkHttpClient,
         configManager: ConfigManager,
     ): ApolloClient = ApolloClient.Builder()
         .serverUrl(configManager.baseGraphqlUrl)

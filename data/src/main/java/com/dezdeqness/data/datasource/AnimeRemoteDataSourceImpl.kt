@@ -13,10 +13,11 @@ import com.dezdeqness.data.mapper.ScreenshotMapper
 import com.dezdeqness.domain.DetailsAdditionalInfo
 import dagger.Lazy
 import javax.inject.Inject
+import javax.inject.Named
 
 class AnimeRemoteDataSourceImpl @Inject constructor(
     private val apiService: Lazy<AnimeApiService>,
-    private val apolloClient: ApolloClient,
+    @Named("shikimori_graphql_client") private val apolloClient: ApolloClient,
     private val animeMapper: AnimeMapper,
     private val screenshotMapper: ScreenshotMapper,
     private val roleMapper: RoleMapper,
