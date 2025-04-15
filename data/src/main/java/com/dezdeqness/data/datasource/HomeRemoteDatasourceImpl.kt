@@ -9,9 +9,10 @@ import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.type.OrderEnum
 import com.dezdeqness.domain.model.HomeEntity
 import javax.inject.Inject
+import javax.inject.Named
 
 class HomeRemoteDatasourceImpl @Inject constructor(
-    private val apolloClient: ApolloClient,
+    @Named("shikimori_graphql_client") private val apolloClient: ApolloClient,
     private val animeMapper: AnimeMapper,
 ) : HomeRemoteDatasource, BaseDataSource() {
 
