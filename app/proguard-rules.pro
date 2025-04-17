@@ -490,3 +490,7 @@ public static java.lang.String TABLENAME;
 -keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
 -keep class com.google.android.gms.measurement.internal.** { *; }
 -keep class com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
+-dontwarn androidx.work.multiprocess.RemoteListenableWorker
+# Keep all classes and methods used by Tink
+-keep class com.google.crypto.tink.** { *; }
+-dontwarn com.google.crypto.tink.**
