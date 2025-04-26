@@ -1,63 +1,63 @@
 [versions]
 supportCoreUiVersion = "0.1.0"
 supportCoreVersion = "0.1.0"
-coreVersion = "1.15.0"
+coreVersion = "1.16.0"
 appCompatVersion = "1.7.0"
-daggerVersion = "2.51.1"
+daggerVersion = "2.52"
 datastorePreferencesVersion = "1.1.1"
 retrofitVersion = "2.11.0"
 # Due to strange behaviour on 2.10.0 and later, leaved this version as stable
 moshiVersion = "2.9.0"
 okhttpVersion = "4.12.0"
 loggingVersion = "4.12.0"
-chuckerVersion = "4.0.0"
+chuckerVersion = "4.1.0"
 glideVersion = "4.16.0"
-securityCryptoVersion = "1.1.0-alpha06"
+securityCryptoVersion = "1.1.0-alpha07"
 transformationVersion = "4.3.0"
-coroutinesVersion = "1.9.0"
+coroutinesVersion = "1.10.1"
 lifecycleVersion = "2.8.7"
-roomVersion = "2.6.1"
+roomVersion = "2.7.1"
 materialVersion = "1.12.0"
-constraintVersion = "2.2.0"
-fragmentVersion = "1.8.5"
-collectionVersion = "1.4.5"
-junitVersion = "5.10.2"
+constraintVersion = "2.2.1"
+fragmentVersion = "1.8.6"
+collectionVersion = "1.5.0"
+junitVersion = "5.12.0"
 mockkVersion = "1.13.10"
 zoomableVersion = "1.5.3"
 swipeRefreshVersion = "1.1.0"
-navigationVersion = "2.8.5"
+navigationVersion = "2.8.9"
 androidJunitVersion = "1.2.1"
 espressoVersion = "3.6.1"
-firebaseBomVersion = "33.7.0"
-firebaseCrashlyticsVersion = "19.3.0"
-firebaseAnalyticsVersion = "22.1.2"
-firebaseConfigVersion = "22.0.1"
+firebaseBomVersion = "33.13.0"
+firebaseCrashlyticsVersion = "19.4.3"
+firebaseAnalyticsVersion = "22.4.0"
+firebaseConfigVersion = "22.1.1"
 coilVersion = "2.7.0"
-composeActivityVersion = "1.9.3"
-composeBomVersion = "2025.03.01"
+composeActivityVersion = "1.10.1"
+composeBomVersion = "2025.04.01"
 
 googleServicesVersion = "4.4.2"
-gradleVersion = "8.7.3"
+gradleVersion = "8.9.2"
 detektVersion = "1.23.5"
 kspVersion = "2.0.21-1.0.26"
-
-material3 = "1.4.0-alpha11"
+androidTools = "31.9.2"
+material3 = "1.4.0-alpha13"
 
 androidVersion = "8.2.2"
 kotlinAndroidVersion = "2.0.21"
-firebaseCrashlyticsGradleVersion = "3.0.2"
+firebaseCrashlyticsGradleVersion = "3.0.3"
 
 kotlinCompilerExtensionVersion = "1.5.14"
 podCoreVersion = "0.1.1"
-navigationSafeArgsVersion = "2.8.5"
+navigationSafeArgsVersion = "2.8.9"
 
-apollo = "4.0.1"
+apollo = "4.1.1"
 leakCanary = "2.14"
 
 reorderable = "2.4.3"
 
 lottie = "6.6.2"
-
+jvm = "21"
 browser = "1.8.0"
 
 tink = "1.17.0"
@@ -100,7 +100,7 @@ androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle
 androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleVersion" }
 
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
-androidx-room-compilier = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
@@ -151,6 +151,8 @@ androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", ve
 
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
+kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinAndroidVersion" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
 
 pod-core = { module = "com.dezdeqness.pod:core", version.ref = "podCoreVersion" }
 
@@ -170,3 +172,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
+
+# Internal
+com-dezdeqness-compose = { id = "com.dezdeqness.compose", version = "unspecified" }
+com-dezdeqness-room = { id = "com.dezdeqness.room", version = "unspecified" }
