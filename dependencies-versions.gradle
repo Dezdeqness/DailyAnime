@@ -1,3 +1,0 @@
-ext.versions = [
-        javaVersion         : JavaVersion.VERSION_21,
-]

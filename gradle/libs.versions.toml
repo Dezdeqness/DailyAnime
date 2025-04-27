@@ -57,7 +57,6 @@ leakCanary = "2.14"
 reorderable = "2.4.3"
 
 lottie = "6.6.2"
-jvm = "21"
 browser = "1.8.0"
 
 tink = "1.17.0"
@@ -83,6 +82,7 @@ dagger-compilier = { group = "com.google.dagger", name = "dagger-compiler", vers
 
 bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
 bumptech-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideVersion" }
+detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detektVersion" }
 wasabeef-transformation = { group = "jp.wasabeef", name = "glide-transformations", version.ref = "transformationVersion" }
 
 square-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
@@ -176,3 +176,7 @@ apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 # Internal
 com-dezdeqness-compose = { id = "com.dezdeqness.compose", version = "unspecified" }
 com-dezdeqness-room = { id = "com.dezdeqness.room", version = "unspecified" }
+com-dezdeqness-firebase = { id = "com.dezdeqness.firebase", version = "unspecified" }
+com-dezdeqness-config = { id = "com.dezdeqness.config", version = "unspecified" }
+com-dezdeqness-flavour = { id = "com.dezdeqness.flavour", version = "unspecified" }
+com-dezdeqness-detekt = { id = "com.dezdeqness.detekt", version = "unspecified" }
