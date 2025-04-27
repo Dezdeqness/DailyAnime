@@ -21,6 +21,7 @@ dependencies {
     compileOnly(libs.gradle)
     compileOnly(libs.kotlin)
     compileOnly(libs.android.tools.common)
+    compileOnly(libs.detekt.gradle.plugin)
 }
 
 gradlePlugin {
@@ -32,6 +33,22 @@ gradlePlugin {
         register("androidRoom") {
             id = "com.dezdeqness.room"
             implementationClass = "com.dezdeqness.buildlogic.RoomPlugin"
+        }
+        register("androidFirebase") {
+            id = "com.dezdeqness.firebase"
+            implementationClass = "com.dezdeqness.buildlogic.FirebasePlugin"
+        }
+        register("androidConfig") {
+            id = "com.dezdeqness.config"
+            implementationClass = "com.dezdeqness.buildlogic.AndroidConfigPlugin"
+        }
+        register("androidFlavour") {
+            id = "com.dezdeqness.flavour"
+            implementationClass = "com.dezdeqness.buildlogic.FlavorPlugin"
+        }
+        register("androidDetekt") {
+            id = "com.dezdeqness.detekt"
+            implementationClass = "com.dezdeqness.buildlogic.DetektPlugin"
         }
     }
 }
