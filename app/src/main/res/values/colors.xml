@@ -14,17 +14,12 @@
     <color name="text_primary">#000000</color>
     <color name="search_label">#FFFFFF</color>
 
-    <color name="list_title_primary">#000000</color>
-
     <color name="background_shadow">#AA000000</color>
-    <color name="profile_divider">#615C5C</color>
 
     <color name="background_tint">#ffffff</color>
     <color name="search_container">#F8F8F8</color>
 
     <color name="loading_indicator">#000000</color>
-
-    <color name="details_toolbar_color_expand">#FFFFFF</color>
 
     <color name="filter_divider">#838383</color>
 </resources>

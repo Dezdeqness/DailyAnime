@@ -22,11 +22,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.dezdeqness.ui.RecyclerViewWithState
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:emptyStateLayout="@layout/state_anime_empty_screen"
-        app:recycleViewLayout="@layout/state_default_recycler_view" />
+        android:layout_height="match_parent" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

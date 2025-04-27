@@ -5,12 +5,9 @@
     <color name="drawable_icon">#FFFFFF</color>
 
     <color name="text_primary">#FFFFFF</color>
-    <color name="list_title_primary">#FFFFFF</color>
 
     <color name="loading_indicator">#FFFFFF</color>
 
-    <color name="details_toolbar_color_expand">#000000</color>
     <color name="search_container">#000000</color>
-
 
 </resources>

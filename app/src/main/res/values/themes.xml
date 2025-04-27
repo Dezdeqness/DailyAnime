@@ -30,12 +30,6 @@
         <item name="colorPrimary">@color/background_tint</item>
     </style>
 
-    <style name="SearchItemEmptyState">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/list_title_primary</item>
-    </style>
-
     <style name="StatsHeader">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
