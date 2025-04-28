@@ -6,6 +6,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
@@ -36,6 +39,8 @@ abstract class GenericListableFragment : BaseComposeFragment() {
     @StringRes
     abstract fun getTitleRes(): Int
 
+    abstract fun getRenderer(): GenericRenderer
+
     open fun onEvent(event: Event) = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +53,25 @@ abstract class GenericListableFragment : BaseComposeFragment() {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            GenericListPage()
+            CompositionLocalProvider(LocalAdapterItemRenderer provides getRenderer()) {
+                GenericListPage(
+                    title = stringResource(getTitleRes()),
+                    stateFlow = viewModel.genericListableStateFlow,
+                    actions = object : GenericListableActions {
+                        override fun onActionReceive(action: Action) {
+                            viewModel.onActionReceive(action)
+                        }
+
+                        override fun onRetryClicked() {
+                            viewModel.onRetryButtonClicked()
+                        }
+
+                        override fun onBackPressed() {
+                            findNavController().popBackStack()
+                        }
+                    },
+                )
+            }
         }
     }
 
@@ -79,37 +102,3 @@ abstract class GenericListableFragment : BaseComposeFragment() {
     }
 
 }
-
-//<?xml version="1.0" encoding="utf-8"?>
-//<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-//    xmlns:app="http://schemas.android.com/apk/res-auto"
-//    android:layout_width="match_parent"
-//    android:layout_height="match_parent"
-//    android:orientation="vertical">
-//
-//    <com.google.android.material.appbar.AppBarLayout
-//        android:id="@+id/appbar_layout"
-//        android:layout_width="match_parent"
-//        android:layout_height="wrap_content"
-//        app:layout_constraintEnd_toEndOf="parent"
-//        app:layout_constraintStart_toStartOf="parent"
-//        app:layout_constraintTop_toTopOf="parent">
-//
-//        <com.google.android.material.appbar.MaterialToolbar
-//            android:id="@+id/toolbar"
-//            android:layout_width="match_parent"
-//            android:layout_height="wrap_content"
-//            android:backgroundTint="@color/background_tint"
-//            app:navigationIcon="@drawable/ic_back"
-//            app:title="@string/toolbar_title_similar"
-//            app:titleTextColor="@color/text_primary" />
-//
-//    </com.google.android.material.appbar.AppBarLayout>
-//
-//        <com.dezdeqness.ui.RecyclerViewWithState
-//            android:id="@+id/recycler"
-//            android:layout_width="match_parent"
-//            android:layout_height="match_parent"
-// />
-//
-//</androidx.appcompat.widget.LinearLayoutCompat>

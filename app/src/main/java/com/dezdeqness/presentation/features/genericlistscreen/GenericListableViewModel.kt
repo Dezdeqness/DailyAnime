@@ -6,6 +6,7 @@ import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.domain.usecases.BaseListableUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
+import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -62,7 +63,7 @@ class GenericListableViewModel @Inject constructor(
 
                 _genericListableStateFlow.update {
                     it.copy(
-                        list = list,
+                        list = ImmutableList.copyOf(list),
                         status = GenericListableStatus.Error,
                     )
                 }
