@@ -8,6 +8,7 @@ import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -19,9 +20,9 @@ class GenericListableViewModel @Inject constructor(
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
-coroutineDispatcherProvider = coroutineDispatcherProvider,
-appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable {
+    coroutineDispatcherProvider = coroutineDispatcherProvider,
+    appLogger = appLogger,
+), BaseViewModel.InitialLoaded {
 
     private val _genericListableStateFlow = MutableStateFlow(GenericListableState())
     val genericListableStateFlow: StateFlow<GenericListableState> get() = _genericListableStateFlow
@@ -35,37 +36,7 @@ appLogger = appLogger,
         get() = "GenericListableViewModel"
 
 
-    override fun setPullDownIndicatorVisible(isVisible: Boolean) {
-        _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
-            isPullDownRefreshing = isVisible,
-        )
-    }
-
-    override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
-            isInitialLoadingIndicatorShowing = isVisible,
-        )
-    }
-
-
-    override fun onPullDownRefreshed() {
-        onPullDownRefreshed(
-            action = {
-                baseListableUseCase.invoke(id = animeId)
-            },
-            onSuccess = { state ->
-                val list = state.mapNotNull(genericMapper::map)
-
-                _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
-                    list = list,
-                    isErrorStateShowing = false,
-                )
-            },
-            onFailure = {
-                logInfo("Error during pull down of generic list", it)
-            }
-        )
-    }
+    override fun setLoadingIndicatorVisible(isVisible: Boolean) {}
 
     override fun onCleared() {
         super.onCleared()
@@ -78,26 +49,28 @@ appLogger = appLogger,
         }
     }
 
+    fun onRetryButtonClicked() {
+        initialPageLoad()
+    }
+
     private fun initialPageLoad() {
+        _genericListableStateFlow.update { it.copy(status = GenericListableStatus.Loading) }
         onInitialLoad(
-            action = {
-                baseListableUseCase.invoke(id = animeId)
-            },
+            action = { baseListableUseCase.invoke(id = animeId) },
             onSuccess = { state ->
                 val list = state.mapNotNull(genericMapper::map)
 
-                _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
-                    list = list,
-                    isEmptyStateShowing = list.isEmpty(),
-                    isErrorStateShowing = false,
-                )
+                _genericListableStateFlow.update {
+                    it.copy(
+                        list = list,
+                        status = GenericListableStatus.Error,
+                    )
+                }
             },
             onFailure = {
                 logInfo("Error during initial loading of state of generic list", it)
 
-                _genericListableStateFlow.value = _genericListableStateFlow.value.copy(
-                    isErrorStateShowing = true,
-                )
+                _genericListableStateFlow.update { it.copy(status = GenericListableStatus.Error) }
             }
         )
     }

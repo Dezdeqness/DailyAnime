@@ -8,7 +8,6 @@ import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.ChronologyArgsModule
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.features.animechronology.recyclerview.AnimeChronologyAdapter
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableFragment
 import javax.inject.Inject
 
@@ -20,8 +19,6 @@ class AnimeChronologyFragment : GenericListableFragment() {
     lateinit var analyticsManager: AnalyticsManager
 
     override fun getTitleRes() = R.string.anime_chronology_title
-
-    override fun delegateAdapter() = AnimeChronologyAdapter(actionListener = this)
 
     override fun setupScreenComponent(component: AppComponent) {
         component
