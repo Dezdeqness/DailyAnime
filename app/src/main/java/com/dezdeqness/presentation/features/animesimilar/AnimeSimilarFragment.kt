@@ -8,7 +8,6 @@ import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.subcomponents.SimilarArgsModule
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.Event
-import com.dezdeqness.presentation.features.animesimilar.recyclerview.AnimeSimilarAdapter
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableFragment
 import javax.inject.Inject
 
@@ -20,8 +19,6 @@ class AnimeSimilarFragment : GenericListableFragment() {
     lateinit var analyticsManager: AnalyticsManager
 
     override fun getTitleRes() = R.string.anime_similar_title
-
-    override fun delegateAdapter() = AnimeSimilarAdapter(actionListener = this)
 
     override fun setupScreenComponent(component: AppComponent) {
         component
