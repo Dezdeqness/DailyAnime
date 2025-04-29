@@ -2,10 +2,12 @@ package com.dezdeqness.presentation.features.genericlistscreen.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.genericlistscreen.LocalAdapterItemRenderer
@@ -34,7 +36,11 @@ fun GenericList(
         ) { index ->
             val item = list[index]
 
-            renderer?.Render(item, onClick) ?: Text(item.toString())
+            renderer?.Render(
+                modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
+                item = item,
+                onClick = onClick
+            ) ?: Text(item.toString())
         }
     }
 }

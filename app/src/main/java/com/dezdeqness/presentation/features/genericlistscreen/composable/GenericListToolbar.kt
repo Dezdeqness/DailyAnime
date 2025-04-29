@@ -8,7 +8,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
@@ -36,9 +35,7 @@ fun GenericListToolbar(
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorResource(id = R.color.background_tint)
-        ),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = AppTheme.colors.onPrimary),
         modifier = modifier,
     )
 }
