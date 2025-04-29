@@ -39,7 +39,7 @@ abstract class GenericListableFragment : BaseComposeFragment() {
     @StringRes
     abstract fun getTitleRes(): Int
 
-    abstract fun getRenderer(): GenericRenderer
+    abstract val renderer: GenericRenderer
 
     open fun onEvent(event: Event) = false
 
@@ -53,7 +53,7 @@ abstract class GenericListableFragment : BaseComposeFragment() {
     @Composable
     override fun FragmentContent() {
         AppTheme {
-            CompositionLocalProvider(LocalAdapterItemRenderer provides getRenderer()) {
+            CompositionLocalProvider(LocalAdapterItemRenderer provides renderer) {
                 GenericListPage(
                     title = stringResource(getTitleRes()),
                     stateFlow = viewModel.genericListableStateFlow,

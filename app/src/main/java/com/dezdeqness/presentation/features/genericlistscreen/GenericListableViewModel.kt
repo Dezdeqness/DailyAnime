@@ -64,7 +64,7 @@ class GenericListableViewModel @Inject constructor(
                 _genericListableStateFlow.update {
                     it.copy(
                         list = ImmutableList.copyOf(list),
-                        status = GenericListableStatus.Error,
+                        status = GenericListableStatus.Loaded,
                     )
                 }
             },
