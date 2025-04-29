@@ -105,9 +105,6 @@ dependencies {
     // Material Design
     implementation(libs.google.material)
 
-    // ConstraintLayout
-    implementation(libs.androidx.constraintlayout)
-
     // Core
     implementation(libs.androidx.core)
 
@@ -127,9 +124,6 @@ dependencies {
     // Android Testing
     implementation(libs.androidx.test.junit)
     implementation(libs.androidx.test.espresso)
-
-    // Swipe Refresh Layout
-    implementation(libs.androidx.swiperefreshlayout)
 
     // Navigation
     implementation(libs.androidx.navigation.fragment)
@@ -170,8 +164,6 @@ dependencies {
     implementation(libs.androidx.browser)
     implementation(libs.androidx.work.runtime)
 
-    // Project modules
-    implementation(project(":advanced_recycler"))
     implementation(project(":data"))
     implementation(project(":domain"))
 }
