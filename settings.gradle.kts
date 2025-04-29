@@ -32,6 +32,5 @@ dependencyResolutionManagement {
 rootProject.name = "Daily Anime"
 
 include(":app")
-include(":advanced_recycler")
 include(":data")
 include(":domain")
