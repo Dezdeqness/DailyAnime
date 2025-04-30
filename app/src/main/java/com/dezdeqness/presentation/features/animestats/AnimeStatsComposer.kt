@@ -3,8 +3,11 @@ package com.dezdeqness.presentation.features.animestats
 import com.dezdeqness.R
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AdapterItem
+import com.dezdeqness.presentation.models.DiagramChartUiModel
+import com.dezdeqness.presentation.models.ScoreChartUiModel
+import com.dezdeqness.presentation.models.StatsData
 import com.dezdeqness.presentation.models.StatsHeaderUiModel
-import com.dezdeqness.presentation.models.StatsValueUiModel
+import com.google.common.collect.ImmutableList
 
 
 class AnimeStatsComposer(
@@ -24,16 +27,22 @@ class AnimeStatsComposer(
                     header = resourceProvider.getString(R.string.stats_header_scores)
                 )
             )
-            animeStatsFragment.scoresArgument.forEach { value ->
-                statsList.add(
-                    StatsValueUiModel(
+
+            val scores = animeStatsFragment.scoresArgument
+                .map { value ->
+                    StatsData(
                         name = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
-                        maxProgress = maxProgress,
                     )
+                }
+
+            statsList.add(
+                ScoreChartUiModel(
+                    maxProgress = maxProgress,
+                    ImmutableList.copyOf(scores),
                 )
-            }
+            )
         }
 
         if (animeStatsFragment.statusesArgument.isNotEmpty()) {
@@ -46,16 +55,21 @@ class AnimeStatsComposer(
                     header = resourceProvider.getString(R.string.stats_header_lists)
                 )
             )
-            animeStatsFragment.statusesArgument.forEach { value ->
-                statsList.add(
-                    StatsValueUiModel(
+            val statuses = animeStatsFragment
+                .statusesArgument
+                .map { value ->
+                    StatsData(
                         name = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
-                        maxProgress = maxProgress,
                     )
+                }
+            statsList.add(
+                DiagramChartUiModel(
+                    maxProgress = maxProgress,
+                    ImmutableList.copyOf(statuses)
                 )
-            }
+            )
         }
 
         return statsList

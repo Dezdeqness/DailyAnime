@@ -4,8 +4,11 @@ import com.dezdeqness.R
 import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.presentation.models.AdapterItem
+import com.dezdeqness.presentation.models.ScoreChartUiModel
+import com.dezdeqness.presentation.models.StatsChartUiModel
+import com.dezdeqness.presentation.models.StatsData
 import com.dezdeqness.presentation.models.StatsHeaderUiModel
-import com.dezdeqness.presentation.models.StatsValueUiModel
+import com.google.common.collect.ImmutableList
 
 class StatsComposer(
     private val resourceProvider: ResourceProvider,
@@ -24,16 +27,23 @@ class StatsComposer(
                     header = resourceProvider.getString(R.string.stats_header_types)
                 )
             )
-            account.types.forEach { value ->
-                statsList.add(
-                    StatsValueUiModel(
+
+            val scores = account
+                .types
+                .map { value ->
+                    StatsData(
                         name = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
-                        maxProgress = maxProgress,
                     )
+                }
+
+            statsList.add(
+                StatsChartUiModel(
+                    maxProgress = maxProgress,
+                    ImmutableList.copyOf(scores)
                 )
-            }
+            )
         }
 
         if (account.scores.isNotEmpty()) {
@@ -46,16 +56,22 @@ class StatsComposer(
                     header = resourceProvider.getString(R.string.stats_header_scores)
                 )
             )
-            account.scores.forEach { value ->
-                statsList.add(
-                    StatsValueUiModel(
+            val scores = account
+                .scores
+                .map { value ->
+                    StatsData(
                         name = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
-                        maxProgress = maxProgress,
                     )
+                }
+
+            statsList.add(
+                ScoreChartUiModel(
+                    maxProgress = maxProgress,
+                    ImmutableList.copyOf(scores)
                 )
-            }
+            )
         }
 
         return statsList
