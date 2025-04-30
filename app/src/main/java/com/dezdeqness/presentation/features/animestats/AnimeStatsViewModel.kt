@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.animestats
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.page.StatsState
 import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,9 +20,9 @@ class AnimeStatsViewModel @Inject constructor(
     appLogger = appLogger,
 ) {
 
-    private val _statsStateFlow: MutableStateFlow<AnimeStatsState> =
-        MutableStateFlow(AnimeStatsState())
-    val statsStateFlow: StateFlow<AnimeStatsState> get() = _statsStateFlow
+    private val _statsStateFlow: MutableStateFlow<StatsState> =
+        MutableStateFlow(StatsState())
+    val statsStateFlow: StateFlow<StatsState> get() = _statsStateFlow
 
     init {
         val uiItems = animeStatsComposer.compose(animeStatsFragment = arguments)

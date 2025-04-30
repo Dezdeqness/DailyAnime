@@ -22,7 +22,7 @@ import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
-import com.dezdeqness.presentation.event.NavigateToAnimeState
+import com.dezdeqness.presentation.event.NavigateToAnimeStats
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
@@ -134,7 +134,7 @@ class AnimeDetailsFragment : BaseComposeFragment() {
                 )
             }
 
-            is NavigateToAnimeState -> {
+            is NavigateToAnimeStats -> {
                 val action = AnimeDetailsFragmentDirections.navigateToAnimeStatsAction(
                     event.scoreList.toTypedArray(),
                     event.statusesList.toTypedArray(),

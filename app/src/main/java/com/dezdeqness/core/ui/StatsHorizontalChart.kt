@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -61,7 +60,7 @@ fun StatsHorizontalChart(
                         .height(10.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(4.dp))
-                        .background(Color.DarkGray)
+                        .background(AppTheme.colors.onSecondary.copy(alpha = 0.15f))
                 ) {
                     Box(
                         modifier = Modifier

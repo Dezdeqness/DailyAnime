@@ -60,7 +60,7 @@ data class SwitchDarkTheme(val isEnabled: Boolean) : Event()
 
 data class ShareUrl(val url: String) : ConsumableEvent()
 
-data class NavigateToAnimeState(
+data class NavigateToAnimeStats(
     val scoreList: List<AnimeStatsTransferModel>,
     val statusesList: List<AnimeStatsTransferModel>,
 ) : Event()

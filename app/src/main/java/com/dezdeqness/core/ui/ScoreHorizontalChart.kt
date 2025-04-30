@@ -80,7 +80,7 @@ fun ScoreHorizontalChart(
                         .height(10.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(4.dp))
-                        .background(Color.DarkGray)
+                        .background(AppTheme.colors.onSecondary.copy(alpha = 0.15f))
                 ) {
                     Box(
                         modifier = Modifier
