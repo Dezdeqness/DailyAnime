@@ -10,7 +10,7 @@ import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.NavigateToAnimeState
+import com.dezdeqness.presentation.event.NavigateToAnimeStats
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
@@ -143,7 +143,7 @@ class AnimeDetailsViewModel @Inject constructor(
         val details = animeDetails?.animeDetailsEntity ?: return
 
         onEventReceive(
-            NavigateToAnimeState(
+            NavigateToAnimeStats(
                 scoreList = details.scoresStats.map { score ->
                     AnimeStatsTransferModel(
                         score.name,
