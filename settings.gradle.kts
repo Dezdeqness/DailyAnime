@@ -34,3 +34,4 @@ rootProject.name = "Daily Anime"
 include(":app")
 include(":data")
 include(":domain")
+include(":common:core-ui")
