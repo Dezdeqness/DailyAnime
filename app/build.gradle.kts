@@ -156,7 +156,7 @@ dependencies {
     add("qaImplementation", libs.leak.canary)
 
     // Core UI
-    implementation(libs.core.ui)
+    implementation(project(":common:core-ui"))
     implementation(libs.core)
     implementation(libs.pod.core)
 
