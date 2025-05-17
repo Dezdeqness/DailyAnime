@@ -9,8 +9,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.profile.composables.ProfileCard
 import com.dezdeqness.presentation.features.profile.composables.ProfileSkeleton
 import com.dezdeqness.presentation.features.profile.composables.UnauthorizedCard
@@ -38,22 +37,16 @@ fun ProfileScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {},
+            AppToolbar(
                 actions = {
-                    IconButton(
-                        onClick = actions::onSettingIconClicked,
-                    ) {
+                    IconButton(onClick = actions::onSettingIconClicked) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_profile_label_gear),
-                            tint = AppTheme.colors.onSecondary,
+                            tint = AppTheme.colors.onSurface,
                             contentDescription = null,
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors().copy(
-                    containerColor = AppTheme.colors.onPrimary,
-                ),
             )
         },
     ) { padding ->
