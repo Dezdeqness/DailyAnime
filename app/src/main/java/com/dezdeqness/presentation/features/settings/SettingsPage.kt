@@ -4,12 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,12 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.TimePickerDialog
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.settings.composables.HeaderSettingsView
 import com.dezdeqness.presentation.features.settings.composables.SelectRibbonStatusReorderDialog
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionDialog
@@ -53,25 +47,9 @@ fun SettingsPage(
         containerColor = colorResource(id = R.color.background_tint),
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        stringResource(R.string.settings_toolbar_title),
-                        color = AppTheme.colors.textPrimary,
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { actions.onBackPressed() }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_back),
-                            contentDescription = null,
-                            tint = AppTheme.colors.onSecondary,
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors().copy(
-                    containerColor = AppTheme.colors.onPrimary,
-                ),
+            AppToolbar(
+                title = stringResource(R.string.settings_toolbar_title),
+                navigationClick = actions::onBackPressed,
             )
         }
     ) { padding ->

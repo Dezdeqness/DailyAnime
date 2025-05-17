@@ -17,9 +17,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,6 +35,8 @@ import com.dezdeqness.R
 import com.dezdeqness.core.activity.hideSystemUI
 import com.dezdeqness.core.activity.showSystemUI
 import com.dezdeqness.core.collectEvents
+import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.di.subcomponents.ScreenshotsArgsModule
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.screenshotsviewer.composables.ScreenshotPager
@@ -73,7 +72,7 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
             .inject(this)
 
         setContent {
-            MaterialTheme {
+            AppTheme {
                 Box(modifier = Modifier.background(Color.Black)) {
                     val context = LocalContext.current
 
@@ -126,26 +125,15 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                         enter = fadeIn() + expandVertically(),
                         exit = shrinkVertically() + fadeOut(),
                     ) {
-                        TopAppBar(
-                            title = {
-                                Text(text = "${state.index + 1}/${state.screenshotsList.size}")
-                            },
+                        AppToolbar(
+                            title = "${state.index + 1}/${state.screenshotsList.size}",
                             colors = TopAppBarDefaults.topAppBarColors(
                                 titleContentColor = Color.White,
                                 containerColor = Color(0x29000000),
                             ),
-                            navigationIcon = {
-                                IconButton(
-                                    onClick = {
-                                        finish()
-                                    },
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_back),
-                                        tint = Color.White,
-                                        contentDescription = null,
-                                    )
-                                }
+                            navigationColor = Color.White,
+                            navigationClick = {
+                                finish()
                             },
                             actions = {
                                 IconButton(
