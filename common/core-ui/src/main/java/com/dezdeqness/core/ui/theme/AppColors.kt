@@ -26,6 +26,7 @@ fun lightColors(): AppColors = AppColors(
     errorColor = LightAnimeColors.Error,
     successColor = LightAnimeColors.Success,
     warningColor = LightAnimeColors.Warning,
+    accentColor = LightAnimeColors.Accent,
 )
 
 fun darkColors(): AppColors = AppColors(
@@ -47,28 +48,30 @@ fun darkColors(): AppColors = AppColors(
     errorColor = DarkAnimeColors.Error,
     successColor = DarkAnimeColors.Success,
     warningColor = DarkAnimeColors.Warning,
+    accentColor = DarkAnimeColors.Accent,
 )
 
 @Immutable
 class AppColors(
-    val primaryColor: Color,
-    val primaryVariantColor: Color,
-    val secondaryColor: Color,
-    val backgroundColor: Color,
-    val surfaceColor: Color,
-    val surfaceVariantColor: Color,
-    val borderColor: Color,
-    val onPrimaryColor: Color,
-    val onSecondaryColor: Color,
-    val onBackgroundColor: Color,
-    val onSurfaceColor: Color,
-    val textPrimaryColor: Color,
-    val textSecondaryColor: Color,
-    val textDisabledColor: Color,
-    val rippleColor: Color,
-    val errorColor: Color,
-    val successColor: Color,
-    val warningColor: Color,
+    private val primaryColor: Color,
+    private val primaryVariantColor: Color,
+    private val secondaryColor: Color,
+    private val backgroundColor: Color,
+    private val surfaceColor: Color,
+    private val surfaceVariantColor: Color,
+    private val borderColor: Color,
+    private val onPrimaryColor: Color,
+    private val onSecondaryColor: Color,
+    private val onBackgroundColor: Color,
+    private val onSurfaceColor: Color,
+    private val textPrimaryColor: Color,
+    private val textSecondaryColor: Color,
+    private val textDisabledColor: Color,
+    private val rippleColor: Color,
+    private val errorColor: Color,
+    private val successColor: Color,
+    private val warningColor: Color,
+    private val accentColor: Color,
 ) {
 
     var primary by mutableStateOf(primaryColor)
@@ -107,6 +110,8 @@ class AppColors(
         private set
     var warning by mutableStateOf(warningColor)
         private set
+    var accent by mutableStateOf(accentColor)
+        private set
 
     fun updateColorsFrom(other: AppColors) {
         primary = other.primary
@@ -127,6 +132,7 @@ class AppColors(
         error = other.error
         success = other.success
         warning = other.warning
+        accent = other.accent
     }
 
     fun copy(
@@ -148,6 +154,7 @@ class AppColors(
         error: Color = this.error,
         success: Color = this.success,
         warning: Color = this.warning,
+        accent: Color = this.accent,
     ): AppColors = AppColors(
         primaryColor = primary,
         primaryVariantColor = primaryVariant,
@@ -167,6 +174,7 @@ class AppColors(
         onSecondaryColor = onSecondary,
         onBackgroundColor = onBackground,
         onSurfaceColor = onSurface,
+        accentColor = accent,
     )
 }
 
