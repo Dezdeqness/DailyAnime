@@ -5,13 +5,19 @@ package com.dezdeqness.core.ui.theme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -34,6 +40,7 @@ object LightAnimeColors {
     val TextSecondary = Color(0xFF5C5C66)
     val TextDisabled = Color(0xFF9E9EA7)
     val Ripple = Color(0x1F000000)
+    val Accent = Color(0xFFB48BFF)
 }
 
 object DarkAnimeColors {
@@ -55,6 +62,7 @@ object DarkAnimeColors {
     val TextSecondary = Color(0xFFA5A5AA)
     val TextDisabled = Color(0xFF5E5E66)
     val Ripple = Color(0x33FFFFFF)
+    val Accent = Color(0xFFD1B3FF)
 }
 
 val red50 = Color(0xFFFFEBEE)
@@ -385,4 +393,91 @@ fun PreviewBlackAndWhitePalette() {
             white,
         ),
     )
+}
+
+data class NamedColor(val name: String, val color: Color)
+
+val lightColors = listOf(
+    NamedColor("Primary", LightAnimeColors.Primary),
+    NamedColor("PrimaryVariant", LightAnimeColors.PrimaryVariant),
+    NamedColor("Secondary", LightAnimeColors.Secondary),
+    NamedColor("Background", LightAnimeColors.Background),
+    NamedColor("Surface", LightAnimeColors.Surface),
+    NamedColor("SurfaceVariant", LightAnimeColors.SurfaceVariant),
+    NamedColor("Border", LightAnimeColors.Border),
+    NamedColor("OnPrimary", LightAnimeColors.OnPrimary),
+    NamedColor("OnSecondary", LightAnimeColors.OnSecondary),
+    NamedColor("OnBackground", LightAnimeColors.OnBackground),
+    NamedColor("OnSurface", LightAnimeColors.OnSurface),
+    NamedColor("Error", LightAnimeColors.Error),
+    NamedColor("Success", LightAnimeColors.Success),
+    NamedColor("Warning", LightAnimeColors.Warning),
+    NamedColor("TextPrimary", LightAnimeColors.TextPrimary),
+    NamedColor("TextSecondary", LightAnimeColors.TextSecondary),
+    NamedColor("TextDisabled", LightAnimeColors.TextDisabled),
+    NamedColor("Ripple", LightAnimeColors.Ripple),
+    NamedColor("Accent", LightAnimeColors.Accent),
+)
+
+val darkColors = listOf(
+    NamedColor("Primary", DarkAnimeColors.Primary),
+    NamedColor("PrimaryVariant", DarkAnimeColors.PrimaryVariant),
+    NamedColor("Secondary", DarkAnimeColors.Secondary),
+    NamedColor("Background", DarkAnimeColors.Background),
+    NamedColor("Surface", DarkAnimeColors.Surface),
+    NamedColor("SurfaceVariant", DarkAnimeColors.SurfaceVariant),
+    NamedColor("Border", DarkAnimeColors.Border),
+    NamedColor("OnPrimary", DarkAnimeColors.OnPrimary),
+    NamedColor("OnSecondary", DarkAnimeColors.OnSecondary),
+    NamedColor("OnBackground", DarkAnimeColors.OnBackground),
+    NamedColor("OnSurface", DarkAnimeColors.OnSurface),
+    NamedColor("Error", DarkAnimeColors.Error),
+    NamedColor("Success", DarkAnimeColors.Success),
+    NamedColor("Warning", DarkAnimeColors.Warning),
+    NamedColor("TextPrimary", DarkAnimeColors.TextPrimary),
+    NamedColor("TextSecondary", DarkAnimeColors.TextSecondary),
+    NamedColor("TextDisabled", DarkAnimeColors.TextDisabled),
+    NamedColor("Ripple", DarkAnimeColors.Ripple),
+    NamedColor("Accent", DarkAnimeColors.Accent),
+)
+
+@Composable
+fun ColorListPreview(title: String, colors: List<NamedColor>) {
+    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        Text(text = title, style = MaterialTheme.typography.titleLarge)
+        Spacer(modifier = Modifier.height(8.dp))
+        colors.forEach { colorItem ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+                    .height(48.dp)
+                    .background(colorItem.color),
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+            ) {
+                Text(
+                    text = colorItem.name,
+                    modifier = Modifier.padding(start = 16.dp).weight(1f),
+                    color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black
+                )
+                Text(
+                    text = "#${colorItem.color.value.toULong().toString(16).uppercase().take(8)}",
+                    modifier = Modifier.padding(end = 16.dp),
+                    color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LightAnimeColorsPreview() {
+    ColorListPreview("Light Anime Colors", lightColors)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DarkAnimeColorsPreview() {
+    ColorListPreview("Dark Anime Colors", darkColors)
 }
