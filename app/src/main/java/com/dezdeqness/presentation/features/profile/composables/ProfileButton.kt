@@ -41,7 +41,7 @@ fun ProfileButton(
     ) {
         Icon(
             painter = painterResource(id = icon),
-            tint = AppTheme.colors.onSecondary,
+            tint = AppTheme.colors.onSurface,
             contentDescription = null,
             modifier = Modifier.padding(horizontal = 16.dp)
         )

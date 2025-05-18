@@ -26,7 +26,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.AppButton
+import com.dezdeqness.core.ui.views.buttons.AppButton
 
 @Composable
 fun DetailsError(

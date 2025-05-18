@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -53,7 +54,6 @@ fun PersonalListAnimeItem(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
-            .background(colorResource(id = R.color.search_container))
             .clickable(
                 onClick = {
                     onActionReceive(Action.AnimeClick(userRateUiModel.id, userRateUiModel.name))
@@ -88,7 +88,7 @@ fun PersonalListAnimeItem(
 
                 Text(
                     text = remember(userRateUiModel.score) { "${userRateUiModel.score} ★" },
-                    color = colorResource(id = R.color.search_label),
+                    color = Color.White,
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
                         .background(colorResource(id = R.color.background_shadow))
@@ -109,6 +109,7 @@ fun PersonalListAnimeItem(
                             .padding(8.dp),
                         maxLines = 2,
                         color = AppTheme.colors.textPrimary,
+                        style = AppTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -116,6 +117,7 @@ fun PersonalListAnimeItem(
                         text = userRateUiModel.kind,
                         textAlign = TextAlign.Start,
                         fontSize = 14.sp,
+                        style = AppTheme.typography.bodyMedium,
                         color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
                         modifier = Modifier.padding(start = 8.dp),
                     )
@@ -146,7 +148,7 @@ fun PersonalListAnimeItem(
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_plus),
                                         contentDescription = null,
-                                        tint = AppTheme.colors.onSecondary
+                                        tint = AppTheme.colors.onSurface
                                     )
                                 }
                             }
@@ -159,7 +161,7 @@ fun PersonalListAnimeItem(
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_edit),
                                     contentDescription = null,
-                                    tint = AppTheme.colors.onSecondary
+                                    tint = AppTheme.colors.onSurface
                                 )
                             }
                         }

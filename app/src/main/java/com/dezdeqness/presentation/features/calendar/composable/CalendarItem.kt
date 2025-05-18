@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -83,7 +84,7 @@ fun CalendarItem(
 
             Text(
                 text = item.score,
-                color = colorResource(id = R.color.search_label),
+                color = Color.White,
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))
                     .background(colorResource(id = R.color.background_shadow))

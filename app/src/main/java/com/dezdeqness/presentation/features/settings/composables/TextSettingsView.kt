@@ -14,9 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
 private const val SubTitleAlpha = 0.8f
@@ -67,7 +65,7 @@ fun TextSettingsView(
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .background(colorResource(id = R.color.background_tint).copy(alpha = 0.8f))
+                    .background(AppTheme.colors.onPrimary.copy(alpha = 0.8f))
             )
         }
     }

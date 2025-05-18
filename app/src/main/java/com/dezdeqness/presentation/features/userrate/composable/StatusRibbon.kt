@@ -29,7 +29,7 @@ fun StatusRibbon(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .border(BorderStroke(1.dp, AppTheme.colors.onSecondary), RoundedCornerShape(16.dp))
+            .border(BorderStroke(1.dp, AppTheme.colors.onSurface), RoundedCornerShape(16.dp))
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },

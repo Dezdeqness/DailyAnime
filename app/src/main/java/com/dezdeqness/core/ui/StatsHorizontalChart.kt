@@ -15,11 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.models.StatsChartUiModel
 
@@ -60,13 +58,13 @@ fun StatsHorizontalChart(
                         .height(10.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(4.dp))
-                        .background(AppTheme.colors.onSecondary.copy(alpha = 0.15f))
+                        .background(AppTheme.colors.onSurface.copy(alpha = 0.15f))
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth(fraction = progress / statsChart.maxProgress.toFloat())
-                            .background(colorResource(id = R.color.purple_500))
+                            .background(AppTheme.colors.accent)
                     )
                 }
 

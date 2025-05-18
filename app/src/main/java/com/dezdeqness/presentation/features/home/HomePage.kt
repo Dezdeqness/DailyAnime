@@ -9,8 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import com.dezdeqness.R
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.home.composable.HomeBanner
 import com.dezdeqness.presentation.features.home.composable.HomeCalendarSection
 import com.dezdeqness.presentation.features.home.composable.HomeSection
@@ -50,7 +49,7 @@ fun HomePage(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.background_tint)),
+            .background(AppTheme.colors.onPrimary),
         userScrollEnabled = isLoadingVisible.not(),
     ) {
         item {

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,7 +39,7 @@ fun PersonalRibbon(
             val isSelected = item.id == selectedRibbonId
 
             val localModifier = if (isSelected) {
-                Modifier.background(color = colorResource(R.color.purple_500))
+                Modifier.background(AppTheme.colors.accent)
             } else {
                 Modifier.border(
                     border = BorderStroke(1.dp, colorResource(R.color.filter_divider)),
@@ -47,7 +48,7 @@ fun PersonalRibbon(
             }
 
             val textColor = if (isSelected) {
-                colorResource(R.color.white)
+                Color.White
             } else {
                 AppTheme.colors.textPrimary
             }

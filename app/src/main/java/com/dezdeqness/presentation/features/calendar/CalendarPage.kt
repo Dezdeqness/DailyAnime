@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.GeneralEmpty
 import com.dezdeqness.core.ui.GeneralError
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.calendar.composable.CalendarList
 import com.dezdeqness.presentation.features.calendar.composable.CalendarSearch
 import com.dezdeqness.presentation.features.calendar.composable.ShimmerCalendarLoading
@@ -43,7 +44,7 @@ fun CalendarPage(
     }
 
     Scaffold(
-        containerColor = colorResource(id = R.color.background_tint),
+        containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
             CalendarSearch(
@@ -80,7 +81,7 @@ fun CalendarPage(
                 CalendarList(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(colorResource(id = R.color.background_tint)),
+                        .background(AppTheme.colors.onPrimary),
                     list = state.list,
                     isScrollNeed = state.isScrollNeed,
                     onNeedScroll = { listState ->

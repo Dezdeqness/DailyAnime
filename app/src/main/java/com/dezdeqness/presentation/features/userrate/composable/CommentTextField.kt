@@ -43,7 +43,7 @@ fun CommentTextField(
         color = AppTheme.colors.textPrimary,
     ),
     onCommentChanged: (String) -> Unit,
-    containerColor: Color = colorResource(id = R.color.search_container),
+    containerColor: Color = AppTheme.colors.surfaceVariant,
     shape: Shape = RoundedCornerShape(16.dp),
     placeholder: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,

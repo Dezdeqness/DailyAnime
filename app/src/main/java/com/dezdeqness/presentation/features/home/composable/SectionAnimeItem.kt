@@ -82,6 +82,7 @@ fun SectionAnimeItem(
                 color = AppTheme.colors.textPrimary,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
+                style = AppTheme.typography.bodyMedium,
             )
 
             Text(

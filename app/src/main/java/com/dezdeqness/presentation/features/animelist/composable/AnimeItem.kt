@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -74,7 +75,7 @@ fun AnimeItem(
 
             Text(
                 text = item.kind,
-                color = colorResource(id = R.color.search_label),
+                color = Color.White,
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))
                     .background(colorResource(id = R.color.background_shadow))
@@ -91,6 +92,7 @@ fun AnimeItem(
                     .padding(8.dp),
                 textAlign = TextAlign.Center,
                 maxLines = 2,
+                style = AppTheme.typography.bodyMedium,
                 color = AppTheme.colors.textPrimary,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,

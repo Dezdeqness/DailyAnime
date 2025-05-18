@@ -70,6 +70,7 @@ fun HomeCalendarItem(
                 textAlign = TextAlign.Start,
                 fontSize = 16.sp,
                 maxLines = 2,
+                style = AppTheme.typography.bodyMedium,
                 color = AppTheme.colors.textPrimary,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
@@ -78,6 +79,7 @@ fun HomeCalendarItem(
             Text(
                 text = item.description,
                 textAlign = TextAlign.Start,
+                style = AppTheme.typography.bodySmall,
                 fontSize = 14.sp,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,

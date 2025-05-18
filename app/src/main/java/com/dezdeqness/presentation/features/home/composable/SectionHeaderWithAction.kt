@@ -52,7 +52,7 @@ fun SectionHeaderWithAction(
         Icon(
             Icons.AutoMirrored.Default.KeyboardArrowRight,
             contentDescription = null,
-            tint = AppTheme.colors.onSecondary
+            tint = AppTheme.colors.onSurface
         )
     }
 }

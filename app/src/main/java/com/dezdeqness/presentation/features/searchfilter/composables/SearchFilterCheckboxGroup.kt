@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.ExpandableContent
-import com.dezdeqness.core.ui.views.AppTextButton
+import com.dezdeqness.core.ui.views.buttons.AppTextButton
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 
 @Composable
