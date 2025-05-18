@@ -1,4 +1,4 @@
-package com.dezdeqness.core.ui
+package com.dezdeqness.core.ui.views.textfield
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -24,14 +24,12 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
@@ -43,7 +41,7 @@ fun SearchTextField(
         color = AppTheme.colors.textPrimary,
     ),
     onQueryChanged: (String) -> Unit,
-    containerColor: Color = colorResource(id = R.color.search_container),
+    containerColor: Color = AppTheme.colors.surfaceVariant,
     shape: Shape = RoundedCornerShape(16.dp),
     placeholder: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -115,7 +113,7 @@ fun SearchTextField(
 
 class SearchState {
     var query by mutableStateOf("")
-    private set
+        private set
 
     var hasUserInteracted = false
 
@@ -142,3 +140,4 @@ class SearchState {
 fun rememberSearchState() = rememberSaveable(saver = SearchState.Saver) {
     SearchState()
 }
+

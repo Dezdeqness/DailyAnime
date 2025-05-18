@@ -1,4 +1,4 @@
-package com.dezdeqness.core.ui
+package com.dezdeqness.core.ui.views
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -7,7 +7,6 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -15,18 +14,23 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
+import com.dezdeqness.core.ui.theme.AppTheme
+
+private const val DEFAULT_WIDTH_SHADOW_BRUSH = 700
+private const val DEFAULT_DURATION = 1500
+private const val DEFAULT_ANGLE_AXIS_X = 270f
+private val DEFAULT_COLOR = Color.LightGray
 
 @Composable
 fun Modifier.shimmer(
-    shape: Shape = RoundedCornerShape(6.dp),
-    widthOfShadowBrush: Int = 700,
-    angleOfAxisY: Float = 270f,
-    durationMillis: Int = 1500,
+    shape: Shape = AppTheme.shapes.medium,
+    widthOfShadowBrush: Int = DEFAULT_WIDTH_SHADOW_BRUSH,
+    angleOfAxisY: Float = DEFAULT_ANGLE_AXIS_X,
+    durationMillis: Int = DEFAULT_DURATION,
     color: Color = Color.Unspecified
 ): Modifier = composed {
     val shimmerBaseColor = if (color == Color.Unspecified) {
-        Color.LightGray
+        DEFAULT_COLOR
     } else {
         color
     }
