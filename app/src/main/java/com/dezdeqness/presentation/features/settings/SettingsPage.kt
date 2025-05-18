@@ -12,11 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.TimePickerDialog
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.settings.composables.HeaderSettingsView
 import com.dezdeqness.presentation.features.settings.composables.SelectRibbonStatusReorderDialog
@@ -44,7 +44,7 @@ fun SettingsPage(
     }
 
     Scaffold(
-        containerColor = colorResource(id = R.color.background_tint),
+        containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
             AppToolbar(

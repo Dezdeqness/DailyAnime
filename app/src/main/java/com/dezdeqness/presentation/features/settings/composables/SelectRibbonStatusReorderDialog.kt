@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -31,7 +30,7 @@ import com.dezdeqness.R
 import com.dezdeqness.core.ui.ReorderHapticFeedbackType
 import com.dezdeqness.core.ui.rememberReorderHapticFeedback
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.AppButton
+import com.dezdeqness.core.ui.views.buttons.AppButton
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.google.common.collect.ImmutableList
 import sh.calvin.reorderable.ReorderableItem
@@ -59,7 +58,7 @@ fun SelectRibbonStatusReorderDialog(
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = modifier,
-            colors = CardDefaults.cardColors(containerColor = colorResource(R.color.background_tint))
+            colors = CardDefaults.cardColors(containerColor = AppTheme.colors.onPrimary)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -83,7 +82,7 @@ fun SelectRibbonStatusReorderDialog(
                                 onClick = {},
                                 interactionSource = interactionSource,
                                 colors = CardDefaults.cardColors(
-                                    containerColor = colorResource(R.color.background_tint)
+                                    containerColor = AppTheme.colors.onPrimary
                                 )
                             ) {
                                 Row(
@@ -116,7 +115,7 @@ fun SelectRibbonStatusReorderDialog(
                                     ) {
                                         Icon(
                                             painter = painterResource(R.drawable.ic_palm),
-                                            tint = AppTheme.colors.onSecondary,
+                                            tint = AppTheme.colors.onSurface,
                                             contentDescription = null,
                                         )
                                     }

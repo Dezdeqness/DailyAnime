@@ -7,9 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
@@ -32,8 +30,8 @@ fun SearchFilterChip(
             )
         },
         colors = FilterChipDefaults.filterChipColors().copy(
-            containerColor = colorResource(R.color.background_tint),
-            selectedContainerColor = colorResource(R.color.purple_500)
+            containerColor = AppTheme.colors.onPrimary,
+            selectedContainerColor = AppTheme.colors.accent,
         ),
         shape = RoundedCornerShape(50),
         elevation = FilterChipDefaults.filterChipElevation(elevation = 2.dp),

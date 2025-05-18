@@ -10,9 +10,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.models.AnimeCellList
 
@@ -41,8 +39,8 @@ fun DetailsGenres(
                     )
                 },
                 colors = FilterChipDefaults.filterChipColors().copy(
-                    containerColor = colorResource(R.color.background_tint),
-                    selectedContainerColor = colorResource(R.color.background_tint)
+                    containerColor = AppTheme.colors.onPrimary,
+                    selectedContainerColor = AppTheme.colors.onPrimary,
                 ),
                 shape = RoundedCornerShape(50),
                 elevation = null,

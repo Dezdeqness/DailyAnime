@@ -25,7 +25,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
@@ -75,7 +74,7 @@ fun PersonalListPage(
     }
 
     Scaffold(
-        containerColor = colorResource(id = R.color.background_tint),
+        containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
             Row(
@@ -103,7 +102,7 @@ fun PersonalListPage(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_filter_action),
                             contentDescription = null,
-                            tint = AppTheme.colors.onSecondary
+                            tint = AppTheme.colors.onSurface
                         )
                     }
                 }

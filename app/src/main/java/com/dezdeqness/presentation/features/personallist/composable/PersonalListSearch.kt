@@ -15,9 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.SearchTextField
-import com.dezdeqness.core.ui.rememberSearchState
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.textfield.SearchTextField
+import com.dezdeqness.core.ui.views.textfield.rememberSearchState
 
 @Composable
 fun PersonalListSearch(
@@ -55,7 +55,7 @@ fun PersonalListSearch(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_close),
                     contentDescription = null,
-                    tint = AppTheme.colors.onSecondary
+                    tint = AppTheme.colors.onSurface
                 )
             }
         },
@@ -63,7 +63,7 @@ fun PersonalListSearch(
             Icon(
                 painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = null,
-                tint = AppTheme.colors.onSecondary
+                tint = AppTheme.colors.onSurface
             )
         },
     )

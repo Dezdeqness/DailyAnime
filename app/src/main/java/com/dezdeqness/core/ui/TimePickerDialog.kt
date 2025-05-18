@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
@@ -31,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.AppButton
+import com.dezdeqness.core.ui.views.buttons.AppButton
 import java.util.Locale
 
 private const val VISIBLE_ITEMS = 3
@@ -66,7 +65,7 @@ fun TimePickerDialog(
         sheetState = sheetState,
         sheetGesturesEnabled = false,
         dragHandle = null,
-        containerColor = colorResource(id = R.color.background_tint),
+        containerColor = AppTheme.colors.onPrimary,
     ) {
         Column(
             modifier = modifier.padding(16.dp),
@@ -161,14 +160,14 @@ private fun SelectorView(modifier: Modifier = Modifier, visibleItems: Int) {
                 modifier = Modifier
                     .height(0.5.dp)
                     .alpha(0.5f)
-                    .background(AppTheme.colors.onSecondary)
+                    .background(AppTheme.colors.onSurface)
                     .fillMaxWidth()
             )
             Box(
                 modifier = Modifier
                     .height(0.5.dp)
                     .alpha(0.5f)
-                    .background(AppTheme.colors.onSecondary)
+                    .background(AppTheme.colors.onSurface)
                     .fillMaxWidth()
             )
         }

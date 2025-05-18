@@ -38,6 +38,7 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             AppToolbar(
+                navigationIcon = null,
                 actions = {
                     IconButton(onClick = actions::onSettingIconClicked) {
                         Icon(

@@ -225,7 +225,7 @@ fun Thumb(
         modifier = modifier
             .defaultMinSize(minWidth = size, minHeight = size)
             .clip(shape)
-            .background(colorResource(id = R.color.purple_200))
+            .background(AppTheme.colors.primary)
     )
 }
 

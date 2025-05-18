@@ -20,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
@@ -49,7 +48,7 @@ fun AnimeSearchPage(
     }
 
     Scaffold(
-        containerColor = colorResource(id = R.color.background_tint),
+        containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
             AnimeSearch(
@@ -61,7 +60,7 @@ fun AnimeSearchPage(
         },
         floatingActionButton = {
             FloatingActionButton(
-                containerColor = colorResource(id = R.color.purple_500),
+                containerColor = AppTheme.colors.accent,
                 contentColor = AppTheme.colors.onPrimary,
                 onClick = {
                     actions.onFabClicked()
@@ -70,7 +69,7 @@ fun AnimeSearchPage(
                 Icon(
                     painter = painterResource(id = R.drawable.filter_list),
                     contentDescription = null,
-                    tint = colorResource(id = R.color.pure_white),
+                    tint = AppTheme.colors.onSurface,
                 )
             }
         }

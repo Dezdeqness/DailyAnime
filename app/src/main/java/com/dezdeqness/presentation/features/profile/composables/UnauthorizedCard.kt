@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.AppTextButton
+import com.dezdeqness.core.ui.views.buttons.AppTextButton
 
 @Composable
 fun UnauthorizedCard(

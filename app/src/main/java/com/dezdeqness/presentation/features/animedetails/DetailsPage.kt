@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
@@ -70,7 +69,7 @@ fun DetailsPage(
         if (state.isEditRateFabShown) {
             FloatingActionButton(
                 onClick = actions::onFabClicked,
-                containerColor = colorResource(id = R.color.purple_500),
+                containerColor = AppTheme.colors.accent,
                 contentColor = AppTheme.colors.onPrimary,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -79,7 +78,7 @@ fun DetailsPage(
                 Icon(
                     painterResource(R.drawable.ic_edit),
                     contentDescription = null,
-                    tint = colorResource(id = R.color.pure_white),
+                    tint = AppTheme.colors.onSurface,
                 )
             }
         }

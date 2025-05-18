@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -47,7 +46,7 @@ fun PersonalListSelectOrderDialog(
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults
                 .cardColors()
-                .copy(containerColor = colorResource(id = R.color.background_tint)),
+                .copy(containerColor = AppTheme.colors.onPrimary),
         ) {
 
             Column(modifier = Modifier.padding(8.dp)) {

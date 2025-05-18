@@ -23,13 +23,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.HorizontalAnimationLayout
-import com.dezdeqness.core.ui.views.AppButton
-import com.dezdeqness.core.ui.views.AppOutlinedButton
+import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.buttons.AppButton
+import com.dezdeqness.core.ui.views.buttons.AppOutlinedButton
 import com.dezdeqness.presentation.features.searchfilter.composables.Section
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -56,7 +56,7 @@ fun AnimeSearchFilter(
             onDismissRequest = {
                 actions.onDismissed()
             },
-            containerColor = colorResource(R.color.background_tint),
+            containerColor = AppTheme.colors.onPrimary,
             sheetState = sheetState,
             modifier = modifier
                 .fillMaxSize()
@@ -106,7 +106,7 @@ fun AnimeSearchFilter(
                     AppOutlinedButton(
                         modifier = Modifier
                             .padding(end = 8.dp)
-                            .background(colorResource(R.color.background_tint)),
+                            .background(AppTheme.colors.onPrimary),
                         title = stringResource(R.string.search_filter_reset)
                     ) {
                         actions.onResetFilter()

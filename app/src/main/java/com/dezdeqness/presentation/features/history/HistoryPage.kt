@@ -18,12 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.GeneralEmpty
 import com.dezdeqness.core.ui.GeneralError
+import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.history.composables.HistoryList
 import com.dezdeqness.presentation.features.history.composables.HistoryShimmerLoading
@@ -43,7 +43,7 @@ fun HistoryPage(
     }
 
     Scaffold(
-        containerColor = colorResource(id = R.color.background_tint),
+        containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
             AppToolbar(
