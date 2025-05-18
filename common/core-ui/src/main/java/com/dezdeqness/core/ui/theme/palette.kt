@@ -49,7 +49,7 @@ object DarkAnimeColors {
     val Secondary = Color(0xFF66F8E3)
     val Background = Color(0xFF121212)
     val Surface = Color(0xFF1E1E1E)
-    val SurfaceVariant = Color(0xFF2C2C2C)
+    val SurfaceVariant = Color(0xFF3B2F41)
     val Border = Color(0xFF3D3D3D)
     val OnPrimary = Color(0xFF1B141F)
     val OnSecondary = Color(0xFF00221D)
