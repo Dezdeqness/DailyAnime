@@ -21,6 +21,7 @@ import com.dezdeqness.core.ui.theme.AppTheme
 fun AppToolbar(
     modifier: Modifier = Modifier,
     title: String = "",
+    titleColor: Color = AppTheme.colors.textPrimary,
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(containerColor = AppTheme.colors.onPrimary),
     navigationIcon: ImageVector? = Icons.AutoMirrored.Filled.ArrowBack,
     navigationColor: Color = AppTheme.colors.onSurface,
@@ -32,7 +33,7 @@ fun AppToolbar(
         title = {
             Text(
                 title,
-                color = AppTheme.colors.textPrimary,
+                color = titleColor,
             )
         },
         navigationIcon = {

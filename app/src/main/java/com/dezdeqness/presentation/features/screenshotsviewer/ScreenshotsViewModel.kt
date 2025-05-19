@@ -10,7 +10,6 @@ import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsN
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
-import javax.inject.Named
 
 class ScreenshotsViewModel @Inject constructor(
     private val store: PlantStore<Event, State, Effect>,

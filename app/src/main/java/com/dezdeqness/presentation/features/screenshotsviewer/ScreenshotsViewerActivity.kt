@@ -41,7 +41,6 @@ import com.dezdeqness.di.subcomponents.ScreenshotsArgsModule
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.screenshotsviewer.composables.ScreenshotPager
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace
-import kotlinx.coroutines.flow.filterIsInstance
 import javax.inject.Inject
 
 class ScreenshotsViewerActivity : AppCompatActivity() {
@@ -98,20 +97,20 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
 
                     viewModel
                         .effects
-                        .filterIsInstance<ScreenshotsNamespace.Effect.ScrollToPage>()
                         .collectEvents { effect ->
-                            pagerState.scrollToPage(effect.index)
-                        }
+                            when (effect) {
+                                is ScreenshotsNamespace.Effect.ScrollToPage -> {
+                                    pagerState.scrollToPage(effect.index)
+                                }
 
-                    viewModel
-                        .effects
-                        .filterIsInstance<ScreenshotsNamespace.Effect.ShareUrl>()
-                        .collectEvents { effect ->
-                            val url = effect.url
-                            ShareCompat.IntentBuilder(context)
-                                .setType("text/plain")
-                                .setText(url)
-                                .startChooser()
+                                is ScreenshotsNamespace.Effect.ShareUrl -> {
+                                    val url = effect.url
+                                    ShareCompat.IntentBuilder(context)
+                                        .setType("text/plain")
+                                        .setText(url)
+                                        .startChooser()
+                                }
+                            }
                         }
 
                     LaunchedEffect(pagerState) {
@@ -127,6 +126,7 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                     ) {
                         AppToolbar(
                             title = "${state.index + 1}/${state.screenshotsList.size}",
+                            titleColor = Color.White,
                             colors = TopAppBarDefaults.topAppBarColors(
                                 titleContentColor = Color.White,
                                 containerColor = Color(0x29000000),
