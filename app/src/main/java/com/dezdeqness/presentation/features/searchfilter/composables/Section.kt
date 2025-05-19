@@ -109,7 +109,8 @@ fun Section(
                     contentDescription = null,
                     modifier = Modifier
                         .size(24.dp)
-                        .graphicsLayer(rotationZ = rotationAngle)
+                        .graphicsLayer(rotationZ = rotationAngle),
+                    tint = AppTheme.colors.textPrimary,
                 )
             }
         }
