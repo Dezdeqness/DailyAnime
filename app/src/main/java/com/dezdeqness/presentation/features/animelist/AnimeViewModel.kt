@@ -52,7 +52,9 @@ class AnimeViewModel @Inject constructor(
             action = {
                 getAnimeListUseCase.invoke(
                     pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(filtersList),
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
+                        filtersList
+                    ),
                     searchQuery = query,
                 )
             },
@@ -61,8 +63,7 @@ class AnimeViewModel @Inject constructor(
                 _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
                     list = animeUiMapper.map(state.list),
                     hasNextPage = state.hasNextPage,
-                    isErrorStateShowing = false,
-                    isEmptyStateShowing = false,
+                    status = AnimeSearchStatus.Loaded,
                 )
             },
             onFailure = {
@@ -132,7 +133,9 @@ class AnimeViewModel @Inject constructor(
             action = {
                 getAnimeListUseCase.invoke(
                     pageNumber = currentPage,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(filtersList),
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
+                        filtersList
+                    ),
                     searchQuery = query,
                 )
             },
@@ -159,7 +162,9 @@ class AnimeViewModel @Inject constructor(
             action = {
                 getAnimeListUseCase.invoke(
                     pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(filtersList),
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
+                        filtersList
+                    ),
                     searchQuery = query,
                 )
             },
@@ -170,8 +175,7 @@ class AnimeViewModel @Inject constructor(
                 _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
                     list = list,
                     hasNextPage = state.hasNextPage,
-                    isEmptyStateShowing = list.isEmpty(),
-                    isErrorStateShowing = false,
+                    status = if (list.isEmpty()) AnimeSearchStatus.Empty else AnimeSearchStatus.Loaded,
                     isScrollNeed = isScrollNeed,
                 )
             },
@@ -180,9 +184,8 @@ class AnimeViewModel @Inject constructor(
                     onErrorMessage()
                 } else {
                     _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-                        isErrorStateShowing = true,
+                        status = AnimeSearchStatus.Error,
                         isScrollNeed = false,
-                        isEmptyStateShowing = false,
                     )
                 }
                 logInfo("Error during loading of initial of state of search list", it)

@@ -88,52 +88,54 @@ fun AnimeSearchPage(
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.Center,
         ) {
-            if (state.isLoadingStateShowing) {
-                ShimmerSearchLoading(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(horizontal = 8.dp),
-                )
-            }
-
-            if (state.isErrorStateShowing) {
-                GeneralError(modifier = Modifier.align(Alignment.Center))
-            }
-
-            if (state.isEmptyStateShowing) {
-                GeneralEmpty(modifier = Modifier.align(Alignment.Center))
-            }
-
-            if (state.list.isNotEmpty()) {
-
-                var isPageLoading by remember {
-                    mutableStateOf(false)
+            when (state.status) {
+                AnimeSearchStatus.Initial, AnimeSearchStatus.Loading -> {
+                    ShimmerSearchLoading(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(horizontal = 8.dp),
+                    )
                 }
 
-                // Workaround to fix pagination when load more was failure
-                LaunchedEffect(state.list, state.isPullDownRefreshing) {
-                    isPageLoading = false
+                AnimeSearchStatus.Error -> {
+                    GeneralError(modifier = Modifier.align(Alignment.Center))
                 }
 
-                AnimeSearchGrid(
-                    list = state.list,
-                    hasNextPage = state.hasNextPage,
-                    isPageLoading = isPageLoading,
-                    isScrollNeed = state.isScrollNeed,
-                    onLoadMore = {
-                        actions.onLoadMore()
-                        isPageLoading = true
-                    },
-                    onNeedScroll = { gridState ->
-                        scope.launch {
-                            actions.onScrolled()
-                            gridState.animateScrollToItem(0)
-                        }
-                    },
-                    onActionReceive = { action ->
-                        actions.onActionReceived(action)
+                AnimeSearchStatus.Empty -> {
+                    GeneralEmpty(modifier = Modifier.align(Alignment.Center))
+                }
+
+                AnimeSearchStatus.Loaded -> {
+                    var isPageLoading by remember {
+                        mutableStateOf(false)
                     }
-                )
+
+                    // Workaround to fix pagination when load more was failure
+                    LaunchedEffect(state.list, state.isPullDownRefreshing) {
+                        isPageLoading = false
+                    }
+
+                    AnimeSearchGrid(
+                        list = state.list,
+                        hasNextPage = state.hasNextPage,
+                        isPageLoading = isPageLoading,
+                        isScrollNeed = state.isScrollNeed,
+                        onLoadMore = {
+                            actions.onLoadMore()
+                            isPageLoading = true
+                        },
+                        onNeedScroll = { gridState ->
+                            scope.launch {
+                                actions.onScrolled()
+                                gridState.animateScrollToItem(0)
+                            }
+                        },
+                        onActionReceive = { action ->
+                            actions.onActionReceived(action)
+                        }
+                    )
+                }
+
             }
 
             PullRefreshIndicator(
