@@ -1,6 +1,7 @@
 package com.dezdeqness.core.ui.views.buttons
 
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -43,6 +44,7 @@ fun AppOutlinedButton(
         shape = shape,
         modifier = Modifier
             .then(modifier),
+        colors = ButtonDefaults.outlinedButtonColors().copy(containerColor = AppTheme.colors.onPrimary),
         onClick = { onClick() },
     ) {
         Text(

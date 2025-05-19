@@ -3,7 +3,6 @@ package com.dezdeqness.presentation.features.searchfilter
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -104,9 +103,7 @@ fun AnimeSearchFilter(
                     progress = progress
                 ) {
                     AppOutlinedButton(
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .background(AppTheme.colors.onPrimary),
+                        modifier = Modifier.padding(end = 8.dp),
                         title = stringResource(R.string.search_filter_reset)
                     ) {
                         actions.onResetFilter()
