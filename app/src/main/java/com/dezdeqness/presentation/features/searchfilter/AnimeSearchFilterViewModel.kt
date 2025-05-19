@@ -59,7 +59,7 @@ class AnimeSearchFilterViewModel @Inject constructor(
     }
 
     fun onResetButtonClicked() {
-        applyFilter(listOf())
+        resetFilter()
     }
 
     fun onDismissed() {
@@ -118,6 +118,18 @@ class AnimeSearchFilterViewModel @Inject constructor(
                     selectedCells = it.selectedCells - cellId,
                 )
             }
+    }
+
+    private fun resetFilter() {
+        _animeSearchFilterStateFlow.update {
+            it.copy(
+                items = listOf(),
+                selectedCells = setOf(),
+                isFilterVisible = false,
+                generalSelectedCells = false
+            )
+        }
+        onEventReceive(ApplyFilter(filters = listOf()))
     }
 
 }
