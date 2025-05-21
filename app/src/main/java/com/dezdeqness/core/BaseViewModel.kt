@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel(
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    protected val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     val appLogger: AppLogger,
 ) : ViewModel(), CoroutineScope, EventListener {
 
