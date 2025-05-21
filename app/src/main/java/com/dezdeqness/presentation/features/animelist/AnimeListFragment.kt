@@ -56,7 +56,7 @@ class AnimeListFragment : BaseComposeFragment() {
         AppTheme {
             Box {
                 AnimeSearchPage(
-                    stateFlow = viewModel.animeSearchStateFlow,
+                    stateFlow = viewModel.animeSearchState,
                     actions = object : AnimeSearchActions {
                         override fun onPullDownRefreshed() {
                             viewModel.onPullDownRefreshed()
@@ -64,10 +64,6 @@ class AnimeListFragment : BaseComposeFragment() {
 
                         override fun onLoadMore() {
                             viewModel.onLoadMore()
-                        }
-
-                        override fun onInitialLoad() {
-                            viewModel.onInitialLoad()
                         }
 
                         override fun onActionReceived(action: Action) {

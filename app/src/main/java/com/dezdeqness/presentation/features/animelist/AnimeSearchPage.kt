@@ -43,10 +43,6 @@ fun AnimeSearchPage(
 
     val state by stateFlow.collectAsState()
 
-    LaunchedEffect(Unit) {
-        actions.onInitialLoad()
-    }
-
     Scaffold(
         containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),

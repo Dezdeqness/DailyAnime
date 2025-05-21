@@ -7,7 +7,6 @@ interface AnimeSearchActions {
     fun onPullDownRefreshed()
     fun onLoadMore()
     fun onScrolled()
-    fun onInitialLoad()
     fun onActionReceived(action: Action)
     fun onFabClicked()
     fun onQueryChanged(query: String)
