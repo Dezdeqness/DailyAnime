@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.animelist
 
+import androidx.lifecycle.viewModelScope
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
@@ -12,8 +13,18 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.SearchSectionUiModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -29,17 +40,92 @@ class AnimeViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable, BaseViewModel.LoadMore {
+) {
 
-    private val _animeSearchStateFlow: MutableStateFlow<AnimeSearchState> =
-        MutableStateFlow(AnimeSearchState())
-    val animeSearchStateFlow: StateFlow<AnimeSearchState> get() = _animeSearchStateFlow
+    private val loadEvents = MutableSharedFlow<LoadEvent>(extraBufferCapacity = 1)
 
-    private var filtersList: List<SearchSectionUiModel> = emptyList()
+    private val _pullRefreshFlow = MutableStateFlow(false)
+    val pullRefreshFlow: StateFlow<Boolean> get() = _pullRefreshFlow
 
-    private var query: String = ""
+    private val _scrollNeedFlow = MutableStateFlow(false)
+    val scrollNeedFlow: StateFlow<Boolean> get() = _scrollNeedFlow
 
-    private var currentPage = INITIAL_PAGE
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val animeSearchState: StateFlow<AnimeSearchState> = loadEvents
+        .onStart { emit(LoadEvent.Initial()) }
+        .flatMapLatest { event ->
+            flow {
+                val result = getAnimeListUseCase.invoke(
+                    pageNumber = event.page,
+                    searchQuery = event.input.query,
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(event.input.filters)
+                )
+
+                emit(
+                    LoadResult(
+                        event = event,
+                        result = result,
+                    )
+                )
+            }.flowOn(coroutineDispatcherProvider.io())
+        }
+        .scan(AnimeSearchState()) { previous, loadResult ->
+            val event = loadResult.event
+            val result = loadResult.result
+
+            result.onSuccess { response ->
+                val mappedList = animeUiMapper.map(response.list)
+                val updatedList = when (event) {
+                    is LoadEvent.Refresh, is LoadEvent.Initial -> mappedList
+                    is LoadEvent.LoadMore -> previous.list + mappedList
+                }
+
+                if (event.isScrollNeed) {
+                    _scrollNeedFlow.update { true }
+                }
+
+                val newStatus = if (mappedList.isEmpty()) {
+                    AnimeSearchStatus.Empty
+                } else {
+                    AnimeSearchStatus.Loaded
+                }
+
+                return@scan previous.copy(
+                    list = updatedList,
+                    input = event.input,
+                    status = newStatus,
+                    currentPage = response.currentPage,
+                    hasNextPage = response.hasNextPage,
+                )
+            }
+
+            result.onFailure { error ->
+                appLogger.logInfo(viewModelTag, message = event.toString(), error)
+
+                val newStatus = when (event) {
+                    is LoadEvent.Initial -> AnimeSearchStatus.Error
+                    else -> previous.status
+                }
+
+                if (event is LoadEvent.LoadMore) {
+                    onErrorMessage()
+                }
+
+                _scrollNeedFlow.update { false }
+
+                return@scan previous.copy(
+                    status = newStatus,
+                )
+            }
+
+            previous
+        }
+        .onEach { _pullRefreshFlow.tryEmit(false) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = AnimeSearchState()
+        )
 
     init {
         actionConsumer.attachListener(this)
@@ -47,60 +133,21 @@ class AnimeViewModel @Inject constructor(
 
     override val viewModelTag = "SearchListViewModel"
 
-    override fun onPullDownRefreshed() {
-        onPullDownRefreshed(
-            action = {
-                getAnimeListUseCase.invoke(
-                    pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filtersList
-                    ),
-                    searchQuery = query,
-                )
-            },
-            onSuccess = { state ->
-                currentPage = state.currentPage
-                _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-                    list = animeUiMapper.map(state.list),
-                    hasNextPage = state.hasNextPage,
-                    status = AnimeSearchStatus.Loaded,
-                )
-            },
-            onFailure = {
-                logInfo("Error during pull down of search list", it)
-            }
-        )
-    }
-
-    override fun setPullDownIndicatorVisible(isVisible: Boolean) {
-        _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-            isPullDownRefreshing = isVisible,
-        )
-    }
-
-    override fun setLoadingIndicatorVisible(isVisible: Boolean) {
-        _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-            isInitialLoadingIndicatorShowing = isVisible,
-        )
-    }
-
-    override fun setLoadMoreIndicator(isVisible: Boolean) {
-//        _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-//            isLoadMoreLoading = isVisible,
-//        )
-    }
-
     override fun onCleared() {
         super.onCleared()
         actionConsumer.detachListener()
     }
 
     fun onScrolled() {
-        if (animeSearchStateFlow.value.isScrollNeed) {
-            _animeSearchStateFlow.update {
-                _animeSearchStateFlow.value.copy(isScrollNeed = false)
-            }
+        if (_scrollNeedFlow.value) {
+            _scrollNeedFlow.update { false }
         }
+    }
+
+    fun onPullDownRefreshed() {
+        val input = animeSearchState.value.input
+        loadEvents.tryEmit(LoadEvent.Refresh(input))
+        _pullRefreshFlow.tryEmit(true)
     }
 
     fun onActionReceive(action: Action) {
@@ -110,87 +157,24 @@ class AnimeViewModel @Inject constructor(
     }
 
     fun onFabClicked() {
-        onEventReceive(NavigateToFilter(filters = filtersList))
+        onEventReceive(NavigateToFilter(filters = animeSearchState.value.input.filters))
     }
 
     fun onFilterChanged(filtersList: List<SearchSectionUiModel>) {
-        this.filtersList = filtersList
-        onInitialLoad(isScrollNeed = true)
+        val input = animeSearchState.value.input.copy(filters = filtersList)
+        loadEvents.tryEmit(LoadEvent.Refresh(input, isScrollNeed = true))
     }
 
     fun onQueryChanged(query: String) {
-        this.query = query
-        onInitialLoad(isScrollNeed = true)
-    }
-
-    fun onQueryEmpty() {
-        this.query = ""
-        onInitialLoad()
+        val input = animeSearchState.value.input.copy(query = query)
+        loadEvents.tryEmit(LoadEvent.Refresh(input, isScrollNeed = true))
     }
 
     fun onLoadMore() {
-        onLoadMore(
-            action = {
-                getAnimeListUseCase.invoke(
-                    pageNumber = currentPage,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filtersList
-                    ),
-                    searchQuery = query,
-                )
-            },
-            onSuccess = { state ->
-                val hasNextPage = state.hasNextPage
-                currentPage = state.currentPage
-                val list = animeUiMapper.map(state.list)
-
-                _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-                    list = _animeSearchStateFlow.value.list + list,
-                    hasNextPage = hasNextPage,
-                )
-                hasNextPage
-            },
-            onFailure = {
-                logInfo("Error during load more of search list", it)
-                onErrorMessage()
-            }
-        )
-    }
-
-    fun onInitialLoad(isScrollNeed: Boolean = false) {
-        onInitialLoad(
-            action = {
-                getAnimeListUseCase.invoke(
-                    pageNumber = INITIAL_PAGE,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(
-                        filtersList
-                    ),
-                    searchQuery = query,
-                )
-            },
-            onSuccess = { state ->
-                currentPage = state.currentPage
-                val list = animeUiMapper.map(state.list)
-
-                _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-                    list = list,
-                    hasNextPage = state.hasNextPage,
-                    status = if (list.isEmpty()) AnimeSearchStatus.Empty else AnimeSearchStatus.Loaded,
-                    isScrollNeed = isScrollNeed,
-                )
-            },
-            onFailure = {
-                if (_animeSearchStateFlow.value.list.isNotEmpty()) {
-                    onErrorMessage()
-                } else {
-                    _animeSearchStateFlow.value = _animeSearchStateFlow.value.copy(
-                        status = AnimeSearchStatus.Error,
-                        isScrollNeed = false,
-                    )
-                }
-                logInfo("Error during loading of initial of state of search list", it)
-            }
-        )
+        val state = animeSearchState.value
+        if (state.hasNextPage) {
+            loadEvents.tryEmit(LoadEvent.LoadMore(state.input, state.currentPage + 1))
+        }
     }
 
     private fun onErrorMessage() {
@@ -203,4 +187,27 @@ class AnimeViewModel @Inject constructor(
         private const val INITIAL_PAGE = 1
     }
 
+
+    private sealed class LoadEvent(
+        open val input: AnimeUserInput,
+        open val page: Int,
+        open val isScrollNeed: Boolean
+    ) {
+        data class Refresh(
+            override val input: AnimeUserInput,
+            override val isScrollNeed: Boolean = false
+        ) :
+            LoadEvent(input = input, page = INITIAL_PAGE, isScrollNeed = isScrollNeed)
+
+        data class LoadMore(override val input: AnimeUserInput, override val page: Int) :
+            LoadEvent(input = input, page = page, isScrollNeed = false)
+
+        data class Initial(override val input: AnimeUserInput = AnimeUserInput()) :
+            LoadEvent(input = input, page = INITIAL_PAGE, isScrollNeed = false)
+    }
+
+    private data class LoadResult(
+        val event: LoadEvent,
+        val result: Result<GetAnimeListUseCase.AnimeListState>,
+    )
 }

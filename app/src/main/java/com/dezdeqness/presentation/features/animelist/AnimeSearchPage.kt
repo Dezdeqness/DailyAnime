@@ -12,7 +12,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearch
@@ -37,11 +37,17 @@ import kotlinx.coroutines.launch
 fun AnimeSearchPage(
     modifier: Modifier = Modifier,
     stateFlow: StateFlow<AnimeSearchState>,
+    pullRefreshFlow: StateFlow<Boolean>,
+    scrollNeedFlow: StateFlow<Boolean>,
     actions: AnimeSearchActions,
 ) {
     val scope = rememberCoroutineScope()
 
-    val state by stateFlow.collectAsState()
+    val state by stateFlow.collectAsStateWithLifecycle()
+
+    val isPullDownRefreshing by pullRefreshFlow.collectAsStateWithLifecycle()
+
+    val isScrollNeed by scrollNeedFlow.collectAsStateWithLifecycle()
 
     Scaffold(
         containerColor = AppTheme.colors.onPrimary,
@@ -71,7 +77,7 @@ fun AnimeSearchPage(
         }
     ) { contentPadding ->
         val pullRefreshState = rememberPullRefreshState(
-            refreshing = state.isPullDownRefreshing,
+            refreshing = isPullDownRefreshing,
             onRefresh = {
                 actions.onPullDownRefreshed()
             },
@@ -107,7 +113,7 @@ fun AnimeSearchPage(
                     }
 
                     // Workaround to fix pagination when load more was failure
-                    LaunchedEffect(state.list, state.isPullDownRefreshing) {
+                    LaunchedEffect(state.list, isPullDownRefreshing) {
                         isPageLoading = false
                     }
 
@@ -115,7 +121,7 @@ fun AnimeSearchPage(
                         list = state.list,
                         hasNextPage = state.hasNextPage,
                         isPageLoading = isPageLoading,
-                        isScrollNeed = state.isScrollNeed,
+                        isScrollNeed = isScrollNeed,
                         onLoadMore = {
                             actions.onLoadMore()
                             isPageLoading = true
@@ -135,9 +141,9 @@ fun AnimeSearchPage(
             }
 
             PullRefreshIndicator(
-                refreshing = state.isPullDownRefreshing,
+                refreshing = isPullDownRefreshing,
                 pullRefreshState,
-                Modifier.align(Alignment.TopCenter)
+                Modifier.align(Alignment.TopCenter),
             )
 
         }
