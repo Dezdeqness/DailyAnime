@@ -57,6 +57,8 @@ class AnimeListFragment : BaseComposeFragment() {
             Box {
                 AnimeSearchPage(
                     stateFlow = viewModel.animeSearchState,
+                    pullRefreshFlow = viewModel.pullRefreshFlow,
+                    scrollNeedFlow = viewModel.scrollNeedFlow,
                     actions = object : AnimeSearchActions {
                         override fun onPullDownRefreshed() {
                             viewModel.onPullDownRefreshed()
