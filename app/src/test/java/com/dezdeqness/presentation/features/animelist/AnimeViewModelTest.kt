@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.animelist
 
+import app.cash.turbine.test
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.model.AnimeBriefEntity
@@ -13,12 +14,9 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.assertAll
 import utils.TestCoroutineDispatcherProvider
 
 
@@ -78,49 +76,77 @@ class AnimeViewModelTest {
         every {
             animeFilterResponseConverter.convertSearchFilterToQueryMap(listOf())
         } returns mapOf()
+
         every {
             getAnimeListUseCase.invoke(
                 pageNumber = 1,
                 queryMap = mapOf(),
                 searchQuery = ""
             )
-        } returns Result.success(GetAnimeListUseCase.AnimeListState(list = successListEntity))
-        every {
-            animeUiMapper.map(successListEntity)
-        } returns exceptedUiList
-
-        viewModel.onInitialLoad()
-
-        val uiState = viewModel.animeSearchStateFlow.value
-
-        assertAll(
-            { assertFalse(uiState.isLoadingStateShowing) },
-            { assertEquals(exceptedUiList, uiState.list) },
+        } returns Result.success(
+            GetAnimeListUseCase.AnimeListState(
+                list = successListEntity,
+                currentPage = 1,
+                hasNextPage = true,
+            )
         )
+
+        every { animeUiMapper.map(successListEntity) } returns exceptedUiList
+
+        viewModel.animeSearchState.test {
+            val initial = awaitItem()
+            assertEquals(AnimeSearchState(), initial)
+
+            val loaded = awaitItem()
+            val expected = AnimeSearchState(
+                list = exceptedUiList,
+                status = AnimeSearchStatus.Loaded,
+                currentPage = 1,
+                hasNextPage = true,
+                input = AnimeUserInput()
+            )
+
+            assertEquals(expected, loaded)
+        }
     }
 
+
     @Test
-    fun `WHEN user open page AND initial load IS failure SHOULD show show error state`() =
-        runBlocking {
-            every {
-                animeFilterResponseConverter.convertSearchFilterToQueryMap(listOf())
-            } returns mapOf()
-            every {
-                getAnimeListUseCase.invoke(
-                    pageNumber = 1,
-                    queryMap = mapOf(),
-                    searchQuery = ""
-                )
-            } returns Result.failure(Exception())
+    fun `WHEN user open page AND initial load IS failure SHOULD show error state`() = runBlocking {
+        val entityItem = mockk<AnimeBriefEntity>()
+        val successListEntity = listOf(entityItem)
+        val uiItem = mockk<AnimeUiModel>()
+        val exceptedUiList = listOf(uiItem)
 
-            viewModel.onInitialLoad()
+        every {
+            animeFilterResponseConverter.convertSearchFilterToQueryMap(listOf())
+        } returns mapOf()
 
-            val uiState = viewModel.animeSearchStateFlow.value
-
-            assertAll(
-                { assertFalse(uiState.isLoadingStateShowing) },
-                { assertTrue(uiState.isErrorStateShowing) },
+        every {
+            getAnimeListUseCase.invoke(
+                pageNumber = 1,
+                queryMap = mapOf(),
+                searchQuery = ""
             )
+        } returns Result.failure(Exception())
+
+        every { animeUiMapper.map(successListEntity) } returns exceptedUiList
+
+        viewModel.animeSearchState.test {
+            val initial = awaitItem()
+            assertEquals(AnimeSearchState(), initial)
+
+            val loaded = awaitItem()
+            val expected = AnimeSearchState(
+                list = listOf(),
+                status = AnimeSearchStatus.Error,
+                currentPage = 1,
+                hasNextPage = false,
+                input = AnimeUserInput()
+            )
+
+            assertEquals(expected, loaded)
         }
+    }
 
 }

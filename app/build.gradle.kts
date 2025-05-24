@@ -120,6 +120,7 @@ dependencies {
     // Unit Testing
     testImplementation(libs.junit.api)
     testImplementation(libs.junit.engine)
+    testImplementation(libs.turbine)
 
     // Android Testing
     implementation(libs.androidx.test.junit)
