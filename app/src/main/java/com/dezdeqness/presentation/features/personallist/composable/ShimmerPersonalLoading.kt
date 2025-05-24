@@ -53,7 +53,7 @@ private fun ShimmerPersonalItem(
 
             Box(
                 modifier = Modifier
-                    .height(140.dp)
+                    .height(150.dp)
                     .aspectRatio(2f / 3)
                     .shimmer()
             )

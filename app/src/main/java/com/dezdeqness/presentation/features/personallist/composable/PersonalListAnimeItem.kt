@@ -82,7 +82,7 @@ fun PersonalListAnimeItem(
                     placeholder = painterResource(id = R.drawable.ic_placeholder),
                     error = painterResource(id = R.drawable.ic_placeholder),
                     modifier = Modifier
-                        .height(140.dp)
+                        .height(150.dp)
                         .aspectRatio(2f / 3)
                 )
 
@@ -116,7 +116,7 @@ fun PersonalListAnimeItem(
                     Text(
                         text = userRateUiModel.kind,
                         textAlign = TextAlign.Start,
-                        fontSize = 14.sp,
+                        fontSize = 12.sp,
                         style = AppTheme.typography.bodyMedium,
                         color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
                         modifier = Modifier.padding(start = 8.dp),
@@ -135,6 +135,7 @@ fun PersonalListAnimeItem(
                                 modifier = Modifier.padding(8.dp),
                                 color = AppTheme.colors.textPrimary,
                                 fontWeight = FontWeight.Bold,
+                                style = AppTheme.typography.bodySmall,
                             )
                         }
 
@@ -177,6 +178,7 @@ fun PersonalListAnimeItem(
                         progress = { progressValue },
                         modifier = Modifier
                             .padding(horizontal = 4.dp)
+                            .height(4.dp)
                             .fillMaxWidth(),
                         drawStopIndicator = {}
                     )
