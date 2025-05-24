@@ -22,6 +22,7 @@ fragmentVersion = "1.8.6"
 collectionVersion = "1.5.0"
 junitVersion = "5.12.0"
 mockkVersion = "1.13.10"
+turbineVersion = "1.2.0"
 zoomableVersion = "1.5.3"
 navigationVersion = "2.8.9"
 androidJunitVersion = "1.2.1"
@@ -80,6 +81,7 @@ dagger-compilier = { group = "com.google.dagger", name = "dagger-compiler", vers
 bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
 bumptech-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideVersion" }
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detektVersion" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
 wasabeef-transformation = { group = "jp.wasabeef", name = "glide-transformations", version.ref = "transformationVersion" }
 
 square-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
