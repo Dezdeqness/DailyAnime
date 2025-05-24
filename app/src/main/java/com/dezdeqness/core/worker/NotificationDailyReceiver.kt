@@ -2,36 +2,36 @@ package com.dezdeqness.core.worker
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.work.Worker
-import androidx.work.WorkerParameters
 import com.dezdeqness.R
+import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.data.provider.PermissionCheckProvider
-import com.dezdeqness.domain.repository.SettingsRepository
+import com.dezdeqness.getComponent
 import kotlinx.coroutines.runBlocking
 
-class NotificationDailyWorker(
-    private val settingsRepository: SettingsRepository,
-    private val permissionCheckProvider: PermissionCheckProvider,
-    private val context: Context,
-    workerParams: WorkerParameters,
-) : Worker(context, workerParams) {
+class NotificationDailyReceiver : BroadcastReceiver() {
 
-    override fun doWork(): Result {
-        showNotification()
-        return Result.success()
+    override fun onReceive(context: Context, intent: Intent) {
+        showNotification(context)
     }
 
-    private fun showNotification() {
+    private fun showNotification(context: Context) {
+        val application = context.applicationContext as ShikimoriApp
+        val settingsRepository = application.getComponent().settingsRepository
+        val permissionCheckProvider: PermissionCheckProvider =
+            application.getComponent().permissionCheckProvider
+
         val isNotificationEnabled = runBlocking {
             settingsRepository.getNotificationsEnabled()
         }
         val permissionGranted = permissionCheckProvider.isNotificationPermissionGranted()
 
         if (isNotificationEnabled && permissionGranted) {
-            createNotificationChannel()
+            createNotificationChannel(context)
 
             val title = context.getString(R.string.app_name)
             val message = context.getString(R.string.notification_daily_description)
@@ -49,7 +49,7 @@ class NotificationDailyWorker(
 
     }
 
-    private fun createNotificationChannel() {
+    private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notification Daily Channel"
             val descriptionText = "Channel for scheduled daily notifications"
@@ -68,4 +68,3 @@ class NotificationDailyWorker(
         private const val NOTIFICATION_ID = 236
     }
 }
-

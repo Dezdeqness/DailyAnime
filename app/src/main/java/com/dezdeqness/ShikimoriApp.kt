@@ -1,20 +1,13 @@
 package com.dezdeqness
 
 import android.app.Application
-import android.content.Context
-import androidx.work.Configuration
-import androidx.work.ListenableWorker
-import androidx.work.Worker
-import androidx.work.WorkerFactory
-import androidx.work.WorkerParameters
 import coil.Coil
 import coil.ImageLoader
 import coil.util.DebugLogger
-import com.dezdeqness.core.worker.NotificationDailyWorker
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
 
-class ShikimoriApp : Application(), Configuration.Provider {
+class ShikimoriApp : Application() {
 
     val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(applicationContext)
@@ -38,33 +31,6 @@ class ShikimoriApp : Application(), Configuration.Provider {
 
         Coil.setImageLoader(imageLoader)
     }
-
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(object : WorkerFactory() {
-                override fun createWorker(
-                    appContext: Context,
-                    workerClassName: String,
-                    workerParameters: WorkerParameters
-                ): ListenableWorker? {
-                    val workerClass = try {
-                        Class.forName(workerClassName).asSubclass(Worker::class.java)
-                    } catch (_: ClassNotFoundException) {
-                        null
-                    }
-                    return if (workerClass == NotificationDailyWorker::class.java) {
-                        NotificationDailyWorker(
-                            settingsRepository = appComponent.settingsRepository,
-                            permissionCheckProvider = appComponent.permissionCheckProvider,
-                            appContext,
-                            workerParameters)
-                    } else {
-                        null
-                    }
-                }
-
-            })
-            .build()
 
 }
 
