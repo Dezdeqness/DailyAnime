@@ -260,19 +260,6 @@ fun UserRatePage(
                     }
                 }
 
-                Text(
-                    text = stringResource(id = R.string.edit_rate_episodes_header),
-                    style = AppTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                    ),
-                    color = AppTheme.colors.textPrimary,
-                    modifier = Modifier.padding(
-                        horizontal = 16.dp,
-                        vertical = 8.dp,
-                    )
-                )
-
             }
 
             Text(
