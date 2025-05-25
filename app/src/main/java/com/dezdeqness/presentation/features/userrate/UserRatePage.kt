@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.userrate.composable.CommentTextField
 import com.dezdeqness.presentation.features.userrate.composable.ScoreSlider
@@ -142,17 +143,13 @@ fun UserRatePage(
                 )
             )
 
-            Text(
-                text = stringResource(id = R.string.edit_rate_status_title),
-                style = AppTheme.typography.titleMedium.copy(
+            Header(
+                title = stringResource(id = R.string.edit_rate_status_title),
+                titleStyle = AppTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                 ),
-                color = AppTheme.colors.textPrimary,
-                modifier = Modifier.padding(
-                    vertical = 8.dp,
-                    horizontal = 16.dp,
-                )
+                verticalPadding = 8.dp,
             )
 
             MaterialTheme {
@@ -182,17 +179,13 @@ fun UserRatePage(
                 }
             }
 
-            Text(
-                text = stringResource(id = R.string.edit_rate_score_title),
-                style = AppTheme.typography.titleMedium.copy(
+            Header(
+                title = stringResource(id = R.string.edit_rate_score_title),
+                titleStyle = AppTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                 ),
-                color = AppTheme.colors.textPrimary,
-                modifier = Modifier.padding(
-                    vertical = 8.dp,
-                    horizontal = 16.dp,
-                )
+                verticalPadding = 8.dp,
             )
 
             ScoreSlider(
@@ -201,23 +194,18 @@ fun UserRatePage(
                 onScoreChanged = actions::onScoreChanged,
             )
 
-            Text(
-                text = stringResource(id = R.string.edit_rate_episodes_header),
-                style = AppTheme.typography.titleMedium.copy(
+            Header(
+                title = stringResource(id = R.string.edit_rate_episodes_header),
+                titleStyle = AppTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                 ),
-                color = AppTheme.colors.textPrimary,
-                modifier = Modifier.padding(
-                    top = 4.dp,
-                    end = 16.dp,
-                    start = 16.dp,
-                )
+                verticalPadding = 4.dp,
             )
 
             Row(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                    .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -262,17 +250,13 @@ fun UserRatePage(
 
             }
 
-            Text(
-                text = stringResource(id = R.string.edit_rate_comment_header),
-                style = AppTheme.typography.titleMedium.copy(
+            Header(
+                title = stringResource(id = R.string.edit_rate_comment_header),
+                titleStyle = AppTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                 ),
-                color = AppTheme.colors.textPrimary,
-                modifier = Modifier.padding(
-                    horizontal = 16.dp,
-                    vertical = 8.dp,
-                )
+                verticalPadding = 8.dp,
             )
 
             val commentState = rememberCommentState(state.comment)

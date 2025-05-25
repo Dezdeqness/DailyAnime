@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.calendar.CalendarListUiModel
 
@@ -35,9 +37,10 @@ fun CalendarList(
     ) {
         list.forEach { section ->
             stickyHeader {
-                CalendarDateHeader(
+                Header(
                     title = section.header,
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    titleStyle = MaterialTheme.typography.titleMedium,
                 )
             }
             items(
@@ -53,7 +56,7 @@ fun CalendarList(
                             horizontal = 16.dp,
                         ),
                     onClick = { id, name ->
-                        onActionReceive(Action.AnimeClick(id,  title = name))
+                        onActionReceive(Action.AnimeClick(id, title = name))
                     },
                 )
             }

@@ -1,14 +1,12 @@
-package com.dezdeqness.presentation.features.home.composable
+package com.dezdeqness.core.ui.views.header
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
@@ -18,23 +16,49 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.action.Action
 
 @Composable
-fun SectionHeaderWithAction(
+fun Header(
     modifier: Modifier = Modifier,
     title: String,
-    onActionReceive: (Action) -> Unit,
+    titleStyle: TextStyle = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
+    titleColor: Color = AppTheme.colors.textPrimary,
+    verticalPadding: Dp = 16.dp,
+) {
+    Header(
+        modifier = modifier,
+        title = title,
+        titleStyle = titleStyle,
+        titleColor = titleColor,
+        verticalPadding = verticalPadding,
+        onClick = null,
+    )
+}
+
+@Composable
+fun Header(
+    modifier: Modifier = Modifier,
+    title: String,
+    titleStyle: TextStyle = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
+    titleColor: Color = AppTheme.colors.textPrimary,
+    icon: ImageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
+    iconColor: Color = AppTheme.colors.onSurface,
+    verticalPadding: Dp = 16.dp,
+    onClick: (() -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
             .clickable(
-                onClick = { onActionReceive.invoke(Action.CalendarHeaderClicked) },
+                enabled = onClick != null,
+                onClick = onClick ?: {},
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),
             )
@@ -44,33 +68,31 @@ fun SectionHeaderWithAction(
     ) {
         Text(
             title,
-            style = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
-            modifier = Modifier.padding(vertical = 16.dp),
-            color = AppTheme.colors.textPrimary
+            style = titleStyle,
+            modifier = Modifier.padding(vertical = verticalPadding),
+            color = titleColor
         )
 
-        Icon(
-            Icons.AutoMirrored.Default.KeyboardArrowRight,
-            contentDescription = null,
-            tint = AppTheme.colors.onSurface
-        )
+        if (onClick != null) {
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = iconColor,
+            )
+        }
     }
 }
 
 @PreviewLightDark
 @Composable
-fun SectionHeaderWithActionPreview() {
+fun HeaderPreview() {
     AppTheme {
-        Box(
+        Header(
             modifier = Modifier
                 .background(AppTheme.colors.onPrimary)
-                .padding(16.dp)
-                .width(200.dp)
-        ) {
-            SectionHeaderWithAction(
-                title = "Sci-Fi",
-                onActionReceive = {},
-            )
-        }
+                .fillMaxWidth(),
+            title = "Sci-Fi",
+            onClick = {},
+        )
     }
 }

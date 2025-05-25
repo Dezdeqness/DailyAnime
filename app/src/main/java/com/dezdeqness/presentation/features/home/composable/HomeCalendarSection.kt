@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
+import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 
@@ -57,10 +58,12 @@ fun HomeCalendarSection(
                 indicatorScrollState.animateScrollToItem((currentPage - 1).coerceAtLeast(0))
             }
         }
-        SectionHeaderWithAction(
+        Header(
             title = stringResource(R.string.home_calendar_title),
-            modifier = Modifier.padding(vertical = 8.dp),
-            onActionReceive = onActionReceive,
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                onActionReceive(Action.CalendarHeaderClicked)
+            },
         )
         HorizontalPager(state = pagerState) { index ->
             val currentItem = items[index]

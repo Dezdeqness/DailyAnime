@@ -30,10 +30,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.ExpandableContent
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import com.dezdeqness.presentation.models.SectionType
 import kotlinx.coroutines.flow.StateFlow
@@ -74,12 +74,7 @@ fun Section(
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                state.displayName,
-                style = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
-                modifier = Modifier.padding(vertical = 16.dp),
-                color = AppTheme.colors.textPrimary
-            )
+            Header(title = state.displayName)
 
             if (state.isExpandable) {
                 Spacer(modifier = Modifier.weight(1f))
