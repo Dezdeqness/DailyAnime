@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.GeneralError
+import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
 import com.dezdeqness.presentation.features.home.model.SectionStatus
@@ -25,10 +26,7 @@ fun HomeSection(
     onActionReceive: (Action) -> Unit,
 ) {
     Column(modifier = modifier) {
-        SectionHeader(
-            title = title,
-            modifier = Modifier.padding(horizontal = 16.dp),
-        )
+        Header(title = title)
         Box(
             modifier = modifier.wrapContentHeight()
         ) {

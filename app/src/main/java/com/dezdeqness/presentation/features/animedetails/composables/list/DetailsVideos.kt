@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.core.ui.views.image.AppImage
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.google.common.collect.ImmutableList
@@ -36,11 +37,10 @@ fun DetailsVideos(
     onVideoClick: (String) -> Unit
 ) {
     Column(modifier = modifier) {
-        Text(
-            stringResource(R.string.anime_details_video_title),
-            style = AppTheme.typography.headlineSmall,
-            color = AppTheme.colors.textPrimary,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        Header(
+            title = stringResource(R.string.anime_details_video_title),
+            titleStyle = AppTheme.typography.headlineSmall,
+            verticalPadding = 8.dp,
         )
 
         LazyRow(
