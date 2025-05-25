@@ -4,10 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,37 +31,41 @@ fun UnauthorizedScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .background(AppTheme.colors.onPrimary)
             .padding(vertical = 16.dp, horizontal = 16.dp)
     ) {
-        Image(
-            painter = painterResource(id = com.dezdeqness.core.ui.R.drawable.ic_placeholder),
-            contentDescription = null,
-        )
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Image(
+                painter = painterResource(id = com.dezdeqness.core.ui.R.drawable.ic_placeholder),
+                contentDescription = null,
+            )
 
-        Text(
-            text = title,
-            style = AppTheme.typography.titleMedium,
-            color = AppTheme.colors.textPrimary,
-            textAlign = TextAlign.Center,
-        )
+            Text(
+                text = title,
+                style = AppTheme.typography.titleMedium,
+                color = AppTheme.colors.textPrimary,
+                textAlign = TextAlign.Center,
+            )
+
+        }
 
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             AppButton(
                 title = stringResource(id = R.string.unauthorized_sign_in),
                 onClick = {
                     actions.onSignInClicked()
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp)
+                modifier = Modifier.widthIn(480.dp)
             )
 
             AppOutlinedButton(
@@ -67,7 +73,7 @@ fun UnauthorizedScreen(
                 onClick = {
                     actions.onSignUpClicked()
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.widthIn(480.dp)
             )
         }
     }
