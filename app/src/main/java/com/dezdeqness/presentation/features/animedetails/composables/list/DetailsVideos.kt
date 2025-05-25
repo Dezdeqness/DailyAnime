@@ -17,17 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.image.AppImage
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.google.common.collect.ImmutableList
 
@@ -81,23 +78,11 @@ private fun VideoItem(
                 indication = ripple(color = AppTheme.colors.ripple),
             )
     ) {
-        val model = remember {
-            ImageRequest.Builder(context)
-                .data(video.imageUrl)
-                .crossfade(true)
-                .build()
-        }
-
-        AsyncImage(
-            model = model,
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-            placeholder = painterResource(id = R.drawable.ic_placeholder),
-            error = painterResource(id = R.drawable.ic_placeholder),
+        AppImage(
+            data = video.imageUrl,
             modifier = Modifier
                 .width(120.dp)
                 .height(80.dp)
-                .clip(RoundedCornerShape(8.dp)),
         )
 
         Text(

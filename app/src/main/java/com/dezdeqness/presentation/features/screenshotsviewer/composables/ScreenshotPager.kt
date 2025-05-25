@@ -13,11 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.dezdeqness.R
+import com.dezdeqness.core.ui.views.image.AppImage
 import kotlinx.coroutines.launch
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.toggleScale
@@ -31,8 +27,6 @@ fun ScreenshotPager(
     onShow: () -> Unit,
     onHide: () -> Unit,
 ) {
-    val context = LocalContext.current
-
     val scope = rememberCoroutineScope()
 
     var isUiVisible by remember { mutableStateOf(true) }
@@ -46,24 +40,14 @@ fun ScreenshotPager(
             mutableStateOf<ContentScale>(ContentScale.None)
         }
 
-        val model = remember {
-            ImageRequest.Builder(context)
-                .data(items[page])
-                .crossfade(true)
-                .build()
-        }
-
         val zoomState = rememberZoomState()
-        AsyncImage(
-            model = model,
-            contentDescription = null,
+        AppImage(
+            data = items[page],
             contentScale = scale,
             onSuccess = { state ->
                 zoomState.setContentSize(state.painter.intrinsicSize)
                 scale = ContentScale.Fit
             },
-            placeholder = painterResource(id = R.drawable.ic_placeholder),
-            error = painterResource(id = R.drawable.ic_placeholder),
             modifier = Modifier
                 .fillMaxSize()
                 .zoomable(
@@ -86,6 +70,5 @@ fun ScreenshotPager(
             }
         }
     }
-
 
 }

@@ -18,19 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.image.AppImage
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 
 @Composable
@@ -39,8 +35,6 @@ fun AnimeItem(
     item: AnimeUiModel,
     onClick: (Long) -> Unit,
 ) {
-    val context = LocalContext.current
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -54,19 +48,8 @@ fun AnimeItem(
             ),
     ) {
         Box {
-            val model = remember {
-                ImageRequest.Builder(context)
-                    .data(item.logoUrl)
-                    .crossfade(true)
-                    .build()
-            }
-
-            AsyncImage(
-                model = model,
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-                placeholder = painterResource(id = R.drawable.ic_placeholder),
-                error = painterResource(id = R.drawable.ic_placeholder),
+            AppImage(
+                data = item.logoUrl,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp)

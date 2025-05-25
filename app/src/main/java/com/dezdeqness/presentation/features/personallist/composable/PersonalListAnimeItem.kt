@@ -35,10 +35,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.image.AppImage
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.models.UserRateUiModel
 
@@ -63,24 +62,11 @@ fun PersonalListAnimeItem(
             )
             .fillMaxWidth(),
     ) {
-        Row(
-            modifier = Modifier.height(IntrinsicSize.Max)
-        ) {
-
+        Row(modifier = Modifier.height(IntrinsicSize.Max)) {
             Box {
-                val model = remember(userRateUiModel) {
-                    ImageRequest.Builder(context)
-                        .data(userRateUiModel.logoUrl)
-                        .crossfade(true)
-                        .build()
-                }
-
-                AsyncImage(
-                    model = model,
+                AppImage(
+                    data = userRateUiModel.logoUrl,
                     contentScale = ContentScale.FillHeight,
-                    contentDescription = null,
-                    placeholder = painterResource(id = R.drawable.ic_placeholder),
-                    error = painterResource(id = R.drawable.ic_placeholder),
                     modifier = Modifier
                         .height(150.dp)
                         .aspectRatio(2f / 3)
