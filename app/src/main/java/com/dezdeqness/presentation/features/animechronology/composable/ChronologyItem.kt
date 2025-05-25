@@ -21,17 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.image.AppImage
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.models.ChronologyUiModel
 
@@ -41,8 +37,6 @@ fun ChronologyItem(
     item: ChronologyUiModel,
     onClick: (Action) -> Unit,
 ) {
-    val context = LocalContext.current
-
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
@@ -60,19 +54,9 @@ fun ChronologyItem(
         ) {
 
             Box {
-                val model = remember(item.imageUrl) {
-                    ImageRequest.Builder(context)
-                        .data(item.imageUrl)
-                        .crossfade(true)
-                        .build()
-                }
-
-                AsyncImage(
-                    model = model,
+                AppImage(
+                    data = item.imageUrl,
                     contentScale = ContentScale.FillHeight,
-                    contentDescription = null,
-                    placeholder = painterResource(id = R.drawable.ic_placeholder),
-                    error = painterResource(id = R.drawable.ic_placeholder),
                     modifier = Modifier
                         .width(96.dp)
                         .height(120.dp)

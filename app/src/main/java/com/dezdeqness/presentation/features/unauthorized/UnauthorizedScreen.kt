@@ -37,7 +37,7 @@ fun UnauthorizedScreen(
             .padding(vertical = 16.dp, horizontal = 16.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_placeholder),
+            painter = painterResource(id = com.dezdeqness.core.ui.R.drawable.ic_placeholder),
             contentDescription = null,
         )
 
