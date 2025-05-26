@@ -3,16 +3,12 @@ package com.dezdeqness.presentation.features.animedetails.composables.list
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.chips.AppChip
 import com.dezdeqness.presentation.action.Action
 
 @Composable
@@ -26,8 +22,8 @@ fun DetailMoreInfo(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         item {
-            MoreInfoItem(
-                textRes = R.string.anime_toolbar_similar,
+            AppChip(
+                title = stringResource(R.string.anime_toolbar_similar),
                 onClick = {
                     onAction(Action.SimilarClicked)
                 }
@@ -35,46 +31,20 @@ fun DetailMoreInfo(
         }
 
         item {
-            MoreInfoItem(
-                textRes = R.string.anime_toolbar_chronology,
+            AppChip(
+                title = stringResource(R.string.anime_toolbar_chronology),
                 onClick = {
                     onAction(Action.ChronologyClicked)
                 }
             )
         }
         item {
-            MoreInfoItem(
-                textRes = R.string.anime_toolbar_stats,
+            AppChip(
+                title = stringResource( R.string.anime_toolbar_stats),
                 onClick = {
                     onAction(Action.StatsClicked)
                 }
             )
         }
     }
-}
-
-@Composable
-fun MoreInfoItem(
-    modifier: Modifier = Modifier,
-    textRes: Int,
-    onClick: () -> Unit
-) {
-    FilterChip(
-        modifier = modifier,
-        onClick = onClick,
-        label = {
-            Text(
-                text = stringResource(id = textRes),
-                color = AppTheme.colors.textPrimary,
-                style = AppTheme.typography.bodyMedium,
-            )
-        },
-        colors = FilterChipDefaults.filterChipColors().copy(
-            containerColor = AppTheme.colors.onPrimary,
-            selectedContainerColor = AppTheme.colors.onPrimary
-        ),
-        shape = RoundedCornerShape(50),
-        elevation = null,
-        selected = false,
-    )
 }
