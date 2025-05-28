@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails.composables.list
+package com.dezdeqness.presentation.features.details.composables.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -47,7 +47,6 @@ fun DetailsHeader(
                 )
         )
 
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -67,15 +66,18 @@ fun DetailsHeader(
                     modifier = Modifier.size(width = 200.dp, height = 264.dp),
                 )
 
-                Text(
-                    detailsHeader.ratingScore.toString(),
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .background(Color.Black.copy(alpha = 0.8f), RoundedCornerShape(8.dp))
-                        .padding(4.dp),
-                    color = Color.White,
-                    style = AppTheme.typography.headlineSmall,
-                )
+                val ratingScore = detailsHeader.ratingScore
+                if (ratingScore != null) {
+                    Text(
+                        ratingScore.toString(),
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .background(Color.Black.copy(alpha = 0.8f), RoundedCornerShape(8.dp))
+                            .padding(4.dp),
+                        color = Color.White,
+                        style = AppTheme.typography.headlineSmall,
+                    )
+                }
             }
         }
     }

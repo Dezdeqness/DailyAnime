@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails.composables.list
+package com.dezdeqness.presentation.features.details.composables.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

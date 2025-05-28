@@ -11,7 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsError
+import com.dezdeqness.presentation.features.details.composables.list.DetailsError
 import com.dezdeqness.presentation.features.genericlistscreen.composable.GenericList
 import com.dezdeqness.presentation.features.genericlistscreen.composable.GenericListLoading
 import kotlinx.coroutines.flow.StateFlow

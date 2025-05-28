@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.presentation.models.AdapterItem
 import com.google.common.collect.ImmutableList

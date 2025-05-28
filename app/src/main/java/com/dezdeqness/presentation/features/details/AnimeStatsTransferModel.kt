@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

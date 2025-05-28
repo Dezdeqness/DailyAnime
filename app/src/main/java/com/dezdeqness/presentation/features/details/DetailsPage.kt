@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,10 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.features.animedetails.composables.DetailsList
-import com.dezdeqness.presentation.features.animedetails.composables.DetailsToolbar
-import com.dezdeqness.presentation.features.animedetails.composables.ShimmerDetailsLoading
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsError
+import com.dezdeqness.presentation.features.details.composables.DetailsList
+import com.dezdeqness.presentation.features.details.composables.DetailsToolbar
+import com.dezdeqness.presentation.features.details.composables.ShimmerDetailsLoading
+import com.dezdeqness.presentation.features.details.composables.list.DetailsError
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable

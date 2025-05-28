@@ -1,7 +1,8 @@
 package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.modules.AnimeDetailsModule
-import com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment
+import com.dezdeqness.presentation.features.details.AnimeDetailsFragment
+import com.dezdeqness.presentation.features.details.Target
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -22,11 +23,11 @@ interface AnimeDetailsComponent {
 }
 
 @Module
-class ArgsModule(private val id: Long) {
+class ArgsModule(private val target: Target) {
 
-    @Named("animeId")
+    @Named("target")
     @Provides
-    fun provideAnimeId() = id
+    fun provideTarget() = target
 
 }
 

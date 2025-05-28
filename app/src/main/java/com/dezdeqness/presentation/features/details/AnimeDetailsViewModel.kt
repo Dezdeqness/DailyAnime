@@ -1,21 +1,26 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
+import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.domain.repository.CharacterRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.NavigateToAnimeStats
+import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
+import com.dezdeqness.presentation.features.details.Target.Anime
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,8 +31,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AnimeDetailsViewModel @Inject constructor(
-    @Named("animeId") private val animeId: Long,
+    @Named("target") private val target: Target,
     private val getAnimeDetailsUseCase: GetAnimeDetailsUseCase,
+    private val characterRepository: CharacterRepository,
     private val animeDetailsComposer: AnimeDetailsComposer,
     private val createOrUpdateUserRateUseCase: CreateOrUpdateUserRateUseCase,
     private val accountRepository: AccountRepository,
@@ -46,6 +52,7 @@ class AnimeDetailsViewModel @Inject constructor(
     val animeDetailsStateFlow: StateFlow<AnimeDetailsState> get() = _animeDetailsStateFlow
 
     private var animeDetails: AnimeDetailsFullEntity? = null
+    private var characterDetails: CharacterDetailsEntity? = null
 
     init {
         actionConsumer.attachListener(this)
@@ -67,20 +74,32 @@ class AnimeDetailsViewModel @Inject constructor(
                 is Action.ScreenShotClick -> {
                     onScreenShotClicked(action.screenshotUrl)
                 }
+
                 is Action.StatsClicked -> {
                     onStatsClicked()
                 }
+
                 is Action.SimilarClicked -> {
                     onSimilarClicked()
                 }
+
                 is Action.ChronologyClicked -> {
                     onChronologyClicked()
                 }
+
+                is Action.CharacterClick -> {
+                    onCharacterCLicked(action.characterId)
+                }
+
                 else -> {
                     actionConsumer.consume(action)
                 }
             }
         }
+    }
+
+    private fun onCharacterCLicked(characterId: Long) {
+        onEventReceive(NavigateToCharacterDetails(characterId = characterId))
     }
 
     fun onEditRateClicked() {
@@ -100,9 +119,10 @@ class AnimeDetailsViewModel @Inject constructor(
     fun onUserRateChanged(userRate: EditRateUiModel?) {
         launchOnIo {
             userRate?.let {
+                val animeTargetId = (target as? Anime)?.id ?: return@let
                 createOrUpdateUserRateUseCase.invoke(
                     rateId = userRate.rateId,
-                    targetId = animeId.toString(),
+                    targetId = animeTargetId.toString(),
                     status = userRate.status,
                     episodes = userRate.episodes,
                     score = userRate.score,
@@ -133,9 +153,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
     fun onShareButtonClicked() {
         onEventReceive(
-            ShareUrl(
-                url = animeDetails?.animeDetailsEntity?.url.orEmpty()
-            )
+            ShareUrl(url = animeDetails?.animeDetailsEntity?.url ?: characterDetails?.url.orEmpty())
         )
     }
 
@@ -207,28 +225,56 @@ class AnimeDetailsViewModel @Inject constructor(
 
     private fun initialLoad() {
         _animeDetailsStateFlow.update { it.copy(status = DetailsStatus.Loading) }
-        onInitialLoad(
-            collector = flow { emit(getAnimeDetailsUseCase.invoke(animeId)) },
-            onSuccess = { details ->
-                animeDetails = details
-                val isAuthorized = accountRepository.isAuthorized()
-                val uiItems = animeDetailsComposer.compose(details)
-                _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-                    title = details.animeDetailsEntity.russian,
-                    uiModels = uiItems,
-                    isEditRateFabShown = isAuthorized,
-                    status = DetailsStatus.Loaded,
-                )
-            },
-            onFailure = {
-                logInfo("Error during initial load of details with $animeId", it)
+        when (target) {
+            is Anime -> {
+                onInitialLoad(
+                    collector = flow { emit(getAnimeDetailsUseCase.invoke(target.id)) },
+                    onSuccess = { details ->
+                        animeDetails = details
+                        val isAuthorized = accountRepository.isAuthorized()
+                        val uiItems = animeDetailsComposer.compose(details)
+                        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                            title = details.animeDetailsEntity.russian,
+                            uiModels = uiItems,
+                            isEditRateFabShown = isAuthorized,
+                            status = DetailsStatus.Loaded,
+                        )
+                    },
+                    onFailure = {
+                        logInfo("Error during initial load of details with ${target.id}", it)
 
-                _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
-                    isEditRateFabShown = false,
-                    status = DetailsStatus.Error,
+                        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                            isEditRateFabShown = false,
+                            status = DetailsStatus.Error,
+                        )
+                    }
                 )
             }
-        )
+
+            is Target.Character -> {
+                onInitialLoad(
+                    collector = flow { emit(characterRepository.getCharacterDetailsById(target.id)) },
+                    onSuccess = { details ->
+                        characterDetails = details
+                        val uiItems = animeDetailsComposer.compose(details)
+                        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                            title = details.russian,
+                            uiModels = uiItems,
+                            isEditRateFabShown = false,
+                            status = DetailsStatus.Loaded,
+                        )
+                    },
+                    onFailure = {
+                        logInfo("Error during initial load of details with ${target.id}", it)
+
+                        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                            isEditRateFabShown = false,
+                            status = DetailsStatus.Error,
+                        )
+                    }
+                )
+            }
+        }
     }
 
     private fun onEditCreateSuccessMessage() {
@@ -243,4 +289,9 @@ class AnimeDetailsViewModel @Inject constructor(
         }
     }
 
+}
+
+sealed class Target(open val id: Long) {
+    data class Anime(override val id: Long) : Target(id = id)
+    data class Character(override val id: Long) : Target(id = id)
 }

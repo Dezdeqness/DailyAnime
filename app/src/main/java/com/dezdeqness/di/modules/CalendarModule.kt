@@ -3,9 +3,7 @@ package com.dezdeqness.di.modules
 import com.dezdeqness.data.CalendarApiService
 import com.dezdeqness.data.datasource.CalendarRemoteDataSource
 import com.dezdeqness.data.datasource.CalendarRemoteDataSourceImpl
-import com.dezdeqness.data.repository.AnimeRepositoryImpl
 import com.dezdeqness.data.repository.CalendarRepositoryImpl
-import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.repository.CalendarRepository
 import dagger.Binds
 import dagger.Module
