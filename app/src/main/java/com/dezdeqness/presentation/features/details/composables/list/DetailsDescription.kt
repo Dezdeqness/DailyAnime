@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails.composables.list
+package com.dezdeqness.presentation.features.details.composables.list
 
 import android.graphics.Typeface
 import android.text.style.CharacterStyle

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import android.os.Bundle
 import android.view.View
@@ -23,6 +23,7 @@ import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeStats
+import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
@@ -62,7 +63,7 @@ class AnimeDetailsFragment : BaseComposeFragment() {
     override fun setupScreenComponent(component: AppComponent) {
         component
             .animeDetailsComponent()
-            .argsModule(module = ArgsModule(requireArguments().getLong("animeId")))
+            .argsModule(module = ArgsModule(parseTarget()))
             .build()
             .inject(this)
     }
@@ -169,11 +170,30 @@ class AnimeDetailsFragment : BaseComposeFragment() {
                 )
             }
 
+            is NavigateToCharacterDetails -> {
+                findNavController().navigate(
+                    AnimeDetailsFragmentDirections.navigateToCharacter(event.characterId, 0)
+                )
+            }
+
             is ConsumableEvent -> {
                 eventConsumer.consume(event)
             }
 
             else -> {}
+        }
+    }
+
+    private fun parseTarget(): Target {
+        val arguments = requireArguments()
+
+        val animeId = arguments.getLong("animeId")
+        val characterId = arguments.getLong("characterId")
+
+        return if (characterId != 0L) {
+            Target.Character(characterId)
+        } else {
+            Target.Anime(animeId)
         }
     }
 

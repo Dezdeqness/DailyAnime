@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.R
 import com.dezdeqness.data.provider.ResourceProvider
@@ -6,6 +6,7 @@ import com.dezdeqness.domain.model.AnimeDetailsEntity
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCell
@@ -148,6 +149,7 @@ class AnimeDetailsComposer @Inject constructor(
         .roles
         .map {
             RoleUiModel(
+                id = it.character.id,
                 name = it.character.russian.ifEmpty { it.character.name },
                 imageUrl = it.character.image.preview,
             )
@@ -299,6 +301,22 @@ class AnimeDetailsComposer @Inject constructor(
         }
 
         return BriefInfoUiModelList(ImmutableList.copyOf(list))
+    }
+
+    fun compose(entity: CharacterDetailsEntity) : ImmutableList<AdapterItem> {
+        val uiItems = mutableListOf<AdapterItem>()
+
+        uiItems.add(HeaderItemUiModel(imageUrl = entity.image.original))
+
+        uiItems.add(NameUiModel(title = entity.russian))
+
+        if (entity.description != null) {
+            uiItems.add(DescriptionUiModel(content = entity.descriptionHTML))
+        }
+
+        uiItems.add(SpacerUiItem)
+
+        return ImmutableList.copyOf(uiItems)
     }
 
     companion object {

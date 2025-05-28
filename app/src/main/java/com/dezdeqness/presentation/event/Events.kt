@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.event
 
-import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
+import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import java.util.UUID
@@ -68,6 +68,8 @@ data class NavigateToAnimeStats(
 data class NavigateToSimilar(val animeId: Long) : Event()
 
 data class NavigateToChronology(val animeId: Long) : Event()
+
+data class NavigateToCharacterDetails(val characterId: Long) : Event()
 
 object CloseAuthorization: Event()
 

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails.composables
+package com.dezdeqness.presentation.features.details.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

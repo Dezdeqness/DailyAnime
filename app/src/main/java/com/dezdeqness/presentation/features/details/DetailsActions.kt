@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails
+package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.presentation.action.Action
 

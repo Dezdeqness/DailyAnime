@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.animedetails.composables
+package com.dezdeqness.presentation.features.details.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
@@ -14,16 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailMoreInfo
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsCharacters
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsDescription
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsGenres
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsHeader
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsMoreInfo
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsRelated
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsScreenshots
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsTitle
-import com.dezdeqness.presentation.features.animedetails.composables.list.DetailsVideos
+import com.dezdeqness.presentation.features.details.composables.list.DetailMoreInfo
+import com.dezdeqness.presentation.features.details.composables.list.DetailsCharacters
+import com.dezdeqness.presentation.features.details.composables.list.DetailsDescription
+import com.dezdeqness.presentation.features.details.composables.list.DetailsGenres
+import com.dezdeqness.presentation.features.details.composables.list.DetailsHeader
+import com.dezdeqness.presentation.features.details.composables.list.DetailsMoreInfo
+import com.dezdeqness.presentation.features.details.composables.list.DetailsRelated
+import com.dezdeqness.presentation.features.details.composables.list.DetailsScreenshots
+import com.dezdeqness.presentation.features.details.composables.list.DetailsTitle
+import com.dezdeqness.presentation.features.details.composables.list.DetailsVideos
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCellList
 import com.dezdeqness.presentation.models.BriefInfoUiModelList
@@ -96,7 +96,12 @@ fun DetailsList(
                     )
                 }
                 is RoleUiModelList -> {
-                    DetailsCharacters(characters = item.list)
+                    DetailsCharacters(
+                        characters = item.list,
+                        onCharacterClick = {
+                            onClick(Action.CharacterClick(it))
+                        }
+                    )
                 }
                 is RelatedItemListUiModel -> {
                     DetailsRelated(

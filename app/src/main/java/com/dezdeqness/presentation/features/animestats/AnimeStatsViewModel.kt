@@ -4,7 +4,7 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.page.StatsState
-import com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel
+import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

@@ -1,0 +1,35 @@
+query Characters($ids: [ID!]) {
+    characters(ids: $ids) {
+        createdAt
+        description
+        descriptionHtml
+        descriptionSource
+        id
+        isAnime
+        isManga
+        isRanobe
+        japanese
+        malId
+        name
+        russian
+        synonyms
+        updatedAt
+        url
+        topic {
+            body
+            commentsCount
+            createdAt
+            htmlBody
+            id
+            tags
+            title
+            type
+            updatedAt
+            url
+        }
+        poster {
+            originalUrl
+            previewUrl
+        }
+    }
+}

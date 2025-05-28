@@ -7,13 +7,13 @@ import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
-import com.dezdeqness.presentation.features.animedetails.AnimeDetailsViewModel
+import com.dezdeqness.presentation.features.details.AnimeDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
-@Module(includes = [AnimeModule::class, PersonalModule::class])
+@Module(includes = [AnimeModule::class, PersonalModule::class, CharacterModule::class])
 abstract class AnimeDetailsModule {
 
     companion object {

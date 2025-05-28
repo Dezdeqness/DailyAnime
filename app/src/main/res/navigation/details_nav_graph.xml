@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/animeDetailsFragment"
-        android:name="com.dezdeqness.presentation.features.animedetails.AnimeDetailsFragment">
+        android:name="com.dezdeqness.presentation.features.details.AnimeDetailsFragment">
 
         <argument
             android:name="animeId"
@@ -36,10 +36,10 @@
 
             <argument
                 android:name="animeScores"
-                app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+                app:argType="com.dezdeqness.presentation.features.details.AnimeStatsTransferModel[]" />
             <argument
                 android:name="animeStatuses"
-                app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+                app:argType="com.dezdeqness.presentation.features.details.AnimeStatsTransferModel[]" />
         </action>
 
         <action
@@ -47,6 +47,14 @@
             app:destination="@id/details">
             <argument
                 android:name="animeId"
+                app:argType="long" />
+        </action>
+        <action
+            android:id="@+id/navigateToCharacter"
+            app:destination="@id/animeDetailsFragment">
+
+            <argument
+                android:name="characterId"
                 app:argType="long" />
         </action>
     </fragment>
@@ -58,10 +66,10 @@
 
         <argument
             android:name="animeScores"
-            app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+            app:argType="com.dezdeqness.presentation.features.details.AnimeStatsTransferModel[]" />
         <argument
             android:name="animeStatuses"
-            app:argType="com.dezdeqness.presentation.features.animedetails.AnimeStatsTransferModel[]" />
+            app:argType="com.dezdeqness.presentation.features.details.AnimeStatsTransferModel[]" />
     </fragment>
 
     <fragment

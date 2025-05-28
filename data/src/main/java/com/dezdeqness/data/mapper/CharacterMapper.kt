@@ -1,7 +1,9 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.data.CharactersQuery
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.CharacterRemote
+import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.model.CharacterEntity
 import com.dezdeqness.domain.model.ImageEntity
 import javax.inject.Inject
@@ -31,6 +33,20 @@ class CharacterMapper @Inject constructor(
                 original = characterRemote.poster?.originalUrl.orEmpty(),
             ),
             url = characterRemote.url,
+        )
+
+    fun fromResponse(character: CharactersQuery.Character) =
+        CharacterDetailsEntity(
+            id = character.id.toLong(),
+            name = character.name,
+            russian = character.russian.orEmpty(),
+            image = ImageEntity(
+                preview = character.poster?.previewUrl.orEmpty(),
+                original = character.poster?.originalUrl.orEmpty(),
+            ),
+            url = character.url,
+            description = character.description,
+            descriptionHTML = character.descriptionHtml.orEmpty(),
         )
 
 }
