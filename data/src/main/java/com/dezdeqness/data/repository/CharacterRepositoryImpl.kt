@@ -7,6 +7,6 @@ import javax.inject.Inject
 class CharacterRepositoryImpl @Inject constructor(
     private val characterRemoteDataSource: CharacterRemoteDataSource
 ): CharacterRepository {
-    override suspend fun getCharacterDetailsById(id: Long) =
+    override fun getCharacterDetailsById(id: Long) =
         characterRemoteDataSource.getCharacterDetailsById(id)
 }

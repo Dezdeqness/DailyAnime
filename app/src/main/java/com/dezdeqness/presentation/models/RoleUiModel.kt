@@ -9,3 +9,5 @@ data class RoleUiModel(
 ) : AdapterItem()
 
 data class RoleUiModelList(val list: ImmutableList<RoleUiModel>) : AdapterItem()
+
+data class SeyuModelList(val list: ImmutableList<RoleUiModel>) : AdapterItem()

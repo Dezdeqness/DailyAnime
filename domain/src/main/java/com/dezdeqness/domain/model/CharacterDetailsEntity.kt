@@ -8,4 +8,6 @@ data class CharacterDetailsEntity(
    val url: String,
    val description: String?,
    val descriptionHTML: String,
+   val seyuList: List<CharacterEntity>,
+   val animeList: List<AnimeBriefEntity>,
 )

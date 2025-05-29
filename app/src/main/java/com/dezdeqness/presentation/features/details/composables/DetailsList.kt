@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.action.Action
+import com.dezdeqness.presentation.features.details.composables.list.DetailAnimes
 import com.dezdeqness.presentation.features.details.composables.list.DetailMoreInfo
+import com.dezdeqness.presentation.features.details.composables.list.DetailSeyus
 import com.dezdeqness.presentation.features.details.composables.list.DetailsCharacters
 import com.dezdeqness.presentation.features.details.composables.list.DetailsDescription
 import com.dezdeqness.presentation.features.details.composables.list.DetailsGenres
@@ -26,6 +28,7 @@ import com.dezdeqness.presentation.features.details.composables.list.DetailsTitl
 import com.dezdeqness.presentation.features.details.composables.list.DetailsVideos
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCellList
+import com.dezdeqness.presentation.models.AnimeItemListUiModel
 import com.dezdeqness.presentation.models.BriefInfoUiModelList
 import com.dezdeqness.presentation.models.DescriptionUiModel
 import com.dezdeqness.presentation.models.HeaderItemUiModel
@@ -34,6 +37,7 @@ import com.dezdeqness.presentation.models.NameUiModel
 import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
+import com.dezdeqness.presentation.models.SeyuModelList
 import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.google.common.collect.ImmutableList
@@ -100,6 +104,17 @@ fun DetailsList(
                         characters = item.list,
                         onCharacterClick = {
                             onClick(Action.CharacterClick(it))
+                        }
+                    )
+                }
+                is SeyuModelList -> {
+                    DetailSeyus(characters = item.list)
+                }
+                is AnimeItemListUiModel -> {
+                    DetailAnimes(
+                        animeList = item.list,
+                        onAnimeClick = {
+                            onClick(Action.AnimeClick(it))
                         }
                     )
                 }

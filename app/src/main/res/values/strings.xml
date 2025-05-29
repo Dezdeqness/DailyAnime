@@ -58,6 +58,8 @@
     <string name="anime_details_description_title">Synopsis</string>
     <string name="anime_details_related_title">Related</string>
     <string name="anime_details_characters_title">Characters</string>
+    <string name="anime_details_anime_title">Anime</string>
+    <string name="anime_details_seiyu_title">Seiyū</string>
     <string name="anime_details_screenshots_title">Screenshots</string>
     <string name="anime_details_video_title">Video</string>
     <string name="anime_details_date">Release date</string>
