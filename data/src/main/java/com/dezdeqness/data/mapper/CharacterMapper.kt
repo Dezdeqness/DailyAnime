@@ -1,7 +1,7 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.data.CharactersQuery
 import com.dezdeqness.data.DetailsQuery
+import com.dezdeqness.data.model.CharacterDetailsRemote
 import com.dezdeqness.data.model.CharacterRemote
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.model.CharacterEntity
@@ -12,6 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class CharacterMapper @Inject constructor(
     private val imageMapper: ImageMapper,
+    private val animeMapper: AnimeMapper,
 ) {
 
     fun fromResponse(characterRemote: CharacterRemote) =
@@ -35,18 +36,17 @@ class CharacterMapper @Inject constructor(
             url = characterRemote.url,
         )
 
-    fun fromResponse(character: CharactersQuery.Character) =
+    fun fromResponse(character: CharacterDetailsRemote) =
         CharacterDetailsEntity(
             id = character.id.toLong(),
             name = character.name,
-            russian = character.russian.orEmpty(),
-            image = ImageEntity(
-                preview = character.poster?.previewUrl.orEmpty(),
-                original = character.poster?.originalUrl.orEmpty(),
-            ),
+            russian = character.russian,
+            image = imageMapper.fromResponse(character.image),
             url = character.url,
             description = character.description,
-            descriptionHTML = character.descriptionHtml.orEmpty(),
+            descriptionHTML = character.descriptionHtml,
+            seyuList = character.seyuList.map(::fromResponse),
+            animeList = character.animeList.map(animeMapper::fromResponse),
         )
 
 }

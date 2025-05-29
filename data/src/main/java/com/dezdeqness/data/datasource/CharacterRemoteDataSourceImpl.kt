@@ -1,32 +1,29 @@
 package com.dezdeqness.data.datasource
 
-import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Optional
-import com.dezdeqness.data.CharactersQuery
+import com.dezdeqness.data.CharacterApiService
 import com.dezdeqness.data.core.BaseDataSource
-import com.dezdeqness.data.core.createGraphqlException
+import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.CharacterMapper
 import com.dezdeqness.domain.model.CharacterDetailsEntity
+import dagger.Lazy
 import javax.inject.Inject
-import javax.inject.Named
 
 class CharacterRemoteDataSourceImpl @Inject constructor(
-    @Named("shikimori_graphql_client") private val apolloClient: ApolloClient,
+    private val apiService: Lazy<CharacterApiService>,
     private val characterMapper: CharacterMapper,
 ) : CharacterRemoteDataSource, BaseDataSource() {
 
-    override suspend fun getCharacterDetailsById(id: Long): Result<CharacterDetailsEntity> =
-        tryWithCatchSuspend {
-            val response = apolloClient
-                .query(CharactersQuery(ids = Optional.present(listOf(id.toString()))))
-                .execute()
+    override fun getCharacterDetailsById(id: Long): Result<CharacterDetailsEntity> =
+        tryWithCatch {
+            val response = apiService.get().getCharacterDetails(id).execute()
 
-            val data = response.data
+            val responseBody = response.body()
 
-            if (data != null && response.hasErrors().not() && data.characters.isNotEmpty()) {
-                Result.success(characterMapper.fromResponse(data.characters.first()))
+            if (response.isSuccessful && responseBody != null) {
+                val screenshots = characterMapper.fromResponse(responseBody)
+                Result.success(screenshots)
             } else {
-                throw response.createGraphqlException()
+                throw response.createApiException()
             }
         }
 

@@ -56,6 +56,8 @@
     <string name="anime_details_description_title">Описание</string>
     <string name="anime_details_related_title">Связанное</string>
     <string name="anime_details_characters_title">Персонажи</string>
+    <string name="anime_details_anime_title">Аниме</string>
+    <string name="anime_details_seiyu_title">Сэйю</string>
     <string name="anime_details_screenshots_title">Кадры</string>
     <string name="anime_details_video_title">Видео</string>
     <string name="anime_details_date">Дата выхода</string>

@@ -11,6 +11,7 @@ import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCell
 import com.dezdeqness.presentation.models.AnimeCellList
+import com.dezdeqness.presentation.models.AnimeItemListUiModel
 import com.dezdeqness.presentation.models.BriefInfoUiModel
 import com.dezdeqness.presentation.models.BriefInfoUiModelList
 import com.dezdeqness.presentation.models.DescriptionUiModel
@@ -21,6 +22,7 @@ import com.dezdeqness.presentation.models.RelatedItemListUiModel
 import com.dezdeqness.presentation.models.RoleUiModel
 import com.dezdeqness.presentation.models.RoleUiModelList
 import com.dezdeqness.presentation.models.ScreenshotUiModelList
+import com.dezdeqness.presentation.models.SeyuModelList
 import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
@@ -33,6 +35,7 @@ import java.util.Date
 import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.text.ifEmpty
 
 class AnimeDetailsComposer @Inject constructor(
     private val animeUiMapper: AnimeUiMapper,
@@ -303,16 +306,39 @@ class AnimeDetailsComposer @Inject constructor(
         return BriefInfoUiModelList(ImmutableList.copyOf(list))
     }
 
-    fun compose(entity: CharacterDetailsEntity) : ImmutableList<AdapterItem> {
+    fun compose(entity: CharacterDetailsEntity): ImmutableList<AdapterItem> {
         val uiItems = mutableListOf<AdapterItem>()
 
-        uiItems.add(HeaderItemUiModel(imageUrl = entity.image.original))
+        uiItems.add(
+            HeaderItemUiModel(
+                imageUrl = imageUrlUtils.getImageWithBaseUrl(entity.image.original),
+            )
+        )
 
         uiItems.add(NameUiModel(title = entity.russian))
 
         if (entity.description != null) {
             uiItems.add(DescriptionUiModel(content = entity.descriptionHTML))
         }
+        entity
+            .seyuList
+            .map {
+                RoleUiModel(
+                    id = it.id,
+                    name = it.russian.ifEmpty { it.name },
+                    imageUrl = imageUrlUtils.getImageWithBaseUrl(it.image.preview),
+                )
+            }
+            .takeIf { it.isNotEmpty() }
+            ?.let { list ->
+                uiItems.add(SeyuModelList(list = ImmutableList.copyOf(list)))
+            }
+
+        animeUiMapper.map(entity.animeList)
+            .takeIf { it.isNotEmpty() }
+            ?.let { list ->
+                uiItems.add(AnimeItemListUiModel(list = ImmutableList.copyOf(list)))
+            }
 
         uiItems.add(SpacerUiItem)
 
