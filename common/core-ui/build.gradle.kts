@@ -24,6 +24,10 @@ android {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
+
+    buildTypes {
+        create("qa") {}
+    }
 }
 
 dependencies {

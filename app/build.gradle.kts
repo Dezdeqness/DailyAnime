@@ -11,7 +11,6 @@ plugins {
     alias(libs.plugins.com.dezdeqness.room)
     alias(libs.plugins.com.dezdeqness.firebase)
     alias(libs.plugins.com.dezdeqness.config)
-    alias(libs.plugins.com.dezdeqness.flavour)
     alias(libs.plugins.com.dezdeqness.detekt)
 }
 
@@ -59,6 +58,31 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isDebuggable = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+
+        getByName("debug") {
+            isMinifyEnabled = false
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            proguardFiles("proguard-rules.pro")
+        }
+
+        create("qa") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".qa"
+            signingConfig = signingConfigs.getByName("release")
+        }
     }
 
     compileOptions {

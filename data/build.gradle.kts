@@ -30,7 +30,7 @@ android {
     namespace = "com.dezdeqness.data"
 
     buildTypes {
-        create("qa")
+        create("qa") {}
     }
 }
 
