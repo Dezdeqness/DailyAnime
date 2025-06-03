@@ -218,5 +218,5 @@ fun Project.getParsedVersionCode(projectName: String): Int {
     val versionCode = major * 10000000 + minor * 100000 + patch * 1000 + incrementPostfixNumber
     println("Version code: $versionCode")
 
-    return versionCode
+    return incrementPostfixNumber
 }
