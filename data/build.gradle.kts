@@ -77,8 +77,6 @@ dependencies {
     implementation(libs.google.firebase.analytics)
     implementation(libs.google.firebase.crashlytics)
     implementation(libs.google.firebase.config)
-
-    implementation(libs.androidx.work.runtime)
 }
 
 apollo {
