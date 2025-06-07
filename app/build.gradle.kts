@@ -187,7 +187,6 @@ dependencies {
 
     // Androidx
     implementation(libs.androidx.browser)
-    implementation(libs.androidx.work.runtime)
 
     implementation(project(":data"))
     implementation(project(":domain"))
