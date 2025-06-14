@@ -67,6 +67,7 @@ fun HomePage(
                 item {
                     HomeCalendarSection(
                         items = calendarSection.items,
+                        isCalendarActionVisible = calendarSection.isCalendarActionVisible,
                         onActionReceive = actions::onActionReceived,
                     )
                 }

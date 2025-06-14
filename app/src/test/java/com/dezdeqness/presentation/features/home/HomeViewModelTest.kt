@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.home
 
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.domain.model.AccountEntity
 import com.dezdeqness.domain.model.AnimeBriefEntity
@@ -51,6 +52,9 @@ class HomeViewModelTest {
     private lateinit var appLogger: AppLogger
 
     @MockK
+    private lateinit var configManager: ConfigManager
+
+    @MockK
     private lateinit var homeComposer: HomeComposer
 
     private lateinit var viewModel: HomeViewModel
@@ -63,6 +67,8 @@ class HomeViewModelTest {
 
         every { appLogger.logInfo(any(), any()) } returns Unit
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
+
+        every { configManager.isCalendarEnabled } returns true
 
         every { accountRepository.authorizationState() } returns MutableSharedFlow()
 
@@ -84,6 +90,7 @@ class HomeViewModelTest {
             coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
             appLogger = appLogger,
             homeComposer = homeComposer,
+            configManager = configManager,
         )
     }
 

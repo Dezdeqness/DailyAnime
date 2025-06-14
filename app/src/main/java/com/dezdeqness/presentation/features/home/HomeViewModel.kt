@@ -3,6 +3,7 @@ package com.dezdeqness.presentation.features.home
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.HomeRepository
@@ -22,6 +23,7 @@ class HomeViewModel @Inject constructor(
     private val animeUiMapper: AnimeUiMapper,
     private val homeGenresProvider: HomeGenresProvider,
     private val accountRepository: AccountRepository,
+    private val configManager: ConfigManager,
     homeComposer: HomeComposer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -108,6 +110,7 @@ class HomeViewModel @Inject constructor(
                             calendarSection = _homeStateFlow.value.sectionsState.calendarSection.copy(
                                 items = calendarSection,
                                 status = SectionStatus.Loaded,
+                                isCalendarActionVisible = configManager.isCalendarEnabled,
                             )
                         ),
                     )
