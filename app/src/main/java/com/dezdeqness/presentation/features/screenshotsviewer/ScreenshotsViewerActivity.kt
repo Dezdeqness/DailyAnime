@@ -76,7 +76,9 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                     val context = LocalContext.current
 
                     val state by viewModel.state.collectAsState()
-                    val pagerState = rememberPagerState { state.screenshotsList.size }
+                    val pagerState = rememberPagerState(initialPage = state.index) {
+                        state.screenshotsList.size
+                    }
 
                     var isToolbarVisible by remember {
                         mutableStateOf(true)

@@ -183,10 +183,11 @@ dependencies {
     // Core UI
     implementation(project(":common:core-ui"))
     implementation(libs.core)
-    implementation(libs.pod.core)
 
     // Androidx
     implementation(libs.androidx.browser)
+
+    implementation(libs.elmslie.core)
 
     implementation(project(":data"))
     implementation(project(":domain"))

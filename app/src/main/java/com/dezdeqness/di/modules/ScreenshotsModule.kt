@@ -1,13 +1,11 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.di.ViewModelKey
 import com.dezdeqness.di.subcomponents.ScreenshotsArgsModule
-import com.dezdeqness.pod.core.scope.plantScope
-import com.dezdeqness.pod.core.store.internal.PlantStore
+import money.vivid.elmslie.core.store.NoOpActor
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewModel
+import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Command
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Event
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.State
@@ -16,9 +14,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import money.vivid.elmslie.core.store.ElmStore
 import javax.inject.Named
-
-private const val KEY = "ScreenshotStore"
 
 @Module(includes = [ScreenshotsArgsModule::class])
 abstract class ScreenshotsModule {
@@ -33,23 +30,14 @@ abstract class ScreenshotsModule {
         fun provideScreenshotStore(
             @Named("index") index: Int,
             @Named("screenshots") screenshots: List<String>,
-            coroutineDispatcherProvider: CoroutineDispatcherProvider,
-            appLogger: AppLogger,
-        ): PlantStore<Event, State, Effect> =
-            PlantStore(
-                state = State(
+        ): ElmStore<Event, State, Effect, Command> =
+            ElmStore(
+                initialState = State(
                     screenshotsList = screenshots,
                     index = index,
                 ),
                 reducer = screenshotReducer,
-                storeScope = plantScope(
-                    key = KEY,
-                    dispatcher = coroutineDispatcherProvider.io(),
-                    onError = { throwable ->
-                        appLogger.logInfo(tag = KEY, throwable = throwable)
-                    }
-                )
+                actor = NoOpActor(),
             )
     }
-
 }
