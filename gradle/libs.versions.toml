@@ -91,6 +91,7 @@ square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref =
 square-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingVersion" }
 
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesVersion" }
 kotlinx-coroutinesAndroid = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesVersion" }
 
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
