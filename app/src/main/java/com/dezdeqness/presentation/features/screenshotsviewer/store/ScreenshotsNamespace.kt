@@ -16,8 +16,6 @@ interface ScreenshotsNamespace {
 
     sealed class Effect {
         data class ShareUrl(val url: String) : Effect()
-
-        data class ScrollToPage(val index: Int) : Effect()
     }
 
     sealed interface Command

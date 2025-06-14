@@ -101,10 +101,6 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                         .effects
                         .collectEvents { effect ->
                             when (effect) {
-                                is ScreenshotsNamespace.Effect.ScrollToPage -> {
-                                    pagerState.scrollToPage(effect.index)
-                                }
-
                                 is ScreenshotsNamespace.Effect.ShareUrl -> {
                                     val url = effect.url
                                     ShareCompat.IntentBuilder(context)
