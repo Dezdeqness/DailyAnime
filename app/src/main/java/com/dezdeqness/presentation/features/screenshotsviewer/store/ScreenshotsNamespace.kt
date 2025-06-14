@@ -8,8 +8,6 @@ interface ScreenshotsNamespace {
     )
 
     sealed class Event {
-        data object Init : Event()
-
         data class IndexChanged(val index: Int) : Event()
 
         data object ShareUrlClicked : Event()
@@ -22,4 +20,5 @@ interface ScreenshotsNamespace {
         data class ScrollToPage(val index: Int) : Effect()
     }
 
+    sealed interface Command
 }

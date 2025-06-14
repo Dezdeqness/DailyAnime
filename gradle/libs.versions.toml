@@ -1,4 +1,5 @@
 [versions]
+elmslieCoreVersion = "3.0.0"
 supportCoreUiVersion = "0.1.0"
 supportCoreVersion = "0.1.0"
 coreVersion = "1.16.0"
@@ -47,7 +48,6 @@ kotlinAndroidVersion = "2.0.21"
 firebaseCrashlyticsGradleVersion = "3.0.3"
 
 kotlinCompilerExtensionVersion = "1.5.14"
-podCoreVersion = "0.1.1"
 navigationSafeArgsVersion = "2.8.9"
 
 apollo = "4.1.1"
@@ -79,6 +79,7 @@ dagger-compilier = { group = "com.google.dagger", name = "dagger-compiler", vers
 bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
 bumptech-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideVersion" }
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detektVersion" }
+elmslie-core = { module = "money.vivid.elmslie:elmslie-core", version.ref = "elmslieCoreVersion" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
 wasabeef-transformation = { group = "jp.wasabeef", name = "glide-transformations", version.ref = "transformationVersion" }
 
@@ -145,8 +146,6 @@ google-services = { module = "com.google.gms:google-services", version.ref = "go
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinAndroidVersion" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
-
-pod-core = { module = "com.dezdeqness.pod:core", version.ref = "podCoreVersion" }
 
 apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
 leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary"}

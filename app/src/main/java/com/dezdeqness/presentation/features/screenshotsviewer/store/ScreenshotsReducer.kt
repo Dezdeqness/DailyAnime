@@ -1,22 +1,16 @@
 package com.dezdeqness.presentation.features.screenshotsviewer.store
 
 import com.dezdeqness.data.BuildConfig
-import com.dezdeqness.pod.core.store.Reducer
-import com.dezdeqness.pod.core.store.ReducerResultBuilder
+import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Command
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Event
 import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.State
+import money.vivid.elmslie.core.store.StateReducer
 
-val screenshotReducer = object : Reducer<Event, State, Effect>() {
+val screenshotReducer = object : StateReducer<Event, State, Effect, Command>() {
 
-    override fun ReducerResultBuilder<State, Effect>.reduce(event: Event) {
+    override fun Result.reduce(event: Event) {
         when (event) {
-            is Event.Init -> {
-                effects {
-                    Effect.ScrollToPage(index = state.index)
-                }
-            }
-
             is Event.IndexChanged -> {
                 state {
                     copy(index = event.index)
@@ -31,9 +25,7 @@ val screenshotReducer = object : Reducer<Event, State, Effect>() {
                 } else {
                     url
                 }
-                effects {
-                    Effect.ShareUrl(url = formattedUrl)
-                }
+                effects { +Effect.ShareUrl(url = formattedUrl) }
             }
         }
     }
