@@ -145,6 +145,7 @@ dependencies {
     testImplementation(libs.junit.api)
     testImplementation(libs.junit.engine)
     testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Android Testing
     implementation(libs.androidx.test.junit)
