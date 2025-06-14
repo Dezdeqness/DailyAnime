@@ -19,6 +19,10 @@ enum class ConfigKeys(
     SELECT_GENRES_COUNTER(
         key = "select_genres_counter",
         defaultValue = 3,
+    ),
+    CALENDAR_ENABLED(
+        key = "calendar_enabled",
+        defaultValue = true,
     );
 
     companion object {

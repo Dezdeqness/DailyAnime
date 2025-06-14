@@ -79,6 +79,7 @@ class RemoteConfigProvider(
     override fun getStringValue(key: String) = remoteConfig.getValue(key).asString()
     override fun getIntValue(key: String) = remoteConfig.getValue(key).asLong().toInt()
     override fun getDoubleValue(key: String) = remoteConfig.getValue(key).asDouble()
+    override fun getBooleanValue(key: String) = remoteConfig.getValue(key).asBoolean()
 
     companion object {
         private const val TAG = "RemoteConfigProvider"

@@ -9,11 +9,14 @@ class ConfigManager(
     val baseUrl: String
         get() = getValue(ConfigKeys.BASE_URL)
 
-    val electGenresCounter: Int
+    val selectGenresCounter: Int
         get() = getValue(ConfigKeys.SELECT_GENRES_COUNTER)
 
     val baseGraphqlUrl: String
         get() = getValue(ConfigKeys.BASE_SHIKIMORI_GRAPHQL_URL)
+
+    val isCalendarEnabled: Boolean
+        get() = getValue<Boolean>(ConfigKeys.CALENDAR_ENABLED) == true
 
     suspend fun invalidate() {
         configProvider.setDefaults()
@@ -27,6 +30,7 @@ class ConfigManager(
                 is String -> configProvider.getStringValue(key.key) ?: key.defaultValue
                 is Int -> configProvider.getIntValue(key.key)
                 is Double -> configProvider.getDoubleValue(key.key)
+                is Boolean -> configProvider.getBooleanValue(key.key) ?: key.defaultValue
                 else -> key.defaultValue
             } as T
         } catch (exception: Exception) {

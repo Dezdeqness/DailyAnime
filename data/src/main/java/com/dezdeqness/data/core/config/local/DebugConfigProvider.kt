@@ -3,14 +3,17 @@ package com.dezdeqness.data.core.config.local
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.dezdeqness.data.core.config.BaseConfigProvider
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onErrorResume
 import kotlinx.coroutines.runBlocking
 
 // TODO: Move to core module
@@ -68,6 +71,20 @@ class DebugConfigProvider(
                 .dataStore
                 .data
                 .map { preferences -> preferences[doublePreferencesKey(key)] }
+                .first()
+        }
+
+    override fun getBooleanValue(key: String) =
+        runBlocking {
+            context
+                .dataStore
+                .data
+                .map { preferences ->
+                    runCatching {
+                        preferences[booleanPreferencesKey(key)]
+                    }
+                        .getOrNull()
+                }
                 .first()
         }
 

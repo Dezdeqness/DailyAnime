@@ -7,4 +7,5 @@ abstract class BaseConfigProvider {
     internal abstract fun getStringValue(key: String): String?
     internal abstract fun getIntValue(key: String): Int?
     internal abstract fun getDoubleValue(key: String): Double?
+    internal abstract fun getBooleanValue(key: String): Boolean?
 }
