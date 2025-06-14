@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.BackFragmentListener
 import com.dezdeqness.data.analytics.AnalyticsManager
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.databinding.ActivityMainBinding
 import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.extensions.setupWithNavController
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity(), TabSelection {
 
     @Inject
     lateinit var analyticsManager: AnalyticsManager
+
+    @Inject
+    lateinit var configManager: ConfigManager
 
     private lateinit var binding: ActivityMainBinding
 
@@ -117,18 +121,32 @@ class MainActivity : AppCompatActivity(), TabSelection {
     private fun setupBottomNavigationBar(isRestored: Boolean) {
         val bottomNav = binding.navigation
 
-        val navGraphIds = listOf(
-            R.navigation.personal_host_nav_graph,
-            R.navigation.home_nav_graph,
-            R.navigation.calendar_nav_graph,
-            R.navigation.search_nav_graph,
-            R.navigation.profile_nav_graph,
-        )
+        val isCalendarEnabled = configManager.isCalendarEnabled
+
+        bottomNav.menu.findItem(R.id.calendar_nav_graph).isVisible = isCalendarEnabled
+
+        val navGraphIds = if (configManager.isCalendarEnabled) {
+            listOf(
+                R.navigation.personal_host_nav_graph,
+                R.navigation.home_nav_graph,
+                R.navigation.calendar_nav_graph,
+                R.navigation.search_nav_graph,
+                R.navigation.profile_nav_graph,
+            )
+        } else {
+            listOf(
+                R.navigation.personal_host_nav_graph,
+                R.navigation.home_nav_graph,
+                R.navigation.search_nav_graph,
+                R.navigation.profile_nav_graph,
+            )
+        }
 
         lifecycleScope.launch {
-            val section = withContext(application.getComponent().coroutineDispatcherProvider().io()) {
-                application.getComponent().settingsRepository().getSelectedInitialSection()
-            }
+            val section =
+                withContext(application.getComponent().coroutineDispatcherProvider().io()) {
+                    application.getComponent().settingsRepository().getSelectedInitialSection()
+                }
             bottomNav.setupWithNavController(
                 navGraphIds = navGraphIds,
                 fragmentManager = supportFragmentManager,
@@ -171,6 +189,7 @@ class MainActivity : AppCompatActivity(), TabSelection {
                         is LanguageDisclaimer -> {
                             showLanguageDisclaimer()
                         }
+
                         is OpenCalendarTab -> {
                             binding.navigation.selectedItemId = R.id.calendar_nav_graph
                         }

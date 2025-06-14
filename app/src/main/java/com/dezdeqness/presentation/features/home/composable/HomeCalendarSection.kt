@@ -32,6 +32,7 @@ import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 fun HomeCalendarSection(
     modifier: Modifier = Modifier,
     items: List<HomeCalendarUiModel>,
+    isCalendarActionVisible: Boolean,
     onActionReceive: (Action) -> Unit,
 ) {
     Column(
@@ -61,9 +62,11 @@ fun HomeCalendarSection(
         Header(
             title = stringResource(R.string.home_calendar_title),
             modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                onActionReceive(Action.CalendarHeaderClicked)
-            },
+            onClick = if (isCalendarActionVisible) {
+                {
+                    onActionReceive(Action.CalendarHeaderClicked)
+                }
+            } else null,
         )
         HorizontalPager(state = pagerState) { index ->
             val currentItem = items[index]
