@@ -5,8 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dezdeqness.core.BaseComposeFragment
+import com.dezdeqness.core.collectEvents
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.AppComponent
+import com.dezdeqness.presentation.features.history.store.HistoryNamespace
 
 class HistoryFragment : BaseComposeFragment() {
 
@@ -23,7 +25,7 @@ class HistoryFragment : BaseComposeFragment() {
     override fun FragmentContent() {
         AppTheme {
             HistoryPage(
-                stateFlow = viewModel.historyStateFlow,
+                stateFlow = viewModel.state,
                 actions = object : HistoryActions {
                     override fun onPullDownRefreshed() {
                         viewModel.onPullDownRefreshed()
@@ -33,15 +35,19 @@ class HistoryFragment : BaseComposeFragment() {
                         viewModel.onLoadMore()
                     }
 
-                    override fun onInitialLoad() {
-                        viewModel.onInitialLoad()
-                    }
-
                     override fun onBackPressed() {
                         findNavController().popBackStack()
                     }
                 }
             )
+
+            viewModel.effects.collectEvents {
+                when (it) {
+                    HistoryNamespace.Effect.Error -> {
+                        viewModel.onErrorMessage()
+                    }
+                }
+            }
         }
     }
 
