@@ -27,20 +27,18 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.history.composables.HistoryList
 import com.dezdeqness.presentation.features.history.composables.HistoryShimmerLoading
+import com.dezdeqness.presentation.features.history.store.HistoryNamespace
+import com.dezdeqness.presentation.features.history.store.HistoryStatus
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun HistoryPage(
     modifier: Modifier = Modifier,
-    stateFlow: StateFlow<HistoryState>,
+    stateFlow: StateFlow<HistoryNamespace.State>,
     actions: HistoryActions,
 ) {
     val state by stateFlow.collectAsState()
-
-    LaunchedEffect(Unit) {
-        actions.onInitialLoad()
-    }
 
     Scaffold(
         containerColor = AppTheme.colors.onPrimary,
@@ -66,44 +64,43 @@ fun HistoryPage(
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.Center,
         ) {
-            if (state.isLoadingStateShowing) {
-                HistoryShimmerLoading(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    times = 10,
-                )
-            }
-
-            if (state.isErrorStateShowing) {
-                GeneralError(modifier = Modifier.align(Alignment.Center))
-            }
-
-            if (state.isEmptyStateShowing) {
-                GeneralEmpty(modifier = Modifier.align(Alignment.Center))
-            }
-
-            if (state.list.isNotEmpty()) {
-
-                var isPageLoading by remember {
-                    mutableStateOf(false)
+            when (state.status) {
+                HistoryStatus.Initial, HistoryStatus.Loading -> {
+                    HistoryShimmerLoading(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        times = 10,
+                    )
                 }
+                HistoryStatus.Error -> {
+                    GeneralError(modifier = Modifier.align(Alignment.Center))
 
-                // Workaround to fix pagination when load more was failure
-                LaunchedEffect(state.list, state.isPullDownRefreshing) {
-                    isPageLoading = false
                 }
+                HistoryStatus.Empty -> {
+                    GeneralEmpty(modifier = Modifier.align(Alignment.Center))
+                }
+                HistoryStatus.Loaded -> {
+                    var isPageLoading by remember {
+                        mutableStateOf(false)
+                    }
 
-                HistoryList(
-                    list = state.list,
-                    hasNextPage = state.hasNextPage,
-                    isPageLoading = isPageLoading,
-                    onLoadMore = {
-                        actions.onLoadMore()
-                        isPageLoading = true
-                    },
-                )
+                    // Workaround to fix pagination when load more was failure
+                    LaunchedEffect(state.list, state.isPullDownRefreshing) {
+                        isPageLoading = false
+                    }
+
+                    HistoryList(
+                        list = state.list,
+                        hasNextPage = state.hasNextPage,
+                        isPageLoading = isPageLoading,
+                        onLoadMore = {
+                            actions.onLoadMore()
+                            isPageLoading = true
+                        },
+                    )
+                }
             }
 
             PullRefreshIndicator(

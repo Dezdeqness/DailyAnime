@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
 
-class HistoryCompose @Inject constructor(
+class HistoryComposer @Inject constructor(
     private val imageUrlUtils: ImageUrlUtils
 ) {
 
@@ -19,8 +19,9 @@ class HistoryCompose @Inject constructor(
 
     fun compose(items: List<HistoryEntity>): List<HistoryModel> {
         val uiItems = mutableListOf<HistoryModel>()
+        val orderedItems = items.sortedByDescending { it.createdAtTimestamp }
         var previousHeader = ""
-        items.forEach { item ->
+        orderedItems.forEach { item ->
             val header = dateFormatter.format(item.createdAtTimestamp)
 
             if (previousHeader != header) {
