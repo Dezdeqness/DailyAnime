@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -31,9 +30,7 @@ fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel
                     AppTheme.colors.onPrimary.copy(alpha = 0.7f),
                     blendMode = BlendMode.SrcOver,
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
+                modifier = Modifier.matchParentSize()
             )
 
             Column(
