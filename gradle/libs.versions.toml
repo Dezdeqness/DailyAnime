@@ -13,7 +13,6 @@ okhttpVersion = "4.12.0"
 loggingVersion = "4.12.0"
 chuckerVersion = "4.1.0"
 glideVersion = "4.16.0"
-securityCryptoVersion = "1.1.0-alpha07"
 transformationVersion = "4.3.0"
 coroutinesVersion = "1.10.1"
 lifecycleVersion = "2.8.7"
@@ -67,7 +66,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
 androidx-navigation-safeargs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsVersion" }
-androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCryptoVersion" }
 
 chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chuckerVersion" }
 chucker-noop = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chuckerVersion" }

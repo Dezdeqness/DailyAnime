@@ -173,7 +173,6 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     // Crypto
-    implementation(libs.androidx.security.crypto)
     implementation(libs.google.tink)
     implementation(libs.protobuf.javalite)
 
