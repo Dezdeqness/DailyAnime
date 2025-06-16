@@ -44,7 +44,6 @@ dependencies {
     implementation(project(":domain"))
 
     // Crypto
-    implementation(libs.androidx.security.crypto)
     implementation(libs.google.tink)
     implementation(libs.protobuf.javalite)
 
