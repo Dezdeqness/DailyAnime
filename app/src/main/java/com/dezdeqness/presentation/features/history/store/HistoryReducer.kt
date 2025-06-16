@@ -22,12 +22,11 @@ val historyReducer = object : StateReducer<Event, State, Effect, Command>() {
 
             is Event.LoadMore -> {
                 val nextPage = state.currentPage + 1
-                state { copy(currentPage = nextPage) }
                 commands { +LoadPage(nextPage, isLoadMore = true) }
             }
 
             is Event.Refresh -> {
-                state { copy(currentPage = 1) }
+                state { copy(currentPage = 1, isPullDownRefreshing = true) }
                 commands { +LoadPage(page = 1) }
             }
 
@@ -37,6 +36,7 @@ val historyReducer = object : StateReducer<Event, State, Effect, Command>() {
                     copy(
                         status = HistoryStatus.Loaded,
                         hasNextPage = event.hasNextPage,
+                        currentPage = state.currentPage + 1,
                         list = list.toList(),
                     )
                 }
@@ -48,7 +48,7 @@ val historyReducer = object : StateReducer<Event, State, Effect, Command>() {
 
             is Event.OnLoadPageError -> {
                 state {
-                    copy(status = HistoryStatus.Error)
+                    copy(status = HistoryStatus.Error, isPullDownRefreshing = false)
                 }
             }
 
@@ -57,7 +57,8 @@ val historyReducer = object : StateReducer<Event, State, Effect, Command>() {
                     copy(
                         status = if (event.list.isEmpty()) HistoryStatus.Empty else HistoryStatus.Loaded,
                         hasNextPage = event.hasNextPage,
-                        list = event.list.toList(),
+                        list = event.list,
+                        isPullDownRefreshing = false,
                     )
                 }
             }

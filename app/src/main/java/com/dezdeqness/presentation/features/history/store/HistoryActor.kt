@@ -37,17 +37,16 @@ class HistoryActor @Inject constructor(
                         )
                     }
                 } catch (e: Exception) {
+                    val message: String
                     val event = if (command.isLoadMore) {
-                        val message =
-                            "Error during load more of history list, page: ${command.page}"
-                        appLogger.logInfo(TAG, message, e)
+                        message = "Error during load more of history list, page: ${command.page}"
                         Event.OnLoadMorePageError(message, e)
                     } else {
-                        val message = "Error during initial loading of state of history list"
-                        appLogger.logInfo(TAG, message, e)
+                        message = "Error during initial loading of state of history list"
                         Event.OnLoadPageError(message, e)
                     }
 
+                    appLogger.logInfo(TAG, message, e)
                     emit(event)
                 }
             }
