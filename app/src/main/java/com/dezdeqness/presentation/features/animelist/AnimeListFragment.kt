@@ -59,6 +59,7 @@ class AnimeListFragment : BaseComposeFragment() {
                     stateFlow = viewModel.animeSearchState,
                     pullRefreshFlow = viewModel.pullRefreshFlow,
                     scrollNeedFlow = viewModel.scrollNeedFlow,
+                    isListScrollingFlow = viewModel.isListScrolling,
                     actions = object : AnimeSearchActions {
                         override fun onPullDownRefreshed() {
                             viewModel.onPullDownRefreshed()
@@ -82,6 +83,10 @@ class AnimeListFragment : BaseComposeFragment() {
 
                         override fun onFilterChanged(filtersList: List<SearchSectionUiModel>) {
                             viewModel.onFilterChanged(filtersList = filtersList)
+                        }
+
+                        override fun onScrollInProgress(isScrollInProgress: Boolean) {
+                            viewModel.onScrollInProgress(isScrollInProgress)
                         }
 
                         override fun onScrolled() {
