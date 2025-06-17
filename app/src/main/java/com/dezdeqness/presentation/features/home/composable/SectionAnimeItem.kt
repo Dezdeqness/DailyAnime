@@ -56,9 +56,7 @@ fun SectionAnimeItem(
         Box(contentAlignment = Alignment.Center) {
             Text(
                 text = item.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 color = AppTheme.colors.textPrimary,
@@ -69,10 +67,11 @@ fun SectionAnimeItem(
 
             Text(
                 text = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 minLines = 2,
+                style = AppTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }

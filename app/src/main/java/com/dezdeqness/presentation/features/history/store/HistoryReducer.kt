@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.history.store
 
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command.*
+import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command.LoadPage
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Effect
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Event
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.State
