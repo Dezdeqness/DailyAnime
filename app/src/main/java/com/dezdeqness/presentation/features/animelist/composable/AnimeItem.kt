@@ -52,7 +52,7 @@ fun AnimeItem(
                 data = item.logoUrl,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
+                    .height(150.dp)
                     .align(alignment = Alignment.Center)
             )
 
@@ -70,9 +70,7 @@ fun AnimeItem(
         Box(contentAlignment = Alignment.Center) {
             Text(
                 text = item.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 style = AppTheme.typography.bodyMedium,
@@ -83,10 +81,11 @@ fun AnimeItem(
 
             Text(
                 text = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 minLines = 2,
+                style = AppTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -103,7 +102,7 @@ fun AnimeItemPreview() {
                 item = AnimeUiModel(
                     id = 321,
                     logoUrl = "url",
-                    title = "Code Geass",
+                    title = "Code Geass\nRebellion Lelouch",
                     kind = "TV",
                 ),
                 onClick = {},

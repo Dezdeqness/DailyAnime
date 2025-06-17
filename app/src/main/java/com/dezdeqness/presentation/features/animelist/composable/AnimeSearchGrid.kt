@@ -1,5 +1,8 @@
 package com.dezdeqness.presentation.features.animelist.composable
 
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
+import android.content.res.Configuration.ORIENTATION_UNDEFINED
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -12,6 +15,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.dezdeqness.presentation.action.Action
@@ -19,6 +23,8 @@ import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 private const val PAGINATION_LOAD_FACTOR = 0.75
+private const val PORTRAIT_MAX_CELLS = 3
+private const val LANDSCAPE_MAX_CELLS = 6
 
 @Composable
 fun AnimeSearchGrid(
@@ -33,6 +39,17 @@ fun AnimeSearchGrid(
     onScrollInProgress: (Boolean) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
+    val configuration = LocalConfiguration.current
+
+    val cellCount = remember(configuration.orientation) {
+        if (configuration.orientation == ORIENTATION_PORTRAIT
+            || configuration.orientation == ORIENTATION_UNDEFINED
+        ) {
+            PORTRAIT_MAX_CELLS
+        } else {
+            LANDSCAPE_MAX_CELLS
+        }
+    }
 
     LaunchedEffect(gridState) {
         snapshotFlow { gridState.isScrollInProgress }
@@ -61,7 +78,7 @@ fun AnimeSearchGrid(
 
     LazyVerticalGrid(
         state = gridState,
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(cellCount),
         modifier = modifier.fillMaxSize(),
     ) {
         items(
@@ -73,18 +90,13 @@ fun AnimeSearchGrid(
         ) { index ->
             val item = list[index]
 
-            val column = index % 2
-
-            val left = 8.dp - column * 8.dp / 2
-            val right = (column + 1) * 8.dp / 2
+            val padding = calculateItemPadding(index, cellCount)
 
             AnimeItem(
                 item = item,
                 modifier = Modifier
                     .animateItem()
-                    .padding(
-                        start = left, end = right, top = 8.dp
-                    ),
+                    .padding(padding),
                 onClick = { id ->
                     onActionReceive(Action.AnimeClick(animeId = id, title = item.title))
                 }
@@ -92,21 +104,21 @@ fun AnimeSearchGrid(
         }
 
         if (hasNextPage) {
-            item {
-                ShimmerSearchItemLoading(
-                    modifier = Modifier
-                        .padding(start = 8.dp, end = 4.dp)
-                        .padding(vertical = 8.dp),
-                )
-            }
-            item {
-                ShimmerSearchItemLoading(
-                    modifier = Modifier
-                        .padding(start = 4.dp, end = 8.dp)
-                        .padding(vertical = 8.dp),
-                )
+            repeat(cellCount) { index ->
+                val padding = calculateItemPadding(index, cellCount)
+                item {
+                    ShimmerSearchItemLoading(modifier = Modifier.padding(padding))
+                }
             }
         }
 
     }
+}
+
+
+private fun calculateItemPadding(index: Int, cellCount: Int): PaddingValues {
+    val column = index % cellCount
+    val left = 8.dp - column * 8.dp / cellCount
+    val right = (column + 1) * 8.dp / cellCount
+    return PaddingValues(start = left, end = right, top = 8.dp)
 }
