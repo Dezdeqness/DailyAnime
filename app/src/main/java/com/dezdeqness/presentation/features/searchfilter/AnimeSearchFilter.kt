@@ -74,7 +74,8 @@ fun AnimeSearchFilter(
                     items(
                         state.items.size,
                         key = { index ->
-                            state.items[index].value.innerId
+                            val item = state.items[index].value
+                            item.innerId + item.displayName
                         }
                     ) { index ->
                         Section(

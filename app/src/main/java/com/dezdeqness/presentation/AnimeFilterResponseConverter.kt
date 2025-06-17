@@ -20,7 +20,7 @@ class AnimeFilterResponseConverter @Inject constructor(){
                     }
 
                 // Add to map only if there are selected IDs
-                if (selectedIds.isNotEmpty()) filter.innerId to selectedIds else null
+                if (selectedIds.isNotEmpty()) filter.queryId to selectedIds else null
             }
             .toMap() // Convert the resulting list to a map
     }

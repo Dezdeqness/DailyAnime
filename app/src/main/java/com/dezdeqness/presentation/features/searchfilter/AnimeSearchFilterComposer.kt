@@ -19,8 +19,26 @@ class AnimeSearchFilterComposer @Inject constructor(
         val animeFilters = mutableListOf<SearchSectionUiModel>()
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.GENRE },
-                FilterType.GENRE.filterName,
+                filter = filters.filter { it.type == FilterType.AUDIENCE },
+                queryId = FilterType.GENRE.filterName,
+                resId = FilterType.AUDIENCE.filterName,
+                isExpandable = true,
+                sectionType = SectionType.CheckBox,
+            )
+        )
+        animeFilters.add(
+            composeFilter(
+                filter = filters.filter { it.type == FilterType.GENRE },
+                resId = FilterType.GENRE.filterName,
+                isExpandable = true,
+                sectionType = SectionType.CheckBox,
+            )
+        )
+        animeFilters.add(
+            composeFilter(
+                filter = filters.filter { it.type == FilterType.THEME },
+                queryId = FilterType.GENRE.filterName,
+                resId = FilterType.THEME.filterName,
                 isExpandable = true,
                 sectionType = SectionType.CheckBox,
             )
@@ -28,26 +46,26 @@ class AnimeSearchFilterComposer @Inject constructor(
         animeFilters.add(composeSeasonFilter())
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.STATUS },
-                FilterType.STATUS.filterName
+                filter = filters.filter { it.type == FilterType.STATUS },
+                resId = FilterType.STATUS.filterName,
             )
         )
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.KIND },
-                FilterType.KIND.filterName
+                filter = filters.filter { it.type == FilterType.KIND },
+                resId = FilterType.KIND.filterName,
             )
         )
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.DURATION },
-                FilterType.DURATION.filterName
+                filter = filters.filter { it.type == FilterType.DURATION },
+                resId = FilterType.DURATION.filterName,
             )
         )
         animeFilters.add(
             composeFilter(
-                filters.filter { it.type == FilterType.RATING },
-                FilterType.RATING.filterName
+                filter = filters.filter { it.type == FilterType.RATING },
+                resId = FilterType.RATING.filterName,
             )
         )
 
@@ -63,13 +81,15 @@ class AnimeSearchFilterComposer @Inject constructor(
 
     private fun composeFilter(
         filter: List<FilterEntity>,
-        id: String,
+        resId: String,
+        queryId: String = resId,
         isExpandable: Boolean = false,
         sectionType: SectionType = SectionType.ChipMultipleChoice,
     ) =
         SearchSectionUiModel(
-            innerId = id,
-            displayName = resourceManager.getString(PREFIX + id),
+            innerId = resId,
+            queryId = queryId,
+            displayName = resourceManager.getString(PREFIX + resId),
             items = ImmutableList.copyOf(
                 filter.map { item ->
                     AnimeCell(
