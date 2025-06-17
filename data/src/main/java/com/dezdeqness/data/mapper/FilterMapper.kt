@@ -4,6 +4,7 @@ import com.dezdeqness.data.model.FilterItem
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.FilterType
 import com.dezdeqness.domain.model.GenreEntity
+import com.dezdeqness.domain.model.GenreKindEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,7 +22,10 @@ class FilterMapper @Inject constructor() {
         FilterEntity(
             id = item.id,
             name = item.name,
-            type = FilterType.GENRE,
+            type = when (item.kind) {
+                GenreKindEntity.DEMOGRAPHIC -> FilterType.AUDIENCE
+                GenreKindEntity.THEME -> FilterType.THEME
+                else -> FilterType.GENRE
+            }
         )
-
 }

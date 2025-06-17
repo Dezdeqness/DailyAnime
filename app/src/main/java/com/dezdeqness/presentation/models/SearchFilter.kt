@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList
 
 data class SearchSectionUiModel(
     val innerId: String,
+    val queryId: String = innerId,
     val displayName: String,
     val items: ImmutableList<AnimeCell>,
     val selectedCells: Set<String> = setOf(),

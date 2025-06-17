@@ -16,6 +16,8 @@ import com.dezdeqness.core.ui.ExpandableContent
 import com.dezdeqness.core.ui.views.buttons.AppTextButton
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 
+private const val ITEMS_EXPAND_THRESHOLD = 6
+
 @Composable
 fun SearchFilterCheckboxGroup(
     modifier: Modifier = Modifier,
@@ -25,6 +27,8 @@ fun SearchFilterCheckboxGroup(
 ) {
     val items = section.items
     val selectedItems = section.selectedCells
+
+    val isItemsExceedsLimit = items.size > ITEMS_EXPAND_THRESHOLD
 
     var isCollapsed by remember {
         mutableStateOf(true)
@@ -71,19 +75,21 @@ fun SearchFilterCheckboxGroup(
             }
         }
 
-        AppTextButton(
-            title = if (isCollapsed) {
-                stringResource(R.string.search_filter_show_more_title)
-            } else {
-                stringResource(R.string.search_filter_collapse_title)
-            },
-            onClick = {
-                if (!isCollapsed) {
-                    onScrollNeed()
-                }
+        if (isItemsExceedsLimit) {
+            AppTextButton(
+                title = if (isCollapsed) {
+                    stringResource(R.string.search_filter_show_more_title)
+                } else {
+                    stringResource(R.string.search_filter_collapse_title)
+                },
+                onClick = {
+                    if (!isCollapsed) {
+                        onScrollNeed()
+                    }
 
-                isCollapsed = !isCollapsed
-            }
-        )
+                    isCollapsed = !isCollapsed
+                }
+            )
+        }
     }
 }

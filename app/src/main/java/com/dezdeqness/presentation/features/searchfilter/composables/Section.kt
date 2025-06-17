@@ -70,8 +70,7 @@ fun Section(
                         isExpanded = isExpanded.not()
                     },
                     enabled = state.isExpandable,
-                )
-                .padding(horizontal = 16.dp),
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Header(title = state.displayName)
@@ -103,6 +102,7 @@ fun Section(
                     painter = painterResource(R.drawable.ic_arrow_down),
                     contentDescription = null,
                     modifier = Modifier
+                        .padding(end = 16.dp)
                         .size(24.dp)
                         .graphicsLayer(rotationZ = rotationAngle),
                     tint = AppTheme.colors.textPrimary,

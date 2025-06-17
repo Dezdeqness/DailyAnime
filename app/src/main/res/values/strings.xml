@@ -8,6 +8,8 @@
     <string name="search_filter_collapse_title">Collapse</string>
 
     <string name="anime_search_filter_genre">Genre</string>
+    <string name="anime_search_filter_theme">Theme</string>
+    <string name="anime_search_filter_audience">Audience</string>
     <string name="anime_search_filter_season">Season</string>
     <string name="anime_search_filter_status">Status</string>
     <string name="anime_search_filter_kind">Type</string>

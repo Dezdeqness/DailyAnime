@@ -5,4 +5,5 @@ data class GenreEntity(
     val id: String,
     val name: String,
     val type: TypeEntity,
+    val kind: GenreKindEntity,
 )

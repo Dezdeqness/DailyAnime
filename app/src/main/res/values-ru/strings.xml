@@ -6,6 +6,8 @@
     <string name="search_filter_collapse_title">Свернуть</string>
 
     <string name="anime_search_filter_genre">Жанр</string>
+    <string name="anime_search_filter_theme">Тема</string>
+    <string name="anime_search_filter_audience">Аудиенция</string>
     <string name="anime_search_filter_season">Сезон</string>
     <string name="anime_search_filter_status">Статус</string>
     <string name="anime_search_filter_kind">Тип</string>

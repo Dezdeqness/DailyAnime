@@ -8,6 +8,8 @@ data class FilterEntity(
 
 enum class FilterType(val filterName: String) {
     GENRE("genre"),
+    THEME("theme"),
+    AUDIENCE("audience"),
     STATUS("status"),
     KIND("kind"),
     SEASON("season"),
