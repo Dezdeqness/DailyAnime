@@ -90,6 +90,10 @@ fun AnimeSearchPage(
                         }
                     )
                 },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = AppTheme.colors.onPrimary,
+                    scrolledContainerColor = AppTheme.colors.onPrimary,
+                ),
                 scrollBehavior = scrollBehavior
             )
         },
