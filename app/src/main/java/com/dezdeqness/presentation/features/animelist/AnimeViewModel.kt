@@ -126,7 +126,7 @@ class AnimeViewModel @Inject constructor(
         .onEach { _pullRefreshFlow.tryEmit(false) }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Lazily,
             initialValue = AnimeSearchState()
         )
 

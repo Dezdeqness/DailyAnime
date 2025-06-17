@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.animelist.composable
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,12 +46,13 @@ fun ShimmerSearchItemLoading(
 private fun ShimmerSearchPair(
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier) {
-        ShimmerSearchItem(modifier = Modifier.weight(1f))
-
-        Spacer(modifier = Modifier.size(8.dp))
-
-        ShimmerSearchItem(modifier = Modifier.weight(1f))
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        repeat(3) {
+            ShimmerSearchItem(modifier = Modifier.weight(1f))
+        }
     }
 }
 
@@ -63,7 +65,7 @@ private fun ShimmerSearchItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
+                    .height(150.dp)
                     .shimmer()
             )
 
