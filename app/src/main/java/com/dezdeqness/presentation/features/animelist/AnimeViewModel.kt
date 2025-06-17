@@ -50,6 +50,9 @@ class AnimeViewModel @Inject constructor(
     private val _scrollNeedFlow = MutableStateFlow(false)
     val scrollNeedFlow: StateFlow<Boolean> get() = _scrollNeedFlow
 
+    private val _isListScrolling = MutableStateFlow(false)
+    val isListScrolling: StateFlow<Boolean> get() = _isListScrolling
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val animeSearchState: StateFlow<AnimeSearchState> = loadEvents
         .onStart { emit(LoadEvent.Initial()) }
@@ -181,6 +184,10 @@ class AnimeViewModel @Inject constructor(
         launchOnIo {
             messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
         }
+    }
+
+    fun onScrollInProgress(isScrollInProgression: Boolean) {
+        _isListScrolling.value = isScrollInProgression
     }
 
     companion object {

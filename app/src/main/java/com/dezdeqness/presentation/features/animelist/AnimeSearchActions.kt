@@ -11,4 +11,5 @@ interface AnimeSearchActions {
     fun onFabClicked()
     fun onQueryChanged(query: String)
     fun onFilterChanged(filtersList: List<SearchSectionUiModel>)
+    fun onScrollInProgress(isScrollInProgress: Boolean)
 }

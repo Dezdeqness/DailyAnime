@@ -1,5 +1,10 @@
 package com.dezdeqness.presentation.features.animelist
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -39,6 +44,7 @@ fun AnimeSearchPage(
     stateFlow: StateFlow<AnimeSearchState>,
     pullRefreshFlow: StateFlow<Boolean>,
     scrollNeedFlow: StateFlow<Boolean>,
+    isListScrollingFlow: StateFlow<Boolean>,
     actions: AnimeSearchActions,
 ) {
     val scope = rememberCoroutineScope()
@@ -48,6 +54,8 @@ fun AnimeSearchPage(
     val isPullDownRefreshing by pullRefreshFlow.collectAsStateWithLifecycle()
 
     val isScrollNeed by scrollNeedFlow.collectAsStateWithLifecycle()
+
+    val isListScrolling by isListScrollingFlow.collectAsStateWithLifecycle()
 
     Scaffold(
         containerColor = AppTheme.colors.onPrimary,
@@ -61,18 +69,22 @@ fun AnimeSearchPage(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                containerColor = AppTheme.colors.accent,
-                contentColor = AppTheme.colors.onPrimary,
-                onClick = {
-                    actions.onFabClicked()
-                }
+            AnimatedVisibility(
+                visible = isListScrolling.not(),
+                enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }) + fadeIn(),
+                exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut(),
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.filter_list),
-                    contentDescription = null,
-                    tint = AppTheme.colors.onSurface,
-                )
+                FloatingActionButton(
+                    containerColor = AppTheme.colors.accent,
+                    contentColor = AppTheme.colors.onPrimary,
+                    onClick = { actions.onFabClicked() }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.filter_list),
+                        contentDescription = null,
+                        tint = AppTheme.colors.onSurface,
+                    )
+                }
             }
         }
     ) { contentPadding ->
@@ -134,6 +146,9 @@ fun AnimeSearchPage(
                         },
                         onActionReceive = { action ->
                             actions.onActionReceived(action)
+                        },
+                        onScrollInProgress = { isListScrolling ->
+                            actions.onScrollInProgress(isListScrolling)
                         }
                     )
                 }

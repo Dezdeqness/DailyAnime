@@ -10,11 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 private const val PAGINATION_LOAD_FACTOR = 0.75
 
@@ -28,8 +30,15 @@ fun AnimeSearchGrid(
     onLoadMore: () -> Unit,
     onNeedScroll: (LazyGridState) -> Unit,
     onActionReceive: (Action) -> Unit,
+    onScrollInProgress: (Boolean) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
+
+    LaunchedEffect(gridState) {
+        snapshotFlow { gridState.isScrollInProgress }
+            .distinctUntilChanged()
+            .collect { onScrollInProgress(it) }
+    }
 
     val shouldStartPaginate = remember {
         derivedStateOf {
