@@ -19,15 +19,6 @@ class RemoteConfigProvider(
 
     override suspend fun refresh() {
         remoteConfig
-            .setDefaultsAsync(ConfigKeys.defaults())
-            .await()
-            .onSuccess {
-                appLogger.logInfo(TAG, "Default async success")
-            }
-            .onFailure {
-                appLogger.logInfo(TAG, "Default async error", it)
-            }
-        remoteConfig
             .fetch()
             .await()
             .onSuccess {
