@@ -2,7 +2,6 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
-import com.dezdeqness.BuildConfig
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.CoroutineDispatcherProviderImpl
@@ -108,18 +107,14 @@ class AppModule {
 
     @Singleton
     @Provides
-    // TODO: Fancy but no so useful, provide manager with both classes
     fun provideConfigManager(
         remoteConfigProvider: RemoteConfigProvider,
         debugConfigProvider: DebugConfigProvider,
         appLogger: AppLogger,
     ) = ConfigManager(
         appLogger = appLogger,
-        configProvider = if (BuildConfig.DEBUG) {
-            debugConfigProvider
-        } else {
-            remoteConfigProvider
-        }
+        debugConfigProvider = debugConfigProvider,
+        remoteConfigProvider = remoteConfigProvider,
     )
 
     @Singleton
