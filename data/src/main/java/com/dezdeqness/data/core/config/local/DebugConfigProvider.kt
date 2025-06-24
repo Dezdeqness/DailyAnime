@@ -10,26 +10,16 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.dezdeqness.data.core.config.BaseConfigProvider
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onErrorResume
 import kotlinx.coroutines.runBlocking
 
 // TODO: Move to core module
 class DebugConfigProvider(
     private val context: Context,
-) : BaseConfigProvider() {
+) : BaseConfigProvider {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "debug_config")
-
-    override suspend fun refresh() {
-        // no-op
-    }
-
-    override suspend fun setDefaults() {
-        // no-op
-    }
 
     override fun getStringValue(key: String) =
         runBlocking {
@@ -74,6 +64,14 @@ class DebugConfigProvider(
                 .first()
         }
 
+    fun setDoubleValue(key: String, value: Double) {
+        runBlocking {
+            context.dataStore.edit { settings ->
+                settings[doublePreferencesKey(key)] = value
+            }
+        }
+    }
+
     override fun getBooleanValue(key: String) =
         runBlocking {
             context
@@ -88,10 +86,10 @@ class DebugConfigProvider(
                 .first()
         }
 
-    fun setDoubleValue(key: String, value: Double) {
+    fun setBooleanValue(key: String, value: Boolean) {
         runBlocking {
             context.dataStore.edit { settings ->
-                settings[doublePreferencesKey(key)] = value
+                settings[booleanPreferencesKey(key)] = value
             }
         }
     }
