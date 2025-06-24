@@ -13,11 +13,11 @@ import kotlin.coroutines.resume
 
 class RemoteConfigProvider(
     private val appLogger: AppLogger,
-) : BaseConfigProvider() {
+) : BaseConfigProvider {
 
     private val remoteConfig = Firebase.remoteConfig
 
-    override suspend fun refresh() {
+    suspend fun refresh() {
         remoteConfig
             .fetch()
             .await()
@@ -27,7 +27,7 @@ class RemoteConfigProvider(
             }
     }
 
-    override suspend fun setDefaults() {
+    fun setDefaults() {
         runBlocking {
             remoteConfig
                 .setDefaultsAsync(ConfigKeys.defaults())
@@ -40,6 +40,11 @@ class RemoteConfigProvider(
                 }
         }
     }
+
+    override fun getStringValue(key: String) = remoteConfig.getValue(key).asString()
+    override fun getIntValue(key: String) = remoteConfig.getValue(key).asLong().toInt()
+    override fun getDoubleValue(key: String) = remoteConfig.getValue(key).asDouble()
+    override fun getBooleanValue(key: String) = remoteConfig.getValue(key).asBoolean()
 
     private suspend fun <T> Task<T>.await(): Result<T> {
         if (isComplete) {
@@ -66,11 +71,6 @@ class RemoteConfigProvider(
             }
         }
     }
-
-    override fun getStringValue(key: String) = remoteConfig.getValue(key).asString()
-    override fun getIntValue(key: String) = remoteConfig.getValue(key).asLong().toInt()
-    override fun getDoubleValue(key: String) = remoteConfig.getValue(key).asDouble()
-    override fun getBooleanValue(key: String) = remoteConfig.getValue(key).asBoolean()
 
     companion object {
         private const val TAG = "RemoteConfigProvider"

@@ -9,6 +9,7 @@ import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
 import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.data.core.config.ConfigSettingsProvider
 import com.dezdeqness.data.core.config.local.DebugConfigProvider
 import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
 import com.dezdeqness.data.manager.PersonalListFilterManager
@@ -107,14 +108,22 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun provideConfigSettingsProvider(context: Context) = ConfigSettingsProvider(
+        context = context,
+    )
+
+    @Singleton
+    @Provides
     fun provideConfigManager(
         remoteConfigProvider: RemoteConfigProvider,
         debugConfigProvider: DebugConfigProvider,
+        configSettingsProvider: ConfigSettingsProvider,
         appLogger: AppLogger,
     ) = ConfigManager(
         appLogger = appLogger,
         debugConfigProvider = debugConfigProvider,
         remoteConfigProvider = remoteConfigProvider,
+        configSettingsProvider = configSettingsProvider,
     )
 
     @Singleton
