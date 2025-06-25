@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -25,10 +24,10 @@ class ConfigSettingsProvider(
                 .first()
         }
 
-    fun setOverrideRemoteEnabled(value: String) {
+    fun setOverrideRemoteEnabled(value: Boolean) {
         runBlocking {
             context.dataStore.edit { settings ->
-                settings[stringPreferencesKey(CONFIG_SETTING_OVERRIDE_REMOTE)] = value
+                settings[booleanPreferencesKey(CONFIG_SETTING_OVERRIDE_REMOTE)] = value
             }
         }
     }

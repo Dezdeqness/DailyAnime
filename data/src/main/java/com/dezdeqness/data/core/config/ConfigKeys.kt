@@ -27,5 +27,6 @@ enum class ConfigKeys(
 
     companion object {
         fun defaults() = entries.associate { it.key to it.defaultValue }
+        fun getByKey(key: String) = entries.first { it.key == key }
     }
 }
