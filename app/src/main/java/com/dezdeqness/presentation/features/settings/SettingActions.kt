@@ -20,4 +20,6 @@ interface SettingActions {
     fun onNotificationTimePickerClicked()
     fun onNotificationTimeSaved(hours: Int, minutes: Int)
     fun onNotificationTimePickerClosed()
+
+    fun onDebugOptionsClicked()
 }
