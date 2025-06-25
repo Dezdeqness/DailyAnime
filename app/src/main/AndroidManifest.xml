@@ -60,6 +60,7 @@
             android:name=".presentation.features.userrate.UserRateActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

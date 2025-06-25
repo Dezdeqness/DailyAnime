@@ -17,6 +17,7 @@ import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
+import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
@@ -92,6 +93,8 @@ interface AppComponent {
     fun screenshotsViewerComponent(): ScreenshotsViewerComponent.Builder
 
     fun homeComponent(): HomeComponent.Factory
+
+    fun debugComponent(): DebugComponent.Factory
 
     val appLogger: AppLogger
 
