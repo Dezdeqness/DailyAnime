@@ -36,7 +36,7 @@ class ConfigManager(
         }
     }
 
-    private fun <T> getValue(key: ConfigKeys) =
+    fun <T> getValue(key: ConfigKeys) =
         if (configSettingsProvider.isOverrideRemoteEnabled() == true) {
             getValue<T>(debugConfigProvider, key)
         } else {
@@ -47,10 +47,10 @@ class ConfigManager(
     private fun <T> getValue(provider: BaseConfigProvider, key: ConfigKeys) =
         try {
             when (key.defaultValue) {
-                is String -> provider.getStringValue(key.key)
-                is Int -> provider.getIntValue(key.key)
-                is Double -> provider.getDoubleValue(key.key)
-                is Boolean -> provider.getBooleanValue(key.key)
+                is String -> provider.getStringValue(key.key) ?: key.defaultValue
+                is Int -> provider.getIntValue(key.key) ?: key.defaultValue
+                is Double -> provider.getDoubleValue(key.key) ?: key.defaultValue
+                is Boolean -> provider.getBooleanValue(key.key) ?: key.defaultValue
                 else -> key.defaultValue
             } as T
         } catch (exception: Exception) {
