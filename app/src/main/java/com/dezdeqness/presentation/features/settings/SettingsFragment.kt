@@ -18,6 +18,7 @@ import com.dezdeqness.di.AppComponent
 import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.SwitchDarkTheme
+import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -95,6 +96,10 @@ class SettingsFragment : BaseComposeFragment() {
 
                     override fun onNotificationTimePickerClosed() {
                         viewModel.onNotificationTimePickerClosed()
+                    }
+
+                    override fun onDebugOptionsClicked() {
+                        startActivity(DebugScreenActivity.newIntent(context = requireContext()))
                     }
 
                 }

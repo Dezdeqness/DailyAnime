@@ -133,6 +133,15 @@ fun SettingsPage(
                     subtitle = BuildConfig.VERSION_NAME,
                 )
             }
+
+            if (BuildConfig.DEBUG) {
+                item {
+                    TextSettingsView(
+                        title = "Debug options",
+                        onSettingClick = actions::onDebugOptionsClicked,
+                    )
+                }
+            }
         }
 
         if (state.isSelectInitialSectionDialogShown) {
