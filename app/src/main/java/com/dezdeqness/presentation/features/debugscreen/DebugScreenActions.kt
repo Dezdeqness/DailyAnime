@@ -6,4 +6,6 @@ interface DebugScreenActions {
     fun onInitialLoading()
     fun onOverrideConfigKeysClicked(value: Boolean)
     fun setValue(key: ConfigKeys, value: Any)
+    fun onBackPressed()
+    fun onApplyChangesClicked()
 }
