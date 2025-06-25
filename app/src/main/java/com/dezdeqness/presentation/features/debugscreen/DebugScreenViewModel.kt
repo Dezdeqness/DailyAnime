@@ -29,11 +29,16 @@ class DebugScreenViewModel @Inject constructor(
 
     fun updateConfigValue(key: ConfigKeys, value: Any) {
         configManager.setConfigKey(key, value)
-        _uiState.update { it.copy(configValues = it.configValues + (key to value)) }
+        _uiState.update {
+            it.copy(
+                configValues = it.configValues + (key to value),
+                isModified = true,
+            )
+        }
     }
 
     fun onOverrideConfigKeysClicked(value: Boolean) {
         configSettingsProvider.setOverrideRemoteEnabled(value)
-        _uiState.update { it.copy(isOverrideEnabled = value) }
+        _uiState.update { it.copy(isOverrideEnabled = value, isModified = true) }
     }
 }

@@ -49,6 +49,16 @@ class DebugScreenActivity : AppCompatActivity() {
                         override fun setValue(key: ConfigKeys, value: Any) {
                             viewModel.updateConfigValue(key, value)
                         }
+
+                        override fun onBackPressed() {
+                            this@DebugScreenActivity.onBackPressed()
+                        }
+
+                        override fun onApplyChangesClicked() {
+                            val intent = packageManager.getLaunchIntentForPackage(packageName)
+                            val mainIntent = Intent.makeRestartActivityTask(intent?.component)
+                            startActivity(mainIntent)
+                        }
                     }
                 )
             }
