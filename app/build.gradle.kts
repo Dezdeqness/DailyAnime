@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.firebase)
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
+    alias(libs.plugins.screenshot)
 }
 
 val appVersionName = version.toString()
@@ -92,6 +93,8 @@ android {
     }
 
     namespace = "com.dezdeqness"
+
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 dependencies {
@@ -191,6 +194,8 @@ dependencies {
 
     implementation(project(":data"))
     implementation(project(":domain"))
+
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
 
 fun Project.getParsedVersionCode(projectName: String): Int {
