@@ -59,6 +59,7 @@ browser = "1.8.0"
 
 tink = "1.17.0"
 protobuf = "4.28.3"
+screenshot = "0.0.1-alpha09"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
@@ -162,6 +163,8 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
+
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
 
 # Internal
 com-dezdeqness-compose = { id = "com.dezdeqness.compose", version = "unspecified" }
