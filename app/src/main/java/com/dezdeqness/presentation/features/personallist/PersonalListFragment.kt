@@ -110,7 +110,6 @@ class PersonalListFragment : BaseComposeFragment() {
                     UserRateActivity.UserRateParams(
                         userRateId = event.rateId,
                         title = event.title,
-                        overallEpisodes = event.overallEpisodes,
                     ),
                     ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()),
                 )

@@ -13,8 +13,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModelProvider
 import com.dezdeqness.core.collectEvents
 import com.dezdeqness.core.ui.theme.AppTheme
@@ -67,7 +65,6 @@ class UserRateActivity : AppCompatActivity() {
                 UserRateModule(
                     rateId = params.userRateId,
                     title = params.title,
-                    overallEpisode = params.overallEpisodes,
                 )
             )
             .build()
@@ -163,7 +160,6 @@ class UserRateActivity : AppCompatActivity() {
     data class UserRateParams(
         val userRateId: Long,
         val title: String,
-        val overallEpisodes: Int,
     ) : Parcelable
 
     companion object {

@@ -35,7 +35,6 @@ data class ApplyFilter(val filters: List<SearchSectionUiModel> = listOf()) : Eve
 data class NavigateToEditRate(
     val rateId: Long,
     val title: String,
-    val overallEpisodes: Int,
 ) : Event()
 
 data object LanguageDisclaimer : Event()

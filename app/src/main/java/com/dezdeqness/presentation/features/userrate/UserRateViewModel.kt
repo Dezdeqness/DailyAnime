@@ -17,7 +17,6 @@ class UserRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
     @Named("rateId") private val rateId: Long,
     @Named("title") private val title: String,
-    @Named("overallEpisode") private val overallEpisode: Int,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -61,10 +60,6 @@ class UserRateViewModel @Inject constructor(
 
     fun onEpisodesPlusClicked() {
         val episode = _userRateStateFlow.value.episode + 1
-
-        if (overallEpisode != 0 && episode > overallEpisode) {
-            return
-        }
 
         _userRateStateFlow.value = _userRateStateFlow.value.copy(
             episode = episode,

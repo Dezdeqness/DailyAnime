@@ -25,7 +25,6 @@ interface UserRateComponent {
 class UserRateModule(
     private val rateId: Long,
     private val title: String,
-    private val overallEpisode: Int,
 ) {
     @Named("rateId")
     @Provides
@@ -34,8 +33,4 @@ class UserRateModule(
     @Named("title")
     @Provides
     fun provideTitle() = title
-
-    @Named("overallEpisode")
-    @Provides
-    fun provideOverallEpisode() = overallEpisode
 }
