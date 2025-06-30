@@ -105,12 +105,10 @@ class AnimeDetailsViewModel @Inject constructor(
     fun onEditRateClicked() {
         val rateId = animeDetails?.animeDetailsEntity?.userRate?.id ?: -1
         val title = animeDetails?.animeDetailsEntity?.russian ?: ""
-        val overallEpisodes = animeDetails?.animeDetailsEntity?.episodes ?: -1
         onEventReceive(
             NavigateToEditRate(
                 rateId = rateId,
                 title = title,
-                overallEpisodes = overallEpisodes,
             )
         )
 
