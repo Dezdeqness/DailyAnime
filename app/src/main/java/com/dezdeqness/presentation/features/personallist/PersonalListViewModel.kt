@@ -15,13 +15,19 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.message.MessageConsumer
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 class PersonalListViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
     private val personalListComposer: PersonalListComposer,
@@ -40,7 +46,8 @@ class PersonalListViewModel @Inject constructor(
 
     private var currentRibbonId: String? = null
 
-    private var query: String? = null
+    private val _queryFlow: MutableStateFlow<String?> = MutableStateFlow(null)
+    val queryFlow: StateFlow<String?> = _queryFlow
 
     private var ribbonRaw: FullAnimeStatusesEntity = FullAnimeStatusesEntity(listOf())
 
@@ -67,6 +74,25 @@ class PersonalListViewModel @Inject constructor(
                 }
         }
 
+        launchOnIo {
+            queryFlow
+                .debounce(300)
+                .distinctUntilChanged()
+                .mapNotNull { it }
+                .collectLatest { query ->
+                    val uiItems = personalListComposer.compose(
+                        filter = personalListFilterRepository.getFilter(),
+                        entityList = userRatesList,
+                        query = query,
+                    )
+
+                    _personalListStateFlow.value = _personalListStateFlow.value.copy(
+                        items = uiItems,
+                        placeholder = if (uiItems.isEmpty()) Placeholder.UserRate.Empty else Placeholder.None,
+                        isScrollNeed = true,
+                    )
+                }
+        }
     }
 
     override val viewModelTag = "PersonalListViewModel"
@@ -90,7 +116,7 @@ class PersonalListViewModel @Inject constructor(
                         val uiItems = personalListComposer.compose(
                             filter = personalListFilterRepository.getFilter(),
                             entityList = list,
-                            query = query,
+                            query = _queryFlow.value,
                         )
 
                         _personalListStateFlow.value = _personalListStateFlow.value.copy(
@@ -234,7 +260,7 @@ class PersonalListViewModel @Inject constructor(
             val uiItems = personalListComposer.compose(
                 filter = personalListFilterRepository.getFilter(),
                 entityList = userRatesList,
-                query = query,
+                query = _queryFlow.value,
             )
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
@@ -246,25 +272,7 @@ class PersonalListViewModel @Inject constructor(
     }
 
     fun onQueryChanged(query: String) {
-        if (this.query == query) {
-            return
-        }
-
-        this.query = query
-
-        launchOnIo {
-            val uiItems = personalListComposer.compose(
-                filter = personalListFilterRepository.getFilter(),
-                entityList = userRatesList,
-                query = query,
-            )
-
-            _personalListStateFlow.value = _personalListStateFlow.value.copy(
-                items = uiItems,
-                placeholder = if (uiItems.isEmpty()) Placeholder.UserRate.Empty else Placeholder.None,
-                isScrollNeed = true,
-            )
-        }
+        _queryFlow.update { query }
     }
 
     private fun onEditRateClicked(editRateId: Long) {
@@ -275,7 +283,6 @@ class PersonalListViewModel @Inject constructor(
                     NavigateToEditRate(
                         rateId = editRateId,
                         title = it.anime?.russian.orEmpty(),
-                        overallEpisodes = it.anime?.episodesAired ?: 0,
                     )
                 )
             }
@@ -338,7 +345,7 @@ class PersonalListViewModel @Inject constructor(
                 val uiItems = personalListComposer.compose(
                     filter = personalListFilterRepository.getFilter(),
                     entityList = userRatesList,
-                    query = query,
+                    query = _queryFlow.value,
                 )
 
                 _personalListStateFlow.value = _personalListStateFlow.value.copy(
