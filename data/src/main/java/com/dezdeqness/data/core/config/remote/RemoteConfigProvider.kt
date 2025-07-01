@@ -1,11 +1,13 @@
 package com.dezdeqness.data.core.config.remote
 
+import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.BaseConfigProvider
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.cancellation.CancellationException
@@ -15,11 +17,17 @@ class RemoteConfigProvider(
     private val appLogger: AppLogger,
 ) : BaseConfigProvider {
 
-    private val remoteConfig = Firebase.remoteConfig
+    val configSettings = remoteConfigSettings {
+        minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else 3600 // 1 hour
+    }
+
+    private val remoteConfig = Firebase.remoteConfig.apply {
+        setConfigSettingsAsync(configSettings)
+    }
 
     suspend fun refresh() {
         remoteConfig
-            .fetch()
+            .fetchAndActivate()
             .await()
             .onSuccess {
                 val task = remoteConfig.activate().await()

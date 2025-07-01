@@ -1,6 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.datasource.HomeRemoteDatasource
 import com.dezdeqness.data.datasource.HomeRemoteDatasourceImpl
 import com.dezdeqness.data.provider.ConfigurationProvider
@@ -21,8 +22,14 @@ abstract class HomeModule {
     companion object {
 
         @Provides
-        fun provideHomeGenresProvider(configurationProvider: ConfigurationProvider) =
-            HomeGenresProvider(configurationProvider = configurationProvider)
+        fun provideHomeGenresProvider(
+            configurationProvider: ConfigurationProvider,
+            configManager: ConfigManager,
+        ) =
+            HomeGenresProvider(
+                configurationProvider = configurationProvider,
+                configManager = configManager,
+            )
 
         @Provides
         fun provideHomeComposer(homeGenresProvider: HomeGenresProvider) =
