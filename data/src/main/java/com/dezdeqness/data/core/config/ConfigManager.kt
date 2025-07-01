@@ -22,6 +22,9 @@ class ConfigManager(
     val isCalendarEnabled: Boolean
         get() = getValue<Boolean>(ConfigKeys.CALENDAR_ENABLED) == true
 
+    val homeGenresList: List<String>
+        get() = getValue<String>(ConfigKeys.HOME_GENRES_LIST_IDS).split(",")
+
     suspend fun invalidate() {
         remoteConfigProvider.setDefaults()
         remoteConfigProvider.refresh()

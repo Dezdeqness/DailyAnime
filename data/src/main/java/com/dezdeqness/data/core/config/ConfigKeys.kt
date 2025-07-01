@@ -23,6 +23,10 @@ enum class ConfigKeys(
     CALENDAR_ENABLED(
         key = "calendar_enabled",
         defaultValue = true,
+    ),
+    HOME_GENRES_LIST_IDS(
+        key = "home_genres_list_ids",
+        defaultValue = "2,27,22", // GENRE_ID_ADVENTURE, GENRE_ID_ROMANTIC, GENRE_ID_SHOUNEN
     );
 
     companion object {
