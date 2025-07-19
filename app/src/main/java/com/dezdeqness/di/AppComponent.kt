@@ -1,8 +1,8 @@
 package com.dezdeqness.di
 
 import android.content.Context
-import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.WorkSchedulerManager
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.PermissionCheckProvider

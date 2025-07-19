@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.authorization
 import androidx.core.net.toUri
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.presentation.event.AuthUrl

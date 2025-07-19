@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.animestats
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.page.StatsState
 import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 import kotlinx.coroutines.flow.MutableStateFlow

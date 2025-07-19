@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.genericlistscreen
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.usecases.BaseListableUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer

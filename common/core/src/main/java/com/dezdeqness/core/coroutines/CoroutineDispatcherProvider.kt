@@ -1,4 +1,4 @@
-package com.dezdeqness.core
+package com.dezdeqness.core.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 

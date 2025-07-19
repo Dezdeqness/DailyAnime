@@ -2,8 +2,8 @@ package com.dezdeqness.presentation.features.settings
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.WorkSchedulerManager
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.ui.TimeData
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider

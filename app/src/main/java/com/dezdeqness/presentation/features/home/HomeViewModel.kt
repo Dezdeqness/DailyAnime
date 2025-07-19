@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.home
 
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider

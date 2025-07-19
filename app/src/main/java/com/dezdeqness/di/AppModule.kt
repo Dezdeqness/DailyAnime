@@ -3,9 +3,9 @@ package com.dezdeqness.di
 import android.content.Context
 import android.content.res.AssetManager
 import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.core.CoroutineDispatcherProvider
-import com.dezdeqness.core.CoroutineDispatcherProviderImpl
 import com.dezdeqness.core.MessageProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProviderImpl
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
 import com.dezdeqness.data.core.config.ConfigManager
