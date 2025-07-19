@@ -14,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.dezdeqness.core.collectEvents
+import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.di.subcomponents.UserRateModule
 import com.dezdeqness.getComponent
@@ -128,7 +128,7 @@ class UserRateActivity : AppCompatActivity() {
                         val result = Intent().apply {
                             putExtra(USER_RATE_RESULT, event.userRateUiModel)
                         }
-                        setResult(Activity.RESULT_OK, result)
+                        setResult(RESULT_OK, result)
                         finish()
                     }
 

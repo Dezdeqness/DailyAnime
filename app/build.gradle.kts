@@ -183,9 +183,9 @@ dependencies {
     debugImplementation(libs.leak.canary)
     add("qaImplementation", libs.leak.canary)
 
-    // Core UI
+    // Common
     implementation(project(":common:core-ui"))
-    implementation(libs.core)
+    implementation(project(":common:core"))
 
     // Androidx
     implementation(libs.androidx.browser)

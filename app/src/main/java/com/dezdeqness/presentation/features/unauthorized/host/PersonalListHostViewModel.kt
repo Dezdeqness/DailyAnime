@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.unauthorized.host
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.AccountRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

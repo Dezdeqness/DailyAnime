@@ -2,8 +2,8 @@ package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.MessageProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.repository.AccountRepository
@@ -12,7 +12,6 @@ import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.NavigateToAnimeStats
 import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology

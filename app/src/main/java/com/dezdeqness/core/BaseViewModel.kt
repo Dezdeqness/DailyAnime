@@ -2,6 +2,7 @@ package com.dezdeqness.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventListener
@@ -15,7 +16,7 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel(
     protected val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    val appLogger: AppLogger,
+    protected val appLogger: AppLogger,
 ) : ViewModel(), CoroutineScope, EventListener {
 
     private val _events = Channel<Event>()
@@ -36,14 +37,6 @@ abstract class BaseViewModel(
     private val initialLoaded: InitialLoaded
         get() {
             if (this !is InitialLoaded) {
-                throw NotImplementedMethodException()
-            }
-            return this
-        }
-
-    private val loadMore: LoadMore
-        get() {
-            if (this !is LoadMore) {
                 throw NotImplementedMethodException()
             }
             return this
@@ -111,20 +104,6 @@ abstract class BaseViewModel(
             isPullDownRefresh = true,
         )
 
-
-    protected fun <T> onLoadMore(
-        action: () -> (Result<T>),
-        onSuccess: (T) -> (Boolean),
-        onFailure: ((Throwable) -> (Unit))? = null,
-        errorMessage: String = "",
-    ) =
-        makeRequest(
-            action = action,
-            onSuccess = onSuccess,
-            onFailure = onFailure,
-            errorMessage = errorMessage,
-        )
-
     protected fun <T> onInitialLoad(
         action: () -> (Result<T>),
         onSuccess: (T) -> (Unit),
@@ -195,35 +174,11 @@ abstract class BaseViewModel(
         }
 
     private fun <T> makeRequest(
-        action: () -> (Result<T>),
-        onSuccess: (T) -> (Boolean),
-        onFailure: ((Throwable) -> (Unit))? = null,
-        errorMessage: String = "",
-    ) =
-        launchOnIo {
-            action.invoke()
-                .onSuccess { value ->
-                    val hasNextPage = onSuccess.invoke(value)
-                    loadMore.setLoadMoreIndicator(isVisible = hasNextPage)
-                }
-                .onFailure { throwable ->
-                    onFailure?.invoke(throwable)
-                    appLogger.logInfo(
-                        tag = viewModelTag,
-                        message = errorMessage,
-                        throwable = throwable,
-                    )
-                }
-        }
-
-
-    private fun <T> makeRequest(
         collector: Flow<Result<T>>,
         onSuccess: suspend (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         isPullDownRefresh: Boolean = false,
         isInitialLoad: Boolean = false,
-        isLoadMore: Boolean = false,
         errorMessage: String = "",
     ) =
         launchOnIo {
@@ -251,9 +206,6 @@ abstract class BaseViewModel(
                         }
                         if (isInitialLoad) {
                             initialLoaded.setLoadingIndicatorVisible(isVisible = false)
-                        }
-                        if (isLoadMore) {
-                            loadMore.setLoadMoreIndicator(isVisible = false)
                         }
                         appLogger.logInfo(
                             tag = viewModelTag,
@@ -341,11 +293,6 @@ abstract class BaseViewModel(
 
     interface InitialLoaded {
         fun setLoadingIndicatorVisible(isVisible: Boolean)
-    }
-
-    interface LoadMore {
-        fun setLoadMoreIndicator(isVisible: Boolean)
-
     }
 
     class NotImplementedMethodException : Exception()

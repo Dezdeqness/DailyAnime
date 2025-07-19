@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.calendar
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.AnimeCalendarEntity
 import com.dezdeqness.domain.repository.CalendarRepository
 import com.dezdeqness.presentation.action.Action

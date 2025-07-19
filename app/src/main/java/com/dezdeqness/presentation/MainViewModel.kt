@@ -2,7 +2,7 @@ package com.dezdeqness.presentation
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.provider.LocaleProvider
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.LanguageDisclaimer

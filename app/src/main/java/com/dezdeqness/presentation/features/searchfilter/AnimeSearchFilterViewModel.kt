@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.searchfilter
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.SearchFilterRepository
 import com.dezdeqness.presentation.event.ApplyFilter
 import com.dezdeqness.presentation.models.SearchSectionUiModel

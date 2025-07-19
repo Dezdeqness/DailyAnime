@@ -3,8 +3,8 @@ package com.dezdeqness.presentation.features.history
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.CoroutineDispatcherProvider
 import com.dezdeqness.core.MessageProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Effect
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Event

@@ -1,6 +1,6 @@
 package utils
 
-import com.dezdeqness.core.CoroutineDispatcherProvider
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import kotlinx.coroutines.Dispatchers
 
 class TestCoroutineDispatcherProvider : CoroutineDispatcherProvider {
