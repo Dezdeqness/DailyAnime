@@ -1,4 +1,4 @@
-package com.dezdeqness.domain.model
+package com.dezdeqness.contract.user.model
 
 data class AccountEntity(
     val id: Long,

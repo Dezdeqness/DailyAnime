@@ -195,6 +195,10 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
+    implementation(project(":contract:auth"))
+    implementation(project(":contract:history"))
+    implementation(project(":contract:user"))
+
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
 

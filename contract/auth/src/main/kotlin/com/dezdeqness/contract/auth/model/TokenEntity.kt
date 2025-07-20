@@ -1,4 +1,4 @@
-package com.dezdeqness.domain.model
+package com.dezdeqness.contract.auth.model
 
 data class TokenEntity(
     val accessToken: String,

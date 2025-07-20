@@ -1,20 +1,20 @@
-package com.dezdeqness.domain.usecases
+package com.dezdeqness.contract.auth.usecase
 
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.auth.repository.AuthRepository
 
 class RefreshTokenUseCase(
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
 ) {
 
     operator fun invoke(): Result<String> {
 
-        val isExpired = accountRepository.isSessionExpired()
+        val isExpired = authRepository.isSessionExpired()
 
         if (!isExpired) {
             return Result.success("")
         }
 
-        val refreshResult = accountRepository.refresh()
+        val refreshResult = authRepository.refresh()
         refreshResult.onFailure {
             return Result.failure(it)
         }
@@ -22,7 +22,7 @@ class RefreshTokenUseCase(
         val token = refreshResult.getOrElse {
             return Result.failure(it)
         }
-        val tokenResult = accountRepository.saveToken(token)
+        val tokenResult = authRepository.saveToken(token)
         tokenResult.onFailure {
             return Result.failure(it)
         }

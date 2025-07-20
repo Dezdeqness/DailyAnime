@@ -1,39 +1,40 @@
-package com.dezdeqness.domain.usecases
+package com.dezdeqness.contract.auth.usecase
 
-import com.dezdeqness.domain.model.AuthorizationState
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.auth.model.AuthorizationState
+import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 
 class LoginUseCase(
-    private val accountRepository: AccountRepository,
-
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
 ) {
 
     suspend operator fun invoke(code: String): Result<Boolean> {
-        val loginResult = accountRepository.login(code)
+        val loginResult = authRepository.login(code)
 
         if (loginResult.isFailure) {
             return Result.failure(loginResult.exceptionOrNull() ?: Throwable("Login failure"))
         }
 
         val token = loginResult.getOrNull() ?: return Result.failure(Throwable("Token failure"))
-        val tokenResult = accountRepository.saveToken(token)
+        val tokenResult = authRepository.saveToken(token)
 
         if (tokenResult.isFailure) {
             return Result.failure(tokenResult.exceptionOrNull() ?: Throwable("Token failure"))
         }
 
-        val profileResult = accountRepository.getProfileRemote()
+        val profileResult = userRepository.getProfileRemote()
 
         if (profileResult.isFailure) {
-            accountRepository.clearToken()
+            authRepository.clearToken()
             return Result.failure(profileResult.exceptionOrNull() ?: Throwable("Profile failure"))
         }
 
-        accountRepository.saveProfileLocal(
+        userRepository.saveProfileLocal(
             profileResult.getOrNull() ?: return Result.failure(Throwable("Save profile failure"))
         )
 
-        accountRepository.emitAuthorizationState(AuthorizationState.LoggedIn)
+        authRepository.emitAuthorizationState(AuthorizationState.LoggedIn)
 
         return Result.success(true)
     }

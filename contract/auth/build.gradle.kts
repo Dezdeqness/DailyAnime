@@ -1,25 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.com.dezdeqness.config)
-}
-
-android {
-    defaultConfig {
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    namespace = "com.dezdeqness.domain"
-
-    buildTypes {
-        create("qa") {}
-    }
+    alias(libs.plugins.com.dezdeqness.detekt)
 }
 
 java {
@@ -32,11 +15,24 @@ kotlin {
     jvmToolchain(21)
 }
 
+android {
+    namespace = "com.dezdeqness.contract.auth"
+
+    compileOptions {
+        val javaVersion = JavaVersion.VERSION_21
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+    }
+
+    buildTypes {
+        create("qa") {}
+    }
+}
+
 dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
 
-    implementation(project(":contract:auth"))
     implementation(project(":contract:user"))
 }

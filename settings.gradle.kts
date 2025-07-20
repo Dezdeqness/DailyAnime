@@ -19,13 +19,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url = uri("https://maven.pkg.github.com/Dezdeqness/Android-Support-Things")
-            credentials {
-                username = props["github.username"].toString()
-                password = props["github.token"].toString()
-            }
-        }
     }
 }
 
@@ -38,3 +31,8 @@ include(":domain")
 // common
 include(":common:core-ui")
 include(":common:core")
+
+// contracts
+include(":contract:auth")
+include(":contract:history")
+include(":contract:user")

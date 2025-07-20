@@ -76,6 +76,10 @@ dependencies {
     implementation(libs.google.firebase.analytics)
     implementation(libs.google.firebase.crashlytics)
     implementation(libs.google.firebase.config)
+
+    implementation(project(":contract:auth"))
+    implementation(project(":contract:history"))
+    implementation(project(":contract:user"))
 }
 
 apollo {
