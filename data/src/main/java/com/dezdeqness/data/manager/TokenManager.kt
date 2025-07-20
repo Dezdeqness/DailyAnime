@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import com.dezdeqness.data.TokenEntityProto
 import com.dezdeqness.data.serializer.TokenSerializer
-import com.dezdeqness.domain.model.TokenEntity
+import com.dezdeqness.contract.auth.model.TokenEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

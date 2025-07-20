@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.personallist
 
-import com.dezdeqness.domain.model.FullAnimeStatusesEntity
+import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.PersonalListFilterEntity
 import com.dezdeqness.domain.model.Sort
 import com.dezdeqness.domain.model.UserRateEntity

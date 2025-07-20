@@ -1,18 +1,18 @@
 package com.dezdeqness.domain.usecases
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
-import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 
 class GetAnimeDetailsUseCase(
     private val animeRepository: AnimeRepository,
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val userRatesRepository: UserRatesRepository,
 ) {
 
     suspend operator fun invoke(id: Long): Result<AnimeDetailsFullEntity> {
-        val isAuthorized = accountRepository.isAuthorized()
+        val isAuthorized = authRepository.isAuthorized()
 
         val detailsResult = animeRepository.getDetails(id = id, isAuthorized = isAuthorized)
         detailsResult.onFailure { exception ->

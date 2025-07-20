@@ -1,6 +1,6 @@
 package com.dezdeqness.data.datasource.db
 
-import com.dezdeqness.domain.model.AccountEntity
+import com.dezdeqness.contract.user.model.AccountEntity
 
 interface AccountLocalDataSource {
 

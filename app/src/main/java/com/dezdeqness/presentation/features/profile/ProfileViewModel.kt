@@ -1,22 +1,22 @@
 package com.dezdeqness.presentation.features.profile
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.repository.AccountRepository
-import com.dezdeqness.domain.usecases.GetProfileUseCase
-import com.dezdeqness.domain.usecases.LogoutUseCase
+import com.dezdeqness.contract.user.usecase.GetUserUseCase
+import com.dezdeqness.contract.auth.usecase.LogoutUseCase
 import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val getProfileUseCase: GetProfileUseCase,
+    private val getUserUseCase: GetUserUseCase,
     private val logoutUseCase: LogoutUseCase,
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: MessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -35,7 +35,7 @@ class ProfileViewModel @Inject constructor(
         }
 
         launchOnIo {
-            accountRepository.authorizationState().collect { state ->
+            authRepository.authorizationState().collect { state ->
                 handleProfileState()
             }
         }
@@ -43,7 +43,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun handleProfileState() {
-        val isAuthorized = accountRepository.isAuthorized()
+        val isAuthorized = authRepository.isAuthorized()
         if (isAuthorized) {
             fetchProfile()
         } else {
@@ -71,7 +71,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun fetchProfile() {
         onInitialLoad(
-            collector = getProfileUseCase.invoke(),
+            collector = getUserUseCase.invoke(),
             onSuccess = { account ->
                 _profileStateFlow.value = _profileStateFlow.value.copy(
                     authorizedState = AuthorizedUiState.Authorized,

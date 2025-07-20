@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.history
 
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
-import com.dezdeqness.domain.model.HistoryEntity
+import com.dezdeqness.contract.history.model.HistoryEntity
 import com.dezdeqness.presentation.features.history.models.HistoryModel
 import com.dezdeqness.presentation.features.history.models.HistoryModel.HistoryHeaderUiModel
 import com.dezdeqness.presentation.features.history.models.HistoryModel.HistoryUiModel

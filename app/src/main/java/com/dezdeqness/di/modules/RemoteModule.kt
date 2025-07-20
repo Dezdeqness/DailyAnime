@@ -13,7 +13,7 @@ import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
-import com.dezdeqness.domain.usecases.RefreshTokenUseCase
+import com.dezdeqness.contract.auth.usecase.RefreshTokenUseCase
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module

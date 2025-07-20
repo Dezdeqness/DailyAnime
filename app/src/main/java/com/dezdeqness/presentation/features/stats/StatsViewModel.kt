@@ -4,13 +4,13 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.page.StatsState
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class StatsViewModel @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val userRepository: UserRepository,
     private val statsComposer: StatsComposer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -24,7 +24,7 @@ class StatsViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            accountRepository.getProfileLocal()?.let {
+            userRepository.getProfileLocal()?.let {
                 val itemList = statsComposer.compose(it)
                 launchOnMain {
                     _statsStateFlow.value = _statsStateFlow.value.copy(

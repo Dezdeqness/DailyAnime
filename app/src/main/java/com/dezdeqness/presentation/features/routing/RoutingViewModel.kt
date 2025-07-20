@@ -1,18 +1,20 @@
 package com.dezdeqness.presentation.features.routing
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.PermissionCheckProvider
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import javax.inject.Inject
 
 class RoutingViewModel @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     private val configManager: ConfigManager,
     private val workSchedulerManager: WorkSchedulerManager,
     permissionCheckProvider: PermissionCheckProvider,
@@ -37,11 +39,11 @@ class RoutingViewModel @Inject constructor(
             workSchedulerManager.scheduleDailyWork()
             configManager.invalidate()
 
-            if (accountRepository.isAuthorized()) {
-                accountRepository
+            if (authRepository.isAuthorized()) {
+                userRepository
                     .getProfileRemote()
                     .onSuccess {
-                        accountRepository.saveProfileLocal(it)
+                        userRepository.saveProfileLocal(it)
 
                         onEventReceive(NavigateToMainFlow)
                     }

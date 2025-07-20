@@ -4,21 +4,21 @@ import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import com.dezdeqness.data.exception.UserLocalNotFound
 import com.dezdeqness.domain.model.UserRateEntity
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRatesRepositoryImpl @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val userRepository: UserRepository,
     private val userRatesRemoteDataSource: UserRatesRemoteDataSource,
     private val userRatesLocalDataSource: UserRatesLocalDataSource,
 ) : UserRatesRepository {
 
     override fun getUserRates(status: String, page: Int, onlyRemote: Boolean): Flow<Result<List<UserRateEntity>>> =
         flow {
-            val profile = accountRepository.getProfileLocal()
+            val profile = userRepository.getProfileLocal()
             if (profile == null) {
                 emit(Result.failure(UserLocalNotFound()))
                 return@flow
@@ -93,7 +93,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         score: Float,
         comment: String,
     ): Result<UserRateEntity> {
-        val profile = accountRepository.getProfileLocal()
+        val profile = userRepository.getProfileLocal()
             ?: return Result.failure(UserLocalNotFound())
 
         val result = userRatesRemoteDataSource.createUserRate(
