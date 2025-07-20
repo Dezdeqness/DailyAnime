@@ -1,7 +1,5 @@
 [versions]
 elmslieCoreVersion = "3.0.0"
-supportCoreUiVersion = "0.1.0"
-supportCoreVersion = "0.1.0"
 coreVersion = "1.16.0"
 appCompatVersion = "1.7.0"
 daggerVersion = "2.52"

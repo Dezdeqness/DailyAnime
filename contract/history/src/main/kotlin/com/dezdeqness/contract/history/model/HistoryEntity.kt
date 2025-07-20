@@ -1,4 +1,4 @@
-package com.dezdeqness.domain.model
+package com.dezdeqness.contract.history.model
 
 data class HistoryEntity(
     val id: Long,

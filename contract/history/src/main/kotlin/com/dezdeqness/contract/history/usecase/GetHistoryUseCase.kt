@@ -1,14 +1,14 @@
-package com.dezdeqness.domain.usecases
+package com.dezdeqness.contract.history.usecase
 
-import com.dezdeqness.domain.model.HistoryEntity
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.history.model.HistoryEntity
+import com.dezdeqness.contract.history.repository.HistoryRepository
 
 class GetHistoryUseCase(
-    private val accountRepository: AccountRepository,
+    private val historyRepository: HistoryRepository,
 ) {
 
     operator fun invoke(pageNumber: Int): Result<HistoryListState> {
-        val result = accountRepository.getUserHistory(
+        val result = historyRepository.getUserHistory(
             page = pageNumber,
             limit = PAGE_SIZE,
         )
