@@ -1,11 +1,12 @@
 package com.dezdeqness.presentation.features.home
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
@@ -22,7 +23,8 @@ class HomeViewModel @Inject constructor(
     private val actionConsumer: ActionConsumer,
     private val animeUiMapper: AnimeUiMapper,
     private val homeGenresProvider: HomeGenresProvider,
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     private val configManager: ConfigManager,
     homeComposer: HomeComposer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -40,7 +42,7 @@ class HomeViewModel @Inject constructor(
         actionConsumer.attachListener(this)
 
         launchOnIo {
-            accountRepository.authorizationState().collect { _ ->
+            authRepository.authorizationState().collect { _ ->
                 handleProfileState()
             }
         }
@@ -135,9 +137,10 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun handleProfileState() {
-        val isAuthorized = accountRepository.isAuthorized()
-        val userName = accountRepository.getProfileLocal()?.nickname.orEmpty()
-        val avatarUrl = accountRepository.getProfileLocal()?.avatar.orEmpty()
+        val isAuthorized = authRepository.isAuthorized()
+        val profile = userRepository.getProfileLocal()
+        val userName = profile?.nickname.orEmpty()
+        val avatarUrl = profile?.avatar.orEmpty()
 
         _homeStateFlow.update {
             it.copy(

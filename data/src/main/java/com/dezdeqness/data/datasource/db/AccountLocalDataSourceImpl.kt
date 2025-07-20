@@ -2,7 +2,7 @@ package com.dezdeqness.data.datasource.db
 
 import com.dezdeqness.data.datasource.db.dao.AccountDao
 import com.dezdeqness.data.mapper.AccountMapper
-import com.dezdeqness.domain.model.AccountEntity
+import com.dezdeqness.contract.user.model.AccountEntity
 import javax.inject.Inject
 
 class AccountLocalDataSourceImpl @Inject constructor(

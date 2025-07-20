@@ -1,9 +1,9 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.contract.history.repository.HistoryRepository
+import com.dezdeqness.contract.history.usecase.GetHistoryUseCase
 import com.dezdeqness.di.ViewModelKey
-import com.dezdeqness.domain.repository.AccountRepository
-import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.presentation.features.history.HistoryViewModel
 import com.dezdeqness.presentation.features.history.store.HistoryActor
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command
@@ -21,9 +21,10 @@ import money.vivid.elmslie.core.store.ElmStore
 abstract class HistoryModule {
 
     companion object {
+
         @Provides
-        fun provideGetHistoryUseCase(repository: AccountRepository) =
-            GetHistoryUseCase(accountRepository = repository)
+        fun provideGetHistoryUseCase(historyRepository: HistoryRepository) =
+            GetHistoryUseCase(historyRepository = historyRepository)
 
         @Provides
         fun provideHistoryStore(actor: HistoryActor): ElmStore<Event, State, Effect, Command> =

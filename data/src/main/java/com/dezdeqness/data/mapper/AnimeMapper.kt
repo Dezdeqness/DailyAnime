@@ -14,7 +14,7 @@ import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.ImageEntity
-import com.dezdeqness.domain.model.StatsItemEntity
+import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.domain.model.UserRateEntity
 import javax.inject.Inject
 import javax.inject.Singleton

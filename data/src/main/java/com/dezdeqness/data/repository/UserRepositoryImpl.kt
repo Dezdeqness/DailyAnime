@@ -1,26 +1,28 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.history.model.HistoryEntity
+import com.dezdeqness.contract.history.repository.HistoryRepository
 import com.dezdeqness.data.core.CookieCleaner
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.exception.UserLocalNotFound
 import com.dezdeqness.data.manager.TokenManager
-import com.dezdeqness.domain.model.AccountEntity
-import com.dezdeqness.domain.model.AuthorizationState
-import com.dezdeqness.domain.model.HistoryEntity
-import com.dezdeqness.domain.model.TokenEntity
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.model.AccountEntity
+import com.dezdeqness.contract.auth.model.AuthorizationState
+import com.dezdeqness.contract.auth.model.TokenEntity
+import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class AccountRepositoryImpl @Inject constructor(
+class UserRepositoryImpl @Inject constructor(
     private val accountRemoteDataSource: AccountRemoteDataSource,
     private val accountLocalDataSource: AccountLocalDataSource,
     private val tokenManager: TokenManager,
     private val cookieCleaner: CookieCleaner,
-) : AccountRepository {
+) : UserRepository, HistoryRepository, AuthRepository {
 
     private val _authorizationState: MutableSharedFlow<AuthorizationState> = MutableSharedFlow()
     override fun authorizationState(): SharedFlow<AuthorizationState> = _authorizationState

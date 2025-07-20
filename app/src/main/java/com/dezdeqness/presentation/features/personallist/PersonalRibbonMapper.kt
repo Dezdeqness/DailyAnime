@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.personallist
 
 import com.dezdeqness.data.provider.ResourceProvider
-import com.dezdeqness.domain.model.StatusEntity
+import com.dezdeqness.contract.user.model.StatusEntity
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import javax.inject.Inject
 

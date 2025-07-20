@@ -1,6 +1,6 @@
 package com.dezdeqness.data.provider
 
-import com.dezdeqness.domain.model.StatusEntity
+import com.dezdeqness.contract.user.model.StatusEntity
 import javax.inject.Inject
 
 class StatusesProvider @Inject constructor() {

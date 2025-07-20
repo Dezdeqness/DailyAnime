@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.settings
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.WorkSchedulerManager
@@ -9,7 +10,6 @@ import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.model.TimeEntity
-import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.personallist.PersonalRibbonMapper
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val statusesProvider: StatusesProvider,
     private val ribbonMapper: PersonalRibbonMapper,
     private val permissionCheckProvider: PermissionCheckProvider,
@@ -43,7 +43,7 @@ class SettingsViewModel @Inject constructor(
         launchOnIo {
             val themeStatus = settingsRepository.getNightThemeStatus()
             val section = settingsRepository.getSelectedInitialSection()
-            val isAuthorized = accountRepository.isAuthorized()
+            val isAuthorized = authRepository.isAuthorized()
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
             val isNotificationsTurnOn = settingsRepository.getNotificationsEnabled()
             val notificationTime = settingsRepository.getNotificationTime()

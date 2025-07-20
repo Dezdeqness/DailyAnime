@@ -1,12 +1,12 @@
 package com.dezdeqness.presentation.features.details
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.model.AnimeDetailsFullEntity
 import com.dezdeqness.domain.model.CharacterDetailsEntity
-import com.dezdeqness.domain.repository.AccountRepository
 import com.dezdeqness.domain.repository.CharacterRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
@@ -35,7 +35,7 @@ class AnimeDetailsViewModel @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val animeDetailsComposer: AnimeDetailsComposer,
     private val createOrUpdateUserRateUseCase: CreateOrUpdateUserRateUseCase,
-    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository,
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: MessageProvider,
@@ -228,7 +228,7 @@ class AnimeDetailsViewModel @Inject constructor(
                     collector = flow { emit(getAnimeDetailsUseCase.invoke(target.id)) },
                     onSuccess = { details ->
                         animeDetails = details
-                        val isAuthorized = accountRepository.isAuthorized()
+                        val isAuthorized = authRepository.isAuthorized()
                         val uiItems = animeDetailsComposer.compose(details)
                         _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
                             title = details.animeDetailsEntity.russian,

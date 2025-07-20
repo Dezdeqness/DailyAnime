@@ -1,16 +1,17 @@
 package com.dezdeqness.presentation.features.home
 
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
-import com.dezdeqness.domain.model.AccountEntity
+import com.dezdeqness.contract.user.model.AccountEntity
 import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.HomeEntity
 import com.dezdeqness.domain.model.ImageEntity
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.ActionConsumer
@@ -46,7 +47,10 @@ class HomeViewModelTest {
     private lateinit var homeGenresProvider: HomeGenresProvider
 
     @MockK
-    private lateinit var accountRepository: AccountRepository
+    private lateinit var userRepository: UserRepository
+
+    @MockK
+    private lateinit var authRepository: AuthRepository
 
     @MockK
     private lateinit var appLogger: AppLogger
@@ -70,14 +74,14 @@ class HomeViewModelTest {
 
         every { configManager.isCalendarEnabled } returns true
 
-        every { accountRepository.authorizationState() } returns MutableSharedFlow()
+        every { authRepository.authorizationState() } returns MutableSharedFlow()
 
         every { homeComposer.composeSectionsInitial() } returns SectionsState(genreSections = DEFAULT_SECTIONS)
         every { homeGenresProvider.getHomeSectionGenresIds() } returns DEFAULT_SECTIONS_IDS
-        every { accountRepository.isAuthorized() } returns true
+        every { authRepository.isAuthorized() } returns true
 
         val accountEntity = mockk<AccountEntity>()
-        every { accountRepository.getProfileLocal() } returns accountEntity
+        every { userRepository.getProfileLocal() } returns accountEntity
         every { accountEntity.nickname } returns DEFAULT_USERNAME
         every { accountEntity.avatar } returns DEFAULT_AVATAR_URL
 
@@ -85,12 +89,13 @@ class HomeViewModelTest {
             animeUiMapper = animeUiMapper,
             actionConsumer = actionConsumer,
             homeGenresProvider = homeGenresProvider,
-            accountRepository = accountRepository,
+            userRepository = userRepository,
             homeRepository = homeRepository,
             coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
             appLogger = appLogger,
             homeComposer = homeComposer,
             configManager = configManager,
+            authRepository = authRepository,
         )
     }
 

@@ -5,7 +5,7 @@ import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
-import com.dezdeqness.domain.model.TokenEntity
+import com.dezdeqness.contract.auth.model.TokenEntity
 import dagger.Lazy
 import okhttp3.HttpUrl
 import javax.inject.Inject

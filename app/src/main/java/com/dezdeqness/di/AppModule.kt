@@ -23,7 +23,7 @@ import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
@@ -162,11 +162,11 @@ class AppModule {
     @Singleton
     @Provides
     fun provideAnalyticsManager(
-        accountRepository: AccountRepository,
+        userRepository: UserRepository,
         firebaseAnalytics: FirebaseAnalytics
     ): AnalyticsManager =
         AnalyticsManagerImpl(
-            accountRepository = accountRepository,
+            userRepository = userRepository,
             firebaseAnalytics = firebaseAnalytics
         )
 

@@ -1,5 +1,7 @@
 package com.dezdeqness.domain.model
 
+import com.dezdeqness.contract.user.model.StatsItemEntity
+
 data class AnimeDetailsEntity(
     override val id: Long,
     override val name: String,

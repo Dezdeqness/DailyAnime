@@ -1,11 +1,11 @@
 package com.dezdeqness.presentation.features.authorization
 
 import androidx.core.net.toUri
+import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.repository.AccountRepository
-import com.dezdeqness.domain.usecases.LoginUseCase
+import com.dezdeqness.contract.auth.usecase.LoginUseCase
 import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class AuthorizationViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    accountRepository: AccountRepository,
+    authRepository: AuthRepository,
     networkUtils: NetworkUtils,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -36,7 +36,7 @@ class AuthorizationViewModel @Inject constructor(
         )
 
         if (networkUtils.isInternetAvailable()) {
-            accountRepository
+            authRepository
                 .getAuthorizationCodeUrl()
                 .onSuccess { url ->
                     onEventReceive(AuthUrl(url))

@@ -6,15 +6,14 @@ import androidx.core.os.bundleOf
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.model.AnalyticsEvent
 import com.dezdeqness.data.analytics.model.AnalyticsScreenName
-import com.dezdeqness.domain.repository.AccountRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class AnalyticsManagerImpl(
     private val firebaseAnalytics: FirebaseAnalytics,
-    private val accountRepository: AccountRepository,
+    private val userRepository: UserRepository,
 ) : AnalyticsManager {
 
     private val deviceInfo: Bundle by lazy {
@@ -120,7 +119,7 @@ class AnalyticsManagerImpl(
     }
 
     private fun getUserId() = runBlocking(Dispatchers.IO) {
-        accountRepository.getProfileLocal()?.id?.toString() ?: ANONYMOUS_USER
+        userRepository.getProfileLocal()?.id?.toString() ?: ANONYMOUS_USER
     }
 
     companion object {
