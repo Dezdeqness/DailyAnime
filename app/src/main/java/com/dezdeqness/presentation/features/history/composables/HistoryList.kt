@@ -69,7 +69,7 @@ fun HistoryList(
 
         if (hasNextPage) {
             item {
-                ShimmerSearchItem(modifier = Modifier.padding(horizontal = 16.dp))
+                HistoryShimmerItem(modifier = Modifier.padding(horizontal = 16.dp))
             }
 
         }

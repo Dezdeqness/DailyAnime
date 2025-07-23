@@ -16,7 +16,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
-@Module
+@Module(includes = [HistoryModule::class])
 abstract class HomeModule {
 
     companion object {

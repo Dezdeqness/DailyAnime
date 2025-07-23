@@ -172,5 +172,7 @@
     <string name="timepicker_save_title">Сохранить</string>
     <string name="details_synopsis_label_show_less">Показать меньше</string>
     <string name="details_synopsis_label_show_more">… Показать больше</string>
+
+    <string name="section_history_title">Последнее в истории</string>
 </resources>
 
