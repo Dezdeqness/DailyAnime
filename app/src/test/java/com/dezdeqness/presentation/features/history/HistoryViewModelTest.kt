@@ -44,6 +44,8 @@ class HistoryViewModelTest {
 
         every { messageProvider.getGeneralErrorMessage() } returns "Error occurred"
 
+        coEvery { messageConsumer.onErrorMessage(any()) } returns Unit
+
         viewModel = HistoryViewModel(
             store = store,
             messageConsumer = messageConsumer,
