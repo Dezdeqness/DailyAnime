@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.home
 
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.history.usecase.GetLatestHistoryItemUseCase
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -19,6 +20,7 @@ import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
 import com.dezdeqness.presentation.features.home.model.SectionStatus
 import com.dezdeqness.presentation.features.home.model.SectionUiModel
+import com.dezdeqness.utils.ImageUrlUtils
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -61,6 +63,12 @@ class HomeViewModelTest {
     @MockK
     private lateinit var homeComposer: HomeComposer
 
+    @MockK
+    private lateinit var getLatestHistoryItemUseCase: GetLatestHistoryItemUseCase
+
+    @MockK
+    private lateinit var imageUrlUtils: ImageUrlUtils
+
     private lateinit var viewModel: HomeViewModel
 
     @Before
@@ -96,6 +104,8 @@ class HomeViewModelTest {
             homeComposer = homeComposer,
             configManager = configManager,
             authRepository = authRepository,
+            imageUrlUtils = imageUrlUtils,
+            getLatestHistoryItemUseCase = getLatestHistoryItemUseCase,
         )
     }
 
