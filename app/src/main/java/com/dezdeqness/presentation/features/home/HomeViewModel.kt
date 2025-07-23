@@ -1,6 +1,9 @@
 package com.dezdeqness.presentation.features.home
 
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.history.usecase.GetLatestHistoryItemUseCase
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
@@ -11,8 +14,10 @@ import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
+import com.dezdeqness.presentation.features.history.models.HistoryModel.HistoryUiModel
 import com.dezdeqness.presentation.features.home.model.SectionStatus
 import com.dezdeqness.presentation.features.home.model.SectionUiModel
+import com.dezdeqness.utils.ImageUrlUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -26,6 +31,8 @@ class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val configManager: ConfigManager,
+    private val getLatestHistoryItemUseCase: GetLatestHistoryItemUseCase,
+    private val imageUrlUtils: ImageUrlUtils,
     homeComposer: HomeComposer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
@@ -60,6 +67,59 @@ class HomeViewModel @Inject constructor(
         launchOnIo {
             handleProfileState()
         }
+
+        onInitialLoad(
+            action = {
+                getLatestHistoryItemUseCase.invoke()
+            },
+            onLoading = { isLoading ->
+                if (isLoading) {
+                    _homeStateFlow.update {
+                        it.copy(
+                            sectionsState = it.sectionsState.copy(
+                                latestHistoryItem = _homeStateFlow.value.sectionsState.latestHistoryItem.copy(
+                                    status = SectionStatus.Loading,
+                                )
+                            )
+                        )
+                    }
+                }
+            },
+            onSuccess = { item ->
+                val mappedItem = item?.let {
+                    HistoryUiModel(
+                        name = item.itemRussian.ifEmpty { item.itemName },
+                        action = HtmlCompat.fromHtml(
+                            item.description,
+                            FROM_HTML_MODE_COMPACT,
+                        ).toString(),
+                        imageUrl = imageUrlUtils.getImageWithBaseUrl(item.image),
+                    )
+                }
+
+                _homeStateFlow.update {
+                    it.copy(
+                        sectionsState = it.sectionsState.copy(
+                            latestHistoryItem = _homeStateFlow.value.sectionsState.latestHistoryItem.copy(
+                                status = SectionStatus.Loaded,
+                                historyUiModel = mappedItem,
+                            )
+                        )
+                    )
+                }
+            },
+            onFailure = {
+                _homeStateFlow.update {
+                    it.copy(
+                        sectionsState = it.sectionsState.copy(
+                            latestHistoryItem = _homeStateFlow.value.sectionsState.latestHistoryItem.copy(
+                                status = SectionStatus.Error,
+                            )
+                        )
+                    )
+                }
+            }
+        )
 
         onInitialLoad(
             action = {

@@ -28,13 +28,13 @@ fun HistoryShimmerLoading(
             )
     ) {
         repeat(times) { _ ->
-            ShimmerSearchItem()
+            HistoryShimmerItem()
         }
     }
 }
 
 @Composable
-fun ShimmerSearchItem(
+fun HistoryShimmerItem(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.padding(bottom = 8.dp)) {

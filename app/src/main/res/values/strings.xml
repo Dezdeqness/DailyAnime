@@ -177,7 +177,9 @@
 
     <string name="timepicker_save_title">Save</string>
     <string name="details_synopsis_label_show_less">Show less</string>
-    <string name="details_synopsis_label_show_more">... Show more</string>
+    <string name="details_synopsis_label_show_more">… Show more</string>
+
+    <string name="section_history_title">Latest history</string>
 
 </resources>
 
