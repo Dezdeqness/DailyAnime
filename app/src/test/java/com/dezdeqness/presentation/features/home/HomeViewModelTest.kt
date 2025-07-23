@@ -88,6 +88,8 @@ class HomeViewModelTest {
         every { homeGenresProvider.getHomeSectionGenresIds() } returns DEFAULT_SECTIONS_IDS
         every { authRepository.isAuthorized() } returns true
 
+        every { getLatestHistoryItemUseCase.invoke() } returns Result.success(null)
+
         val accountEntity = mockk<AccountEntity>()
         every { userRepository.getProfileLocal() } returns accountEntity
         every { accountEntity.nickname } returns DEFAULT_USERNAME
