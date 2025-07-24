@@ -22,7 +22,6 @@ junitVersion = "5.12.0"
 mockkVersion = "1.13.10"
 turbineVersion = "1.2.0"
 zoomableVersion = "1.5.3"
-navigationVersion = "2.8.9"
 androidJunitVersion = "1.2.1"
 espressoVersion = "3.6.1"
 firebaseBomVersion = "33.13.0"
@@ -45,7 +44,6 @@ kotlinAndroidVersion = "2.0.21"
 firebaseCrashlyticsGradleVersion = "3.0.3"
 
 kotlinCompilerExtensionVersion = "1.5.14"
-navigationSafeArgsVersion = "2.8.9"
 
 apollo = "4.1.1"
 leakCanary = "2.14"
@@ -64,7 +62,6 @@ androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "cor
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompatVersion" }
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
-androidx-navigation-safeargs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsVersion" }
 
 chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chuckerVersion" }
 chucker-noop = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chuckerVersion" }
@@ -110,9 +107,6 @@ mockk-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion"
 engawapg-zoomable = { group = "net.engawapg.lib", name = "zoomable", version.ref = "zoomableVersion" }
 
 reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reorderable" }
-
-androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationVersion" }
-androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationVersion" }
 
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidJunitVersion" }
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoVersion" }
