@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
-    id("androidx.navigation.safeargs")
     alias(libs.plugins.com.dezdeqness.compose)
     alias(libs.plugins.com.dezdeqness.room)
     alias(libs.plugins.com.dezdeqness.firebase)
@@ -153,10 +152,6 @@ dependencies {
     // Android Testing
     implementation(libs.androidx.test.junit)
     implementation(libs.androidx.test.espresso)
-
-    // Navigation
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
 
     // Compose
     implementation(libs.lottie.compose)
