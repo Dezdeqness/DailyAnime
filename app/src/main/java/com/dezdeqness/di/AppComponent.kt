@@ -27,7 +27,6 @@ import com.dezdeqness.di.subcomponents.RoutingComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
-import com.dezdeqness.di.subcomponents.PersonalListHostComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.routing.ApplicationRouter
@@ -67,8 +66,6 @@ interface AppComponent {
     fun editRateComponent(): UserRateComponent.Builder
 
     fun calendarComponent(): CalendarComponent.Factory
-
-    fun unauthorizedHostComponent(): PersonalListHostComponent.Factory
 
     fun historyComponent(): HistoryComponent.Factory
 

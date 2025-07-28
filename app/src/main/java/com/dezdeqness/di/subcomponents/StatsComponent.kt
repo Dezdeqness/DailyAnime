@@ -1,15 +1,13 @@
 package com.dezdeqness.di.subcomponents
 
+import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.di.modules.StatsModule
-import com.dezdeqness.presentation.features.stats.StatsFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [StatsModule::class])
-interface StatsComponent {
+interface StatsComponent : BaseComponent {
     @Subcomponent.Factory
     interface Factory {
         fun create(): StatsComponent
     }
-
-    fun inject(fragment: StatsFragment)
 }
