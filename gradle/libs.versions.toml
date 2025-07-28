@@ -32,6 +32,8 @@ coilVersion = "2.7.0"
 composeActivityVersion = "1.10.1"
 composeBomVersion = "2025.04.01"
 
+composeNavigation = "2.9.2"
+
 googleServicesVersion = "4.4.2"
 gradleVersion = "8.9.2"
 detektVersion = "1.23.5"
@@ -132,6 +134,8 @@ androidx-compose-material = { group = "androidx.compose.material", name = "mater
 androidx-compose-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 androidx-compose-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+
+androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose",  version.ref = "composeNavigation" }
 
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }

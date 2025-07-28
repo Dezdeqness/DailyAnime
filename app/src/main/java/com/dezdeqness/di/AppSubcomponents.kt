@@ -12,7 +12,6 @@ import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
-import com.dezdeqness.di.subcomponents.PersonalListHostComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 import dagger.Module
 
@@ -28,7 +27,6 @@ import dagger.Module
         UserRateComponent::class,
         CalendarComponent::class,
         AnimeSimilarComponent::class,
-        PersonalListHostComponent::class,
         MainComponent::class,
         ScreenshotsViewerComponent::class,
         DebugComponent::class,
