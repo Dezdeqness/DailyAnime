@@ -1,7 +1,7 @@
 package com.dezdeqness.di.subcomponents
 
+import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.di.modules.AnimeDetailsModule
-import com.dezdeqness.presentation.features.details.AnimeDetailsFragment
 import com.dezdeqness.presentation.features.details.Target
 import dagger.Module
 import dagger.Provides
@@ -10,7 +10,7 @@ import javax.inject.Named
 
 @Subcomponent(modules = [
     AnimeDetailsModule::class, ArgsModule::class])
-interface AnimeDetailsComponent {
+interface AnimeDetailsComponent : BaseComponent {
     @Subcomponent.Builder
     interface Builder {
 
@@ -18,8 +18,6 @@ interface AnimeDetailsComponent {
 
         fun build(): AnimeDetailsComponent
     }
-
-    fun inject(fragment: AnimeDetailsFragment)
 }
 
 @Module

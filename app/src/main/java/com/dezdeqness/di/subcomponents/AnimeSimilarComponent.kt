@@ -1,15 +1,15 @@
 package com.dezdeqness.di.subcomponents
 
+import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.di.modules.AnimeSimilarModule
 import com.dezdeqness.di.modules.GenericListableViewModelModule
-import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarFragment
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
 @Subcomponent(modules = [AnimeSimilarModule::class, SimilarArgsModule::class, GenericListableViewModelModule::class])
-interface AnimeSimilarComponent {
+interface AnimeSimilarComponent : BaseComponent {
     @Subcomponent.Builder
     interface Builder {
 
@@ -17,8 +17,6 @@ interface AnimeSimilarComponent {
 
         fun build(): AnimeSimilarComponent
     }
-
-    fun inject(fragment: AnimeSimilarFragment)
 }
 
 @Module

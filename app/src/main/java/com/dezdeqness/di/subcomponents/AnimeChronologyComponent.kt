@@ -1,8 +1,8 @@
 package com.dezdeqness.di.subcomponents
 
+import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.di.modules.AnimeChronologyModule
 import com.dezdeqness.di.modules.GenericListableViewModelModule
-import com.dezdeqness.presentation.features.animechronology.AnimeChronologyFragment
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -15,7 +15,7 @@ import javax.inject.Named
         GenericListableViewModelModule::class
     ]
 )
-interface AnimeChronologyComponent {
+interface AnimeChronologyComponent : BaseComponent {
     @Subcomponent.Builder
     interface Builder {
 
@@ -23,8 +23,6 @@ interface AnimeChronologyComponent {
 
         fun build(): AnimeChronologyComponent
     }
-
-    fun inject(fragment: AnimeChronologyFragment)
 }
 
 @Module
