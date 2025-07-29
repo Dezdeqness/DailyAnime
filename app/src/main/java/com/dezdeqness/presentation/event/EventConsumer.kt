@@ -3,15 +3,11 @@ package com.dezdeqness.presentation.event
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.ShareCompat
-import androidx.fragment.app.Fragment
 import com.dezdeqness.data.BuildConfig
 import androidx.core.net.toUri
 
 
-class EventConsumer(
-    val fragment: Fragment? = null,
-    val context: Context,
-) {
+class EventConsumer(val context: Context) {
 
     fun consume(event: ConsumableEvent) {
         when (event) {
