@@ -52,6 +52,8 @@ leakCanary = "2.14"
 
 reorderable = "2.4.3"
 
+kotlinxSerialization = "1.7.3"
+
 lottie = "6.6.2"
 browser = "1.8.0"
 
@@ -95,6 +97,8 @@ androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-v
 
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
@@ -158,7 +162,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinAndroidVersion" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
 
 # Internal

@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.screenshot)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val appVersionName = version.toString()
@@ -108,6 +109,8 @@ dependencies {
     implementation(libs.square.moshi)
     implementation(libs.square.scalars)
     implementation(libs.apollo.runtime)
+
+    implementation(libs.kotlinx.serialization)
 
     // Chucker
     debugImplementation(libs.chucker.library)
