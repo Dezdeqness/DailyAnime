@@ -3,30 +3,68 @@ package com.dezdeqness.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.Lifecycle
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.dezdeqness.R
-import com.dezdeqness.core.BackFragmentListener
+import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.databinding.ActivityMainBinding
-import com.dezdeqness.domain.model.InitialSection
-import com.dezdeqness.extensions.setupWithNavController
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
-import com.dezdeqness.presentation.event.OpenCalendarTab
-import com.dezdeqness.ui.ShikimoriSnackbar
+import com.dezdeqness.presentation.features.animechronology.AnimeChronologyStandalonePage
+import com.dezdeqness.presentation.features.animelist.SearchPageStandalone
+import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarStandalonePage
+import com.dezdeqness.presentation.features.animestats.AnimeStatsStandalonePage
+import com.dezdeqness.presentation.features.calendar.CalendarStandalonePage
+import com.dezdeqness.presentation.features.details.DetailsStandalonePage
+import com.dezdeqness.presentation.features.details.Target
+import com.dezdeqness.presentation.features.details.deserializeListFromString
+import com.dezdeqness.presentation.features.history.HistoryStandalonePage
+import com.dezdeqness.presentation.features.home.HomePageStandalone
+import com.dezdeqness.presentation.features.personallist.host.PersonalHostStandalonePage
+import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
+import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
+import com.dezdeqness.presentation.features.stats.StatsStandalonePage
+import com.dezdeqness.presentation.models.MessageEvent.MessageEventStatus
+import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), TabSelection {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,15 +75,11 @@ class MainActivity : AppCompatActivity(), TabSelection {
     @Inject
     lateinit var configManager: ConfigManager
 
-    private lateinit var binding: ActivityMainBinding
-
     private val mainViewModel by viewModels<MainViewModel>(
         factoryProducer = {
             viewModelFactory
         }
     )
-
-    private var isFromHome = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,137 +98,222 @@ class MainActivity : AppCompatActivity(), TabSelection {
             }
         }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            val rootController = rememberNavController()
+            val snackbarHostState = remember { SnackbarHostState() }
 
-        binding.navigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.personal_host_nav_graph -> {
-                    analyticsManager.personalListTracked()
+            val coroutineScope = rememberCoroutineScope()
+
+            AppTheme {
+                Box(modifier = Modifier.fillMaxSize()) {
+
+                    NavHost(
+                        navController = rootController,
+                        startDestination = RootRoute,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        composable<RootRoute> {
+                            val navController = rememberNavController()
+
+                            Scaffold(
+                                bottomBar = {
+                                    NavigationBar(
+                                        containerColor = MaterialTheme.colorScheme.background,
+                                        tonalElevation = 0.dp,
+                                    ) {
+                                        val navBackStackEntry =
+                                            navController.currentBackStackEntryAsState().value
+                                        val currentDestination = navBackStackEntry?.destination
+
+                                        AppBottomTabModel.entries.forEach { item ->
+                                            val isSelected =
+                                                currentDestination?.hierarchy?.any {
+                                                    it.hasRoute(
+                                                        item.route::class
+                                                    )
+                                                } == true
+
+                                            if (item == AppBottomTabModel.CALENDAR && configManager.isCalendarEnabled.not()) {
+                                                return@forEach
+                                            }
+                                            NavigationBarItem(
+                                                selected = isSelected,
+                                                onClick = {
+                                                    if (currentDestination != item.route) {
+                                                        navController.navigate(item.route) {
+                                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                                saveState = true
+                                                            }
+                                                            launchSingleTop = true
+                                                            restoreState = true
+                                                        }
+                                                    }
+                                                },
+                                                icon = {
+                                                    Icon(
+                                                        painterResource(item.resIcon),
+                                                        contentDescription = null,
+                                                        modifier = Modifier.size(24.dp),
+                                                    )
+                                                },
+                                            )
+                                        }
+                                    }
+                                }
+                            ) { padding ->
+                                NavHost(
+                                    navController = navController,
+                                    startDestination = BottomBarNav.Home,
+                                    modifier = Modifier
+                                        .padding(padding)
+                                        .fillMaxSize()
+                                ) {
+                                    composable<BottomBarNav.PersonalList> {
+                                        PersonalHostStandalonePage(
+                                            modifier = Modifier.fillMaxSize(),
+                                            navController = rootController,
+                                        )
+                                    }
+                                    composable<BottomBarNav.Home> {
+                                        HomePageStandalone(
+                                            modifier = Modifier.fillMaxSize(),
+                                            navController = navController,
+                                            rootController = rootController,
+                                        )
+                                    }
+                                    composable<BottomBarNav.Calendar> {
+                                        CalendarStandalonePage(
+                                            modifier = Modifier.fillMaxSize(),
+                                            navController = rootController,
+                                        )
+                                    }
+                                    composable<BottomBarNav.Search> {
+                                        SearchPageStandalone(
+                                            modifier = Modifier.fillMaxSize(),
+                                            navController = rootController,
+                                        )
+                                    }
+                                    composable<BottomBarNav.Profile> {
+                                        ProfilePageStandalone(
+                                            modifier = Modifier.fillMaxSize(),
+                                            navController = rootController,
+                                        )
+                                    }
+                                }
+                            }
+
+                            mainViewModel.events.collectEvents { event ->
+                                when (event) {
+                                    is LanguageDisclaimer -> {
+                                        showLanguageDisclaimer()
+                                    }
+
+                                    else -> {}
+                                }
+                            }
+                        }
+
+                        composable<History> {
+                            HistoryStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                            )
+                        }
+                        composable<Settings> {
+                            SettingsPageStandalone(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                            )
+                        }
+                        composable<Stats> {
+                            StatsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                            )
+                        }
+                        composable<Details> { backStackEntry ->
+                            val details = backStackEntry.toRoute<Details>()
+
+                            val target = if (details.isAnime) {
+                                Target.Anime(details.id)
+                            } else {
+                                Target.Character(details.id)
+                            }
+
+                            DetailsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                target = target,
+                            )
+                        }
+
+                        composable<Similar> { backStackEntry ->
+                            val similar = backStackEntry.toRoute<Similar>()
+
+                            AnimeSimilarStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                animeId = similar.id,
+                            )
+                        }
+
+                        composable<Chronology> { backStackEntry ->
+                            val chronology = backStackEntry.toRoute<Chronology>()
+
+                            AnimeChronologyStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                animeId = chronology.id,
+                            )
+                        }
+
+                        composable<DetailsStats> { backStackEntry ->
+                            val detailsStats = backStackEntry.toRoute<DetailsStats>()
+
+                            val scoreList = deserializeListFromString(detailsStats.scoreString)
+                            val statusesList =
+                                deserializeListFromString(detailsStats.statusesString)
+
+                            AnimeStatsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                scoreList = scoreList,
+                                statusesList = statusesList,
+                            )
+                        }
+                    }
+
+                    SnackbarHost(
+                        hostState = snackbarHostState,
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 56.dp),
+                        snackbar = { data ->
+                            val visuals = (data.visuals as? CustomSnackbarVisuals)
+                                ?: return@SnackbarHost
+
+                            val color = when (visuals.messageStatus) {
+                                MessageEventStatus.Success -> AppTheme.colors.success
+                                MessageEventStatus.Error -> AppTheme.colors.error
+                                MessageEventStatus.Unknown -> AppTheme.colors.background
+                            }
+
+                            Snackbar(
+                                snackbarData = data,
+                                containerColor = color,
+                                actionColor = Color.Transparent,
+                                contentColor = Color.White,
+                            )
+                        }
+                    )
                 }
-                R.id.home_nav_graph -> {
-                    analyticsManager.homeTracked()
-                }
-                R.id.calendar_nav_graph -> {
-                    analyticsManager.calendarTracked(isFromHome)
-                    isFromHome = false
-                }
-                R.id.search_nav_graph -> {
-                    analyticsManager.searchTracked()
-                }
-                R.id.profile_nav_graph -> {
-                    analyticsManager.profileTracked()
-                }
-            }
-            true
-        }
 
-        if (savedInstanceState == null) {
-            setupBottomNavigationBar(false)
-        } // Else, need to wait for onRestoreInstanceState
-
-        setupObservers()
-    }
-
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.fragments.firstOrNull { it.isAdded && it.isVisible }
-            ?: return
-
-        val lastFragment =
-            fragment.childFragmentManager.fragments.filterIsInstance<BackFragmentListener>()
-                .lastOrNull()
-        val isBackOk = lastFragment?.isBackNeed() ?: true
-
-        if (isBackOk) {
-            super.onBackPressed()
-        } else {
-            lastFragment?.onBackPressed()
-        }
-
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        setupBottomNavigationBar(true)
-    }
-
-    private fun setupBottomNavigationBar(isRestored: Boolean) {
-        val bottomNav = binding.navigation
-
-        val isCalendarEnabled = configManager.isCalendarEnabled
-
-        bottomNav.menu.findItem(R.id.calendar_nav_graph).isVisible = isCalendarEnabled
-
-        val navGraphIds = if (configManager.isCalendarEnabled) {
-            listOf(
-                R.navigation.personal_host_nav_graph,
-                R.navigation.home_nav_graph,
-                R.navigation.calendar_nav_graph,
-                R.navigation.search_nav_graph,
-                R.navigation.profile_nav_graph,
-            )
-        } else {
-            listOf(
-                R.navigation.personal_host_nav_graph,
-                R.navigation.home_nav_graph,
-                R.navigation.search_nav_graph,
-                R.navigation.profile_nav_graph,
-            )
-        }
-
-        lifecycleScope.launch {
-            val section =
-                withContext(application.getComponent().coroutineDispatcherProvider().io()) {
-                    application.getComponent().settingsRepository().getSelectedInitialSection()
-                }
-            bottomNav.setupWithNavController(
-                navGraphIds = navGraphIds,
-                fragmentManager = supportFragmentManager,
-                containerId = R.id.container,
-                intent = intent,
-                selectedGraphId = sectionToGraph(section),
-                isRestored = isRestored,
-            )
-        }
-
-    }
-
-    private fun sectionToGraph(section: InitialSection) =
-        when (section) {
-            InitialSection.FAVORITES -> R.id.personal_host_nav_graph
-            InitialSection.HOME -> R.id.home_nav_graph
-            InitialSection.CALENDAR -> R.id.calendar_nav_graph
-            InitialSection.SEARCH -> R.id.search_nav_graph
-            InitialSection.PROFILE -> R.id.profile_nav_graph
-        }
-
-    private fun setupObservers() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.messageState.collect { event ->
-                    ShikimoriSnackbar
-                        .showSnackbarShort(
-                            view = binding.root,
-                            anchorView = binding.navigation,
-                            event = event,
+                mainViewModel.messageState.collectEvents { event ->
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            CustomSnackbarVisuals(
+                                message = event.text,
+                                messageStatus = event.status,
+                            )
                         )
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.events.collect { event ->
-                    when (event) {
-                        is LanguageDisclaimer -> {
-                            showLanguageDisclaimer()
-                        }
-
-                        is OpenCalendarTab -> {
-                            binding.navigation.selectedItemId = R.id.calendar_nav_graph
-                        }
-
-                        else -> {}
                     }
                 }
             }
@@ -212,9 +331,30 @@ class MainActivity : AppCompatActivity(), TabSelection {
         dialog.setCanceledOnTouchOutside(false)
     }
 
-    override fun navigateToCalendarTab() {
-        isFromHome = true
-        mainViewModel.onNavigateToCalendarTab()
+    enum class AppBottomTabModel(
+        val route: BottomBarNav,
+        @DrawableRes val resIcon: Int
+    ) {
+        PERSONAL_LIST(
+            route = BottomBarNav.PersonalList,
+            resIcon = R.drawable.ic_personal_list_filled,
+        ),
+        HOME(
+            route = BottomBarNav.Home,
+            resIcon = R.drawable.ic_personal_home_filled,
+        ),
+        CALENDAR(
+            route = BottomBarNav.Calendar,
+            resIcon = R.drawable.ic_calendar_filled,
+        ),
+        SEARCH(
+            route = BottomBarNav.Search,
+            resIcon = R.drawable.ic_search_v2,
+        ),
+        PROFILE(
+            route = BottomBarNav.Profile,
+            resIcon = R.drawable.ic_user_filled,
+        ),
     }
 
     companion object {

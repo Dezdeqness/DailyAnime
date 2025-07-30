@@ -6,7 +6,6 @@ import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.provider.LocaleProvider
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.LanguageDisclaimer
-import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.utils.LocaleUtils
 import javax.inject.Inject
@@ -37,9 +36,4 @@ class MainViewModel @Inject constructor(
         }
 
     }
-
-    fun onNavigateToCalendarTab() {
-        onEventReceive(OpenCalendarTab)
-    }
-
 }
