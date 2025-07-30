@@ -42,6 +42,7 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.presentation.features.animechronology.AnimeChronologyStandalonePage
@@ -62,6 +63,7 @@ import com.dezdeqness.presentation.models.MessageEvent.MessageEventStatus
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -97,6 +99,11 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
+
+        val section =
+            runBlocking(application.getComponent().coroutineDispatcherProvider().io()) {
+                application.getComponent().settingsRepository().getSelectedInitialSection()
+            }
 
         setContent {
             val rootController = rememberNavController()
@@ -163,7 +170,7 @@ class MainActivity : AppCompatActivity() {
                             ) { padding ->
                                 NavHost(
                                     navController = navController,
-                                    startDestination = BottomBarNav.Home,
+                                    startDestination = sectionToRoute(section),
                                     modifier = Modifier
                                         .padding(padding)
                                         .fillMaxSize()
@@ -285,7 +292,9 @@ class MainActivity : AppCompatActivity() {
 
                     SnackbarHost(
                         hostState = snackbarHostState,
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 56.dp),
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 56.dp),
                         snackbar = { data ->
                             val visuals = (data.visuals as? CustomSnackbarVisuals)
                                 ?: return@SnackbarHost
@@ -319,6 +328,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun sectionToRoute(section: InitialSection) =
+        when (section) {
+            InitialSection.FAVORITES -> BottomBarNav.PersonalList
+            InitialSection.HOME -> BottomBarNav.Home
+            InitialSection.CALENDAR -> BottomBarNav.Calendar
+            InitialSection.SEARCH -> BottomBarNav.Search
+            InitialSection.PROFILE -> BottomBarNav.Profile
+        }
 
     private fun showLanguageDisclaimer() {
         val dialog = MaterialAlertDialogBuilder(this)

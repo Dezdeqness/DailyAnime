@@ -95,31 +95,52 @@ data class SelectSectionItem(
     @StringRes val titleId: Int,
 ) {
     companion object {
-        fun getSections() =
-            listOf(
-                SelectSectionItem(
-                    section = InitialSection.HOME,
-                    titleId = R.string.bottom_navigation_home
-                ),
-                SelectSectionItem(
-                    section = InitialSection.FAVORITES,
-                    titleId = R.string.bottom_navigation_personal_lists
-                ),
-                SelectSectionItem(
-                    section = InitialSection.CALENDAR,
-                    titleId = R.string.bottom_navigation_calendar
-                ),
-                SelectSectionItem(
-                    section = InitialSection.PROFILE,
-                    titleId = R.string.bottom_navigation_profile
-                ),
-                SelectSectionItem(
-                    section = InitialSection.SEARCH,
-                    titleId = R.string.bottom_navigation_search
-                ),
-            )
+        fun getSections(isCalendarEnabled: Boolean = true) =
+            if (isCalendarEnabled) {
+                listOf(
+                    SelectSectionItem(
+                        section = InitialSection.HOME,
+                        titleId = R.string.bottom_navigation_home
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.FAVORITES,
+                        titleId = R.string.bottom_navigation_personal_lists
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.CALENDAR,
+                        titleId = R.string.bottom_navigation_calendar
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.PROFILE,
+                        titleId = R.string.bottom_navigation_profile
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.SEARCH,
+                        titleId = R.string.bottom_navigation_search
+                    ),
+                )
+            } else {
+                listOf(
+                    SelectSectionItem(
+                        section = InitialSection.HOME,
+                        titleId = R.string.bottom_navigation_home
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.FAVORITES,
+                        titleId = R.string.bottom_navigation_personal_lists
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.PROFILE,
+                        titleId = R.string.bottom_navigation_profile
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.SEARCH,
+                        titleId = R.string.bottom_navigation_search
+                    ),
+                )
+            }
 
-        fun getById(sectionId: Int): SelectSectionItem{
+        fun getById(sectionId: Int): SelectSectionItem {
             val items = getSections()
 
             return items.find { it.section.id == sectionId } ?: items.first()
