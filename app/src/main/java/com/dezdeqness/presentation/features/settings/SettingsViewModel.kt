@@ -6,6 +6,7 @@ import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.ui.TimeData
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.domain.model.InitialSection
@@ -28,6 +29,7 @@ class SettingsViewModel @Inject constructor(
     private val ribbonMapper: PersonalRibbonMapper,
     private val permissionCheckProvider: PermissionCheckProvider,
     private val workSchedulerManager: WorkSchedulerManager,
+    private val configManager: ConfigManager,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -61,7 +63,8 @@ class SettingsViewModel @Inject constructor(
                         hours = notificationTime.hours,
                         minutes = notificationTime.minutes
                     ),
-                    personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map))
+                    personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map)),
+                    isCalendarEnabled = configManager.isCalendarEnabled,
                 )
             }
         }

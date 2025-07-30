@@ -39,8 +39,8 @@ fun SettingsPage(
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
 
-    val listSections = remember {
-        SelectSectionItem.getSections()
+    val listSections = remember(state.isCalendarEnabled) {
+        SelectSectionItem.getSections(state.isCalendarEnabled)
     }
 
     Scaffold(
