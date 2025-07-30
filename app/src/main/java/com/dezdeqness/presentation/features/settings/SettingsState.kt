@@ -15,7 +15,8 @@ data class SettingsState(
     val isNotificationsTurnOn: Boolean = false,
     val isNotificationsEnabled: Boolean = false,
     val isNotificationTimePickerDialogShown: Boolean = false,
-    val notificationTimeData: TimeData = TimeData(hours = 19, minutes = 0)
+    val notificationTimeData: TimeData = TimeData(hours = 19, minutes = 0),
+    val isCalendarEnabled: Boolean = true,
 ) {
     val ribbonSettingsSubTitle: String
         get() = personalRibbonStatuses.joinToString(", ") { it.displayName }
