@@ -1,27 +1,27 @@
 package com.dezdeqness.presentation.models
 
-import android.graphics.Color
-
 sealed class MessageEvent(
     open val text: String,
-    val textColor: Int,
-    val backgroundColor: Int,
+    val status: MessageEventStatus,
 ) {
 
     data class SuccessMessageEvent(
         val successText: String,
     ) : MessageEvent(
         text = successText,
-        textColor = Color.WHITE,
-        backgroundColor = Color.GREEN,
+        status = MessageEventStatus.Success,
     )
 
     data class ErrorMessageEvent(
         val errorText: String,
     ) : MessageEvent(
         text = errorText,
-        textColor = Color.WHITE,
-        backgroundColor = Color.RED,
+        status = MessageEventStatus.Error,
     )
 
+    enum class MessageEventStatus {
+        Success,
+        Error,
+        Unknown;
+    }
 }
