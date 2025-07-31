@@ -14,6 +14,8 @@ interface Action {
 
     data object CalendarHeaderClicked : Action
 
+    data object HistoryHeaderClicked : Action
+
     data object SimilarClicked : Action
 
     data object StatsClicked : Action
