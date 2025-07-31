@@ -41,6 +41,8 @@ data object LanguageDisclaimer : Event()
 
 data object OpenCalendarTab : Event()
 
+data object OpenHistoryPage : Event()
+
 data class EditUserRate(val userRateUiModel: EditRateUiModel) : Event()
 
 data class NavigateToScreenshotViewer(val currentIndex: Int, val screenshots: List<String>) : Event()

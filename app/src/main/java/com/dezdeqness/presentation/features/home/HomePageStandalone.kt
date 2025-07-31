@@ -10,9 +10,11 @@ import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.Details
+import com.dezdeqness.presentation.History
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.OpenCalendarTab
+import com.dezdeqness.presentation.event.OpenHistoryPage
 
 @Composable
 fun HomePageStandalone(
@@ -59,6 +61,10 @@ fun HomePageStandalone(
             }
             is OpenCalendarTab -> {
                 navController.navigate(BottomBarNav.Calendar)
+            }
+
+            is OpenHistoryPage -> {
+                rootController.navigate(History)
             }
 
             else -> {}

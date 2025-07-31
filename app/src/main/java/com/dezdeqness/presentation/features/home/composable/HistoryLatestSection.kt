@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.home.composable
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.history.composables.HistoryItem
 import com.dezdeqness.presentation.features.history.models.HistoryModel
 
@@ -15,12 +17,17 @@ import com.dezdeqness.presentation.features.history.models.HistoryModel
 fun HistoryLatestSection(
     modifier: Modifier = Modifier,
     item: HistoryModel.HistoryUiModel,
+    onActionReceive: (Action) -> Unit,
 ) {
     Column(
         modifier = modifier,
     ) {
         Header(
             title = stringResource(R.string.section_history_title),
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                onActionReceive.invoke(Action.HistoryHeaderClicked)
+            },
         )
         HistoryItem(
             item = item,
