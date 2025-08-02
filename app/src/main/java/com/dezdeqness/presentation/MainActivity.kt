@@ -4,14 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -20,11 +24,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -85,6 +93,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+
         application
             .getComponent()
             .mainComponent()
@@ -123,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                             val navController = rememberNavController()
 
                             Scaffold(
+                                contentWindowInsets = WindowInsets(0.dp),
                                 bottomBar = {
                                     NavigationBar(
                                         containerColor = MaterialTheme.colorScheme.background,
@@ -166,7 +177,8 @@ class MainActivity : AppCompatActivity() {
                                             )
                                         }
                                     }
-                                }
+                                },
+                                containerColor = AppTheme.colors.background,
                             ) { padding ->
                                 NavHost(
                                     navController = navController,
@@ -315,6 +327,8 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
 
+                StatusBarProtection()
+
                 mainViewModel.messageState.collectEvents { event ->
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar(
@@ -379,4 +393,35 @@ class MainActivity : AppCompatActivity() {
         fun newIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
+}
+
+@Composable
+private fun StatusBarProtection(
+    color: Color = MaterialTheme.colorScheme.surfaceContainer,
+    heightProvider: () -> Float = calculateGradientHeight(),
+) {
+
+    Canvas(Modifier.fillMaxSize()) {
+        val calculatedHeight = heightProvider()
+        val gradient = Brush.verticalGradient(
+            colors = listOf(
+                color.copy(alpha = 1f),
+                color.copy(alpha = .8f),
+                Color.Transparent
+            ),
+            startY = 0f,
+            endY = calculatedHeight
+        )
+        drawRect(
+            brush = gradient,
+            size = Size(size.width, calculatedHeight),
+        )
+    }
+}
+
+@Composable
+private fun calculateGradientHeight(): () -> Float {
+    val statusBars = WindowInsets.statusBars
+    val density = LocalDensity.current
+    return { statusBars.getTop(density).times(1.2f) }
 }

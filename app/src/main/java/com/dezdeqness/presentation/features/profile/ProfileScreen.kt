@@ -53,7 +53,7 @@ fun ProfileScreen(
     ) { padding ->
         Column(
             modifier = modifier
-                .padding(padding)
+                .padding(top = padding.calculateTopPadding())
                 .fillMaxSize()
                 .background(AppTheme.colors.onPrimary)
         ) {

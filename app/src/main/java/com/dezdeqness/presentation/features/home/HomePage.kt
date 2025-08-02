@@ -1,8 +1,11 @@
 package com.dezdeqness.presentation.features.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,8 +56,9 @@ fun HomePage(
 
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.onPrimary),
+            .background(AppTheme.colors.onPrimary)
+            .padding(top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding())
+            .fillMaxSize(),
         userScrollEnabled = isLoadingVisible.not(),
     ) {
         item {
