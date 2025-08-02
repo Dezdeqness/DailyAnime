@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -78,7 +81,7 @@ fun PersonalListPage(
         modifier = modifier.fillMaxSize(),
         topBar = {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars).fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Box(modifier = Modifier.weight(1f)) {
@@ -117,7 +120,7 @@ fun PersonalListPage(
         )
         Box(
             modifier = modifier
-                .padding(contentPadding)
+                .padding(top = contentPadding.calculateTopPadding())
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.Center,
