@@ -10,6 +10,7 @@ import android.transition.Slide
 import android.view.Gravity
 import android.view.Window
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,7 @@ class UserRateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         with(window) {
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)

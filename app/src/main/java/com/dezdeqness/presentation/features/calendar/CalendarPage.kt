@@ -2,8 +2,11 @@ package com.dezdeqness.presentation.features.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -16,9 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.GeneralEmpty
 import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.core.ui.theme.AppTheme
@@ -48,7 +49,9 @@ fun CalendarPage(
         modifier = modifier.fillMaxSize(),
         topBar = {
             CalendarSearch(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 onQueryChanged = { query ->
                     actions.onQueryChanged(query)
                 }

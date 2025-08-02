@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -97,6 +98,7 @@ fun AnimeSearchPage(
                 scrollBehavior = scrollBehavior
             )
         },
+        contentWindowInsets = WindowInsets(0.dp),
         floatingActionButton = {
             AnimatedVisibility(
                 visible = isListScrolling.not(),
@@ -126,7 +128,7 @@ fun AnimeSearchPage(
 
         Box(
             modifier = modifier
-                .padding(contentPadding)
+                .padding(top = contentPadding.calculateTopPadding())
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.Center,
