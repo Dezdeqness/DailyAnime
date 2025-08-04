@@ -2,6 +2,10 @@ package com.dezdeqness.presentation.features.settings
 
 import android.app.UiModeManager.MODE_NIGHT_NO
 import android.app.UiModeManager.MODE_NIGHT_YES
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -12,9 +16,11 @@ import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.domain.model.InitialSection
+import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import androidx.core.net.toUri
 
 @Composable
 fun SettingsPageStandalone(
@@ -82,6 +88,10 @@ fun SettingsPageStandalone(
                 viewModel.onNotificationTimePickerClosed()
             }
 
+            override fun invalidate() {
+                viewModel.invalidate()
+            }
+
             override fun onDebugOptionsClicked() {
                 context.startActivity(DebugScreenActivity.newIntent(context = context))
             }
@@ -99,6 +109,14 @@ fun SettingsPageStandalone(
                 AppCompatDelegate.setDefaultNightMode(themeMode)
             }
 
+            is OpenSettingsAlarm -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = "package:${context.packageName}".toUri()
+                    }
+                    context.startActivity(intent)
+                }
+            }
             else -> {}
         }
     }

@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.dezdeqness.core.worker.NotificationDailyReceiver
 import com.dezdeqness.domain.repository.SettingsRepository
 import java.util.Calendar
@@ -39,7 +40,13 @@ class WorkSchedulerManager @Inject constructor(
             }
         }
 
-        alarmManager.set(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                return
+            }
+        }
+
+        alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
             pendingIntent
