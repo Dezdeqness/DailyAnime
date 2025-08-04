@@ -21,5 +21,7 @@ interface SettingActions {
     fun onNotificationTimeSaved(hours: Int, minutes: Int)
     fun onNotificationTimePickerClosed()
 
+    fun invalidate()
+
     fun onDebugOptionsClicked()
 }

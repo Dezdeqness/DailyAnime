@@ -7,11 +7,14 @@ import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.ui.TimeData
 import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.domain.model.TimeEntity
 import com.dezdeqness.domain.repository.SettingsRepository
+import com.dezdeqness.presentation.event.Event
+import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.personallist.PersonalRibbonMapper
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
@@ -30,6 +33,7 @@ class SettingsViewModel @Inject constructor(
     private val permissionCheckProvider: PermissionCheckProvider,
     private val workSchedulerManager: WorkSchedulerManager,
     private val configManager: ConfigManager,
+    private val alarmManagerProvider: AlarmManagerProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -57,7 +61,7 @@ class SettingsViewModel @Inject constructor(
                     isDarkThemeEnabled = themeStatus,
                     selectedSection = SelectSectionItem.getById(section.id),
                     isAuthorized = isAuthorized,
-                    isNotificationsTurnOn = isNotificationsTurnOn,
+                    isNotificationsTurnOn = isNotificationsTurnOn && alarmManagerProvider.canScheduleExactAlarms(),
                     isNotificationsEnabled = permissionCheckProvider.isNotificationPermissionGranted(),
                     notificationTimeData = TimeData(
                         hours = notificationTime.hours,
@@ -143,8 +147,12 @@ class SettingsViewModel @Inject constructor(
         launchOnIo {
             settingsRepository.setNotificationsEnabled(isEnabled)
 
+            if (!alarmManagerProvider.canScheduleExactAlarms()) {
+                onEventReceive(OpenSettingsAlarm)
+            }
+
             _settingsStateFlow.update {
-                it.copy(isNotificationsTurnOn = isEnabled)
+                it.copy(isNotificationsTurnOn = isEnabled && alarmManagerProvider.canScheduleExactAlarms())
             }
         }
     }
@@ -171,6 +179,14 @@ class SettingsViewModel @Inject constructor(
     fun onNotificationTimePickerClosed() {
         _settingsStateFlow.update {
             it.copy(isNotificationTimePickerDialogShown = false)
+        }
+    }
+
+    fun invalidate() {
+        _settingsStateFlow.update {
+            it.copy(
+                isNotificationsTurnOn = alarmManagerProvider.canScheduleExactAlarms(),
+            )
         }
     }
 }
