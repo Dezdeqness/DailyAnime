@@ -24,6 +24,7 @@ import com.dezdeqness.data.provider.SettingsProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.contract.user.repository.UserRepository
+import com.dezdeqness.data.mapper.AchievementMapper
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
@@ -47,12 +48,14 @@ class AppModule {
         assetManager: AssetManager,
         genreMapper: GenreMapper,
         filterMapper: FilterMapper,
+        achievementMapper: AchievementMapper,
         moshi: Moshi,
     ) =
         ConfigurationProvider(
             assetManager = assetManager,
             genreMapper = genreMapper,
             filterMapper = filterMapper,
+            achievementMapper = achievementMapper,
             moshi = moshi,
         )
 
