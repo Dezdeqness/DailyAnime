@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
@@ -34,7 +35,13 @@ android {
 }
 
 dependencies {
-    // Coroutines
-    implementation(libs.kotlinx.coroutines)
-    implementation(libs.kotlinx.coroutinesAndroid)
+    // Dagger
+    implementation(libs.dagger.dagger)
+    ksp(libs.dagger.compilier)
+    // Common
+    implementation(project(":common:core-ui"))
+    implementation(project(":common:core"))
+
+    implementation(project(":data"))
+    implementation(project(":domain"))
 }

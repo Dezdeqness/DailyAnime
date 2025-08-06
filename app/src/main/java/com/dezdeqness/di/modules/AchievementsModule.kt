@@ -23,7 +23,9 @@ abstract class AchievementsModule {
     }
 
     @Binds
-    abstract fun bindAchievementRemoteDataSource(achievementRemoteDataSourceImpl: AchievementRemoteDataSourceImpl): AchievementRemoteDataSource
+    abstract fun bindAchievementRemoteDataSource(
+        achievementRemoteDataSourceImpl: AchievementRemoteDataSourceImpl,
+    ): AchievementRemoteDataSource
 
     @Binds
     abstract fun bindAchievementRepository(achievementRepositoryImpl: AchievementRepositoryImpl): AchievementRepository

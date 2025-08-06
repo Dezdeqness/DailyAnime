@@ -5,8 +5,9 @@ import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AchievementMapper
 import dagger.Lazy
+import javax.inject.Inject
 
-class AchievementRemoteDataSourceImpl(
+class AchievementRemoteDataSourceImpl @Inject constructor(
     private val achievementService: Lazy<AchievementService>,
     private val achievementMapper: AchievementMapper,
 ) : AchievementRemoteDataSource, BaseDataSource() {

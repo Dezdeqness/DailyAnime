@@ -10,6 +10,7 @@ import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule
 import com.dezdeqness.di.modules.RemoteModule
+import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
 import com.dezdeqness.di.subcomponents.AnimeComponent
 import com.dezdeqness.di.subcomponents.AnimeDetailsComponent
@@ -92,6 +93,8 @@ interface AppComponent {
     fun homeComponent(): HomeComponent.Factory
 
     fun debugComponent(): DebugComponent.Factory
+
+    fun achievementsComponent() : AchievementsSubcomponent.Builder
 
     val appLogger: AppLogger
 
