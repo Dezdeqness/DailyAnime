@@ -15,16 +15,16 @@ data class AchievementConfigRemote(
 ) : DataModel.Api
 
 data class AchievementMetadataRemote(
-    @Json(name = "title_ru")
+    @field:Json(name = "title_ru")
     val titleRu: String,
 
-    @Json(name = "text_ru")
+    @field:Json(name = "text_ru")
     val textRu: String?,
 
-    @Json(name = "title_en")
+    @field:Json(name = "title_en")
     val titleEn: String,
 
-    @Json(name = "text_en")
+    @field:Json(name = "text_en")
     val textEn: String?,
 
     val image: String
