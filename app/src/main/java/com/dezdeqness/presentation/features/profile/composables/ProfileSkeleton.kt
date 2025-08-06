@@ -44,33 +44,16 @@ fun ProfileSkeleton(modifier: Modifier = Modifier) {
                 .shimmer()
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .height(20.dp)
-                .width(140.dp)
-                .shimmer()
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .height(20.dp)
-                .width(140.dp)
-                .shimmer()
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .height(20.dp)
-                .width(140.dp)
-                .shimmer()
-        )
-
+        repeat(4) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+                    .height(20.dp)
+                    .width(140.dp)
+                    .shimmer()
+            )
+        }
     }
 
 }

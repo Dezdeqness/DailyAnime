@@ -25,6 +25,7 @@ fun ProfileCard(
     nickname: String,
     avatar: String,
     onHistoryClicked: () -> Unit,
+    onAchievementsClicked: () -> Unit,
     onStatsClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -56,6 +57,11 @@ fun ProfileCard(
             icon = R.drawable.ic_profile_label_statistics,
             onClick = onStatsClicked,
         )
+        ProfileButton(
+            title = stringResource(id = R.string.profile_achievements),
+            icon = R.drawable.ic_profile_label_achievements,
+            onClick = onAchievementsClicked,
+        )
 
         ProfileButton(
             title = stringResource(id = R.string.profile_history),
@@ -81,6 +87,7 @@ fun ProfileCardPreview() {
             "no_url",
             onHistoryClicked = {},
             onStatsClicked = {},
+            onAchievementsClicked = {},
             onLogoutClicked = {},
         )
     }

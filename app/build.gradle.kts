@@ -197,6 +197,8 @@ dependencies {
     implementation(project(":contract:history"))
     implementation(project(":contract:user"))
 
+    implementation(project(":feature:achievements"))
+
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
 
