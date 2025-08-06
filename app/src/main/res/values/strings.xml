@@ -30,6 +30,7 @@
 
     <string name="profile_history">History</string>
     <string name="profile_statistics">Statistics</string>
+    <string name="profile_achievements">Achievements</string>
     <string name="profile_logout">Log Out</string>
 
     <string name="history_empty_state">Your history is empty</string>

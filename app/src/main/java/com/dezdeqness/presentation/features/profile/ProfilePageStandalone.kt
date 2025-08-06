@@ -8,9 +8,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.presentation.Achievements
 import com.dezdeqness.presentation.History
 import com.dezdeqness.presentation.Settings
 import com.dezdeqness.presentation.Stats
+import com.dezdeqness.presentation.event.NavigateToAchievements
 import com.dezdeqness.presentation.event.NavigateToHistory
 import com.dezdeqness.presentation.event.NavigateToLoginPage
 import com.dezdeqness.presentation.event.NavigateToSettings
@@ -43,6 +45,10 @@ fun ProfilePageStandalone(
 
             override fun onHistoryIconClicked() =
                 viewModel.onEventReceive(NavigateToHistory)
+
+            override fun onAchievementsClicked(userId: Long) {
+                viewModel.onEventReceive(NavigateToAchievements(userId))
+            }
 
             override fun onLoginCLicked() = viewModel.onEventReceive(NavigateToLoginPage)
 
@@ -78,6 +84,10 @@ fun ProfilePageStandalone(
             NavigateToSignUp -> {
                 profileComponent.analyticsManager().authTracked(isLogin = false)
                 profileComponent.applicationRouter().navigateToSignUpScreen(context)
+            }
+
+            is NavigateToAchievements -> {
+                navController.navigate(Achievements(userId = event.usedId))
             }
 
             else -> Unit

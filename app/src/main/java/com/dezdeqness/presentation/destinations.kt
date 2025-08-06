@@ -27,6 +27,9 @@ sealed interface BottomBarNav {
 object History
 
 @Serializable
+data class Achievements(val userId: Long)
+
+@Serializable
 object Settings
 
 @Serializable
