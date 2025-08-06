@@ -53,6 +53,7 @@ import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
+import com.dezdeqness.presentation.features.achievements.AchievementsStandalonePage
 import com.dezdeqness.presentation.features.animechronology.AnimeChronologyStandalonePage
 import com.dezdeqness.presentation.features.animelist.SearchPageStandalone
 import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarStandalonePage
@@ -263,6 +264,15 @@ class MainActivity : AppCompatActivity() {
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                                 target = target,
+                            )
+                        }
+                        composable<Achievements> { backStackEntry ->
+                            val achievements = backStackEntry.toRoute<Achievements>()
+
+                            AchievementsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                userId = achievements.userId,
                             )
                         }
 

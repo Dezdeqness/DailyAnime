@@ -75,6 +75,7 @@ class ProfileViewModel @Inject constructor(
             onSuccess = { account ->
                 _profileStateFlow.value = _profileStateFlow.value.copy(
                     authorizedState = AuthorizedUiState.Authorized,
+                    userId = account.id,
                     avatar = account.avatar,
                     nickname = account.nickname,
                 )
