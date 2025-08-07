@@ -10,13 +10,18 @@ class AchievementsComposer @Inject constructor(
     private val configManager: ConfigManager,
 ) {
 
-    fun compose(configData: Map<String, List<AchievementConfigEntity>>, achievements: List<AchievementEntity>): List<AchievementsUiModel> {
+    fun compose(
+        configData: Map<String, List<AchievementConfigEntity>>,
+        achievements: List<AchievementEntity>,
+    ): List<AchievementsUiModel> {
         return achievements
             .groupBy { it.nekoId }
             .mapNotNull { (nekoId, userAchievements) ->
-                val maxAchievement = userAchievements.maxByOrNull { it.level } ?: return@mapNotNull null
+                val maxAchievement =
+                    userAchievements.maxByOrNull { it.level } ?: return@mapNotNull null
                 val configForId = configData[nekoId] ?: return@mapNotNull null
-                val configLevel = configForId.find { it.level == maxAchievement.level } ?: return@mapNotNull null
+                val configLevel =
+                    configForId.find { it.level == maxAchievement.level } ?: return@mapNotNull null
 
                 AchievementsUiModel(
                     id = nekoId,

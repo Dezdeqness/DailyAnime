@@ -33,19 +33,7 @@ fun ScoreHorizontalChart(
             val progress = item.currentProgress
             val value = item.value
 
-            val emoji = when (name) {
-                "10" -> "😍"
-                "9"-> "😁"
-                "8"-> "😊"
-                "7"-> "🙂"
-                "6"-> "😐"
-                "5"-> "😶"
-                "4"-> "😕"
-                "3"-> "😟"
-                "2"-> "😠"
-                "1"-> "😡"
-                else -> "❓"
-            }
+            val emoji = name.mapEmoji()
 
             val barColor = when (name.toInt()) {
                 in 8..10 -> Color.Green
@@ -94,3 +82,18 @@ fun ScoreHorizontalChart(
         }
     }
 }
+
+private fun String.mapEmoji() =
+    when (this) {
+        "10" -> "😍"
+        "9" -> "😁"
+        "8" -> "😊"
+        "7" -> "🙂"
+        "6" -> "😐"
+        "5" -> "😶"
+        "4" -> "😕"
+        "3" -> "😟"
+        "2" -> "😠"
+        "1" -> "😡"
+        else -> "❓"
+    }
