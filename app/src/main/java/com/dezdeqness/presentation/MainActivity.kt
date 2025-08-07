@@ -152,7 +152,8 @@ class MainActivity : AppCompatActivity() {
                                                     )
                                                 } == true
 
-                                            if (item == AppBottomTabModel.CALENDAR && configManager.isCalendarEnabled.not()) {
+                                            if (item == AppBottomTabModel.CALENDAR
+                                                && configManager.isCalendarEnabled.not()) {
                                                 return@forEach
                                             }
                                             NavigationBarItem(
