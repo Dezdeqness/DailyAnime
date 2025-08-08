@@ -41,15 +41,17 @@ class AchievementsViewModel @Inject constructor(
                         achievementsComposer.compose(cfg, userAchievements)
                     }
 
-                    AchievementsUiState(
-                        status = if (common.isEmpty() && genres.isEmpty()) Status.Empty else Status.Loaded,
-                        common = common,
-                        genres = genres
+                    emit(
+                        AchievementsUiState(
+                            status = if (common.isEmpty() && genres.isEmpty()) Status.Empty else Status.Loaded,
+                            common = common,
+                            genres = genres
+                        )
                     )
                 }
                 .onFailure {
                     appLogger.logInfo(TAG, throwable = it)
-                    AchievementsUiState(status = Status.Error)
+                    emit(AchievementsUiState(status = Status.Error))
                 }
         }
             .catch {

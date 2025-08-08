@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_title">Достижения</string>
+    <string name="title_empty_state">На данный момент список достижений пуст</string>
+    <string name="title_error_state">Произошла ошибка</string>
+    <string name="title_common">Общее</string>
+    <string name="title_genres">Жанры</string>
+
+    <string name="level_subtitle">Уровень %s</string>
+    <string name="level_progress">Прогресс %s%%</string>
+</resources>
