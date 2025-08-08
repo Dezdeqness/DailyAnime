@@ -117,11 +117,6 @@ dependencies {
     releaseImplementation(libs.chucker.noop)
     add("qaImplementation", libs.chucker.library)
 
-    // Glide
-    implementation(libs.bumptech.glide)
-    ksp(libs.bumptech.compiler)
-    implementation(libs.wasabeef.transformation)
-
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
