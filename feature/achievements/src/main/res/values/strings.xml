@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_title">Achievements</string>
+
+    <string name="title_empty_state">Your list of achievements is empty</string>
+    <string name="title_error_state">Something went wrong</string>
+    <string name="title_common">Common</string>
+    <string name="title_genres">Genres</string>
+
+    <string name="level_subtitle">Level %s</string>
+    <string name="level_progress">Progress %s%%</string>
+
+</resources>

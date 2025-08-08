@@ -5,6 +5,7 @@ data class AchievementsUiModel(
     val titleRu: String,
     val titleEn: String,
     val level: Int,
-    val progress: Long,
+    val progress: Float,
+    val progressValue: Long,
     val imageUrl: String,
 )

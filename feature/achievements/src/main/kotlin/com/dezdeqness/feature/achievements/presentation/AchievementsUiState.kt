@@ -1,7 +1,9 @@
 package com.dezdeqness.feature.achievements.presentation
 
+import androidx.compose.runtime.Immutable
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
 
+@Immutable
 data class AchievementsUiState(
     val status: Status = Status.Initial,
     val common: List<AchievementsUiModel> = listOf(),
