@@ -164,6 +164,7 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
     implementation(libs.coil)
+    implementation(libs.coil.gif)
 
     // Datastore
     implementation(libs.androidx.datastore.preferences)
