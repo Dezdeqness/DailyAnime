@@ -8,4 +8,3 @@ data class ProfileState(
     val avatar: String = "",
     val nickname: String = "",
 )
-

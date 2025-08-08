@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.di.subcomponents.AchievementsArgsModule
+import com.dezdeqness.feature.achievements.presentation.AchievementsActions
 import com.dezdeqness.feature.achievements.presentation.AchievementsPage
 import com.dezdeqness.feature.achievements.presentation.AchievementsViewModel
 
@@ -26,11 +26,24 @@ fun AchievementsStandalonePage(
             .build()
     }
 
-    val viewModel = viewModel<AchievementsViewModel>(factory = achievementsComponent.viewModelFactory())
+    val viewModel =
+        viewModel<AchievementsViewModel>(factory = achievementsComponent.viewModelFactory())
 
-    val state = viewModel.achievementsState.collectAsStateWithLifecycle()
+    val actions = remember {
+        object : AchievementsActions {
+            override fun onPullDownRefreshed() {
 
-    println(state.toString())
+            }
 
-    AchievementsPage(modifier = modifier)
+            override fun onBackPressed() {
+                navController.popBackStack()
+            }
+        }
+    }
+
+    AchievementsPage(
+        modifier = modifier,
+        stateFlow = viewModel.achievementsState,
+        actions = actions,
+    )
 }
