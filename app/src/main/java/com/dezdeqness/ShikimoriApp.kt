@@ -1,8 +1,11 @@
 package com.dezdeqness
 
 import android.app.Application
+import android.os.Build.VERSION.SDK_INT
 import coil.Coil
 import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.util.DebugLogger
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
@@ -26,6 +29,13 @@ class ShikimoriApp : Application() {
                 )
             }
         val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
             .logger(DebugLogger())
             .build()
 
