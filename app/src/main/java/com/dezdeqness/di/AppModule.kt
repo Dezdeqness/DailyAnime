@@ -25,6 +25,9 @@ import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.mapper.AchievementMapper
+import com.dezdeqness.data.provider.HistorySearchListProvider
+import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
+import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
@@ -80,6 +83,11 @@ class AppModule {
         Moshi.Builder()
             .add(FilterTypeAdapter())
             .build()
+
+    @Singleton
+    @Provides
+    fun provideHistorySearchRepository(historySearchListProvider: HistorySearchListProvider): HistorySearchRepository =
+        HistorySearchRepositoryImpl(historySearchProvider = historySearchListProvider)
 
     @Singleton
     @Provides

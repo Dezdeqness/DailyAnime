@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -51,6 +52,7 @@ fun AnimeSearchPage(
     pullRefreshFlow: StateFlow<Boolean>,
     scrollNeedFlow: StateFlow<Boolean>,
     isListScrollingFlow: StateFlow<Boolean>,
+    historySearchFlow: StateFlow<List<String>>,
     actions: AnimeSearchActions,
 ) {
     val scope = rememberCoroutineScope()
@@ -62,6 +64,8 @@ fun AnimeSearchPage(
     val isScrollNeed by scrollNeedFlow.collectAsStateWithLifecycle()
 
     val isListScrolling by isListScrollingFlow.collectAsStateWithLifecycle()
+
+    val historySearch by historySearchFlow.collectAsStateWithLifecycle()
 
     val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
 
@@ -76,21 +80,33 @@ fun AnimeSearchPage(
                 scrollBehavior = scrollBehavior,
                 onQueryChanged = actions::onQueryChanged,
                 historyContent = { textFieldState, searchBarState ->
-                    listOf<String>().forEach {
-                        HistoryItem(
-                            title = it,
-                            onClicked = {
-                                textFieldState.setTextAndPlaceCursorAtEnd(it)
-                                actions.onQueryChanged(it)
-                                scope.launch {
-                                    searchBarState.animateToCollapsed()
-                                }
+                    LazyColumn {
+                        items(
+                            count = historySearch.size,
+                            key = { index ->
+                                historySearch[index]
                             },
-                            onRemoveClicked = {},
-                            onFulFillClicked = {
-                                textFieldState.setTextAndPlaceCursorAtEnd(it)
-                            }
-                        )
+                        ) { index ->
+                            val item = historySearch[index]
+
+                            HistoryItem(
+                                modifier = Modifier.animateItem(),
+                                title = item,
+                                onClicked = {
+                                    textFieldState.setTextAndPlaceCursorAtEnd(item)
+                                    actions.onQueryChanged(item)
+                                    scope.launch {
+                                        searchBarState.animateToCollapsed()
+                                    }
+                                },
+                                onRemoveClicked = {
+                                    actions.removeSearchHistoryItem(item)
+                                },
+                                onFulFillClicked = {
+                                    textFieldState.setTextAndPlaceCursorAtEnd(item)
+                                }
+                            )
+                        }
                     }
                 }
             )
