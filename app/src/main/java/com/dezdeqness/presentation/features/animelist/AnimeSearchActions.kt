@@ -12,4 +12,5 @@ interface AnimeSearchActions {
     fun onQueryChanged(query: String)
     fun onFilterChanged(filtersList: List<SearchSectionUiModel>)
     fun onScrollInProgress(isScrollInProgress: Boolean)
+    fun removeSearchHistoryItem(item: String)
 }

@@ -44,6 +44,7 @@ fun SearchPageStandalone(
             pullRefreshFlow = viewModel.pullRefreshFlow,
             scrollNeedFlow = viewModel.scrollNeedFlow,
             isListScrollingFlow = viewModel.isListScrolling,
+            historySearchFlow = viewModel.historySearchFlow,
             actions = object : AnimeSearchActions {
                 override fun onPullDownRefreshed() {
                     viewModel.onPullDownRefreshed()
@@ -71,6 +72,10 @@ fun SearchPageStandalone(
 
                 override fun onScrollInProgress(isScrollInProgress: Boolean) {
                     viewModel.onScrollInProgress(isScrollInProgress)
+                }
+
+                override fun removeSearchHistoryItem(item: String) {
+                    viewModel.onRemoveSearchHistoryItem(item)
                 }
 
                 override fun onScrolled() {
