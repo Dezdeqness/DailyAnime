@@ -5,6 +5,7 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AnimeViewModel @Inject constructor(
@@ -35,6 +37,7 @@ class AnimeViewModel @Inject constructor(
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: MessageProvider,
+    private val historySearchRepository: HistorySearchRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -52,6 +55,12 @@ class AnimeViewModel @Inject constructor(
 
     private val _isListScrolling = MutableStateFlow(false)
     val isListScrolling: StateFlow<Boolean> get() = _isListScrolling
+
+    val historySearchFlow = historySearchRepository.getSearchHistoryFlow().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = listOf()
+    )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val animeSearchState: StateFlow<AnimeSearchState> = loadEvents
@@ -171,6 +180,9 @@ class AnimeViewModel @Inject constructor(
     fun onQueryChanged(query: String) {
         val input = animeSearchState.value.input.copy(query = query)
         loadEvents.tryEmit(LoadEvent.Refresh(input, isScrollNeed = true))
+        launchOnIo {
+            historySearchRepository.addSearchHistory(query)
+        }
     }
 
     fun onLoadMore() {
@@ -188,6 +200,12 @@ class AnimeViewModel @Inject constructor(
 
     fun onScrollInProgress(isScrollInProgression: Boolean) {
         _isListScrolling.value = isScrollInProgression
+    }
+
+    fun onRemoveSearchHistoryItem(item: String) {
+        launchOnIo {
+            historySearchRepository.removeSearchHistory(item)
+        }
     }
 
     companion object {
