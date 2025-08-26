@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
@@ -14,6 +15,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -43,6 +45,9 @@ class AnimeViewModelTest {
     @MockK
     private lateinit var appLogger: AppLogger
 
+    @MockK
+    private lateinit var historySearchRepository: HistorySearchRepository
+
     private lateinit var viewModel: AnimeViewModel
 
     @Before
@@ -50,6 +55,8 @@ class AnimeViewModelTest {
         MockKAnnotations.init(this)
 
         every { actionConsumer.attachListener(any()) } returns Unit
+
+        every { historySearchRepository.getSearchHistoryFlow() } returns flowOf(listOf())
 
         every { appLogger.logInfo(any(), any()) } returns Unit
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
@@ -61,6 +68,7 @@ class AnimeViewModelTest {
             actionConsumer = actionConsumer,
             messageConsumer = messageConsumer,
             messageProvider = messageProvider,
+            historySearchRepository = historySearchRepository,
             coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
             appLogger = appLogger,
         )
