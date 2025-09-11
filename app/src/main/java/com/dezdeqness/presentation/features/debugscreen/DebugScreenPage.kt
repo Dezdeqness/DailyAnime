@@ -90,7 +90,7 @@ fun DebugScreenPage(
                                 title = item.key.key,
                                 enabled = state.isOverrideEnabled,
                                 subtitle = value.toString(),
-                                onSettingClick = {
+                                onClick = {
                                     editingKey = item.key
                                     inputValue = value.toString()
                                 }
