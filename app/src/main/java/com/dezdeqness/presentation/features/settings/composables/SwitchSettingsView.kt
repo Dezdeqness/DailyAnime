@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.dezdeqness.core.ui.theme.AppTheme
 
@@ -17,8 +17,8 @@ fun SwitchSettingsView(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String? = null,
-    icon: ImageVector? = null,
     enabled: Boolean = true,
+    prefixIcon: (@Composable (Modifier) -> Unit)? = null,
     checked: Boolean = false,
     onCheckedChanged: (Boolean) -> Unit,
 ) {
@@ -26,15 +26,15 @@ fun SwitchSettingsView(
         modifier = modifier,
         title = title,
         subtitle = subtitle,
-        icon = icon,
+        onClick = { onCheckedChanged(!checked) },
         enabled = enabled,
-        widget = {
+        prefixIcon = prefixIcon,
+        suffixIcon = {
             Switch(
                 checked = checked,
                 onCheckedChange = null,
             )
         },
-        onSettingClick = { onCheckedChanged(!checked) },
     )
 }
 
@@ -64,7 +64,14 @@ fun SwitchSettingsViewPreview() {
             SwitchSettingsView(
                 title = "Title1",
                 subtitle = "Subtitle1",
-                icon = Icons.Outlined.Settings,
+                prefixIcon = { modifier ->
+                    Icon(
+                        Icons.Outlined.Settings,
+                        modifier = modifier,
+                        contentDescription = null,
+                        tint = AppTheme.colors.textPrimary,
+                    )
+                },
                 onCheckedChanged = {},
             )
         }

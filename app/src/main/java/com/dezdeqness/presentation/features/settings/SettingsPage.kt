@@ -86,7 +86,7 @@ fun SettingsPage(
                 TextSettingsView(
                     title = stringResource(R.string.settings_initial_tab_page),
                     subtitle = stringResource(state.selectedSection.titleId),
-                    onSettingClick = {
+                    onClick = {
                         actions.onChangeInitialSectionClicked()
                     }
                 )
@@ -97,7 +97,7 @@ fun SettingsPage(
                     TextSettingsView(
                         title = stringResource(R.string.settings_order_of_statuses),
                         subtitle = state.ribbonSettingsSubTitle,
-                        onSettingClick = {
+                        onClick = {
                             actions.onChangeRibbonStatusClicked()
                         }
                     )
@@ -138,7 +138,7 @@ fun SettingsPage(
                     title = stringResource(R.string.settings_notification_time_title),
                     subtitle = state.notificationTimeData.formattedTime,
                     enabled = state.isNotificationsEnabled,
-                    onSettingClick = {
+                    onClick = {
                         actions.onNotificationTimePickerClicked()
                     }
                 )
@@ -158,7 +158,7 @@ fun SettingsPage(
                 item {
                     TextSettingsView(
                         title = "Debug options",
-                        onSettingClick = actions::onDebugOptionsClicked,
+                        onClick = actions::onDebugOptionsClicked,
                     )
                 }
             }
