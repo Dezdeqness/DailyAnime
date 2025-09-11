@@ -3,8 +3,10 @@ package com.dezdeqness.presentation.features.settings.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 
 private const val SubTitleAlpha = 0.8f
@@ -24,52 +28,49 @@ fun TextSettingsView(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String? = null,
+    onClick: (() -> Unit)? = null,
     enabled: Boolean = true,
-    icon: ImageVector? = null,
-    iconTint: Color = AppTheme.colors.textPrimary,
-    widget: @Composable (() -> Unit)? = null,
-    onSettingClick: (() -> Unit)? = null,
+    contentColor: Color = AppTheme.colors.onPrimary,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+    prefixIcon: (@Composable (Modifier) -> Unit)? = null,
+    suffixIcon: (@Composable (Modifier) -> Unit)? = null,
 ) {
-    Box {
-        BaseSettingsView(
-            modifier = modifier,
-            title = title,
-            subTitle = if (!subtitle.isNullOrBlank()) {
-                {
-                    Text(
-                        text = subtitle,
-                        modifier = Modifier.alpha(SubTitleAlpha),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = AppTheme.colors.textPrimary,
-                    )
-                }
-            } else {
-                null
-            },
-            icon = if (icon != null) {
-                {
-                    Icon(
-                        imageVector = icon,
-                        tint = iconTint,
-                        contentDescription = null,
-                    )
-                }
-            } else {
-                null
-            },
-            onClick = if (enabled) onSettingClick else null,
-            widget = widget,
-        )
-
-        if (enabled.not()) {
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .background(AppTheme.colors.onPrimary.copy(alpha = 0.8f))
+    BaseSettingsView(
+        modifier = modifier,
+        title = {
+            Text(
+                text = title,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2,
+                style = AppTheme.typography.titleLarge,
+                color = AppTheme.colors.textPrimary,
             )
-        }
-    }
+        },
+        subTitle = if (!subtitle.isNullOrBlank()) {
+            {
+                Text(
+                    text = subtitle,
+                    modifier = Modifier.alpha(SubTitleAlpha),
+                    style = AppTheme.typography.bodySmall,
+                    color = AppTheme.colors.textPrimary,
+                )
+            }
+        } else {
+            null
+        },
+        enabled = enabled,
+        onClick = if (enabled) onClick else null,
+        contentColor = contentColor,
+        contentPadding = contentPadding,
+        prefixIcon = { iconModifier ->
+            prefixIcon?.invoke(iconModifier)
+        },
+        suffixIcon = { iconModifier ->
+            suffixIcon?.invoke(iconModifier)
+        },
+    )
 }
+
 
 @PreviewLightDark
 @Composable
@@ -90,12 +91,26 @@ fun TextSettingPreview() {
             TextSettingsView(
                 title = "Title1",
                 subtitle = "Subtitle1",
-                icon = Icons.Outlined.Settings,
+                prefixIcon = { modifier ->
+                    Icon(
+                        Icons.Outlined.Settings,
+                        modifier = modifier,
+                        contentDescription = null,
+                        tint = AppTheme.colors.textPrimary,
+                    )
+                },
             )
             TextSettingsView(
                 title = "Title1",
                 subtitle = "Subtitle1",
-                icon = Icons.Outlined.Settings,
+                prefixIcon = { modifier ->
+                    Icon(
+                        Icons.Outlined.Settings,
+                        modifier = modifier,
+                        contentDescription = null,
+                        tint = AppTheme.colors.textPrimary,
+                    )
+                },
                 enabled = false
             )
         }
