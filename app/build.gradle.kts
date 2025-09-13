@@ -158,9 +158,6 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
-    // Zoomable
-    implementation(libs.engawapg.zoomable)
-
     // Coil
     implementation(libs.coil.compose)
     implementation(libs.coil)
@@ -194,6 +191,7 @@ dependencies {
     implementation(project(":contract:user"))
 
     implementation(project(":feature:achievements"))
+    implementation(project(":feature:screenshotviewer"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

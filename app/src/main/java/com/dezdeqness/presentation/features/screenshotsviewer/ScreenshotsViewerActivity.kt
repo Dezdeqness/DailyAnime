@@ -13,39 +13,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
-import com.dezdeqness.R
-import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.di.subcomponents.ScreenshotsArgsModule
+import com.dezdeqness.feature.screenshotsviewer.ScreenshotViewerActions
+import com.dezdeqness.feature.screenshotsviewer.ScreenshotViewerPage
+import com.dezdeqness.feature.screenshotsviewer.ScreenshotsViewModel
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.features.screenshotsviewer.composables.ScreenshotPager
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace
 import javax.inject.Inject
 
 class ScreenshotsViewerActivity : AppCompatActivity() {
@@ -78,84 +53,32 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
 
         setContent {
             AppTheme {
-                Box(modifier = Modifier.background(Color.Black)) {
-                    val context = LocalContext.current
+                ScreenshotViewerPage(
+                    stateFlow = viewModel.state,
+                    effectFlow = viewModel.effects,
+                    actions = object : ScreenshotViewerActions {
+                        override fun onShareButtonClicked() {
+                            viewModel.onShareButtonClicked()
+                        }
 
-                    val state by viewModel.state.collectAsState()
-                    val pagerState = rememberPagerState(initialPage = state.index) {
-                        state.screenshotsList.size
-                    }
-
-                    var isToolbarVisible by remember {
-                        mutableStateOf(true)
-                    }
-
-                    ScreenshotPager(
-                        state = pagerState,
-                        items = state.screenshotsList,
-                        onShow = {
-                            isToolbarVisible = true
-                            showSystemUI()
-                        },
-                        onHide = {
-                            isToolbarVisible = false
+                        override fun onShowSystemUi() {
                             hideSystemUI()
                         }
-                    )
 
-                    viewModel
-                        .effects
-                        .collectEvents { effect ->
-                            when (effect) {
-                                is ScreenshotsNamespace.Effect.ShareUrl -> {
-                                    val url = effect.url
-                                    ShareCompat.IntentBuilder(context)
-                                        .setType("text/plain")
-                                        .setText(url)
-                                        .startChooser()
-                                }
-                            }
+                        override fun onHideSystemUi() {
+                            showSystemUI()
                         }
 
-                    LaunchedEffect(pagerState) {
-                        snapshotFlow { pagerState.currentPage }.collect { page ->
-                            viewModel.onScreenShotChanged(page)
+                        override fun onScreenShotChanged(index: Int) {
+                            viewModel.onScreenShotChanged(index = index)
                         }
-                    }
 
-                    AnimatedVisibility(
-                        visible = isToolbarVisible,
-                        enter = fadeIn() + expandVertically(),
-                        exit = shrinkVertically() + fadeOut(),
-                    ) {
-                        AppToolbar(
-                            title = "${state.index + 1}/${state.screenshotsList.size}",
-                            titleColor = Color.White,
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                titleContentColor = Color.White,
-                                containerColor = Color(0x29000000),
-                            ),
-                            navigationColor = Color.White,
-                            navigationClick = {
-                                finish()
-                            },
-                            actions = {
-                                IconButton(
-                                    onClick = {
-                                        viewModel.onShareButtonClicked()
-                                    },
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_share),
-                                        tint = Color.White,
-                                        contentDescription = null,
-                                    )
-                                }
-                            },
-                        )
-                    }
+                        override fun onBackClicked() {
+                            finish()
+                        }
 
-                }
+                    }
+                )
             }
         }
     }

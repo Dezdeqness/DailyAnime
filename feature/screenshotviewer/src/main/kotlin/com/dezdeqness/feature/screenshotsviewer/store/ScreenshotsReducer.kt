@@ -1,11 +1,12 @@
-package com.dezdeqness.presentation.features.screenshotsviewer.store
+package com.dezdeqness.feature.screenshotsviewer.store
 
 import com.dezdeqness.data.BuildConfig
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Command
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Effect
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Event
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.State
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Command
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.State
 import money.vivid.elmslie.core.store.StateReducer
+import kotlin.text.startsWith
 
 val screenshotReducer = object : StateReducer<Event, State, Effect, Command>() {
 
