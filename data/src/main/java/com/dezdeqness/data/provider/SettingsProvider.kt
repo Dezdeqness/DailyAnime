@@ -70,14 +70,9 @@ class SettingsProvider @Inject constructor(
         }
     }
 
-    suspend fun getStatusesOrder() =
-        context
-            .dataStore
-            .data
-            .map { preferences -> preferences[STATUSES_ORDER]?.split(SEPARATOR) }
-            .first()
+    suspend fun getStatusesOrder() = getStatusesOrderFlow().first()
 
-    suspend fun getStatusesOrderFlow() =
+    fun getStatusesOrderFlow() =
         context
             .dataStore
             .data
@@ -116,14 +111,30 @@ class SettingsProvider @Inject constructor(
         }
     }
 
+    fun getImageCacheMaxSizeFlow() =
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[IMAGE_CACHE_MAX_SIZE] ?: 512 }
+
+    suspend fun setImageCacheMaxSize(size: Int) {
+        context.dataStore.edit { settings ->
+            settings[IMAGE_CACHE_MAX_SIZE] = size
+        }
+    }
+
+    suspend fun getImageCacheMaxSize() = getImageCacheMaxSizeFlow().first()
+
     companion object {
         private val IS_NIGHT_THEME = booleanPreferencesKey("nightTheme")
-        private val IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN = booleanPreferencesKey("languageDisclaimerShown")
+        private val IS_LANGUAGE_DISCLAIMER_DIALOG_SHOWN =
+            booleanPreferencesKey("languageDisclaimerShown")
         private val SELECTED_INITIAL_SECTION = intPreferencesKey("selectedInitialSection")
         private val STATUSES_ORDER = stringPreferencesKey("statusOrder")
         private val IS_NOTIFICATION_ENABLED = booleanPreferencesKey("notificationsEnabled")
         private val NOTIFICATION_HOURS = intPreferencesKey("notificationsHours")
         private val NOTIFICATION_MINUTES = intPreferencesKey("notificationsMinutes")
+        private val IMAGE_CACHE_MAX_SIZE = intPreferencesKey("imageCacheMaxSize")
 
         private const val SEPARATOR = ","
     }
