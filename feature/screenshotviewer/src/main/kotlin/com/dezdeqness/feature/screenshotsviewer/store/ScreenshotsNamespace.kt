@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.screenshotsviewer.store
+package com.dezdeqness.feature.screenshotsviewer.store
 
 interface ScreenshotsNamespace {
 
