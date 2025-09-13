@@ -88,6 +88,18 @@ fun SettingsPageStandalone(
                 viewModel.onNotificationTimePickerClosed()
             }
 
+            override fun onMaxImageCacheSizeClicked() {
+                viewModel.onMaxImageCacheSizeClicked()
+            }
+
+            override fun onMaxImageCacheSize(size: Int) {
+                viewModel.onMaxImageCacheSize(size = size)
+            }
+
+            override fun onMaxImageCacheSizeDialogClosed() {
+                viewModel.onMaxImageCacheSizeDialogClosed()
+            }
+
             override fun invalidate() {
                 viewModel.invalidate()
             }

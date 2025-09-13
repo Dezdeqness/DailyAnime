@@ -53,6 +53,7 @@ class SettingsViewModel @Inject constructor(
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
             val isNotificationsTurnOn = settingsRepository.getNotificationsEnabled()
             val notificationTime = settingsRepository.getNotificationTime()
+            val maxImageCacheSize = settingsRepository.getImageCacheMaxSize()
 
             val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
 
@@ -69,6 +70,7 @@ class SettingsViewModel @Inject constructor(
                     ),
                     personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map)),
                     isCalendarEnabled = configManager.isCalendarEnabled,
+                    maxImageCacheSize = maxImageCacheSize,
                 )
             }
         }
@@ -179,6 +181,30 @@ class SettingsViewModel @Inject constructor(
     fun onNotificationTimePickerClosed() {
         _settingsStateFlow.update {
             it.copy(isNotificationTimePickerDialogShown = false)
+        }
+    }
+
+    fun onMaxImageCacheSizeClicked() {
+        _settingsStateFlow.update {
+            it.copy(isMaxImageCacheSizeDialogShown = true)
+        }
+    }
+
+    fun onMaxImageCacheSize(size: Int) {
+        launchOnIo {
+            settingsRepository.setImageCacheMaxSize(size)
+            _settingsStateFlow.update {
+                it.copy(
+                    isMaxImageCacheSizeDialogShown = false,
+                    maxImageCacheSize = size,
+                )
+            }
+        }
+    }
+
+    fun onMaxImageCacheSizeDialogClosed() {
+        _settingsStateFlow.update {
+            it.copy(isMaxImageCacheSizeDialogShown = false)
         }
     }
 
