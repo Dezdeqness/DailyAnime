@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.settings
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,37 +9,52 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import coil.annotation.ExperimentalCoilApi
+import coil.imageLoader
 import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.TimePickerDialog
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
-import com.dezdeqness.presentation.features.settings.composables.HeaderSettingsView
+import com.dezdeqness.presentation.features.settings.composables.HeaderCustomSettingsView
+import com.dezdeqness.presentation.features.settings.composables.ListPreferencesDialog
+import com.dezdeqness.presentation.features.settings.composables.ProgressSettingsView
 import com.dezdeqness.presentation.features.settings.composables.SelectRibbonStatusReorderDialog
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionDialog
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
 import com.dezdeqness.presentation.features.settings.composables.SwitchSettingsView
 import com.dezdeqness.presentation.features.settings.composables.TextSettingsView
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalCoilApi::class)
 @Composable
 fun SettingsPage(
     stateFlow: StateFlow<SettingsState>,
     modifier: Modifier = Modifier,
     actions: SettingActions
 ) {
+    val context = LocalContext.current
+
     val state by stateFlow.collectAsState()
+
+    val imageDiskCache = context.imageLoader.diskCache ?: return
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
@@ -79,7 +95,9 @@ fun SettingsPage(
                 .fillMaxSize()
         ) {
             item {
-                HeaderSettingsView(title = stringResource(R.string.settings_navigation_section))
+                HeaderCustomSettingsView(
+                    title = stringResource(R.string.settings_navigation_section),
+                )
             }
 
             item {
@@ -105,7 +123,60 @@ fun SettingsPage(
             }
 
             item {
-                HeaderSettingsView(title = stringResource(R.string.settings_theme_section))
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_storage_title))
+            }
+
+            item {
+                var imageCacheSize by remember(state.maxImageCacheSize) {
+                    mutableLongStateOf(imageDiskCache.size)
+                }
+
+                LaunchedEffect(imageDiskCache) {
+                    while (isActive) {
+                        delay(500)
+                        imageCacheSize = imageDiskCache.size
+                    }
+                }
+
+                val imageCacheProgress by animateFloatAsState(
+                    targetValue = (imageCacheSize.toFloat() / imageDiskCache.maxSize).coerceIn(
+                        0f,
+                        1f
+                    ),
+                    label = ""
+                )
+                ProgressSettingsView(
+                    title = stringResource(R.string.settings_image_cache_title),
+                    subtitle = stringResource(
+                        R.string.settings_image_cache_used_title,
+                        formatSize(imageCacheSize),
+                        formatSize(imageDiskCache.maxSize)
+                    ),
+                    progress = imageCacheProgress,
+                )
+            }
+
+            item {
+                TextSettingsView(
+                    title = stringResource(R.string.settings_max_image_cache_title),
+                    subtitle = formatSize(imageDiskCache.maxSize),
+                    onClick = {
+                        actions.onMaxImageCacheSizeClicked()
+                    }
+                )
+            }
+
+            item {
+                TextSettingsView(
+                    title = stringResource(R.string.settings_image_cache_clear_title),
+                    onClick = {
+                        imageDiskCache.clear()
+                    }
+                )
+            }
+
+            item {
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_theme_section))
             }
 
             item {
@@ -119,7 +190,7 @@ fun SettingsPage(
             }
 
             item {
-                HeaderSettingsView(title = stringResource(R.string.settings_notification_section))
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_notification_section))
             }
 
             item {
@@ -145,7 +216,7 @@ fun SettingsPage(
             }
 
             item {
-                HeaderSettingsView(title = stringResource(R.string.settings_about_section))
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_about_section))
             }
             item {
                 TextSettingsView(
@@ -207,5 +278,43 @@ fun SettingsPage(
                 }
             )
         }
+
+        if (state.isMaxImageCacheSizeDialogShown) {
+            ListPreferencesDialog(
+                values = (7..13).map { 1 shl it },
+                selectedValue = state.maxImageCacheSize,
+                valueText = { formatSize(it * 1024 * 1024L) },
+                onValueSelected = { size ->
+                    actions.onMaxImageCacheSize(size)
+                },
+                onDismiss = {
+                    actions.onMaxImageCacheSizeDialogClosed()
+                },
+            )
+        }
     }
+}
+
+fun formatSize(sizeBytes: Long): String {
+    val prefix = if (sizeBytes < 0) "-" else ""
+    var result: Long = sizeBytes.absoluteValue
+    var suffix = "B"
+    if (result > 900) {
+        suffix = "KB"
+        result /= 1024
+    }
+    if (result > 900) {
+        suffix = "MB"
+        result /= 1024
+    }
+    if (result > 900) {
+        suffix = "GB"
+        result /= 1024
+    }
+    if (result > 900) {
+        suffix = "TB"
+        result /= 1024
+    }
+
+    return "$prefix$result $suffix"
 }
