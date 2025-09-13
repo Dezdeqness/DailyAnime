@@ -17,6 +17,8 @@ data class SettingsState(
     val isNotificationTimePickerDialogShown: Boolean = false,
     val notificationTimeData: TimeData = TimeData(hours = 19, minutes = 0),
     val isCalendarEnabled: Boolean = true,
+    val maxImageCacheSize: Int = 512,
+    val isMaxImageCacheSizeDialogShown: Boolean = false,
 ) {
     val ribbonSettingsSubTitle: String
         get() = personalRibbonStatuses.joinToString(", ") { it.displayName }

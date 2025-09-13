@@ -21,6 +21,10 @@ interface SettingActions {
     fun onNotificationTimeSaved(hours: Int, minutes: Int)
     fun onNotificationTimePickerClosed()
 
+    fun onMaxImageCacheSizeClicked()
+    fun onMaxImageCacheSize(size: Int)
+    fun onMaxImageCacheSizeDialogClosed()
+
     fun invalidate()
 
     fun onDebugOptionsClicked()
