@@ -36,7 +36,7 @@ class SettingsRepositoryImpl @Inject constructor(
         settingsProvider.getStatusesOrder()
             ?: statusesProvider.getStatuses().map { it.groupedId }
 
-    override suspend fun getStatusesOrderFlow() =
+    override fun getStatusesOrderFlow() =
         settingsProvider.getStatusesOrderFlow()
 
     override suspend fun setStatusesOrder(statuses: List<String>) {
@@ -54,6 +54,14 @@ class SettingsRepositoryImpl @Inject constructor(
 
     override suspend fun setNotificationTime(time: TimeEntity) {
         settingsProvider.setNotificationTime(time = time)
+    }
+
+    override fun getImageCacheMaxSizeFlow() = settingsProvider.getImageCacheMaxSizeFlow()
+
+    override suspend fun getImageCacheMaxSize() = settingsProvider.getImageCacheMaxSize()
+
+    override suspend fun setImageCacheMaxSize(size: Int) {
+        settingsProvider.setImageCacheMaxSize(size = size)
     }
 
 }

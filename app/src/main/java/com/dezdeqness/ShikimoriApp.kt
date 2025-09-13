@@ -1,20 +1,31 @@
 package com.dezdeqness
 
 import android.app.Application
-import android.os.Build.VERSION.SDK_INT
+import android.os.Build
 import coil.Coil
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
+import coil.disk.DiskCache
 import coil.util.DebugLogger
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.CoroutineContext
 
-class ShikimoriApp : Application() {
+class ShikimoriApp : Application(), CoroutineScope {
 
     val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(applicationContext)
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + Job()
 
     override fun onCreate() {
         super.onCreate()
@@ -28,19 +39,43 @@ class ShikimoriApp : Application() {
                     )
                 )
             }
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .logger(DebugLogger())
-            .build()
 
-        Coil.setImageLoader(imageLoader)
+        Coil.setImageLoader(
+            createImageLoader(
+                runBlocking {
+                    appComponent.settingsRepository.getImageCacheMaxSize()
+                },
+            ),
+        )
+
+        launch {
+            appComponent.settingsRepository
+                .getImageCacheMaxSizeFlow()
+                .drop(1)
+                .collect { cacheMb ->
+                    Coil.setImageLoader(createImageLoader(cacheMb))
+                }
+        }
     }
+
+    private fun createImageLoader(cacheSizeMb: Int) = ImageLoader.Builder(this)
+        .allowHardware(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        .components {
+            if (Build.VERSION.SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .logger(DebugLogger())
+        .diskCache(
+            DiskCache.Builder()
+                .directory(cacheDir.resolve("coil"))
+                .maxSizeBytes(cacheSizeMb * 1024 * 1024L)
+                .build()
+        )
+        .build()
+
 
 }
 

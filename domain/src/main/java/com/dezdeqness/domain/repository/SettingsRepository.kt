@@ -20,7 +20,7 @@ interface SettingsRepository {
 
     suspend fun getStatusesOrder(): List<String>
 
-    suspend fun getStatusesOrderFlow(): Flow<List<String>?>
+    fun getStatusesOrderFlow(): Flow<List<String>?>
 
     suspend fun setStatusesOrder(statuses: List<String>)
 
@@ -31,4 +31,10 @@ interface SettingsRepository {
     suspend fun getNotificationTime(): TimeEntity
 
     suspend fun setNotificationTime(time: TimeEntity)
+
+    fun getImageCacheMaxSizeFlow(): Flow<Int>
+
+    suspend fun getImageCacheMaxSize(): Int
+
+    suspend fun setImageCacheMaxSize(size: Int)
 }
