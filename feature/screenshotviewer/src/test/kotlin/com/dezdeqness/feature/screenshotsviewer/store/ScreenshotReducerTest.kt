@@ -1,10 +1,10 @@
-package com.dezdeqness.presentation.features.screenshotsviewer.store
+package com.dezdeqness.feature.screenshotsviewer.store
 
 import app.cash.turbine.test
 import com.dezdeqness.data.BuildConfig
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Effect
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.Event
-import com.dezdeqness.presentation.features.screenshotsviewer.store.ScreenshotsNamespace.State
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.test.runTest

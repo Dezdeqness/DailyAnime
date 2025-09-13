@@ -55,6 +55,10 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
 
+    // Android Testing
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.androidx.test.espresso)
+
     // Mock
     testImplementation(libs.mockk.mockk)
 

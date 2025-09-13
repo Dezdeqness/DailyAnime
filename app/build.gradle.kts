@@ -148,8 +148,8 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
 
     // Android Testing
-    implementation(libs.androidx.test.junit)
-    implementation(libs.androidx.test.espresso)
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.androidx.test.espresso)
 
     // Compose
     implementation(libs.lottie.compose)
