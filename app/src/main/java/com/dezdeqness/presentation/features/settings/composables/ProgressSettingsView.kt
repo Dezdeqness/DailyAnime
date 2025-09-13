@@ -36,7 +36,7 @@ fun ProgressSettingsView(
                 text = title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
-                style = AppTheme.typography.titleLarge,
+                style = AppTheme.typography.bodyLarge,
                 color = AppTheme.colors.textPrimary,
             )
         },
