@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.screenshotsviewer.composables
+package com.dezdeqness.feature.screenshotsviewer.composables
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize

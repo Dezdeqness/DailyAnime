@@ -39,3 +39,4 @@ include(":contract:user")
 
 // features
 include(":feature:achievements")
+include(":feature:screenshotviewer")
