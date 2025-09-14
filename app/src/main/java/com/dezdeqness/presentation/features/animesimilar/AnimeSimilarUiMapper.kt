@@ -1,9 +1,9 @@
 package com.dezdeqness.presentation.features.animesimilar
 
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.AnimeKind
-import com.dezdeqness.domain.model.AnimeStatus
-import com.dezdeqness.domain.model.Entity
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeKind
+import com.dezdeqness.contract.anime.model.AnimeStatus
+import com.dezdeqness.contract.anime.model.Entity
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.SimilarUiModel
 import com.dezdeqness.utils.AnimeKindUtils

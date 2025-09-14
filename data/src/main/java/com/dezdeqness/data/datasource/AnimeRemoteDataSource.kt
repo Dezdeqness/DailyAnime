@@ -1,12 +1,12 @@
 package com.dezdeqness.data.datasource
 
-import com.dezdeqness.domain.DetailsAdditionalInfo
-import com.dezdeqness.domain.model.AnimeDetailsEntity
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.AnimeChronologyEntity
-import com.dezdeqness.domain.model.RelatedItemEntity
-import com.dezdeqness.domain.model.RoleEntity
-import com.dezdeqness.domain.model.ScreenshotEntity
+import com.dezdeqness.contract.anime.DetailsAdditionalInfo
+import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
+import com.dezdeqness.contract.anime.model.RelatedItemEntity
+import com.dezdeqness.contract.anime.model.RoleEntity
+import com.dezdeqness.contract.anime.model.ScreenshotEntity
 
 interface AnimeRemoteDataSource {
 

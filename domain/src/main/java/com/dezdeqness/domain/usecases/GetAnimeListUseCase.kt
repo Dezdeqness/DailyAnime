@@ -1,7 +1,7 @@
 package com.dezdeqness.domain.usecases
 
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.repository.AnimeRepository
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.repository.AnimeRepository
 
 class GetAnimeListUseCase(
     private val animeRepository: AnimeRepository,

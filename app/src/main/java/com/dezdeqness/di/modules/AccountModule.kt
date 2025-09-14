@@ -11,10 +11,10 @@ import com.dezdeqness.data.datasource.db.AccountLocalDataSourceImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
 import com.dezdeqness.contract.user.repository.UserRepository
-import com.dezdeqness.contract.user.usecase.GetUserUseCase
-import com.dezdeqness.contract.auth.usecase.LoginUseCase
-import com.dezdeqness.contract.auth.usecase.LogoutUseCase
-import com.dezdeqness.contract.auth.usecase.RefreshTokenUseCase
+import com.dezdeqness.domain.usecases.GetUserUseCase
+import com.dezdeqness.domain.usecases.LoginUseCase
+import com.dezdeqness.domain.usecases.LogoutUseCase
+import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

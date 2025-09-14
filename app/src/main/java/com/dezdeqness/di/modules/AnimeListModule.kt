@@ -1,8 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.di.ViewModelKey
-import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.features.animelist.AnimeViewModel
 import dagger.Binds

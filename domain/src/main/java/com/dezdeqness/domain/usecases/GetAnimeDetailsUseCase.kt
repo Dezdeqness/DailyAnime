@@ -1,8 +1,8 @@
 package com.dezdeqness.domain.usecases
 
+import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
+import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.domain.model.AnimeDetailsFullEntity
-import com.dezdeqness.domain.repository.AnimeRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 
 class GetAnimeDetailsUseCase(

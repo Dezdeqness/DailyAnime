@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.genericlistscreen
 
-import com.dezdeqness.domain.model.Entity
+import com.dezdeqness.contract.anime.model.Entity
 import com.dezdeqness.presentation.models.AdapterItem
 
 interface GenericListableUiMapper {

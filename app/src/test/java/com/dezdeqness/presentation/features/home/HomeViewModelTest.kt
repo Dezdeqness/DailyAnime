@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.home
 
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.contract.history.usecase.GetLatestHistoryItemUseCase
+import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -11,7 +11,6 @@ import com.dezdeqness.domain.model.AnimeKind
 import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.HomeEntity
-import com.dezdeqness.domain.model.ImageEntity
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.AnimeUiMapper

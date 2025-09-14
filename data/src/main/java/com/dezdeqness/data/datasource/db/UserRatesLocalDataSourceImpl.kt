@@ -2,7 +2,7 @@ package com.dezdeqness.data.datasource.db
 
 import com.dezdeqness.data.datasource.db.dao.UserRatesDao
 import com.dezdeqness.data.mapper.UserRatesMapper
-import com.dezdeqness.domain.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import javax.inject.Inject
 
 class UserRatesLocalDataSourceImpl @Inject constructor(

@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.history.store
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.history.model.HistoryEntity
-import com.dezdeqness.contract.history.usecase.GetHistoryUseCase
+import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.presentation.features.history.HistoryComposer
 import com.dezdeqness.presentation.features.history.models.HistoryModel

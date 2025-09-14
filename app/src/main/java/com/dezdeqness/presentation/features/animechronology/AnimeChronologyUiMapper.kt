@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.animechronology
 
-import com.dezdeqness.domain.model.AnimeChronologyEntity
-import com.dezdeqness.domain.model.Entity
+import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
+import com.dezdeqness.contract.anime.model.Entity
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.ChronologyUiModel

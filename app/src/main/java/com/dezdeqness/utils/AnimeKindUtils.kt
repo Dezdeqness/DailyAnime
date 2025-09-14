@@ -1,8 +1,8 @@
 package com.dezdeqness.utils
 
 import com.dezdeqness.R
+import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.data.provider.ResourceProvider
-import com.dezdeqness.domain.model.AnimeKind
 import javax.inject.Inject
 
 class AnimeKindUtils @Inject constructor(

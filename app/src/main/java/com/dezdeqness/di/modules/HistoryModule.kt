@@ -3,8 +3,8 @@ package com.dezdeqness.di.modules
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.history.repository.HistoryRepository
-import com.dezdeqness.contract.history.usecase.GetHistoryUseCase
-import com.dezdeqness.contract.history.usecase.GetLatestHistoryItemUseCase
+import com.dezdeqness.domain.usecases.GetHistoryUseCase
+import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.di.ViewModelKey
 import com.dezdeqness.presentation.features.history.HistoryViewModel
 import com.dezdeqness.presentation.features.history.store.HistoryActor

@@ -1,6 +1,6 @@
 package com.dezdeqness.domain.usecases
 
-import com.dezdeqness.domain.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 
 class CreateOrUpdateUserRateUseCase(

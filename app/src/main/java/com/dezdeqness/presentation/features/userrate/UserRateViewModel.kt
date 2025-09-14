@@ -1,9 +1,9 @@
 package com.dezdeqness.presentation.features.userrate
 
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.event.EditUserRate
 import kotlinx.coroutines.flow.MutableStateFlow

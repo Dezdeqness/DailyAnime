@@ -1,7 +1,7 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.VideoRemote
-import com.dezdeqness.domain.model.VideoEntity
+import com.dezdeqness.contract.anime.model.VideoEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,9 +1,9 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.GenreRemote
-import com.dezdeqness.domain.model.GenreEntity
-import com.dezdeqness.domain.model.GenreKindEntity
-import com.dezdeqness.domain.model.TypeEntity
+import com.dezdeqness.contract.anime.model.GenreEntity
+import com.dezdeqness.contract.anime.model.GenreKindEntity
+import com.dezdeqness.contract.anime.model.TypeEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
