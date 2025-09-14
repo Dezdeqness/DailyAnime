@@ -5,8 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.dezdeqness.contract.settings.models.NotificationTimePreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.worker.NotificationDailyReceiver
-import com.dezdeqness.domain.repository.SettingsRepository
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ class WorkSchedulerManager @Inject constructor(
 ) {
 
     suspend fun scheduleDailyWork() {
-        val time = settingsRepository.getNotificationTime()
+        val time = settingsRepository.getPreference(NotificationTimePreference)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

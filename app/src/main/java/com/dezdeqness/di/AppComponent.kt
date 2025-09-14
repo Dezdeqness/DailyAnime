@@ -1,6 +1,7 @@
 package com.dezdeqness.di
 
 import android.content.Context
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
@@ -29,7 +30,6 @@ import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
-import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import dagger.BindsInstance
 import dagger.Component

@@ -31,8 +31,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.dezdeqness.R
+import com.dezdeqness.contract.settings.models.NightThemePreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
@@ -73,7 +74,7 @@ class RoutingActivity : AppCompatActivity() {
             .inject(this)
 
         lifecycleScope.launch {
-            val status = settingsRepository.getNightThemeStatus()
+            val status = settingsRepository.getPreference(NightThemePreference)
             if (status) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {

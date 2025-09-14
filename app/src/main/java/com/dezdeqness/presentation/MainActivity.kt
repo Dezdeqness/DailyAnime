@@ -46,11 +46,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.dezdeqness.R
+import com.dezdeqness.contract.settings.models.InitialSection
+import com.dezdeqness.contract.settings.models.InitialSectionPreference
+import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.presentation.features.achievements.AchievementsStandalonePage
@@ -103,7 +105,10 @@ class MainActivity : AppCompatActivity() {
             .inject(this)
 
         lifecycleScope.launch {
-            val status = application.getComponent().settingsRepository().getNightThemeStatus()
+            val status = application
+                .getComponent()
+                .settingsRepository()
+                .getPreference(NightThemePreference)
             if (status) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
@@ -113,7 +118,10 @@ class MainActivity : AppCompatActivity() {
 
         val section =
             runBlocking(application.getComponent().coroutineDispatcherProvider().io()) {
-                application.getComponent().settingsRepository().getSelectedInitialSection()
+                application
+                    .getComponent()
+                    .settingsRepository()
+                    .getPreference(InitialSectionPreference)
             }
 
         setContent {
