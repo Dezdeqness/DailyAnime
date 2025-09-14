@@ -2,7 +2,7 @@ package com.dezdeqness.ui
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarVisuals
-import com.dezdeqness.presentation.models.MessageEvent.MessageEventStatus
+import com.dezdeqness.core.message.MessageEvent.MessageEventStatus
 
 data class CustomSnackbarVisuals(
     override val message: String,

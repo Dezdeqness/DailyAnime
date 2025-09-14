@@ -2,12 +2,12 @@ package com.dezdeqness.presentation
 
 import com.dezdeqness.contract.settings.models.LanguageDisclaimerPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.LocaleProvider
 import com.dezdeqness.presentation.event.LanguageDisclaimer
-import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.utils.LocaleUtils
 import javax.inject.Inject
 

@@ -6,6 +6,7 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
@@ -27,7 +28,6 @@ import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
 import com.dezdeqness.utils.AnimeKindUtils
-import com.dezdeqness.utils.ImageUrlUtils
 import com.google.common.collect.ImmutableList
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,7 +35,6 @@ import java.util.Date
 import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.text.ifEmpty
 
 class AnimeDetailsComposer @Inject constructor(
     private val animeUiMapper: AnimeUiMapper,

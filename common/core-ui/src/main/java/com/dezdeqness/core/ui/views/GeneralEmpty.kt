@@ -1,8 +1,7 @@
-package com.dezdeqness.core.ui
+package com.dezdeqness.core.ui.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -25,11 +24,14 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.dezdeqness.R
+import com.dezdeqness.core.ui.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable
-fun GeneralEmpty(modifier: Modifier = Modifier) {
+fun GeneralEmpty(
+    modifier: Modifier = Modifier,
+    title: String = stringResource(id = R.string.search_empty_state_title),
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -48,7 +50,7 @@ fun GeneralEmpty(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = stringResource(id = R.string.search_empty_state_title),
+            text = title,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 16.dp),
             fontSize = 18.sp,

@@ -24,15 +24,12 @@
     <string name="unauthorized_sign_in">Авторизация</string>
     <string name="unauthorized_sign_up">Регистрация</string>
 
-    <string name="search_empty_state_title">По запросу ничего не найдено</string>
-
     <string name="profile_history">История</string>
     <string name="profile_statistics">Статистика</string>
     <string name="profile_achievements">Достижения</string>
     <string name="profile_logout">Выход из аккаунта</string>
 
     <string name="history_empty_state">Ваша история пуста</string>
-    <string name="history_toolbar_title">История</string>
 
     <string name="settings_toolbar_title">Настройки</string>
     <string name="settings_dark_theme">Включить темную тему</string>
@@ -117,7 +114,6 @@
     <string name="edit_rate_score_title">Оценка</string>
     <string name="edit_rate_status_no_status">Выбрать</string>
 
-    <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
     <string name="general_error">Произошла ошибка</string>
     <string name="general_no_internet_error">Интернет отстуствует. Проверь интернет подключение</string>
 

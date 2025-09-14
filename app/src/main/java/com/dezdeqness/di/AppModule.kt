@@ -3,31 +3,32 @@ package com.dezdeqness.di
 import android.content.Context
 import android.content.res.AssetManager
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProviderImpl
+import com.dezdeqness.core.message.BaseMessageProvider
+import com.dezdeqness.core.message.MessageConsumer
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.ConfigSettingsProvider
 import com.dezdeqness.data.core.config.local.DebugConfigProvider
 import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
 import com.dezdeqness.data.manager.PersonalListFilterManager
 import com.dezdeqness.data.manager.TokenManager
+import com.dezdeqness.data.mapper.AchievementMapper
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.data.provider.ResourceProvider
-import com.dezdeqness.data.repository.SettingsRepositoryImpl
-import com.dezdeqness.contract.user.repository.UserRepository
-import com.dezdeqness.data.mapper.AchievementMapper
 import com.dezdeqness.data.provider.HistorySearchListProvider
+import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
+import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.moshi.Moshi
@@ -131,7 +132,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideMessageProvider(resourceProvider: ResourceProvider) =
+    fun provideMessageProvider(resourceProvider: ResourceProvider): BaseMessageProvider =
         MessageProvider(resourceProvider = resourceProvider)
 
     @Singleton

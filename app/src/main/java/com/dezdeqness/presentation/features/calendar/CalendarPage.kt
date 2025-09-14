@@ -20,9 +20,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.GeneralEmpty
-import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.GeneralEmpty
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.presentation.features.calendar.composable.CalendarList
 import com.dezdeqness.presentation.features.calendar.composable.CalendarSearch
 import com.dezdeqness.presentation.features.calendar.composable.ShimmerCalendarLoading

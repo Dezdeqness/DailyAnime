@@ -1,10 +1,11 @@
 package com.dezdeqness.presentation.features.animelist
 
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.message.BaseMessageProvider
+import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
@@ -12,7 +13,6 @@ import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToFilter
-import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AnimeViewModel @Inject constructor(
@@ -36,7 +35,7 @@ class AnimeViewModel @Inject constructor(
     private val animeFilterResponseConverter: AnimeFilterResponseConverter,
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
-    private val messageProvider: MessageProvider,
+    private val messageProvider: BaseMessageProvider,
     private val historySearchRepository: HistorySearchRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,

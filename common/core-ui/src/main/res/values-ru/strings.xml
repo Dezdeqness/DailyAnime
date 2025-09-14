@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_empty_state_title">По запросу ничего не найдено</string>
+    <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
+</resources>
