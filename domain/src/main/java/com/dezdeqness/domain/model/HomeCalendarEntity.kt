@@ -1,5 +1,10 @@
 package com.dezdeqness.domain.model
 
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeKind
+import com.dezdeqness.contract.anime.model.AnimeStatus
+import com.dezdeqness.contract.anime.model.ImageEntity
+
 class HomeCalendarEntity(
     override val id: Long,
     override val name: String,

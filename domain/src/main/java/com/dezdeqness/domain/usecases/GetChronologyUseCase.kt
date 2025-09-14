@@ -1,6 +1,6 @@
 package com.dezdeqness.domain.usecases
 
-import com.dezdeqness.domain.repository.AnimeRepository
+import com.dezdeqness.contract.anime.repository.AnimeRepository
 
 class GetChronologyUseCase(
     private val animeRepository: AnimeRepository,

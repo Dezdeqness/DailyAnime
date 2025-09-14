@@ -1,11 +1,11 @@
 package com.dezdeqness.presentation.features.personallist
 
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
-import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.SettingsRepository

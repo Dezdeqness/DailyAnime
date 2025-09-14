@@ -1,6 +1,6 @@
 package com.dezdeqness.data.core
 
-import com.dezdeqness.contract.auth.usecase.RefreshTokenUseCase
+import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

@@ -1,11 +1,11 @@
 package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.R
+import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
+import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
+import com.dezdeqness.contract.anime.model.AnimeKind
+import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.data.provider.ResourceProvider
-import com.dezdeqness.domain.model.AnimeDetailsEntity
-import com.dezdeqness.domain.model.AnimeDetailsFullEntity
-import com.dezdeqness.domain.model.AnimeKind
-import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.models.AdapterItem

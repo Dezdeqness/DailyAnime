@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.history.store
 
-import com.dezdeqness.contract.history.usecase.GetHistoryUseCase
+import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.presentation.features.history.HistoryComposer
 import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command

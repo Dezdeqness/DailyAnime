@@ -10,7 +10,7 @@ import com.dezdeqness.data.model.GenreRemote
 import com.dezdeqness.domain.model.AchievementConfigDataEntity
 import com.dezdeqness.domain.model.AchievementConfigEntity
 import com.dezdeqness.domain.model.FilterEntity
-import com.dezdeqness.domain.model.GenreEntity
+import com.dezdeqness.contract.anime.model.GenreEntity
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import okio.buffer

@@ -2,7 +2,7 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.RoleRemote
-import com.dezdeqness.domain.model.RoleEntity
+import com.dezdeqness.contract.anime.model.RoleEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

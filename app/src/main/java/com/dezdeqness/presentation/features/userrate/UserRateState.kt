@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.userrate
 
-import com.dezdeqness.domain.model.UserRateStatusEntity
+import com.dezdeqness.contract.anime.model.UserRateStatusEntity
 
 data class UserRateState(
     val rateId: Long = -1,

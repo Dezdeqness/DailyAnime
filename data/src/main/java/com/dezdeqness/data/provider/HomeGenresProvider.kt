@@ -1,7 +1,7 @@
 package com.dezdeqness.data.provider
 
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.domain.model.TypeEntity
+import com.dezdeqness.contract.anime.model.TypeEntity
 
 class HomeGenresProvider(
     private val configurationProvider: ConfigurationProvider,

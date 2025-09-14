@@ -33,6 +33,4 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
-
-    implementation(project(":contract:user"))
 }

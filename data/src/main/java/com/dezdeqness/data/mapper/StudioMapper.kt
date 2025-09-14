@@ -1,7 +1,7 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.model.StudioRemote
-import com.dezdeqness.domain.model.StudioEntity
+import com.dezdeqness.contract.anime.model.StudioEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

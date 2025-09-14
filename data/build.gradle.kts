@@ -80,6 +80,8 @@ dependencies {
     implementation(project(":contract:auth"))
     implementation(project(":contract:history"))
     implementation(project(":contract:user"))
+    implementation(project(":contract:settings"))
+    implementation(project(":contract:anime"))
 }
 
 apollo {

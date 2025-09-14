@@ -1,6 +1,6 @@
 package com.dezdeqness.domain.repository
 
-import com.dezdeqness.domain.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UserRatesRepository {

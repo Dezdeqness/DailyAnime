@@ -1,6 +1,6 @@
 package com.dezdeqness.data.datasource
 
-import com.dezdeqness.domain.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateEntity
 
 interface UserRatesRemoteDataSource {
 
