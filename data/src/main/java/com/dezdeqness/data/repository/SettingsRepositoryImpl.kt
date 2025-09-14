@@ -1,67 +1,39 @@
 package com.dezdeqness.data.repository
 
-import com.dezdeqness.data.provider.PermissionCheckProvider
-import com.dezdeqness.data.provider.SettingsProvider
-import com.dezdeqness.data.provider.StatusesProvider
-import com.dezdeqness.domain.model.InitialSection
-import com.dezdeqness.domain.model.TimeEntity
-import com.dezdeqness.domain.repository.SettingsRepository
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
+import com.dezdeqness.contract.settings.core.SettingsPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
-    private val settingsProvider: SettingsProvider,
-    private val statusesProvider: StatusesProvider,
-    private val permissionCheckProvider: PermissionCheckProvider,
+    private val context: Context,
 ) : SettingsRepository {
 
-    override suspend fun getNightThemeStatus() = settingsProvider.getNightThemeStatus()
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_settings")
 
-    override suspend fun setNightThemeStatus(status: Boolean) {
-        settingsProvider.setNightThemeStatus(status = status)
+    override suspend fun <T> getPreference(key: SettingsPreference<T>) =
+        context
+            .dataStore
+            .data
+            .firstOrNull()
+            ?.let { key.handler.read(it, key) }
+            ?: key.default
+
+    override suspend fun <T> setPreference(key: SettingsPreference<T>, value: T) {
+        context.dataStore.edit { prefs -> key.handler.write(prefs, key, value) }
     }
 
-    override suspend fun isLanguageDisclaimerShown() = settingsProvider.isLanguageDisclaimerShown()
-
-    override suspend fun setLanguageDisclaimerShown(isShown: Boolean) {
-        settingsProvider.setLanguageDisclaimerShown(isShown = isShown)
-    }
-
-    override suspend fun getSelectedInitialSection() = settingsProvider.getSelectedInitialSection()
-
-    override suspend fun setSelectedInitialSection(section: InitialSection) {
-        settingsProvider.setSelectedInitialSection(section = section)
-    }
-
-    override suspend fun getStatusesOrder() =
-        settingsProvider.getStatusesOrder()
-            ?: statusesProvider.getStatuses().map { it.groupedId }
-
-    override fun getStatusesOrderFlow() =
-        settingsProvider.getStatusesOrderFlow()
-
-    override suspend fun setStatusesOrder(statuses: List<String>) {
-        settingsProvider.setStatusesOrder(statuses)
-    }
-
-    override suspend fun getNotificationsEnabled() =
-        permissionCheckProvider.isNotificationPermissionGranted() && settingsProvider.getNotificationsEnabled()
-
-    override suspend fun setNotificationsEnabled(enabled: Boolean) {
-        settingsProvider.setNotificationsEnabled(enabled = enabled)
-    }
-
-    override suspend fun getNotificationTime() = settingsProvider.getNotificationTime()
-
-    override suspend fun setNotificationTime(time: TimeEntity) {
-        settingsProvider.setNotificationTime(time = time)
-    }
-
-    override fun getImageCacheMaxSizeFlow() = settingsProvider.getImageCacheMaxSizeFlow()
-
-    override suspend fun getImageCacheMaxSize() = settingsProvider.getImageCacheMaxSize()
-
-    override suspend fun setImageCacheMaxSize(size: Int) {
-        settingsProvider.setImageCacheMaxSize(size = size)
+    override fun <T> observePreference(key: SettingsPreference<T>): Flow<T> {
+        return context.dataStore.data.map { prefs ->
+            key.handler.read(prefs, key) ?: key.default
+        }
     }
 
 }

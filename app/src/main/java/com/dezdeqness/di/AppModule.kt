@@ -2,6 +2,7 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
@@ -18,17 +19,13 @@ import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.ResourceProvider
-import com.dezdeqness.data.provider.SettingsProvider
-import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.mapper.AchievementMapper
 import com.dezdeqness.data.provider.HistorySearchListProvider
 import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
 import com.dezdeqness.domain.repository.HistorySearchRepository
-import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.presentation.routing.ApplicationRouter
@@ -71,11 +68,6 @@ class AppModule {
     @Provides
     fun provideResourceProvider(context: Context) =
         ResourceProvider(context = context)
-
-    @Singleton
-    @Provides
-    fun provideSettingsProvider(context: Context) =
-        SettingsProvider(context = context)
 
     @Singleton
     @Provides
@@ -152,14 +144,10 @@ class AppModule {
     @Singleton
     @Provides
     fun provideSettingsRepository(
-        settingsProvider: SettingsProvider,
-        statusesProvider: StatusesProvider,
-        permissionCheckProvider: PermissionCheckProvider,
+        context: Context,
     ): SettingsRepository =
         SettingsRepositoryImpl(
-            settingsProvider = settingsProvider,
-            statusesProvider = statusesProvider,
-            permissionCheckProvider = permissionCheckProvider,
+            context = context,
         )
 
     @Singleton

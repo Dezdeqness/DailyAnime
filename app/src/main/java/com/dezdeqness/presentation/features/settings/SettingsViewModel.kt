@@ -1,6 +1,15 @@
 package com.dezdeqness.presentation.features.settings
 
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
+import com.dezdeqness.contract.settings.models.InitialSection
+import com.dezdeqness.contract.settings.models.InitialSectionPreference
+import com.dezdeqness.contract.settings.models.NightThemePreference
+import com.dezdeqness.contract.settings.models.NotificationEnabledPreference
+import com.dezdeqness.contract.settings.models.NotificationTimePreference
+import com.dezdeqness.contract.settings.models.StatusesOrderPreference
+import com.dezdeqness.contract.settings.models.TimeEntity
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.WorkSchedulerManager
@@ -10,10 +19,6 @@ import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
-import com.dezdeqness.domain.model.InitialSection
-import com.dezdeqness.domain.model.TimeEntity
-import com.dezdeqness.domain.repository.SettingsRepository
-import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.personallist.PersonalRibbonMapper
@@ -47,15 +52,22 @@ class SettingsViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            val themeStatus = settingsRepository.getNightThemeStatus()
-            val section = settingsRepository.getSelectedInitialSection()
+            val themeStatus = settingsRepository.getPreference(NightThemePreference)
+            val section = settingsRepository.getPreference(InitialSectionPreference)
             val isAuthorized = authRepository.isAuthorized()
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
-            val isNotificationsTurnOn = settingsRepository.getNotificationsEnabled()
-            val notificationTime = settingsRepository.getNotificationTime()
-            val maxImageCacheSize = settingsRepository.getImageCacheMaxSize()
+            val isNotificationsTurnOn =
+                settingsRepository.getPreference(NotificationEnabledPreference) && permissionCheckProvider.isNotificationPermissionGranted()
+            val notificationTime = settingsRepository.getPreference(NotificationTimePreference)
+            val maxImageCacheSize = settingsRepository.getPreference(ImageCacheMaxSizePreference)
 
-            val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
+            val orderedStatuses = (
+                    settingsRepository
+                        .getPreference(StatusesOrderPreference)
+                        .ifEmpty {
+                            statusesProvider.getStatuses().map { it.groupedId }
+                        }
+                    ).mapNotNull { statuses[it] }
 
             _settingsStateFlow.update {
                 it.copy(
@@ -83,7 +95,7 @@ class SettingsViewModel @Inject constructor(
         if (isChecked == isEnabled) return
 
         launchOnMain {
-            settingsRepository.setNightThemeStatus(isChecked)
+            settingsRepository.setPreference(NightThemePreference, isChecked)
         }
 
         _settingsStateFlow.value = _settingsStateFlow.value.copy(
@@ -100,7 +112,7 @@ class SettingsViewModel @Inject constructor(
 
     fun onSelectedSectionChanged(section: InitialSection) {
         launchOnIo {
-            settingsRepository.setSelectedInitialSection(section)
+            settingsRepository.setPreference(InitialSectionPreference, section)
 
             val sectionItem = SelectSectionItem.getById(section.id)
             _settingsStateFlow.update {
@@ -126,10 +138,11 @@ class SettingsViewModel @Inject constructor(
         launchOnIo {
             val statusesIds = statuses.map { it.id }
 
-            settingsRepository.setStatusesOrder(statusesIds)
+            settingsRepository.setPreference(StatusesOrderPreference, statusesIds)
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
 
-            val orderedStatuses = settingsRepository.getStatusesOrder().mapNotNull { statuses[it] }
+            val orderedStatuses = settingsRepository.getPreference(StatusesOrderPreference)
+                .mapNotNull { statuses[it] }
 
             _settingsStateFlow.update {
                 it.copy(
@@ -147,14 +160,19 @@ class SettingsViewModel @Inject constructor(
 
     fun onNotificationToggleClicked(isEnabled: Boolean) {
         launchOnIo {
-            settingsRepository.setNotificationsEnabled(isEnabled)
+            settingsRepository.setPreference(NotificationEnabledPreference, isEnabled)
 
             if (!alarmManagerProvider.canScheduleExactAlarms()) {
                 onEventReceive(OpenSettingsAlarm)
             }
 
             _settingsStateFlow.update {
-                it.copy(isNotificationsTurnOn = isEnabled && alarmManagerProvider.canScheduleExactAlarms())
+                it.copy(
+                    isNotificationsTurnOn =
+                        isEnabled
+                                && permissionCheckProvider.isNotificationPermissionGranted()
+                                && alarmManagerProvider.canScheduleExactAlarms()
+                )
             }
         }
     }
@@ -167,7 +185,7 @@ class SettingsViewModel @Inject constructor(
 
     fun onNotificationTimeSaved(hours: Int, minutes: Int) {
         launchOnIo {
-            settingsRepository.setNotificationTime(TimeEntity(hours, minutes))
+            settingsRepository.setPreference(NotificationTimePreference, TimeEntity(hours, minutes))
             workSchedulerManager.scheduleDailyWork()
             _settingsStateFlow.update {
                 it.copy(
@@ -192,7 +210,7 @@ class SettingsViewModel @Inject constructor(
 
     fun onMaxImageCacheSize(size: Int) {
         launchOnIo {
-            settingsRepository.setImageCacheMaxSize(size)
+            settingsRepository.setPreference(ImageCacheMaxSizePreference, size)
             _settingsStateFlow.update {
                 it.copy(
                     isMaxImageCacheSizeDialogShown = false,
