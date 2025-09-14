@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.history.composables
+package com.dezdeqness.feature.history.presentation.composables
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

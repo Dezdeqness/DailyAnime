@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.history.composables
+package com.dezdeqness.feature.history.presentation.composables
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,7 +10,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.presentation.features.history.models.HistoryModel
+import com.dezdeqness.feature.history.presentation.models.HistoryModel
 
 private const val PAGINATION_LOAD_FACTOR = 0.75
 

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.history.composables
+package com.dezdeqness.feature.history.presentation.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.image.AppImage
-import com.dezdeqness.presentation.features.history.models.HistoryModel
+import com.dezdeqness.feature.history.presentation.models.HistoryModel
 
 @Composable
 fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel) {
