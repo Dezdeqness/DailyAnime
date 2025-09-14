@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.history.composables
+package com.dezdeqness.feature.history.presentation.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

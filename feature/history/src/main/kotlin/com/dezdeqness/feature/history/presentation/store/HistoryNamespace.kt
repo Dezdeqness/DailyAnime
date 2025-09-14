@@ -1,6 +1,6 @@
-package com.dezdeqness.presentation.features.history.store
+package com.dezdeqness.feature.history.presentation.store
 
-import com.dezdeqness.presentation.features.history.models.HistoryModel
+import com.dezdeqness.feature.history.presentation.models.HistoryModel
 
 interface HistoryNamespace {
     data class State(

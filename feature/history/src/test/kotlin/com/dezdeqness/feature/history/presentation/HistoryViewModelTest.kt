@@ -1,23 +1,23 @@
-package com.dezdeqness.presentation.features.history
+package com.dezdeqness.feature.history.presentation
 
-import com.dezdeqness.core.MessageProvider
-import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Command
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Effect
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace.Event
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace.State
-import com.dezdeqness.presentation.message.MessageConsumer
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.message.BaseMessageProvider
+import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Command
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Effect
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Event
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.State
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import money.vivid.elmslie.core.store.ElmStore
 import org.junit.Before
 import org.junit.Test
-import utils.TestCoroutineDispatcherProvider
 
 class HistoryViewModelTest {
 
@@ -25,13 +25,10 @@ class HistoryViewModelTest {
     private lateinit var store: ElmStore<Event, State, Effect, Command>
 
     @MockK
-    private lateinit var appLogger: AppLogger
-
-    @MockK
     private lateinit var messageConsumer: MessageConsumer
 
     @MockK
-    private lateinit var messageProvider: MessageProvider
+    private lateinit var messageProvider: BaseMessageProvider
 
     private lateinit var viewModel: HistoryViewModel
 
@@ -50,8 +47,13 @@ class HistoryViewModelTest {
             store = store,
             messageConsumer = messageConsumer,
             messageProvider = messageProvider,
-            coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
-            appLogger = appLogger,
+            coroutineDispatcherProvider = object: CoroutineDispatcherProvider {
+                override fun main() = Dispatchers.Unconfined
+
+                override fun io() = Dispatchers.Unconfined
+
+                override fun computation() = Dispatchers.Unconfined
+            },
         )
     }
 

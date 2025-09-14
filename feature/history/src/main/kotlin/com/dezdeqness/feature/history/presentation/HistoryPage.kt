@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.history
+package com.dezdeqness.feature.history.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,15 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
-import com.dezdeqness.core.ui.GeneralEmpty
-import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.GeneralEmpty
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
-import com.dezdeqness.presentation.features.history.composables.HistoryList
-import com.dezdeqness.presentation.features.history.composables.HistoryShimmerLoading
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace
-import com.dezdeqness.presentation.features.history.store.HistoryStatus
+import com.dezdeqness.feature.history.R
+import com.dezdeqness.feature.history.presentation.composables.HistoryList
+import com.dezdeqness.feature.history.presentation.composables.HistoryShimmerLoading
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
+import com.dezdeqness.feature.history.presentation.store.HistoryStatus
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -76,7 +76,6 @@ fun HistoryPage(
                 }
                 HistoryStatus.Error -> {
                     GeneralError(modifier = Modifier.align(Alignment.Center))
-
                 }
                 HistoryStatus.Empty -> {
                     GeneralEmpty(modifier = Modifier.align(Alignment.Center))
