@@ -1,5 +1,4 @@
-package com.dezdeqness.presentation.features.history
-
+package com.dezdeqness.feature.history.presentation
 
 interface HistoryActions {
     fun onPullDownRefreshed()

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.history.models
+package com.dezdeqness.feature.history.presentation.models
 
 sealed class HistoryModel {
     abstract fun id(): String

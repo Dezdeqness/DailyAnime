@@ -8,7 +8,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
-import com.dezdeqness.presentation.features.history.store.HistoryNamespace
+import com.dezdeqness.feature.history.presentation.HistoryActions
+import com.dezdeqness.feature.history.presentation.HistoryPage
+import com.dezdeqness.feature.history.presentation.HistoryViewModel
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
 
 @Composable
 fun HistoryStandalonePage(

@@ -1,12 +1,10 @@
-package com.dezdeqness.presentation.features.history
+package com.dezdeqness.feature.history.presentation
 
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.history.model.HistoryEntity
-import com.dezdeqness.presentation.features.history.models.HistoryModel
-import com.dezdeqness.presentation.features.history.models.HistoryModel.HistoryHeaderUiModel
-import com.dezdeqness.presentation.features.history.models.HistoryModel.HistoryUiModel
-import com.dezdeqness.utils.ImageUrlUtils
+import com.dezdeqness.data.utils.ImageUrlUtils
+import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
@@ -26,10 +24,10 @@ class HistoryComposer @Inject constructor(
 
             if (previousHeader != header) {
                 previousHeader = header
-                uiItems.add(HistoryHeaderUiModel(header))
+                uiItems.add(HistoryModel.HistoryHeaderUiModel(header))
             }
             uiItems.add(
-                HistoryUiModel(
+                HistoryModel.HistoryUiModel(
                     name = item.itemRussian.ifEmpty { item.itemName },
                     action = HtmlCompat.fromHtml(
                         item.description,
