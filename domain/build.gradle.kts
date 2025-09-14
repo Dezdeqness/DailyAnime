@@ -41,5 +41,6 @@ dependencies {
     implementation(project(":contract:user"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:history"))
+    implementation(project(":contract:settings"))
 
 }
