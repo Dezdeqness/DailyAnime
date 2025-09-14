@@ -1,10 +1,11 @@
 package com.dezdeqness.presentation
 
+import com.dezdeqness.contract.settings.models.LanguageDisclaimerPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.provider.LocaleProvider
-import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.presentation.message.MessageConsumer
 import com.dezdeqness.utils.LocaleUtils
@@ -29,9 +30,10 @@ class MainViewModel @Inject constructor(
     init {
         launchOnIo {
             val locale = localeProvider.getCurrentLocale()
-            if (localeUtils.isNonRusLocale(locale) && settingsRepository.isLanguageDisclaimerShown().not()) {
+            if (localeUtils.isNonRusLocale(locale)
+                && settingsRepository.getPreference(LanguageDisclaimerPreference).not()) {
                 onEventReceive(LanguageDisclaimer)
-                settingsRepository.setLanguageDisclaimerShown(isShown = true)
+                settingsRepository.setPreference(LanguageDisclaimerPreference, true)
             }
         }
 

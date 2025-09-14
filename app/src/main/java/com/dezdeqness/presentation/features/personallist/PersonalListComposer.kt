@@ -1,10 +1,11 @@
 package com.dezdeqness.presentation.features.personallist
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.contract.settings.models.StatusesOrderPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.PersonalListFilterEntity
 import com.dezdeqness.domain.model.Sort
-import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
 import com.dezdeqness.utils.AnimeKindUtils
@@ -40,7 +41,10 @@ class PersonalListComposer @Inject constructor(
             .filter { item -> item.size != 0L }
             .associateBy { it.groupedId }
 
-        return settingsRepository.getStatusesOrder().mapNotNull { list[it] }.map(ribbonMapper::map)
+        return settingsRepository
+            .getPreference(StatusesOrderPreference)
+            .mapNotNull { list[it] }
+            .map(ribbonMapper::map)
     }
 
     private fun applyFilter(

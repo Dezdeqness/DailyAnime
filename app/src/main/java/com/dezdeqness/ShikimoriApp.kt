@@ -8,6 +8,7 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.disk.DiskCache
 import coil.util.DebugLogger
+import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
 import kotlinx.coroutines.CoroutineScope
@@ -43,14 +44,14 @@ class ShikimoriApp : Application(), CoroutineScope {
         Coil.setImageLoader(
             createImageLoader(
                 runBlocking {
-                    appComponent.settingsRepository.getImageCacheMaxSize()
+                    appComponent.settingsRepository.getPreference(ImageCacheMaxSizePreference)
                 },
             ),
         )
 
         launch {
             appComponent.settingsRepository
-                .getImageCacheMaxSizeFlow()
+                .observePreference(ImageCacheMaxSizePreference)
                 .drop(1)
                 .collect { cacheMb ->
                     Coil.setImageLoader(createImageLoader(cacheMb))

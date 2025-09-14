@@ -1,6 +1,8 @@
 package com.dezdeqness.presentation.features.personallist
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.contract.settings.models.StatusesOrderPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
@@ -8,7 +10,6 @@ import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.PersonalListFilterRepository
-import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
@@ -64,7 +65,7 @@ class PersonalListViewModel @Inject constructor(
 
         launchOnIo {
             settingsRepository
-                .getStatusesOrderFlow()
+                .observePreference(StatusesOrderPreference)
                 .drop(1)
                 .collect {
                     val ribbon = personalListComposer.composeStatuses(ribbonRaw)

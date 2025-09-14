@@ -3,7 +3,6 @@ package com.dezdeqness.presentation.features.settings
 import android.app.UiModeManager.MODE_NIGHT_NO
 import android.app.UiModeManager.MODE_NIGHT_YES
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,12 +14,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
-import com.dezdeqness.domain.model.InitialSection
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import androidx.core.net.toUri
+import com.dezdeqness.contract.settings.models.InitialSection
 
 @Composable
 fun SettingsPageStandalone(

@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.dezdeqness.R
 import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.contract.settings.models.NotificationEnabledPreference
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.getComponent
 import kotlinx.coroutines.runBlocking
@@ -26,7 +27,7 @@ class NotificationDailyReceiver : BroadcastReceiver() {
             application.getComponent().permissionCheckProvider
 
         val isNotificationEnabled = runBlocking {
-            settingsRepository.getNotificationsEnabled()
+            settingsRepository.getPreference(NotificationEnabledPreference)
         }
         val permissionGranted = permissionCheckProvider.isNotificationPermissionGranted()
 

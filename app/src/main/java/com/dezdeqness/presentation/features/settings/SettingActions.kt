@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.settings
 
-import com.dezdeqness.domain.model.InitialSection
+import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 
 interface SettingActions {
