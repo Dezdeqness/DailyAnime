@@ -2,10 +2,11 @@ package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.message.BaseMessageProvider
+import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.repository.CharacterRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
@@ -21,7 +22,6 @@ import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.details.Target.Anime
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
-import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -38,7 +38,7 @@ class AnimeDetailsViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val actionConsumer: ActionConsumer,
     private val messageConsumer: MessageConsumer,
-    private val messageProvider: MessageProvider,
+    private val messageProvider: BaseMessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(

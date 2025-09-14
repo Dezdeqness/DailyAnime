@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 pluginManagement {
     includeBuild("build-logic")
@@ -42,3 +42,4 @@ include(":contract:settings")
 // features
 include(":feature:achievements")
 include(":feature:screenshotviewer")
+include(":feature:history")

@@ -4,13 +4,13 @@ import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.RelatedItemEntity
+import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
 import com.dezdeqness.utils.AnimeKindUtils
-import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject

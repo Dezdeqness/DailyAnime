@@ -1,23 +1,24 @@
 package com.dezdeqness.core
 
 import com.dezdeqness.R
+import com.dezdeqness.core.message.BaseMessageProvider
 import com.dezdeqness.data.provider.ResourceProvider
 import javax.inject.Inject
 
 class MessageProvider @Inject constructor(
     private val resourceProvider: ResourceProvider,
-) {
+) : BaseMessageProvider {
 
-    fun getAnimeEditCreateSuccessMessage() =
+    override fun getAnimeEditCreateSuccessMessage() =
         resourceProvider.getString(R.string.edit_rate_create_success)
 
-    fun getAnimeEditUpdateSuccessMessage() =
+    override fun getAnimeEditUpdateSuccessMessage() =
         resourceProvider.getString(R.string.edit_rate_update_success)
 
-    fun getAnimeEditRateErrorMessage() =
+    override fun getAnimeEditRateErrorMessage() =
         resourceProvider.getString(R.string.edit_rate_error)
 
-    fun getGeneralErrorMessage() =
+    override fun getGeneralErrorMessage() =
         resourceProvider.getString(R.string.general_error)
 
 }

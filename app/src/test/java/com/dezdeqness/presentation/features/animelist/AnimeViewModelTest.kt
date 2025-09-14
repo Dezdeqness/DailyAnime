@@ -2,14 +2,14 @@ package com.dezdeqness.presentation.features.animelist
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.MessageProvider
+import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.message.MessageConsumer
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

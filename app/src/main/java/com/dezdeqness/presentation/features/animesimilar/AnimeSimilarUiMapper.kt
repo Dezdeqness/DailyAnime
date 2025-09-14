@@ -4,10 +4,10 @@ import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.Entity
+import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.SimilarUiModel
 import com.dezdeqness.utils.AnimeKindUtils
-import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject

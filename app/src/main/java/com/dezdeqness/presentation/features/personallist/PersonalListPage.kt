@@ -31,15 +31,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.GeneralError
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.presentation.features.personallist.composable.PersonalList
-import com.dezdeqness.presentation.features.personallist.composable.UserRateEmptyState
 import com.dezdeqness.presentation.features.personallist.composable.PersonalListSearch
 import com.dezdeqness.presentation.features.personallist.composable.PersonalListSelectOrderDialog
 import com.dezdeqness.presentation.features.personallist.composable.PersonalRibbon
 import com.dezdeqness.presentation.features.personallist.composable.RibbonEmptyState
 import com.dezdeqness.presentation.features.personallist.composable.ShimmerPersonalLoading
+import com.dezdeqness.presentation.features.personallist.composable.UserRateEmptyState
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 

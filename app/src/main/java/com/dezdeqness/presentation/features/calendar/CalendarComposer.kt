@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.calendar
 
+import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.AnimeCalendarEntity
-import com.dezdeqness.utils.ImageUrlUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject

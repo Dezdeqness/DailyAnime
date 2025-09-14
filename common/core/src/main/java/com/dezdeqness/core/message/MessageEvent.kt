@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.models
+package com.dezdeqness.core.message
 
 sealed class MessageEvent(
     open val text: String,

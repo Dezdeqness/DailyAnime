@@ -49,6 +49,7 @@ import com.dezdeqness.R
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.contract.settings.models.InitialSectionPreference
 import com.dezdeqness.contract.settings.models.NightThemePreference
+import com.dezdeqness.core.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.data.analytics.AnalyticsManager
@@ -70,7 +71,6 @@ import com.dezdeqness.presentation.features.personallist.host.PersonalHostStanda
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
 import com.dezdeqness.presentation.features.stats.StatsStandalonePage
-import com.dezdeqness.presentation.models.MessageEvent.MessageEventStatus
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch

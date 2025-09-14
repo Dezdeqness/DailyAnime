@@ -194,6 +194,7 @@ dependencies {
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:screenshotviewer"))
+    implementation(project(":feature:history"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

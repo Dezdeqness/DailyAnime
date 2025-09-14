@@ -1,4 +1,4 @@
-package com.dezdeqness.utils
+package com.dezdeqness.data.utils
 
 import com.dezdeqness.data.core.config.ConfigManager
 import javax.inject.Inject
