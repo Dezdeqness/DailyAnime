@@ -190,6 +190,7 @@ dependencies {
     implementation(project(":contract:history"))
     implementation(project(":contract:user"))
     implementation(project(":contract:anime"))
+    implementation(project(":contract:settings"))
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:screenshotviewer"))
