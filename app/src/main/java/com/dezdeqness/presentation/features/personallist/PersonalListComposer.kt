@@ -4,12 +4,12 @@ import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
+import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.PersonalListFilterEntity
 import com.dezdeqness.domain.model.Sort
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel
 import com.dezdeqness.utils.AnimeKindUtils
-import com.dezdeqness.utils.ImageUrlUtils
 import javax.inject.Inject
 
 class PersonalListComposer @Inject constructor(

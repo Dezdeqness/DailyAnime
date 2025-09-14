@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.GeneralError
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel

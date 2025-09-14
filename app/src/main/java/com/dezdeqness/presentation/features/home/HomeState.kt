@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.home
 
 import androidx.compose.runtime.Immutable
-import com.dezdeqness.presentation.features.history.models.HistoryModel
+import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import com.dezdeqness.presentation.features.home.model.HomeCalendarSectionUiModel
 import com.dezdeqness.presentation.features.home.model.SectionStatus
 import com.dezdeqness.presentation.features.home.model.SectionUiModel

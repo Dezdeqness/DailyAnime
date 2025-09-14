@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.features.history.composables.HistoryShimmerItem
+import com.dezdeqness.feature.history.presentation.composables.HistoryShimmerItem
 import com.dezdeqness.presentation.features.home.composable.HistoryLatestSection
 import com.dezdeqness.presentation.features.home.composable.HomeBanner
 import com.dezdeqness.presentation.features.home.composable.HomeCalendarSection

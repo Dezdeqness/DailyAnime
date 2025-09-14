@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.GeneralEmpty
-import com.dezdeqness.core.ui.GeneralError
+import com.dezdeqness.core.ui.views.GeneralEmpty
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearch
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchGrid
 import com.dezdeqness.presentation.features.animelist.composable.HistoryItem

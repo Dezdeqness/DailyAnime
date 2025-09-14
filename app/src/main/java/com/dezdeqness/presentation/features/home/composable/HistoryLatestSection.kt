@@ -9,9 +9,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.feature.history.presentation.composables.HistoryItem
+import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.features.history.composables.HistoryItem
-import com.dezdeqness.presentation.features.history.models.HistoryModel
 
 @Composable
 fun HistoryLatestSection(

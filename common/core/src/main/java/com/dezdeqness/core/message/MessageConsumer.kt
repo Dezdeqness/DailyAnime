@@ -1,12 +1,10 @@
-package com.dezdeqness.presentation.message
+package com.dezdeqness.core.message
 
-import com.dezdeqness.presentation.models.MessageEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
-import javax.inject.Inject
 
-class MessageConsumer @Inject constructor() {
+class MessageConsumer() {
 
     private val _messageState: Channel<MessageEvent> = Channel()
     val messageState: Flow<MessageEvent> = _messageState.receiveAsFlow()
