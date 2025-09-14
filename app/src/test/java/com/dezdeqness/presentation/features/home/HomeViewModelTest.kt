@@ -1,14 +1,15 @@
 package com.dezdeqness.presentation.features.home
 
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeKind
+import com.dezdeqness.contract.anime.model.AnimeStatus
+import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.contract.user.model.AccountEntity
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.AnimeKind
-import com.dezdeqness.domain.model.AnimeStatus
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.domain.model.HomeEntity
 import com.dezdeqness.contract.user.repository.UserRepository

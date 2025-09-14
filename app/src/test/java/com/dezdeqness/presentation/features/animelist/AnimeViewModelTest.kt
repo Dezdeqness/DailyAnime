@@ -1,9 +1,9 @@
 package com.dezdeqness.presentation.features.animelist
 
 import app.cash.turbine.test
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.MessageProvider
-import com.dezdeqness.domain.model.AnimeBriefEntity
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
