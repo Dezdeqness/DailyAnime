@@ -3,7 +3,7 @@ package com.dezdeqness.data.repository
 import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import com.dezdeqness.data.exception.UserLocalNotFound
-import com.dezdeqness.domain.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import kotlinx.coroutines.flow.Flow

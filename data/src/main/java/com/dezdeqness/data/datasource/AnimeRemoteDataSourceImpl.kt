@@ -10,7 +10,7 @@ import com.dezdeqness.data.core.createGraphqlException
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
-import com.dezdeqness.domain.DetailsAdditionalInfo
+import com.dezdeqness.contract.anime.DetailsAdditionalInfo
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named

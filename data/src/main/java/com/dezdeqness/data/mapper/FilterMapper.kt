@@ -3,8 +3,8 @@ package com.dezdeqness.data.mapper
 import com.dezdeqness.data.model.FilterItem
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.FilterType
-import com.dezdeqness.domain.model.GenreEntity
-import com.dezdeqness.domain.model.GenreKindEntity
+import com.dezdeqness.contract.anime.model.GenreEntity
+import com.dezdeqness.contract.anime.model.GenreKindEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

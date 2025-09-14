@@ -1,11 +1,11 @@
 package com.dezdeqness.presentation.features.details
 
+import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.model.AnimeDetailsFullEntity
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.repository.CharacterRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase

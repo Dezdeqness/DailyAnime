@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.home
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.contract.history.usecase.GetLatestHistoryItemUseCase
+import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger

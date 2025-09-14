@@ -6,8 +6,8 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.contract.user.usecase.GetUserUseCase
-import com.dezdeqness.contract.auth.usecase.LogoutUseCase
+import com.dezdeqness.domain.usecases.GetUserUseCase
+import com.dezdeqness.domain.usecases.LogoutUseCase
 import com.dezdeqness.presentation.message.MessageConsumer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

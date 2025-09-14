@@ -7,15 +7,15 @@ import com.dezdeqness.data.model.AnimeDetailsRemote
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyRemote
 import com.dezdeqness.data.model.db.AnimeLocal
-import com.dezdeqness.domain.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.AnimeChronologyEntity
-import com.dezdeqness.domain.model.AnimeDetailsEntity
-import com.dezdeqness.domain.model.AnimeKind
-import com.dezdeqness.domain.model.AnimeStatus
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
+import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
+import com.dezdeqness.contract.anime.model.AnimeKind
+import com.dezdeqness.contract.anime.model.AnimeStatus
+import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.domain.model.HomeCalendarEntity
-import com.dezdeqness.domain.model.ImageEntity
 import com.dezdeqness.contract.user.model.StatsItemEntity
-import com.dezdeqness.domain.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

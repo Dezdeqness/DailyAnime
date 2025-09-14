@@ -1,9 +1,9 @@
 package com.dezdeqness.presentation.features.personallist
 
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.domain.model.PersonalListFilterEntity
 import com.dezdeqness.domain.model.Sort
-import com.dezdeqness.domain.model.UserRateEntity
 import com.dezdeqness.domain.repository.SettingsRepository
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.dezdeqness.presentation.models.UserRateUiModel

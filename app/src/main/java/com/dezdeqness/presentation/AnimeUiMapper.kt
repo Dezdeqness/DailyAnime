@@ -2,9 +2,9 @@ package com.dezdeqness.presentation
 
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
-import com.dezdeqness.domain.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.RelatedItemEntity
 import com.dezdeqness.domain.model.HomeCalendarEntity
-import com.dezdeqness.domain.model.RelatedItemEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel

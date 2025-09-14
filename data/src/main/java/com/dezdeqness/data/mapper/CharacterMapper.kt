@@ -4,8 +4,8 @@ import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.CharacterDetailsRemote
 import com.dezdeqness.data.model.CharacterRemote
 import com.dezdeqness.domain.model.CharacterDetailsEntity
-import com.dezdeqness.domain.model.CharacterEntity
-import com.dezdeqness.domain.model.ImageEntity
+import com.dezdeqness.contract.anime.model.CharacterEntity
+import com.dezdeqness.contract.anime.model.ImageEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,6 +1,6 @@
 package com.dezdeqness.domain.usecases
 
-import com.dezdeqness.domain.model.Entity
+import com.dezdeqness.contract.anime.model.Entity
 
 abstract class BaseListableUseCase {
 

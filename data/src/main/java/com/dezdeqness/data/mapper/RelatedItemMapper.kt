@@ -2,7 +2,7 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.model.RelatedItemRemote
-import com.dezdeqness.domain.model.RelatedItemEntity
+import com.dezdeqness.contract.anime.model.RelatedItemEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

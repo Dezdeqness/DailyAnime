@@ -1,8 +1,8 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.data.model.ImageRemote
 import com.dezdeqness.data.model.db.ImageLocal
-import com.dezdeqness.domain.model.ImageEntity
 import javax.inject.Inject
 
 class ImageMapper @Inject constructor() {
