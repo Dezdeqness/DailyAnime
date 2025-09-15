@@ -59,7 +59,7 @@ fun DetailsError(
                 text = stringResource(id = com.dezdeqness.core.ui.R.string.error_state_title),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 16.dp),
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = AppTheme.colors.textPrimary,
             )

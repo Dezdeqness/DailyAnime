@@ -39,7 +39,6 @@ fun CommentTextField(
     modifier: Modifier = Modifier,
     state: CommentState,
     textStyle: TextStyle = AppTheme.typography.titleMedium.copy(
-        fontSize = 14.sp,
         color = AppTheme.colors.textPrimary,
     ),
     onCommentChanged: (String) -> Unit,

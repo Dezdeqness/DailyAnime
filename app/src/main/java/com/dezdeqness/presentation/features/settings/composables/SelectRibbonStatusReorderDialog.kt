@@ -66,7 +66,7 @@ fun SelectRibbonStatusReorderDialog(
             ) {
                 Text(
                     text = stringResource(R.string.reorder_statuses_title),
-                    style = AppTheme.typography.titleLarge,
+                    style = AppTheme.typography.titleMedium,
                     color = AppTheme.colors.textPrimary,
                 )
 

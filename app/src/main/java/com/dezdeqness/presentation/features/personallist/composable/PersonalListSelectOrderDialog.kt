@@ -82,6 +82,7 @@ fun PersonalListSelectOrderDialog(
                             Text(
                                 text = item.title,
                                 color = AppTheme.colors.textPrimary,
+                                style = AppTheme.typography.bodyMedium,
                             )
                         }
                     }

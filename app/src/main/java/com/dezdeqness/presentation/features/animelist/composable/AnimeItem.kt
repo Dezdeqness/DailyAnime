@@ -73,7 +73,7 @@ fun AnimeItem(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 maxLines = 2,
-                style = AppTheme.typography.bodyMedium,
+                style = AppTheme.typography.bodySmall,
                 color = AppTheme.colors.textPrimary,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
@@ -83,7 +83,7 @@ fun AnimeItem(
                 text = "",
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 2,
-                style = AppTheme.typography.bodyMedium,
+                style = AppTheme.typography.bodySmall,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
             )

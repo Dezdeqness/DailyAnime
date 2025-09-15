@@ -17,7 +17,7 @@ fun DetailsTitle(
     Text(
         text = title,
         color = AppTheme.colors.textPrimary,
-        fontSize = 24.sp,
+        fontSize = 18.sp,
         modifier = modifier.padding(vertical = 8.dp, horizontal = 16.dp),
         textAlign = TextAlign.Center,
     )

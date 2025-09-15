@@ -40,7 +40,7 @@ private fun BriefInfoItem(modifier: Modifier = Modifier, item: BriefInfoUiModel)
         Text(
             text = item.title,
             style = AppTheme.typography.labelMedium.copy(
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             ),
             color = AppTheme.colors.textPrimary.copy(alpha = 0.9f),
@@ -50,7 +50,7 @@ private fun BriefInfoItem(modifier: Modifier = Modifier, item: BriefInfoUiModel)
         Text(
             text = item.info,
             style = AppTheme.typography.labelMedium.copy(
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Normal
             ),
             color = AppTheme.colors.textPrimary.copy(alpha = 0.9f),

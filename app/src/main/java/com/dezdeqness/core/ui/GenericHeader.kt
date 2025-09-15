@@ -13,7 +13,7 @@ fun GenericHeader(
 ) {
     Text(
         title,
-        style = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
+        style = AppTheme.typography.labelLarge.copy(fontSize = 16.sp),
         modifier = modifier,
         color = AppTheme.colors.textPrimary
     )

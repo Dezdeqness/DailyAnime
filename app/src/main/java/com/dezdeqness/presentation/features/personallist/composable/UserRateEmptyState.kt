@@ -31,7 +31,7 @@ fun UserRateEmptyState(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(horizontal = 16.dp),
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.textPrimary,
         )

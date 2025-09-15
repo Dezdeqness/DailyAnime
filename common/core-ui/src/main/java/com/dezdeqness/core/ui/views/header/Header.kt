@@ -29,9 +29,9 @@ import com.dezdeqness.core.ui.theme.AppTheme
 fun Header(
     modifier: Modifier = Modifier,
     title: String,
-    titleStyle: TextStyle = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
+    titleStyle: TextStyle = AppTheme.typography.labelLarge,
     titleColor: Color = AppTheme.colors.textPrimary,
-    verticalPadding: Dp = 16.dp,
+    verticalPadding: Dp = 12.dp,
 ) {
     Header(
         modifier = modifier,
@@ -47,11 +47,11 @@ fun Header(
 fun Header(
     modifier: Modifier = Modifier,
     title: String,
-    titleStyle: TextStyle = AppTheme.typography.labelLarge.copy(fontSize = 20.sp),
+    titleStyle: TextStyle = AppTheme.typography.labelLarge,
     titleColor: Color = AppTheme.colors.textPrimary,
     icon: ImageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
     iconColor: Color = AppTheme.colors.onSurface,
-    verticalPadding: Dp = 16.dp,
+    verticalPadding: Dp = 12.dp,
     onClick: (() -> Unit)? = null,
 ) {
     Row(
