@@ -52,7 +52,7 @@ fun CalendarItem(
     ) {
         Text(
             text = item.time,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.textPrimary,
             modifier = Modifier

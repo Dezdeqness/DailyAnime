@@ -53,7 +53,7 @@ fun DetailsCharacters(
                 CharacterItem(
                     character = character,
                     onCharacterClick = onCharacterClick,
-                    )
+                )
             }
         }
     }

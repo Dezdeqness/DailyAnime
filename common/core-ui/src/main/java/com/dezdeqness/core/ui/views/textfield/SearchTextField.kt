@@ -37,7 +37,6 @@ fun SearchTextField(
     modifier: Modifier = Modifier,
     state: SearchState,
     textStyle: TextStyle = AppTheme.typography.titleMedium.copy(
-        fontSize = 18.sp,
         color = AppTheme.colors.textPrimary,
     ),
     onQueryChanged: (String) -> Unit,

@@ -13,7 +13,7 @@ fun HistoryHeader(modifier: Modifier = Modifier, header: String) {
         header,
         color = AppTheme.colors.textPrimary,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
+        fontSize = 16.sp,
         modifier = modifier,
     )
 }

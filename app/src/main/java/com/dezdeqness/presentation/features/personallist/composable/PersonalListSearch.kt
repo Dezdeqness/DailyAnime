@@ -40,7 +40,6 @@ fun PersonalListSearch(
             Text(
                 text = stringResource(id = R.string.personal_list_search_placeholder_hint),
                 style = AppTheme.typography.titleMedium.copy(
-                    fontSize = 18.sp,
                     color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
                 ),
             )

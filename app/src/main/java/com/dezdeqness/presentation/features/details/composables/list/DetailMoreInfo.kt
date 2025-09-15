@@ -40,7 +40,7 @@ fun DetailMoreInfo(
         }
         item {
             AppChip(
-                title = stringResource( R.string.anime_toolbar_stats),
+                title = stringResource(R.string.anime_toolbar_stats),
                 onClick = {
                     onAction(Action.StatsClicked)
                 }

@@ -49,7 +49,7 @@ fun HomeBanner(
             text = text,
             modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
             style = AppTheme.typography.titleLarge.copy(
-                fontSize = 22.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.W500,
             ),
             color = AppTheme.colors.textPrimary,

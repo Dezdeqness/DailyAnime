@@ -15,14 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
-// button, navigation to search
-// title + desc
 @Composable
 fun RibbonEmptyState(modifier: Modifier = Modifier) {
     Column(
@@ -37,7 +35,7 @@ fun RibbonEmptyState(modifier: Modifier = Modifier) {
             text = stringResource(R.string.ribbon_empty_state_title),
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 8.dp),
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.textPrimary,
         )
@@ -45,16 +43,16 @@ fun RibbonEmptyState(modifier: Modifier = Modifier) {
             text = stringResource(R.string.ribbon_empty_state_description),
             textAlign = TextAlign.Center,
             modifier = Modifier,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight.Normal,
-            color = AppTheme.colors.textPrimary,
+            color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
         )
 
 
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun RibbonEmptyStatePreview() {
     AppTheme {
