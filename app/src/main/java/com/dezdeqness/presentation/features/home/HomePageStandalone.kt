@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
@@ -60,7 +61,13 @@ fun HomePageStandalone(
                 rootController.navigate(Details(event.animeId))
             }
             is OpenCalendarTab -> {
-                navController.navigate(BottomBarNav.Calendar)
+                navController.navigate(BottomBarNav.Calendar) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
 
             is OpenHistoryPage -> {

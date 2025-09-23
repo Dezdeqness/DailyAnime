@@ -5,11 +5,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.dezdeqness.R
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.presentation.BottomBarNav
@@ -56,7 +55,13 @@ fun PersonalHostStandalonePage(
                 modifier = modifier,
                 actions = object : UnauthorizedActions {
                     override fun onNavigateProfileClicked() {
-                        navController.navigate(BottomBarNav.Profile)
+                        navController.navigate(BottomBarNav.Profile) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 }
             )
