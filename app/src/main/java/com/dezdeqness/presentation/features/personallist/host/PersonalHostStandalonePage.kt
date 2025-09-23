@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.dezdeqness.R
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.AuthorizedUiState
+import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.features.personallist.PersonalListStandalonePage
 import com.dezdeqness.presentation.features.personallist.PersonalListViewModel
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedActions
@@ -31,7 +32,6 @@ fun PersonalHostStandalonePage(
     }
 
     val analyticsManager = personalListComponent.analyticsManager()
-    val applicationRouter = personalListComponent.applicationRouter()
 
     val hostViewModel =
         viewModel<PersonalListHostViewModel>(factory = personalListComponent.viewModelFactory())
@@ -54,16 +54,9 @@ fun PersonalHostStandalonePage(
         AuthorizedUiState.Unauthorized -> {
             UnauthorizedScreen(
                 modifier = modifier,
-                title = stringResource(R.string.unauthorized_title_personal_list),
                 actions = object : UnauthorizedActions {
-                    override fun onSignInClicked() {
-                        analyticsManager.authTracked()
-                        applicationRouter.navigateToLoginScreen(context)
-                    }
-
-                    override fun onSignUpClicked() {
-                        analyticsManager.authTracked(isLogin = false)
-                        applicationRouter.navigateToSignUpScreen(context)
+                    override fun onNavigateProfileClicked() {
+                        navController.navigate(BottomBarNav.Profile)
                     }
                 }
             )

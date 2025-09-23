@@ -21,10 +21,11 @@
     <string name="anime_status_released">Released</string>
     <string name="anime_status_latest">Release recently</string>
 
-    <string name="unauthorized_title_profile">Login to account for receiving additional features</string>
-    <string name="unauthorized_title_personal_list">Login to account to follow your progress</string>
+    <string name="unauthorized_title_personal_list">Sign in to continue</string>
+    <string name="unauthorized_title_profile">Login to account to follow your progress</string>
     <string name="unauthorized_sign_in">Log In</string>
     <string name="unauthorized_sign_up">Sign Up</string>
+    <string name="unauthorized_navigation_profile">Navigate to profile</string>
 
     <string name="profile_history">History</string>
     <string name="profile_statistics">Statistics</string>
