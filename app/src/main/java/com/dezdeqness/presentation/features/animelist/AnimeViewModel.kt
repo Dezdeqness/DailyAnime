@@ -187,7 +187,7 @@ class AnimeViewModel @Inject constructor(
     fun onLoadMore() {
         val state = animeSearchState.value
         if (state.hasNextPage) {
-            loadEvents.tryEmit(LoadEvent.LoadMore(state.input, state.currentPage + 1))
+            loadEvents.tryEmit(LoadEvent.LoadMore(state.input, state.currentPage))
         }
     }
 
@@ -210,7 +210,6 @@ class AnimeViewModel @Inject constructor(
     companion object {
         private const val INITIAL_PAGE = 1
     }
-
 
     private sealed class LoadEvent(
         open val input: AnimeUserInput,
