@@ -28,6 +28,18 @@ val screenshotReducer = object : StateReducer<Event, State, Effect, Command>() {
                 }
                 effects { +Effect.ShareUrl(url = formattedUrl) }
             }
+
+            is Event.DownloadClicked -> {
+                val list = state.screenshotsList
+                val url = list[state.index]
+                val formattedUrl = if (url.startsWith(BuildConfig.BASE_URL).not()) {
+                    BuildConfig.BASE_URL + url
+                } else {
+                    url
+                }
+                val fileName = "screenshot_${System.currentTimeMillis()}.jpg"
+                effects { +Effect.DownloadImage(url = formattedUrl, fileName = fileName) }
+            }
         }
     }
 

@@ -61,6 +61,10 @@ class ScreenshotsViewerActivity : AppCompatActivity() {
                             viewModel.onShareButtonClicked()
                         }
 
+                        override fun onDownloadButtonClicked() {
+                            viewModel.onDownloadButtonClicked()
+                        }
+
                         override fun onShowSystemUi() {
                             hideSystemUI()
                         }
