@@ -46,4 +46,11 @@ class ScreenshotsViewModelTest {
 
         verify { store.accept(Event.IndexChanged(3)) }
     }
+    
+    @Test
+    fun `WHEN onDownloadButtonClicked invoked SHOULD call store with DownloadClicked`() {
+        viewModel.onDownloadButtonClicked()
+        
+        verify { store.accept(Event.DownloadClicked) }
+    }
 }

@@ -22,4 +22,8 @@ class ScreenshotsViewModel @Inject constructor(
     fun onScreenShotChanged(index: Int) {
         store.accept(event = ScreenshotsNamespace.Event.IndexChanged(index))
     }
+    
+    fun onDownloadButtonClicked() {
+        store.accept(event = ScreenshotsNamespace.Event.DownloadClicked)
+    }
 }

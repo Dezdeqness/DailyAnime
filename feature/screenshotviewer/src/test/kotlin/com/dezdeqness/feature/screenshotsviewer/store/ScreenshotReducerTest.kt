@@ -12,6 +12,7 @@ import money.vivid.elmslie.core.store.ElmStore
 import money.vivid.elmslie.core.store.NoOpActor
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ScreenshotReducerTest {
@@ -85,4 +86,89 @@ class ScreenshotReducerTest {
         }
     }
 
+    @Test
+    fun `WHEN DownloadClicked with relative URL SHOULD emit DownloadImage with BASE_URL`() = runTest {
+        val screenshotUrl = "image.jpg"
+        val expectedUrl = BuildConfig.BASE_URL + screenshotUrl
+
+        val store = ElmStore(
+            initialState = State(
+                screenshotsList = listOf(screenshotUrl),
+                index = 0,
+            ),
+            reducer = screenshotReducer,
+            actor = NoOpActor()
+        )
+
+        store.effects.test {
+            store.accept(Event.DownloadClicked)
+
+            val effect = awaitItem()
+            assert(effect is Effect.DownloadImage)
+            effect as Effect.DownloadImage
+            assertEquals(expectedUrl, effect.url)
+            assert(effect.fileName.matches(Regex("screenshot_\\d+\\.jpg")))
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `WHEN DownloadClicked with absolute URL SHOULD emit DownloadImage with same URL`() = runTest {
+        val screenshotUrl = "${BuildConfig.BASE_URL}image.jpg"
+
+        val store = ElmStore(
+            initialState = State(
+                screenshotsList = listOf(screenshotUrl),
+                index = 0,
+            ),
+            reducer = screenshotReducer,
+            actor = NoOpActor()
+        )
+
+        store.effects.test {
+            store.accept(Event.DownloadClicked)
+
+            val effect = awaitItem()
+            assert(effect is Effect.DownloadImage)
+            effect as Effect.DownloadImage
+            assertEquals(screenshotUrl, effect.url)
+            assert(effect.fileName.matches(Regex("screenshot_\\d+\\.jpg")))
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `WHEN DownloadClicked SHOULD generate unique filenames for different timestamps`() = runTest {
+        val screenshotUrl = "image.jpg"
+        
+        val store = ElmStore(
+            initialState = State(
+                screenshotsList = listOf(screenshotUrl),
+                index = 0,
+            ),
+            reducer = screenshotReducer,
+            actor = NoOpActor()
+        )
+
+        store.effects.test {
+            store.accept(Event.DownloadClicked)
+            val effect1 = awaitItem() as Effect.DownloadImage
+            val fileName1 = effect1.fileName
+            
+            // Wait a bit to ensure different timestamps
+            kotlinx.coroutines.delay(10)
+            
+            store.accept(Event.DownloadClicked)
+            val effect2 = awaitItem() as Effect.DownloadImage
+            val fileName2 = effect2.fileName
+            
+            assertNotEquals(fileName1, fileName2) {
+                "Filenames should be different: $fileName1 vs $fileName2"
+            }
+            
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }
