@@ -1,8 +1,8 @@
 package com.dezdeqness.presentation.features.personallist.host
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,6 +22,7 @@ import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostVi
 fun PersonalHostStandalonePage(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    rootController: NavHostController,
 ) {
     val context = LocalContext.current
     val personalListComponent = remember {
@@ -45,7 +46,7 @@ fun PersonalHostStandalonePage(
             PersonalListStandalonePage(
                 modifier = modifier,
                 viewModel = viewModel,
-                navController = navController,
+                navController = rootController,
                 analyticsManager = analyticsManager,
             )
         }
