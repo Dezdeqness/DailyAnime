@@ -141,9 +141,9 @@ fun SettingsPage(
             item {
                 SwitchSettingsView(
                     title = stringResource(R.string.settings_adult_content_title),
-                    checked = state.isAdultContentEnabled,
+                    checked = !state.isAdultContentEnabled,
                 ) { isChecked ->
-                    actions.onChangeAdultContentClicked(isChecked)
+                    actions.onChangeAdultContentClicked(!isChecked)
                 }
             }
 

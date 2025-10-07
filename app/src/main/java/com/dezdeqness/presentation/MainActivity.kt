@@ -201,6 +201,7 @@ class MainActivity : AppCompatActivity() {
                                         PersonalHostStandalonePage(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = navController,
+                                            rootController = rootController,
                                         )
                                     }
                                     composable<BottomBarNav.Home> {
