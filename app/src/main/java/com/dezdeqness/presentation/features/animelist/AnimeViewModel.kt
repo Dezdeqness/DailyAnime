@@ -1,6 +1,8 @@
 package com.dezdeqness.presentation.features.animelist
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.contract.settings.models.AdultContentPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.message.BaseMessageProvider
@@ -19,12 +21,17 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -37,6 +44,7 @@ class AnimeViewModel @Inject constructor(
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
     private val historySearchRepository: HistorySearchRepository,
+    private val settingsRepository: SettingsRepository,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -60,6 +68,24 @@ class AnimeViewModel @Inject constructor(
         started = SharingStarted.Lazily,
         initialValue = listOf()
     )
+
+    init {
+        launchOnIo {
+            settingsRepository
+                .observePreference(AdultContentPreference)
+                .drop(1)
+                .distinctUntilChanged()
+                .map {
+                    val input = animeSearchState.value.input
+                    loadEvents.tryEmit(LoadEvent.Refresh(input))
+                }
+                .shareIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.Lazily
+                )
+                .collect()
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val animeSearchState: StateFlow<AnimeSearchState> = loadEvents

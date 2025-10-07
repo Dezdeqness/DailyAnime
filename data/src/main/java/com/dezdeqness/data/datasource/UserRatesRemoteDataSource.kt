@@ -8,6 +8,7 @@ interface UserRatesRemoteDataSource {
         userId: Long,
         status: String,
         page: Int,
+        isAdultContentEnabled: Boolean,
     ): Result<List<UserRateEntity>>
 
     fun updateUserRate(

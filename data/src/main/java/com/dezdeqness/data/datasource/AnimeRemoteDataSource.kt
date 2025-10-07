@@ -1,9 +1,9 @@
 package com.dezdeqness.data.datasource
 
 import com.dezdeqness.contract.anime.DetailsAdditionalInfo
-import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
+import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.RelatedItemEntity
 import com.dezdeqness.contract.anime.model.RoleEntity
 import com.dezdeqness.contract.anime.model.ScreenshotEntity
@@ -14,7 +14,8 @@ interface AnimeRemoteDataSource {
         queryMap: Map<String, String> = mapOf(),
         pageNumber: Int,
         sizeOfPage: Int,
-        searchQuery: String
+        searchQuery: String,
+        isAdultContentEnabled: Boolean,
     ): Result<List<AnimeBriefEntity>>
 
     fun getDetailsAnimeMainInfo(
