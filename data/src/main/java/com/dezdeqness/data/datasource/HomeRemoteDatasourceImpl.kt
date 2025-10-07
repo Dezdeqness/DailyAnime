@@ -19,7 +19,8 @@ class HomeRemoteDatasourceImpl @Inject constructor(
     override suspend fun getHomeSections(
         genreIds: List<String>,
         limit: Int,
-        order: OrderEnum
+        order: OrderEnum,
+        isAdultContentEnabled: Boolean,
     ) = tryWithCatchSuspend {
         val response = apolloClient.query(
             HomeQuery(
@@ -27,7 +28,8 @@ class HomeRemoteDatasourceImpl @Inject constructor(
                 genre2 = genreIds[1],
                 genre3 = genreIds[2],
                 limit = limit,
-                order = order
+                order = order,
+                adultContent = isAdultContentEnabled,
             )
         ).execute()
 

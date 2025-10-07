@@ -12,8 +12,8 @@ class CalendarRemoteDataSourceImpl @Inject constructor(
     private val calendarMapper: CalendarMapper,
 ) : CalendarRemoteDataSource, BaseDataSource() {
 
-    override fun getCalendar() = tryWithCatch {
-        val response = calendarApiService.get().getCalendar().execute()
+    override fun getCalendar(isAdultContentEnabled: Boolean) = tryWithCatch {
+        val response = calendarApiService.get().getCalendar(isAdultContentEnabled = isAdultContentEnabled).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {

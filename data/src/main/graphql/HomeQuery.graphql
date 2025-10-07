@@ -1,14 +1,14 @@
-query Home($genre1: String!, $genre2: String!, $genre3: String!, $limit: PositiveInt!, $order: OrderEnum!) {
-    c:animes(limit: 50, order: aired_on, status: "ongoing") {
+query Home($genre1: String!, $genre2: String!, $genre3: String!, $limit: PositiveInt!, $order: OrderEnum!, $adultContent: Boolean!) {
+    c:animes(limit: 50, order: aired_on, status: "ongoing", censored: $adultContent) {
         ...HomeAnime
     }
-    q1:animes(limit: $limit, genre: $genre1, order: $order) {
+    q1:animes(limit: $limit, genre: $genre1, order: $order, censored: $adultContent) {
         ...HomeAnime
     }
-    q2:animes(limit: $limit, genre: $genre2, order: $order) {
+    q2:animes(limit: $limit, genre: $genre2, order: $order, censored: $adultContent) {
         ...HomeAnime
     }
-    q3:animes(limit: $limit, genre: $genre3, order: $order) {
+    q3:animes(limit: $limit, genre: $genre3, order: $order, censored: $adultContent) {
         ...HomeAnime
     }
 }

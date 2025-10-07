@@ -4,6 +4,6 @@ import com.dezdeqness.domain.model.AnimeCalendarEntity
 
 interface CalendarRepository {
 
-    fun getCalendar(): Result<List<AnimeCalendarEntity>>
+    suspend fun getCalendar(): Result<List<AnimeCalendarEntity>>
 
 }
