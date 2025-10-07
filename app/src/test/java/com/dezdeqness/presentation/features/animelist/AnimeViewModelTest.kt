@@ -2,6 +2,8 @@ package com.dezdeqness.presentation.features.animelist
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.settings.models.AdultContentPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
@@ -11,6 +13,7 @@ import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.ActionConsumer
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -48,6 +51,9 @@ class AnimeViewModelTest {
     @MockK
     private lateinit var historySearchRepository: HistorySearchRepository
 
+    @MockK
+    private lateinit var settingsRepository: SettingsRepository
+
     private lateinit var viewModel: AnimeViewModel
 
     @Before
@@ -61,6 +67,8 @@ class AnimeViewModelTest {
         every { appLogger.logInfo(any(), any()) } returns Unit
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
 
+        coEvery { settingsRepository.observePreference(AdultContentPreference) } returns flowOf()
+
         viewModel = AnimeViewModel(
             getAnimeListUseCase = getAnimeListUseCase,
             animeUiMapper = animeUiMapper,
@@ -69,6 +77,7 @@ class AnimeViewModelTest {
             messageConsumer = messageConsumer,
             messageProvider = messageProvider,
             historySearchRepository = historySearchRepository,
+            settingsRepository = settingsRepository,
             coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
             appLogger = appLogger,
         )
@@ -85,7 +94,7 @@ class AnimeViewModelTest {
             animeFilterResponseConverter.convertSearchFilterToQueryMap(listOf())
         } returns mapOf()
 
-        every {
+        coEvery {
             getAnimeListUseCase.invoke(
                 pageNumber = 1,
                 queryMap = mapOf(),
@@ -130,7 +139,7 @@ class AnimeViewModelTest {
             animeFilterResponseConverter.convertSearchFilterToQueryMap(listOf())
         } returns mapOf()
 
-        every {
+        coEvery {
             getAnimeListUseCase.invoke(
                 pageNumber = 1,
                 queryMap = mapOf(),
