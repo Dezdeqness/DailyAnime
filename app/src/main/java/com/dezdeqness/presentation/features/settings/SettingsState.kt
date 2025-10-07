@@ -19,6 +19,7 @@ data class SettingsState(
     val isCalendarEnabled: Boolean = true,
     val maxImageCacheSize: Int = 512,
     val isMaxImageCacheSizeDialogShown: Boolean = false,
+    val isAdultContentEnabled: Boolean = false,
 ) {
     val ribbonSettingsSubTitle: String
         get() = personalRibbonStatuses.joinToString(", ") { it.displayName }

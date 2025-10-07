@@ -53,6 +53,8 @@
     <string name="settings_image_cache_used_title">%1$s / %2$s used</string>
     <string name="settings_max_image_cache_title">Max image cache</string>
     <string name="settings_image_cache_clear_title">Clear image cache</string>
+    <string name="settings_content_section">Content</string>
+    <string name="settings_adult_content_title">Show +18 content</string>
 
     <string name="notification_daily_description">Do not forget to track you progress in the app!</string>
 

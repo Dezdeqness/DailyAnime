@@ -95,6 +95,59 @@ fun SettingsPage(
                 .fillMaxSize()
         ) {
             item {
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_theme_section))
+            }
+
+            item {
+                SwitchSettingsView(
+                    title = stringResource(R.string.settings_dark_theme_title),
+                    subtitle = stringResource(id = R.string.settings_dark_theme),
+                    checked = state.isDarkThemeEnabled,
+                ) { isChecked ->
+                    actions.onNightThemeToggleClicked(isChecked)
+                }
+            }
+
+            item {
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_notification_section))
+            }
+
+            item {
+                SwitchSettingsView(
+                    title = stringResource(R.string.settings_notification_title),
+                    subtitle = stringResource(R.string.settings_notification_subtitle),
+                    checked = state.isNotificationsTurnOn,
+                    enabled = state.isNotificationsEnabled,
+                ) { isChecked ->
+                    actions.onNotificationToggleClicked(isChecked)
+                }
+            }
+
+            item {
+                TextSettingsView(
+                    title = stringResource(R.string.settings_notification_time_title),
+                    subtitle = state.notificationTimeData.formattedTime,
+                    enabled = state.isNotificationsEnabled,
+                    onClick = {
+                        actions.onNotificationTimePickerClicked()
+                    }
+                )
+            }
+
+            item {
+                HeaderCustomSettingsView(title = stringResource(R.string.settings_content_section))
+            }
+
+            item {
+                SwitchSettingsView(
+                    title = stringResource(R.string.settings_adult_content_title),
+                    checked = state.isAdultContentEnabled,
+                ) { isChecked ->
+                    actions.onChangeAdultContentClicked(isChecked)
+                }
+            }
+
+            item {
                 HeaderCustomSettingsView(
                     title = stringResource(R.string.settings_navigation_section),
                 )
@@ -171,46 +224,6 @@ fun SettingsPage(
                     title = stringResource(R.string.settings_image_cache_clear_title),
                     onClick = {
                         imageDiskCache.clear()
-                    }
-                )
-            }
-
-            item {
-                HeaderCustomSettingsView(title = stringResource(R.string.settings_theme_section))
-            }
-
-            item {
-                SwitchSettingsView(
-                    title = stringResource(R.string.settings_dark_theme_title),
-                    subtitle = stringResource(id = R.string.settings_dark_theme),
-                    checked = state.isDarkThemeEnabled,
-                ) { isChecked ->
-                    actions.onNightThemeToggleClicked(isChecked)
-                }
-            }
-
-            item {
-                HeaderCustomSettingsView(title = stringResource(R.string.settings_notification_section))
-            }
-
-            item {
-                SwitchSettingsView(
-                    title = stringResource(R.string.settings_notification_title),
-                    subtitle = stringResource(R.string.settings_notification_subtitle),
-                    checked = state.isNotificationsTurnOn,
-                    enabled = state.isNotificationsEnabled,
-                ) { isChecked ->
-                    actions.onNotificationToggleClicked(isChecked)
-                }
-            }
-
-            item {
-                TextSettingsView(
-                    title = stringResource(R.string.settings_notification_time_title),
-                    subtitle = state.notificationTimeData.formattedTime,
-                    enabled = state.isNotificationsEnabled,
-                    onClick = {
-                        actions.onNotificationTimePickerClicked()
                     }
                 )
             }

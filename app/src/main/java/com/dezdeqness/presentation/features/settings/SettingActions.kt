@@ -25,6 +25,8 @@ interface SettingActions {
     fun onMaxImageCacheSize(size: Int)
     fun onMaxImageCacheSizeDialogClosed()
 
+    fun onChangeAdultContentClicked(isEnabled: Boolean)
+
     fun invalidate()
 
     fun onDebugOptionsClicked()
