@@ -1,16 +1,16 @@
 package com.dezdeqness.data.datasource
 
 import com.apollographql.apollo.ApolloClient
+import com.dezdeqness.contract.anime.DetailsAdditionalInfo
 import com.dezdeqness.data.AnimeApiService
 import com.dezdeqness.data.DetailsQuery
-import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.core.createGraphqlException
+import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
-import com.dezdeqness.contract.anime.DetailsAdditionalInfo
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named
@@ -28,7 +28,8 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         queryMap: Map<String, String>,
         pageNumber: Int,
         sizeOfPage: Int,
-        searchQuery: String
+        searchQuery: String,
+        isAdultContentEnabled: Boolean,
     ) =
         tryWithCatch {
             val call = if (searchQuery.isEmpty()) {
@@ -36,6 +37,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
                     limit = sizeOfPage,
                     page = pageNumber,
                     options = queryMap,
+                    isAdultContentEnabled = isAdultContentEnabled,
                 )
             } else {
                 apiService.get().getListAnimeWithSearchQuery(
@@ -43,6 +45,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
                     page = pageNumber,
                     options = queryMap,
                     search = searchQuery,
+                    isAdultContentEnabled = isAdultContentEnabled,
                 )
             }
 

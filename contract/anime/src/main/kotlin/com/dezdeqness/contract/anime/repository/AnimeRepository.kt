@@ -22,7 +22,7 @@ interface AnimeRepository {
 
     fun getChronology(id: Long): Result<List<AnimeChronologyEntity>>
 
-    fun getListWithFilter(
+    suspend fun getListWithFilter(
         queryMap: Map<String, String>,
         pageNumber: Int,
         sizeOfPage: Int,

@@ -16,13 +16,19 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
     private val userRatesMapper: UserRatesMapper,
 ) : UserRatesRemoteDataSource, BaseDataSource() {
 
-    override fun getUserRates(userId: Long, status: String, page: Int) =
+    override fun getUserRates(
+        userId: Long,
+        status: String,
+        page: Int,
+        isAdultContentEnabled: Boolean,
+    ) =
         tryWithCatch {
             val response = apiService.get().getUserRates(
                 status = status,
                 id = userId,
                 page = page,
                 limit = 1000,
+                isAdultContentEnabled = isAdultContentEnabled,
             ).execute()
 
             val responseBody = response.body()

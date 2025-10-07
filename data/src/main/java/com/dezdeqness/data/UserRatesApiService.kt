@@ -22,6 +22,7 @@ interface UserRatesApiService {
         @Query(value = "limit") limit: Int,
         @Query(value = "page") page: Int,
         @Query(value = "status") status: String,
+        @Query(value = "censored") isAdultContentEnabled: Boolean,
     ): Call<List<UserRateRemote>>
 
     @NeedAuthorization
