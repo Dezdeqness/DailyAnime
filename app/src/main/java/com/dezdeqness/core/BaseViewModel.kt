@@ -77,7 +77,7 @@ abstract class BaseViewModel(
         }
 
     protected fun <T> onPullDownRefreshed(
-        action: () -> (Result<T>),
+        action: suspend () -> (Result<T>),
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
@@ -105,7 +105,7 @@ abstract class BaseViewModel(
         )
 
     protected fun <T> onInitialLoad(
-        action: () -> (Result<T>),
+        action: suspend () -> (Result<T>),
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
@@ -133,7 +133,7 @@ abstract class BaseViewModel(
         )
 
     private fun <T> makeRequest(
-        action: () -> (Result<T>),
+        action: suspend () -> (Result<T>),
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         isPullDownRefresh: Boolean = false,

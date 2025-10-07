@@ -4,6 +4,6 @@ import com.dezdeqness.domain.model.AnimeCalendarEntity
 
 interface CalendarRemoteDataSource {
 
-    fun getCalendar(): Result<List<AnimeCalendarEntity>>
+    fun getCalendar(isAdultContentEnabled: Boolean): Result<List<AnimeCalendarEntity>>
 
 }

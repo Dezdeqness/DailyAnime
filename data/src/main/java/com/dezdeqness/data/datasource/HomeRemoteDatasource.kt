@@ -9,6 +9,7 @@ interface HomeRemoteDatasource {
         genreIds: List<String>,
         limit: Int,
         order: OrderEnum,
+        isAdultContentEnabled: Boolean,
     ): Result<HomeEntity>
 
 }
