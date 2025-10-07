@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.settings
 
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.contract.settings.models.InitialSectionPreference
@@ -10,11 +11,11 @@ import com.dezdeqness.contract.settings.models.NotificationTimePreference
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.models.TimeEntity
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.ui.TimeData
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.PermissionCheckProvider
@@ -60,6 +61,7 @@ class SettingsViewModel @Inject constructor(
                 settingsRepository.getPreference(NotificationEnabledPreference) && permissionCheckProvider.isNotificationPermissionGranted()
             val notificationTime = settingsRepository.getPreference(NotificationTimePreference)
             val maxImageCacheSize = settingsRepository.getPreference(ImageCacheMaxSizePreference)
+            val isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference)
 
             val orderedStatuses = (
                     settingsRepository
@@ -83,6 +85,7 @@ class SettingsViewModel @Inject constructor(
                     personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map)),
                     isCalendarEnabled = configManager.isCalendarEnabled,
                     maxImageCacheSize = maxImageCacheSize,
+                    isAdultContentEnabled = isAdultContentEnabled,
                 )
             }
         }
@@ -148,6 +151,16 @@ class SettingsViewModel @Inject constructor(
                 it.copy(
                     personalRibbonStatuses = ImmutableList.copyOf(orderedStatuses.map(ribbonMapper::map))
                 )
+            }
+        }
+    }
+
+    fun onChangeAdultContentClicked(isEnabled: Boolean) {
+        launchOnIo {
+            settingsRepository.setPreference(AdultContentPreference, isEnabled)
+
+            _settingsStateFlow.update {
+                it.copy(isAdultContentEnabled = isEnabled)
             }
         }
     }

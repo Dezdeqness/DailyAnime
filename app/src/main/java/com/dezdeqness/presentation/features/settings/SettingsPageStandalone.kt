@@ -10,16 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
-import androidx.core.net.toUri
-import com.dezdeqness.contract.settings.models.InitialSection
 
 @Composable
 fun SettingsPageStandalone(
@@ -97,6 +97,10 @@ fun SettingsPageStandalone(
 
             override fun onMaxImageCacheSizeDialogClosed() {
                 viewModel.onMaxImageCacheSizeDialogClosed()
+            }
+
+            override fun onChangeAdultContentClicked(isEnabled: Boolean) {
+                viewModel.onChangeAdultContentClicked(isEnabled = isEnabled)
             }
 
             override fun invalidate() {
