@@ -1,5 +1,8 @@
 package com.dezdeqness.core.ui
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,18 +24,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.models.StatsChartUiModel
+import com.dezdeqness.presentation.models.StatsData
+import com.google.common.collect.ImmutableList
+import kotlinx.coroutines.delay
 
 @Composable
-fun StatsHorizontalChart(
+fun HorizontalChart(
     modifier: Modifier = Modifier,
-    statsChart: StatsChartUiModel,
+    maxProgress: Int,
+    items: ImmutableList<StatsData>
 ) {
     Column(modifier = modifier) {
-        statsChart.items.forEach { item ->
+        items.forEachIndexed { index, item ->
             val name = item.name
             val progress = item.currentProgress
             val value = item.value
+
+            val animatedProgress = remember { Animatable(0f) }
+
+            LaunchedEffect(Unit) {
+                delay(index * 80L)
+                animatedProgress.animateTo(
+                    targetValue = progress / maxProgress.toFloat(),
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
+            }
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
@@ -63,7 +84,7 @@ fun StatsHorizontalChart(
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .fillMaxWidth(fraction = progress / statsChart.maxProgress.toFloat())
+                            .fillMaxWidth(fraction = animatedProgress.value)
                             .background(AppTheme.colors.accent)
                     )
                 }
