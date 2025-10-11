@@ -9,15 +9,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.ui.DiagramChart
 import com.dezdeqness.core.ui.GenericHeader
-import com.dezdeqness.core.ui.ScoreHorizontalChart
-import com.dezdeqness.core.ui.StatsHorizontalChart
+import com.dezdeqness.core.ui.HorizontalChart
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.models.AdapterItem
@@ -69,11 +68,17 @@ fun StatsPage(
                     }
 
                     is ScoreChartUiModel -> {
-                        ScoreHorizontalChart(scoreChart = item)
+                        HorizontalChart(
+                            maxProgress = item.maxProgress,
+                            items = item.items,
+                        )
                     }
 
                     is StatsChartUiModel -> {
-                        StatsHorizontalChart(statsChart = item)
+                        HorizontalChart(
+                            maxProgress = item.maxProgress,
+                            items = item.items,
+                        )
                     }
 
                     else -> {}
