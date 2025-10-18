@@ -8,6 +8,7 @@ data class AnimeDetailsState(
     val uiModels: ImmutableList<AdapterItem> = ImmutableList.of(),
     val isEditRateFabShown: Boolean = false,
     val status: DetailsStatus = DetailsStatus.Initial,
+    val currentBottomSheet: BottomSheet = BottomSheet.None,
 )
 
 enum class DetailsStatus {
@@ -15,4 +16,12 @@ enum class DetailsStatus {
     Loading,
     Error,
     Loaded,
+}
+
+sealed interface BottomSheet {
+    data object None : BottomSheet
+    data class EditRate(
+        val userRateId: Long,
+        val title: String,
+    ) : BottomSheet
 }

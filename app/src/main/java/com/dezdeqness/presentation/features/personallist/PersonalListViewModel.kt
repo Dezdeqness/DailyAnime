@@ -14,7 +14,6 @@ import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
-import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -279,15 +278,23 @@ class PersonalListViewModel @Inject constructor(
     private fun onEditRateClicked(editRateId: Long) {
         userRatesList
             .firstOrNull { it.id == editRateId }
-            ?.let {
-                onEventReceive(
-                    NavigateToEditRate(
-                        rateId = editRateId,
-                        title = it.anime?.russian.orEmpty(),
+            ?.let { entity ->
+                _personalListStateFlow.update {
+                    it.copy(
+                        currentBottomSheet = BottomSheet.EditRate(
+                            userRateId = editRateId,
+                            title = entity.anime?.russian.orEmpty(),
+                        ),
                     )
-                )
+                }
             }
 
+    }
+
+    fun onUserRateBottomDialogClosed() {
+        _personalListStateFlow.update {
+            it.copy(currentBottomSheet = BottomSheet.None)
+        }
     }
 
     fun onUserRateChanged(userRate: EditRateUiModel?) {

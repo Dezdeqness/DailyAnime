@@ -1,12 +1,9 @@
 package com.dezdeqness.presentation.features.details
 
-import android.app.Activity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
@@ -23,10 +20,9 @@ import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeStats
 import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology
-import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
-import com.dezdeqness.presentation.features.userrate.UserRateActivity
+import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 
 @Composable
 fun DetailsStandalonePage(
@@ -52,11 +48,6 @@ fun DetailsStandalonePage(
         EventConsumer(context = context)
     }
 
-    val editRateResult =
-        rememberLauncherForActivityResult(UserRateActivity.UserRate()) { userRate ->
-            viewModel.onUserRateChanged(userRate)
-        }
-
     DetailsPage(
         modifier = modifier,
         stateFlow = viewModel.animeDetailsStateFlow,
@@ -80,21 +71,19 @@ fun DetailsStandalonePage(
             override fun onRetryClicked() {
                 viewModel.onRetryButtonClicked()
             }
+
+            override fun onUserRateChanged(userRate: EditRateUiModel) {
+                viewModel.onUserRateChanged(userRate)
+            }
+
+            override fun onUserRateBottomDialogClosed() {
+                viewModel.onUserRateBottomDialogClosed()
+            }
         }
     )
 
     viewModel.events.collectEvents { event ->
         when (event) {
-            is NavigateToEditRate -> {
-                editRateResult.launch(
-                    UserRateActivity.UserRateParams(
-                        userRateId = event.rateId,
-                        title = event.title,
-                    ),
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity),
-                )
-            }
-
             is NavigateToAnimeStats -> {
                 navController.navigate(
                     DetailsStats(
