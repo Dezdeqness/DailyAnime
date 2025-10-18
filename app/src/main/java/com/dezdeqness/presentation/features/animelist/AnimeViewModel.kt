@@ -203,6 +203,7 @@ class AnimeViewModel @Inject constructor(
     }
 
     fun onQueryChanged(query: String) {
+        if (animeSearchState.value.input.query == query) return
         val input = animeSearchState.value.input.copy(query = query)
         loadEvents.tryEmit(LoadEvent.Refresh(input, isScrollNeed = true))
         launchOnIo {
