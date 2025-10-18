@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.configure
 
 class AndroidConfigPlugin : Plugin<Project> {
     override fun apply(target: Project) {
+        target.pluginManager.apply("jacoco")
         target.extensions.configure<BaseExtension> {
             compileSdkVersion(35)
             defaultConfig {
