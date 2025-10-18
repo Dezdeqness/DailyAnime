@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
+import com.dezdeqness.core.ui.ReorderHapticFeedbackType
+import com.dezdeqness.core.ui.rememberReorderHapticFeedback
 import com.dezdeqness.core.ui.theme.AppTheme
 import kotlin.math.roundToInt
 
@@ -30,6 +32,8 @@ fun ScoreSlider(
     score: Long,
     onScoreChanged: (Long) -> Unit,
 ) {
+    val haptic = rememberReorderHapticFeedback()
+
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -37,6 +41,7 @@ fun ScoreSlider(
         CustomSlider(
             onValueChange = { newValue ->
                 onScoreChanged(newValue.toLong())
+                haptic.performHapticFeedback(ReorderHapticFeedbackType.MOVE)
             },
             value = score.toFloat(),
             valueRange = 1f..10f,
