@@ -22,5 +22,14 @@ if [ $? -ne 0 ]; then
   echo "Unit tests failed, push aborted."
   exit 1
 fi
+echo "Unit tests passed"
+
+echo "Running screenshot validation..."
+./gradlew app:validateDebugScreenshotTest
+if [ $? -ne 0 ]; then
+  echo "Screenshot tests failed, push aborted."
+  exit 1
+fi
+echo "Screenshot tests passed"
 
 echo "All tests passed, proceeding with push."

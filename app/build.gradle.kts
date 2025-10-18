@@ -13,6 +13,11 @@ plugins {
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.screenshot)
     alias(libs.plugins.kotlin.serialization)
+    id("jacoco")
+}
+
+jacoco {
+    toolVersion = "0.8.14"
 }
 
 val appVersionName = version.toString()
