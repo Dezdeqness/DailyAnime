@@ -1,9 +1,9 @@
 package com.dezdeqness.presentation.features.userrate
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.presentation.event.EditUserRate
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,18 +11,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import okhttp3.internal.toLongOrDefault
 import javax.inject.Inject
-import javax.inject.Named
 
 class UserRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
-    @Named("rateId") private val rateId: Long,
-    @Named("title") private val title: String,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
 ) {
+    private var rateId: Long = 0
+    private var title: String = ""
 
     private val _userRateStateFlow: MutableStateFlow<UserRateState> =
         MutableStateFlow(UserRateState())
@@ -31,7 +30,10 @@ class UserRateViewModel @Inject constructor(
 
     private var localUserRate: UserRateEntity? = null
 
-    init {
+    fun onUserRateUpdated(rateId: Long, title: String) {
+        this.rateId = rateId
+        this.title = title
+
         fetchUserRate()
     }
 
