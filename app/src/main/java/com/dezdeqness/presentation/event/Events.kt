@@ -32,11 +32,6 @@ data class NavigateToFilter(val filters: List<SearchSectionUiModel> = listOf()) 
 
 data class ApplyFilter(val filters: List<SearchSectionUiModel> = listOf()) : Event()
 
-data class NavigateToEditRate(
-    val rateId: Long,
-    val title: String,
-) : Event()
-
 data object LanguageDisclaimer : Event()
 
 data object OpenCalendarTab : Event()

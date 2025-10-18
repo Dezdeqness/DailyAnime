@@ -16,7 +16,6 @@ import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeStats
 import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology
-import com.dezdeqness.presentation.event.NavigateToEditRate
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
@@ -104,13 +103,14 @@ class AnimeDetailsViewModel @Inject constructor(
     fun onEditRateClicked() {
         val rateId = animeDetails?.animeDetailsEntity?.userRate?.id ?: -1
         val title = animeDetails?.animeDetailsEntity?.russian ?: ""
-        onEventReceive(
-            NavigateToEditRate(
-                rateId = rateId,
-                title = title,
+        _animeDetailsStateFlow.update {
+            it.copy(
+                currentBottomSheet = BottomSheet.EditRate(
+                    userRateId = rateId,
+                    title = title,
+                ),
             )
-        )
-
+        }
     }
 
     fun onUserRateChanged(userRate: EditRateUiModel?) {
@@ -212,6 +212,12 @@ class AnimeDetailsViewModel @Inject constructor(
                     )
                 )
             }
+    }
+
+    fun onUserRateBottomDialogClosed() {
+        _animeDetailsStateFlow.update {
+            it.copy(currentBottomSheet = BottomSheet.None)
+        }
     }
 
     private fun onEditErrorMessage() {

@@ -15,9 +15,11 @@ data class PersonalListState(
     private val isInitialLoadingIndicatorShowing: Boolean = false,
     val isScrollNeed: Boolean = false,
     val placeholder: Placeholder = Placeholder.None,
+    val currentBottomSheet: BottomSheet = BottomSheet.None,
 ) {
-    val isLoadingStateShowing get() =
-        items.isEmpty() && placeholder == Placeholder.None && isInitialLoadingIndicatorShowing
+    val isLoadingStateShowing
+        get() =
+            items.isEmpty() && placeholder == Placeholder.None && isInitialLoadingIndicatorShowing
 }
 
 sealed class Placeholder {
@@ -32,4 +34,12 @@ sealed class Placeholder {
     }
 
     data object None : Placeholder()
+}
+
+sealed interface BottomSheet {
+    data object None : BottomSheet
+    data class EditRate(
+        val userRateId: Long,
+        val title: String,
+    ) : BottomSheet
 }

@@ -1,12 +1,9 @@
 package com.dezdeqness.presentation.features.personallist
 
-import android.app.Activity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityOptionsCompat
 import androidx.navigation.NavHostController
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.data.analytics.AnalyticsManager
@@ -15,8 +12,7 @@ import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.EventConsumer
-import com.dezdeqness.presentation.event.NavigateToEditRate
-import com.dezdeqness.presentation.features.userrate.UserRateActivity
+import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 
 @Composable
 fun PersonalListStandalonePage(
@@ -31,10 +27,6 @@ fun PersonalListStandalonePage(
         EventConsumer(
             context = context,
         )
-    }
-
-    val editRateResult = rememberLauncherForActivityResult(UserRateActivity.UserRate()) { userRate ->
-        viewModel.onUserRateChanged(userRate)
     }
 
     PersonalListPage(
@@ -68,21 +60,19 @@ fun PersonalListStandalonePage(
             override fun onRibbonItemSelected(id: String) {
                 viewModel.onRibbonItemSelected(id)
             }
+
+            override fun onUserRateChanged(userRate: EditRateUiModel) {
+                viewModel.onUserRateChanged(userRate)
+            }
+
+            override fun onUserRateBottomDialogClosed() {
+                viewModel.onUserRateBottomDialogClosed()
+            }
         }
     )
 
     viewModel.events.collectEvents { event ->
         when (event) {
-            is NavigateToEditRate -> {
-                editRateResult.launch(
-                    UserRateActivity.UserRateParams(
-                        userRateId = event.rateId,
-                        title = event.title,
-                    ),
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity),
-                )
-            }
-
             is AnimeDetails -> {
                 analyticsManager.detailsTracked(
                     id = event.animeId.toString(),

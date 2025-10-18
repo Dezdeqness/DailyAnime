@@ -40,6 +40,7 @@ import com.dezdeqness.presentation.features.personallist.composable.PersonalRibb
 import com.dezdeqness.presentation.features.personallist.composable.RibbonEmptyState
 import com.dezdeqness.presentation.features.personallist.composable.ShimmerPersonalLoading
 import com.dezdeqness.presentation.features.personallist.composable.UserRateEmptyState
+import com.dezdeqness.presentation.features.userrate.UserRateDialog
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -63,6 +64,19 @@ fun PersonalListPage(
         mutableStateOf(false)
     }
 
+    val editRateBottomSheet = state.currentBottomSheet as? BottomSheet.EditRate
+
+    if (editRateBottomSheet != null) {
+        UserRateDialog(
+            onClosed = {
+                actions.onUserRateBottomDialogClosed()
+            },
+            userRateId = editRateBottomSheet.userRateId,
+            title = editRateBottomSheet.title,
+            onSaveClicked = actions::onUserRateChanged,
+        )
+    }
+
     if (isOrderDialogOpened.value) {
         PersonalListSelectOrderDialog(
             onDismissRequest = {
@@ -81,7 +95,9 @@ fun PersonalListPage(
         modifier = modifier.fillMaxSize(),
         topBar = {
             Row(
-                modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars).fillMaxWidth(),
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Box(modifier = Modifier.weight(1f)) {
