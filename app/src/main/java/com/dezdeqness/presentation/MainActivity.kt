@@ -71,6 +71,12 @@ import com.dezdeqness.presentation.features.personallist.host.PersonalHostStanda
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
 import com.dezdeqness.presentation.features.stats.StatsStandalonePage
+import com.dezdeqness.presentation.routing.slideInFromBottom
+import com.dezdeqness.presentation.routing.slideInFromStart
+import com.dezdeqness.presentation.routing.slideInFromTop
+import com.dezdeqness.presentation.routing.slideOutToBottom
+import com.dezdeqness.presentation.routing.slideOutToStart
+import com.dezdeqness.presentation.routing.slideOutToTop
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -161,7 +167,8 @@ class MainActivity : AppCompatActivity() {
                                                 } == true
 
                                             if (item == AppBottomTabModel.CALENDAR
-                                                && configManager.isCalendarEnabled.not()) {
+                                                && configManager.isCalendarEnabled.not()
+                                            ) {
                                                 return@forEach
                                             }
                                             NavigationBarItem(
@@ -204,26 +211,54 @@ class MainActivity : AppCompatActivity() {
                                             rootController = rootController,
                                         )
                                     }
-                                    composable<BottomBarNav.Home> {
+                                    composable<BottomBarNav.Home>(
+                                        enterTransition = {
+                                            slideInFromTop()
+                                        },
+                                        exitTransition = {
+                                            slideOutToTop()
+                                        },
+                                    ) {
                                         HomePageStandalone(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = navController,
                                             rootController = rootController,
                                         )
                                     }
-                                    composable<BottomBarNav.Calendar> {
+                                    composable<BottomBarNav.Calendar>(
+                                        enterTransition = {
+                                            slideInFromTop()
+                                        },
+                                        exitTransition = {
+                                            slideOutToTop()
+                                        },
+                                    ) {
                                         CalendarStandalonePage(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = rootController,
                                         )
                                     }
-                                    composable<BottomBarNav.Search> {
+                                    composable<BottomBarNav.Search>(
+                                        enterTransition = {
+                                            slideInFromTop()
+                                        },
+                                        exitTransition = {
+                                            slideOutToTop()
+                                        },
+                                    ) {
                                         SearchPageStandalone(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = rootController,
                                         )
                                     }
-                                    composable<BottomBarNav.Profile> {
+                                    composable<BottomBarNav.Profile>(
+                                        enterTransition = {
+                                            slideInFromTop()
+                                        },
+                                        exitTransition = {
+                                            slideOutToTop()
+                                        },
+                                    ) {
                                         ProfilePageStandalone(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = rootController,
@@ -243,25 +278,53 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
 
-                        composable<History> {
+                        composable<History>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) {
                             HistoryStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                             )
                         }
-                        composable<Settings> {
+                        composable<Settings>(
+                            enterTransition = {
+                                slideInFromBottom()
+                            },
+                            exitTransition = {
+                                slideOutToBottom()
+                            },
+                        ) {
                             SettingsPageStandalone(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                             )
                         }
-                        composable<Stats> {
+                        composable<Stats>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) {
                             StatsStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                             )
                         }
-                        composable<Details> { backStackEntry ->
+                        composable<Details>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
                             val details = backStackEntry.toRoute<Details>()
 
                             val target = if (details.isAnime) {
@@ -276,7 +339,14 @@ class MainActivity : AppCompatActivity() {
                                 target = target,
                             )
                         }
-                        composable<Achievements> { backStackEntry ->
+                        composable<Achievements>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
                             val achievements = backStackEntry.toRoute<Achievements>()
 
                             AchievementsStandalonePage(
@@ -286,7 +356,14 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
 
-                        composable<Similar> { backStackEntry ->
+                        composable<Similar>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
                             val similar = backStackEntry.toRoute<Similar>()
 
                             AnimeSimilarStandalonePage(
@@ -296,7 +373,14 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
 
-                        composable<Chronology> { backStackEntry ->
+                        composable<Chronology>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
                             val chronology = backStackEntry.toRoute<Chronology>()
 
                             AnimeChronologyStandalonePage(
@@ -306,7 +390,14 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
 
-                        composable<DetailsStats> { backStackEntry ->
+                        composable<DetailsStats>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
                             val detailsStats = backStackEntry.toRoute<DetailsStats>()
 
                             val scoreList = deserializeListFromString(detailsStats.scoreString)
