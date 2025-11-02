@@ -4,6 +4,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -86,6 +88,7 @@ fun SettingsPage(
             AppToolbar(
                 title = stringResource(R.string.settings_toolbar_title),
                 navigationClick = actions::onBackPressed,
+                navigationIcon = Icons.Filled.Close,
             )
         }
     ) { padding ->
