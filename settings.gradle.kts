@@ -38,6 +38,7 @@ include(":contract:history")
 include(":contract:user")
 include(":contract:anime")
 include(":contract:settings")
+include(":contract:favourite")
 
 // features
 include(":feature:achievements")
