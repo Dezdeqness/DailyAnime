@@ -2,7 +2,7 @@ package com.dezdeqness.data.model.favorite
 
 import com.squareup.moshi.Json
 
-data class FavoriteItemEntity(
+data class FavouriteItemResponse(
     @field:Json(name = "id")
     val id: Long,
     @field:Json(name = "name")
