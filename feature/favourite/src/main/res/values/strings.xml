@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_favourite_title">Favourite</string>
+
+    <string name="title_empty_state">Your list of favourites is empty</string>
+    <string name="title_error_state">Something went wrong</string>
+
+</resources>
