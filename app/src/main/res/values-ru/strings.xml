@@ -28,6 +28,7 @@
     <string name="profile_history">История</string>
     <string name="profile_statistics">Статистика</string>
     <string name="profile_achievements">Достижения</string>
+    <string name="profile_favourites">Избранное</string>
     <string name="profile_logout">Выход из аккаунта</string>
 
     <string name="history_empty_state">Ваша история пуста</string>

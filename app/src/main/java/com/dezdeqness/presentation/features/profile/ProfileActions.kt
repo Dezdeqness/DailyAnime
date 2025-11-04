@@ -8,4 +8,5 @@ interface ProfileActions {
     fun onLoginCLicked()
     fun onLogoutClicked()
     fun onRegistrationClicked()
+    fun onFavouriteClicked(userId: Long)
 }

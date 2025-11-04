@@ -71,6 +71,9 @@ fun ProfileScreen(
                         onAchievementsClicked = {
                             state.userId?.let { actions.onAchievementsClicked(it) }
                         },
+                        onFavouriteClicked = {
+                            state.userId?.let { actions.onFavouriteClicked(it) }
+                        },
                         onLogoutClicked = {
                             actions.onLogoutClicked()
                         }
@@ -106,6 +109,7 @@ fun ProfileScreenPreview() {
                 override fun onAchievementsClicked(userId: Long) = Unit
                 override fun onLoginCLicked() = Unit
                 override fun onRegistrationClicked() = Unit
+                override fun onFavouriteClicked(userId: Long) = Unit
                 override fun onLogoutClicked() = Unit
             }
         )

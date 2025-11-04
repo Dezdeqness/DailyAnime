@@ -9,10 +9,12 @@ import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.presentation.Achievements
+import com.dezdeqness.presentation.Favourites
 import com.dezdeqness.presentation.History
 import com.dezdeqness.presentation.Settings
 import com.dezdeqness.presentation.Stats
 import com.dezdeqness.presentation.event.NavigateToAchievements
+import com.dezdeqness.presentation.event.NavigateToFavourites
 import com.dezdeqness.presentation.event.NavigateToHistory
 import com.dezdeqness.presentation.event.NavigateToLoginPage
 import com.dezdeqness.presentation.event.NavigateToSettings
@@ -58,6 +60,10 @@ fun ProfilePageStandalone(
 
             override fun onRegistrationClicked() =
                 viewModel.onEventReceive(NavigateToSignUp)
+
+            override fun onFavouriteClicked(userId: Long) {
+                viewModel.onEventReceive(NavigateToFavourites(userId))
+            }
         },
     )
 
@@ -88,6 +94,10 @@ fun ProfilePageStandalone(
 
             is NavigateToAchievements -> {
                 navController.navigate(Achievements(userId = event.usedId))
+            }
+
+            is NavigateToFavourites -> {
+                navController.navigate(Favourites(userId = event.usedId))
             }
 
             else -> Unit

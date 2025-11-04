@@ -50,6 +50,8 @@ object NavigateToHistory : Event()
 
 data class NavigateToAchievements(val usedId: Long) : Event()
 
+data class NavigateToFavourites(val usedId: Long) : Event()
+
 object NavigateToLoginPage : Event()
 
 object NavigateToSignUp : Event()

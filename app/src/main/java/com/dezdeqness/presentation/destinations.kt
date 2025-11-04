@@ -30,6 +30,9 @@ object History
 data class Achievements(val userId: Long)
 
 @Serializable
+data class Favourites(val userId: Long)
+
+@Serializable
 object Settings
 
 @Serializable
