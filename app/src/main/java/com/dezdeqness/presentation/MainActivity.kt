@@ -65,6 +65,7 @@ import com.dezdeqness.presentation.features.calendar.CalendarStandalonePage
 import com.dezdeqness.presentation.features.details.DetailsStandalonePage
 import com.dezdeqness.presentation.features.details.Target
 import com.dezdeqness.presentation.features.details.deserializeListFromString
+import com.dezdeqness.presentation.features.favourite.FavouriteStandalonePage
 import com.dezdeqness.presentation.features.history.HistoryStandalonePage
 import com.dezdeqness.presentation.features.home.HomePageStandalone
 import com.dezdeqness.presentation.features.personallist.host.PersonalHostStandalonePage
@@ -353,6 +354,22 @@ class MainActivity : AppCompatActivity() {
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                                 userId = achievements.userId,
+                            )
+                        }
+                        composable<Favourites>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            exitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
+                            val favourites = backStackEntry.toRoute<Favourites>()
+
+                            FavouriteStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                userId = favourites.userId,
                             )
                         }
 
