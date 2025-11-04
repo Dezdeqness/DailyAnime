@@ -20,6 +20,7 @@ import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
+import com.dezdeqness.di.subcomponents.FavouriteSubcomponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
@@ -95,6 +96,8 @@ interface AppComponent {
     fun debugComponent(): DebugComponent.Factory
 
     fun achievementsComponent() : AchievementsSubcomponent.Builder
+
+    fun favouriteComponent() : FavouriteSubcomponent.Builder
 
     val appLogger: AppLogger
 
