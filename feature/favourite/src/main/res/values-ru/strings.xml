@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_favourite_title">Избранное</string>
+    <string name="title_empty_state">На данный момент список избранного пуст</string>
+    <string name="title_error_state">Произошла ошибка</string>
+</resources>
