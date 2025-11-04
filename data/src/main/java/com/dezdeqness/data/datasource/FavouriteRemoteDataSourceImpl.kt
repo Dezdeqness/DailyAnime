@@ -15,7 +15,7 @@ class FavouriteRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getFavourites(userId: Long): Result<List<FavouriteEntity>> =
         tryWithCatch {
-            val response = service.get().getUserFavourites(userId = userId)
+            val response = service.get().getUserFavourites(userId = userId).execute()
 
             val responseBody = response.body()
 
