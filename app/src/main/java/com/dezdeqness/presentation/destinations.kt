@@ -59,3 +59,9 @@ data class Similar(
 data class Chronology(
     val id: Long,
 )
+
+@Serializable
+data class Screenshots(
+    val screenshots: List<String>,
+    val index: Int,
+)

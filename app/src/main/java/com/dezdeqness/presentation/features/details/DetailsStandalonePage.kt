@@ -12,6 +12,7 @@ import com.dezdeqness.di.subcomponents.ArgsModule
 import com.dezdeqness.presentation.Chronology
 import com.dezdeqness.presentation.Details
 import com.dezdeqness.presentation.DetailsStats
+import com.dezdeqness.presentation.Screenshots
 import com.dezdeqness.presentation.Similar
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.AnimeDetails
@@ -41,7 +42,6 @@ fun DetailsStandalonePage(
 
     val viewModel = viewModel<AnimeDetailsViewModel>(factory = detailsComponent.viewModelFactory())
 
-    val applicationRouter = detailsComponent.applicationRouter()
     val analyticsManager = detailsComponent.analyticsManager()
 
     val eventConsumer = remember {
@@ -102,10 +102,11 @@ fun DetailsStandalonePage(
             }
 
             is NavigateToScreenshotViewer -> {
-                applicationRouter.navigateToScreenshotViewerScreen(
-                    context = context,
-                    screenshots = event.screenshots,
-                    index = event.currentIndex,
+                navController.navigate(
+                    Screenshots(
+                        screenshots = event.screenshots,
+                        index = event.currentIndex,
+                    ),
                 )
             }
 

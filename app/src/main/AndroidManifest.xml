@@ -52,11 +52,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerActivity"
-            android:theme="@style/Theme.DailyAnime.Dark"
-            android:windowSoftInputMode="adjustNothing" />
-
         <activity android:name="com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity" />
 
         <provider

@@ -70,6 +70,7 @@ import com.dezdeqness.presentation.features.history.HistoryStandalonePage
 import com.dezdeqness.presentation.features.home.HomePageStandalone
 import com.dezdeqness.presentation.features.personallist.host.PersonalHostStandalonePage
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
+import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
 import com.dezdeqness.presentation.features.stats.StatsStandalonePage
 import com.dezdeqness.presentation.routing.slideInFromBottom
@@ -216,7 +217,7 @@ class MainActivity : AppCompatActivity() {
                                         enterTransition = {
                                             slideInFromTop()
                                         },
-                                        exitTransition = {
+                                        popExitTransition = {
                                             slideOutToTop()
                                         },
                                     ) {
@@ -230,7 +231,7 @@ class MainActivity : AppCompatActivity() {
                                         enterTransition = {
                                             slideInFromTop()
                                         },
-                                        exitTransition = {
+                                        popExitTransition = {
                                             slideOutToTop()
                                         },
                                     ) {
@@ -243,7 +244,7 @@ class MainActivity : AppCompatActivity() {
                                         enterTransition = {
                                             slideInFromTop()
                                         },
-                                        exitTransition = {
+                                        popExitTransition = {
                                             slideOutToTop()
                                         },
                                     ) {
@@ -256,7 +257,7 @@ class MainActivity : AppCompatActivity() {
                                         enterTransition = {
                                             slideInFromTop()
                                         },
-                                        exitTransition = {
+                                        popExitTransition = {
                                             slideOutToTop()
                                         },
                                     ) {
@@ -283,7 +284,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) {
@@ -296,7 +297,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromBottom()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToBottom()
                             },
                         ) {
@@ -309,7 +310,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) {
@@ -322,7 +323,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) { backStackEntry ->
@@ -344,7 +345,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) { backStackEntry ->
@@ -360,7 +361,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) { backStackEntry ->
@@ -377,7 +378,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) { backStackEntry ->
@@ -394,7 +395,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) { backStackEntry ->
@@ -411,7 +412,7 @@ class MainActivity : AppCompatActivity() {
                             enterTransition = {
                                 slideInFromStart()
                             },
-                            exitTransition = {
+                            popExitTransition = {
                                 slideOutToStart()
                             }
                         ) { backStackEntry ->
@@ -426,6 +427,24 @@ class MainActivity : AppCompatActivity() {
                                 navController = rootController,
                                 scoreList = scoreList,
                                 statusesList = statusesList,
+                            )
+                        }
+
+                        composable<Screenshots>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            popExitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
+                            val screenshots = backStackEntry.toRoute<Screenshots>()
+
+                            ScreenshotsViewerStandalone(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                screenshots = screenshots.screenshots,
+                                index = screenshots.index,
                             )
                         }
                     }

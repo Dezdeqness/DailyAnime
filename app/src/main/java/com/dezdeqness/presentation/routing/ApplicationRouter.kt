@@ -3,7 +3,6 @@ package com.dezdeqness.presentation.routing
 import android.content.Context
 import com.dezdeqness.presentation.MainActivity
 import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
-import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerActivity
 import javax.inject.Inject
 
 class ApplicationRouter @Inject constructor() {
@@ -25,19 +24,4 @@ class ApplicationRouter @Inject constructor() {
             AuthorizationActivity.signUpIntent(context)
         )
     }
-
-    fun navigateToScreenshotViewerScreen(
-        context: Context,
-        screenshots: List<String>,
-        index: Int,
-    ) = with(context) {
-        startActivity(
-            ScreenshotsViewerActivity.newIntent(
-                context = context,
-                screenshots = screenshots,
-                currentIndex = index,
-            )
-        )
-    }
-
 }
