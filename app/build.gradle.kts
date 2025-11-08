@@ -197,6 +197,7 @@ dependencies {
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
     implementation(project(":contract:favourite"))
+    implementation(project(":contract:pinned"))
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:screenshotviewer"))

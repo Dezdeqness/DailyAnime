@@ -22,5 +22,5 @@ class PinnedUserRateDataSourceImpl @Inject constructor(
     }
 
     override suspend fun isPinned(userRateId: Long) =
-        dao.isPinned(userRateId = userRateId)
+        dao.isPinned(userRateId = userRateId) > 0
 }

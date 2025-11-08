@@ -187,5 +187,7 @@
 
     <string name="section_history_title">Latest history</string>
 
+    <string name="userrate_action_pin">Pin</string>
+    <string name="userrate_action_unpin">Unpin</string>
 </resources>
 

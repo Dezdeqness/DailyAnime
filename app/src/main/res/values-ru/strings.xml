@@ -180,5 +180,8 @@
     <string name="details_synopsis_label_show_more">… Показать больше</string>
 
     <string name="section_history_title">Последнее в истории</string>
+
+    <string name="userrate_action_pin">Прикрепить</string>
+    <string name="userrate_action_unpin">Открепить</string>
 </resources>
 
