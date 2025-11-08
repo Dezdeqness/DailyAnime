@@ -1,5 +1,7 @@
 package com.dezdeqness.feature.screenshotsviewer
 
+import android.app.DownloadManager
+import android.os.Environment
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -20,9 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import android.app.DownloadManager
-import android.net.Uri
-import android.os.Environment
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
@@ -30,15 +29,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ShareCompat
 import androidx.core.content.getSystemService
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dezdeqness.core.R
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.feature.screenshotsviewer.composables.ScreenshotPager
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,11 +63,9 @@ fun ScreenshotViewerPage(
             items = state.screenshotsList,
             onShow = {
                 isToolbarVisible = true
-                actions.onShowSystemUi()
             },
             onHide = {
                 isToolbarVisible = false
-                actions.onHideSystemUi()
             }
         )
 

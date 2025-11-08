@@ -15,6 +15,15 @@ class ScreenshotsViewModel @Inject constructor(
 
     val effects: Flow<ScreenshotsNamespace.Effect> = store.effects
 
+    fun onScreenshotOpened(screenshots: List<String>, index: Int) {
+        store.accept(
+            event = ScreenshotsNamespace.Event.Initial(
+                screenshots = screenshots,
+                index = index,
+            )
+        )
+    }
+
     fun onShareButtonClicked() {
         store.accept(event = ScreenshotsNamespace.Event.ShareUrlClicked)
     }

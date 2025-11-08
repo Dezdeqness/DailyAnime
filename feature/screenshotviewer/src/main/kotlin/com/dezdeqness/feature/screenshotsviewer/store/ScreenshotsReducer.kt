@@ -3,10 +3,11 @@ package com.dezdeqness.feature.screenshotsviewer.store
 import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Command
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect.DownloadImage
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect.ShareUrl
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.State
 import money.vivid.elmslie.core.store.StateReducer
-import kotlin.text.startsWith
 
 val screenshotReducer = object : StateReducer<Event, State, Effect, Command>() {
 
@@ -26,7 +27,7 @@ val screenshotReducer = object : StateReducer<Event, State, Effect, Command>() {
                 } else {
                     url
                 }
-                effects { +Effect.ShareUrl(url = formattedUrl) }
+                effects { +ShareUrl(url = formattedUrl) }
             }
 
             is Event.DownloadClicked -> {
@@ -38,7 +39,16 @@ val screenshotReducer = object : StateReducer<Event, State, Effect, Command>() {
                     url
                 }
                 val fileName = "screenshot_${System.currentTimeMillis()}.jpg"
-                effects { +Effect.DownloadImage(url = formattedUrl, fileName = fileName) }
+                effects { +DownloadImage(url = formattedUrl, fileName = fileName) }
+            }
+
+            is Event.Initial -> {
+                state {
+                    copy(
+                        screenshotsList = event.screenshots,
+                        index = event.index
+                    )
+                }
             }
         }
     }

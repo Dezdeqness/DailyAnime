@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Shikimori" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/background_tint</item>
@@ -7,9 +7,5 @@
     </style>
 
     <style name="Theme.DailyAnime" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
-
-    <style name="Theme.DailyAnime.Dark" parent="Theme.DailyAnime">
-        <item name="android:statusBarColor">@color/black</item>
-    </style>
 
 </resources>
