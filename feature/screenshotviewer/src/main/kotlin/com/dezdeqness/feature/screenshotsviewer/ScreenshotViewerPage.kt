@@ -58,6 +58,12 @@ fun ScreenshotViewerPage(
             mutableStateOf(true)
         }
 
+        LaunchedEffect(state.screenshotsList.size) {
+            if (state.screenshotsList.isNotEmpty()) {
+                pagerState.scrollToPage(state.index)
+            }
+        }
+
         ScreenshotPager(
             state = pagerState,
             items = state.screenshotsList,
@@ -79,15 +85,19 @@ fun ScreenshotViewerPage(
                             .setText(url)
                             .startChooser()
                     }
+
                     is ScreenshotsNamespace.Effect.DownloadImage -> {
                         try {
                             val downloadManager = context.getSystemService<DownloadManager>()
                             val uri = effect.url.toUri()
-                            
+
                             val request = DownloadManager.Request(uri)
                                 .setTitle(effect.fileName)
                                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, effect.fileName)
+                                .setDestinationInExternalPublicDir(
+                                    Environment.DIRECTORY_DOWNLOADS,
+                                    effect.fileName
+                                )
                                 .setAllowedOverMetered(true)
                                 .setAllowedOverRoaming(true)
                             downloadManager?.enqueue(request)
@@ -101,7 +111,9 @@ fun ScreenshotViewerPage(
 
         LaunchedEffect(pagerState) {
             snapshotFlow { pagerState.currentPage }.collect { page ->
-                actions.onScreenShotChanged(page)
+                if (state.screenshotsList.isNotEmpty()) {
+                    actions.onScreenShotChanged(page)
+                }
             }
         }
 
