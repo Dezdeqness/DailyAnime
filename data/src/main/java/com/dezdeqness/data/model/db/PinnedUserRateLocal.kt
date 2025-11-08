@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "pinned_user_rate")
-data class PinnedUserRate(
+data class PinnedUserRateLocal(
     @PrimaryKey
     val userRateId: Long,
     val groupId: String,

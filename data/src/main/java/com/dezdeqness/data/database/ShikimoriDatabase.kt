@@ -9,7 +9,7 @@ import com.dezdeqness.data.datasource.db.dao.AccountDao
 import com.dezdeqness.data.datasource.db.dao.PinnedUserRateDao
 import com.dezdeqness.data.datasource.db.dao.UserRatesDao
 import com.dezdeqness.data.model.db.AccountLocal
-import com.dezdeqness.data.model.db.PinnedUserRate
+import com.dezdeqness.data.model.db.PinnedUserRateLocal
 import com.dezdeqness.data.model.db.UserRateLocal
 
 @TypeConverters(StatusConverter::class, StatsConverter::class)
@@ -17,7 +17,7 @@ import com.dezdeqness.data.model.db.UserRateLocal
     entities = [
         AccountLocal::class,
         UserRateLocal::class,
-        PinnedUserRate::class
+        PinnedUserRateLocal::class
     ],
     version = 2
 )
