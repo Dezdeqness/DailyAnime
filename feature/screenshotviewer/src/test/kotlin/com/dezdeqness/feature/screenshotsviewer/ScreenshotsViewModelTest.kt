@@ -1,9 +1,9 @@
 package com.dezdeqness.feature.screenshotsviewer
 
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Command
-import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.State
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
+import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.State
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -46,11 +46,26 @@ class ScreenshotsViewModelTest {
 
         verify { store.accept(Event.IndexChanged(3)) }
     }
-    
+
     @Test
     fun `WHEN onDownloadButtonClicked invoked SHOULD call store with DownloadClicked`() {
         viewModel.onDownloadButtonClicked()
-        
+
         verify { store.accept(Event.DownloadClicked) }
+    }
+
+    @Test
+    fun `WHEN onScreenshotOpened invoked SHOULD call store with Initial`() {
+        val list = listOf("url", "url2")
+        viewModel.onScreenshotOpened(screenshots = list, index = 1)
+
+        verify {
+            store.accept(
+                Event.Initial(
+                    screenshots = list,
+                    index = 1,
+                )
+            )
+        }
     }
 }
