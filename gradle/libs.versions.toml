@@ -58,6 +58,7 @@ browser = "1.8.0"
 tink = "1.17.0"
 protobuf = "4.28.3"
 screenshot = "0.0.1-alpha09"
+runtimeVersion = "1.9.4"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
@@ -148,6 +149,7 @@ leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.r
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 google-tink = { module = "com.google.crypto.tink:tink-android", version.ref = "tink" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtimeVersion" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidVersion" }
