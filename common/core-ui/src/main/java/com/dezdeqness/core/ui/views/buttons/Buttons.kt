@@ -19,6 +19,7 @@ import com.dezdeqness.core.ui.theme.AppTheme
 @Composable
 fun AppButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     title: String,
     titleStyle: TextStyle = AppTheme.typography.titleMedium,
     shape: Shape = AppTheme.shapes.medium,
@@ -26,6 +27,7 @@ fun AppButton(
 ) {
     Button(
         shape = shape,
+        enabled = enabled,
         modifier = Modifier
             .then(modifier),
         onClick = { onClick() },
