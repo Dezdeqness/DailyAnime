@@ -82,3 +82,5 @@ data class AuthUrl(val url: String) : Event()
 data object HandlePermission : Event()
 
 data object OpenSettingsAlarm : Event()
+
+data object OpenSelectGenresPage : Event()

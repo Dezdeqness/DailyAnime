@@ -30,4 +30,5 @@ interface SettingActions {
     fun invalidate()
 
     fun onDebugOptionsClicked()
+    fun onSelectInterestsClicked()
 }

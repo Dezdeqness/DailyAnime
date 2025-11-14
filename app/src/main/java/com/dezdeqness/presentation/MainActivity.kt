@@ -73,6 +73,7 @@ import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
 import com.dezdeqness.presentation.features.stats.StatsStandalonePage
+import com.dezdeqness.presentation.features.useroboarding.selectgenres.SelectGenresStandalonePage
 import com.dezdeqness.presentation.routing.slideInFromBottom
 import com.dezdeqness.presentation.routing.slideInFromStart
 import com.dezdeqness.presentation.routing.slideInFromTop
@@ -302,6 +303,19 @@ class MainActivity : AppCompatActivity() {
                             },
                         ) {
                             SettingsPageStandalone(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                            )
+                        }
+                        composable<SelectGenres>(
+                            enterTransition = {
+                                slideInFromBottom()
+                            },
+                            popExitTransition = {
+                                slideOutToBottom()
+                            },
+                        ) {
+                            SelectGenresStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                             )

@@ -202,6 +202,7 @@ dependencies {
     implementation(project(":feature:screenshotviewer"))
     implementation(project(":feature:history"))
     implementation(project(":feature:favourite"))
+    implementation(project(":feature:onboarding"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

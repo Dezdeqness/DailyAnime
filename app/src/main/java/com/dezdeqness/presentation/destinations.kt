@@ -36,6 +36,9 @@ data class Favourites(val userId: Long)
 object Settings
 
 @Serializable
+object SelectGenres
+
+@Serializable
 object Stats
 
 @Serializable
