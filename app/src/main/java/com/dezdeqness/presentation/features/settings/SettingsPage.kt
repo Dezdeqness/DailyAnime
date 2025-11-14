@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -139,6 +142,23 @@ fun SettingsPage(
 
             item {
                 HeaderCustomSettingsView(title = stringResource(R.string.settings_content_section))
+            }
+
+            item {
+                TextSettingsView(
+                    title = stringResource(R.string.settings_select_interests_title),
+                    subtitle = state.notificationTimeData.formattedTime,
+                    suffixIcon = {
+                        Icon(
+                            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                            contentDescription = null,
+                            tint = AppTheme.colors.textPrimary,
+                        )
+                    },
+                    onClick = {
+                        actions.onSelectInterestsClicked()
+                    }
+                )
             }
 
             item {

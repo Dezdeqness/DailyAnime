@@ -28,6 +28,7 @@ import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
 import com.dezdeqness.di.subcomponents.RoutingComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
+import com.dezdeqness.di.subcomponents.SelectGenresSubcomponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
@@ -98,6 +99,8 @@ interface AppComponent {
     fun achievementsComponent() : AchievementsSubcomponent.Builder
 
     fun favouriteComponent() : FavouriteSubcomponent.Builder
+
+    fun selectGenresComponent() : SelectGenresSubcomponent.Factory
 
     val appLogger: AppLogger
 

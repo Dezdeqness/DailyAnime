@@ -16,6 +16,8 @@ import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.presentation.SelectGenres
+import com.dezdeqness.presentation.event.OpenSelectGenresPage
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
@@ -110,6 +112,10 @@ fun SettingsPageStandalone(
             override fun onDebugOptionsClicked() {
                 context.startActivity(DebugScreenActivity.newIntent(context = context))
             }
+
+            override fun onSelectInterestsClicked() {
+                viewModel.onSelectInterestsClicked()
+            }
         }
     )
 
@@ -131,6 +137,9 @@ fun SettingsPageStandalone(
                     }
                     context.startActivity(intent)
                 }
+            }
+            is OpenSelectGenresPage -> {
+               navController.navigate(SelectGenres)
             }
             else -> {}
         }

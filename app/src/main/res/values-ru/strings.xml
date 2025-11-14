@@ -54,6 +54,7 @@
     <string name="settings_image_cache_clear_title">Очистить кэш изоражений</string>
     <string name="settings_content_section">Контент</string>
     <string name="settings_adult_content_title">Показать +18 контент</string>
+    <string name="settings_select_interests_title">Выбрать интересы</string>
 
     <string name="notification_daily_description">Не забудьте отслеживать свой прогресс в приложении!</string>
 

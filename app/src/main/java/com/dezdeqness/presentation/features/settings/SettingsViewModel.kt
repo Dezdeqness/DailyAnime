@@ -20,6 +20,7 @@ import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.presentation.event.OpenSelectGenresPage
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.personallist.PersonalRibbonMapper
@@ -245,5 +246,9 @@ class SettingsViewModel @Inject constructor(
                 isNotificationsTurnOn = alarmManagerProvider.canScheduleExactAlarms(),
             )
         }
+    }
+
+    fun onSelectInterestsClicked() {
+        onEventReceive(OpenSelectGenresPage)
     }
 }
