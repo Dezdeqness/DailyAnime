@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_select_genres_header">Выберите интересы</string>
+    <string name="onboarding_select_genres_title_genres">Жанры</string>
+    <string name="onboarding_select_genres_title_themes">Темы</string>
+     <string name="onboarding_select_genres_save">Сохранить</string>
+</resources>
