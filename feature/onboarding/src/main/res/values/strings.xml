@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_select_genres_header">Choose interests</string>
+    <string name="onboarding_select_genres_title_genres">Genres</string>
+    <string name="onboarding_select_genres_title_themes">Themes</string>
+    <string name="onboarding_select_genres_save">Save</string>
+</resources>
