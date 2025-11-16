@@ -5,6 +5,8 @@ import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.AccountEntity
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.core.AppLogger
@@ -28,6 +30,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -69,6 +72,9 @@ class HomeViewModelTest {
     @MockK
     private lateinit var imageUrlUtils: ImageUrlUtils
 
+    @MockK
+    private lateinit var settingsRepository: SettingsRepository
+
     private lateinit var viewModel: HomeViewModel
 
     @Before
@@ -95,6 +101,11 @@ class HomeViewModelTest {
         every { accountEntity.nickname } returns DEFAULT_USERNAME
         every { accountEntity.avatar } returns DEFAULT_AVATAR_URL
 
+        coEvery {
+            settingsRepository.observePreference(UserSelectedInterestsPreference)
+        } returns flowOf(emptyList())
+
+
         viewModel = HomeViewModel(
             animeUiMapper = animeUiMapper,
             actionConsumer = actionConsumer,
@@ -108,6 +119,7 @@ class HomeViewModelTest {
             authRepository = authRepository,
             imageUrlUtils = imageUrlUtils,
             getLatestHistoryItemUseCase = getLatestHistoryItemUseCase,
+            settingsRepository = settingsRepository,
         )
     }
 
