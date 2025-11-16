@@ -45,8 +45,7 @@ class HomeViewModel @Inject constructor(
     appLogger = appLogger,
 ) {
 
-    private val _homeStateFlow: MutableStateFlow<HomeState> =
-        MutableStateFlow(HomeState(sectionsState = homeComposer.composeSectionsInitial()))
+    private val _homeStateFlow: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val homeStateFlow: StateFlow<HomeState> get() = _homeStateFlow
 
     init {
@@ -65,6 +64,13 @@ class HomeViewModel @Inject constructor(
                 .collect {
                     loadInterestsSections(resetSections = true)
                 }
+        }
+
+        launchOnIo {
+            val sectionsState = homeComposer.composeSectionsInitial()
+            _homeStateFlow.update {
+                it.copy(sectionsState = sectionsState)
+            }
         }
     }
 
@@ -141,13 +147,13 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadInterestsSections(resetSections: Boolean = false) {
-        if (resetSections) {
-            _homeStateFlow.update {
-                it.copy(sectionsState = homeComposer.composeSectionsInitial())
-            }
-        }
         onInitialLoad(
             action = {
+                if (resetSections) {
+                    _homeStateFlow.update {
+                        it.copy(sectionsState = homeComposer.composeSectionsInitial())
+                    }
+                }
                 homeRepository.getHomeSections(homeGenresProvider.getHomeSectionGenresIds())
             },
             onLoading = { isLoading ->

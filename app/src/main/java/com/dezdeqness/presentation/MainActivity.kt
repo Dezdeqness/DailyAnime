@@ -25,6 +25,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -36,6 +37,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -82,8 +84,8 @@ import com.dezdeqness.presentation.routing.slideOutToStart
 import com.dezdeqness.presentation.routing.slideOutToTop
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -102,6 +104,8 @@ class MainActivity : AppCompatActivity() {
             viewModelFactory
         }
     )
+
+    private val initialSectionFlow = MutableStateFlow<InitialSection?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,14 +129,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val section =
-            runBlocking(application.getComponent().coroutineDispatcherProvider().io()) {
-                application
-                    .getComponent()
-                    .settingsRepository()
-                    .getPreference(InitialSectionPreference)
-            }
+        lifecycleScope.launch {
+            val section = application
+                .getComponent()
+                .settingsRepository()
+                .getPreference(InitialSectionPreference)
 
+            initialSectionFlow.value = section
+        }
         setContent {
             val rootController = rememberNavController()
             val snackbarHostState = remember { SnackbarHostState() }
@@ -140,6 +144,9 @@ class MainActivity : AppCompatActivity() {
             val coroutineScope = rememberCoroutineScope()
 
             AppTheme {
+
+                val section by initialSectionFlow.collectAsStateWithLifecycle()
+
                 Box(modifier = Modifier.fillMaxSize()) {
 
                     NavHost(
@@ -200,9 +207,12 @@ class MainActivity : AppCompatActivity() {
                                 },
                                 containerColor = AppTheme.colors.background,
                             ) { padding ->
+                                val localSection = section
+                                if (localSection == null) return@Scaffold
+
                                 NavHost(
                                     navController = navController,
-                                    startDestination = sectionToRoute(section),
+                                    startDestination = sectionToRoute(localSection),
                                     modifier = Modifier
                                         .padding(padding)
                                         .fillMaxSize()

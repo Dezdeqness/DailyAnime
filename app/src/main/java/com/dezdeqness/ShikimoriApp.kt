@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.CoroutineContext
 
 class ShikimoriApp : Application(), CoroutineScope {
@@ -41,13 +40,13 @@ class ShikimoriApp : Application(), CoroutineScope {
                 )
             }
 
-        Coil.setImageLoader(
-            createImageLoader(
-                runBlocking {
+        launch {
+            Coil.setImageLoader(
+                createImageLoader(
                     appComponent.settingsRepository.getPreference(ImageCacheMaxSizePreference)
-                },
-            ),
-        )
+                ),
+            )
+        }
 
         launch {
             appComponent.settingsRepository

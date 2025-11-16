@@ -7,7 +7,7 @@ class HomeComposer(
     private val homeGenresProvider: HomeGenresProvider,
 ) {
 
-    fun composeSectionsInitial(): SectionsState {
+    suspend fun composeSectionsInitial(): SectionsState {
         val sections = homeGenresProvider.getHomeSectionGenres().map { genre ->
             SectionUiModel(
                 id = genre.id,

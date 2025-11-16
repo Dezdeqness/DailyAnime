@@ -1,5 +1,6 @@
 package com.dezdeqness.data.core.config
 
+import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.local.DebugConfigProvider
 import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
@@ -40,7 +41,7 @@ class ConfigManager(
     }
 
     fun <T> getValue(key: ConfigKeys) =
-        if (configSettingsProvider.isOverrideRemoteEnabled() == true) {
+        if (BuildConfig.DEBUG && configSettingsProvider.isOverrideRemoteEnabled() == true) {
             getValue<T>(debugConfigProvider, key)
         } else {
             getValue<T>(remoteConfigProvider, key)
