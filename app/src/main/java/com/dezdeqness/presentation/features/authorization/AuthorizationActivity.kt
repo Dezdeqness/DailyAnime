@@ -110,10 +110,10 @@ class AuthorizationActivity : AppCompatActivity() {
                             val intent = Intent(Intent.ACTION_VIEW, uri)
                             if (intent.resolveActivity(this@AuthorizationActivity.packageManager) != null) {
                                 try {
-                                    analyticsManager.authFailed(AuthStatus.CustomTabOpen)
+                                    analyticsManager.authStatusTracked(AuthStatus.CustomTabOpen)
                                     customTabsIntent.launchUrl(this@AuthorizationActivity, uri)
                                 } catch (_: ActivityNotFoundException) {
-                                    analyticsManager.authFailed(AuthStatus.NoAppToOpen)
+                                    analyticsManager.authStatusTracked(AuthStatus.NoAppToOpen)
                                     this@AuthorizationActivity.startActivity(
                                         Intent(
                                             Intent.ACTION_VIEW,
@@ -122,7 +122,7 @@ class AuthorizationActivity : AppCompatActivity() {
                                     )
                                 }
                             } else {
-                                analyticsManager.authFailed(AuthStatus.NoAppToOpen)
+                                analyticsManager.authStatusTracked(AuthStatus.NoAppToOpen)
                                 Toast
                                     .makeText(
                                         this@AuthorizationActivity,

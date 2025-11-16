@@ -111,7 +111,7 @@ class AnalyticsManagerImpl(
         logEvent(event)
     }
 
-    override fun authFailed(status: AuthStatus) {
+    override fun authStatusTracked(status: AuthStatus) {
         val data = bundleOf().apply {
             putUserId()
             putAll(deviceInfo)
