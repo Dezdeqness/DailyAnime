@@ -245,12 +245,14 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun invalidate() {
-        val selectedInterests = homeGenresProvider.getHomeSectionGenres().map { it.name }
-        _settingsStateFlow.update {
-            it.copy(
-                isNotificationsTurnOn = alarmManagerProvider.canScheduleExactAlarms(),
-                selectedInterests = ImmutableList.copyOf(selectedInterests),
-            )
+        launchOnIo {
+            val selectedInterests = homeGenresProvider.getHomeSectionGenres().map { it.name }
+            _settingsStateFlow.update {
+                it.copy(
+                    isNotificationsTurnOn = alarmManagerProvider.canScheduleExactAlarms(),
+                    selectedInterests = ImmutableList.copyOf(selectedInterests),
+                )
+            }
         }
     }
 

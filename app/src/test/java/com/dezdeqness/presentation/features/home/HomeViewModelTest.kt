@@ -90,8 +90,8 @@ class HomeViewModelTest {
 
         every { authRepository.authorizationState() } returns MutableSharedFlow()
 
-        every { homeComposer.composeSectionsInitial() } returns SectionsState(genreSections = DEFAULT_SECTIONS)
-        every { homeGenresProvider.getHomeSectionGenresIds() } returns DEFAULT_SECTIONS_IDS
+        coEvery { homeComposer.composeSectionsInitial() } returns SectionsState(genreSections = DEFAULT_SECTIONS)
+        coEvery { homeGenresProvider.getHomeSectionGenresIds() } returns DEFAULT_SECTIONS_IDS
         every { authRepository.isAuthorized() } returns true
 
         every { getLatestHistoryItemUseCase.invoke() } returns Result.success(null)
