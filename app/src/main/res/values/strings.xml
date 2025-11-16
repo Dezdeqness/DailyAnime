@@ -123,6 +123,7 @@
 
     <string name="general_error">Something went wrong</string>
     <string name="general_no_internet_error">No internet. Check your connection</string>
+    <string name="general_no_app_view">No application found to proceed authorization</string>
 
     <string name="anime_chronology_title">Chronology</string>
     <string name="anime_similar_title">Similar</string>

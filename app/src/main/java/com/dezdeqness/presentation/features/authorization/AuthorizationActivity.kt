@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.authorization
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
+import com.dezdeqness.data.analytics.AnalyticsManager
+import com.dezdeqness.data.analytics.model.AuthStatus
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.databinding.ActivityAuthorizationBinding
 import com.dezdeqness.di.subcomponents.AuthorizationArgsModule
@@ -34,6 +37,9 @@ class AuthorizationActivity : AppCompatActivity() {
 
     @Inject
     lateinit var configManager: ConfigManager
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     private val authorizationViewModel by viewModels<AuthorizationViewModel>(
         factoryProducer = {
@@ -94,11 +100,38 @@ class AuthorizationActivity : AppCompatActivity() {
                                 .show()
                             finish()
                         }
+
                         is AuthUrl -> {
+                            val uri = event.url.toUri()
                             val customTabsIntent = CustomTabsIntent
                                 .Builder()
                                 .build()
-                            customTabsIntent.launchUrl(this@AuthorizationActivity, event.url.toUri())
+
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            if (intent.resolveActivity(this@AuthorizationActivity.packageManager) != null) {
+                                try {
+                                    analyticsManager.authFailed(AuthStatus.CustomTabOpen)
+                                    customTabsIntent.launchUrl(this@AuthorizationActivity, uri)
+                                } catch (_: ActivityNotFoundException) {
+                                    analyticsManager.authFailed(AuthStatus.NoAppToOpen)
+                                    this@AuthorizationActivity.startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            uri
+                                        )
+                                    )
+                                }
+                            } else {
+                                analyticsManager.authFailed(AuthStatus.NoAppToOpen)
+                                Toast
+                                    .makeText(
+                                        this@AuthorizationActivity,
+                                        R.string.general_no_app_view,
+                                        Toast.LENGTH_LONG
+                                    )
+                                    .show()
+                                finish()
+                            }
                         }
 
                         is AuthorizationSuccess -> {

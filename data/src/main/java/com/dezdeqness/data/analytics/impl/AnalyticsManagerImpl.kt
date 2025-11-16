@@ -3,10 +3,11 @@ package com.dezdeqness.data.analytics.impl
 import android.os.Build
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.model.AnalyticsEvent
 import com.dezdeqness.data.analytics.model.AnalyticsScreenName
-import com.dezdeqness.contract.user.repository.UserRepository
+import com.dezdeqness.data.analytics.model.AuthStatus
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -110,6 +111,17 @@ class AnalyticsManagerImpl(
         logEvent(event)
     }
 
+    override fun authFailed(status: AuthStatus) {
+        val data = bundleOf().apply {
+            putUserId()
+            putAll(deviceInfo)
+            putString(AUTH_STATUS, status.name)
+        }
+
+        val event = AnalyticsEvent(screenName = AnalyticsScreenName.Auth, data = data)
+        logEvent(event)
+    }
+
     private fun Bundle.putUserId() = this.apply {
         putString(USER_ID, getUserId())
     }
@@ -129,5 +141,6 @@ class AnalyticsManagerImpl(
         private const val LOGIN_FLOW = "loginFlow"
         private const val ANIME_ID = "animeId"
         private const val ANIME_TITLE = "animeTitle"
+        private const val AUTH_STATUS = "authStatus"
     }
 }

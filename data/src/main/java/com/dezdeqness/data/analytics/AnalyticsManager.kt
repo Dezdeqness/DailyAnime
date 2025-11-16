@@ -1,5 +1,7 @@
 package com.dezdeqness.data.analytics
 
+import com.dezdeqness.data.analytics.model.AuthStatus
+
 interface AnalyticsManager {
     fun personalListTracked()
     fun homeTracked()
@@ -9,4 +11,6 @@ interface AnalyticsManager {
     fun detailsTracked(id: String, title: String)
     fun settingsTracked()
     fun authTracked(isLogin: Boolean = true)
+
+    fun authFailed(status: AuthStatus)
 }
