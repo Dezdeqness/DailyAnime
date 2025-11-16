@@ -12,5 +12,5 @@ interface AnalyticsManager {
     fun settingsTracked()
     fun authTracked(isLogin: Boolean = true)
 
-    fun authFailed(status: AuthStatus)
+    fun authStatusTracked(status: AuthStatus)
 }
