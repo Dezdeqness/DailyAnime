@@ -18,6 +18,7 @@ import com.dezdeqness.core.ui.TimeData
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
+import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.presentation.event.OpenSelectGenresPage
@@ -41,6 +42,7 @@ class SettingsViewModel @Inject constructor(
     private val workSchedulerManager: WorkSchedulerManager,
     private val configManager: ConfigManager,
     private val alarmManagerProvider: AlarmManagerProvider,
+    private val homeGenresProvider: HomeGenresProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -71,6 +73,7 @@ class SettingsViewModel @Inject constructor(
                             statusesProvider.getStatuses().map { it.groupedId }
                         }
                     ).mapNotNull { statuses[it] }
+            val selectedInterests = homeGenresProvider.getHomeSectionGenres().map { it.name }
 
             _settingsStateFlow.update {
                 it.copy(
@@ -87,6 +90,7 @@ class SettingsViewModel @Inject constructor(
                     isCalendarEnabled = configManager.isCalendarEnabled,
                     maxImageCacheSize = maxImageCacheSize,
                     isAdultContentEnabled = isAdultContentEnabled,
+                    selectedInterests = ImmutableList.copyOf(selectedInterests)
                 )
             }
         }
@@ -241,9 +245,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun invalidate() {
+        val selectedInterests = homeGenresProvider.getHomeSectionGenres().map { it.name }
         _settingsStateFlow.update {
             it.copy(
                 isNotificationsTurnOn = alarmManagerProvider.canScheduleExactAlarms(),
+                selectedInterests = ImmutableList.copyOf(selectedInterests),
             )
         }
     }

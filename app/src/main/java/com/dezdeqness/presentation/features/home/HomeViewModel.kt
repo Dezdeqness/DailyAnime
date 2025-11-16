@@ -3,6 +3,8 @@ package com.dezdeqness.presentation.features.home
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
@@ -20,6 +22,7 @@ import com.dezdeqness.presentation.features.home.model.SectionStatus
 import com.dezdeqness.presentation.features.home.model.SectionUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -33,7 +36,8 @@ class HomeViewModel @Inject constructor(
     private val configManager: ConfigManager,
     private val getLatestHistoryItemUseCase: GetLatestHistoryItemUseCase,
     private val imageUrlUtils: ImageUrlUtils,
-    homeComposer: HomeComposer,
+    private val settingsRepository: SettingsRepository,
+    private val homeComposer: HomeComposer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     appLogger: AppLogger,
 ) : BaseViewModel(
@@ -53,6 +57,15 @@ class HomeViewModel @Inject constructor(
                 handleProfileState()
             }
         }
+
+        launchOnIo {
+            settingsRepository
+                .observePreference(UserSelectedInterestsPreference)
+                .drop(1)
+                .collect {
+                    loadInterestsSections(resetSections = true)
+                }
+        }
     }
 
     override val viewModelTag = "HomeViewModel"
@@ -68,6 +81,11 @@ class HomeViewModel @Inject constructor(
             handleProfileState()
         }
 
+        loadLastHistorySection()
+        loadInterestsSections()
+    }
+
+    private fun loadLastHistorySection() {
         onInitialLoad(
             action = {
                 getLatestHistoryItemUseCase.invoke()
@@ -120,7 +138,14 @@ class HomeViewModel @Inject constructor(
                 }
             }
         )
+    }
 
+    private fun loadInterestsSections(resetSections: Boolean = false) {
+        if (resetSections) {
+            _homeStateFlow.update {
+                it.copy(sectionsState = homeComposer.composeSectionsInitial())
+            }
+        }
         onInitialLoad(
             action = {
                 homeRepository.getHomeSections(homeGenresProvider.getHomeSectionGenresIds())
