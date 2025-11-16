@@ -51,12 +51,7 @@ fun AppOutlinedButton(
         shape = shape,
         modifier = Modifier
             .then(modifier),
-        colors = ButtonDefaults.outlinedButtonColors().copy(
-            containerColor = AppTheme.colors.onPrimary,
-            disabledContainerColor = AppTheme.colors.onPrimary,
-            contentColor = AppTheme.colors.textPrimary,
-            disabledContentColor = AppTheme.colors.textPrimary.copy(alpha = 0.38f),
-        ),
+        colors = ButtonDefaults.outlinedButtonColors().copy(containerColor = AppTheme.colors.onPrimary),
         onClick = { onClick() },
     ) {
         Text(
