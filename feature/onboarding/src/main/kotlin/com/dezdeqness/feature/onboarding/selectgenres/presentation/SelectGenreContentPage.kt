@@ -1,5 +1,10 @@
 package com.dezdeqness.feature.onboarding.selectgenres.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,15 +63,25 @@ fun SelectGenresContentPage(
                 onGenreClick = actions::onGenreClicked,
             )
 
-            AppButton(
-                title = stringResource(R.string.onboarding_select_genres_save),
-                onClick = { actions.onSaveClicked() },
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 8.dp)
-                    .fillMaxWidth(),
-            )
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                visible = state.selectedGenres.size >= 3,
+                enter = slideInVertically(
+                    initialOffsetY = { it }
+                ) + fadeIn(),
+                exit = slideOutVertically(
+                    targetOffsetY = { it }
+                ) + fadeOut()
+            ) {
+                AppButton(
+                    title = stringResource(R.string.onboarding_select_genres_save),
+                    onClick = { actions.onSaveClicked() },
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth()
+                )
+            }
         }
     }
 }
@@ -97,8 +112,10 @@ fun SelectGenresContentPageNonSavePreview() {
             actions = object : SelectGenresActions {
                 override fun onBackPressed() {
                 }
+
                 override fun onGenreClicked(genreId: String) {
                 }
+
                 override fun onSaveClicked() {
                 }
             }
@@ -132,8 +149,10 @@ fun SelectGenresContentPagePreview() {
             actions = object : SelectGenresActions {
                 override fun onBackPressed() {
                 }
+
                 override fun onGenreClicked(genreId: String) {
                 }
+
                 override fun onSaveClicked() {
                 }
             }

@@ -1,13 +1,16 @@
 package com.dezdeqness.data.provider
 
 import com.dezdeqness.contract.anime.model.GenreEntity
-import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.contract.anime.model.TypeEntity
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.data.core.config.ConfigManager
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HomeGenresProvider(
+@Singleton
+class HomeGenresProvider @Inject constructor(
     private val configurationProvider: ConfigurationProvider,
     private val configManager: ConfigManager,
     private val settingsRepository: SettingsRepository,
@@ -21,9 +24,7 @@ class HomeGenresProvider(
             settingsRepository.getPreference(UserSelectedInterestsPreference)
         }
 
-        val ids = if (userSelected.isNotEmpty()) {
-            userSelected.mapNotNull { it.toIntOrNull() }
-        } else {
+        val ids = userSelected.ifEmpty {
             configManager.homeGenresList
         }
 

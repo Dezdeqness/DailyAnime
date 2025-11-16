@@ -20,7 +20,11 @@ data class SettingsState(
     val maxImageCacheSize: Int = 512,
     val isMaxImageCacheSizeDialogShown: Boolean = false,
     val isAdultContentEnabled: Boolean = false,
+    val selectedInterests: ImmutableList<String> = ImmutableList.of(),
 ) {
     val ribbonSettingsSubTitle: String
         get() = personalRibbonStatuses.joinToString(", ") { it.displayName }
+
+    val selectedInterestsSubTitle: String
+        get() = selectedInterests.joinToString(", ") { it }
 }
