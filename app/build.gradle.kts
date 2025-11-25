@@ -45,19 +45,28 @@ android {
 
     signingConfigs {
         create("release") {
-            val props = Properties().apply {
-                val file = if (rootProject.file("build.jenkins.properties").exists())
-                    rootProject.file("build.jenkins.properties")
-                else
-                    rootProject.file("build.properties")
+            val keystoreFile = System.getenv("KEYSTORE_FILE")
+            val keystorePassword = System.getenv("KEYSTORE_PASSWORD")
+            val keyAlias = System.getenv("KEY_ALIAS")
+            val keyPassword = System.getenv("KEY_PASSWORD")
+            
+            if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null) {
+                storeFile = file(keystoreFile)
+                storePassword = keystorePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            } else {
+                val propsFile = rootProject.file("build.properties")
 
-                load(file.inputStream())
+                val props = Properties().apply {
+                    load(propsFile.inputStream())
+                }
+
+                this.keyAlias = props["keystore.key.alias"] as String
+                this.keyPassword = props["keystore.key.password"] as String
+                storeFile = file(props["keystore.release"] as String)
+                storePassword = props["keystore.password"] as String
             }
-
-            keyAlias = props["keystore.key.alias"] as String
-            keyPassword = props["keystore.key.password"] as String
-            storeFile = file(props["keystore.release"] as String)
-            storePassword = props["keystore.password"] as String
         }
     }
 
@@ -210,27 +219,31 @@ dependencies {
 fun Project.getParsedVersionCode(projectName: String): Int {
     println("Project name: $projectName")
     val versionName = properties["version"].toString()
-    val parts = versionName.split(".")
+    
+    val versionWithoutHash = versionName.split("-")[0]
+    val parts = versionWithoutHash.split(".")
     println("Parts: $parts")
 
     if (parts.size != 3) {
-        throw IllegalArgumentException("Version name must have three parts: major.minor.patch")
+        throw IllegalArgumentException("Version name must have three parts: major.minor.patch (optional: -hash)")
     }
 
     val major = parts[0].toInt()
     val minor = parts[1].toInt()
     val patch = parts[2].toInt()
 
-    val incrementPostfixNumber = System.getenv("RELEASE_VERSION_CODE")?.toIntOrNull() ?: 999
+    val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull()
+        ?: properties["buildNumber"]?.toString()?.toIntOrNull() 
+        ?: 999
 
     println("Version is $versionName")
     println("Major: $major")
     println("Minor: $minor")
     println("Patch: $patch")
-    println("Postfix: $incrementPostfixNumber")
+    println("Build number: $buildNumber")
 
-    val versionCode = major * 10000000 + minor * 100000 + patch * 1000 + incrementPostfixNumber
+    val versionCode = major * 10000000 + minor * 100000 + patch * 1000 + buildNumber
     println("Version code: $versionCode")
 
-    return incrementPostfixNumber
+    return versionCode
 }
