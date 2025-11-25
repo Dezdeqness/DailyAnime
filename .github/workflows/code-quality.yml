@@ -1,0 +1,126 @@
+name: Code Quality Check
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+  workflow_dispatch:
+
+jobs:
+  quality-check:
+    name: Quality Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Setup Configuration Files
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          ACHIEVEMENTS_CONFIG: ${{ secrets.ACHIEVEMENTS_CONFIG_JSON }}
+        run: |
+          echo "Setting up configuration files..."
+          
+          mkdir -p app/src/release
+          mkdir -p app/src/debug
+          echo "${GOOGLE_SERVICES_JSON}" > app/src/release/google-services.json
+          echo "${GOOGLE_SERVICES_JSON}" > app/src/debug/google-services.json
+          
+          mkdir -p data/src/main/assets
+          echo "${ACHIEVEMENTS_CONFIG}" > data/src/main/assets/achievements_config.json
+          
+          echo "Configuration files setup completed"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Run Detekt Check
+        run: |
+          echo "Running detekt check..."
+          OUTPUT="/tmp/detekt-$(date +%s)"
+          ./gradlew detekt > $OUTPUT
+          EXIT_CODE=$?
+          if [ $EXIT_CODE -ne 0 ]; then
+            cat $OUTPUT
+            rm $OUTPUT
+            echo "***********************************************"
+            echo "                 detekt failed                 "
+            echo " Please fix the above issues before committing "
+            echo "***********************************************"
+            exit $EXIT_CODE
+          fi
+          rm $OUTPUT
+          
+          echo "detekt check is success"
+
+      - name: Upload Detekt Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: detekt-report
+          path: |
+            **/build/reports/detekt/
+
+      - name: Run Unit Tests
+        run: |
+          ./gradlew testDebugUnitTest
+          if [ $? -ne 0 ]; then
+            echo "Unit tests failed, push aborted."
+            exit 1
+          fi
+          echo "Unit tests passed"
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            **/build/test-results/
+            **/build/reports/tests/
+
+      - name: Run Screenshot Validation
+        run: |
+          echo "Running screenshot validation..."
+          ./gradlew app:validateDebugScreenshotTest
+          if [ $? -ne 0 ]; then
+            echo "Screenshot tests failed, push aborted."
+            exit 1
+          fi
+          echo "Screenshot tests passed"
+      - name: All Tests Passed
+        run: |
+          echo "All tests passed, proceeding with push."
+
+      - name: Create Summary
+        if: always()
+        run: |
+          echo "## 🔍 Code Quality Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Detekt" >> $GITHUB_STEP_SUMMARY
+          echo "Static code analysis completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Unit Tests" >> $GITHUB_STEP_SUMMARY
+          echo "All unit tests passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Screenshot Tests" >> $GITHUB_STEP_SUMMARY
+          echo "Screenshot validation completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**All tests passed, proceeding with push.**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY

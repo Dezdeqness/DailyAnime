@@ -1,0 +1,212 @@
+name: Release Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build from'
+        required: true
+        default: 'master'
+      build_number:
+        description: 'Build number (leave empty to auto-increment from last)'
+        required: false
+        default: ''
+      skip_tests:
+        description: 'Skip tests'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Determine Build Number
+        id: build_number
+        run: |
+          GRADLE_FILE='app/gradle.properties'
+          INPUT_BUILD_NUMBER="${{ github.event.inputs.build_number }}"
+          
+          CURRENT_BUILD_NUMBER=$(cat "${GRADLE_FILE}" | grep -oP 'buildNumber=\K\d+' || echo "0")
+          echo "Current build number in file: ${CURRENT_BUILD_NUMBER}"
+          
+          if [ -z "${INPUT_BUILD_NUMBER}" ]; then
+            # Auto-increment from current value
+            NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
+            echo "Auto-incremented build number: ${NEW_BUILD_NUMBER}"
+          else
+            NEW_BUILD_NUMBER="${INPUT_BUILD_NUMBER}"
+            echo "Using provided build number: ${NEW_BUILD_NUMBER}"
+          fi
+          
+          echo "build_number=${NEW_BUILD_NUMBER}" >> $GITHUB_OUTPUT
+          echo "Build number to use: ${NEW_BUILD_NUMBER}"
+
+      - name: Read Version Name
+        id: version_name
+        run: |
+          GRADLE_FILE='app/gradle.properties'
+          FULL_VERSION=$(cat "${GRADLE_FILE}" | grep -oP 'version=\K\d+\.\d+\.\d+(-[a-f0-9]+)?')
+          VERSION_NAME=$(echo "${FULL_VERSION}" | cut -d'-' -f1)
+          
+          echo "version_name=${VERSION_NAME}" >> $GITHUB_OUTPUT
+          echo "Version name: ${VERSION_NAME}"
+
+      - name: Setup Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+        run: |
+          echo "Setting up keystore..."
+          echo "${KEYSTORE_BASE64}" | base64 -d > release.jks
+          echo "Keystore created: release.jks"
+
+      - name: Setup Configuration Files
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          ACHIEVEMENTS_CONFIG: ${{ secrets.ACHIEVEMENTS_CONFIG_JSON }}
+        run: |
+          echo "Setting up configuration files..."
+          
+          # google-services.json for release and debug
+          mkdir -p app/src/release
+          mkdir -p app/src/debug
+          echo "${GOOGLE_SERVICES_JSON}" > app/src/release/google-services.json
+          echo "${GOOGLE_SERVICES_JSON}" > app/src/debug/google-services.json
+          
+          # achievements_config.json
+          mkdir -p data/src/main/assets
+          echo "${ACHIEVEMENTS_CONFIG}" > data/src/main/assets/achievements_config.json
+          
+          echo "Configuration files setup completed"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Run Detekt
+        run: ./gradlew detekt --no-configuration-cache
+
+      - name: Run Unit Tests
+        if: ${{ github.event.inputs.skip_tests != 'true' }}
+        run: ./gradlew testDebugUnitTest --no-configuration-cache
+
+      - name: Calculate Version Code
+        id: version_code
+        run: |
+          VERSION_NAME="${{ steps.version_name.outputs.version_name }}"
+          BUILD_NUMBER="${{ steps.build_number.outputs.build_number }}"
+          
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${VERSION_NAME}"
+          
+          VERSION_CODE=$((MAJOR * 10000000 + MINOR * 100000 + PATCH * 1000 + BUILD_NUMBER))
+          
+          echo "version_code=${VERSION_CODE}" >> $GITHUB_OUTPUT
+          echo "Version Code calculation:"
+          echo "  Version Name: ${VERSION_NAME} (Major: ${MAJOR}, Minor: ${MINOR}, Patch: ${PATCH})"
+          echo "  Build Number: ${BUILD_NUMBER}"
+          echo "  Version Code: ${VERSION_CODE}"
+
+      - name: Build Release AAB and APK
+        env:
+          BUILD_NUMBER: ${{ steps.build_number.outputs.build_number }}
+          KEYSTORE_FILE: ${{ github.workspace }}/release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "Building with build number: ${BUILD_NUMBER}"
+          echo "Expected version code: ${{ steps.version_code.outputs.version_code }}"
+          echo "Keystore file: ${KEYSTORE_FILE}"
+          ./gradlew clean bundleRelease assembleRelease --no-configuration-cache --stacktrace
+
+      - name: Get Build Info
+        id: build_info
+        run: |
+          VERSION_NAME="${{ steps.version_name.outputs.version_name }}"
+          BUILD_NUMBER="${{ steps.build_number.outputs.build_number }}"
+          VERSION_CODE="${{ steps.version_code.outputs.version_code }}"
+          
+          echo "version_name=${VERSION_NAME}" >> $GITHUB_OUTPUT
+          echo "build_number=${BUILD_NUMBER}" >> $GITHUB_OUTPUT
+          echo "version_code=${VERSION_CODE}" >> $GITHUB_OUTPUT
+          echo "artifact_name=${VERSION_NAME}-${BUILD_NUMBER}" >> $GITHUB_OUTPUT
+
+      - name: Upload AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-${{ steps.build_info.outputs.artifact_name }}.aab
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-${{ steps.build_info.outputs.artifact_name }}.apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload Mapping File
+        uses: actions/upload-artifact@v4
+        with:
+          name: mapping-${{ steps.build_info.outputs.artifact_name }}.txt
+          path: app/build/outputs/mapping/release/mapping.txt
+
+      - name: Configure Git
+        run: |
+          git config user.name "Github Actions"
+          git config user.email "githubactions@dezdeqness.com"
+
+      - name: Update Build Number in gradle.properties
+        run: |
+          GRADLE_FILE='app/gradle.properties'
+          NEW_BUILD_NUMBER="${{ steps.build_number.outputs.build_number }}"
+          
+          echo "Updating build number to ${NEW_BUILD_NUMBER} in ${GRADLE_FILE}"
+          
+          if grep -q "buildNumber=" "${GRADLE_FILE}"; then
+            sed -i "s/buildNumber=[0-9]\+/buildNumber=${NEW_BUILD_NUMBER}/" "${GRADLE_FILE}"
+          else
+            echo "buildNumber=${NEW_BUILD_NUMBER}" >> "${GRADLE_FILE}"
+          fi
+          
+          echo "Updated content:"
+          cat "${GRADLE_FILE}"
+          
+          git add "${GRADLE_FILE}"
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "[CI] Update build number to ${NEW_BUILD_NUMBER}"
+            git push origin ${{ github.event.inputs.branch }}
+            echo "Build number updated and pushed"
+          fi
+
+      - name: Create Release Summary
+        run: |
+          echo "## 🚀 Release Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version Name:** ${{ steps.build_info.outputs.version_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Number:** ${{ steps.build_info.outputs.build_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version Code:** ${{ steps.build_info.outputs.version_code }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.event.inputs.branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- AAB: app-release-${{ steps.build_info.outputs.artifact_name }}.aab" >> $GITHUB_STEP_SUMMARY
+          echo "- APK: app-release-${{ steps.build_info.outputs.artifact_name }}.apk" >> $GITHUB_STEP_SUMMARY
+          echo "- Mapping: mapping-${{ steps.build_info.outputs.artifact_name }}.txt" >> $GITHUB_STEP_SUMMARY
