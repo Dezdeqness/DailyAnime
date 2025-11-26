@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -8,10 +5,6 @@ pluginManagement {
         google()
         mavenCentral()
     }
-}
-
-val props = Properties().apply {
-    load(FileInputStream("local.properties"))
 }
 
 dependencyResolutionManagement {
