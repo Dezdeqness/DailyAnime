@@ -31,6 +31,8 @@ fun ScreenshotPager(
 
     var isUiVisible by remember { mutableStateOf(true) }
 
+    if (items.isEmpty()) return
+
     HorizontalPager(
         state = state,
         modifier = modifier.fillMaxSize()
