@@ -36,8 +36,8 @@ jobs:
           
           mkdir -p app/src/release
           mkdir -p app/src/debug
-          echo "${GOOGLE_SERVICES_JSON}" > app/src/release/google-services.json
-          echo "${GOOGLE_SERVICES_JSON}" > app/src/debug/google-services.json
+          echo "$GOOGLE_SERVICES_JSON" > app/src/release/google-services.json
+          echo "$GOOGLE_SERVICES_JSON" > app/src/debug/google-services.json
           
           echo "Configuration files setup completed"
 
