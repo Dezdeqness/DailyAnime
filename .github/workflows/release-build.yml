@@ -3,10 +3,6 @@ name: Release Build
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch to build from'
-        required: true
-        default: 'master'
       build_number:
         description: 'Build number (leave empty to auto-increment from last)'
         required: false
@@ -28,7 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch }}
           fetch-depth: 0
           token: ${{ secrets.CI_TOKEN }}
 
