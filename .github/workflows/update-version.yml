@@ -118,7 +118,7 @@ jobs:
       - name: Commit and Push Changes
         run: |
           NEW_VERSION="${{ steps.new_version.outputs.new_version }}"
-          BRANCH="master"
+          BRANCH="${{ github.ref_name }}"
           GRADLE_FILE='app/gradle.properties'
           
           # Get current commit hash before making changes
