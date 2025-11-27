@@ -3,10 +3,6 @@ name: Update Version
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Name of branch'
-        required: true
-        default: 'master'
       new_version:
         description: 'New version (e.g., 1.2.3)'
         required: true
@@ -24,9 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch }}
           fetch-depth: 0
-          token: ${{ secrets.CI_TOKEN }}
 
       - name: Read Current Version
         id: read_version
@@ -116,18 +110,6 @@ jobs:
           echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
           echo "Version to set: ${NEW_VERSION}"
 
-      - name: Update Version in gradle.properties
-        run: |
-          GRADLE_FILE='app/gradle.properties'
-          NEW_VERSION="${{ steps.new_version.outputs.new_version }}"
-          
-          echo "Updating version to ${NEW_VERSION}"
-          # Remove old version (with or without hash)
-          sed -i "s/version=[0-9]\+\.[0-9]\+\.[0-9]\+\(-[a-f0-9]\+\)\?/version=${NEW_VERSION}/" "${GRADLE_FILE}"
-          
-          echo "Updated content:"
-          cat "${GRADLE_FILE}"
-
       - name: Configure Git
         run: |
           git config user.name "Github Actions"
@@ -136,8 +118,23 @@ jobs:
       - name: Commit and Push Changes
         run: |
           NEW_VERSION="${{ steps.new_version.outputs.new_version }}"
-          BRANCH="${{ github.event.inputs.branch }}"
+          BRANCH="master"
           GRADLE_FILE='app/gradle.properties'
+          
+          # Get current commit hash before making changes
+          CURRENT_HASH=$(git rev-parse HEAD)
+          SHORT_HASH=$(git rev-parse --short=7 HEAD)
+          VERSION_WITH_HASH="${NEW_VERSION}-${SHORT_HASH}"
+          
+          echo "Current commit hash: ${CURRENT_HASH}"
+          echo "Short commit hash: ${SHORT_HASH}"
+          echo "Version to set: ${VERSION_WITH_HASH}"
+          
+          # Update version with hash directly
+          sed -i "s/version=[0-9]\+\.[0-9]\+\.[0-9]\+\(-[a-f0-9]\+\)\?/version=${VERSION_WITH_HASH}/" "${GRADLE_FILE}"
+          
+          echo "Updated content:"
+          cat "${GRADLE_FILE}"
           
           git add app/gradle.properties
           
@@ -146,24 +143,10 @@ jobs:
             exit 0
           fi
           
-          git commit -m "[CI] Update version to ${NEW_VERSION}"
+          # Make single commit with version including hash
+          git commit -m "[CI] Update version to ${VERSION_WITH_HASH}"
           
-          # Get commit hash
-          LATEST_HASH=$(git rev-parse HEAD)
-          SHORT_HASH=$(git rev-parse --short=7 HEAD)
-          VERSION_WITH_HASH="${NEW_VERSION}-${SHORT_HASH}"
-          
-          echo "Latest commit hash: ${LATEST_HASH}"
-          echo "Short commit hash: ${SHORT_HASH}"
-          echo "Updating version to: ${VERSION_WITH_HASH}"
-          
-          # Update version with commit hash
-          sed -i "s/version=${NEW_VERSION}/version=${VERSION_WITH_HASH}/" "${GRADLE_FILE}"
-          
-          git add app/gradle.properties
-          git commit -m "[CI] Add commit hash to version ${VERSION_WITH_HASH}"
-          
-          BRANCH_NAME="${NEW_VERSION}-${LATEST_HASH}"
+          BRANCH_NAME="${NEW_VERSION}-${CURRENT_HASH}"
           echo "Creating temporary branch: ${BRANCH_NAME}"
           
           git checkout -b "${BRANCH_NAME}"
