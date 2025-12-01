@@ -1,21 +1,21 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.data.DetailsQuery
-import com.dezdeqness.data.core.TimestampConverter
-import com.dezdeqness.data.fragment.HomeAnime
-import com.dezdeqness.data.model.AnimeDetailsRemote
-import com.dezdeqness.data.model.AnimeBriefRemote
-import com.dezdeqness.data.model.AnimeChronologyRemote
-import com.dezdeqness.data.model.db.AnimeLocal
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.ImageEntity
-import com.dezdeqness.domain.model.HomeCalendarEntity
-import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.contract.user.model.StatsItemEntity
+import com.dezdeqness.data.AnimeDetailsQuery
+import com.dezdeqness.data.DetailsQuery
+import com.dezdeqness.data.core.TimestampConverter
+import com.dezdeqness.data.fragment.HomeAnime
+import com.dezdeqness.data.model.AnimeBriefRemote
+import com.dezdeqness.data.model.AnimeChronologyRemote
+import com.dezdeqness.data.model.db.AnimeLocal
+import com.dezdeqness.domain.model.HomeCalendarEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -105,55 +105,70 @@ class AnimeMapper @Inject constructor(
             description = item.descriptionHtml,
         )
 
-    fun fromResponse(item: AnimeDetailsRemote) =
+    fun fromResponseGraphql(item: AnimeDetailsQuery.Anime) =
         AnimeDetailsEntity(
-            id = item.id,
+            id = item.id.toLong(),
             name = item.name,
-            russian = item.russian,
-            english = item.english.firstOrNull().orEmpty(),
-            japanese = item.japanese.firstOrNull().orEmpty(),
-            score = item.score,
-            kind = AnimeKind.fromString(item.kind),
-            duration = item.duration,
-            rating = item.rating,
-            airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
-            releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn),
+            russian = item.russian.orEmpty(),
+            english = item.english.orEmpty(),
+            japanese = item.japanese.orEmpty(),
+            score = item.score?.toFloat() ?: 0f,
+            kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
+            duration = item.duration?.toString().orEmpty(),
+            rating = item.rating?.rawValue.orEmpty(),
+            airedOnTimestamp = timestampConverter.convertToTimeStamp(
+                (item.airedOn?.date ?: "").toString()
+            ),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp(
+                (item.releasedOn?.date ?: "").toString()
+            ),
             episodes = item.episodes,
             url = item.url,
-            status = AnimeStatus.fromString(item.status),
+            status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
             episodesAired = item.episodesAired,
-            image = imageMapper.fromResponse(item.image),
-            descriptionHTML = item.descriptionHTML,
+            image = ImageEntity(
+                preview = item.poster?.previewUrl.orEmpty(),
+                original = item.poster?.originalUrl.orEmpty(),
+            ),
+            descriptionHTML = item.descriptionHtml.orEmpty(),
             description = item.description,
-            studioList = item.studios.map(studioMapper::fromResponse),
-            genreList = item.genres.map(genreMapper::fromResponse),
-            videoList = item.videos.map(videoMapper::fromResponse),
-            nextEpisodeAtTimestamp = timestampConverter.convertToTimeStamp(item.nextEpisodeAt),
+            studioList = item.studios.map { studio ->
+                studioMapper.fromResponseGraphql(studio)
+            },
+            genreList = item.genres?.map { genre ->
+                genreMapper.fromResponseGraphql(genre)
+            }.orEmpty(),
+            videoList = item.videos.map { video ->
+                videoMapper.fromResponseGraphql(video)
+            },
+            nextEpisodeAtTimestamp = timestampConverter.convertToTimeStamp(
+                (item.nextEpisodeAt ?: "").toString()
+            ),
             userRate = item.userRate?.let { userRate ->
                 UserRateEntity(
-                    id = userRate.id,
-                    score = userRate.score,
-                    status = userRate.status,
+                    id = userRate.id.toLong(),
+                    score = userRate.score.toLong(),
+                    status = userRate.status.rawValue,
                     text = userRate.text.orEmpty(),
-                    episodes = userRate.episodes ?: 0,
-                    chapters = userRate.chapters ?: 0,
-                    volumes = userRate.volumes ?: 0,
-                    textHTML = userRate.textHTML,
-                    rewatches = userRate.rewatches,
-                    createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.createdAt),
-                    updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.updatedAt),
+                    episodes = userRate.episodes.toLong(),
+                    chapters = userRate.chapters.toLong(),
+                    volumes = userRate.volumes.toLong(),
+                    textHTML = "",
+                    rewatches = userRate.rewatches.toLong(),
+                    createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.createdAt.toString()),
+                    updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.updatedAt.toString()),
                 )
             },
-            scoresStats = item.ratesScoresStats?.map { score ->
+            scoresStats = item.scoresStats?.map { score ->
                 StatsItemEntity(
-                    name = score.name,
-                    value = score.value,
+                    name = score.score.toString(),
+                    value = score.count,
                 )
             } ?: listOf(),
-            statusesStats = item.ratesStatusesStats?.map { status ->
+            statusesStats = item.statusesStats?.map { status ->
                 StatsItemEntity(
-                    name = status.name,
-                    value = status.value,
+                    name = status.status.rawValue,
+                    value = status.count,
                 )
             } ?: listOf(),
         )

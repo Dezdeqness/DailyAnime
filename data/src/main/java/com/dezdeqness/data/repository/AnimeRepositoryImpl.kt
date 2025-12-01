@@ -14,7 +14,7 @@ class AnimeRepositoryImpl @Inject constructor(
     private val settingsRepository: SettingsRepository,
 ) : AnimeRepository {
 
-    override fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity> =
+    override suspend fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity> =
         animeRemoteDataSource.getDetailsAnimeMainInfo(id, isAuthorized)
 
     override fun getSimilar(id: Long): Result<List<AnimeBriefEntity>> =

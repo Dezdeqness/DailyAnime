@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -92,15 +91,7 @@ private fun VideoItem(
             maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 2.dp),
-        )
-
-        Text(
-            video.source.uppercase(),
-            color = AppTheme.colors.textPrimary.copy(alpha = 0.7f),
-            style = AppTheme.typography.bodySmall,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+                .padding(vertical = 4.dp),
         )
     }
 
