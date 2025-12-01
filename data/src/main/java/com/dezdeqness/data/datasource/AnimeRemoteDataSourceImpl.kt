@@ -79,45 +79,6 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getDetailsAnimeScreenshots(id: Long) = tryWithCatch {
-        val response = apiService.get().getDetailsAnimeScreenshots(id).execute()
-
-        val responseBody = response.body()
-
-        if (response.isSuccessful && responseBody != null) {
-            val screenshots = responseBody.map(screenshotMapper::fromResponse)
-            Result.success(screenshots)
-        } else {
-            throw response.createApiException()
-        }
-    }
-
-    override fun getDetailsAnimeRelated(id: Long) = tryWithCatch {
-        val response = apiService.get().getDetailsAnimeRelated(id).execute()
-
-        val responseBody = response.body()
-
-        if (response.isSuccessful && responseBody != null) {
-            val relates = responseBody.mapNotNull(relatedItemMapper::fromResponse)
-            Result.success(relates)
-        } else {
-            throw response.createApiException()
-        }
-    }
-
-    override fun getDetailsAnimeRoles(id: Long) = tryWithCatch {
-        val response = apiService.get().getDetailsAnimeRoles(id).execute()
-
-        val responseBody = response.body()
-
-        if (response.isSuccessful && responseBody != null) {
-            val roles = roleMapper.fromResponse(responseBody)
-            Result.success(roles)
-        } else {
-            throw response.createApiException()
-        }
-    }
-
     override fun getDetailsAnimeSimilar(id: Long) = tryWithCatch {
         val response = apiService.get().getDetailsAnimeSimilar(id).execute()
 
