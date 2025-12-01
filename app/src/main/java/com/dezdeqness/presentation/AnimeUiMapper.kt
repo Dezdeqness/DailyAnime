@@ -4,7 +4,6 @@ import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.RelatedItemEntity
-import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
@@ -16,7 +15,6 @@ import java.util.Locale
 import javax.inject.Inject
 
 class AnimeUiMapper @Inject constructor(
-    private val imageUrlUtils: ImageUrlUtils,
     private val animeKindUtils: AnimeKindUtils,
 ) {
 
@@ -30,7 +28,7 @@ class AnimeUiMapper @Inject constructor(
             title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
                 ?: animeBriefEntity.name,
             kind = animeKindUtils.mapKind(animeBriefEntity.kind),
-            logoUrl = imageUrlUtils.getImageWithBaseUrl(animeBriefEntity.image.original),
+            logoUrl = animeBriefEntity.image.original,
         )
 
     fun map(relatedItemUiModel: RelatedItemEntity) =
@@ -50,7 +48,7 @@ class AnimeUiMapper @Inject constructor(
             id = animeBriefEntity.id,
             title = animeBriefEntity.takeIf { it.russian.isNotEmpty() }?.russian
                 ?: animeBriefEntity.name,
-            logoUrl = animeBriefEntity.image.preview,
+            logoUrl = animeBriefEntity.image.original,
         )
 
     fun mapHomeCalendarAnimeModel(homeCalendarEntity: HomeCalendarEntity) =
