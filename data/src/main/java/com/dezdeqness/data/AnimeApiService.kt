@@ -4,9 +4,6 @@ import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyResponseRemote
 import com.dezdeqness.data.model.AnimeDetailsRemote
-import com.dezdeqness.data.model.RelatedItemRemote
-import com.dezdeqness.data.model.RoleRemote
-import com.dezdeqness.data.model.ScreenshotRemote
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -44,21 +41,6 @@ interface AnimeApiService {
     fun getDetailsAnimeMainInfoWithAuth(
         @Path(value = "id") id: Long,
     ): Call<AnimeDetailsRemote>
-
-    @GET("animes/{id}/screenshots")
-    fun getDetailsAnimeScreenshots(
-        @Path(value = "id") id: Long,
-    ): Call<List<ScreenshotRemote>>
-
-    @GET("animes/{id}/related")
-    fun getDetailsAnimeRelated(
-        @Path(value = "id") id: Long,
-    ): Call<List<RelatedItemRemote>>
-
-    @GET("animes/{id}/roles")
-    fun getDetailsAnimeRoles(
-        @Path(value = "id") id: Long,
-    ): Call<List<RoleRemote>>
 
     @GET("animes/{id}/similar")
     fun getDetailsAnimeSimilar(

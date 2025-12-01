@@ -3,9 +3,6 @@ package com.dezdeqness.data.repository
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
-import com.dezdeqness.contract.anime.model.RelatedItemEntity
-import com.dezdeqness.contract.anime.model.RoleEntity
-import com.dezdeqness.contract.anime.model.ScreenshotEntity
 import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
@@ -19,15 +16,6 @@ class AnimeRepositoryImpl @Inject constructor(
 
     override fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity> =
         animeRemoteDataSource.getDetailsAnimeMainInfo(id, isAuthorized)
-
-    override fun getScreenshots(id: Long): Result<List<ScreenshotEntity>> =
-        animeRemoteDataSource.getDetailsAnimeScreenshots(id)
-
-    override fun getRelated(id: Long): Result<List<RelatedItemEntity>> =
-        animeRemoteDataSource.getDetailsAnimeRelated(id)
-
-    override fun getRoles(id: Long): Result<List<RoleEntity>> =
-        animeRemoteDataSource.getDetailsAnimeRoles(id)
 
     override fun getSimilar(id: Long): Result<List<AnimeBriefEntity>> =
         animeRemoteDataSource.getDetailsAnimeSimilar(id = id)
