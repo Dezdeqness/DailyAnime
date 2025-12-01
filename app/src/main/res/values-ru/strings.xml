@@ -62,6 +62,11 @@
     <string name="stats_header_scores">Оценки</string>
     <string name="stats_header_types">Типы</string>
     <string name="stats_header_lists">Списки</string>
+    <string name="stats_status_planned">Запланировано</string>
+    <string name="stats_status_completed">Завершено</string>
+    <string name="stats_status_dropped">Брошено</string>
+    <string name="stats_status_on_hold">Отложено</string>
+    <string name="stats_status_watching">Смотрю</string>
 
     <string name="anime_details_description_title">Описание</string>
     <string name="anime_details_related_title">Связанное</string>

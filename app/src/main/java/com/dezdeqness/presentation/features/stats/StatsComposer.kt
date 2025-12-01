@@ -1,8 +1,8 @@
 package com.dezdeqness.presentation.features.stats
 
 import com.dezdeqness.R
-import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.contract.user.model.AccountEntity
+import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.ScoreChartUiModel
 import com.dezdeqness.presentation.models.StatsChartUiModel
@@ -32,9 +32,10 @@ class StatsComposer(
                 .types
                 .map { value ->
                     StatsData(
-                        name = value.name,
+                        textName = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
+                        name = 0
                     )
                 }
 
@@ -60,9 +61,10 @@ class StatsComposer(
                 .scores
                 .map { value ->
                     StatsData(
-                        name = value.name,
+                        textName = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
+                        name = 0,
                     )
                 }
 

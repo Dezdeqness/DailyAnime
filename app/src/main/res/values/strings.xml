@@ -64,6 +64,11 @@
     <string name="stats_header_scores">Scores</string>
     <string name="stats_header_types">Types</string>
     <string name="stats_header_lists">Lists</string>
+    <string name="stats_status_planned">Planned</string>
+    <string name="stats_status_completed">Completed</string>
+    <string name="stats_status_dropped">dropped</string>
+    <string name="stats_status_on_hold">On hold</string>
+    <string name="stats_status_watching">Watching</string>
 
     <string name="anime_details_description_title">Synopsis</string>
     <string name="anime_details_related_title">Related</string>

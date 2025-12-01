@@ -29,12 +29,12 @@ import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.presentation.models.StatsData
 import com.google.common.collect.ImmutableList
-import kotlin.collections.map
 
 @Composable
 fun DiagramChart(
@@ -87,7 +87,7 @@ fun DiagramChart(
                 val sweepAngle = proportion * angleOffset.value
                 val adjustedSweep = (sweepAngle - gapDegrees).coerceAtLeast(0f)
                 drawArc(
-                    color = chartData.getOrNull(index)?.name?.colorByStatus() ?: Color.Gray,
+                    color = chartData.getOrNull(index)?.color ?: Color.Gray,
                     startAngle = startAngle,
                     sweepAngle = adjustedSweep,
                     topLeft = topLeft,
@@ -110,10 +110,10 @@ fun DiagramChart(
                             .padding(end = 8.dp)
                             .size(12.dp)
                             .clip(CircleShape)
-                            .background(data.name.colorByStatus())
+                            .background(data.color)
                     )
                     Text(
-                        text = data.name,
+                        text = stringResource(data.name),
                         color = AppTheme.colors.textPrimary,
                     )
 
@@ -128,18 +128,5 @@ fun DiagramChart(
         }
     }
 }
-
-// Strong hardcode due to no proper data from server
-private fun String.colorByStatus() =
-    when (this.lowercase()) {
-        "смотрю" -> Color(0xFF42A5F5)
-        "просмотрено" -> Color(0xFF66BB6A)
-        "брошено" -> Color(0xFFEF5350)
-        "запланировано" -> Color(0xFFFFA726)
-        "пересмотр" -> Color(0xFFAB47BC)
-        "отложено" -> Color(0xFF26C6DA)
-        else -> Color.Gray
-
-    }
 
 private enum class AnimatedCircleProgress { START, END }
