@@ -36,7 +36,7 @@ fun HorizontalChart(
 ) {
     Column(modifier = modifier) {
         items.forEachIndexed { index, item ->
-            val name = item.name
+            val name = item.textName
             val progress = item.currentProgress
             val value = item.value
 

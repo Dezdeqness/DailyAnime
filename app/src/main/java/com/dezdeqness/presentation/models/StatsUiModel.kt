@@ -1,5 +1,7 @@
 package com.dezdeqness.presentation.models
 
+import androidx.annotation.StringRes
+import androidx.compose.ui.graphics.Color
 import com.google.common.collect.ImmutableList
 
 class DiagramChartUiModel(
@@ -18,7 +20,9 @@ class StatsChartUiModel(
 ) : AdapterItem()
 
 data class StatsData(
-    val name: String,
+    @StringRes val name: Int,
+    val textName: String,
     val value: String,
     val currentProgress: Int,
+    val color: Color = Color.Transparent,
 )
