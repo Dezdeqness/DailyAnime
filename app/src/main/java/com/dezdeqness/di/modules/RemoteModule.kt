@@ -8,6 +8,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.AuthorizationTokenInterceptor
+import com.dezdeqness.data.core.GraphqlAuthorizationInterceptor
 import com.dezdeqness.data.core.GraphqlOperationNameInterceptor
 import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
@@ -129,11 +130,15 @@ class RemoteModule {
     @Singleton
     @Provides
     fun providesShikimoriGraphqlHttpClient(
+        @Named("graphql_authorization") graphqlAuthorizationInterceptor: Interceptor,
         @Named("user_agent") userAgentTokenInterceptor: Interceptor,
+        @Named("refresh") refreshInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(graphqlAuthorizationInterceptor)
             .addInterceptor(userAgentTokenInterceptor)
+            .addInterceptor(refreshInterceptor)
             .addInterceptor(chuckerInterceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -188,6 +193,12 @@ class RemoteModule {
     @Provides
     fun provideAuthorizationTokenInterceptor(tokenManager: TokenManager): Interceptor =
         AuthorizationTokenInterceptor(tokenManager = tokenManager)
+
+    @Named("graphql_authorization")
+    @Singleton
+    @Provides
+    fun provideGraphqlAuthorizationInterceptor(tokenManager: TokenManager): Interceptor =
+        GraphqlAuthorizationInterceptor(tokenManager = tokenManager)
 
     @Named("graphql_operation_name")
     @Singleton

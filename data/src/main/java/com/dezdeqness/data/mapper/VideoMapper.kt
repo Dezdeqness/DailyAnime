@@ -1,23 +1,26 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.data.model.VideoRemote
 import com.dezdeqness.contract.anime.model.VideoEntity
+import com.dezdeqness.data.AnimeDetailsQuery
 import javax.inject.Inject
 import javax.inject.Singleton
-
 
 @Singleton
 class VideoMapper @Inject constructor() {
 
-    fun fromResponse(item: VideoRemote) =
+    fun fromResponseGraphql(item: AnimeDetailsQuery.Video) =
         VideoEntity(
-            id = item.id,
+            id = item.id.toInt(),
             name = item.name.orEmpty(),
             playerUrl = item.playerUrl,
             url = item.url,
-            imageUrl = item.imageUrl,
-            kind = item.kind,
-            hosting = item.hosting,
+            imageUrl = if (item.imageUrl.contains(HTTPS)) item.imageUrl else HTTPS + item.imageUrl,
+            kind = item.kind.rawValue,
+            hosting = "",
         )
+
+    companion object {
+        private const val HTTPS = "http:"
+    }
 
 }

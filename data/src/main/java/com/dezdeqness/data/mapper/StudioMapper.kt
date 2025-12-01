@@ -1,7 +1,7 @@
 package com.dezdeqness.data.mapper
 
-import com.dezdeqness.data.model.StudioRemote
 import com.dezdeqness.contract.anime.model.StudioEntity
+import com.dezdeqness.data.AnimeDetailsQuery
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -9,12 +9,12 @@ import javax.inject.Singleton
 @Singleton
 class StudioMapper @Inject constructor() {
 
-    fun fromResponse(item: StudioRemote) =
+    fun fromResponseGraphql(item: AnimeDetailsQuery.Studio) =
         StudioEntity(
-            id = item.id,
+            id = item.id.toInt(),
             name = item.name,
-            filteredName = item.filteredName,
-            real = item.real,
+            filteredName = item.name,
+            real = true,
         )
 
 }

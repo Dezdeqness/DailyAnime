@@ -7,7 +7,7 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 
 interface AnimeRepository {
 
-    fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity>
+    suspend fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity>
 
     fun getSimilar(id: Long): Result<List<AnimeBriefEntity>>
 

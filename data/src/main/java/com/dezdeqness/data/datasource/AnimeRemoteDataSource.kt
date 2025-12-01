@@ -15,7 +15,7 @@ interface AnimeRemoteDataSource {
         isAdultContentEnabled: Boolean,
     ): Result<List<AnimeBriefEntity>>
 
-    fun getDetailsAnimeMainInfo(
+    suspend fun getDetailsAnimeMainInfo(
         id: Long,
         isAuthorized: Boolean,
     ): Result<AnimeDetailsEntity>

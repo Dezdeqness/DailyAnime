@@ -3,6 +3,7 @@ package com.dezdeqness.data.datasource
 import com.apollographql.apollo.ApolloClient
 import com.dezdeqness.contract.anime.DetailsAdditionalInfo
 import com.dezdeqness.data.AnimeApiService
+import com.dezdeqness.data.AnimeDetailsQuery
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
@@ -62,20 +63,18 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
 
         }
 
-    override fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean) = tryWithCatch {
-        val response = if (isAuthorized) {
-            apiService.get().getDetailsAnimeMainInfoWithAuth(id = id).execute()
-        } else {
-            apiService.get().getDetailsAnimeMainInfo(id).execute()
-        }
+    override suspend fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean) =
+        tryWithCatchSuspend {
+            val response = apolloClient.query(AnimeDetailsQuery(id.toString())).execute()
 
-        val responseBody = response.body()
+            val data = response.data
 
-        if (response.isSuccessful && responseBody != null) {
-            val details = animeMapper.fromResponse(responseBody)
+            if (data != null && response.hasErrors().not()) {
+                val animeData = data.animes.first()
+                val details = animeMapper.fromResponseGraphql(animeData)
             Result.success(details)
         } else {
-            throw response.createApiException()
+                throw response.createGraphqlException()
         }
     }
 

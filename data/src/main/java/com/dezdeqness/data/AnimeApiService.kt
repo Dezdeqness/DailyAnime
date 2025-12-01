@@ -1,9 +1,7 @@
 package com.dezdeqness.data
 
-import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.AnimeChronologyResponseRemote
-import com.dezdeqness.data.model.AnimeDetailsRemote
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -30,17 +28,6 @@ interface AnimeApiService {
         @Query(value = "censored") isAdultContentEnabled: Boolean,
         @QueryMap options: Map<String, String> = mapOf(),
     ): Call<List<AnimeBriefRemote>>
-
-    @GET("animes/{id}")
-    fun getDetailsAnimeMainInfo(
-        @Path(value = "id") id: Long,
-    ): Call<AnimeDetailsRemote>
-
-    @NeedAuthorization
-    @GET("animes/{id}")
-    fun getDetailsAnimeMainInfoWithAuth(
-        @Path(value = "id") id: Long,
-    ): Call<AnimeDetailsRemote>
 
     @GET("animes/{id}/similar")
     fun getDetailsAnimeSimilar(

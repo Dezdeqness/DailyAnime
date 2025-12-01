@@ -369,9 +369,6 @@ enum ExternalLinkKindEnum {
   # MyAnimeList
   myanimelist
 
-  # Amediateka
-  amediateka
-
   # AniDB
   anime_db
 
@@ -389,6 +386,12 @@ enum ExternalLinkKindEnum {
 
   # Anime 365
   smotret_anime
+
+  # Shikimori
+  shiki
+
+  # Amediateka
+  amediateka
 
   # Crunchyroll
   crunchyroll
@@ -677,6 +680,12 @@ enum OrderEnum {
 
   # created_at_desc
   created_at_desc
+
+  # By field updated_at on entity
+  updated_at
+
+  # updated_at_desc
+  updated_at_desc
 }
 
 # List of values separated by comma.
@@ -914,14 +923,14 @@ type Related {
   id: ID!
   manga: Manga
   relationEn: String!
-    @deprecated(
-      reason: "use relation_kind/relation_text instead. This field will be deleted after 2025-01-01"
-    )
+  @deprecated(
+    reason: "use relation_kind/relation_text instead. This field will be deleted after 2025-01-01"
+  )
   relationKind: RelationKindEnum!
   relationRu: String!
-    @deprecated(
-      reason: "use relation_kind/relation_text instead. This field will be deleted after 2025-01-01"
-    )
+  @deprecated(
+    reason: "use relation_kind/relation_text instead. This field will be deleted after 2025-01-01"
+  )
   relationText: String!
 }
 

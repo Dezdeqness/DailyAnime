@@ -1,0 +1,78 @@
+query AnimeDetails($id: String!) {
+    animes(ids: $id) {
+        id
+        name
+        russian
+        english
+        japanese
+        url
+        kind
+        score
+        status
+        episodes
+        episodesAired
+        duration
+        rating
+        description
+        descriptionHtml
+        nextEpisodeAt
+        airedOn {
+            date
+            day
+            month
+            year
+        }
+        releasedOn {
+            date
+            day
+            month
+            year
+        }
+        poster {
+            id
+            originalUrl
+            mainUrl
+            previewUrl
+        }
+        genres {
+            id
+            name
+            russian
+            entryType
+            kind
+        }
+        studios {
+            id
+            name
+            imageUrl
+        }
+        videos {
+            id
+            name
+            url
+            playerUrl
+            imageUrl
+            kind
+        }
+        userRate {
+            id
+            score
+            status
+            text
+            episodes
+            chapters
+            volumes
+            rewatches
+            createdAt
+            updatedAt
+        }
+        scoresStats {
+            score
+            count
+        }
+        statusesStats {
+            status
+            count
+        }
+    }
+}

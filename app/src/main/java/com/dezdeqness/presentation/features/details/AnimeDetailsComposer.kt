@@ -55,7 +55,7 @@ class AnimeDetailsComposer @Inject constructor(
 
         uiItems.add(
             HeaderItemUiModel(
-                imageUrl = imageUrlUtils.getImageWithBaseUrl(details.image.original),
+                imageUrl = details.image.original,
                 ratingScore = details.score,
             )
         )
@@ -134,7 +134,6 @@ class AnimeDetailsComposer @Inject constructor(
             .filterNot { it.hosting == EXCLUDED_HOSTING }
             .map { video ->
                 VideoUiModel(
-                    source = video.hosting,
                     imageUrl = imageUrlUtils.getSecurityUrl(video.imageUrl),
                     name = video.name,
                     sourceUrl = video.playerUrl,
