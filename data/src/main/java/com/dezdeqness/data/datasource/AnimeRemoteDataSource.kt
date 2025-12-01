@@ -7,7 +7,7 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 
 interface AnimeRemoteDataSource {
 
-    fun getListAnime(
+    suspend fun getListAnime(
         queryMap: Map<String, String> = mapOf(),
         pageNumber: Int,
         sizeOfPage: Int,

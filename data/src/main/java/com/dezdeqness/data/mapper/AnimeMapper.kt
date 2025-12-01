@@ -9,6 +9,7 @@ import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.data.AnimeDetailsQuery
+import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.fragment.HomeAnime
@@ -103,6 +104,29 @@ class AnimeMapper @Inject constructor(
             releasedOnTimestamp = timestampConverter.convertToTimeStamp((item.releasedOn?.date ?: "").toString()),
             nextEpisodeTimestamp = timestampConverter.convertToTimeStamp((item.nextEpisodeAt ?: "").toString()),
             description = item.descriptionHtml,
+        )
+
+    fun fromResponseGraphql(item: AnimeListQuery.Anime) =
+        AnimeBriefEntity(
+            id = item.id.toLong(),
+            name = item.name,
+            russian = item.russian.orEmpty(),
+            image = ImageEntity(
+                preview = item.poster?.previewUrl.orEmpty(),
+                original = item.poster?.originalUrl.orEmpty(),
+            ),
+            url = item.url,
+            kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
+            score = item.score?.toFloat() ?: 0f,
+            status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
+            episodes = item.episodes,
+            episodesAired = item.episodesAired,
+            airedOnTimestamp = timestampConverter.convertToTimeStamp(
+                (item.airedOn?.date ?: "").toString()
+            ),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp(
+                (item.releasedOn?.date ?: "").toString()
+            ),
         )
 
     fun fromResponseGraphql(item: AnimeDetailsQuery.Anime) =

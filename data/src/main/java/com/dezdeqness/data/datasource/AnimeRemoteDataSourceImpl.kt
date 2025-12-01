@@ -1,9 +1,11 @@
 package com.dezdeqness.data.datasource
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Optional
 import com.dezdeqness.contract.anime.DetailsAdditionalInfo
 import com.dezdeqness.data.AnimeApiService
 import com.dezdeqness.data.AnimeDetailsQuery
+import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
@@ -12,6 +14,7 @@ import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
+import com.dezdeqness.data.type.OrderEnum
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,42 +28,47 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
     private val relatedItemMapper: RelatedItemMapper,
 ) : BaseDataSource(), AnimeRemoteDataSource {
 
-    override fun getListAnime(
+    override suspend fun getListAnime(
         queryMap: Map<String, String>,
         pageNumber: Int,
         sizeOfPage: Int,
         searchQuery: String,
         isAdultContentEnabled: Boolean,
     ) =
-        tryWithCatch {
-            val call = if (searchQuery.isEmpty()) {
-                apiService.get().getListAnime(
-                    limit = sizeOfPage,
+        tryWithCatchSuspend {
+            val response = apolloClient.query(
+                AnimeListQuery(
                     page = pageNumber,
-                    options = queryMap,
-                    isAdultContentEnabled = isAdultContentEnabled,
-                )
-            } else {
-                apiService.get().getListAnimeWithSearchQuery(
                     limit = sizeOfPage,
-                    page = pageNumber,
-                    options = queryMap,
-                    search = searchQuery,
-                    isAdultContentEnabled = isAdultContentEnabled,
+                    order = Optional.presentIfNotNull(queryMap["order"]?.let {
+                        OrderEnum.safeValueOf(
+                            it
+                        )
+                    }),
+                    kind = Optional.presentIfNotNull(queryMap["kind"]),
+                    status = Optional.presentIfNotNull(queryMap["status"]),
+                    season = Optional.presentIfNotNull(queryMap["season"]),
+                    score = Optional.presentIfNotNull(queryMap["score"]?.toIntOrNull()),
+                    duration = Optional.presentIfNotNull(queryMap["duration"]),
+                    rating = Optional.presentIfNotNull(queryMap["rating"]),
+                    origin = Optional.presentIfNotNull(queryMap["origin"]),
+                    genre = Optional.presentIfNotNull(queryMap["genre"]),
+                    studio = Optional.presentIfNotNull(queryMap["studio"]),
+                    franchise = Optional.presentIfNotNull(queryMap["franchise"]),
+                    censored = Optional.Present(isAdultContentEnabled),
+                    mylist = Optional.presentIfNotNull(queryMap["mylist"]),
+                    search = Optional.presentIfNotNull(searchQuery.ifEmpty { null })
                 )
-            }
+            ).execute()
 
-            val response = call.execute()
+            val data = response.data
 
-            val responseBody = response.body()
-
-            if (response.isSuccessful && responseBody != null) {
-                val list = responseBody.map { item -> animeMapper.fromResponse(item) }
+            if (data != null && response.hasErrors().not()) {
+                val list = data.animes.map { item -> animeMapper.fromResponseGraphql(item) }
                 Result.success(list)
             } else {
-                throw response.createApiException()
+                throw response.createGraphqlException()
             }
-
         }
 
     override suspend fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean) =
