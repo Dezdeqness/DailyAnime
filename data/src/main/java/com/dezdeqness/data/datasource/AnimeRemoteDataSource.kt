@@ -20,11 +20,11 @@ interface AnimeRemoteDataSource {
         isAuthorized: Boolean,
     ): Result<AnimeDetailsEntity>
 
-    fun getDetailsAnimeSimilar(
+    suspend fun getDetailsAnimeSimilar(
         id: Long,
     ): Result<List<AnimeBriefEntity>>
 
-    fun getDetailsChronology(
+    suspend fun getDetailsChronology(
         id: Long
     ): Result<List<AnimeChronologyEntity>>
 

@@ -8,13 +8,13 @@ import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.user.model.StatsItemEntity
+import com.dezdeqness.data.AnimeChronologyQuery
 import com.dezdeqness.data.AnimeDetailsQuery
 import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeBriefRemote
-import com.dezdeqness.data.model.AnimeChronologyRemote
 import com.dezdeqness.data.model.db.AnimeLocal
 import com.dezdeqness.domain.model.HomeCalendarEntity
 import javax.inject.Inject
@@ -231,14 +231,14 @@ class AnimeMapper @Inject constructor(
             releasedOnTimestamp = item.releasedOnTimestamp,
         )
 
-    fun fromResponse(item: AnimeChronologyRemote) =
+    fun fromChronologyGraphql(item: AnimeChronologyQuery.Chronology) =
         AnimeChronologyEntity(
-            id = item.id,
-            name = item.name,
-            imageUrl = item.imageUrl,
+            id = item.id.toLong(),
+            name = item.russian.orEmpty(),
+            imageUrl = item.poster?.originalUrl.orEmpty(),
             url = item.url,
-            kind = item.kind.orEmpty(),
-            year = item.year.orEmpty(),
+            kind = item.kind?.rawValue.orEmpty(),
+            year = item.airedOn?.year?.toString().orEmpty(),
         )
 
 }

@@ -4,6 +4,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
 import com.dezdeqness.contract.anime.DetailsAdditionalInfo
 import com.dezdeqness.data.AnimeApiService
+import com.dezdeqness.data.AnimeChronologyQuery
 import com.dezdeqness.data.AnimeDetailsQuery
 import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
@@ -86,7 +87,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getDetailsAnimeSimilar(id: Long) = tryWithCatch {
+    override suspend fun getDetailsAnimeSimilar(id: Long) = tryWithCatchSuspend {
         val response = apiService.get().getDetailsAnimeSimilar(id).execute()
 
         val responseBody = response.body()
@@ -100,19 +101,20 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override fun getDetailsChronology(id: Long) = tryWithCatch {
-        val response = apiService.get().getDetailsAnimeChronology(id = id).execute()
+    override suspend fun getDetailsChronology(id: Long) = tryWithCatchSuspend {
+        val response = apolloClient.query(AnimeChronologyQuery(id.toString())).execute()
 
-        val responseBody = response.body()
+        val data = response.data
 
-        if (response.isSuccessful && responseBody != null) {
-            val list =
-                responseBody.nodes?.map { item -> animeMapper.fromResponse(item) } ?: listOf()
-            Result.success(list)
+        if (data != null && response.hasErrors().not()) {
+            val animeData = data.animes.firstOrNull()
+            val chronologyList = animeData?.chronology?.map { item ->
+                animeMapper.fromChronologyGraphql(item)
+            } ?: listOf()
+            Result.success(chronologyList)
         } else {
-            throw response.createApiException()
+            throw response.createGraphqlException()
         }
-
     }
 
     override suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo> =

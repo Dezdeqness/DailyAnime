@@ -1,0 +1,23 @@
+query AnimeChronology($id: String!) {
+    animes(ids: $id) {
+        chronology {
+            id
+            name
+            russian
+            url
+            kind
+            poster {
+                id
+                originalUrl
+                mainUrl
+                previewUrl
+            }
+            airedOn {
+                date
+                day
+                month
+                year
+            }
+        }
+    }
+}

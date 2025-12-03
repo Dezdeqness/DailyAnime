@@ -17,10 +17,10 @@ class AnimeRepositoryImpl @Inject constructor(
     override suspend fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity> =
         animeRemoteDataSource.getDetailsAnimeMainInfo(id, isAuthorized)
 
-    override fun getSimilar(id: Long): Result<List<AnimeBriefEntity>> =
+    override suspend fun getSimilar(id: Long): Result<List<AnimeBriefEntity>> =
         animeRemoteDataSource.getDetailsAnimeSimilar(id = id)
 
-    override fun getChronology(id: Long): Result<List<AnimeChronologyEntity>> =
+    override suspend fun getChronology(id: Long): Result<List<AnimeChronologyEntity>> =
         animeRemoteDataSource.getDetailsChronology(id = id)
 
     override suspend fun getListWithFilter(
