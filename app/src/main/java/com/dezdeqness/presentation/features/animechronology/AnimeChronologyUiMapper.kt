@@ -1,13 +1,17 @@
 package com.dezdeqness.presentation.features.animechronology
 
 import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
+import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.Entity
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.ChronologyUiModel
+import com.dezdeqness.utils.AnimeKindUtils
 import javax.inject.Inject
 
-class AnimeChronologyUiMapper @Inject constructor() : GenericListableUiMapper {
+class AnimeChronologyUiMapper @Inject constructor(
+    private val animeKindUtils: AnimeKindUtils,
+) : GenericListableUiMapper {
 
     override fun map(item: Entity): AdapterItem? {
         if (item !is AnimeChronologyEntity) return null
@@ -24,7 +28,11 @@ class AnimeChronologyUiMapper @Inject constructor() : GenericListableUiMapper {
         val builder = StringBuilder()
 
         if (item.kind.isNotEmpty()) {
-            builder.append(item.kind)
+            val animeKind = AnimeKind.fromString(item.kind)
+            val kindString = animeKindUtils.mapKind(animeKind)
+            if (kindString.isNotEmpty()) {
+                builder.append(kindString)
+            }
         }
 
         if (item.year.isNotEmpty()) {

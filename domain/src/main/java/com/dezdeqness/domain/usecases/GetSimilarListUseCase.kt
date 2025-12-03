@@ -6,5 +6,5 @@ class GetSimilarListUseCase(
     private val animeRepository: AnimeRepository,
 ) : BaseListableUseCase() {
 
-    override fun invoke(id: Long) = animeRepository.getSimilar(id)
+    override suspend fun invoke(id: Long) = animeRepository.getSimilar(id)
 }

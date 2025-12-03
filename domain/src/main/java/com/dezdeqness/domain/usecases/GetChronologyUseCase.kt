@@ -6,5 +6,5 @@ class GetChronologyUseCase(
     private val animeRepository: AnimeRepository,
 ) : BaseListableUseCase() {
 
-    override fun invoke(id: Long) = animeRepository.getChronology(id)
+    override suspend fun invoke(id: Long) = animeRepository.getChronology(id)
 }

@@ -9,9 +9,9 @@ interface AnimeRepository {
 
     suspend fun getDetails(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity>
 
-    fun getSimilar(id: Long): Result<List<AnimeBriefEntity>>
+    suspend fun getSimilar(id: Long): Result<List<AnimeBriefEntity>>
 
-    fun getChronology(id: Long): Result<List<AnimeChronologyEntity>>
+    suspend fun getChronology(id: Long): Result<List<AnimeChronologyEntity>>
 
     suspend fun getListWithFilter(
         queryMap: Map<String, String>,
