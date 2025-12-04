@@ -1,14 +1,16 @@
 package com.dezdeqness.data.datasource
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.domain.model.UserRateOrderEntity
 
 interface UserRatesRemoteDataSource {
 
-    fun getUserRates(
+    suspend fun getUserRates(
         userId: Long,
         status: String,
         page: Int,
         isAdultContentEnabled: Boolean,
+        order: UserRateOrderEntity,
     ): Result<List<UserRateEntity>>
 
     fun updateUserRate(

@@ -1,38 +1,16 @@
-query AnimeList(
+query UserRates(
     $page: PositiveInt!,
     $limit: PositiveInt!,
-    $order: OrderEnum,
-    $kind: AnimeKindString,
-    $status: AnimeStatusString,
-    $season: SeasonString,
-    $score: Int,
-    $duration: DurationString,
-    $rating: RatingString,
-    $origin: OriginString,
-    $genre: String,
-    $studio: String,
-    $franchise: String,
+    $mylist: MylistString!,
     $censored: Boolean,
-    $mylist: MylistString,
-    $search: String
+    $order: OrderEnum
 ) {
     animes(
         page: $page
         limit: $limit
-        order: $order
-        kind: $kind
-        status: $status
-        season: $season
-        score: $score
-        duration: $duration
-        rating: $rating
-        origin: $origin
-        genre: $genre
-        studio: $studio
-        franchise: $franchise
-        censored: $censored
         mylist: $mylist
-        search: $search
+        censored: $censored
+        order: $order
     ) {
         id
         name
