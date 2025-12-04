@@ -1,43 +1,57 @@
 package com.dezdeqness.data.datasource
 
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Optional
 import com.dezdeqness.data.UserRatesApiService
+import com.dezdeqness.data.UserRatesQuery
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
+import com.dezdeqness.data.core.createGraphqlException
 import com.dezdeqness.data.mapper.UserRatesMapper
 import com.dezdeqness.data.model.requet.PostUserRate
 import com.dezdeqness.data.model.requet.PostUserRateRequestBody
 import com.dezdeqness.data.model.requet.UpdateUserRate
 import com.dezdeqness.data.model.requet.UpdateUserRateRequestBody
+import com.dezdeqness.data.type.OrderEnum
+import com.dezdeqness.domain.model.UserRateOrderEntity
 import dagger.Lazy
 import javax.inject.Inject
+import javax.inject.Named
 
 class UserRatesRemoteDataSourceImpl @Inject constructor(
     private val apiService: Lazy<UserRatesApiService>,
+    @Named("shikimori_graphql_client") private val apolloClient: ApolloClient,
     private val userRatesMapper: UserRatesMapper,
 ) : UserRatesRemoteDataSource, BaseDataSource() {
 
-    override fun getUserRates(
+    override suspend fun getUserRates(
         userId: Long,
         status: String,
         page: Int,
         isAdultContentEnabled: Boolean,
+        order: UserRateOrderEntity,
     ) =
-        tryWithCatch {
-            val response = apiService.get().getUserRates(
-                status = status,
-                id = userId,
-                page = page,
-                limit = 1000,
-                isAdultContentEnabled = isAdultContentEnabled,
+        tryWithCatchSuspend {
+            val orderEnum = mapOrderToEnum(order)
+            val response = apolloClient.query(
+                UserRatesQuery(
+                    page = page,
+                    limit = 50,
+                    mylist = status,
+                    censored = Optional.present(!isAdultContentEnabled),
+                    order = Optional.present(orderEnum),
+                )
             ).execute()
 
-            val responseBody = response.body()
-            if (response.isSuccessful && responseBody != null) {
-                Result.success(
-                    responseBody.map(userRatesMapper::fromResponse)
-                )
+            val data = response.data
+
+            if (data != null) {
+                val userRates = data.animes.mapNotNull { anime ->
+                    userRatesMapper.fromResponseGraphql(anime)
+                }
+                Result.success(userRates)
             } else {
-                throw response.createApiException()
+                throw response.createGraphqlException()
             }
         }
 

@@ -12,6 +12,7 @@ import com.dezdeqness.data.AnimeChronologyQuery
 import com.dezdeqness.data.AnimeDetailsQuery
 import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
+import com.dezdeqness.data.UserRatesQuery
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeBriefRemote
@@ -239,6 +240,29 @@ class AnimeMapper @Inject constructor(
             url = item.url,
             kind = item.kind?.rawValue.orEmpty(),
             year = item.airedOn?.year?.toString().orEmpty(),
+        )
+
+    fun fromResponseGraphqlUserRates(item: UserRatesQuery.Anime) =
+        AnimeBriefEntity(
+            id = item.id.toLong(),
+            name = item.name,
+            russian = item.russian.orEmpty(),
+            image = ImageEntity(
+                preview = item.poster?.previewUrl.orEmpty(),
+                original = item.poster?.originalUrl.orEmpty(),
+            ),
+            url = item.url,
+            kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
+            score = item.score?.toFloat() ?: 0f,
+            status = AnimeStatus.fromString(item.status?.rawValue.orEmpty()),
+            episodes = item.episodes,
+            episodesAired = item.episodesAired,
+            airedOnTimestamp = timestampConverter.convertToTimeStamp(
+                (item.airedOn?.date ?: "").toString()
+            ),
+            releasedOnTimestamp = timestampConverter.convertToTimeStamp(
+                (item.releasedOn?.date ?: "").toString()
+            ),
         )
 
 }

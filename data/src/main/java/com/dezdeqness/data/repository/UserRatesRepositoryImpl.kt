@@ -7,6 +7,7 @@ import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import com.dezdeqness.data.exception.UserLocalNotFound
+import com.dezdeqness.domain.model.UserRateOrderEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +20,12 @@ class UserRatesRepositoryImpl @Inject constructor(
     private val settingsRepository: SettingsRepository,
 ) : UserRatesRepository {
 
-    override fun getUserRates(status: String, page: Int, onlyRemote: Boolean): Flow<Result<List<UserRateEntity>>> =
+    override fun getUserRates(
+        status: String,
+        page: Int,
+        onlyRemote: Boolean,
+        order: UserRateOrderEntity
+    ): Flow<Result<List<UserRateEntity>>> =
         flow {
             val profile = userRepository.getProfileLocal()
             if (profile == null) {
@@ -44,6 +50,7 @@ class UserRatesRepositoryImpl @Inject constructor(
                         page = page,
                         status = status,
                         isAdultContentEnabled = isAdultContentEnabled,
+                        order = order,
                     )
                     .onSuccess { list ->
                         userRatesLocalDataSource.deleteUserRatesByStatus(status)

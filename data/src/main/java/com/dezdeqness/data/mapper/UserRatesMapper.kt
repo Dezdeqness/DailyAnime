@@ -1,9 +1,10 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.data.UserRatesQuery
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.UserRateRemote
 import com.dezdeqness.data.model.db.UserRateLocal
-import com.dezdeqness.contract.anime.model.UserRateEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,5 +62,24 @@ class UserRatesMapper @Inject constructor(
             updatedAtTimestamp = item.updatedAtTimestamp,
             anime = animeMapper.toDatabase(item.anime),
         )
+
+    fun fromResponseGraphql(anime: UserRatesQuery.Anime): UserRateEntity? {
+        val userRate = anime.userRate ?: return null
+
+        return UserRateEntity(
+            id = userRate.id.toLong(),
+            score = userRate.score.toLong(),
+            status = userRate.status.name,
+            text = userRate.text.orEmpty(),
+            episodes = userRate.episodes.toLong(),
+            chapters = userRate.chapters.toLong(),
+            volumes = userRate.volumes.toLong(),
+            textHTML = userRate.text.orEmpty(),
+            rewatches = userRate.rewatches.toLong(),
+            createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.createdAt.toString()),
+            updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.updatedAt.toString()),
+            anime = animeMapper.fromResponseGraphqlUserRates(anime),
+        )
+    }
 
 }
