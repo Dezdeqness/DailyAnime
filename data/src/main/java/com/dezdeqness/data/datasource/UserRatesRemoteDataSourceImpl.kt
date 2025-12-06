@@ -12,7 +12,10 @@ import com.dezdeqness.data.model.requet.PostUserRate
 import com.dezdeqness.data.model.requet.PostUserRateRequestBody
 import com.dezdeqness.data.model.requet.UpdateUserRate
 import com.dezdeqness.data.model.requet.UpdateUserRateRequestBody
-import com.dezdeqness.data.type.OrderEnum
+import com.dezdeqness.data.type.SortOrderEnum
+import com.dezdeqness.data.type.UserRateOrderFieldEnum
+import com.dezdeqness.data.type.UserRateOrderInputType
+import com.dezdeqness.data.type.UserRateStatusEnum
 import com.dezdeqness.domain.model.UserRateOrderEntity
 import dagger.Lazy
 import javax.inject.Inject
@@ -32,22 +35,26 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         order: UserRateOrderEntity,
     ) =
         tryWithCatchSuspend {
-            val orderEnum = mapOrderToEnum(order)
+            val statusEnum = UserRateStatusEnum.safeValueOf(status)
             val response = apolloClient.query(
                 UserRatesQuery(
                     page = page,
                     limit = 50,
-                    mylist = status,
-                    censored = Optional.present(!isAdultContentEnabled),
-                    order = Optional.present(orderEnum),
+                    status = statusEnum,
+                    order = Optional.present(
+                        UserRateOrderInputType(
+                            field = UserRateOrderFieldEnum.updated_at,
+                            order = SortOrderEnum.desc,
+                        ),
+                    ),
                 )
             ).execute()
 
             val data = response.data
 
             if (data != null) {
-                val userRates = data.animes.mapNotNull { anime ->
-                    userRatesMapper.fromResponseGraphql(anime)
+                val userRates = data.userRates.mapNotNull { userRate ->
+                    userRatesMapper.fromResponseGraphql(userRate)
                 }
                 Result.success(userRates)
             } else {
@@ -146,5 +153,4 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
             throw response.createApiException()
         }
     }
-
 }

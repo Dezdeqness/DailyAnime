@@ -1,4 +1,4 @@
-query UserRates(
+query UserRatesSearch(
     $page: PositiveInt!,
     $limit: PositiveInt!,
     $mylist: MylistString!,
@@ -44,6 +44,55 @@ query UserRates(
             rewatches
             createdAt
             updatedAt
+        }
+    }
+}
+
+query UserRates(
+    $page: PositiveInt!,
+    $limit: PositiveInt!,
+    $status: UserRateStatusEnum!,
+    $order: UserRateOrderInputType
+) {
+    userRates(
+        page: $page
+        limit: $limit
+        status: $status
+        order: $order
+        targetType: Anime
+    ) {
+        id
+        score
+        status
+        text
+        episodes
+        chapters
+        volumes
+        rewatches
+        createdAt
+        updatedAt
+        anime {
+            id
+            name
+            russian
+            url
+            kind
+            score
+            status
+            episodes
+            episodesAired
+            airedOn {
+                date
+            }
+            releasedOn {
+                date
+            }
+            poster {
+                id
+                originalUrl
+                mainUrl
+                previewUrl
+            }
         }
     }
 }
