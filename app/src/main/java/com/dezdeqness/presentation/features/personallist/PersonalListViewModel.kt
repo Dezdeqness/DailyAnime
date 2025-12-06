@@ -81,9 +81,7 @@ class PersonalListViewModel @Inject constructor(
                 .mapNotNull { it }
                 .collectLatest { query ->
                     val uiItems = personalListComposer.compose(
-                        filter = personalListFilterRepository.getFilter(),
                         entityList = userRatesList,
-                        query = query,
                     )
 
                     _personalListStateFlow.value = _personalListStateFlow.value.copy(
@@ -114,9 +112,7 @@ class PersonalListViewModel @Inject constructor(
                         userRatesList = list
 
                         val uiItems = personalListComposer.compose(
-                            filter = personalListFilterRepository.getFilter(),
                             entityList = list,
-                            query = _queryFlow.value,
                         )
 
                         _personalListStateFlow.value = _personalListStateFlow.value.copy(
@@ -258,9 +254,7 @@ class PersonalListViewModel @Inject constructor(
             personalListFilterRepository.setSort(sort)
 
             val uiItems = personalListComposer.compose(
-                filter = personalListFilterRepository.getFilter(),
                 entityList = userRatesList,
-                query = _queryFlow.value,
             )
 
             _personalListStateFlow.value = _personalListStateFlow.value.copy(
@@ -351,9 +345,7 @@ class PersonalListViewModel @Inject constructor(
                 userRatesList = list
 
                 val uiItems = personalListComposer.compose(
-                    filter = personalListFilterRepository.getFilter(),
                     entityList = userRatesList,
-                    query = _queryFlow.value,
                 )
 
                 _personalListStateFlow.value = _personalListStateFlow.value.copy(

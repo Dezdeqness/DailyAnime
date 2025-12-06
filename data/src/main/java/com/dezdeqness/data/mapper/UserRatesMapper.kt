@@ -2,6 +2,7 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.data.UserRatesQuery
+import com.dezdeqness.data.UserRatesSearchQuery
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.UserRateRemote
 import com.dezdeqness.data.model.db.UserRateLocal
@@ -63,7 +64,7 @@ class UserRatesMapper @Inject constructor(
             anime = animeMapper.toDatabase(item.anime),
         )
 
-    fun fromResponseGraphql(anime: UserRatesQuery.Anime): UserRateEntity? {
+    fun fromResponseGraphql(anime: UserRatesSearchQuery.Anime): UserRateEntity? {
         val userRate = anime.userRate ?: return null
 
         return UserRateEntity(
@@ -79,6 +80,25 @@ class UserRatesMapper @Inject constructor(
             createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.createdAt.toString()),
             updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.updatedAt.toString()),
             anime = animeMapper.fromResponseGraphqlUserRates(anime),
+        )
+    }
+
+    fun fromResponseGraphql(item: UserRatesQuery.UserRate): UserRateEntity? {
+        val anime = item.anime ?: return null
+
+        return UserRateEntity(
+            id = item.id.toLong(),
+            score = item.score.toLong(),
+            status = item.status.rawValue,
+            text = item.text.orEmpty(),
+            episodes = item.episodes.toLong(),
+            chapters = item.chapters.toLong(),
+            volumes = item.volumes.toLong(),
+            textHTML = item.text.orEmpty(),
+            rewatches = item.rewatches.toLong(),
+            createdAtTimestamp = timestampConverter.convertToTimeStampWithTime(item.createdAt.toString()),
+            updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(item.updatedAt.toString()),
+            anime = animeMapper.fromResponseGraphqlUserRate(anime),
         )
     }
 
