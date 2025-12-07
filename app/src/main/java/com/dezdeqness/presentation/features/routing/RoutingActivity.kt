@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.airbnb.lottie.compose.LottieAnimation
@@ -35,14 +37,23 @@ import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.amoledColors
+import com.dezdeqness.core.ui.theme.darkColors
+import com.dezdeqness.core.ui.theme.lightColors
+import com.dezdeqness.core.ui.theme.toAmoledMaterialScheme
+import com.dezdeqness.core.ui.theme.toDarkMaterialScheme
+import com.dezdeqness.core.ui.theme.toLightMaterialScheme
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RoutingActivity : AppCompatActivity() {
+
+    private val themeModeFlow = MutableStateFlow<ThemeMode?>(null)
 
     @Inject
     lateinit var settingsRepository: SettingsRepository
@@ -80,6 +91,8 @@ class RoutingActivity : AppCompatActivity() {
                 .settingsRepository()
                 .getPreference(NightThemePreference)
 
+            themeModeFlow.value = mode
+
             when (mode) {
                 ThemeMode.SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 ThemeMode.DARK,
@@ -90,7 +103,24 @@ class RoutingActivity : AppCompatActivity() {
             }
         }
         setContent {
-            AppTheme {
+            val themeMode by themeModeFlow.collectAsStateWithLifecycle()
+
+            AppTheme(
+                colors = when (themeMode) {
+                    ThemeMode.AMOLED -> amoledColors()
+                    ThemeMode.DARK -> darkColors()
+                    ThemeMode.LIGHT -> lightColors()
+                    ThemeMode.SYSTEM, null ->
+                        if (isSystemInDarkTheme()) darkColors() else lightColors()
+                },
+                materialDefaultTheme = when (themeMode) {
+                    ThemeMode.AMOLED -> toAmoledMaterialScheme()
+                    ThemeMode.DARK -> toDarkMaterialScheme()
+                    ThemeMode.LIGHT -> toLightMaterialScheme()
+                    ThemeMode.SYSTEM, null ->
+                        if (isSystemInDarkTheme()) toDarkMaterialScheme() else toLightMaterialScheme()
+                },
+            ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,

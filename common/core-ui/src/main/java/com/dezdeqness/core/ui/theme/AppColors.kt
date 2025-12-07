@@ -51,6 +51,28 @@ fun darkColors(): AppColors = AppColors(
     accentColor = DarkAnimeColors.Accent,
 )
 
+fun amoledColors(): AppColors = AppColors(
+    primaryColor = AmoledAnimeColors.Primary,
+    primaryVariantColor = AmoledAnimeColors.PrimaryVariant,
+    secondaryColor = AmoledAnimeColors.Secondary,
+    backgroundColor = AmoledAnimeColors.Background,
+    surfaceColor = AmoledAnimeColors.Surface,
+    surfaceVariantColor = AmoledAnimeColors.SurfaceVariant,
+    borderColor = AmoledAnimeColors.Border,
+    onPrimaryColor = AmoledAnimeColors.OnPrimary,
+    onSecondaryColor = AmoledAnimeColors.OnSecondary,
+    onBackgroundColor = AmoledAnimeColors.OnBackground,
+    onSurfaceColor = AmoledAnimeColors.OnSurface,
+    textPrimaryColor = AmoledAnimeColors.TextPrimary,
+    textSecondaryColor = AmoledAnimeColors.TextSecondary,
+    textDisabledColor = AmoledAnimeColors.TextDisabled,
+    rippleColor = AmoledAnimeColors.Ripple,
+    errorColor = AmoledAnimeColors.Error,
+    successColor = AmoledAnimeColors.Success,
+    warningColor = AmoledAnimeColors.Warning,
+    accentColor = AmoledAnimeColors.Accent,
+)
+
 @Immutable
 class AppColors(
     private val primaryColor: Color,

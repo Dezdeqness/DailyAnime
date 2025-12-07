@@ -68,3 +68,16 @@ fun toDarkMaterialScheme(): ColorScheme = darkColorScheme(
     surfaceVariant = DarkAnimeColors.SurfaceVariant,
     error = DarkAnimeColors.Error,
 )
+
+fun toAmoledMaterialScheme(): ColorScheme = darkColorScheme(
+    primary = AmoledAnimeColors.Primary,
+    onPrimary = AmoledAnimeColors.OnPrimary,
+    secondary = AmoledAnimeColors.Secondary,
+    onSecondary = AmoledAnimeColors.OnSecondary,
+    background = AmoledAnimeColors.Background,
+    onBackground = AmoledAnimeColors.OnBackground,
+    surface = AmoledAnimeColors.Surface,
+    onSurface = AmoledAnimeColors.OnSurface,
+    surfaceVariant = AmoledAnimeColors.SurfaceVariant,
+    error = AmoledAnimeColors.Error,
+)

@@ -65,6 +65,33 @@ object DarkAnimeColors {
     val Accent = Color(0xFFD1B3FF)
 }
 
+object AmoledAnimeColors {
+    val Primary = DarkAnimeColors.Primary
+    val PrimaryVariant = DarkAnimeColors.PrimaryVariant
+    val Secondary = DarkAnimeColors.Secondary
+
+    val Background = Color(0xFF000000)
+    val Surface = Color(0xFF050509)
+    val SurfaceVariant = Color(0xFF15151F)
+    val Border = Color(0xFF262636)
+
+    val OnPrimary = Color(0xFF000000)
+    val OnSecondary = DarkAnimeColors.OnSecondary
+    val OnBackground = Color(0xFFE6E6E6)
+    val OnSurface = Color(0xFFE0E0E0)
+
+    val Error = DarkAnimeColors.Error
+    val Success = DarkAnimeColors.Success
+    val Warning = DarkAnimeColors.Warning
+
+    val TextPrimary = Color(0xFFEFEFEF)
+    val TextSecondary = Color(0xFF909099)
+    val TextDisabled = Color(0xFF5A5A66)
+    val Ripple = DarkAnimeColors.Ripple
+
+    val Accent = DarkAnimeColors.Accent
+}
+
 val red50 = Color(0xFFFFEBEE)
 val red100 = Color(0xFFFFCDD2)
 val red200 = Color(0xFFEF9A9A)
@@ -443,7 +470,9 @@ val darkColors = listOf(
 
 @Composable
 fun ColorListPreview(title: String, colors: List<NamedColor>) {
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
         Text(text = title, style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(8.dp))
         colors.forEach { colorItem ->
@@ -457,7 +486,9 @@ fun ColorListPreview(title: String, colors: List<NamedColor>) {
             ) {
                 Text(
                     text = colorItem.name,
-                    modifier = Modifier.padding(start = 16.dp).weight(1f),
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .weight(1f),
                     color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black
                 )
                 Text(
