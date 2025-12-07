@@ -10,6 +10,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -54,6 +55,12 @@ import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.theme.amoledColors
+import com.dezdeqness.core.ui.theme.darkColors
+import com.dezdeqness.core.ui.theme.lightColors
+import com.dezdeqness.core.ui.theme.toAmoledMaterialScheme
+import com.dezdeqness.core.ui.theme.toDarkMaterialScheme
+import com.dezdeqness.core.ui.theme.toLightMaterialScheme
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.config.ConfigManager
@@ -86,10 +93,13 @@ import com.dezdeqness.presentation.routing.slideOutToTop
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    private val themeModeFlow = MutableStateFlow<ThemeMode?>(null)
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -124,14 +134,18 @@ class MainActivity : AppCompatActivity() {
                 .settingsRepository()
                 .getPreference(NightThemePreference)
 
-            when (mode) {
-                ThemeMode.SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                ThemeMode.DARK,
-                ThemeMode.AMOLED,
-                    -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            applyTheme(mode)
+        }
 
-                ThemeMode.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+        lifecycleScope.launch {
+            application
+                .getComponent()
+                .settingsRepository()
+                .observePreference(NightThemePreference)
+                .drop(1)
+                .collect { mode ->
+                    applyTheme(mode)
+                }
         }
 
         lifecycleScope.launch {
@@ -148,7 +162,24 @@ class MainActivity : AppCompatActivity() {
 
             val coroutineScope = rememberCoroutineScope()
 
-            AppTheme {
+            val themeMode by themeModeFlow.collectAsStateWithLifecycle()
+
+            AppTheme(
+                colors = when (themeMode) {
+                    ThemeMode.AMOLED -> amoledColors()
+                    ThemeMode.DARK -> darkColors()
+                    ThemeMode.LIGHT -> lightColors()
+                    ThemeMode.SYSTEM, null ->
+                        if (isSystemInDarkTheme()) darkColors() else lightColors()
+                },
+                materialDefaultTheme = when (themeMode) {
+                    ThemeMode.AMOLED -> toAmoledMaterialScheme()
+                    ThemeMode.DARK -> toDarkMaterialScheme()
+                    ThemeMode.LIGHT -> toLightMaterialScheme()
+                    ThemeMode.SYSTEM, null ->
+                        if (isSystemInDarkTheme()) toDarkMaterialScheme() else toLightMaterialScheme()
+                },
+            ) {
 
                 val section by initialSectionFlow.collectAsStateWithLifecycle()
 
@@ -517,6 +548,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun applyTheme(mode: ThemeMode) {
+        val themeMode = when (mode) {
+            ThemeMode.SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            ThemeMode.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            ThemeMode.DARK, ThemeMode.AMOLED -> AppCompatDelegate.MODE_NIGHT_YES
+        }
+        AppCompatDelegate.setDefaultNightMode(themeMode)
+
+        themeModeFlow.value = mode
     }
 
     private fun sectionToRoute(section: InitialSection) =

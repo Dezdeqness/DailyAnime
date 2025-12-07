@@ -3,7 +3,6 @@ package com.dezdeqness.presentation.features.settings
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,7 +17,6 @@ import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.presentation.SelectGenres
 import com.dezdeqness.presentation.event.OpenSelectGenresPage
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
-import com.dezdeqness.presentation.event.SwitchDarkTheme
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 
@@ -128,15 +126,6 @@ fun SettingsPageStandalone(
 
     viewModel.events.collectEvents { event ->
         when (event) {
-            is SwitchDarkTheme -> {
-                val themeMode = when (event.mode) {
-                    ThemeMode.SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    ThemeMode.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                    ThemeMode.DARK, ThemeMode.AMOLED -> AppCompatDelegate.MODE_NIGHT_YES
-                }
-                AppCompatDelegate.setDefaultNightMode(themeMode)
-            }
-
             is OpenSettingsAlarm -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
