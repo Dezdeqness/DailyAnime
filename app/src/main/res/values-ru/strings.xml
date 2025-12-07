@@ -38,6 +38,10 @@
     <string name="settings_version_name">Версия:</string>
     <string name="settings_theme_section">Тема</string>
     <string name="settings_dark_theme_title">Темная тема</string>
+    <string name="settings_theme_system">Системная</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Темная</string>
+    <string name="settings_theme_amoled">Амолед</string>
     <string name="settings_about_section">О приложении</string>
     <string name="settings_version_title">Версия</string>
     <string name="settings_navigation_section">Навигация</string>

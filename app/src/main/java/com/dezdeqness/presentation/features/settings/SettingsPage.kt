@@ -30,6 +30,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.imageLoader
 import com.dezdeqness.BuildConfig
 import com.dezdeqness.R
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.ui.TimePickerDialog
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
@@ -104,13 +105,11 @@ fun SettingsPage(
             }
 
             item {
-                SwitchSettingsView(
+                TextSettingsView(
                     title = stringResource(R.string.settings_dark_theme_title),
-                    subtitle = stringResource(id = R.string.settings_dark_theme),
-                    checked = state.isDarkThemeEnabled,
-                ) { isChecked ->
-                    actions.onNightThemeToggleClicked(isChecked)
-                }
+                    subtitle = stringResource(state.themeMode.fromMode()),
+                    onClick = { actions.onThemeClicked() },
+                )
             }
 
             item {
@@ -327,6 +326,20 @@ fun SettingsPage(
                 },
             )
         }
+
+        if (state.isThemeModeDialogShown) {
+            ListPreferencesDialog(
+                values = ThemeMode.entries,
+                selectedValue = state.themeMode,
+                valueText = { stringResource(it.fromMode()) },
+                onValueSelected = { mode ->
+                    actions.onThemeSelected(mode)
+                },
+                onDismiss = {
+                    actions.onMaxImageCacheSizeDialogClosed()
+                },
+            )
+        }
     }
 }
 
@@ -352,4 +365,13 @@ fun formatSize(sizeBytes: Long): String {
     }
 
     return "$prefix$result $suffix"
+}
+
+fun ThemeMode.fromMode(): Int {
+    return when (this) {
+        ThemeMode.SYSTEM -> R.string.settings_theme_system
+        ThemeMode.LIGHT -> R.string.settings_theme_light
+        ThemeMode.DARK -> R.string.settings_theme_dark
+        ThemeMode.AMOLED -> R.string.settings_theme_amoled
+    }
 }
