@@ -1,7 +1,5 @@
 package com.dezdeqness.presentation.features.settings
 
-import android.app.UiModeManager.MODE_NIGHT_NO
-import android.app.UiModeManager.MODE_NIGHT_YES
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
@@ -15,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.contract.settings.models.InitialSection
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.utils.collectEvents
 import com.dezdeqness.presentation.SelectGenres
 import com.dezdeqness.presentation.event.OpenSelectGenresPage
@@ -45,8 +44,16 @@ fun SettingsPageStandalone(
                 navController.popBackStack()
             }
 
-            override fun onNightThemeToggleClicked(isChecked: Boolean) {
-                viewModel.onNightThemeToggleChecked(isChecked)
+            override fun onThemeClicked() {
+                viewModel.onThemeClicked()
+            }
+
+            override fun onThemeSelected(mode: ThemeMode) {
+                viewModel.onThemeSelected(mode)
+            }
+
+            override fun onThemeDialogClosed() {
+                viewModel.onThemeDialogClosed()
             }
 
             override fun onChangeInitialSectionClicked() {
@@ -122,10 +129,10 @@ fun SettingsPageStandalone(
     viewModel.events.collectEvents { event ->
         when (event) {
             is SwitchDarkTheme -> {
-                val themeMode = if (event.isEnabled) {
-                    MODE_NIGHT_YES
-                } else {
-                    MODE_NIGHT_NO
+                val themeMode = when (event.mode) {
+                    ThemeMode.SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    ThemeMode.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+                    ThemeMode.DARK, ThemeMode.AMOLED -> AppCompatDelegate.MODE_NIGHT_YES
                 }
                 AppCompatDelegate.setDefaultNightMode(themeMode)
             }

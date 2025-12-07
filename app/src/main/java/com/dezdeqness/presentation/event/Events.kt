@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.event
 
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 import com.dezdeqness.presentation.features.userrate.EditRateUiModel
 import com.dezdeqness.presentation.models.SearchSectionUiModel
@@ -56,7 +57,7 @@ object NavigateToLoginPage : Event()
 
 object NavigateToSignUp : Event()
 
-data class SwitchDarkTheme(val isEnabled: Boolean) : Event()
+data class SwitchDarkTheme(val mode: ThemeMode) : Event()
 
 data class ShareUrl(val url: String) : ConsumableEvent()
 

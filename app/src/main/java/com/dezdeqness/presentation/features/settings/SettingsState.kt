@@ -1,15 +1,17 @@
 package com.dezdeqness.presentation.features.settings
 
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.ui.TimeData
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 import com.google.common.collect.ImmutableList
 
 data class SettingsState(
-    val isDarkThemeEnabled: Boolean = false,
+    val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val selectedSection: SelectSectionItem = SelectSectionItem.getSections().first(),
     val personalRibbonStatuses: ImmutableList<RibbonStatusUiModel> = ImmutableList.of(),
     val isSelectInitialSectionDialogShown: Boolean = false,
+    val isThemeModeDialogShown: Boolean = false,
     val isStatusReorderDialogShown: Boolean = false,
     val isAuthorized: Boolean = false,
     val isNotificationsTurnOn: Boolean = false,

@@ -1,11 +1,15 @@
 package com.dezdeqness.presentation.features.settings
 
 import com.dezdeqness.contract.settings.models.InitialSection
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.presentation.models.RibbonStatusUiModel
 
 interface SettingActions {
     fun onBackPressed()
-    fun onNightThemeToggleClicked(isChecked: Boolean)
+
+    fun onThemeClicked()
+    fun onThemeSelected(mode: ThemeMode)
+    fun onThemeDialogClosed()
 
     fun onChangeInitialSectionClicked()
     fun onSelectedSectionChanged(section: InitialSection)

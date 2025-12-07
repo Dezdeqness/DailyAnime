@@ -9,6 +9,7 @@ import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.NotificationEnabledPreference
 import com.dezdeqness.contract.settings.models.NotificationTimePreference
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.contract.settings.models.TimeEntity
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
@@ -56,7 +57,7 @@ class SettingsViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            val themeStatus = settingsRepository.getPreference(NightThemePreference)
+            val themeMode = settingsRepository.getPreference(NightThemePreference)
             val section = settingsRepository.getPreference(InitialSectionPreference)
             val isAuthorized = authRepository.isAuthorized()
             val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
@@ -77,7 +78,7 @@ class SettingsViewModel @Inject constructor(
 
             _settingsStateFlow.update {
                 it.copy(
-                    isDarkThemeEnabled = themeStatus,
+                    themeMode = themeMode,
                     selectedSection = SelectSectionItem.getById(section.id),
                     isAuthorized = isAuthorized,
                     isNotificationsTurnOn = isNotificationsTurnOn && alarmManagerProvider.canScheduleExactAlarms(),
@@ -98,18 +99,31 @@ class SettingsViewModel @Inject constructor(
 
     override val viewModelTag = "SettingsViewModel"
 
-    fun onNightThemeToggleChecked(isChecked: Boolean) {
-        val isEnabled = _settingsStateFlow.value.isDarkThemeEnabled
-        if (isChecked == isEnabled) return
-
-        launchOnMain {
-            settingsRepository.setPreference(NightThemePreference, isChecked)
+    fun onThemeClicked() {
+        _settingsStateFlow.update {
+            it.copy(isThemeModeDialogShown = true)
         }
+    }
 
-        _settingsStateFlow.value = _settingsStateFlow.value.copy(
-            isDarkThemeEnabled = isChecked,
-        )
-        onEventReceive(SwitchDarkTheme(isEnabled = isChecked))
+    fun onThemeSelected(mode: ThemeMode) {
+        launchOnIo {
+            settingsRepository.setPreference(NightThemePreference, mode)
+
+            _settingsStateFlow.update {
+                it.copy(
+                    themeMode = mode,
+                    isThemeModeDialogShown = false,
+                )
+            }
+
+            onEventReceive(SwitchDarkTheme(mode = mode))
+        }
+    }
+
+    fun onThemeDialogClosed() {
+        _settingsStateFlow.update {
+            it.copy(isThemeModeDialogShown = false)
+        }
     }
 
     fun onChangeInitialSectionClicked() {

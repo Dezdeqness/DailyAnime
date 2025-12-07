@@ -51,6 +51,7 @@ import com.dezdeqness.R
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.contract.settings.models.InitialSectionPreference
 import com.dezdeqness.contract.settings.models.NightThemePreference
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.utils.collectEvents
@@ -118,14 +119,18 @@ class MainActivity : AppCompatActivity() {
             .inject(this)
 
         lifecycleScope.launch {
-            val status = application
+            val mode = application
                 .getComponent()
                 .settingsRepository()
                 .getPreference(NightThemePreference)
-            if (status) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            when (mode) {
+                ThemeMode.SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                ThemeMode.DARK,
+                ThemeMode.AMOLED,
+                    -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+                ThemeMode.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
 

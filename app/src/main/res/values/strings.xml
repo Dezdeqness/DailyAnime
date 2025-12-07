@@ -40,6 +40,10 @@
     <string name="settings_version_name">Version:</string>
     <string name="settings_theme_section">Theme</string>
     <string name="settings_dark_theme_title">Dark mode</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_amoled">Amoled</string>
     <string name="settings_about_section">About</string>
     <string name="settings_version_title">Version</string>
     <string name="settings_navigation_section">Navigation</string>
