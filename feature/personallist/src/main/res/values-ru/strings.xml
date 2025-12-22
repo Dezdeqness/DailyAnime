@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_status_dialog_title">Выберите статус</string>
+
+    <string name="personal_list_search_placeholder_hint">Аниме</string>
+
+    <string name="personal_list_select_order_name">Имя</string>
+    <string name="personal_list_select_order_progress">Прогресс</string>
+    <string name="personal_list_select_order_score">Оценка</string>
+    <string name="personal_list_select_order_episodes">Эпизоды</string>
+
+    <string name="personal_list_empty_state">Категория не имеет элементов</string>
+
+    <string name="ribbon_empty_state_title">Ваш список пуст</string>
+    <string name="ribbon_empty_state_description">Перейдите на экран поиска, чтобы увидеть доступные для отслеживания аниме.</string>
+</resources>

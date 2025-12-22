@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -17,12 +17,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.feature.personallist.model.RibbonStatusUiModel
 
 @Composable
 fun PersonalRibbon(
@@ -46,7 +44,7 @@ fun PersonalRibbon(
                 Modifier.background(AppTheme.colors.accent)
             } else {
                 Modifier.border(
-                    border = BorderStroke(1.dp, colorResource(R.color.filter_divider)),
+                    border = BorderStroke(1.dp, AppTheme.colors.surface),
                     shape = AppTheme.shapes.large,
                 )
             }

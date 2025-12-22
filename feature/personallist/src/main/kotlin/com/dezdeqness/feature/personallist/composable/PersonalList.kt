@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.models.UserRateUiModel
+import com.dezdeqness.feature.personallist.PersonalListAction
+import com.dezdeqness.feature.personallist.model.UserRateUiModel
 
 @Composable
 fun PersonalList(
@@ -17,7 +17,7 @@ fun PersonalList(
     list: List<UserRateUiModel>,
     isScrollNeed: Boolean,
     onNeedScroll: (LazyListState) -> Unit,
-    onActionReceive: (Action) -> Unit,
+    onActionReceive: (PersonalListAction) -> Unit,
 ) {
     val listState = rememberLazyListState()
 

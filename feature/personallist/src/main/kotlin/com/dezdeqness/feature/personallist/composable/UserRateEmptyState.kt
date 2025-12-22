@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,8 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.feature.personallist.R
 
 @Composable
 fun UserRateEmptyState(modifier: Modifier = Modifier) {
@@ -43,7 +43,9 @@ fun UserRateEmptyState(modifier: Modifier = Modifier) {
 fun UserRateEmptyStatePreview() {
     AppTheme {
         UserRateEmptyState(
-            modifier = Modifier.background(AppTheme.colors.onPrimary).size(300.dp)
+            modifier = Modifier
+                .background(AppTheme.colors.onPrimary)
+                .size(300.dp)
         )
     }
 }
