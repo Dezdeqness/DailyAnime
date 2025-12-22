@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -22,9 +22,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.domain.model.Sort
+import com.dezdeqness.feature.personallist.R
 
 @Composable
 fun PersonalListSelectOrderDialog(

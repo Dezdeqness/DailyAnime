@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.com.dezdeqness.compose)
+    id("kotlin-parcelize")
 }
 
 java {

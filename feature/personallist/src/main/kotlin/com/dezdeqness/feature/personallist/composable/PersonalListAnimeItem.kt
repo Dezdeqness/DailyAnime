@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExposurePlus1
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -26,33 +29,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.image.AppImage
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.models.UserRateUiModel
+import com.dezdeqness.feature.personallist.PersonalListAction
+import com.dezdeqness.feature.personallist.model.UserRateUiModel
 
 
 @Composable
 fun PersonalListAnimeItem(
     modifier: Modifier = Modifier,
     userRateUiModel: UserRateUiModel,
-    onActionReceive: (Action) -> Unit,
+    onActionReceive: (PersonalListAction) -> Unit,
 ) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .clickable(
                 onClick = {
-                    onActionReceive(Action.AnimeClick(userRateUiModel.id, userRateUiModel.name))
+                    onActionReceive(
+                        PersonalListAction.AnimeClick(
+                            userRateUiModel.id,
+                            userRateUiModel.name
+                        )
+                    )
                 },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),
@@ -74,7 +79,7 @@ fun PersonalListAnimeItem(
                     color = Color.White,
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
-                        .background(colorResource(id = R.color.background_shadow))
+                        .background(Color.Black.copy(alpha = 0.6f))
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                         .align(alignment = Alignment.BottomStart)
                 )
@@ -126,11 +131,15 @@ fun PersonalListAnimeItem(
                             if (userRateUiModel.isFinished.not()) {
                                 IconButton(
                                     onClick = {
-                                        onActionReceive(Action.UserRateIncrement(userRateUiModel.rateId))
+                                        onActionReceive(
+                                            PersonalListAction.UserRateIncrement(
+                                                userRateUiModel.rateId
+                                            )
+                                        )
                                     }
                                 ) {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.ic_plus),
+                                        Icons.Default.ExposurePlus1,
                                         contentDescription = null,
                                         tint = AppTheme.colors.onSurface
                                     )
@@ -139,11 +148,15 @@ fun PersonalListAnimeItem(
 
                             IconButton(
                                 onClick = {
-                                    onActionReceive(Action.EditRateClicked(userRateUiModel.rateId))
+                                    onActionReceive(
+                                        PersonalListAction.EditRateClicked(
+                                            userRateUiModel.rateId
+                                        )
+                                    )
                                 }
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.ic_edit),
+                                    Icons.Default.Edit,
                                     contentDescription = null,
                                     tint = AppTheme.colors.onSurface
                                 )

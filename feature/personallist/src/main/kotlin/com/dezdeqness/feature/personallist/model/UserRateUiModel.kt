@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.models
+package com.dezdeqness.feature.personallist.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -13,9 +13,9 @@ data class UserRateUiModel(
     val episodes: Int,
     val logoUrl: String,
     val overallEpisodes: Int,
-) : AdapterItem(), Parcelable {
+) : Parcelable {
 
-    override fun id() = (rateId + id).toString()
+    fun id() = (rateId + id).toString()
 
     val isAnimeInProgress: Boolean
         get() = episodes != 0 && overallEpisodes != 0

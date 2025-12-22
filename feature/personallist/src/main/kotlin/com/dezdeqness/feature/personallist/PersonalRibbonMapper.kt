@@ -1,8 +1,8 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.feature.personallist
 
-import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.contract.user.model.StatusEntity
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.feature.personallist.model.RibbonStatusUiModel
 import javax.inject.Inject
 
 class PersonalRibbonMapper @Inject constructor(

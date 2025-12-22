@@ -103,10 +103,7 @@
     <string name="anime_personal_list_ribbon_status_completed">Завершено</string>
     <string name="anime_personal_list_ribbon_status_on_hold">Отложено</string>
     <string name="anime_personal_list_ribbon_status_dropped">Брошено</string>
-    <string name="personal_list_select_order_name">Имя</string>
-    <string name="personal_list_select_order_progress">Прогресс</string>
-    <string name="personal_list_select_order_score">Оценка</string>
-    <string name="personal_list_select_order_episodes">Эпизоды</string>
+
     <string name="edit_rate_status_watching">Смотрю</string>
     <string name="edit_rate_status_planned">В планах</string>
     <string name="edit_rate_status_rewatching">Пересмотр</string>
@@ -142,14 +139,12 @@
     <string name="bottom_navigation_calendar">Календарь</string>
     <string name="bottom_navigation_search">Поиск</string>
     <string name="bottom_navigation_profile">Профиль</string>
-    <string name="personal_list_empty_state">Категория не имеет элементов</string>
     <string name="search_placeholder_hint">Восстание Лелуша</string>
     <string name="anime_toolbar_similar">Похожее</string>
     <string name="anime_toolbar_chronology">Хронология</string>
     <string name="anime_toolbar_stats">Статистика</string>
     <string name="toolbar_title_similar">Похожее</string>
     <string name="calendar_search_placeholder_hint">Выходящие аниме</string>
-    <string name="personal_list_search_placeholder_hint">Аниме</string>
 
     <string name="cell_episode">Эпизод %d</string>
 
@@ -162,7 +157,6 @@
     <string name="anime_kind_music">Клип</string>
     <string name="anime_kind_promo">Промо</string>
     <string name="anime_kind_ad">Реклама</string>
-    <string name="select_status_dialog_title">Выберите статус</string>
     <string name="select_section_dialog_title">Выберите секцию</string>
 
     <string name="anime_score_1">Хуже некуда</string>
@@ -176,8 +170,6 @@
     <string name="anime_score_9">Великолепно</string>
     <string name="anime_score_10">Эпик вин!</string>
 
-    <string name="ribbon_empty_state_description">Перейдите на экран поиска, чтобы увидеть доступные для отслеживания аниме.</string>
-    <string name="ribbon_empty_state_title">Ваш список пуст</string>
 
     <string name="home_title">Добро пожаловать</string>
     <string name="home_title_authorized">Добро пожаловать,\n%s</string>

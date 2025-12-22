@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_status_dialog_title">Select status</string>
+
+    <string name="personal_list_search_placeholder_hint">Anime</string>
+
+    <string name="personal_list_select_order_name">Name</string>
+    <string name="personal_list_select_order_progress">Progress</string>
+    <string name="personal_list_select_order_score">Score</string>
+    <string name="personal_list_select_order_episodes">Episodes</string>
+
+    <string name="personal_list_empty_state">Category has no elements</string>
+
+    <string name="ribbon_empty_state_title">You have no anime to track</string>
+    <string name="ribbon_empty_state_description">Navigate to search screen to see available animes for tracking</string>
+</resources>

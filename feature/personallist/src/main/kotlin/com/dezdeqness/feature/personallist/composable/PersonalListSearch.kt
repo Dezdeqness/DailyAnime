@@ -1,23 +1,24 @@
-package com.dezdeqness.presentation.features.personallist.composable
+package com.dezdeqness.feature.personallist.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.textfield.SearchTextField
 import com.dezdeqness.core.ui.views.textfield.rememberSearchState
+import com.dezdeqness.feature.personallist.R
 
 @Composable
 fun PersonalListSearch(
@@ -52,7 +53,7 @@ fun PersonalListSearch(
                 },
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_close),
+                    Icons.Default.Close,
                     contentDescription = null,
                     tint = AppTheme.colors.onSurface
                 )
@@ -60,7 +61,7 @@ fun PersonalListSearch(
         },
         leadingIcon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_search),
+                Icons.Default.Search,
                 contentDescription = null,
                 tint = AppTheme.colors.onSurface
             )
