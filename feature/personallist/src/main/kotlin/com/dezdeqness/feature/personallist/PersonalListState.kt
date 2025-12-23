@@ -1,9 +1,9 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.feature.personallist
 
 import androidx.compose.runtime.Immutable
 import com.dezdeqness.domain.model.Sort
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
-import com.dezdeqness.presentation.models.UserRateUiModel
+import com.dezdeqness.feature.personallist.model.UserRateUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 
 @Immutable
 data class PersonalListState(

@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.settings
 
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.contract.settings.models.ThemeMode
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 
 interface SettingActions {
     fun onBackPressed()

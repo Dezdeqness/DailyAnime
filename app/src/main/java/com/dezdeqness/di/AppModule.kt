@@ -9,6 +9,7 @@ import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProviderImpl
 import com.dezdeqness.core.message.BaseMessageProvider
 import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
 import com.dezdeqness.data.core.AppLogger
@@ -24,7 +25,6 @@ import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HistorySearchListProvider
-import com.dezdeqness.data.provider.ResourceProvider
 import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.domain.repository.HistorySearchRepository

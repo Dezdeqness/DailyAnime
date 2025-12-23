@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.settings
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.ui.TimeData
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import com.google.common.collect.ImmutableList
 
 data class SettingsState(

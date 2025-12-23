@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.feature.personallist.model.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 
 @Composable
 fun PersonalRibbon(

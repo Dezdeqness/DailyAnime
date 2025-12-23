@@ -9,7 +9,7 @@ import com.dezdeqness.presentation.features.animelist.AnimeUiModel
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 import com.dezdeqness.presentation.features.home.model.SectionAnimeUiModel
 import com.dezdeqness.presentation.models.RelatedItemUiModel
-import com.dezdeqness.utils.AnimeKindUtils
+import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject

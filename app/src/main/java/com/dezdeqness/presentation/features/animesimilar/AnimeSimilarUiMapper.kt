@@ -7,7 +7,7 @@ import com.dezdeqness.contract.anime.model.Entity
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.SimilarUiModel
-import com.dezdeqness.utils.AnimeKindUtils
+import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject

@@ -6,7 +6,7 @@ import com.dezdeqness.contract.anime.model.Entity
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.ChronologyUiModel
-import com.dezdeqness.utils.AnimeKindUtils
+import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import javax.inject.Inject
 
 class AnimeChronologyUiMapper @Inject constructor(

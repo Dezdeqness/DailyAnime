@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.stats
 
 import com.dezdeqness.R
 import com.dezdeqness.contract.user.model.AccountEntity
-import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.ScoreChartUiModel
 import com.dezdeqness.presentation.models.StatsChartUiModel

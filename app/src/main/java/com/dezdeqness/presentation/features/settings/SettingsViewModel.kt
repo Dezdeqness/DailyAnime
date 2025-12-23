@@ -22,11 +22,11 @@ import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.data.provider.StatusesProvider
+import com.dezdeqness.feature.personallist.PersonalRibbonMapper
 import com.dezdeqness.presentation.event.OpenSelectGenresPage
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
-import com.dezdeqness.presentation.features.personallist.PersonalRibbonMapper
 import com.dezdeqness.presentation.features.settings.composables.SelectSectionItem
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

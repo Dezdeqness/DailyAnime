@@ -97,13 +97,6 @@
     <string name="anime_details_age_rating_rx">Хентай</string>
     <string name="anime_details_state_error_title">Попробовать еще раз</string>
 
-    <string name="anime_personal_list_ribbon_status_planned">Запланировано</string>
-    <string name="anime_personal_list_ribbon_status_watching">Смотрю</string>
-    <string name="anime_personal_list_ribbon_status_rewatching">Пересмотр</string>
-    <string name="anime_personal_list_ribbon_status_completed">Завершено</string>
-    <string name="anime_personal_list_ribbon_status_on_hold">Отложено</string>
-    <string name="anime_personal_list_ribbon_status_dropped">Брошено</string>
-
     <string name="edit_rate_status_watching">Смотрю</string>
     <string name="edit_rate_status_planned">В планах</string>
     <string name="edit_rate_status_rewatching">Пересмотр</string>
@@ -148,15 +141,7 @@
 
     <string name="cell_episode">Эпизод %d</string>
 
-    <string name="anime_kind_tv">ТВ</string>
-    <string name="anime_kind_film">Фильм</string>
-    <string name="anime_kind_ova">Ova</string>
-    <string name="anime_kind_ona">Ona</string>
-    <string name="anime_kind_special">Спэшел</string>
-    <string name="anime_kind_tv_special">ТВ спэшел</string>
-    <string name="anime_kind_music">Клип</string>
-    <string name="anime_kind_promo">Промо</string>
-    <string name="anime_kind_ad">Реклама</string>
+
     <string name="select_section_dialog_title">Выберите секцию</string>
 
     <string name="anime_score_1">Хуже некуда</string>

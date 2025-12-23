@@ -99,12 +99,6 @@
     <string name="anime_details_age_rating_rx">Hentai</string>
     <string name="anime_details_state_error_title">Try again</string>
 
-    <string name="anime_personal_list_ribbon_status_planned">Planned</string>
-    <string name="anime_personal_list_ribbon_status_watching">Watching</string>
-    <string name="anime_personal_list_ribbon_status_rewatching">Re-watching</string>
-    <string name="anime_personal_list_ribbon_status_completed">Completed</string>
-    <string name="anime_personal_list_ribbon_status_on_hold">Hold on</string>
-    <string name="anime_personal_list_ribbon_status_dropped">Abandoned</string>
     <string name="edit_rate_status_watching">Watching</string>
     <string name="edit_rate_status_planned">Planned</string>
     <string name="edit_rate_status_rewatching">Re-watching</string>
@@ -149,15 +143,7 @@
 
     <string name="cell_episode">Episode %d</string>
 
-    <string name="anime_kind_tv">TV</string>
-    <string name="anime_kind_film">Movie</string>
-    <string name="anime_kind_ova">Ova</string>
-    <string name="anime_kind_ona">Ona</string>
-    <string name="anime_kind_special">Special</string>
-    <string name="anime_kind_tv_special">TV special</string>
-    <string name="anime_kind_music">Music</string>
-    <string name="anime_kind_promo">Promo</string>
-    <string name="anime_kind_ad">Ad</string>
+
     <string name="select_section_dialog_title">Select section</string>
 
     <string name="anime_score_1">It couldn\'t be worse</string>

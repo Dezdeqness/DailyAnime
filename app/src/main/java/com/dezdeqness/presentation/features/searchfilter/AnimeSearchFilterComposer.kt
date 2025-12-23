@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.features.searchfilter
 
-import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.domain.model.FilterEntity
 import com.dezdeqness.domain.model.FilterType
 import com.dezdeqness.presentation.models.AnimeCell

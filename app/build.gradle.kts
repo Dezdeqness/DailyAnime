@@ -192,6 +192,9 @@ dependencies {
     implementation(project(":common:core-ui"))
     implementation(project(":common:core"))
 
+    // Shared
+    implementation(project(":shared:shared-presentation"))
+
     // Androidx
     implementation(libs.androidx.browser)
 

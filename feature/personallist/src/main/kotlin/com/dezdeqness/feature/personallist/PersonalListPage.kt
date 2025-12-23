@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.feature.personallist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -28,19 +30,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.GeneralError
-import com.dezdeqness.presentation.features.personallist.composable.PersonalList
-import com.dezdeqness.presentation.features.personallist.composable.PersonalListSearch
-import com.dezdeqness.presentation.features.personallist.composable.PersonalListSelectOrderDialog
-import com.dezdeqness.presentation.features.personallist.composable.PersonalRibbon
-import com.dezdeqness.presentation.features.personallist.composable.RibbonEmptyState
-import com.dezdeqness.presentation.features.personallist.composable.ShimmerPersonalLoading
-import com.dezdeqness.presentation.features.personallist.composable.UserRateEmptyState
-import com.dezdeqness.presentation.features.userrate.UserRateDialog
+import com.dezdeqness.feature.personallist.composable.PersonalList
+import com.dezdeqness.feature.personallist.composable.PersonalListSearch
+import com.dezdeqness.feature.personallist.composable.PersonalListSelectOrderDialog
+import com.dezdeqness.feature.personallist.composable.PersonalRibbon
+import com.dezdeqness.feature.personallist.composable.RibbonEmptyState
+import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
+import com.dezdeqness.feature.personallist.composable.UserRateEmptyState
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -67,14 +66,14 @@ fun PersonalListPage(
     val editRateBottomSheet = state.currentBottomSheet as? BottomSheet.EditRate
 
     if (editRateBottomSheet != null) {
-        UserRateDialog(
-            onClosed = {
-                actions.onUserRateBottomDialogClosed()
-            },
-            userRateId = editRateBottomSheet.userRateId,
-            title = editRateBottomSheet.title,
-            onSaveClicked = actions::onUserRateChanged,
-        )
+//        UserRateDialog(
+//            onClosed = {
+//                actions.onUserRateBottomDialogClosed()
+//            },
+//            userRateId = editRateBottomSheet.userRateId,
+//            title = editRateBottomSheet.title,
+//            onSaveClicked = actions::onUserRateChanged,
+//        )
     }
 
     if (isOrderDialogOpened.value) {
@@ -119,7 +118,7 @@ fun PersonalListPage(
                         },
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_filter_action),
+                            Icons.Default.FilterList,
                             contentDescription = null,
                             tint = AppTheme.colors.onSurface
                         )
