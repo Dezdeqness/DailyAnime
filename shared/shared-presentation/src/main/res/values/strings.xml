@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anime_kind_tv">TV</string>
+    <string name="anime_kind_film">Movie</string>
+    <string name="anime_kind_ova">Ova</string>
+    <string name="anime_kind_ona">Ona</string>
+    <string name="anime_kind_special">Special</string>
+    <string name="anime_kind_tv_special">TV special</string>
+    <string name="anime_kind_music">Music</string>
+    <string name="anime_kind_promo">Promo</string>
+    <string name="anime_kind_ad">Ad</string>
+</resources>

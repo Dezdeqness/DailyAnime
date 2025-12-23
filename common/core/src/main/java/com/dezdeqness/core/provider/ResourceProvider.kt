@@ -1,4 +1,4 @@
-package com.dezdeqness.data.provider
+package com.dezdeqness.core.provider
 
 import android.content.Context
 import androidx.annotation.StringRes

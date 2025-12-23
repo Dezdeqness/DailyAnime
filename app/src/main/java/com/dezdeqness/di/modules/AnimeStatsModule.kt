@@ -1,7 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.di.ViewModelKey
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
 import com.dezdeqness.presentation.features.animestats.AnimeStatsComposer

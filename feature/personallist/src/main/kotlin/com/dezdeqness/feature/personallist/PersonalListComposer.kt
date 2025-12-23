@@ -1,12 +1,12 @@
-package com.dezdeqness.presentation.features.personallist
+package com.dezdeqness.feature.personallist
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
-import com.dezdeqness.presentation.models.UserRateUiModel
-import com.dezdeqness.utils.AnimeKindUtils
+import com.dezdeqness.feature.personallist.model.UserRateUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import javax.inject.Inject
 
 class PersonalListComposer @Inject constructor(

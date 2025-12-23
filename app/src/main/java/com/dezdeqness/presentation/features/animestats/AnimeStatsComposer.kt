@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.animestats
 
 import androidx.compose.ui.graphics.Color
 import com.dezdeqness.R
-import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.DiagramChartUiModel
 import com.dezdeqness.presentation.models.ScoreChartUiModel

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.models
+package com.dezdeqness.shared.presentation.model
 
 data class RibbonStatusUiModel(
     val id: String,

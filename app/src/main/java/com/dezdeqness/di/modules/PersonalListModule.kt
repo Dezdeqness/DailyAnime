@@ -2,7 +2,7 @@ package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.di.ViewModelKey
-import com.dezdeqness.presentation.features.personallist.PersonalListViewModel
+import com.dezdeqness.feature.personallist.PersonalListViewModel
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
 import dagger.Binds
 import dagger.Module

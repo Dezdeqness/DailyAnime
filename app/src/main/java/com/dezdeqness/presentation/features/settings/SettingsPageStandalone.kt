@@ -18,7 +18,7 @@ import com.dezdeqness.presentation.SelectGenres
 import com.dezdeqness.presentation.event.OpenSelectGenresPage
 import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 
 @Composable
 fun SettingsPageStandalone(

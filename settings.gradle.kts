@@ -40,3 +40,6 @@ include(":feature:history")
 include(":feature:favourite")
 include(":feature:onboarding")
 include(":feature:personallist")
+
+// shared
+include(":shared:shared-presentation")

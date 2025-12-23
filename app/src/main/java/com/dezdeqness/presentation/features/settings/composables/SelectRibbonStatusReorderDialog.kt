@@ -31,7 +31,7 @@ import com.dezdeqness.core.ui.ReorderHapticFeedbackType
 import com.dezdeqness.core.ui.rememberReorderHapticFeedback
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.buttons.AppButton
-import com.dezdeqness.presentation.models.RibbonStatusUiModel
+import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import com.google.common.collect.ImmutableList
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState

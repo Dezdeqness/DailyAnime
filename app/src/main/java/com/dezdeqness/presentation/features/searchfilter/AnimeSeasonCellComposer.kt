@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.searchfilter
 
 import com.dezdeqness.R
-import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.presentation.models.AnimeCell
 import com.google.common.collect.ImmutableList
 import java.util.*

@@ -5,7 +5,7 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
-import com.dezdeqness.data.provider.ResourceProvider
+import com.dezdeqness.core.provider.ResourceProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.presentation.AnimeUiMapper
@@ -27,7 +27,7 @@ import com.dezdeqness.presentation.models.SeyuModelList
 import com.dezdeqness.presentation.models.SpacerUiItem
 import com.dezdeqness.presentation.models.VideoUiModel
 import com.dezdeqness.presentation.models.VideoUiModelList
-import com.dezdeqness.utils.AnimeKindUtils
+import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import com.google.common.collect.ImmutableList
 import java.text.SimpleDateFormat
 import java.util.Calendar
