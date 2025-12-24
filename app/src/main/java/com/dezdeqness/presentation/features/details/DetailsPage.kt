@@ -25,7 +25,7 @@ import com.dezdeqness.presentation.features.details.composables.DetailsList
 import com.dezdeqness.presentation.features.details.composables.DetailsToolbar
 import com.dezdeqness.presentation.features.details.composables.ShimmerDetailsLoading
 import com.dezdeqness.presentation.features.details.composables.list.DetailsError
-import com.dezdeqness.presentation.features.userrate.UserRateDialog
+import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -60,7 +60,7 @@ fun DetailsPage(
                 val editRateBottomSheet = state.currentBottomSheet as? BottomSheet.EditRate
 
                 if (editRateBottomSheet != null) {
-                    UserRateDialog(
+                    UserRateDialogStandalone(
                         onClosed = {
                             actions.onUserRateBottomDialogClosed()
                         },

@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.details
 
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.features.userrate.EditRateUiModel
+import com.dezdeqness.feature.userrate.EditRateUiModel
 
 interface DetailsActions {
     fun onBackPressed()

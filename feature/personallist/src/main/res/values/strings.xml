@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="select_status_dialog_title">Select status</string>
-
     <string name="personal_list_search_placeholder_hint">Anime</string>
 
     <string name="personal_list_select_order_name">Name</string>

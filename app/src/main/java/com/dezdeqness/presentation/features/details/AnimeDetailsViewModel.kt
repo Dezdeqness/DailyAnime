@@ -20,7 +20,7 @@ import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.details.Target.Anime
-import com.dezdeqness.presentation.features.userrate.EditRateUiModel
+import com.dezdeqness.feature.userrate.EditRateUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow

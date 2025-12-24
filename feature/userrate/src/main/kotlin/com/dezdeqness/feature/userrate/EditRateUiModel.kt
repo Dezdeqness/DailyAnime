@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.userrate
+package com.dezdeqness.feature.userrate
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

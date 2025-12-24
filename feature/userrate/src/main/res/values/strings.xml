@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="userrate_select_status_dialog_title">Select status</string>
+
+    <string name="userrate_edit_rate_status_watching">Watching</string>
+    <string name="userrate_edit_rate_status_planned">Planned</string>
+    <string name="userrate_edit_rate_status_rewatching">Re-watching</string>
+    <string name="userrate_edit_rate_status_completed">Watched</string>
+    <string name="userrate_edit_rate_status_on_hold">Hold on</string>
+    <string name="userrate_edit_rate_status_dropped">Abandoned</string>
+    <string name="userrate_edit_rate_status_none">Status absent</string>
+
+    <string name="userrate_edit_rate_episodes_title">Watched:</string>
+    <string name="userrate_edit_rate_episodes_header">Episodes</string>
+    <string name="userrate_edit_rate_comment_header">Comment</string>
+    <string name="userrate_edit_rate_score_header">Score</string>
+
+    <string name="userrate_edit_rate_reset_title">Reset</string>
+    <string name="userrate_edit_rate_create_title">Create</string>
+    <string name="userrate_edit_rate_update_title">Update</string>
+
+    <string name="userrate_edit_rate_status_title">Status</string>
+    <string name="userrate_edit_rate_score_title">Score</string>
+    <string name="userrate_edit_rate_status_no_status">Select</string>
+
+    <string name="userrate_anime_score_1">It couldn\'t be worse</string>
+    <string name="userrate_anime_score_2">Terrible</string>
+    <string name="userrate_anime_score_3">Very bad</string>
+    <string name="userrate_anime_score_4">Badly</string>
+    <string name="userrate_anime_score_5">More or less</string>
+    <string name="userrate_anime_score_6">Fine</string>
+    <string name="userrate_anime_score_7">Good</string>
+    <string name="userrate_anime_score_8">Great</string>
+    <string name="userrate_anime_score_9">Fabulous</string>
+    <string name="userrate_anime_score_10">Epic win!</string>
+</resources>

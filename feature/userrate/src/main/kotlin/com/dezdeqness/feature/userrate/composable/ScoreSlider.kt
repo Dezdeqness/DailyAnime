@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.userrate.composable
+package com.dezdeqness.feature.userrate.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -20,10 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
-import com.dezdeqness.core.ui.ReorderHapticFeedbackType
-import com.dezdeqness.core.ui.rememberReorderHapticFeedback
+import com.dezdeqness.core.ui.effects.ReorderHapticFeedbackType
+import com.dezdeqness.core.ui.effects.rememberReorderHapticFeedback
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.feature.userrate.R
 import kotlin.math.roundToInt
 
 @Composable
@@ -49,16 +49,16 @@ fun ScoreSlider(
 
         Text(
             text = when (score.toInt()) {
-                1 -> stringResource(R.string.anime_score_1)
-                2 -> stringResource(R.string.anime_score_2)
-                3 -> stringResource(R.string.anime_score_3)
-                4 -> stringResource(R.string.anime_score_4)
-                5 -> stringResource(R.string.anime_score_5)
-                6 -> stringResource(R.string.anime_score_6)
-                7 -> stringResource(R.string.anime_score_7)
-                8 -> stringResource(R.string.anime_score_8)
-                9 -> stringResource(R.string.anime_score_9)
-                10 -> stringResource(R.string.anime_score_10)
+                1 -> stringResource(R.string.userrate_anime_score_1)
+                2 -> stringResource(R.string.userrate_anime_score_2)
+                3 -> stringResource(R.string.userrate_anime_score_3)
+                4 -> stringResource(R.string.userrate_anime_score_4)
+                5 -> stringResource(R.string.userrate_anime_score_5)
+                6 -> stringResource(R.string.userrate_anime_score_6)
+                7 -> stringResource(R.string.userrate_anime_score_7)
+                8 -> stringResource(R.string.userrate_anime_score_8)
+                9 -> stringResource(R.string.userrate_anime_score_9)
+                10 -> stringResource(R.string.userrate_anime_score_10)
                 else -> ""
             },
             style = AppTheme.typography.titleMedium,

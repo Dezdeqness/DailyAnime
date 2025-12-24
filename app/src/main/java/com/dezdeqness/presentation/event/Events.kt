@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.event
 
 import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
-import com.dezdeqness.presentation.features.userrate.EditRateUiModel
+import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import java.util.UUID
 

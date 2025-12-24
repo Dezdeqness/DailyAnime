@@ -19,7 +19,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.dezdeqness.feature.personallist"
+    namespace = "com.dezdeqness.feature.userrate"
     compileOptions {
         val javaVersion = JavaVersion.VERSION_21
         sourceCompatibility = javaVersion
@@ -60,11 +60,5 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation(project(":contract:user"))
     implementation(project(":contract:anime"))
-    implementation(project(":contract:settings"))
-
-    implementation(project(":shared:shared-presentation"))
-
-    implementation(project(":feature:userrate"))
 }

@@ -216,6 +216,7 @@ dependencies {
     implementation(project(":feature:favourite"))
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:personallist"))
+    implementation(project(":feature:userrate"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

@@ -23,7 +23,7 @@ import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
-import com.dezdeqness.presentation.features.userrate.EditRateUiModel
+import com.dezdeqness.feature.userrate.EditRateUiModel
 
 @Composable
 fun DetailsStandalonePage(
