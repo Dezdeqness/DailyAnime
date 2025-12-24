@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.userrate.composable
+package com.dezdeqness.feature.userrate.composable
 
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.contract.anime.model.UserRateStatusEntity
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.feature.userrate.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +46,7 @@ fun SelectStatusDialog(
 
         Column {
             Text(
-                text = stringResource(R.string.select_status_dialog_title),
+                text = stringResource(R.string.userrate_select_status_dialog_title),
                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
                 style = AppTheme.typography.titleMedium,
                 color = AppTheme.colors.textPrimary,
@@ -99,27 +99,27 @@ data class SelectStatusItem(
             listOf(
                 SelectStatusItem(
                     id = UserRateStatusEntity.WATCHING.status,
-                    title = context.getString(R.string.edit_rate_status_watching)
+                    title = context.getString(R.string.userrate_edit_rate_status_watching)
                 ),
                 SelectStatusItem(
                     id = UserRateStatusEntity.PLANNED.status,
-                    title = context.getString(R.string.edit_rate_status_planned)
+                    title = context.getString(R.string.userrate_edit_rate_status_planned)
                 ),
                 SelectStatusItem(
                     id = UserRateStatusEntity.REWATCHING.status,
-                    title = context.getString(R.string.edit_rate_status_rewatching)
+                    title = context.getString(R.string.userrate_edit_rate_status_rewatching)
                 ),
                 SelectStatusItem(
                     id = UserRateStatusEntity.COMPLETED.status,
-                    title = context.getString(R.string.edit_rate_status_completed)
+                    title = context.getString(R.string.userrate_edit_rate_status_completed)
                 ),
                 SelectStatusItem(
                     id = UserRateStatusEntity.ON_HOLD.status,
-                    title = context.getString(R.string.edit_rate_status_on_hold)
+                    title = context.getString(R.string.userrate_edit_rate_status_on_hold)
                 ),
                 SelectStatusItem(
                     id = UserRateStatusEntity.DROPPED.status,
-                    title = context.getString(R.string.edit_rate_status_dropped)
+                    title = context.getString(R.string.userrate_edit_rate_status_dropped)
                 )
             )
     }

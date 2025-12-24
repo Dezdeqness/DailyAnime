@@ -1,25 +1,25 @@
-package com.dezdeqness.presentation.features.userrate
+package com.dezdeqness.feature.userrate
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.UserRatesRepository
-import com.dezdeqness.presentation.event.EditUserRate
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import okhttp3.internal.toLongOrDefault
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
-    coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    appLogger: AppLogger,
-) : BaseViewModel(
-    coroutineDispatcherProvider = coroutineDispatcherProvider,
-    appLogger = appLogger,
-) {
+    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    private val appLogger: AppLogger,
+) : ViewModel() {
+
     private var rateId: Long = 0
     private var title: String = ""
 
@@ -30,14 +30,15 @@ class UserRateViewModel @Inject constructor(
 
     private var localUserRate: UserRateEntity? = null
 
+    private val _events = MutableSharedFlow<EditRateUiModel>()
+    val events: SharedFlow<EditRateUiModel> = _events
+
     fun onUserRateUpdated(rateId: Long, title: String) {
         this.rateId = rateId
         this.title = title
 
         fetchUserRate()
     }
-
-    override val viewModelTag = "UserRateViewModel"
 
     fun onScoreChanged(score: Long) {
         _userRateStateFlow.value = _userRateStateFlow.value.copy(
@@ -97,7 +98,9 @@ class UserRateViewModel @Inject constructor(
                 score = model.score.toFloat(),
                 comment = model.comment,
             )
-            onEventReceive(EditUserRate(userRateUiModel = uiModel))
+            viewModelScope.launch {
+                _events.emit(uiModel)
+            }
         }
     }
 
@@ -131,11 +134,13 @@ class UserRateViewModel @Inject constructor(
                 it.copy(episode = 0)
             }
         }
-        val parsedEpisodes = episodes.toLongOrDefault(_userRateStateFlow.value.episode)
+        val parsedEpisodes = episodes.toLongOrNull() ?: _userRateStateFlow.value.episode
 
         _userRateStateFlow.update {
             it.copy(episode = parsedEpisodes)
         }
+
+        checkIsContentChanged()
     }
 
     private fun checkIsContentChanged() {
@@ -145,7 +150,7 @@ class UserRateViewModel @Inject constructor(
     }
 
     private fun fetchUserRate() {
-        launchOnIo {
+        viewModelScope.launch(coroutineDispatcherProvider.io()) {
             val userRate = userRatesRepository.getLocalUserRate(rateId = rateId)
             localUserRate = userRate ?: UserRateEntity.EMPTY_USER_RATE
 
@@ -185,4 +190,11 @@ class UserRateViewModel @Inject constructor(
                 uiEditRate.comment != localUserRate?.text
     }
 
+    private fun logInfo(message: String, throwable: Throwable) {
+        appLogger.logInfo(
+            tag = "UserRateViewModel",
+            message = message,
+            throwable = throwable,
+        )
+    }
 }

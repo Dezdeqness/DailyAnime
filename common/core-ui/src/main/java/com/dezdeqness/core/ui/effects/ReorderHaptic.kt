@@ -1,4 +1,4 @@
-package com.dezdeqness.core.ui
+package com.dezdeqness.core.ui.effects
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

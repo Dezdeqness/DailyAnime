@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.userrate.composable
+package com.dezdeqness.feature.userrate.composable
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

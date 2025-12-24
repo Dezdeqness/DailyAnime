@@ -52,7 +52,7 @@ fun PersonalListSelectOrderDialog(
             Column(modifier = Modifier.padding(8.dp)) {
                 Column {
                     Text(
-                        text = stringResource(R.string.select_status_dialog_title),
+                        text = stringResource(com.dezdeqness.feature.userrate.R.string.userrate_select_status_dialog_title),
                         modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
                         style = AppTheme.typography.titleMedium,
                         color = AppTheme.colors.textPrimary,

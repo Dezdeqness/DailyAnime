@@ -1,5 +1,4 @@
-package com.dezdeqness.presentation.features.userrate.composable
-
+package com.dezdeqness.feature.userrate.composable
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -25,13 +24,10 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 
 @Composable

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.userrate
+package com.dezdeqness.feature.userrate
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -41,15 +41,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.header.Header
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
-import com.dezdeqness.presentation.features.userrate.composable.CommentTextField
-import com.dezdeqness.presentation.features.userrate.composable.ScoreSlider
-import com.dezdeqness.presentation.features.userrate.composable.SelectStatusDialog
-import com.dezdeqness.presentation.features.userrate.composable.SelectStatusItem
-import com.dezdeqness.presentation.features.userrate.composable.rememberCommentState
+import com.dezdeqness.feature.userrate.composable.CommentTextField
+import com.dezdeqness.feature.userrate.composable.ScoreSlider
+import com.dezdeqness.feature.userrate.composable.SelectStatusDialog
+import com.dezdeqness.feature.userrate.composable.SelectStatusItem
+import com.dezdeqness.feature.userrate.composable.rememberCommentState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -87,16 +86,16 @@ fun UserRateContent(
                     onClick = { actions.onResetClicked() },
                 ) {
                     Text(
-                        text = stringResource(id = R.string.edit_rate_reset_title),
+                        text = stringResource(id = R.string.userrate_edit_rate_reset_title),
                         style = AppTheme.typography.titleMedium,
                     )
                 }
 
                 val changeTitleId =
                     if (state.isEditMode) {
-                        R.string.edit_rate_update_title
+                        R.string.userrate_edit_rate_update_title
                     } else {
-                        R.string.edit_rate_create_title
+                        R.string.userrate_edit_rate_create_title
                     }
 
                 TextButton(
@@ -137,7 +136,7 @@ fun UserRateContent(
         )
 
         Header(
-            title = stringResource(id = R.string.edit_rate_status_title),
+            title = stringResource(id = R.string.userrate_edit_rate_status_title),
             titleStyle = AppTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -165,7 +164,7 @@ fun UserRateContent(
                     text = listStatuses
                         .firstOrNull { it.id == state.selectedStatus }
                         ?.title
-                        ?: stringResource(id = R.string.edit_rate_status_no_status),
+                        ?: stringResource(id = R.string.userrate_edit_rate_status_no_status),
                     modifier = Modifier.padding(16.dp),
                     color = AppTheme.colors.textPrimary,
                 )
@@ -173,7 +172,7 @@ fun UserRateContent(
         }
 
         Header(
-            title = stringResource(id = R.string.edit_rate_score_title),
+            title = stringResource(id = R.string.userrate_edit_rate_score_title),
             titleStyle = AppTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -188,7 +187,7 @@ fun UserRateContent(
         )
 
         Header(
-            title = stringResource(id = R.string.edit_rate_episodes_header),
+            title = stringResource(id = R.string.userrate_edit_rate_episodes_header),
             titleStyle = AppTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -203,7 +202,7 @@ fun UserRateContent(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = stringResource(id = R.string.edit_rate_episodes_title),
+                text = stringResource(id = R.string.userrate_edit_rate_episodes_title),
                 style = AppTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
@@ -244,7 +243,7 @@ fun UserRateContent(
         }
 
         Header(
-            title = stringResource(id = R.string.edit_rate_comment_header),
+            title = stringResource(id = R.string.userrate_edit_rate_comment_header),
             titleStyle = AppTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -269,7 +268,7 @@ fun UserRateContent(
                     },
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_close),
+                        Icons.Default.Close,
                         contentDescription = null,
                         tint = AppTheme.colors.onSurface
                     )

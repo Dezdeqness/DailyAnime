@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="userrate_select_status_dialog_title">Выберите статус</string>
+
+    <string name="userrate_edit_rate_status_watching">Смотрю</string>
+    <string name="userrate_edit_rate_status_planned">В планах</string>
+    <string name="userrate_edit_rate_status_rewatching">Пересмотр</string>
+    <string name="userrate_edit_rate_status_completed">Просмотрено</string>
+    <string name="userrate_edit_rate_status_on_hold">Отложено</string>
+    <string name="userrate_edit_rate_status_dropped">Брошено</string>
+    <string name="userrate_edit_rate_status_none">Статус отсутствует</string>
+
+    <string name="userrate_edit_rate_episodes_title">Просмотрено:</string>
+    <string name="userrate_edit_rate_episodes_header">Эпизоды</string>
+    <string name="userrate_edit_rate_comment_header">Комментарий</string>
+    <string name="userrate_edit_rate_score_header">Оценка</string>
+
+    <string name="userrate_edit_rate_reset_title">Сбросить</string>
+    <string name="userrate_edit_rate_create_title">Создать</string>
+    <string name="userrate_edit_rate_update_title">Обновить</string>
+
+    <string name="userrate_edit_rate_status_title">Статус</string>
+    <string name="userrate_edit_rate_score_title">Оценка</string>
+    <string name="userrate_edit_rate_status_no_status">Выбрать</string>
+
+    <string name="userrate_anime_score_1">Хуже некуда</string>
+    <string name="userrate_anime_score_2">Ужасно</string>
+    <string name="userrate_anime_score_3">Очень плохо</string>
+    <string name="userrate_anime_score_4">Плохо</string>
+    <string name="userrate_anime_score_5">Более-менее</string>
+    <string name="userrate_anime_score_6">Нормально</string>
+    <string name="userrate_anime_score_7">Хорошо</string>
+    <string name="userrate_anime_score_8">Отлично</string>
+    <string name="userrate_anime_score_9">Великолепно</string>
+    <string name="userrate_anime_score_10">Эпик вин!</string>
+</resources>

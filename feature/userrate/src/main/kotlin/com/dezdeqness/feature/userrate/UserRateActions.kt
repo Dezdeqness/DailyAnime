@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.userrate
+package com.dezdeqness.feature.userrate
 
 @Suppress("TooManyFunctions")
 interface UserRateActions {
