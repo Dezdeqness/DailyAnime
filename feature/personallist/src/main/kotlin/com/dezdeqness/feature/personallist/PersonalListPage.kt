@@ -21,7 +21,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.composable.PersonalList
@@ -51,7 +51,7 @@ fun PersonalListPage(
     modifier: Modifier = Modifier,
 ) {
 
-    val state by stateFlow.collectAsState()
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     val scope = rememberCoroutineScope()
 
@@ -61,19 +61,6 @@ fun PersonalListPage(
 
     val isOrderDialogOpened = rememberSaveable {
         mutableStateOf(false)
-    }
-
-    val editRateBottomSheet = state.currentBottomSheet as? BottomSheet.EditRate
-
-    if (editRateBottomSheet != null) {
-//        UserRateDialog(
-//            onClosed = {
-//                actions.onUserRateBottomDialogClosed()
-//            },
-//            userRateId = editRateBottomSheet.userRateId,
-//            title = editRateBottomSheet.title,
-//            onSaveClicked = actions::onUserRateChanged,
-//        )
     }
 
     if (isOrderDialogOpened.value) {
