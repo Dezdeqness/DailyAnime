@@ -78,7 +78,7 @@ import com.dezdeqness.presentation.features.details.deserializeListFromString
 import com.dezdeqness.presentation.features.favourite.FavouriteStandalonePage
 import com.dezdeqness.presentation.features.history.HistoryStandalonePage
 import com.dezdeqness.presentation.features.home.HomePageStandalone
-import com.dezdeqness.presentation.features.personallist.host.PersonalHostStandalonePage
+import com.dezdeqness.presentation.features.personallist.PersonalHostStandalonePage
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone

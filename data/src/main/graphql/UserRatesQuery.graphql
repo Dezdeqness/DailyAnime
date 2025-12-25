@@ -3,7 +3,8 @@ query UserRatesSearch(
     $limit: PositiveInt!,
     $mylist: MylistString!,
     $censored: Boolean,
-    $order: OrderEnum
+    $order: OrderEnum,
+    $search: String,
 ) {
     animes(
         page: $page
@@ -11,6 +12,7 @@ query UserRatesSearch(
         mylist: $mylist
         censored: $censored
         order: $order
+        search: $search
     ) {
         id
         name

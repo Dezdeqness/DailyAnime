@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.personallist.host
+package com.dezdeqness.presentation.features.personallist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,9 +11,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.AuthorizedUiState
+import com.dezdeqness.feature.personallist.PersonalListViewModel
 import com.dezdeqness.presentation.BottomBarNav
-import com.dezdeqness.presentation.features.personallist.PersonalListStandalonePage
-import com.dezdeqness.presentation.features.personallist.PersonalListViewModel
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedActions
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedScreen
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
