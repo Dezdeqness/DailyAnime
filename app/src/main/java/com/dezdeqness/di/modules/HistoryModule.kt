@@ -3,7 +3,7 @@ package com.dezdeqness.di.modules
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.history.repository.HistoryRepository
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.feature.history.presentation.HistoryViewModel

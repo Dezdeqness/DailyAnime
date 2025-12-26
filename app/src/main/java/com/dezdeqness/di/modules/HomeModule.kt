@@ -5,7 +5,7 @@ import com.dezdeqness.data.datasource.HomeRemoteDatasource
 import com.dezdeqness.data.datasource.HomeRemoteDatasourceImpl
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.repository.HomeRepositoryImpl
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.presentation.features.home.HomeComposer
 import com.dezdeqness.presentation.features.home.HomeViewModel

@@ -1,7 +1,7 @@
 package com.dezdeqness.di.subcomponents
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.presentation.features.routing.RoutingActivity
 import com.dezdeqness.presentation.features.routing.RoutingViewModel
 import dagger.Binds

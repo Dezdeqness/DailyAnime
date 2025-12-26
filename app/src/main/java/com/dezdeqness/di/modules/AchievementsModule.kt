@@ -5,7 +5,7 @@ import com.dezdeqness.data.AchievementService
 import com.dezdeqness.data.datasource.AchievementRemoteDataSource
 import com.dezdeqness.data.datasource.AchievementRemoteDataSourceImpl
 import com.dezdeqness.data.repository.AchievementRepositoryImpl
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.domain.repository.AchievementRepository
 import com.dezdeqness.feature.achievements.presentation.AchievementsViewModel
 import dagger.Binds

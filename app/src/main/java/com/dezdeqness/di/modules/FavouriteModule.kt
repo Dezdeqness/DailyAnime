@@ -6,7 +6,7 @@ import com.dezdeqness.data.FavouriteApiService
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSource
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSourceImpl
 import com.dezdeqness.data.repository.FavouriteRepositoryImpl
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.feature.favourite.presentation.FavouritesViewModel
 import dagger.Binds
 import dagger.Module

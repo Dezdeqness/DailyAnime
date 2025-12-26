@@ -1,7 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresViewModel
 import dagger.Binds
 import dagger.Module

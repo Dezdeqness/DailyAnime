@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.com.dezdeqness.compose)
+    alias(libs.plugins.ksp)
 }
 
 java {
@@ -38,4 +39,8 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
+
+    // Dagger
+    implementation(libs.dagger.dagger)
+    ksp(libs.dagger.compilier)
 }
