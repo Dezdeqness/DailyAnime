@@ -4,6 +4,7 @@ import android.content.Context
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.di.ViewModelBuilderModule
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.PermissionCheckProvider

@@ -1,7 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.di.ViewModelKey
+import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotsViewModel
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Command
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
