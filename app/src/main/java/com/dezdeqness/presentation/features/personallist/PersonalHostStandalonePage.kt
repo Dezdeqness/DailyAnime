@@ -11,7 +11,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.AuthorizedUiState
-import com.dezdeqness.feature.personallist.PersonalListViewModel
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedActions
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedScreen
@@ -30,13 +29,8 @@ fun PersonalHostStandalonePage(
             .create()
     }
 
-    val analyticsManager = personalListComponent.analyticsManager()
-
     val hostViewModel =
         viewModel<PersonalListHostViewModel>(factory = personalListComponent.viewModelFactory())
-
-    val viewModel =
-        viewModel<PersonalListViewModel>(factory = personalListComponent.viewModelFactory())
 
     val state by hostViewModel.hostStateFlow.collectAsStateWithLifecycle()
 
@@ -44,9 +38,7 @@ fun PersonalHostStandalonePage(
         AuthorizedUiState.Authorized -> {
             PersonalListStandalonePage(
                 modifier = modifier,
-                viewModel = viewModel,
                 navController = rootController,
-                analyticsManager = analyticsManager,
             )
         }
 
