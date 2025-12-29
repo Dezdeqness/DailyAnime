@@ -2,25 +2,16 @@ package com.dezdeqness.feature.personallist
 
 import androidx.compose.runtime.Immutable
 import com.dezdeqness.domain.model.Sort
-import com.dezdeqness.feature.personallist.model.UserRateUiModel
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 
 @Immutable
-data class PersonalListState(
+data class PersonalListPagerState(
     val ribbon: List<RibbonStatusUiModel> = listOf(),
-    val currentRibbonId: String = "",
-    val items: List<UserRateUiModel> = listOf(),
+    val selectedRibbonId: String = "",
     val currentSortId: String = Sort.NAME.sort,
-    val isPullDownRefreshing: Boolean = false,
-    private val isInitialLoadingIndicatorShowing: Boolean = false,
-    val isScrollNeed: Boolean = false,
+    val isInitialLoading: Boolean = false,
     val placeholder: Placeholder = Placeholder.None,
-    val currentBottomSheet: BottomSheet = BottomSheet.None,
-) {
-    val isLoadingStateShowing
-        get() =
-            items.isEmpty() && placeholder == Placeholder.None && isInitialLoadingIndicatorShowing
-}
+)
 
 sealed class Placeholder {
     sealed class Ribbon : Placeholder() {
