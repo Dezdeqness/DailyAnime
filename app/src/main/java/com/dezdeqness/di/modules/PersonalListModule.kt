@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.dezdeqness.core.di.AssistedViewModelFactory
 import com.dezdeqness.core.di.AssistedViewModelKey
 import com.dezdeqness.core.di.ViewModelKey
-import com.dezdeqness.feature.personallist.PersonalListTabViewModel
 import com.dezdeqness.feature.personallist.PersonalListViewModel
+import com.dezdeqness.feature.personallist.tab.PersonalListTabViewModel
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
 import dagger.Binds
 import dagger.Module
