@@ -1,4 +1,4 @@
-package com.dezdeqness.data.provider
+package com.dezdeqness.shared.presentation.provider
 
 import android.content.Context
 import android.content.pm.PackageManager

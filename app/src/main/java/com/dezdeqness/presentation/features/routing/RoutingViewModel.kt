@@ -1,15 +1,15 @@
 package com.dezdeqness.presentation.features.routing
 
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.WorkSchedulerManager
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.contract.user.repository.UserRepository
+import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
+import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
+import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
 import javax.inject.Inject
 
 class RoutingViewModel @Inject constructor(

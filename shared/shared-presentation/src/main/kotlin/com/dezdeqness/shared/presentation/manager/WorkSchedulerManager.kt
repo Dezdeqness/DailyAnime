@@ -1,4 +1,4 @@
-package com.dezdeqness.core
+package com.dezdeqness.shared.presentation.manager
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -7,7 +7,7 @@ import android.content.Intent
 import android.os.Build
 import com.dezdeqness.contract.settings.models.NotificationTimePreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.core.worker.NotificationDailyReceiver
+import com.dezdeqness.shared.presentation.receiver.NotificationDailyReceiver
 import java.util.Calendar
 import javax.inject.Inject
 

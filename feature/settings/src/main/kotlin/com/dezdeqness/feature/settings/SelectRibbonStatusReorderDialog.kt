@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.settings.composables
+package com.dezdeqness.feature.settings
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DragIndicator
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -21,18 +23,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.dezdeqness.R
 import com.dezdeqness.core.ui.effects.ReorderHapticFeedbackType
 import com.dezdeqness.core.ui.effects.rememberReorderHapticFeedback
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.buttons.AppButton
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
-import com.google.common.collect.ImmutableList
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
@@ -40,7 +39,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 fun SelectRibbonStatusReorderDialog(
     modifier: Modifier = Modifier,
     onDoneClicked: (List<RibbonStatusUiModel>) -> Unit,
-    statuses: ImmutableList<RibbonStatusUiModel>,
+    statuses: List<RibbonStatusUiModel>,
     onDismissRequest: () -> Unit,
 ) {
     val haptic = rememberReorderHapticFeedback()
@@ -114,7 +113,7 @@ fun SelectRibbonStatusReorderDialog(
                                         onClick = {},
                                     ) {
                                         Icon(
-                                            painter = painterResource(R.drawable.ic_palm),
+                                            Icons.Default.DragIndicator,
                                             tint = AppTheme.colors.onSurface,
                                             contentDescription = null,
                                         )

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.settings.composables
+package com.dezdeqness.feature.settings
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.R
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.core.ui.theme.AppTheme
 
@@ -100,42 +99,42 @@ data class SelectSectionItem(
                 listOf(
                     SelectSectionItem(
                         section = InitialSection.HOME,
-                        titleId = R.string.bottom_navigation_home
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_home
                     ),
                     SelectSectionItem(
                         section = InitialSection.FAVORITES,
-                        titleId = R.string.bottom_navigation_personal_lists
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_personal_lists
                     ),
                     SelectSectionItem(
                         section = InitialSection.CALENDAR,
-                        titleId = R.string.bottom_navigation_calendar
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_calendar
                     ),
                     SelectSectionItem(
                         section = InitialSection.PROFILE,
-                        titleId = R.string.bottom_navigation_profile
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_profile
                     ),
                     SelectSectionItem(
                         section = InitialSection.SEARCH,
-                        titleId = R.string.bottom_navigation_search
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search
                     ),
                 )
             } else {
                 listOf(
                     SelectSectionItem(
                         section = InitialSection.HOME,
-                        titleId = R.string.bottom_navigation_home
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_home
                     ),
                     SelectSectionItem(
                         section = InitialSection.FAVORITES,
-                        titleId = R.string.bottom_navigation_personal_lists
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_personal_lists
                     ),
                     SelectSectionItem(
                         section = InitialSection.PROFILE,
-                        titleId = R.string.bottom_navigation_profile
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_profile
                     ),
                     SelectSectionItem(
                         section = InitialSection.SEARCH,
-                        titleId = R.string.bottom_navigation_search
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search
                     ),
                 )
             }

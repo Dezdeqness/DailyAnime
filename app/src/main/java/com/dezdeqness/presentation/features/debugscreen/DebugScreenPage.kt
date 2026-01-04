@@ -29,8 +29,8 @@ import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.buttons.AppButton
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.data.core.config.ConfigKeys
-import com.dezdeqness.presentation.features.settings.composables.SwitchSettingsView
-import com.dezdeqness.presentation.features.settings.composables.TextSettingsView
+import com.dezdeqness.feature.settings.composables.SwitchSettingsView
+import com.dezdeqness.feature.settings.composables.TextSettingsView
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +60,9 @@ fun DebugScreenPage(
             )
         }
     ) { padding ->
-        Box(modifier = Modifier.padding(padding).fillMaxSize()) {
+        Box(modifier = Modifier
+            .padding(padding)
+            .fillMaxSize()) {
             LazyColumn {
                 item {
                     SwitchSettingsView(

@@ -3,7 +3,7 @@ package com.dezdeqness.di.subcomponents
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.di.core.BaseComponent
-import com.dezdeqness.presentation.features.settings.SettingsViewModel
+import com.dezdeqness.feature.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Subcomponent

@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Daily Anime</string>
-
     <string name="search_filter_title">Filter</string>
     <string name="search_filter_reset">Reset</string>
     <string name="search_filter_apply">Apply</string>
@@ -34,35 +32,6 @@
     <string name="profile_logout">Log Out</string>
 
     <string name="history_empty_state">Your history is empty</string>
-
-    <string name="settings_toolbar_title">Settings</string>
-    <string name="settings_dark_theme">Enable dark theme</string>
-    <string name="settings_version_name">Version:</string>
-    <string name="settings_theme_section">Theme</string>
-    <string name="settings_dark_theme_title">Dark mode</string>
-    <string name="settings_theme_system">System</string>
-    <string name="settings_theme_light">Light</string>
-    <string name="settings_theme_dark">Dark</string>
-    <string name="settings_theme_amoled">Amoled</string>
-    <string name="settings_about_section">About</string>
-    <string name="settings_version_title">Version</string>
-    <string name="settings_navigation_section">Navigation</string>
-    <string name="settings_initial_tab_page">Section by default</string>
-    <string name="settings_order_of_statuses">Order of statuses</string>
-    <string name="settings_notification_section">Notifications</string>
-    <string name="settings_notification_title">Enable Daily Notifications</string>
-    <string name="settings_notification_subtitle">Notifications will be sent every day at a certain time.</string>
-    <string name="settings_notification_time_title">Notification Time</string>
-    <string name="settings_storage_title">Storage</string>
-    <string name="settings_image_cache_title">Image cache</string>
-    <string name="settings_image_cache_used_title">%1$s / %2$s used</string>
-    <string name="settings_max_image_cache_title">Max image cache</string>
-    <string name="settings_image_cache_clear_title">Clear image cache</string>
-    <string name="settings_content_section">Content</string>
-    <string name="settings_adult_content_title">Show +18 content</string>
-    <string name="settings_select_interests_title">Select interests</string>
-
-    <string name="notification_daily_description">Do not forget to track you progress in the app!</string>
 
     <string name="stats_toolbar_title">Statistics</string>
     <string name="stats_header_scores">Scores</string>
@@ -129,11 +98,6 @@
 
     <string name="filter_cell_season_old_enough">More old</string>
 
-    <string name="bottom_navigation_personal_lists">Lists</string>
-    <string name="bottom_navigation_home">Home</string>
-    <string name="bottom_navigation_calendar">Calendar</string>
-    <string name="bottom_navigation_search">Search</string>
-    <string name="bottom_navigation_profile">Profile</string>
     <string name="search_placeholder_hint">Code Geass</string>
     <string name="anime_toolbar_similar">Similar</string>
     <string name="anime_toolbar_chronology">Chronology</string>
@@ -143,8 +107,6 @@
 
     <string name="cell_episode">Episode %d</string>
 
-
-    <string name="select_section_dialog_title">Select section</string>
 
     <string name="anime_score_1">It couldn\'t be worse</string>
     <string name="anime_score_2">Terrible</string>
@@ -165,10 +127,6 @@
     <string name="home_title_authorized">Welcome back,\n%s</string>
     <string name="home_calendar_title">New this week</string>
 
-    <string name="reorder_statuses_title">Change order</string>
-    <string name="reorder_statuses_button_save_title">Save</string>
-
-    <string name="timepicker_save_title">Save</string>
     <string name="details_synopsis_label_show_less">Show less</string>
     <string name="details_synopsis_label_show_more">… Show more</string>
 
