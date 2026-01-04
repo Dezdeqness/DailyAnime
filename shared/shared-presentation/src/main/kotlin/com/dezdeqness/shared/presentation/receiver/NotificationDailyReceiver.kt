@@ -1,4 +1,4 @@
-package com.dezdeqness.core.worker
+package com.dezdeqness.shared.presentation.receiver
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,11 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.dezdeqness.R
-import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.contract.settings.models.NotificationEnabledPreference
-import com.dezdeqness.data.provider.PermissionCheckProvider
-import com.dezdeqness.getComponent
+import com.dezdeqness.shared.presentation.R
+import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import kotlinx.coroutines.runBlocking
 
 class NotificationDailyReceiver : BroadcastReceiver() {
@@ -21,10 +19,9 @@ class NotificationDailyReceiver : BroadcastReceiver() {
     }
 
     private fun showNotification(context: Context) {
-        val application = context.applicationContext as ShikimoriApp
-        val settingsRepository = application.getComponent().settingsRepository
-        val permissionCheckProvider: PermissionCheckProvider =
-            application.getComponent().permissionCheckProvider
+        val bridge = context.applicationContext as ApplicationBridge
+        val settingsRepository = bridge.getSettingsRepository()
+        val permissionCheckProvider = bridge.getPermissionCheckProvider()
 
         val isNotificationEnabled = runBlocking {
             settingsRepository.getPreference(NotificationEnabledPreference)
@@ -38,7 +35,7 @@ class NotificationDailyReceiver : BroadcastReceiver() {
             val message = context.getString(R.string.notification_daily_description)
 
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(bridge.getAppForegroundIcon())
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

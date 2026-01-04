@@ -33,35 +33,6 @@
 
     <string name="history_empty_state">Ваша история пуста</string>
 
-    <string name="settings_toolbar_title">Настройки</string>
-    <string name="settings_dark_theme">Включить темную тему</string>
-    <string name="settings_version_name">Версия:</string>
-    <string name="settings_theme_section">Тема</string>
-    <string name="settings_dark_theme_title">Темная тема</string>
-    <string name="settings_theme_system">Системная</string>
-    <string name="settings_theme_light">Светлая</string>
-    <string name="settings_theme_dark">Темная</string>
-    <string name="settings_theme_amoled">Амолед</string>
-    <string name="settings_about_section">О приложении</string>
-    <string name="settings_version_title">Версия</string>
-    <string name="settings_navigation_section">Навигация</string>
-    <string name="settings_initial_tab_page">Секция по умолчанию</string>
-    <string name="settings_order_of_statuses">Порядок статусов</string>
-    <string name="settings_notification_section">Уведомления</string>
-    <string name="settings_notification_title">Включить уведомления</string>
-    <string name="settings_notification_subtitle">Уведомления будут приходить каждый день в определенное время</string>
-    <string name="settings_notification_time_title">Время уведомлений</string>
-    <string name="settings_storage_title">Хранилише</string>
-    <string name="settings_image_cache_title">Кэш изображений</string>
-    <string name="settings_image_cache_used_title">%1$s / %2$s использовано</string>
-    <string name="settings_max_image_cache_title">Макс. кэш изображений</string>
-    <string name="settings_image_cache_clear_title">Очистить кэш изоражений</string>
-    <string name="settings_content_section">Контент</string>
-    <string name="settings_adult_content_title">Показать +18 контент</string>
-    <string name="settings_select_interests_title">Выбрать интересы</string>
-
-    <string name="notification_daily_description">Не забудьте отслеживать свой прогресс в приложении!</string>
-
     <string name="stats_toolbar_title">Статистика</string>
     <string name="stats_header_scores">Оценки</string>
     <string name="stats_header_types">Типы</string>
@@ -127,11 +98,6 @@
 
     <string name="filter_cell_season_old_enough">Более старые</string>
 
-    <string name="bottom_navigation_personal_lists">Списки</string>
-    <string name="bottom_navigation_home">Главная</string>
-    <string name="bottom_navigation_calendar">Календарь</string>
-    <string name="bottom_navigation_search">Поиск</string>
-    <string name="bottom_navigation_profile">Профиль</string>
     <string name="search_placeholder_hint">Восстание Лелуша</string>
     <string name="anime_toolbar_similar">Похожее</string>
     <string name="anime_toolbar_chronology">Хронология</string>
@@ -141,8 +107,6 @@
 
     <string name="cell_episode">Эпизод %d</string>
 
-
-    <string name="select_section_dialog_title">Выберите секцию</string>
 
     <string name="anime_score_1">Хуже некуда</string>
     <string name="anime_score_2">Ужасно</string>
@@ -160,10 +124,6 @@
     <string name="home_title_authorized">Добро пожаловать,\n%s</string>
     <string name="home_calendar_title">Новое на этой недели</string>
 
-    <string name="reorder_statuses_title">Изменить порядок</string>
-    <string name="reorder_statuses_button_save_title">Сохранить</string>
-
-    <string name="timepicker_save_title">Сохранить</string>
     <string name="details_synopsis_label_show_less">Показать меньше</string>
     <string name="details_synopsis_label_show_more">… Показать больше</string>
 

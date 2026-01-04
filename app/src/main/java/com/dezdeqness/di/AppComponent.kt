@@ -2,12 +2,10 @@ package com.dezdeqness.di
 
 import android.content.Context
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.core.WorkSchedulerManager
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.di.ViewModelBuilderModule
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.data.provider.PermissionCheckProvider
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule
@@ -34,6 +32,8 @@ import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
+import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

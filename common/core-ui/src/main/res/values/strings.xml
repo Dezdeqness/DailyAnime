@@ -2,4 +2,6 @@
 <resources>
     <string name="search_empty_state_title">Nothing found matching your request</string>
     <string name="error_state_title">Internet connection is absent or error is present</string>
+
+    <string name="timepicker_save_title">Save</string>
 </resources>

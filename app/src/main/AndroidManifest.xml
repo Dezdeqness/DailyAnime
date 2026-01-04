@@ -71,8 +71,6 @@
             android:exported="false"
             tools:node="remove" />
 
-        <receiver android:name=".core.worker.NotificationDailyReceiver" android:exported="false" />
-
 
         <receiver android:name=".core.BootReceiver" android:exported="false">
             <intent-filter>

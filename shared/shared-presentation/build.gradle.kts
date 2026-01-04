@@ -31,6 +31,9 @@ android {
 }
 
 dependencies {
+    // Appcompat
+    implementation(libs.androidx.appcompat)
+
     // Common
     implementation(project(":common:core"))
 
@@ -40,4 +43,5 @@ dependencies {
 
     // Contracts
     implementation(project(":contract:anime"))
+    implementation(project(":contract:settings"))
 }

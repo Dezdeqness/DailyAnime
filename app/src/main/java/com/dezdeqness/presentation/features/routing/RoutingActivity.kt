@@ -133,7 +133,7 @@ class RoutingActivity : AppCompatActivity() {
                     )
 
                     Text(
-                        text = stringResource(id = R.string.app_name),
+                        text = stringResource(id = com.dezdeqness.shared.presentation.R.string.app_name),
                         color = AppTheme.colors.textPrimary,
                         fontFamily = FontFamily(Font(R.font.pacifico_regular)),
                         textAlign = TextAlign.Center,

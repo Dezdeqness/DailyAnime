@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Daily Anime</string>
+
     <string name="anime_kind_tv">TV</string>
     <string name="anime_kind_film">Movie</string>
     <string name="anime_kind_ova">Ova</string>
@@ -9,4 +11,12 @@
     <string name="anime_kind_music">Music</string>
     <string name="anime_kind_promo">Promo</string>
     <string name="anime_kind_ad">Ad</string>
+
+    <string name="notification_daily_description">Do not forget to track you progress in the app!</string>
+
+    <string name="bottom_navigation_personal_lists">Lists</string>
+    <string name="bottom_navigation_home">Home</string>
+    <string name="bottom_navigation_calendar">Calendar</string>
+    <string name="bottom_navigation_search">Search</string>
+    <string name="bottom_navigation_profile">Profile</string>
 </resources>

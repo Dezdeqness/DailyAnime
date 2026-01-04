@@ -11,6 +11,7 @@ import coil.util.DebugLogger
 import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
+import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class ShikimoriApp : Application(), CoroutineScope {
+class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
 
     val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(applicationContext)
@@ -76,6 +77,11 @@ class ShikimoriApp : Application(), CoroutineScope {
         )
         .build()
 
+    override fun getSettingsRepository() = appComponent.settingsRepository
+
+    override fun getPermissionCheckProvider() = appComponent.permissionCheckProvider
+
+    override fun getAppForegroundIcon() = R.drawable.ic_launcher_foreground
 
 }
 
