@@ -1,4 +1,4 @@
-package com.dezdeqness.core.ui
+package com.dezdeqness.core.ui.dialogs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +28,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.R
+import com.dezdeqness.core.ui.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.buttons.AppButton
+import com.dezdeqness.core.ui.views.custom.WheelView
 import java.util.Locale
 
 private const val VISIBLE_ITEMS = 3
@@ -148,7 +149,9 @@ private fun SelectorView(modifier: Modifier = Modifier, visibleItems: Int) {
     Column(
         modifier.fillMaxSize()
     ) {
-        Box(modifier = Modifier.weight(visibleItems.toFloat()).fillMaxWidth())
+        Box(modifier = Modifier
+            .weight(visibleItems.toFloat())
+            .fillMaxWidth())
 
         Column(
             modifier = Modifier
@@ -172,6 +175,8 @@ private fun SelectorView(modifier: Modifier = Modifier, visibleItems: Int) {
             )
         }
 
-        Box(modifier = Modifier.weight(visibleItems.toFloat()).fillMaxWidth())
+        Box(modifier = Modifier
+            .weight(visibleItems.toFloat())
+            .fillMaxWidth())
     }
 }
