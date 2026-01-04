@@ -1,4 +1,4 @@
-package com.dezdeqness.core.ui
+package com.dezdeqness.core.ui.views.custom
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

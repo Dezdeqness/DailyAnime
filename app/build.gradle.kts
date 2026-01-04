@@ -168,7 +168,6 @@ dependencies {
 
     // Compose
     implementation(libs.lottie.compose)
-    implementation(libs.reorderable)
 
     // Mock
     testImplementation(libs.mockk.mockk)
@@ -218,6 +217,7 @@ dependencies {
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:personallist"))
     implementation(project(":feature:userrate"))
+    implementation(project(":feature:settings"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

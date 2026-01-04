@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.settings.composables
+package com.dezdeqness.feature.settings.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -50,7 +50,10 @@ fun ProgressSettingsView(
         },
         progress = {
             LinearProgressIndicator(
-                modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(1f).height(4.dp),
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth(1f)
+                    .height(4.dp),
                 progress = { progress },
                 drawStopIndicator = {},
             )

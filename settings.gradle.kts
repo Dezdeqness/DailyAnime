@@ -41,6 +41,7 @@ include(":feature:favourite")
 include(":feature:onboarding")
 include(":feature:personallist")
 include(":feature:userrate")
+include(":feature:settings")
 
 // shared
 include(":shared:shared-presentation")

@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.settings.composables
+package com.dezdeqness.feature.settings.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

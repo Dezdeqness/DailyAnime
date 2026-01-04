@@ -1,4 +1,4 @@
-package com.dezdeqness.presentation.features.settings.composables
+package com.dezdeqness.feature.settings.composables
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Text
