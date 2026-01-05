@@ -53,6 +53,9 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
 
+    //Elm
+    implementation(libs.elmslie.core)
+
     // Android Testing
     testImplementation(libs.androidx.test.junit)
     testImplementation(libs.androidx.test.espresso)
@@ -69,6 +72,8 @@ dependencies {
 
     implementation(project(":contract:settings"))
     implementation(project(":contract:auth"))
+    implementation(project(":contract:anime"))
+    implementation(project(":contract:user"))
 
     implementation(project(":feature:personallist"))
 
