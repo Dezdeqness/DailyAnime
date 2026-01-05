@@ -9,4 +9,6 @@ interface ApplicationBridge {
     fun getPermissionCheckProvider(): PermissionCheckProvider
     @DrawableRes
     fun getAppForegroundIcon(): Int
+
+    fun getVersionName(): String
 }

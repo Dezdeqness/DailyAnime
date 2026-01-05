@@ -83,6 +83,8 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
 
     override fun getAppForegroundIcon() = R.drawable.ic_launcher_foreground
 
+    override fun getVersionName() = BuildConfig.VERSION_NAME
+
 }
 
 fun Application.getComponent(): AppComponent {
