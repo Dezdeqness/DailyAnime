@@ -26,6 +26,7 @@
     <string name="settings_content_section">Content</string>
     <string name="settings_adult_content_title">Show +18 content</string>
     <string name="settings_select_interests_title">Select interests</string>
+    <string name="settings_debug_option" translatable="false">Debug options</string>
 
     <string name="reorder_statuses_title">Change order</string>
     <string name="reorder_statuses_button_save_title">Save</string>

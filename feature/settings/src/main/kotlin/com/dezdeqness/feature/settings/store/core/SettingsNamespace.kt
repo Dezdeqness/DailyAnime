@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.settings.store.core
 
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.DialogState.DialogPayload
-import com.dezdeqness.feature.settings.store.models.SettingUiPref
+import java.util.Collections.emptyList
 
 interface SettingsNamespace {
     data class State(
@@ -25,7 +25,7 @@ interface SettingsNamespace {
 
 }
 
-data object InitialLoad: SettingsNamespace.Event
+data object InitialLoad : SettingsNamespace.Event
 
 data class OnSettingUpdated(val setting: SettingUiPref) : SettingsNamespace.Event
 data class CustomEvent(val id: String) : SettingsNamespace.Event
@@ -41,3 +41,23 @@ data class OnSettingSwitchChanged(
     val id: String,
     val checked: Boolean
 ) : SettingsNamespace.Event
+
+data class DeployEffect(val effect: SettingsNamespace.Effect) : SettingsNamespace.Event
+
+data object LoadInitialState : SettingsNamespace.Command
+
+data class HandleSettingClick(
+    val id: String,
+    val setting: SettingUiPref,
+) : SettingsNamespace.Command
+
+data class OnEvent(
+    val event: SettingsNamespace.Event,
+    val setting: SettingUiPref,
+) : SettingsNamespace.Command
+
+data class HandleSwitchChange(
+    val id: String,
+    val checked: Boolean,
+    val setting: SettingUiPref,
+) : SettingsNamespace.Command

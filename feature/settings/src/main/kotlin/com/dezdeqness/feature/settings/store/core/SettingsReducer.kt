@@ -4,7 +4,6 @@ import money.vivid.elmslie.core.store.StateReducer
 
 val settingsReducer = object :
     StateReducer<SettingsNamespace.Event, SettingsNamespace.State, SettingsNamespace.Effect, SettingsNamespace.Command>() {
-    
     override fun Result.reduce(event: SettingsNamespace.Event) {
         when (event) {
             is InitialLoad -> {
@@ -15,6 +14,7 @@ val settingsReducer = object :
                 state {
                     SettingsNamespace.State(
                         settings = event.settings,
+                        dialogState = SettingsNamespace.DialogState.None,
                     )
                 }
             }
@@ -56,6 +56,10 @@ val settingsReducer = object :
                         dialogState = SettingsNamespace.DialogState.ShowModal(event.payload)
                     )
                 }
+            }
+
+            is DeployEffect -> {
+                effects { +event.effect }
             }
 
             is CloseDialog -> {

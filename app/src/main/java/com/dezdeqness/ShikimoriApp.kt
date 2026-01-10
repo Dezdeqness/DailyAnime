@@ -85,6 +85,8 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
 
     override fun getVersionName() = BuildConfig.VERSION_NAME
 
+    override fun isDebug() = BuildConfig.DEBUG
+
 }
 
 fun Application.getComponent(): AppComponent {
