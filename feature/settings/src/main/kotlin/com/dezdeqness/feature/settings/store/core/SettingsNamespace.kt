@@ -33,6 +33,7 @@ data class CustomEvent(val id: String) : SettingsNamespace.Event
 data class OpenDialog(val payload: DialogPayload) : SettingsNamespace.Event
 
 data object CloseDialog : SettingsNamespace.Event
+data object Invalidate : SettingsNamespace.Event
 
 data class OnInitialStateLoaded(val settings: List<SettingUiPref>) : SettingsNamespace.Event
 data class OnSettingClicked(val id: String) : SettingsNamespace.Event

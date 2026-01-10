@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.event
 
-import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 import com.dezdeqness.feature.userrate.EditRateUiModel
+import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import java.util.UUID
 
@@ -80,5 +80,3 @@ data class AuthUrl(val url: String) : Event()
 data object HandlePermission : Event()
 
 data object OpenSettingsAlarm : Event()
-
-data object OpenSelectGenresPage : Event()
