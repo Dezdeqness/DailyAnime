@@ -1,5 +1,7 @@
 package com.dezdeqness.contract.user.model
 
+import com.dezdeqness.shared.domain.model.StatusEntity
+
 data class AccountEntity(
     val id: Long,
     val nickname: String,
@@ -39,14 +41,6 @@ data class AccountEntity(
 
 data class FullAnimeStatusesEntity(
     val list: List<StatusEntity>
-)
-
-data class StatusEntity(
-    val id: Long,
-    val groupedId: String,
-    val name: String,
-    val size: Long,
-    val type: String
 )
 
 data class StatsItemEntity(

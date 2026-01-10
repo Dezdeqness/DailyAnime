@@ -45,3 +45,4 @@ include(":feature:settings")
 
 // shared
 include(":shared:shared-presentation")
+include(":shared:shared-domain")

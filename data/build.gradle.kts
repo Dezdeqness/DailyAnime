@@ -83,6 +83,8 @@ dependencies {
     implementation(project(":contract:settings"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:favourite"))
+
+    implementation(project(":shared:shared-domain"))
 }
 
 apollo {

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
+    alias(libs.plugins.ksp)
 }
 
 java {
@@ -16,7 +17,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.dezdeqness.contract.user"
+    namespace = "com.dezdeqness.shared.domain"
 
     compileOptions {
         val javaVersion = JavaVersion.VERSION_21
@@ -30,9 +31,6 @@ android {
 }
 
 dependencies {
-    // Coroutines
-    implementation(libs.kotlinx.coroutines)
-    implementation(libs.kotlinx.coroutinesAndroid)
-
-    implementation(project(":shared:shared-domain"))
+    // Common
+    implementation(project(":common:core"))
 }
