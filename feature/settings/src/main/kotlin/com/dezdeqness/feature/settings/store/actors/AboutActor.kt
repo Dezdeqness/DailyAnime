@@ -7,9 +7,9 @@ import com.dezdeqness.feature.settings.store.models.SectionType
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import javax.inject.Inject
 
-const val VERSION_ID = "version"
-const val DEBUG_OPTION_ID = "debug_option"
-const val ABOUT_HEADER_ID = "about_header"
+private const val VERSION_ID = "version"
+private const val DEBUG_OPTION_ID = "debug_option"
+private const val ABOUT_HEADER_ID = "about_header"
 
 data object OpenDebugMenu : SettingsNamespace.Effect
 

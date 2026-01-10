@@ -1,23 +1,30 @@
 package com.dezdeqness.di.subcomponents
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.provider.AlarmManagerProvider
+import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.feature.settings.SettingsViewModel
 import com.dezdeqness.feature.settings.store.SettingsActor
 import com.dezdeqness.feature.settings.store.actors.AboutActor
+import com.dezdeqness.feature.settings.store.actors.ContentActor
+import com.dezdeqness.feature.settings.store.actors.NotificationActor
 import com.dezdeqness.feature.settings.store.actors.SectionActor
+import com.dezdeqness.feature.settings.store.actors.ThemeActor
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.core.settingsReducer
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
+import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
+import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
 import money.vivid.elmslie.core.store.ElmStore
-import javax.inject.Singleton
 
 @Subcomponent(modules = [SettingsModule::class])
 interface SettingsComponent : BaseComponent {
@@ -33,8 +40,26 @@ abstract class SettingsModule {
 
     companion object {
         @Provides
-        fun providerSectionActors(applicationBridge: ApplicationBridge): List<SectionActor> =
-            listOf<SectionActor>(
+        fun providerSectionActors(
+            applicationBridge: ApplicationBridge,
+            settingsRepository: SettingsRepository,
+            homeGenresProvider: HomeGenresProvider,
+            permissionCheckProvider: PermissionCheckProvider,
+            alarmManagerProvider: AlarmManagerProvider,
+            workSchedulerManager: WorkSchedulerManager,
+        ): List<SectionActor> =
+            listOf(
+                ThemeActor(settingsRepository = settingsRepository),
+                NotificationActor(
+                    settingsRepository = settingsRepository,
+                    permissionCheckProvider = permissionCheckProvider,
+                    alarmManagerProvider = alarmManagerProvider,
+                    workSchedulerManager = workSchedulerManager,
+                ),
+                ContentActor(
+                    settingsRepository = settingsRepository,
+                    homeGenresProvider = homeGenresProvider,
+                ),
                 AboutActor(applicationBridge = applicationBridge),
             )
 

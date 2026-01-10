@@ -1,24 +1,20 @@
 package com.dezdeqness.presentation.features.settings
 
-import android.content.Intent
-import android.os.Build
-import android.provider.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.contract.settings.models.InitialSection
-import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.feature.settings.SettingActions
+import com.dezdeqness.feature.settings.SettingsPage
+import com.dezdeqness.feature.settings.SettingsViewModel
+import com.dezdeqness.feature.settings.store.actors.OpenDebugMenu
+import com.dezdeqness.feature.settings.store.actors.OpenSelectInterests
 import com.dezdeqness.presentation.SelectGenres
-import com.dezdeqness.presentation.event.OpenSelectGenresPage
-import com.dezdeqness.presentation.event.OpenSettingsAlarm
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
-import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 
 @Composable
 fun SettingsPageStandalone(
@@ -36,107 +32,46 @@ fun SettingsPageStandalone(
 
     SettingsPage(
         modifier = modifier,
-        stateFlow = viewModel.settingsStateFlow,
+        stateFlow = viewModel.state,
         actions = object : SettingActions {
             override fun onBackPressed() {
                 navController.popBackStack()
             }
 
-            override fun onThemeClicked() {
-                viewModel.onThemeClicked()
+            override fun onSettingClicked(id: String) {
+                viewModel.onSettingClicked(id)
             }
 
-            override fun onThemeSelected(mode: ThemeMode) {
-                viewModel.onThemeSelected(mode)
-            }
-
-            override fun onThemeDialogClosed() {
-                viewModel.onThemeDialogClosed()
-            }
-
-            override fun onChangeInitialSectionClicked() {
-                viewModel.onChangeInitialSectionClicked()
-            }
-
-            override fun onSelectedSectionChanged(section: InitialSection) {
-                viewModel.onSelectedSectionChanged(section)
-            }
-
-            override fun onSelectedSectionDialogClosed() {
-                viewModel.onSelectedSectionDialogClosed()
-            }
-
-            override fun onChangeRibbonStatusClicked() {
-                viewModel.onChangeRibbonStatusClicked()
-            }
-
-            override fun onSelectedRibbonDataChanged(statuses: List<RibbonStatusUiModel>) {
-                viewModel.onSelectedRibbonDataChanged(statuses)
-            }
-
-            override fun onChangeRibbonStatusClosed() {
-                viewModel.onChangeRibbonStatusClosed()
-            }
-
-            override fun onNotificationToggleClicked(isEnabled: Boolean) {
-                viewModel.onNotificationToggleClicked(isEnabled = isEnabled)
-            }
-
-            override fun onNotificationTimePickerClicked() {
-                viewModel.onNotificationTimeClicked()
-            }
-
-            override fun onNotificationTimeSaved(hours: Int, minutes: Int) {
-                viewModel.onNotificationTimeSaved(hours, minutes)
-            }
-
-            override fun onNotificationTimePickerClosed() {
-                viewModel.onNotificationTimePickerClosed()
-            }
-
-            override fun onMaxImageCacheSizeClicked() {
-                viewModel.onMaxImageCacheSizeClicked()
-            }
-
-            override fun onMaxImageCacheSize(size: Int) {
-                viewModel.onMaxImageCacheSize(size = size)
-            }
-
-            override fun onMaxImageCacheSizeDialogClosed() {
-                viewModel.onMaxImageCacheSizeDialogClosed()
-            }
-
-            override fun onChangeAdultContentClicked(isEnabled: Boolean) {
-                viewModel.onChangeAdultContentClicked(isEnabled = isEnabled)
+            override fun onSwitchChanged(id: String, checked: Boolean) {
+                viewModel.onSwitchChanged(id, checked)
             }
 
             override fun invalidate() {
                 viewModel.invalidate()
             }
 
-            override fun onDebugOptionsClicked() {
-                context.startActivity(DebugScreenActivity.newIntent(context = context))
-            }
-
-            override fun onSelectInterestsClicked() {
-                viewModel.onSelectInterestsClicked()
-            }
         }
     )
 
-    viewModel.events.collectEvents { event ->
-        when (event) {
-            is OpenSettingsAlarm -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                        data = "package:${context.packageName}".toUri()
-                    }
-                    context.startActivity(intent)
-                }
+    viewModel.effects.collectEvents { effect ->
+        when (effect) {
+            is OpenDebugMenu -> {
+                context.startActivity(DebugScreenActivity.newIntent(context = context))
             }
-            is OpenSelectGenresPage -> {
-               navController.navigate(SelectGenres)
+//
+//            is OpenSettingsAlarm -> {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+//                        data = "package:${context.packageName}".toUri()
+//                    }
+//                    context.startActivity(intent)
+//                }
+//            }
+//
+            is OpenSelectInterests -> {
+                navController.navigate(SelectGenres)
             }
+
             else -> {}
         }
     }

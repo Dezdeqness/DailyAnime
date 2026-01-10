@@ -6,7 +6,7 @@ val settingsReducer = object :
     StateReducer<SettingsNamespace.Event, SettingsNamespace.State, SettingsNamespace.Effect, SettingsNamespace.Command>() {
     override fun Result.reduce(event: SettingsNamespace.Event) {
         when (event) {
-            is InitialLoad -> {
+            is InitialLoad, Invalidate -> {
                 commands { +LoadInitialState }
             }
 
