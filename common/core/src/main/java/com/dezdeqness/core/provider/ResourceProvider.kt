@@ -13,6 +13,7 @@ class ResourceProvider(private val context: Context) {
     fun getString(@StringRes resId: Int, vararg formatArgs: Any) =
         context.getString(resId, *formatArgs)
 
+    @Deprecated("")
     private fun getStringByIdName(idName: String): String {
         val res = context.resources
         return res.getString(res.getIdentifier(idName, "string", context.packageName))
