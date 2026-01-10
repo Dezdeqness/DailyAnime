@@ -44,4 +44,6 @@ dependencies {
     // Contracts
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
+
+    implementation(project(":shared:shared-domain"))
 }

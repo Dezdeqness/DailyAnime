@@ -5,6 +5,7 @@ import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
+import com.dezdeqness.shared.presentation.mapper.PersonalRibbonMapper
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import javax.inject.Inject

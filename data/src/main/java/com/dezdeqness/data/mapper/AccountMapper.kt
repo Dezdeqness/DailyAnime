@@ -1,16 +1,16 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.contract.history.model.HistoryEntity
+import com.dezdeqness.contract.user.model.AccountEntity
+import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
+import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import com.dezdeqness.data.model.db.AccountLocal
 import com.dezdeqness.data.model.db.StatsLocal
 import com.dezdeqness.data.model.db.StatusLocal
-import com.dezdeqness.contract.user.model.AccountEntity
-import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
-import com.dezdeqness.contract.user.model.StatsItemEntity
-import com.dezdeqness.contract.user.model.StatusEntity
+import com.dezdeqness.shared.domain.model.StatusEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
