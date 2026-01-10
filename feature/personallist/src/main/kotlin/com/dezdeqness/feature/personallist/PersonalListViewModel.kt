@@ -13,7 +13,6 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.feature.userrate.EditRateUiModel
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +23,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
 class PersonalListViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
     private val personalListComposer: PersonalListComposer,

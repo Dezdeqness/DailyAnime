@@ -2,6 +2,7 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
+import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
@@ -30,6 +31,7 @@ import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -169,5 +171,10 @@ class AppModule {
             userRepository = userRepository,
             firebaseAnalytics = firebaseAnalytics
         )
+
+    @Singleton
+    @Provides
+    fun provideApplicationBridge(context: Context) =
+        context.applicationContext as ApplicationBridge
 
 }

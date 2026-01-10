@@ -5,7 +5,7 @@ import com.dezdeqness.di.modules.HistoryModule
 import dagger.Subcomponent
 
 @Subcomponent(modules = [HistoryModule::class])
-interface HistoryComponent : BaseComponent{
+interface HistoryComponent : BaseComponent {
     @Subcomponent.Factory
     interface Factory {
         fun create(): HistoryComponent

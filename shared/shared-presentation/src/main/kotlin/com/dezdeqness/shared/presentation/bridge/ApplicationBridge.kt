@@ -11,4 +11,5 @@ interface ApplicationBridge {
     fun getAppForegroundIcon(): Int
 
     fun getVersionName(): String
+    fun isDebug(): Boolean
 }
