@@ -78,4 +78,5 @@ dependencies {
     implementation(project(":feature:personallist"))
 
     implementation(project(":shared:shared-presentation"))
+    implementation(project(":shared:shared-domain"))
 }

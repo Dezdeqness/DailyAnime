@@ -21,18 +21,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.annotation.ExperimentalCoilApi
-import coil.imageLoader
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.settings.composables.HeaderCustomSettingsView
+import com.dezdeqness.feature.settings.composables.ProgressSettingsView
 import com.dezdeqness.feature.settings.composables.SwitchSettingsView
 import com.dezdeqness.feature.settings.composables.TextSettingsView
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalCoilApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsPage(
     stateFlow: StateFlow<SettingsNamespace.State>,
@@ -45,14 +44,8 @@ fun SettingsPage(
 
     val items = state.settings
 
-    val imageDiskCache = context.imageLoader.diskCache ?: return
-
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
-
-//    val listSections = remember(state.isCalendarEnabled) {
-//        SelectSectionItem.getSections(state.isCalendarEnabled)
-//    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -136,61 +129,15 @@ fun SettingsPage(
                         }
                     }
 
-                    else -> {
-
+                    is SettingUiPref.ProgressSetting -> {
+                        ProgressSettingsView(
+                            title = item.getTitle(),
+                            subtitle = item.getSubtitle().orEmpty(),
+                            progress = item.progress,
+                        )
                     }
                 }
             }
-//
-//            item {
-//                SettingsSection(
-//                    sectionTitle = stringResource(R.string.settings_storage_title),
-//                    content = {
-//                        var imageCacheSize by remember(state.cache.maxImageSize) {
-//                            mutableLongStateOf(imageDiskCache.size)
-//                        }
-//
-//                        LaunchedEffect(imageDiskCache) {
-//                            while (isActive) {
-//                                delay(500)
-//                                imageCacheSize = imageDiskCache.size
-//                            }
-//                        }
-//
-//                        val imageCacheProgress by animateFloatAsState(
-//                            targetValue = (imageCacheSize.toFloat() / imageDiskCache.maxSize).coerceIn(
-//                                0f,
-//                                1f
-//                            ),
-//                            label = ""
-//                        )
-//                        ProgressSettingsView(
-//                            title = stringResource(R.string.settings_image_cache_title),
-//                            subtitle = stringResource(
-//                                R.string.settings_image_cache_used_title,
-//                                formatSize(imageCacheSize),
-//                                formatSize(imageDiskCache.maxSize)
-//                            ),
-//                            progress = imageCacheProgress,
-//                        )
-//
-//                        TextSettingsView(
-//                            title = stringResource(R.string.settings_max_image_cache_title),
-//                            subtitle = formatSize(imageDiskCache.maxSize),
-//                            onClick = {
-//                                actions.onMaxImageCacheSizeClicked()
-//                            }
-//                        )
-//
-//                        TextSettingsView(
-//                            title = stringResource(R.string.settings_image_cache_clear_title),
-//                            onClick = {
-//                                imageDiskCache.clear()
-//                            }
-//                        )
-//                    }
-//                )
-//            }
         }
 
 //        if (state.navigation.isDialogShown) {
