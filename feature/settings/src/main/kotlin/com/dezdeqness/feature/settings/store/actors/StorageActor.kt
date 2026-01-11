@@ -16,6 +16,7 @@ private const val MAX_CACHE_SIZE_ID = "max_cache_size"
 private const val IMAGE_CACHE_PROGRESS_ID = "image_cache_progress"
 private const val STORAGE_HEADER_ID = "storage_header"
 
+@OptIn(ExperimentalCoilApi::class)
 class StorageActor @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val context: Context,
@@ -23,7 +24,6 @@ class StorageActor @Inject constructor(
 
     override val sectionType: SectionType = SectionType.Storage
 
-    @OptIn(ExperimentalCoilApi::class)
     override suspend fun buildSettings(): List<SettingUiPref> {
         val maxSize = settingsRepository.getPreference(ImageCacheMaxSizePreference)
         val imageDiskCache = context.imageLoader.diskCache
@@ -69,6 +69,15 @@ class StorageActor @Inject constructor(
         settingId: String,
         currentSetting: SettingUiPref
     ): ActorResult {
+        when (settingId) {
+            CLEAR_CACHE_ID -> {
+                context
+                    .imageLoader
+                    .diskCache
+                    ?.clear()
+                return ActorResult(updatedSettings = buildSettings())
+            }
+        }
         return ActorResult()
     }
 }

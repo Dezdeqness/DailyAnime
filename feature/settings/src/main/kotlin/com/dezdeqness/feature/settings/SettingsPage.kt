@@ -21,14 +21,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.settings.composables.HeaderCustomSettingsView
+import com.dezdeqness.feature.settings.composables.ListPreferencesDialog
 import com.dezdeqness.feature.settings.composables.ProgressSettingsView
 import com.dezdeqness.feature.settings.composables.SwitchSettingsView
 import com.dezdeqness.feature.settings.composables.TextSettingsView
+import com.dezdeqness.feature.settings.store.actors.ThemeSelectPayload
+import com.dezdeqness.feature.settings.store.actors.ThemeSelectResult
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
+import com.dezdeqness.feature.settings.utils.fromMode
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -136,6 +141,26 @@ fun SettingsPage(
                             progress = item.progress,
                         )
                     }
+                }
+            }
+        }
+
+        val dialogState = state.dialogState as? SettingsNamespace.DialogState.ShowModal
+
+        if (dialogState != null) {
+            when (dialogState.payload) {
+                is ThemeSelectPayload -> {
+                    ListPreferencesDialog(
+                        values = ThemeMode.entries,
+                        selectedValue = dialogState.payload.mode,
+                        valueText = { stringResource(it.fromMode()) },
+                        onValueSelected = { mode ->
+                            actions.onDialogResult(dialogState.settingId, ThemeSelectResult(mode))
+                        },
+                        onDismiss = {
+                            actions.onDialogClosed()
+                        },
+                    )
                 }
             }
         }

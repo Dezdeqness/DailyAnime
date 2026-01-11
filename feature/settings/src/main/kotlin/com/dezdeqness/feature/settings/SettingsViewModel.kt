@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.dezdeqness.feature.settings.store.core.CloseDialog
 import com.dezdeqness.feature.settings.store.core.InitialLoad
 import com.dezdeqness.feature.settings.store.core.Invalidate
+import com.dezdeqness.feature.settings.store.core.OnDialogResult
 import com.dezdeqness.feature.settings.store.core.OnSettingClicked
 import com.dezdeqness.feature.settings.store.core.OnSettingSwitchChanged
+import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Command
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Effect
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Event
@@ -45,10 +47,10 @@ class SettingsViewModel @Inject constructor(
     fun onDialogClosed() {
         store.accept(CloseDialog)
     }
-//
-//    fun onDialogResult(result: SettingsNamespace.DialogResult) {
-//        store.accept(OnDialogResult(result))
-//    }
+
+    fun onDialogResult(id: String, data: SettingsNamespace.DialogState.DialogResult) {
+        store.accept(OnDialogResult(id = id, data = data))
+    }
 
     fun invalidate() {
         store.accept(Invalidate)

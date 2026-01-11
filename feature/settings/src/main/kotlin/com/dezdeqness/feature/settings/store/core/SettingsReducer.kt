@@ -50,11 +50,24 @@ val settingsReducer = object :
                 }
             }
 
-            is OpenDialog -> {
+            is ShowDialog -> {
                 state {
                     state.copy(
-                        dialogState = SettingsNamespace.DialogState.ShowModal(event.payload)
+                        dialogState = event.dialogState
                     )
+                }
+            }
+
+            is OnDialogResult -> {
+                val setting = state.settings.firstOrNull { it.id == event.id }
+                if (setting != null) {
+                    commands {
+                        +SaveDialogResult(
+                            id = event.id,
+                            data = event.data,
+                            currentSetting = setting,
+                        )
+                    }
                 }
             }
 

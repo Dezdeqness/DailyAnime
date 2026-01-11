@@ -19,6 +19,13 @@ interface SectionActor {
         currentSetting: SettingUiPref,
     ) =
         ActorResult()
+
+    suspend fun saveDialogResult(
+        settingId: String,
+        data: SettingsNamespace.DialogState.DialogResult,
+        currentSetting: SettingUiPref,
+    ) =
+        ActorResult()
 }
 
 data class ActorResult(
