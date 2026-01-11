@@ -1,12 +1,12 @@
 package com.dezdeqness.feature.settings.store.core
 
-import com.dezdeqness.feature.settings.store.core.SettingsNamespace.DialogState.DialogPayload
 import java.util.Collections.emptyList
 
 interface SettingsNamespace {
     data class State(
         val settings: List<SettingUiPref> = emptyList(),
-        val dialogState: DialogState = DialogState.None,
+        val isAuthorized: Boolean = false,
+        val dialogState: DialogState? = null,
     )
 
     interface Event
@@ -16,11 +16,12 @@ interface SettingsNamespace {
     interface Command
 
     sealed interface DialogState {
-        data class ShowModal(val payload: DialogPayload) : DialogState
+        data class ShowModal(val payload: DialogPayload, val settingId: String) : DialogState
 
         data object None : DialogState
 
         interface DialogPayload
+        interface DialogResult
     }
 
 }
@@ -30,9 +31,15 @@ data object InitialLoad : SettingsNamespace.Event
 data class OnSettingUpdated(val setting: SettingUiPref) : SettingsNamespace.Event
 data class CustomEvent(val id: String) : SettingsNamespace.Event
 
-data class OpenDialog(val payload: DialogPayload) : SettingsNamespace.Event
+data class ShowDialog(val dialogState: SettingsNamespace.DialogState) : SettingsNamespace.Event
 
 data object CloseDialog : SettingsNamespace.Event
+
+data class OnDialogResult(
+    val id: String,
+    val data: SettingsNamespace.DialogState.DialogResult,
+) : SettingsNamespace.Event
+
 data object Invalidate : SettingsNamespace.Event
 
 data class OnInitialStateLoaded(val settings: List<SettingUiPref>) : SettingsNamespace.Event
@@ -61,4 +68,10 @@ data class HandleSwitchChange(
     val id: String,
     val checked: Boolean,
     val setting: SettingUiPref,
+) : SettingsNamespace.Command
+
+data class SaveDialogResult(
+    val id: String,
+    val data: SettingsNamespace.DialogState.DialogResult,
+    val currentSetting: SettingUiPref,
 ) : SettingsNamespace.Command

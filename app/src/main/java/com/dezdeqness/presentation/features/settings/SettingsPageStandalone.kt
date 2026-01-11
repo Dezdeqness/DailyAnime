@@ -13,6 +13,7 @@ import com.dezdeqness.feature.settings.SettingsPage
 import com.dezdeqness.feature.settings.SettingsViewModel
 import com.dezdeqness.feature.settings.store.actors.OpenDebugMenu
 import com.dezdeqness.feature.settings.store.actors.OpenSelectInterests
+import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.presentation.SelectGenres
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 
@@ -44,6 +45,17 @@ fun SettingsPageStandalone(
 
             override fun onSwitchChanged(id: String, checked: Boolean) {
                 viewModel.onSwitchChanged(id, checked)
+            }
+
+            override fun onDialogClosed() {
+                viewModel.onDialogClosed()
+            }
+
+            override fun onDialogResult(
+                id: String,
+                data: SettingsNamespace.DialogState.DialogResult
+            ) {
+                viewModel.onDialogResult(id = id, data = data)
             }
 
             override fun invalidate() {
