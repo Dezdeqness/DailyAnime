@@ -32,7 +32,6 @@ import com.dezdeqness.core.ui.R
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.buttons.AppButton
 import com.dezdeqness.core.ui.views.custom.WheelView
-import java.util.Locale
 
 private const val VISIBLE_ITEMS = 3
 
@@ -139,10 +138,7 @@ fun TimePickerDialog(
     }
 }
 
-data class TimeData(val hours: Int, val minutes: Int) {
-    val formattedTime: String
-        get() = String.format(Locale.getDefault(), "%02d:%02d", hours, minutes)
-}
+data class TimeData(val hours: Int, val minutes: Int)
 
 @Composable
 private fun SelectorView(modifier: Modifier = Modifier, visibleItems: Int) {

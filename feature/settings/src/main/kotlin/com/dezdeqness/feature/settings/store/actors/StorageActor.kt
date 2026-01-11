@@ -7,6 +7,7 @@ import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.feature.settings.R
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
+import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.models.SectionType
 import com.dezdeqness.feature.settings.utils.formatSize
 import javax.inject.Inject
@@ -15,6 +16,14 @@ private const val CLEAR_CACHE_ID = "clear_cache"
 private const val MAX_CACHE_SIZE_ID = "max_cache_size"
 private const val IMAGE_CACHE_PROGRESS_ID = "image_cache_progress"
 private const val STORAGE_HEADER_ID = "storage_header"
+
+data class ImageCacheMaxSizePayload(
+    val maxSizeMb: Int,
+) : SettingsNamespace.DialogState.DialogPayload
+
+data class ImageCacheMaxSizeResult(
+    val maxSizeMb: Int,
+) : SettingsNamespace.DialogState.DialogResult
 
 @OptIn(ExperimentalCoilApi::class)
 class StorageActor @Inject constructor(
@@ -70,6 +79,16 @@ class StorageActor @Inject constructor(
         currentSetting: SettingUiPref
     ): ActorResult {
         when (settingId) {
+            MAX_CACHE_SIZE_ID -> {
+                val maxSize = settingsRepository.getPreference(ImageCacheMaxSizePreference)
+                return ActorResult(
+                    dialog = SettingsNamespace.DialogState.ShowModal(
+                        payload = ImageCacheMaxSizePayload(maxSizeMb = maxSize),
+                        settingId = settingId,
+                    ),
+                )
+            }
+
             CLEAR_CACHE_ID -> {
                 context
                     .imageLoader
@@ -78,6 +97,22 @@ class StorageActor @Inject constructor(
                 return ActorResult(updatedSettings = buildSettings())
             }
         }
+        return ActorResult()
+    }
+
+    override suspend fun saveDialogResult(
+        settingId: String,
+        data: SettingsNamespace.DialogState.DialogResult,
+        currentSetting: SettingUiPref,
+    ): ActorResult {
+        when (settingId) {
+            MAX_CACHE_SIZE_ID -> {
+                val result = data as ImageCacheMaxSizeResult
+                settingsRepository.setPreference(ImageCacheMaxSizePreference, result.maxSizeMb)
+                return ActorResult(updatedSettings = buildSettings())
+            }
+        }
+
         return ActorResult()
     }
 }

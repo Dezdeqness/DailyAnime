@@ -2,6 +2,7 @@ package com.dezdeqness.feature.settings.store.actors
 
 import com.dezdeqness.contract.settings.models.NotificationEnabledPreference
 import com.dezdeqness.contract.settings.models.NotificationTimePreference
+import com.dezdeqness.contract.settings.models.TimeEntity
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.feature.settings.R
@@ -18,6 +19,16 @@ private const val NOTIFICATION_ENABLE_ID = "notification_enable"
 private const val NOTIFICATION_HEADER_ID = "notification_header"
 
 data object OpenAlarmSettings : SettingsNamespace.Effect
+
+data class TimePickerPayload(
+    val hours: Int,
+    val minutes: Int,
+) : SettingsNamespace.DialogState.DialogPayload
+
+data class TimePickerResult(
+    val hours: Int,
+    val minutes: Int,
+) : SettingsNamespace.DialogState.DialogResult
 
 class NotificationActor @Inject constructor(
     private val settingsRepository: SettingsRepository,
@@ -68,6 +79,22 @@ class NotificationActor @Inject constructor(
         settingId: String,
         currentSetting: SettingUiPref
     ): ActorResult {
+        when (settingId) {
+            NOTIFICATION_TIME_ID -> {
+                val notificationTime = settingsRepository.getPreference(NotificationTimePreference)
+
+                return ActorResult(
+                    dialog = SettingsNamespace.DialogState.ShowModal(
+                        payload = TimePickerPayload(
+                            hours = notificationTime.hours,
+                            minutes = notificationTime.minutes,
+                        ),
+                        settingId = settingId,
+                    ),
+                )
+            }
+        }
+
         return ActorResult()
     }
 
@@ -94,6 +121,25 @@ class NotificationActor @Inject constructor(
                 return ActorResult(updatedSettings = listOf(updated), effect = effect)
             }
         }
+        return ActorResult()
+    }
+
+    override suspend fun saveDialogResult(
+        settingId: String,
+        data: SettingsNamespace.DialogState.DialogResult,
+        currentSetting: SettingUiPref
+    ): ActorResult {
+        when (settingId) {
+            NOTIFICATION_TIME_ID -> {
+                val result = (data as TimePickerResult)
+                val timeEntity = TimeEntity(hours = result.hours, minutes = result.minutes)
+
+                settingsRepository.setPreference(NotificationTimePreference, timeEntity)
+                workSchedulerManager.scheduleDailyWork()
+                return ActorResult(updatedSettings = buildSettings())
+            }
+        }
+
         return ActorResult()
     }
 }
