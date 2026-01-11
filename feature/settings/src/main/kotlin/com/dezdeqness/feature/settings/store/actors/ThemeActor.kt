@@ -57,7 +57,7 @@ class ThemeActor @Inject constructor(
                         payload = ThemeSelectPayload(
                             mode = currentMode,
                         ),
-                        settingId = THEME_SELECTOR_ID,
+                        settingId = settingId,
                     ),
                 )
             }

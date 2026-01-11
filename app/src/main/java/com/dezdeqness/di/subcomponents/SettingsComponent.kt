@@ -6,6 +6,7 @@ import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.provider.StatusesProvider
@@ -56,6 +57,7 @@ abstract class SettingsModule {
             workSchedulerManager: WorkSchedulerManager,
             statusesProvider: StatusesProvider,
             ribbonMapper: PersonalRibbonMapper,
+            configManager: ConfigManager,
             context: Context,
         ): List<SectionActor> =
             listOf(
@@ -75,6 +77,7 @@ abstract class SettingsModule {
                     authRepository = authRepository,
                     statusesProvider = statusesProvider,
                     ribbonMapper = ribbonMapper,
+                    configManager = configManager,
                 ),
                 StorageActor(
                     settingsRepository = settingsRepository,

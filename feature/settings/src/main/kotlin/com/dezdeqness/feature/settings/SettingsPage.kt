@@ -13,15 +13,15 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.contract.settings.models.ThemeMode
+import com.dezdeqness.core.ui.dialogs.TimeData
+import com.dezdeqness.core.ui.dialogs.TimePickerDialog
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.settings.composables.HeaderCustomSettingsView
@@ -29,10 +29,19 @@ import com.dezdeqness.feature.settings.composables.ListPreferencesDialog
 import com.dezdeqness.feature.settings.composables.ProgressSettingsView
 import com.dezdeqness.feature.settings.composables.SwitchSettingsView
 import com.dezdeqness.feature.settings.composables.TextSettingsView
+import com.dezdeqness.feature.settings.store.actors.ImageCacheMaxSizePayload
+import com.dezdeqness.feature.settings.store.actors.ImageCacheMaxSizeResult
+import com.dezdeqness.feature.settings.store.actors.InitialSectionSelectPayload
+import com.dezdeqness.feature.settings.store.actors.InitialSectionSelectResult
+import com.dezdeqness.feature.settings.store.actors.RibbonReorderPayload
+import com.dezdeqness.feature.settings.store.actors.RibbonReorderResult
 import com.dezdeqness.feature.settings.store.actors.ThemeSelectPayload
 import com.dezdeqness.feature.settings.store.actors.ThemeSelectResult
+import com.dezdeqness.feature.settings.store.actors.TimePickerPayload
+import com.dezdeqness.feature.settings.store.actors.TimePickerResult
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
+import com.dezdeqness.feature.settings.utils.formatSize
 import com.dezdeqness.feature.settings.utils.fromMode
 import kotlinx.coroutines.flow.StateFlow
 
@@ -43,13 +52,10 @@ fun SettingsPage(
     modifier: Modifier = Modifier,
     actions: SettingActions
 ) {
-    val context = LocalContext.current
-
     val state by stateFlow.collectAsStateWithLifecycle()
 
     val items = state.settings
 
-    val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
 
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -162,80 +168,79 @@ fun SettingsPage(
                         },
                     )
                 }
+
+                is TimePickerPayload -> {
+                    val payload = dialogState.payload
+                    val timeData = TimeData(
+                        hours = payload.hours,
+                        minutes = payload.minutes,
+                    )
+                    TimePickerDialog(
+                        time = timeData,
+                        sheetState = sheetState,
+                        onSaveTime = { hours, minutes ->
+                            actions.onDialogResult(
+                                dialogState.settingId,
+                                TimePickerResult(hours = hours, minutes = minutes),
+                            )
+                        },
+                        onDismissRequest = {
+                            actions.onDialogClosed()
+                        }
+                    )
+                }
+
+                is InitialSectionSelectPayload -> {
+                    SelectSectionDialog(
+                        selectedId = dialogState.payload.selectedId,
+                        state = sheetState,
+                        statuses = dialogState.payload.items,
+                        onSelectedItem = {
+                            actions.onDialogResult(
+                                dialogState.settingId,
+                                InitialSectionSelectResult(it),
+                            )
+                        },
+                        onCloseClicked = {
+                            actions.onDialogClosed()
+                        }
+                    )
+                }
+
+                is RibbonReorderPayload -> {
+                    SelectRibbonStatusReorderDialog(
+                        onDismissRequest = {
+                            actions.onDialogClosed()
+                        },
+                        onDoneClicked = {
+                            actions.onDialogResult(
+                                dialogState.settingId,
+                                RibbonReorderResult(it),
+                            )
+                        },
+                        statuses = dialogState.payload.statuses,
+                    )
+                }
+
+                is ImageCacheMaxSizePayload -> {
+                    val values = (7..13).map { 1 shl it }
+                    ListPreferencesDialog(
+                        values = values,
+                        selectedValue = dialogState.payload.maxSizeMb,
+                        valueText = { formatSize(it * 1024 * 1024L) },
+                        onValueSelected = { size ->
+                            actions.onDialogResult(
+                                dialogState.settingId,
+                                ImageCacheMaxSizeResult(maxSizeMb = size),
+                            )
+                        },
+                        onDismiss = {
+                            actions.onDialogClosed()
+                        },
+                    )
+                }
             }
         }
-
-//        if (state.navigation.isDialogShown) {
-//            SelectSectionDialog(
-//                selectedId = state.navigation.selectedSection.id,
-//                state = sheetState,
-//                statuses = listSections,
-//                onSelectedItem = {
-//                    actions.onSelectedSectionChanged(it)
-//                },
-//                onCloseClicked = {
-//                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-//                        if (sheetState.isVisible.not()) {
-//                            actions.onSelectedSectionDialogClosed()
-//                        }
-//                    }
-//                }
-//            )
-//        }
-
-//        if (state.ribbon.isReorderDialogShown) {
-//            SelectRibbonStatusReorderDialog(
-//                onDismissRequest = {
-//                    actions.onChangeRibbonStatusClosed()
-//                },
-//                onDoneClicked = {
-//                    actions.onSelectedRibbonDataChanged(statuses = it)
-//                    actions.onChangeRibbonStatusClosed()
-//                },
-//                statuses = state.ribbon.statuses,
-//            )
-//        }
-
-//        if (state.notifications.isTimePickerShown) {
-//            TimePickerDialog(
-//                time = state.notifications.time,
-//                sheetState = sheetState,
-//                onSaveTime = { hours, minutes ->
-//                    actions.onNotificationTimeSaved(hours = hours, minutes = minutes)
-//                },
-//                onDismissRequest = {
-//                    actions.onNotificationTimePickerClosed()
-//                }
-//            )
-//        }
-//
-//        if (state.cache.isDialogShown) {
-//            ListPreferencesDialog(
-//                values = (7..13).map { 1 shl it },
-//                selectedValue = state.cache.maxImageSize,
-//                valueText = { formatSize(it * 1024 * 1024L) },
-//                onValueSelected = { size ->
-//                    actions.onMaxImageCacheSize(size)
-//                },
-//                onDismiss = {
-//                    actions.onMaxImageCacheSizeDialogClosed()
-//                },
-//            )
-//        }
-
-//        if (state.theme.isDialogShown) {
-//            ListPreferencesDialog(
-//                values = ThemeMode.entries,
-//                selectedValue = state.theme.mode,
-//                valueText = { stringResource(it.fromMode()) },
-//                onValueSelected = { mode ->
-//                    actions.onThemeSelected(mode)
-//                },
-//                onDismiss = {
-//                    actions.onThemeDialogClosed()
-//                },
-//            )
-//        }
     }
 }
 
