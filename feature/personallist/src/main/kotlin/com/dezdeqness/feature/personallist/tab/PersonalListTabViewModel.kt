@@ -11,7 +11,6 @@ import com.dezdeqness.core.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.model.Sort
 import com.dezdeqness.domain.repository.UserRatesRepository
-import com.dezdeqness.feature.personallist.PersonalListComposer
 import com.dezdeqness.feature.personallist.Placeholder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
