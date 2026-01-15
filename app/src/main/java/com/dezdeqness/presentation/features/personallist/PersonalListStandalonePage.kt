@@ -18,7 +18,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,10 +36,9 @@ import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.BottomSheet
-import com.dezdeqness.feature.personallist.PersonalListViewModel
-import com.dezdeqness.feature.personallist.Placeholder
+import com.dezdeqness.feature.personallist.DataStatus
+import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
 import com.dezdeqness.feature.personallist.composable.PersonalListSearch
-import com.dezdeqness.feature.personallist.composable.PersonalListSelectOrderDialog
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
 import com.dezdeqness.feature.personallist.composable.RibbonEmptyState
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
@@ -62,32 +60,28 @@ fun PersonalListStandalonePage(
     }
     val analyticsManager = personalListComponent.analyticsManager()
     val viewModelFactory = personalListComponent.viewModelFactory()
-    val viewModel = viewModel<PersonalListViewModel>(factory = viewModelFactory)
+    val viewModel = viewModel<PersonalListTabsViewModel>(factory = viewModelFactory)
 
     val scope = rememberCoroutineScope()
 
     val pagerState by viewModel.pagerStateFlow.collectAsStateWithLifecycle()
     val bottomSheet by viewModel.bottomSheetFlow.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.onInitialLoad()
-    }
-
     val isOrderDialogOpened = rememberSaveable {
         mutableStateOf(false)
     }
 
     if (isOrderDialogOpened.value) {
-        PersonalListSelectOrderDialog(
-            onDismissRequest = {
-                isOrderDialogOpened.value = false
-            },
-            onSelectedItem = {
-                viewModel.onSortChanged(it)
-                isOrderDialogOpened.value = false
-            },
-            selectedId = pagerState.currentSortId,
-        )
+//        PersonalListSelectOrderDialog(
+//            onDismissRequest = {
+//                isOrderDialogOpened.value = false
+//            },
+//            onSelectedItem = {
+//                viewModel.onSortChanged(it)
+//                isOrderDialogOpened.value = false
+//            },
+//            selectedId = pagerState.currentSortId,
+//        )
     }
 
     val ribbon = pagerState.ribbon
@@ -158,15 +152,7 @@ fun PersonalListStandalonePage(
                 .fillMaxSize(),
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                val isRibbonVisible by remember(
-                    pagerState.isInitialLoading,
-                    pagerState.placeholder,
-                    ribbon
-                ) {
-                    derivedStateOf { ribbon.isNotEmpty() && pagerState.placeholder !is Placeholder.Ribbon }
-                }
-
-                if (isRibbonVisible) {
+                if (ribbon.isNotEmpty()) {
                     PersonalRibbon(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -184,23 +170,21 @@ fun PersonalListStandalonePage(
                     )
                 }
 
-                if (pagerState.isInitialLoading) {
-                    ShimmerPersonalLoading(
+                when (pagerState.status) {
+                    DataStatus.Loading -> ShimmerPersonalLoading(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 16.dp, vertical = 4.dp),
                     )
-                }
 
-                when (pagerState.placeholder) {
-                    Placeholder.Ribbon.Error -> GeneralError(modifier = Modifier.fillMaxSize())
-                    Placeholder.Ribbon.Empty -> RibbonEmptyState(modifier = Modifier.fillMaxSize())
+                    DataStatus.Error -> GeneralError(modifier = Modifier.fillMaxSize())
+                    DataStatus.Empty -> RibbonEmptyState(modifier = Modifier.fillMaxSize())
                     else -> {
                         if (ribbon.isNotEmpty()) {
                             PersonalListTabsPager(
                                 pager = pager,
                                 ribbon = ribbon,
-                                currentSortId = pagerState.currentSortId,
+                                currentSortId = "",
                                 viewModelFactory = viewModelFactory,
                                 analyticsManager = analyticsManager,
                                 onOpenEditRate = { userRateId, title ->

@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.personallist
+package com.dezdeqness.feature.personallist.tab
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
