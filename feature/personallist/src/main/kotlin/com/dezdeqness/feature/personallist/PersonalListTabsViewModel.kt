@@ -28,9 +28,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -88,24 +86,21 @@ class PersonalListTabsViewModel @Inject constructor(
             .onStart { emit(LoadEvent.Initial) }
             .flatMapLatest { event ->
                 when (event) {
-
                     LoadEvent.Initial,
-                    LoadEvent.RefreshTabs -> flow {
-                        emit(Change.Loading)
-
-                        val result = userRepository.getProfileDetails().first()
-
-                        result
-                            .onSuccess { account ->
-                                ribbonRaw = account.fullAnimeStatusesEntity
-                                val ribbon = personalListComposer.composeStatuses(ribbonRaw)
-
-                                emit(Change.TabsLoaded(ribbon))
-                            }
-                            .onFailure { exception ->
-                                emit(Change.Error(exception))
-                            }
-                    }
+                    LoadEvent.RefreshTabs -> userRepository.getProfileDetails()
+                        .map { result ->
+                            result.fold(
+                                onSuccess = { account ->
+                                    ribbonRaw = account.fullAnimeStatusesEntity
+                                    val ribbon = personalListComposer.composeStatuses(ribbonRaw)
+                                    Change.TabsLoaded(ribbon)
+                                },
+                                onFailure = { exception ->
+                                    Change.Error(exception)
+                                }
+                            )
+                        }
+                        .onStart { emit(Change.Loading) }
 
                     is LoadEvent.SelectRibbon -> flowOf(
                         Change.RibbonSelected(event.ribbonId)
