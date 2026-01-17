@@ -31,6 +31,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         userId: Long,
         status: String,
         page: Int,
+        limit: Int,
         isAdultContentEnabled: Boolean,
         order: UserRateOrderEntity,
     ) =
@@ -39,7 +40,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
             val response = apolloClient.query(
                 UserRatesQuery(
                     page = page,
-                    limit = 50,
+                    limit = limit,
                     status = statusEnum,
                     order = Optional.present(
                         UserRateOrderInputType(

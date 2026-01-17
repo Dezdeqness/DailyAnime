@@ -2,16 +2,15 @@ package com.dezdeqness.domain.repository
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.domain.model.UserRateOrderEntity
-import kotlinx.coroutines.flow.Flow
 
 interface UserRatesRepository {
 
-    fun getUserRates(
+    suspend fun getUserRates(
         status: String,
         page: Int = 1,
-        onlyRemote: Boolean = false,
+        limit: Int = 50,
         order: UserRateOrderEntity = UserRateOrderEntity.UPDATED_AT_DESC
-    ): Flow<Result<List<UserRateEntity>>>
+    ): Result<List<UserRateEntity>>
 
     fun getLocalUserRate(rateId: Long): UserRateEntity?
 

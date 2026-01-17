@@ -9,6 +9,7 @@ interface UserRatesRemoteDataSource {
         userId: Long,
         status: String,
         page: Int,
+        limit: Int,
         isAdultContentEnabled: Boolean,
         order: UserRateOrderEntity,
     ): Result<List<UserRateEntity>>

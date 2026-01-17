@@ -9,8 +9,6 @@ import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import com.dezdeqness.data.exception.UserLocalNotFound
 import com.dezdeqness.domain.model.UserRateOrderEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRatesRepositoryImpl @Inject constructor(
@@ -20,45 +18,29 @@ class UserRatesRepositoryImpl @Inject constructor(
     private val settingsRepository: SettingsRepository,
 ) : UserRatesRepository {
 
-    override fun getUserRates(
+    override suspend fun getUserRates(
         status: String,
         page: Int,
-        onlyRemote: Boolean,
+        limit: Int,
         order: UserRateOrderEntity
-    ): Flow<Result<List<UserRateEntity>>> =
-        flow {
-            val profile = userRepository.getProfileLocal()
-            if (profile == null) {
-                emit(Result.failure(UserLocalNotFound()))
-                return@flow
-            }
+    ): Result<List<UserRateEntity>> {
+        val profile = userRepository.getProfileLocal() ?: return Result.failure(UserLocalNotFound())
 
-            if (onlyRemote.not()) {
-                val localList = userRatesLocalDataSource.getUserRatesByStatus(status = status)
+        val isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference)
 
-                if (localList.isNotEmpty()) {
-                    emit(Result.success(localList))
-                }
-            }
-
-            val isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference)
-
-            emit(
-                userRatesRemoteDataSource
-                    .getUserRates(
-                        userId = profile.id,
-                        page = page,
-                        status = status,
-                        isAdultContentEnabled = isAdultContentEnabled,
-                        order = order,
-                    )
-                    .onSuccess { list ->
-                        userRatesLocalDataSource.deleteUserRatesByStatus(status)
-                        userRatesLocalDataSource.saveUserRates(list)
-                    }
+        return userRatesRemoteDataSource
+            .getUserRates(
+                userId = profile.id,
+                page = page,
+                status = status,
+                limit = limit,
+                isAdultContentEnabled = isAdultContentEnabled,
+                order = order,
             )
-
-        }
+            .onSuccess { list ->
+                userRatesLocalDataSource.saveUserRates(list)
+            }
+    }
 
     override fun getLocalUserRate(rateId: Long) =
         userRatesLocalDataSource.getUserRate(rateId = rateId)
