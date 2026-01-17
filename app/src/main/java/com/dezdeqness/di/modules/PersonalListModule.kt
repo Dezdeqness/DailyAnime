@@ -1,11 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.core.di.AssistedViewModelFactory
-import com.dezdeqness.core.di.AssistedViewModelKey
 import com.dezdeqness.core.di.ViewModelKey
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
-import com.dezdeqness.feature.personallist.tab.PersonalListTabViewModel
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
 import dagger.Binds
 import dagger.Module
@@ -17,18 +14,11 @@ abstract class PersonalListModule {
     @Binds
     @IntoMap
     @ViewModelKey(PersonalListTabsViewModel::class)
-    abstract fun bindPersonalListViewModel(viewModel: PersonalListTabsViewModel): ViewModel
+    abstract fun bindPersonalListTabsViewModel(viewModel: PersonalListTabsViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(PersonalListHostViewModel::class)
     abstract fun bindPersonalListHostViewModel(viewModel: PersonalListHostViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @AssistedViewModelKey(PersonalListTabViewModel::class)
-    abstract fun bindPersonalListTabViewModelFactory(
-        factory: PersonalListTabViewModel.Factory
-    ): AssistedViewModelFactory<out ViewModel>
 
 }
