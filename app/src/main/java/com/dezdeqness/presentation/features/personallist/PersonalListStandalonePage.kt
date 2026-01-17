@@ -1,9 +1,7 @@
 package com.dezdeqness.presentation.features.personallist
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,21 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -67,23 +57,6 @@ fun PersonalListStandalonePage(
     val pagerState by viewModel.pagerStateFlow.collectAsStateWithLifecycle()
     val bottomSheet by viewModel.bottomSheetFlow.collectAsStateWithLifecycle()
 
-    val isOrderDialogOpened = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    if (isOrderDialogOpened.value) {
-//        PersonalListSelectOrderDialog(
-//            onDismissRequest = {
-//                isOrderDialogOpened.value = false
-//            },
-//            onSelectedItem = {
-//                viewModel.onSortChanged(it)
-//                isOrderDialogOpened.value = false
-//            },
-//            selectedId = pagerState.currentSortId,
-//        )
-    }
-
     val ribbon = pagerState.ribbon
     val selectedId = pagerState.selectedRibbonId
     val selectedIndex = remember(ribbon, selectedId) {
@@ -95,8 +68,6 @@ fun PersonalListStandalonePage(
         pageCount = { ribbon.size.coerceAtLeast(1) },
     )
 
-    val ribbonState by rememberUpdatedState(ribbon)
-
     LaunchedEffect(selectedIndex, ribbon.size) {
         if (ribbon.isNotEmpty() && pager.currentPage != selectedIndex) {
             pager.animateScrollToPage(selectedIndex)
@@ -105,7 +76,7 @@ fun PersonalListStandalonePage(
 
     LaunchedEffect(pager) {
         snapshotFlow { pager.currentPage }.collectLatest { page ->
-            val id = ribbonState.getOrNull(page)?.id ?: return@collectLatest
+            val id = ribbon.getOrNull(page)?.id ?: return@collectLatest
             viewModel.onRibbonItemSelected(id)
         }
     }
@@ -114,36 +85,13 @@ fun PersonalListStandalonePage(
         containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
-            Row(
+            PersonalListSearch(
                 modifier = Modifier
                     .windowInsetsPadding(WindowInsets.statusBars)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Box(modifier = Modifier.weight(1f)) {
-                    PersonalListSearch(
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
-                        onQueryChanged = { },
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(end = 4.dp),
-                ) {
-                    IconButton(
-                        onClick = {
-                            isOrderDialogOpened.value = true
-                        },
-                    ) {
-                        Icon(
-                            Icons.Default.FilterList,
-                            contentDescription = null,
-                            tint = AppTheme.colors.onSurface
-                        )
-                    }
-                }
-            }
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                onQueryChanged = { },
+            )
         },
     ) { contentPadding ->
         Box(
@@ -158,13 +106,10 @@ fun PersonalListStandalonePage(
                             .fillMaxWidth()
                             .padding(vertical = 8.dp),
                         items = ribbon,
-                        selectedRibbonId = selectedId,
-                        onClick = { id ->
-                            val index = ribbon.indexOfFirst { it.id == id }
-                            if (index >= 0) {
-                                scope.launch {
-                                    pager.animateScrollToPage(index)
-                                }
+                        targetPage = pager.targetPage,
+                        onClick = { index ->
+                            scope.launch {
+                                pager.animateScrollToPage(index)
                             }
                         },
                     )
@@ -181,12 +126,9 @@ fun PersonalListStandalonePage(
                     DataStatus.Empty -> RibbonEmptyState(modifier = Modifier.fillMaxSize())
                     else -> {
                         if (ribbon.isNotEmpty()) {
-                            PersonalListTabsPager(
+                            PersonalListPageStandalonePage(
                                 pager = pager,
                                 ribbon = ribbon,
-                                currentSortId = "",
-                                viewModelFactory = viewModelFactory,
-                                analyticsManager = analyticsManager,
                                 onOpenEditRate = { userRateId, title ->
                                     viewModel.openEditRateBottomSheet(
                                         userRateId = userRateId,
@@ -194,7 +136,11 @@ fun PersonalListStandalonePage(
                                     )
                                 },
                                 refreshStatusFlow = viewModel.refreshStatusFlow,
-                                onDetailsClick = { animeId ->
+                                onDetailsClick = { animeId, title ->
+                                    analyticsManager.detailsTracked(
+                                        id = animeId.toString(),
+                                        title = title,
+                                    )
                                     navController.navigate(Details(animeId))
                                 },
                             )

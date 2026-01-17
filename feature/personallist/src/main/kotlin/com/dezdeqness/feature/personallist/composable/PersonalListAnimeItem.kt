@@ -150,7 +150,8 @@ fun PersonalListAnimeItem(
                                 onClick = {
                                     onActionReceive(
                                         PersonalListAction.EditRateClicked(
-                                            userRateUiModel.rateId
+                                            editRateId = userRateUiModel.rateId,
+                                            displayName = userRateUiModel.name,
                                         )
                                     )
                                 }

@@ -6,10 +6,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -26,19 +25,20 @@ import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 fun PersonalRibbon(
     modifier: Modifier = Modifier,
     items: List<RibbonStatusUiModel> = listOf(),
-    selectedRibbonId: String = "",
-    onClick: (String) -> Unit,
+    targetPage: Int,
+    onClick: (Int) -> Unit,
 ) {
-    LazyRow(
-        modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 16.dp)
-        ) {
-        items(
-            count = items.size,
-            key = { index -> items[index].id },
-        ) { index ->
-            val item = items[index]
-            val isSelected = item.id == selectedRibbonId
+    SecondaryScrollableTabRow(
+        selectedTabIndex = targetPage,
+        modifier = modifier.fillMaxWidth(),
+        containerColor = AppTheme.colors.onPrimary,
+        contentColor = AppTheme.colors.textPrimary,
+        edgePadding = 16.dp,
+        divider = {},
+        indicator = {},
+    ) {
+        items.forEachIndexed { index, item ->
+            val isSelected = targetPage == index
 
             val localModifier = if (isSelected) {
                 Modifier.background(AppTheme.colors.accent)
@@ -64,7 +64,7 @@ fun PersonalRibbon(
                     .clip(AppTheme.shapes.large)
                     .clickable(
                         onClick = {
-                            onClick(item.id)
+                            onClick(index)
                         },
                         interactionSource = remember { MutableInteractionSource() },
                         indication = ripple(color = AppTheme.colors.ripple),
@@ -96,7 +96,7 @@ fun PersonalRibbonPreview() {
                 RibbonStatusUiModel("key1", "Planned"),
                 RibbonStatusUiModel("key2", "Watching"),
             ),
-            selectedRibbonId = "key2",
+            targetPage = 0,
             onClick = {},
         )
     }

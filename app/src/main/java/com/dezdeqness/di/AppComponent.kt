@@ -24,6 +24,7 @@ import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
+import com.dezdeqness.di.subcomponents.PersonalListTabComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
 import com.dezdeqness.di.subcomponents.RoutingComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
@@ -66,6 +67,8 @@ interface AppComponent {
     fun animeDetailsComponent(): AnimeDetailsComponent.Builder
 
     fun personalListComponent(): PersonalListComponent.Factory
+
+    fun personalListTabComponent(): PersonalListTabComponent.Factory
 
     fun editRateComponent(): UserRateComponent.Builder
 
