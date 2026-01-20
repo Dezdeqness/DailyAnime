@@ -133,6 +133,7 @@ class RemoteModule {
         @Named("graphql_authorization") graphqlAuthorizationInterceptor: Interceptor,
         @Named("user_agent") userAgentTokenInterceptor: Interceptor,
         @Named("refresh") refreshInterceptor: Interceptor,
+        @Named("logging") loggingInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
@@ -140,6 +141,7 @@ class RemoteModule {
             .addInterceptor(userAgentTokenInterceptor)
             .addInterceptor(refreshInterceptor)
             .addInterceptor(chuckerInterceptor)
+            .addInterceptor(loggingInterceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .build()
