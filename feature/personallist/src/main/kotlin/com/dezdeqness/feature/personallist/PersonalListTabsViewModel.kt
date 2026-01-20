@@ -10,7 +10,6 @@ import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.message.BaseMessageProvider
 import com.dezdeqness.core.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.empty
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loaded
@@ -42,7 +41,6 @@ import javax.inject.Inject
 class PersonalListTabsViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
     private val personalListComposer: PersonalListComposer,
-    private val personalListFilterRepository: PersonalListFilterRepository,
     private val userRepository: UserRepository,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
@@ -161,13 +159,6 @@ class PersonalListTabsViewModel @Inject constructor(
     fun onRibbonItemSelected(id: String) {
         if (pagerStateFlow.value.selectedRibbonId == id) return
         loadEvents.tryEmit(LoadEvent.SelectRibbon(ribbonId = id))
-    }
-
-    fun onSortChanged(sort: String) {
-//        viewModelScope.launch(coroutineDispatcherProvider.io()) {
-//            personalListFilterRepository.setSort(sort)
-//            _pagerStateFlow.update { it.copy(currentSortId = sort) }
-//        }
     }
 
     fun openEditRateBottomSheet(userRateId: Long, title: String) {

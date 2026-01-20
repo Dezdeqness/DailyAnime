@@ -47,15 +47,6 @@ enum class DataStatus {
     Loading,
 }
 
-sealed class Placeholder {
-    sealed class UserRate : Placeholder() {
-        data object Empty : UserRate()
-        data object Error : UserRate()
-    }
-
-    data object None : Placeholder()
-}
-
 sealed interface BottomSheet {
     data object None : BottomSheet
     data class EditRate(
