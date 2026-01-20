@@ -57,6 +57,8 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
+    implementation(libs.elmslie.core)
+
     implementation(project(":data"))
     implementation(project(":domain"))
 
