@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.feature.personallist.PersonalListAction
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
+import com.dezdeqness.feature.personallist.tab.PersonalListAction
 
 @Composable
 fun PersonalList(

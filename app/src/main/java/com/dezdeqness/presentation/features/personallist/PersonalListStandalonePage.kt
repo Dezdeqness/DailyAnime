@@ -160,7 +160,9 @@ fun PersonalListStandalonePage(
             },
             userRateId = editRateBottomSheet.userRateId,
             title = editRateBottomSheet.title,
-            onSaveClicked = viewModel::onUserRateChanged,
+            onSaveClicked = { userRate ->
+                viewModel.onUserRateChanged(userRate, selectedId)
+            },
         )
     }
 }

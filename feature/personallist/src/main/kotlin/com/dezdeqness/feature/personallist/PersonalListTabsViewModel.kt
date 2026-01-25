@@ -58,8 +58,15 @@ class PersonalListTabsViewModel @Inject constructor(
     private val _bottomSheetFlow: MutableStateFlow<BottomSheet> = MutableStateFlow(BottomSheet.None)
     val bottomSheetFlow: StateFlow<BottomSheet> get() = _bottomSheetFlow
 
-    private val _refreshStatusFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    val refreshStatusFlow: Flow<String> = _refreshStatusFlow.asSharedFlow()
+    private val _refreshStatusFlow = MutableSharedFlow<RefreshEvent>(extraBufferCapacity = 10)
+    val refreshStatusFlow: Flow<RefreshEvent> = _refreshStatusFlow.asSharedFlow()
+
+    data class RefreshEvent(
+        val statusId: String,
+        val userRateId: Long,
+        val shouldRemoveLocally: Boolean,
+        val shouldMarkPending: Boolean,
+    )
 
     init {
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
