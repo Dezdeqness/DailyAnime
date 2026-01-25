@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.core.ui.views.image.AppImage
-import com.dezdeqness.feature.personallist.PersonalListAction
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
+import com.dezdeqness.feature.personallist.tab.PersonalListAction
 
 
 @Composable
