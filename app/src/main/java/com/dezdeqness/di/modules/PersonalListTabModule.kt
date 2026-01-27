@@ -24,7 +24,7 @@ abstract class PersonalListTabModule {
             GetPersonalListByStatusUseCase(userRatesRepository = userRatesRepository)
 
         @Provides
-        fun provideHistoryStore(actor: PersonalListActor): ElmStore<
+        fun providePersonalListStore(actor: PersonalListActor): ElmStore<
                 PersonalListNamespace.Event,
                 PersonalListNamespace.State,
                 PersonalListNamespace.Effect,
