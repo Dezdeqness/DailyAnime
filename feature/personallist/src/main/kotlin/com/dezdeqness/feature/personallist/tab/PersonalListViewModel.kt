@@ -36,6 +36,14 @@ class PersonalListViewModel(
             initialValue = PersonalListNamespace.State()
         )
 
+    fun onLoadMore() {
+        store.accept(PersonalListNamespace.Event.LoadMore)
+    }
+
+    fun onRefresh() {
+        store.accept(PersonalListNamespace.Event.Refresh)
+    }
+
     fun removeItemLocally(userRateId: Long) {
         store.accept(PersonalListNamespace.Event.ItemRemovedLocally(userRateId))
     }

@@ -4,7 +4,7 @@ import com.dezdeqness.feature.userrate.EditRateUiModel
 
 interface PersonalListActions {
     fun onPullDownRefreshed()
-    fun onScrolled()
+    fun onLoadMore()
     fun onAnimeClicked(animeId: Long, displayName: String)
     fun onOpenEditRateClicked(editRateId: Long, displayName: String)
     fun onUserRateIncrement(editRateId: Long)

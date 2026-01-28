@@ -8,8 +8,11 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,7 +24,6 @@ import com.dezdeqness.feature.personallist.composable.UserRateEmptyState
 import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
 import com.dezdeqness.feature.personallist.tab.store.PersonalListStatus
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -29,8 +31,6 @@ fun PersonalListPage(
     stateFlow: StateFlow<PersonalListNamespace.State>,
     actions: PersonalListActions,
 ) {
-    val scope = rememberCoroutineScope()
-
     val state by stateFlow.collectAsStateWithLifecycle()
 
     val pullRefreshState = rememberPullRefreshState(
@@ -57,9 +57,17 @@ fun PersonalListPage(
             else -> {}
         }
 
+        var isPageLoading by remember {
+            mutableStateOf(false)
+        }
+
+        // Workaround to fix pagination when load more was failure
+        LaunchedEffect(state.list, state.isPullDownRefreshing) {
+            isPageLoading = false
+        }
+
         PersonalList(
             list = state.list,
-            isScrollNeed = false,
             onActionReceive = { action ->
                 when (action) {
                     is PersonalListAction.AnimeClick -> {
@@ -75,11 +83,11 @@ fun PersonalListPage(
                     }
                 }
             },
-            onNeedScroll = { listState ->
-                scope.launch {
-                    actions.onScrolled()
-                    listState.animateScrollToItem(0)
-                }
+            hasNextPage = state.hasNextPage,
+            isPageLoading = isPageLoading,
+            onLoadMore = {
+                actions.onLoadMore()
+                isPageLoading = true
             },
             modifier = Modifier.fillMaxSize(),
         )
