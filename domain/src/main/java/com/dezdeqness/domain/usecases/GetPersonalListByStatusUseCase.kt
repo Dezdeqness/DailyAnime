@@ -17,7 +17,7 @@ class GetPersonalListByStatusUseCase(
         }
         val list = result.getOrDefault(listOf())
 
-        val hasNextPage = list.size > PAGE_SIZE || list.isNotEmpty()
+        val hasNextPage = list.size >= PAGE_SIZE
 
         return Result.success(
             PersonalListState(

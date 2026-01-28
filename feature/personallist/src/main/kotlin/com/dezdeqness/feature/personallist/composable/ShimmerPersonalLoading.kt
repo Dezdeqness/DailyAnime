@@ -43,7 +43,7 @@ fun ShimmerPersonalLoading(
 }
 
 @Composable
-private fun ShimmerPersonalItem(
+fun ShimmerPersonalItem(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier) {

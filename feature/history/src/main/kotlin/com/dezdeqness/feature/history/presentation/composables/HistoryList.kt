@@ -49,19 +49,21 @@ fun HistoryList(
                 item.id() + item.hashCode()
             }
         ) { index ->
-            val item = list[index]
-
-            when (item) {
+            when (val item = list[index]) {
                 is HistoryModel.HistoryUiModel -> {
                     HistoryItem(
                         item = item,
-                        modifier = Modifier.animateItem().padding(horizontal = 16.dp, vertical = 8.dp)
+                        modifier = Modifier
+                            .animateItem()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
                     )
                 }
                 is HistoryModel.HistoryHeaderUiModel -> {
                     HistoryHeader(
                         header = item.header,
-                        modifier = Modifier.animateItem().padding(vertical = 8.dp, horizontal = 16.dp)
+                        modifier = Modifier
+                            .animateItem()
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
                     )
                 }
             }
@@ -71,7 +73,6 @@ fun HistoryList(
             item {
                 HistoryShimmerItem(modifier = Modifier.padding(horizontal = 16.dp))
             }
-
         }
 
     }
