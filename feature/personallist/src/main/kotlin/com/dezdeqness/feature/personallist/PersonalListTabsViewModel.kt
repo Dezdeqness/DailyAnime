@@ -7,15 +7,11 @@ import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.empty
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loaded
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loading
 import com.dezdeqness.feature.personallist.tab.PersonalListComposer
-import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +19,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -39,11 +34,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PersonalListTabsViewModel @Inject constructor(
-    private val userRatesRepository: UserRatesRepository,
     private val personalListComposer: PersonalListComposer,
     private val userRepository: UserRepository,
-    private val messageConsumer: MessageConsumer,
-    private val messageProvider: BaseMessageProvider,
     private val settingsRepository: SettingsRepository,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val appLogger: AppLogger,
@@ -57,16 +49,6 @@ class PersonalListTabsViewModel @Inject constructor(
 
     private val _bottomSheetFlow: MutableStateFlow<BottomSheet> = MutableStateFlow(BottomSheet.None)
     val bottomSheetFlow: StateFlow<BottomSheet> get() = _bottomSheetFlow
-
-    private val _refreshStatusFlow = MutableSharedFlow<RefreshEvent>(extraBufferCapacity = 10)
-    val refreshStatusFlow: Flow<RefreshEvent> = _refreshStatusFlow.asSharedFlow()
-
-    data class RefreshEvent(
-        val statusId: String,
-        val userRateId: Long,
-        val shouldRemoveLocally: Boolean,
-        val shouldMarkPending: Boolean,
-    )
 
     init {
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
@@ -179,42 +161,6 @@ class PersonalListTabsViewModel @Inject constructor(
         _bottomSheetFlow.value = BottomSheet.None
     }
 
-    fun onUserRateChanged(userRate: EditRateUiModel?) {
-        if (userRate == null) {
-            return
-        }
-        viewModelScope.launch(coroutineDispatcherProvider.io()) {
-            userRatesRepository.updateUserRate(
-                rateId = userRate.rateId,
-                status = userRate.status,
-                episodes = userRate.episodes,
-                score = userRate.score,
-                comment = userRate.comment,
-            )
-                .onSuccess {
-                    onEditSuccessMessage()
-                    _bottomSheetFlow.value = BottomSheet.None
-                    _refreshStatusFlow.tryEmit(userRate.status)
-                }
-                .onFailure { throwable ->
-                    logInfo("Error during user rate changes of personal list", throwable)
-                    onEditErrorMessage()
-                }
-        }
-    }
-
-    private fun onEditErrorMessage() {
-        viewModelScope.launch(coroutineDispatcherProvider.io()) {
-            messageConsumer.onErrorMessage(messageProvider.getAnimeEditRateErrorMessage())
-        }
-    }
-
-    private fun onEditSuccessMessage() {
-        viewModelScope.launch(coroutineDispatcherProvider.io()) {
-            messageConsumer.onSuccessMessage(messageProvider.getAnimeEditUpdateSuccessMessage())
-        }
-    }
-
     private fun logInfo(message: String, throwable: Throwable? = null) {
         if (throwable == null) {
             appLogger.logInfo(
@@ -248,5 +194,4 @@ class PersonalListTabsViewModel @Inject constructor(
 
         data class Error(val exception: Throwable) : Change
     }
-
 }

@@ -32,6 +32,7 @@ import com.dezdeqness.feature.personallist.composable.PersonalListSearch
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
 import com.dezdeqness.feature.personallist.composable.RibbonEmptyState
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
+import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.presentation.Details
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
 import kotlinx.coroutines.flow.collectLatest
@@ -135,7 +136,6 @@ fun PersonalListStandalonePage(
                                         title = title,
                                     )
                                 },
-                                refreshStatusFlow = viewModel.refreshStatusFlow,
                                 onDetailsClick = { animeId, title ->
                                     analyticsManager.detailsTracked(
                                         id = animeId.toString(),
@@ -153,6 +153,10 @@ fun PersonalListStandalonePage(
 
     val editRateBottomSheet = bottomSheet as? BottomSheet.EditRate
     if (editRateBottomSheet != null) {
+        val tabViewModel = viewModel<PersonalListViewModel>(
+            key = "personal_list_tab_${ribbon[pager.currentPage].id}",
+            factory = viewModelFactory,
+        )
         UserRateDialogStandalone(
             modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
             onClosed = {
@@ -161,7 +165,8 @@ fun PersonalListStandalonePage(
             userRateId = editRateBottomSheet.userRateId,
             title = editRateBottomSheet.title,
             onSaveClicked = { userRate ->
-                viewModel.onUserRateChanged(userRate, selectedId)
+                viewModel.onUserRateBottomDialogClosed()
+                tabViewModel.onUserRateChanged(userRate)
             },
         )
     }
