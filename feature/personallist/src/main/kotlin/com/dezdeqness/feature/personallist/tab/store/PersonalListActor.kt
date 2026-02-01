@@ -1,6 +1,7 @@
 package com.dezdeqness.feature.personallist.tab.store
 
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
 import com.dezdeqness.feature.personallist.tab.PersonalListComposer
 import kotlinx.coroutines.flow.flow
@@ -10,6 +11,7 @@ import javax.inject.Inject
 class PersonalListActor @Inject constructor(
     private val useCase: GetPersonalListByStatusUseCase,
     private val personalListComposer: PersonalListComposer,
+    private val userRatesRepository: UserRatesRepository,
     private val appLogger: AppLogger,
 ) : Actor<PersonalListNamespace.Command, PersonalListNamespace.Event>() {
 
@@ -57,6 +59,67 @@ class PersonalListActor @Inject constructor(
                         }
                     )
                 }
+
+            is PersonalListNamespace.Command.IncrementUserRate -> flow {
+                userRatesRepository.incrementUserRate(
+                    rateId = command.userRateId,
+                )
+                    .onSuccess { userRate ->
+                        emit(PersonalListNamespace.Event.EditUserRateSuccess)
+
+                        val statusChanged = command.statusId != userRate.status
+
+                        if (statusChanged) {
+                            emit(PersonalListNamespace.Event.ItemRemovedLocally(userRate.id))
+                        } else {
+                            personalListComposer.convertOnlyUserAnime(userRate)?.let { item ->
+                                emit(PersonalListNamespace.Event.UpdateUserRateLocally(item))
+                            }
+                        }
+                    }
+                    .onFailure { throwable ->
+                        appLogger.logInfo(
+                            TAG,
+                            "Error during user rate changes of personal list",
+                            throwable
+                        )
+
+                        emit(PersonalListNamespace.Event.EditUserRateError)
+                    }
+            }
+
+            is PersonalListNamespace.Command.UpdateUserRate -> flow {
+                val userRate = command.userRate
+                userRatesRepository.updateUserRate(
+                    rateId = userRate.rateId,
+                    status = userRate.status,
+                    episodes = userRate.episodes,
+                    score = userRate.score,
+                    comment = userRate.comment,
+                )
+                    .onSuccess {
+                        emit(PersonalListNamespace.Event.EditUserRateSuccess)
+
+                        val statusChanged = command.statusId != userRate.status
+
+                        if (statusChanged) {
+                            emit(PersonalListNamespace.Event.ItemRemovedLocally(userRate.rateId))
+                        } else {
+                            personalListComposer.convertOnlyUserAnime(it)?.let { item ->
+                                emit(PersonalListNamespace.Event.UpdateUserRateLocally(item))
+                            }
+                        }
+                    }
+                    .onFailure { throwable ->
+                        appLogger.logInfo(
+                            TAG,
+                            "Error during user rate changes of personal list",
+                            throwable
+                        )
+
+                        emit(PersonalListNamespace.Event.EditUserRateError)
+                    }
+            }
         }
 
     companion object {

@@ -22,15 +22,13 @@ val personalListReducer = object :
             }
 
             is PersonalListNamespace.Event.LoadMore -> {
-                if (!state.hasLocalChanges) {
-                    val nextPage = state.currentPage + 1
-                    commands {
-                        +PersonalListNamespace.Command.LoadPage(
-                            status = state.personalListStatus,
-                            page = nextPage,
-                            isLoadMore = true,
-                        )
-                    }
+                val nextPage = state.currentPage + 1
+                commands {
+                    +PersonalListNamespace.Command.LoadPage(
+                        status = state.personalListStatus,
+                        page = nextPage,
+                        isLoadMore = true,
+                    )
                 }
             }
 
@@ -76,8 +74,6 @@ val personalListReducer = object :
                         hasNextPage = event.hasNextPage,
                         list = event.list,
                         isPullDownRefreshing = false,
-                        hasLocalChanges = false,
-                        hasPendingRefresh = false,
                     )
                 }
             }
@@ -85,40 +81,66 @@ val personalListReducer = object :
             is PersonalListNamespace.Event.ItemRemovedLocally -> {
                 state {
                     state.copy(
-                        list = state.list.filter { it.id != event.userRateId },
-                        hasLocalChanges = true,
-                        hasNextPage = false,
+                        list = state.list.filter { it.rateId != event.userRateId },
                     )
                 }
             }
 
-            is PersonalListNamespace.Event.DismissRefreshHint -> {
-                state {
-                    state.copy(hasLocalChanges = false)
-                }
-                commands {
-                    +PersonalListNamespace.Command.LoadPage(
-                        status = state.personalListStatus,
-                        page = 1,
-                    )
-                }
-            }
-
-            is PersonalListNamespace.Event.MarkPendingRefresh -> {
-                state {
-                    state.copy(hasPendingRefresh = true)
-                }
-            }
-
-            is PersonalListNamespace.Event.CheckPendingRefresh -> {
-                if (state.hasPendingRefresh) {
+            is PersonalListNamespace.Event.UserRateChanged -> {
+                val userRate = event.userRate
+                if (userRate != null) {
                     commands {
-                        +PersonalListNamespace.Command.LoadPage(
-                            status = state.personalListStatus,
-                            page = 1,
+                        +PersonalListNamespace.Command.UpdateUserRate(
+                            userRate,
+                            event.statusId
                         )
                     }
                 }
+            }
+
+            PersonalListNamespace.Event.EditUserRateError -> {
+                effects { +PersonalListNamespace.Effect.Error }
+            }
+
+            PersonalListNamespace.Event.EditUserRateSuccess -> {
+                effects { +PersonalListNamespace.Effect.EditUserRateSuccess }
+            }
+
+            is PersonalListNamespace.Event.UpdateUserRateLocally -> {
+                state {
+                    var isSortNeed = false
+                    val updatedList = state.list.map {
+                        if (it.rateId == event.userRate.id) {
+                            isSortNeed = true
+                            event.userRate.copy(
+                                episodes = event.userRate.episodes,
+                                score = event.userRate.score,
+                            )
+                        } else {
+                            it
+                        }
+                    }
+
+                    val finalList = if (isSortNeed) {
+                        updatedList.sortedByDescending { it.updatedAtTimestamp }
+                    } else {
+                        updatedList
+                    }
+
+                    state.copy(
+                        list = finalList
+                    )
+                }
+            }
+
+            is PersonalListNamespace.Event.UserRateIncrement -> {
+                commands {
+                    +PersonalListNamespace.Command.IncrementUserRate(
+                        event.userRateId,
+                        event.statusId,
+                    )
+                }
+
             }
         }
     }

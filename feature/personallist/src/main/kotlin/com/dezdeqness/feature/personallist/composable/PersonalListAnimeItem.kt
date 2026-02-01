@@ -199,6 +199,7 @@ fun PersonalListAnimeItemPreview() {
             episodes = 4,
             logoUrl = "logoUrl",
             overallEpisodes = 12,
+            updatedAtTimestamp = System.currentTimeMillis(),
         )
 
         PersonalListAnimeItem(

@@ -59,6 +59,27 @@ class PersonalListComposer @Inject constructor(
             episodes = item.episodes.toInt(),
             logoUrl = anime.image.original,
             overallEpisodes = anime.episodes,
+            updatedAtTimestamp = item.updatedAtTimestamp,
+        )
+    }
+
+    fun convertOnlyUserAnime(item: UserRateEntity): UserRateUiModel? {
+        val score = if (item.score == 0L) {
+            "-"
+        } else {
+            item.score.toString()
+        }
+
+        return UserRateUiModel(
+            rateId = item.id,
+            id = -1,
+            name = "",
+            score = score,
+            kind = "",
+            episodes = item.episodes.toInt(),
+            logoUrl = "",
+            overallEpisodes = -1,
+            updatedAtTimestamp = item.updatedAtTimestamp,
         )
     }
 

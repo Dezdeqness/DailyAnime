@@ -13,6 +13,7 @@ data class UserRateUiModel(
     val episodes: Int,
     val logoUrl: String,
     val overallEpisodes: Int,
+    val updatedAtTimestamp: Long,
 ) : Parcelable {
 
     fun id() = (rateId + id).toString()
