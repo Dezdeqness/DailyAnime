@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,16 +31,17 @@ import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.BottomSheet
 import com.dezdeqness.feature.personallist.DataStatus
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
-import com.dezdeqness.feature.personallist.composable.PersonalListSearch
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
 import com.dezdeqness.feature.personallist.composable.RibbonEmptyState
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
+import com.dezdeqness.feature.personallist.search.PersonalListSearch
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.presentation.Details
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonalListStandalonePage(
     modifier: Modifier = Modifier,
@@ -69,6 +73,8 @@ fun PersonalListStandalonePage(
         pageCount = { ribbon.size.coerceAtLeast(1) },
     )
 
+    val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
+
     LaunchedEffect(selectedIndex, ribbon.size) {
         if (ribbon.isNotEmpty() && pager.currentPage != selectedIndex) {
             pager.animateScrollToPage(selectedIndex)
@@ -84,14 +90,16 @@ fun PersonalListStandalonePage(
 
     Scaffold(
         containerColor = AppTheme.colors.onPrimary,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .windowInsetsPadding(WindowInsets.statusBars),
         topBar = {
             PersonalListSearch(
                 modifier = Modifier
-                    .windowInsetsPadding(WindowInsets.statusBars)
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                onQueryChanged = { },
+                    .padding(vertical = 8.dp),
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { contentPadding ->
