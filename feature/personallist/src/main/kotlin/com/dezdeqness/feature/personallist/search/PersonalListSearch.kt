@@ -1,0 +1,110 @@
+package com.dezdeqness.feature.personallist.search
+
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExpandedFullScreenSearchBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarScrollBehavior
+import androidx.compose.material3.SearchBarValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopSearchBar
+import androidx.compose.material3.rememberSearchBarState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.feature.personallist.R
+import kotlinx.coroutines.launch
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PersonalListSearch(
+    modifier: Modifier = Modifier,
+    scrollBehavior: SearchBarScrollBehavior,
+) {
+    val searchBarState = rememberSearchBarState()
+
+    val textFieldState = rememberTextFieldState()
+
+    val scope = rememberCoroutineScope()
+
+    val inputField =
+        @Composable {
+            SearchBarDefaults.InputField(
+                modifier = modifier,
+                searchBarState = searchBarState,
+                textFieldState = textFieldState,
+                textStyle = AppTheme.typography.titleMedium.copy(
+                    color = AppTheme.colors.textPrimary,
+                ),
+                onSearch = {
+                    scope.launch { searchBarState.animateToCollapsed() }
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.personal_list_search_placeholder_hint),
+                        style = AppTheme.typography.titleMedium.copy(
+                            color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
+                        ),
+                    )
+                },
+                leadingIcon = {
+                    if (searchBarState.currentValue == SearchBarValue.Expanded) {
+
+                        IconButton(
+                            onClick = { scope.launch { searchBarState.animateToCollapsed() } }
+                        ) {
+                            Icon(
+                                Icons.AutoMirrored.Default.ArrowBack,
+                                contentDescription = null,
+                                tint = AppTheme.colors.onSurface
+                            )
+                        }
+                    } else {
+                        Icon(
+                            Icons.Default.Search,
+                            contentDescription = null,
+                            tint = AppTheme.colors.onSurface
+                        )
+                    }
+                },
+                trailingIcon = {
+                    if (textFieldState.text.isNotEmpty()) {
+                        IconButton(
+                            onClick = {
+                                textFieldState.setTextAndPlaceCursorAtEnd("")
+                            },
+                        ) {
+                            Icon(
+                                Icons.Default.Clear,
+                                contentDescription = null,
+                                tint = AppTheme.colors.onSurface
+                            )
+                        }
+                    }
+                },
+            )
+        }
+
+    TopSearchBar(
+        scrollBehavior = scrollBehavior,
+        state = searchBarState,
+        inputField = inputField,
+        colors = SearchBarDefaults.colors(
+            containerColor = AppTheme.colors.onPrimary,
+        )
+    )
+    ExpandedFullScreenSearchBar(
+        state = searchBarState,
+        inputField = inputField,
+    ) {
+    }
+}
