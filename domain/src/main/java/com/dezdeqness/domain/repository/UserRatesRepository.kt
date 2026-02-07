@@ -1,7 +1,6 @@
 package com.dezdeqness.domain.repository
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.domain.model.UserRateOrderEntity
 
 interface UserRatesRepository {
 
@@ -9,12 +8,24 @@ interface UserRatesRepository {
         status: String,
         page: Int = 1,
         limit: Int = 50,
-        order: UserRateOrderEntity = UserRateOrderEntity.UPDATED_AT_DESC
+    ): Result<List<UserRateEntity>>
+
+    suspend fun searchUserRates(
+        search: String,
+        statuses: String = "planned,watching,rewatching,completed,on_hold,dropped",
+        page: Int = 1,
+        limit: Int = 50,
     ): Result<List<UserRateEntity>>
 
     fun getLocalUserRate(rateId: Long): UserRateEntity?
 
-    fun updateUserRate(rateId: Long, status: String, episodes: Long, score: Float, comment: String): Result<UserRateEntity>
+    fun updateUserRate(
+        rateId: Long,
+        status: String,
+        episodes: Long,
+        score: Float,
+        comment: String
+    ): Result<UserRateEntity>
 
     fun createUserRate(targetId: String, status: String, episodes: Long, score: Float, comment: String): Result<UserRateEntity>
 
