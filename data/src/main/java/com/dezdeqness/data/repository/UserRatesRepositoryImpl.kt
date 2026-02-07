@@ -7,7 +7,6 @@ import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import com.dezdeqness.data.exception.UserLocalNotFound
-import com.dezdeqness.domain.model.UserRateOrderEntity
 import com.dezdeqness.domain.repository.UserRatesRepository
 import javax.inject.Inject
 
@@ -22,11 +21,8 @@ class UserRatesRepositoryImpl @Inject constructor(
         status: String,
         page: Int,
         limit: Int,
-        order: UserRateOrderEntity
     ): Result<List<UserRateEntity>> {
         val profile = userRepository.getProfileLocal() ?: return Result.failure(UserLocalNotFound())
-
-        val isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference)
 
         return userRatesRemoteDataSource
             .getUserRates(
@@ -34,8 +30,27 @@ class UserRatesRepositoryImpl @Inject constructor(
                 page = page,
                 status = status,
                 limit = limit,
+            )
+            .onSuccess { list ->
+                userRatesLocalDataSource.saveUserRates(list)
+            }
+    }
+
+    override suspend fun searchUserRates(
+        search: String,
+        statuses: String,
+        page: Int,
+        limit: Int,
+    ): Result<List<UserRateEntity>> {
+        val isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference)
+
+        return userRatesRemoteDataSource
+            .searchUserRates(
+                search = search,
+                mylist = statuses,
+                page = page,
+                limit = limit,
                 isAdultContentEnabled = isAdultContentEnabled,
-                order = order,
             )
             .onSuccess { list ->
                 userRatesLocalDataSource.saveUserRates(list)

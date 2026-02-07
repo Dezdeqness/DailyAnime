@@ -106,5 +106,6 @@ fun PersonalListSearch(
         state = searchBarState,
         inputField = inputField,
     ) {
+
     }
 }

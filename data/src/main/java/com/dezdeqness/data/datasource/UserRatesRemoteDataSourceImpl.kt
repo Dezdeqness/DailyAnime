@@ -4,6 +4,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
 import com.dezdeqness.data.UserRatesApiService
 import com.dezdeqness.data.UserRatesQuery
+import com.dezdeqness.data.UserRatesSearchQuery
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.core.createGraphqlException
@@ -12,11 +13,11 @@ import com.dezdeqness.data.model.requet.PostUserRate
 import com.dezdeqness.data.model.requet.PostUserRateRequestBody
 import com.dezdeqness.data.model.requet.UpdateUserRate
 import com.dezdeqness.data.model.requet.UpdateUserRateRequestBody
+import com.dezdeqness.data.type.OrderEnum
 import com.dezdeqness.data.type.SortOrderEnum
 import com.dezdeqness.data.type.UserRateOrderFieldEnum
 import com.dezdeqness.data.type.UserRateOrderInputType
 import com.dezdeqness.data.type.UserRateStatusEnum
-import com.dezdeqness.domain.model.UserRateOrderEntity
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named
@@ -32,8 +33,6 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         status: String,
         page: Int,
         limit: Int,
-        isAdultContentEnabled: Boolean,
-        order: UserRateOrderEntity,
     ) =
         tryWithCatchSuspend {
             val statusEnum = UserRateStatusEnum.safeValueOf(status)
@@ -56,6 +55,39 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
             if (data != null) {
                 val userRates = data.userRates.mapNotNull { userRate ->
                     userRatesMapper.fromResponseGraphql(userRate)
+                }
+                Result.success(userRates)
+            } else {
+                throw response.createGraphqlException()
+            }
+        }
+
+    override suspend fun searchUserRates(
+        search: String,
+        statuses: String,
+        page: Int,
+        limit: Int,
+        isAdultContentEnabled: Boolean,
+    ) =
+        tryWithCatchSuspend {
+            val response = apolloClient
+                .query(
+                    UserRatesSearchQuery(
+                        page = page,
+                        limit = limit,
+                        mylist = statuses,
+                        censored = Optional.presentIfNotNull(!isAdultContentEnabled),
+                        order = Optional.presentIfNotNull(OrderEnum.ranked),
+                        search = Optional.presentIfNotNull(search),
+                    )
+                )
+                .execute()
+
+            val data = response.data
+
+            if (data != null) {
+                val userRates = data.animes.mapNotNull { anime ->
+                    userRatesMapper.fromResponseGraphql(anime)
                 }
                 Result.success(userRates)
             } else {
