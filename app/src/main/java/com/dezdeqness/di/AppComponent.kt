@@ -24,6 +24,7 @@ import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
+import com.dezdeqness.di.subcomponents.PersonalListSearchComponent
 import com.dezdeqness.di.subcomponents.PersonalListTabComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
 import com.dezdeqness.di.subcomponents.RoutingComponent
@@ -69,6 +70,8 @@ interface AppComponent {
     fun personalListComponent(): PersonalListComponent.Factory
 
     fun personalListTabComponent(): PersonalListTabComponent.Factory
+
+    fun personalListSearchComponent(): PersonalListSearchComponent.Factory
 
     fun editRateComponent(): UserRateComponent.Builder
 
