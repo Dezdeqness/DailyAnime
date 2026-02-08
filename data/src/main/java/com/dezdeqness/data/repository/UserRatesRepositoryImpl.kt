@@ -47,7 +47,7 @@ class UserRatesRepositoryImpl @Inject constructor(
         return userRatesRemoteDataSource
             .searchUserRates(
                 search = search,
-                mylist = statuses,
+                statuses = statuses,
                 page = page,
                 limit = limit,
                 isAdultContentEnabled = isAdultContentEnabled,
