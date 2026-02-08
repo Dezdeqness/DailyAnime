@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 class PersonalListSearchViewModel @Inject constructor(
     private val searchPersonalListUseCase: SearchPersonalListUseCase,
-    private val userRateUiMapper: UserRateUiMapper,
+    private val userRateUiMapper: SearchUserRateUiMapper,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
