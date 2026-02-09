@@ -23,7 +23,7 @@ class SearchUserRateUiMapper @Inject constructor(
             id = anime.id,
             status = UserRateStatusEntity.fromString(userRateEntity.status),
             updatedAtTimestamp = userRateEntity.updatedAtTimestamp,
-            name = anime.name,
+            name = anime.russian,
             kind = kind,
             logoUrl = anime.image.original,
         )
