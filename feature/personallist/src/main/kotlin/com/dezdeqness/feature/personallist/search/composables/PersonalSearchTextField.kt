@@ -14,8 +14,11 @@ import androidx.compose.material3.SearchBarState
 import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.core.ui.theme.AppTheme
@@ -32,9 +35,10 @@ fun PersonalSearchTextField(
 ) {
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
 
     SearchBarDefaults.InputField(
-        modifier = modifier,
+        modifier = modifier.focusRequester(focusRequester),
         searchBarState = searchBarState,
         textFieldState = textFieldState,
         textStyle = AppTheme.typography.titleMedium.copy(
@@ -79,6 +83,7 @@ fun PersonalSearchTextField(
                     onClick = {
                         textFieldState.setTextAndPlaceCursorAtEnd("")
                         onSearch("")
+                        focusRequester.requestFocus()
                     },
                 ) {
                     Icon(

@@ -15,26 +15,25 @@ import com.dezdeqness.feature.personallist.search.PersonalListTab
 
 @Composable
 fun PersonalListTabs(
-    selectedTab: PersonalListTab,
-    onTabSelected: (PersonalListTab) -> Unit,
+    items: List<PersonalListTab>,
+    targetPage: Int,
+    onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val tabs = PersonalListTab.entries
-
     SecondaryScrollableTabRow(
-        selectedTabIndex = tabs.indexOf(selectedTab),
+        selectedTabIndex = targetPage,
         modifier = modifier.fillMaxWidth(),
         containerColor = Color.Transparent,
         edgePadding = 16.dp,
         divider = {},
     ) {
-        tabs.forEachIndexed { _, tab ->
-            val isSelected = selectedTab == tab
+        items.forEachIndexed { index, tab ->
+            val isSelected = targetPage == index
 
             Tab(
                 selected = isSelected,
                 onClick = {
-                    onTabSelected(tab)
+                    onClick(index)
                 },
             ) {
                 Text(
