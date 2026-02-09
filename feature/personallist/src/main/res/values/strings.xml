@@ -12,6 +12,7 @@
     <string name="ribbon_empty_state_title">You have no anime to track</string>
     <string name="ribbon_empty_state_description">Navigate to search screen to see available animes for tracking</string>
 
+    <string name="anime_personal_list_ribbon_status_all">All</string>
     <string name="anime_personal_list_ribbon_status_planned">Planned</string>
     <string name="anime_personal_list_ribbon_status_watching">Watching</string>
     <string name="anime_personal_list_ribbon_status_rewatching">Re-watching</string>

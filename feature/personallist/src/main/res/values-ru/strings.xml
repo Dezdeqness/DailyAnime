@@ -12,6 +12,7 @@
     <string name="ribbon_empty_state_title">Ваш список пуст</string>
     <string name="ribbon_empty_state_description">Перейдите на экран поиска, чтобы увидеть доступные для отслеживания аниме.</string>
 
+    <string name="anime_personal_list_ribbon_status_all">Все</string>
     <string name="anime_personal_list_ribbon_status_planned">Запланировано</string>
     <string name="anime_personal_list_ribbon_status_watching">Смотрю</string>
     <string name="anime_personal_list_ribbon_status_rewatching">Пересмотр</string>

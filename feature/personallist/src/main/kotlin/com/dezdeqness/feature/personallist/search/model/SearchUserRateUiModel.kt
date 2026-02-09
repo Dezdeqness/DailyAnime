@@ -6,9 +6,7 @@ data class SearchUserRateUiModel(
     val id: Long,
     val name: String,
     val kind: String,
-    val episodes: Int,
     val logoUrl: String,
-    val overallEpisodes: Int,
     val updatedAtTimestamp: Long,
     val status: UserRateStatusEntity,
 )
