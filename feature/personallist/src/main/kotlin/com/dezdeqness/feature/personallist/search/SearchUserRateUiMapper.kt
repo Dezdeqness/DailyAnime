@@ -20,7 +20,7 @@ class SearchUserRateUiMapper @Inject constructor(
         val kind = animeKindUtils.mapKind(anime.kind)
 
         return SearchUserRateUiModel(
-            id = userRateEntity.id,
+            id = anime.id,
             status = UserRateStatusEntity.fromString(userRateEntity.status),
             updatedAtTimestamp = userRateEntity.updatedAtTimestamp,
             name = anime.name,
