@@ -2,6 +2,7 @@ package com.dezdeqness.feature.personallist.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.message.BaseMessageProvider
 import com.dezdeqness.core.message.MessageConsumer
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -30,59 +32,70 @@ class PersonalListSearchViewModel @Inject constructor(
 
     private val events = MutableSharedFlow<SearchEvent>(extraBufferCapacity = 1)
 
-    private val stateFlow = events
-        .scan(PersonalListSearchState()) { state, event ->
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val results = events
+        .onStart { emit(SearchEvent.Initial) }
+        .flatMapLatest { event ->
             when (event) {
-                is SearchEvent.Initial -> state
+                is SearchEvent.Search -> flow {
+                    emit(
+                        SearchResult.Loading
+                    )
 
-                is SearchEvent.QueryChanged -> {
-                    state.copy(query = event.query)
-                }
+                    val result = searchPersonalListUseCase(event.query)
 
-                is SearchEvent.TabSelect -> {
-                    state.copy(selectedTab = event.tab)
-                }
+                    emit(
+                        SearchResult.Result(
+                            query = event.query,
+                            result = result
+                        )
+                    )
+                }.flowOn(coroutineDispatcherProvider.io())
 
-                is SearchEvent.Search -> {
-                    state.copy(status = PersonalListSearchStatus.Loading)
+                else -> flow {
+                    emit(SearchResult.Event(event))
                 }
             }
         }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val searchState: StateFlow<PersonalListSearchState> =
-        stateFlow
-            .flatMapLatest { state ->
-                val event = events.replayCache.lastOrNull()
-                if (event !is SearchEvent.Search) {
-                    flow { emit(state) }
-                } else {
-                    flow {
-                        val result = searchPersonalListUseCase(
-                            search = state.query
-                        )
+        results
+            .scan(PersonalListSearchState()) { previous, result ->
+                when (result) {
 
-                        result.fold(
-                            onSuccess = { list ->
-                                val mapped = userRateUiMapper.map(list)
-                                emit(
-                                    state.copy(
-                                        list = mapped,
-                                        status = if (mapped.isEmpty())
-                                            PersonalListSearchStatus.Empty
-                                        else
-                                            PersonalListSearchStatus.Loaded
-                                    )
-                                )
-                            },
-                            onFailure = { error ->
-                                appLogger.logInfo(TAG, "Personal search failed", error)
-                                emit(state.copy(status = PersonalListSearchStatus.Error))
-                                onErrorMessage()
-                            }
-                        )
+                    is SearchResult.Event -> when (val event = result.event) {
+                        is SearchEvent.TabSelect -> previous.copy(selectedTab = event.tab)
+                        is SearchEvent.Initial -> PersonalListSearchState()
+                        else -> previous
+                    }
 
-                    }.flowOn(coroutineDispatcherProvider.io())
+                    is SearchResult.Loading -> {
+                        previous.copy(status = PersonalListSearchStatus.Loading)
+                    }
+
+                    is SearchResult.Result -> {
+                        if (result.result.isSuccess) {
+                            val list = result.result.getOrThrow()
+                            val mapped = userRateUiMapper.map(list)
+                            PersonalListSearchState(
+                                list = mapped,
+                                status = if (mapped.isEmpty()) {
+                                    PersonalListSearchStatus.Empty
+                                } else {
+                                    PersonalListSearchStatus.Loaded
+                                },
+                                query = result.query,
+                            )
+                        } else {
+                            onErrorMessage()
+                            appLogger.logInfo(
+                                tag = TAG,
+                                "Error while personal search",
+                                result.result.exceptionOrNull() ?: Exception(),
+                            )
+                            previous.copy(status = PersonalListSearchStatus.Error)
+                        }
+                    }
                 }
             }
             .stateIn(
@@ -91,18 +104,20 @@ class PersonalListSearchViewModel @Inject constructor(
                 PersonalListSearchState()
             )
 
+
     fun onQueryChanged(query: String) {
         if (searchState.value.query == query) return
-        events.tryEmit(SearchEvent.QueryChanged(query))
+        val event = if (query.isEmpty()) {
+            SearchEvent.Initial
+        } else {
+            SearchEvent.Search(query)
+        }
+        events.tryEmit(event)
     }
 
     fun onTabSelected(tab: PersonalListTab) {
         if (searchState.value.selectedTab == tab) return
         events.tryEmit(SearchEvent.TabSelect(tab))
-    }
-
-    fun onSearch() {
-        events.tryEmit(SearchEvent.Search)
     }
 
     private fun onErrorMessage() {
@@ -115,9 +130,22 @@ class PersonalListSearchViewModel @Inject constructor(
 
     private sealed interface SearchEvent {
         data object Initial : SearchEvent
-        data class QueryChanged(val query: String) : SearchEvent
         data class TabSelect(val tab: PersonalListTab) : SearchEvent
-        data object Search : SearchEvent
+        data class Search(val query: String) : SearchEvent
+    }
+
+    private sealed interface SearchResult {
+
+        data class Event(
+            val event: SearchEvent
+        ) : SearchResult
+
+        data object Loading : SearchResult
+
+        data class Result(
+            val query: String,
+            val result: kotlin.Result<List<UserRateEntity>>
+        ) : SearchResult
     }
 
     companion object {
