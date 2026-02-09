@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.core.ui.theme.AppTheme
 import com.dezdeqness.feature.personallist.R
@@ -30,6 +31,7 @@ fun PersonalSearchTextField(
     onSearch: (String) -> Unit
 ) {
     val scope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
 
     SearchBarDefaults.InputField(
         modifier = modifier,
@@ -39,7 +41,8 @@ fun PersonalSearchTextField(
             color = AppTheme.colors.textPrimary,
         ),
         onSearch = {
-            onSearch("")
+            onSearch(textFieldState.text.toString())
+            focusManager.clearFocus()
         },
         placeholder = {
             Text(
@@ -51,11 +54,9 @@ fun PersonalSearchTextField(
         },
         leadingIcon = {
             if (searchBarState.currentValue == SearchBarValue.Expanded) {
-
                 IconButton(
                     onClick = {
                         scope.launch { searchBarState.animateToCollapsed() }
-                        onSearch("")
                     }
                 ) {
                     Icon(
@@ -73,10 +74,11 @@ fun PersonalSearchTextField(
             }
         },
         trailingIcon = {
-            if (textFieldState.text.isNotEmpty()) {
+            if (textFieldState.text.isNotEmpty() && searchBarState.currentValue == SearchBarValue.Expanded) {
                 IconButton(
                     onClick = {
                         textFieldState.setTextAndPlaceCursorAtEnd("")
+                        onSearch("")
                     },
                 ) {
                     Icon(

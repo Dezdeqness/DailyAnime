@@ -34,7 +34,6 @@ import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
 import com.dezdeqness.feature.personallist.composable.RibbonEmptyState
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
-import com.dezdeqness.feature.personallist.search.PersonalListSearch
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.presentation.Details
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
@@ -100,6 +99,13 @@ fun PersonalListStandalonePage(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 scrollBehavior = scrollBehavior,
+                onDetailsClick = { animeId, title ->
+                    analyticsManager.detailsTracked(
+                        id = animeId.toString(),
+                        title = title,
+                    )
+                    navController.navigate(Details(animeId))
+                },
             )
         },
     ) { contentPadding ->

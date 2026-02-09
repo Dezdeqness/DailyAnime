@@ -22,12 +22,10 @@ class SearchUserRateUiMapper @Inject constructor(
         return SearchUserRateUiModel(
             id = userRateEntity.id,
             status = UserRateStatusEntity.fromString(userRateEntity.status),
-            episodes = userRateEntity.episodes.toInt(),
             updatedAtTimestamp = userRateEntity.updatedAtTimestamp,
             name = anime.name,
             kind = kind,
             logoUrl = anime.image.original,
-            overallEpisodes = anime.episodes,
         )
     }
 }
