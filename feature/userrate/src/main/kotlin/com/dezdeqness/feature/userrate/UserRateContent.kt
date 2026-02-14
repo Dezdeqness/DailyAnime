@@ -315,7 +315,6 @@ fun UserRatePagePreview() {
                 override fun onBackPressed() = Unit
                 override fun onIncrementEpisode() = Unit
                 override fun onDecrementEpisode() = Unit
-                override fun onEpisodesChanged(episodes: String) = Unit
                 override fun onCommentChanged(comment: String) = Unit
             }
         )
