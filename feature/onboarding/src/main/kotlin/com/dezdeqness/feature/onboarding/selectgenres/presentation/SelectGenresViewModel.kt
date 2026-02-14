@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -62,6 +63,7 @@ class SelectGenresViewModel @Inject constructor(
                 emit(SelectGenresUiState(genres = emptyList()))
             }
             .flowOn(coroutineDispatcherProvider.io())
+            .distinctUntilChanged()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
@@ -73,7 +75,7 @@ class SelectGenresViewModel @Inject constructor(
             val newSet = current.toMutableSet()
             if (id in newSet) {
                 newSet.remove(id)
-            } else if (newSet.size < 3) {
+            } else if (newSet.size < MAX_GENRE_COUNT) {
                 newSet.add(id)
             }
             newSet
@@ -93,5 +95,6 @@ class SelectGenresViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "SelectGenresViewModel"
+        private const val MAX_GENRE_COUNT = 3
     }
 }
