@@ -8,6 +8,7 @@ import com.dezdeqness.data.core.AppLogger
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -41,18 +42,19 @@ class FavouritesViewModel @Inject constructor(
                 }
                 .onFailure { throwable ->
                     appLogger.logInfo(TAG, throwable = throwable)
-                    FavouritesUiState(status = Status.Error)
+                    emit(FavouritesUiState(status = Status.Error))
                 }
         }
             .catch { throwable ->
                 appLogger.logInfo(TAG, throwable = throwable)
-                FavouritesUiState(status = Status.Error)
+                emit(FavouritesUiState(status = Status.Error))
             }
             .flowOn(coroutineDispatcherProvider.io())
+            .distinctUntilChanged()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = FavouritesUiState(status = Status.Loading)
+                initialValue = FavouritesUiState(status = Status.Initial)
             )
 
     companion object {
