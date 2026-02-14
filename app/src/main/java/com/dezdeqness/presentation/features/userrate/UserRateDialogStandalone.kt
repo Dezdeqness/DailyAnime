@@ -17,7 +17,6 @@ import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.feature.userrate.UserRateActions
 import com.dezdeqness.feature.userrate.UserRateContent
 import com.dezdeqness.feature.userrate.UserRateViewModel
-import com.dezdeqness.presentation.event.EditUserRate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,10 +93,6 @@ fun UserRateDialogStandalone(
 
                 override fun onDecrementEpisode() {
                     viewModel.onEpisodesMinusClicked()
-                }
-
-                override fun onEpisodesChanged(episodes: String) {
-                    viewModel.onEpisodesChanged(episodes)
                 }
 
                 override fun onCommentChanged(comment: String) {
