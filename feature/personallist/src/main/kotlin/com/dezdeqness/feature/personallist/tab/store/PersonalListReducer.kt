@@ -110,11 +110,12 @@ val personalListReducer = object :
                 state {
                     var isSortNeed = false
                     val updatedList = state.list.map {
-                        if (it.rateId == event.userRate.id) {
+                        if (it.rateId == event.userRate.rateId) {
                             isSortNeed = true
-                            event.userRate.copy(
+                            it.copy(
                                 episodes = event.userRate.episodes,
                                 score = event.userRate.score,
+                                updatedAtTimestamp = event.userRate.updatedAtTimestamp,
                             )
                         } else {
                             it

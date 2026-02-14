@@ -108,14 +108,8 @@ fun UserRateDialogStandalone(
 
     }
 
-    viewModel.events.collectEvents { event ->
-        when (event) {
-            is EditUserRate -> {
-                onSaveClicked(event.userRateUiModel)
-                onClosed()
-            }
-
-            else -> {}
-        }
+    viewModel.events.collectEvents { userRateUiModel ->
+        onSaveClicked(userRateUiModel)
+        onClosed()
     }
 }
