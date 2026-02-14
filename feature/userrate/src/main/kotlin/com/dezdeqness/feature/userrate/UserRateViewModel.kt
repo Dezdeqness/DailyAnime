@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.UserRatesRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,6 @@ import javax.inject.Inject
 class UserRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val appLogger: AppLogger,
 ) : ViewModel() {
 
     private var rateId: Long = 0
@@ -128,21 +126,6 @@ class UserRateViewModel @Inject constructor(
         checkIsContentChanged()
     }
 
-    fun onEpisodesChanged(episodes: String) {
-        if (episodes.isBlank()) {
-            _userRateStateFlow.update {
-                it.copy(episode = 0)
-            }
-        }
-        val parsedEpisodes = episodes.toLongOrNull() ?: _userRateStateFlow.value.episode
-
-        _userRateStateFlow.update {
-            it.copy(episode = parsedEpisodes)
-        }
-
-        checkIsContentChanged()
-    }
-
     private fun checkIsContentChanged() {
         _userRateStateFlow.value = _userRateStateFlow.value.copy(
             isContentChanged = isUserRateChanged(),
@@ -151,10 +134,10 @@ class UserRateViewModel @Inject constructor(
 
     private fun fetchUserRate() {
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
+            emitDefaultState()
+
             val userRate = userRatesRepository.getLocalUserRate(rateId = rateId)
             localUserRate = userRate ?: UserRateEntity.EMPTY_USER_RATE
-
-            emitDefaultState()
 
             userRate?.let {
                 emitEditRateState(userRate)
@@ -188,13 +171,5 @@ class UserRateViewModel @Inject constructor(
                 uiEditRate.episode != localUserRate?.episodes ||
                 uiEditRate.score != localUserRate?.score ||
                 uiEditRate.comment != localUserRate?.text
-    }
-
-    private fun logInfo(message: String, throwable: Throwable) {
-        appLogger.logInfo(
-            tag = "UserRateViewModel",
-            message = message,
-            throwable = throwable,
-        )
     }
 }

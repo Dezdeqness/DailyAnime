@@ -4,7 +4,6 @@ package com.dezdeqness.feature.userrate
 interface UserRateActions {
     fun onStatusChanged(id: String)
     fun onScoreChanged(score: Long)
-    fun onEpisodesChanged(episodes: String)
     fun onCommentChanged(comment: String)
     fun onSelectStatusClicked()
     fun onCloseSelectStatusClicked()
