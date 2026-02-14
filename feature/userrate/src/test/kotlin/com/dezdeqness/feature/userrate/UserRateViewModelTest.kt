@@ -3,19 +3,23 @@ package com.dezdeqness.feature.userrate
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.domain.repository.UserRatesRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class UserRateViewModelTest {
 
     @MockK
@@ -25,6 +29,8 @@ class UserRateViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
 
         viewModel = UserRateViewModel(
@@ -37,6 +43,11 @@ class UserRateViewModelTest {
         )
     }
 
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun `WHEN onUserRateUpdated invoked SHOULD get user rate and update state`() = runTest {
         val userRate = defaultUserRateEntity()
@@ -45,6 +56,11 @@ class UserRateViewModelTest {
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
         viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
             val loadedState = awaitItem()
             assertEquals(RATE_ID, loadedState.rateId)
             assertEquals(RATE_NAME, loadedState.title)
@@ -67,6 +83,11 @@ class UserRateViewModelTest {
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
         viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
             val loadedState = awaitItem()
             assertEquals(RATE_ID, loadedState.rateId)
             assertEquals(RATE_NAME, loadedState.title)
@@ -97,6 +118,11 @@ class UserRateViewModelTest {
             viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
             viewModel.userRateStateFlow.test {
+                advanceUntilIdle()
+
+                val initialState = awaitItem()
+                assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
                 val loadedState = awaitItem()
                 assertEquals(RATE_ID, loadedState.rateId)
                 assertEquals(RATE_NAME, loadedState.title)
@@ -127,6 +153,11 @@ class UserRateViewModelTest {
             viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
             viewModel.userRateStateFlow.test {
+                advanceUntilIdle()
+
+                val initialState = awaitItem()
+                assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
                 val loadedState = awaitItem()
                 assertEquals(RATE_ID, loadedState.rateId)
                 assertEquals(RATE_NAME, loadedState.title)
@@ -157,6 +188,11 @@ class UserRateViewModelTest {
             viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
             viewModel.userRateStateFlow.test {
+                advanceUntilIdle()
+
+                val initialState = awaitItem()
+                assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
                 val loadedState = awaitItem()
                 assertEquals(RATE_ID, loadedState.rateId)
                 assertEquals(RATE_NAME, loadedState.title)
@@ -180,6 +216,11 @@ class UserRateViewModelTest {
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
         viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
             val loadedState = awaitItem()
             assertEquals(RATE_ID, loadedState.rateId)
             assertEquals(RATE_NAME, loadedState.title)
@@ -210,6 +251,12 @@ class UserRateViewModelTest {
             viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
             viewModel.userRateStateFlow.test {
+                advanceUntilIdle()
+
+                val initialState = awaitItem()
+                assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
+
                 val loadedState = awaitItem()
                 assertEquals(RATE_ID, loadedState.rateId)
                 assertEquals(RATE_NAME, loadedState.title)
@@ -239,6 +286,11 @@ class UserRateViewModelTest {
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
         viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
             val loadedState = awaitItem()
             assertEquals(RATE_ID, loadedState.rateId)
             assertEquals(RATE_NAME, loadedState.title)
@@ -278,10 +330,35 @@ class UserRateViewModelTest {
         coEvery { userRatesRepository.getLocalUserRate(RATE_ID) } returns userRate
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
-        viewModel.onStatusChanged("completed")
+
+        viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
+            val loadedState = awaitItem()
+            assertEquals(RATE_ID, loadedState.rateId)
+            assertEquals(RATE_NAME, loadedState.title)
+            assertEquals(userRate.status, loadedState.selectedStatus)
+            assertEquals(userRate.episodes, loadedState.episode)
+            assertEquals(userRate.score, loadedState.score)
+            assertEquals(userRate.text, loadedState.comment)
+            assertEquals(true, loadedState.isEditMode)
+
+            viewModel.onStatusChanged("completed")
+
+            val statusChangedState = awaitItem()
+            assertEquals("completed", statusChangedState.selectedStatus)
+
+            val contentChangedState = awaitItem()
+            assertEquals(true, contentChangedState.isContentChanged)
+        }
 
         viewModel.events.test {
             viewModel.onApplyButtonClicked()
+
+            advanceUntilIdle()
 
             val event = awaitItem()
             assertEquals(RATE_ID, event.rateId)
@@ -298,6 +375,11 @@ class UserRateViewModelTest {
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
         viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
             val loadedState = awaitItem()
             assertEquals(RATE_ID, loadedState.rateId)
             assertEquals(RATE_NAME, loadedState.title)
@@ -324,6 +406,11 @@ class UserRateViewModelTest {
         viewModel.onUserRateUpdated(RATE_ID, RATE_NAME)
 
         viewModel.userRateStateFlow.test {
+            advanceUntilIdle()
+
+            val initialState = awaitItem()
+            assertEquals(UserRateState(title = RATE_NAME, isEditMode = false), initialState)
+
             val loadedState = awaitItem()
             assertEquals(RATE_ID, loadedState.rateId)
             assertEquals(RATE_NAME, loadedState.title)

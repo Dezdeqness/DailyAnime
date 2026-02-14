@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.favourite.model.FavouriteEntity
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.feature.favourite.presentation.models.FavouritesUiModel
 import io.mockk.MockKAnnotations
@@ -15,12 +14,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class FavouritesViewModelTest {
 
     @MockK
@@ -36,6 +40,8 @@ class FavouritesViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
 
         viewModel = FavouritesViewModel(
@@ -54,6 +60,11 @@ class FavouritesViewModelTest {
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
     }
 
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun `WHEN favourites loaded successfully SHOULD emit loaded state with data`() = runTest {
         val favourites = listOf(mockk<FavouriteEntity>())
@@ -63,19 +74,24 @@ class FavouritesViewModelTest {
         every { favouriteMapper.map(any()) } returns uiItem
 
         viewModel.favouritesState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
+
             assertEquals(
                 FavouritesUiState(status = Status.Initial),
                 initial
             )
 
             val loading = awaitItem()
+
             assertEquals(
                 FavouritesUiState(status = Status.Loading),
                 loading
             )
 
             val loaded = awaitItem()
+
             assertEquals(
                 FavouritesUiState(status = Status.Loaded, items = listOf(uiItem)),
                 loaded
@@ -90,6 +106,8 @@ class FavouritesViewModelTest {
         coEvery { favouriteRepository.getFavourites(USER_ID) } returns Result.success(listOf())
 
         viewModel.favouritesState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 FavouritesUiState(status = Status.Initial),
@@ -119,6 +137,8 @@ class FavouritesViewModelTest {
         coEvery { favouriteRepository.getFavourites(USER_ID) } returns Result.failure(error)
 
         viewModel.favouritesState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 FavouritesUiState(status = Status.Initial),
@@ -150,6 +170,8 @@ class FavouritesViewModelTest {
         coEvery { favouriteRepository.getFavourites(USER_ID) } throws error
 
         viewModel.favouritesState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 FavouritesUiState(status = Status.Initial),

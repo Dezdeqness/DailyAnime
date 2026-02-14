@@ -5,7 +5,6 @@ import com.dezdeqness.contract.anime.model.GenreEntity
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -19,12 +18,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class SelectGenresViewModelTest {
 
     @MockK
@@ -49,6 +53,8 @@ class SelectGenresViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
 
         viewModel = SelectGenresViewModel(
@@ -94,11 +100,18 @@ class SelectGenresViewModelTest {
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
     }
 
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun `WHEN genre clicked and not selected SHOULD add to selection`() = runTest {
         val genreId = "genre1"
 
         viewModel.uiState.test {
+            advanceUntilIdle()
+
             assertEquals(SelectGenresUiState(genres = listOf()), awaitItem())
             assertEquals(SelectGenresUiState(genres = uiGenres), awaitItem())
 
@@ -118,6 +131,8 @@ class SelectGenresViewModelTest {
         val genreId = "genre1"
 
         viewModel.uiState.test {
+            advanceUntilIdle()
+
             assertEquals(SelectGenresUiState(genres = listOf()), awaitItem())
             assertEquals(SelectGenresUiState(genres = uiGenres), awaitItem())
 
@@ -143,6 +158,8 @@ class SelectGenresViewModelTest {
             coEvery { homeGenresProvider.getHomeSectionGenresIds() } returns genreIds
 
             viewModel.uiState.test {
+                advanceUntilIdle()
+
                 assertEquals(SelectGenresUiState(genres = listOf()), awaitItem())
                 assertEquals(SelectGenresUiState(genres = uiGenres), awaitItem())
                 assertEquals(SelectGenresUiState(genres = uiGenres, selectedGenres = genreIds.toSet()), awaitItem())
@@ -168,11 +185,15 @@ class SelectGenresViewModelTest {
         } returns Unit
 
         viewModel.uiState.test {
+            advanceUntilIdle()
+
             assertEquals(SelectGenresUiState(genres = listOf()), awaitItem())
             assertEquals(SelectGenresUiState(genres = uiGenres), awaitItem())
         }
 
         viewModel.events.test {
+            advanceUntilIdle()
+
             viewModel.onGenreClick("genre1")
             viewModel.onGenreClick("genre2")
             viewModel.onSaveClick()
@@ -194,6 +215,8 @@ class SelectGenresViewModelTest {
         every { configurationProvider.getListGenre() } throws error
 
         viewModel.uiState.test {
+            advanceUntilIdle()
+
             assertEquals(SelectGenresUiState(genres = listOf()), awaitItem())
             ensureAllEventsConsumed()
         }

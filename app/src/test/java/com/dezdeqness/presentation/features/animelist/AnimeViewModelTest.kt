@@ -6,7 +6,6 @@ import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.message.MessageConsumer
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
@@ -19,14 +18,20 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import utils.TestCoroutineDispatcherProvider
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class AnimeViewModelTest {
 
     @MockK
@@ -60,6 +65,8 @@ class AnimeViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
 
         every { actionConsumer.attachListener(any()) } returns Unit
@@ -85,8 +92,13 @@ class AnimeViewModelTest {
         )
     }
 
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
+    }
+
     @Test
-    fun `WHEN user open page AND initial load IS success SHOULD show first page`() = runBlocking {
+    fun `WHEN user open page AND initial load IS success SHOULD show first page`() = runTest {
         val entityItem = mockk<AnimeBriefEntity>()
         val successListEntity = listOf(entityItem)
         val uiItem = mockk<AnimeUiModel>()
@@ -113,6 +125,8 @@ class AnimeViewModelTest {
         every { animeUiMapper.map(successListEntity) } returns exceptedUiList
 
         viewModel.animeSearchState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(AnimeSearchState(), initial)
 
@@ -129,9 +143,8 @@ class AnimeViewModelTest {
         }
     }
 
-
     @Test
-    fun `WHEN user open page AND initial load IS failure SHOULD show error state`() = runBlocking {
+    fun `WHEN user open page AND initial load IS failure SHOULD show error state`() = runTest {
         val entityItem = mockk<AnimeBriefEntity>()
         val successListEntity = listOf(entityItem)
         val uiItem = mockk<AnimeUiModel>()
@@ -151,7 +164,10 @@ class AnimeViewModelTest {
 
         every { animeUiMapper.map(successListEntity) } returns exceptedUiList
 
+
         viewModel.animeSearchState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(AnimeSearchState(), initial)
 

@@ -2,7 +2,6 @@ package com.dezdeqness.feature.achievements.presentation
 
 import app.cash.turbine.test
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.domain.model.AchievementConfigDataEntity
@@ -17,12 +16,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class AchievementsViewModelTest {
 
     @MockK
@@ -41,6 +45,8 @@ class AchievementsViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
 
         viewModel = AchievementsViewModel(
@@ -60,6 +66,11 @@ class AchievementsViewModelTest {
         every { appLogger.logInfo(any(), any(), any()) } returns Unit
     }
 
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun `WHEN achievements loaded successfully SHOULD emit loaded state with data`() = runTest {
         val achievementConfig = mockk<AchievementConfigDataEntity>()
@@ -74,6 +85,8 @@ class AchievementsViewModelTest {
         every { achievementsComposer.compose(any(), any()) } returns commonAchievements andThen genreAchievements
 
         viewModel.achievementsState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 AchievementsUiState(status = Status.Initial),
@@ -105,6 +118,8 @@ class AchievementsViewModelTest {
         coEvery { achievementRepository.fetchAchievementsByUserId(USER_ID) } returns Result.failure(error)
 
         viewModel.achievementsState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 AchievementsUiState(status = Status.Initial),
@@ -139,6 +154,8 @@ class AchievementsViewModelTest {
         coEvery { achievementRepository.fetchAchievementsByUserId(USER_ID) } throws error
 
         viewModel.achievementsState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 AchievementsUiState(status = Status.Initial),
@@ -174,6 +191,8 @@ class AchievementsViewModelTest {
         every { achievementsComposer.compose(any(), any()) } returns emptyList()
 
         viewModel.achievementsState.test {
+            advanceUntilIdle()
+
             val initial = awaitItem()
             assertEquals(
                 AchievementsUiState(status = Status.Initial),

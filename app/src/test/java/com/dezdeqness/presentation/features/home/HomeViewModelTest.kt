@@ -9,7 +9,6 @@ import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.AccountEntity
 import com.dezdeqness.contract.user.repository.UserRepository
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -30,16 +29,22 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase.assertTrue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.extension.ExtendWith
 import utils.TestCoroutineDispatcherProvider
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
 
     @MockK
@@ -82,6 +87,8 @@ class HomeViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
         every { actionConsumer.attachListener(any()) } returns Unit
 
@@ -107,7 +114,6 @@ class HomeViewModelTest {
             settingsRepository.observePreference(UserSelectedInterestsPreference)
         } returns flowOf(emptyList())
 
-
         viewModel = HomeViewModel(
             animeUiMapper = animeUiMapper,
             actionConsumer = actionConsumer,
@@ -125,8 +131,13 @@ class HomeViewModelTest {
         )
     }
 
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
+    }
+
     @Test
-    fun `WHEN home IS load success SHOULD show home sections`() = runBlocking {
+    fun `WHEN home IS load success SHOULD show home sections`() = runTest {
         val homeEntity = mockk<HomeEntity>()
         val sectionAnimeUiModel = mockk<SectionAnimeUiModel>()
         val sectionCalendarUiModel = mockk<HomeCalendarUiModel>()
@@ -140,6 +151,8 @@ class HomeViewModelTest {
 
         viewModel.onInitialLoad()
 
+        advanceUntilIdle()
+
         val uiState = viewModel.homeStateFlow.value
 
         assertAll(
@@ -150,12 +163,14 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `WHEN home IS load failure SHOULD show home sections with error state`() = runBlocking {
+    fun `WHEN home IS load failure SHOULD show home sections with error state`() = runTest {
         coEvery {
             homeRepository.getHomeSections(DEFAULT_SECTIONS_IDS)
         } returns Result.failure(Throwable())
 
         viewModel.onInitialLoad()
+
+        advanceUntilIdle()
 
         val uiState = viewModel.homeStateFlow.value
 

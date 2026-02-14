@@ -3,7 +3,6 @@ package com.dezdeqness.feature.history.presentation
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.message.BaseMessageProvider
 import com.dezdeqness.core.message.MessageConsumer
-import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Command
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Effect
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Event
@@ -14,14 +13,18 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import money.vivid.elmslie.core.store.ElmStore
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MainDispatcherExtension::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class HistoryViewModelTest {
 
     @MockK(relaxUnitFun = true)
@@ -37,6 +40,8 @@ class HistoryViewModelTest {
 
     @Before
     fun setup() {
+        Dispatchers.setMain(StandardTestDispatcher())
+
         MockKAnnotations.init(this)
 
         every { store.states } returns MutableStateFlow(State())
@@ -56,6 +61,11 @@ class HistoryViewModelTest {
                 override fun computation() = Dispatchers.Main
             },
         )
+    }
+
+    @After
+    fun dispose() {
+        Dispatchers.resetMain()
     }
 
     @Test

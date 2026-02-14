@@ -133,8 +133,9 @@ class UserRateViewModel @Inject constructor(
     }
 
     private fun fetchUserRate() {
+        emitDefaultState()
+
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
-            emitDefaultState()
 
             val userRate = userRatesRepository.getLocalUserRate(rateId = rateId)
             localUserRate = userRate ?: UserRateEntity.EMPTY_USER_RATE
