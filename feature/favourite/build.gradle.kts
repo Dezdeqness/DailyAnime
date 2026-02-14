@@ -59,8 +59,6 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
-    testImplementation(project(":common:core"))
-
     implementation(project(":data"))
     implementation(project(":domain"))
 
