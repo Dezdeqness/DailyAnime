@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import javax.inject.Named
@@ -56,13 +57,14 @@ class AchievementsViewModel @Inject constructor(
         }
             .catch {
                 appLogger.logInfo(TAG, throwable = it)
-                AchievementsUiState(status = Status.Error)
+                emit(AchievementsUiState(status = Status.Error))
             }
             .flowOn(coroutineDispatcherProvider.io())
+            .distinctUntilChanged()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = AchievementsUiState(status = Status.Loading)
+                initialValue = AchievementsUiState(status = Status.Initial)
             )
 
     companion object {
