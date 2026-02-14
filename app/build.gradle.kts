@@ -35,6 +35,16 @@ kotlin {
 }
 
 android {
+    packaging {
+        resources {
+            excludes += "/META-INF/NOTICE"
+            excludes += "/META-INF/NOTICE.md"
+            excludes += "/META-INF/LICENSE"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.dezdeqness"
         versionCode = project.getParsedVersionCode(project.name)
