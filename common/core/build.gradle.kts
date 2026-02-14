@@ -39,6 +39,11 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
+    implementation(libs.kotlinx.coroutines.test)
+
+    // Unit Testing
+    implementation(libs.junit.api)
+    implementation(libs.junit.engine)
 
     // Dagger
     implementation(libs.dagger.dagger)

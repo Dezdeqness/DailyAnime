@@ -6,6 +6,7 @@ import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
@@ -22,9 +23,10 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import utils.TestCoroutineDispatcherProvider
 
-
+@ExtendWith(MainDispatcherExtension::class)
 class AnimeViewModelTest {
 
     @MockK

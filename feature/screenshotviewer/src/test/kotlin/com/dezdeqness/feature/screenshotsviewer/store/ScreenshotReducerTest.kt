@@ -1,6 +1,7 @@
 package com.dezdeqness.feature.screenshotsviewer.store
 
 import app.cash.turbine.test
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
@@ -13,7 +14,9 @@ import money.vivid.elmslie.core.store.NoOpActor
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class ScreenshotReducerTest {
     @Test

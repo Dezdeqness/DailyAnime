@@ -3,6 +3,7 @@ package com.dezdeqness.feature.history.presentation
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.message.BaseMessageProvider
 import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Command
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Effect
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Event
@@ -18,7 +19,9 @@ import kotlinx.coroutines.flow.flowOf
 import money.vivid.elmslie.core.store.ElmStore
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 class HistoryViewModelTest {
 
     @MockK(relaxUnitFun = true)
@@ -47,12 +50,10 @@ class HistoryViewModelTest {
             store = store,
             messageConsumer = messageConsumer,
             messageProvider = messageProvider,
-            coroutineDispatcherProvider = object: CoroutineDispatcherProvider {
-                override fun main() = Dispatchers.Unconfined
-
-                override fun io() = Dispatchers.Unconfined
-
-                override fun computation() = Dispatchers.Unconfined
+            coroutineDispatcherProvider = object : CoroutineDispatcherProvider {
+                override fun main() = Dispatchers.Main
+                override fun io() = Dispatchers.Main
+                override fun computation() = Dispatchers.Main
             },
         )
     }

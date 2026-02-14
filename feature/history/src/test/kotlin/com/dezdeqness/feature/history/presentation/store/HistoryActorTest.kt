@@ -2,6 +2,7 @@ package com.dezdeqness.feature.history.presentation.store
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.history.model.HistoryEntity
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.feature.history.presentation.HistoryComposer
@@ -16,7 +17,9 @@ import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 class HistoryActorTest {
 
     @MockK(relaxed = true)

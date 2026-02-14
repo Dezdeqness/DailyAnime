@@ -9,6 +9,7 @@ import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.AccountEntity
 import com.dezdeqness.contract.user.repository.UserRepository
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -35,8 +36,10 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.extension.ExtendWith
 import utils.TestCoroutineDispatcherProvider
 
+@ExtendWith(MainDispatcherExtension::class)
 class HomeViewModelTest {
 
     @MockK
@@ -80,7 +83,6 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-
         every { actionConsumer.attachListener(any()) } returns Unit
 
         every { appLogger.logInfo(any(), any()) } returns Unit

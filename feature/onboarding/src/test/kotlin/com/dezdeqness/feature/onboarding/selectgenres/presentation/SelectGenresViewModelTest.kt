@@ -5,6 +5,7 @@ import com.dezdeqness.contract.anime.model.GenreEntity
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -21,7 +22,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 class SelectGenresViewModelTest {
 
     @MockK
@@ -52,9 +55,9 @@ class SelectGenresViewModelTest {
             configurationProvider = configurationProvider,
             mapper = mapper,
             coroutineDispatcherProvider = object : CoroutineDispatcherProvider {
-                override fun main() = Dispatchers.Unconfined
-                override fun io() = Dispatchers.Unconfined
-                override fun computation() = Dispatchers.Unconfined
+                override fun main() = Dispatchers.Main
+                override fun io() = Dispatchers.Main
+                override fun computation() = Dispatchers.Main
             },
             appLogger = appLogger,
             settingsRepository = settingsRepository,

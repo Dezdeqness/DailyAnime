@@ -3,6 +3,7 @@ package com.dezdeqness.feature.userrate
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.domain.repository.UserRatesRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -12,7 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 class UserRateViewModelTest {
 
     @MockK
@@ -27,9 +30,9 @@ class UserRateViewModelTest {
         viewModel = UserRateViewModel(
             userRatesRepository = userRatesRepository,
             coroutineDispatcherProvider = object : CoroutineDispatcherProvider {
-                override fun main() = Dispatchers.Unconfined
-                override fun io() = Dispatchers.Unconfined
-                override fun computation() = Dispatchers.Unconfined
+                override fun main() = Dispatchers.Main
+                override fun io() = Dispatchers.Main
+                override fun computation() = Dispatchers.Main
             },
         )
     }

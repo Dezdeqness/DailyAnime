@@ -1,6 +1,7 @@
 package com.dezdeqness.feature.history.presentation.store
 
 import app.cash.turbine.test
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -14,7 +15,9 @@ import money.vivid.elmslie.core.store.ElmStore
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class HistoryReducerTest {
 

@@ -1,5 +1,6 @@
 package com.dezdeqness.feature.screenshotsviewer
 
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Command
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
@@ -13,7 +14,9 @@ import kotlinx.coroutines.flow.flowOf
 import money.vivid.elmslie.core.store.ElmStore
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 class ScreenshotsViewModelTest {
 
     @MockK(relaxUnitFun = true)

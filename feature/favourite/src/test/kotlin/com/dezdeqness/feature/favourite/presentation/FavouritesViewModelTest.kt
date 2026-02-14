@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.favourite.model.FavouriteEntity
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.core.test.MainDispatcherExtension
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.feature.favourite.presentation.models.FavouritesUiModel
 import io.mockk.MockKAnnotations
@@ -17,7 +18,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MainDispatcherExtension::class)
 class FavouritesViewModelTest {
 
     @MockK
@@ -38,9 +41,9 @@ class FavouritesViewModelTest {
         viewModel = FavouritesViewModel(
             userId = USER_ID,
             coroutineDispatcherProvider = object : CoroutineDispatcherProvider {
-                override fun main() = Dispatchers.Unconfined
-                override fun io() = Dispatchers.Unconfined
-                override fun computation() = Dispatchers.Unconfined
+                override fun main() = Dispatchers.Main
+                override fun io() = Dispatchers.Main
+                override fun computation() = Dispatchers.Main
             },
             appLogger = appLogger,
             favouriteRepository = favouriteRepository,
