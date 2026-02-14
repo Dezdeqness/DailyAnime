@@ -22,47 +22,47 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 object LightAnimeColors {
-    val Primary = Color(0xFFFF70A6)
-    val PrimaryVariant = Color(0xFFE75890)
-    val Secondary = Color(0xFF84E0CB)
-    val Background = Color(0xFFFFF9FC)
+    val Primary = Color(0xFFFF5C9C)
+    val PrimaryVariant = Color(0xFFE14C8B)
+    val Secondary = Color(0xFF7ED8C4)
+    val Background = Color(0xFFFFF8FB)
     val Surface = Color(0xFFFFFFFF)
-    val SurfaceVariant = Color(0xFFF2E8F5)
-    val Border = Color(0xFFE0E0E0)
+    val SurfaceVariant = Color(0xFFF3EDF7)
+    val Border = Color(0xFFE9DDEA)
     val OnPrimary = Color.White
-    val OnSecondary = Color(0xFF00332D)
+    val OnSecondary = Color(0xFF0F2E29)
     val OnBackground = Color(0xFF1C1B1F)
-    val OnSurface = Color(0xFF313033)
-    val Error = Color(0xFFFF5C5C)
-    val Success = Color(0xFF58C186)
-    val Warning = Color(0xFFFFD25F)
+    val OnSurface = Color(0xFF2B2A30)
+    val Error = Color(0xFFFF6B6B)
+    val Success = Color(0xFF5EBE8A)
+    val Warning = Color(0xFFFFC96B)
     val TextPrimary = Color(0xFF1C1B1F)
-    val TextSecondary = Color(0xFF5C5C66)
-    val TextDisabled = Color(0xFF9E9EA7)
-    val Ripple = Color(0x1F000000)
-    val Accent = Color(0xFFB48BFF)
+    val TextSecondary = Color(0xFF64646F)
+    val TextDisabled = Color(0xFFA3A3AD)
+    val Ripple = Color(0x14000000)
+    val Accent = Color(0xFFA97CFF)
 }
 
 object DarkAnimeColors {
-    val Primary = Color(0xFFFF9DCB)
-    val PrimaryVariant = Color(0xFFC6447F)
-    val Secondary = Color(0xFF66F8E3)
-    val Background = Color(0xFF121212)
-    val Surface = Color(0xFF1E1E1E)
-    val SurfaceVariant = Color(0xFF3B2F41)
-    val Border = Color(0xFF3D3D3D)
-    val OnPrimary = Color(0xFF1B141F)
-    val OnSecondary = Color(0xFF00221D)
-    val OnBackground = Color(0xFFE5E5E5)
-    val OnSurface = Color(0xFFCACACA)
-    val Error = Color(0xFFFF8A80)
-    val Success = Color(0xFF81D4A3)
-    val Warning = Color(0xFFFFCA69)
-    val TextPrimary = Color(0xFFEDEDED)
-    val TextSecondary = Color(0xFFA5A5AA)
-    val TextDisabled = Color(0xFF5E5E66)
-    val Ripple = Color(0x33FFFFFF)
-    val Accent = Color(0xFFD1B3FF)
+    val Primary = Color(0xFFFFA6CF)
+    val PrimaryVariant = Color(0xFFC54C83)
+    val Secondary = Color(0xFF5FE7D3)
+    val Background = Color(0xFF141218)
+    val Surface = Color(0xFF1C1A22)
+    val SurfaceVariant = Color(0xFF2A2430)
+    val Border = Color(0xFF35323D)
+    val OnPrimary = Color(0xFF1A1016)
+    val OnSecondary = Color(0xFF00231E)
+    val OnBackground = Color(0xFFE8E6EC)
+    val OnSurface = Color(0xFFD5D2DA)
+    val Error = Color(0xFFFF8F8F)
+    val Success = Color(0xFF7DD3A7)
+    val Warning = Color(0xFFFFD27A)
+    val TextPrimary = Color(0xFFEDEAF3)
+    val TextSecondary = Color(0xFFB2AFC0)
+    val TextDisabled = Color(0xFF6E6B78)
+    val Ripple = Color(0x26FFFFFF)
+    val Accent = Color(0xFFC7A8FF)
 }
 
 object AmoledAnimeColors {
@@ -71,24 +71,20 @@ object AmoledAnimeColors {
     val Secondary = DarkAnimeColors.Secondary
 
     val Background = Color(0xFF000000)
-    val Surface = Color(0xFF050509)
-    val SurfaceVariant = Color(0xFF15151F)
-    val Border = Color(0xFF262636)
-
+    val Surface = Color(0xFF0C0A12)
+    val SurfaceVariant = Color(0xFF16131C)
+    val Border = Color(0xFF26232D)
     val OnPrimary = Color(0xFF000000)
     val OnSecondary = DarkAnimeColors.OnSecondary
     val OnBackground = Color(0xFFE6E6E6)
     val OnSurface = Color(0xFFE0E0E0)
-
     val Error = DarkAnimeColors.Error
     val Success = DarkAnimeColors.Success
     val Warning = DarkAnimeColors.Warning
-
-    val TextPrimary = Color(0xFFEFEFEF)
-    val TextSecondary = Color(0xFF909099)
-    val TextDisabled = Color(0xFF5A5A66)
+    val TextPrimary = Color(0xFFEFEAF8)
+    val TextSecondary = Color(0xFFA8A5B5)
+    val TextDisabled = Color(0xFF6A6775)
     val Ripple = DarkAnimeColors.Ripple
-
     val Accent = DarkAnimeColors.Accent
 }
 
