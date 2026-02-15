@@ -24,6 +24,7 @@ include(":domain")
 // common
 include(":common:core-ui")
 include(":common:core")
+include(":common:core-test")
 
 // contracts
 include(":contract:auth")

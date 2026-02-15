@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
-    alias(libs.plugins.com.dezdeqness.compose)
     alias(libs.plugins.ksp)
 }
 
@@ -18,7 +17,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.dezdeqness.core"
+    namespace = "com.dezdeqness.core.test"
 
     compileOptions {
         val javaVersion = JavaVersion.VERSION_21
@@ -39,8 +38,9 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
+    implementation(libs.kotlinx.coroutines.test)
 
-    // Dagger
-    implementation(libs.dagger.dagger)
-    ksp(libs.dagger.compilier)
+    // Unit Testing
+    api(libs.junit.api)
+    runtimeOnly(libs.junit.engine)
 }

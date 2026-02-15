@@ -65,6 +65,7 @@ dependencies {
     // Common
     implementation(project(":common:core-ui"))
     implementation(project(":common:core"))
+    testImplementation(project(":common:core-test"))
 
     implementation(project(":data"))
     implementation(project(":domain"))
