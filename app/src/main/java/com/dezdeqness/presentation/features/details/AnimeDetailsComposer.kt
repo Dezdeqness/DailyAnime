@@ -136,7 +136,7 @@ class AnimeDetailsComposer @Inject constructor(
                 VideoUiModel(
                     imageUrl = imageUrlUtils.getSecurityUrl(video.imageUrl),
                     name = video.name,
-                    sourceUrl = video.playerUrl,
+                    sourceUrl = video.url,
                 )
             }.takeIf { it.isNotEmpty() }
             ?.let { list ->
