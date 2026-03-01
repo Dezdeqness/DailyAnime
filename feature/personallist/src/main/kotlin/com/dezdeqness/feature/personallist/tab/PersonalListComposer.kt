@@ -4,6 +4,7 @@ import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
+import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
 import com.dezdeqness.shared.presentation.mapper.PersonalRibbonMapper
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
@@ -14,6 +15,7 @@ class PersonalListComposer @Inject constructor(
     private val animeKindUtils: AnimeKindUtils,
     private val ribbonMapper: PersonalRibbonMapper,
     private val settingsRepository: SettingsRepository,
+    private val statusesProvider: StatusesProvider,
 ) {
 
     fun compose(
@@ -30,6 +32,7 @@ class PersonalListComposer @Inject constructor(
 
         return settingsRepository
             .getPreference(StatusesOrderPreference)
+            .ifEmpty { statusesProvider.getStatuses().map { it.groupedId } }
             .mapNotNull { list[it] }
             .map(ribbonMapper::map)
     }
