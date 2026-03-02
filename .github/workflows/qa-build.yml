@@ -1,0 +1,146 @@
+name: QA Build & Telegram
+
+on:
+  push:
+    branches: [ dev ]
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    name: Prepare Build Info
+    runs-on: ubuntu-latest
+    environment: DailyAnime
+    timeout-minutes: 5
+
+    permissions:
+      contents: read
+
+    outputs:
+      version_name: ${{ steps.version.outputs.version_name }}
+      build_number: ${{ steps.version.outputs.build_number }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read Version
+        id: version
+        run: |
+          GRADLE_FILE='app/gradle.properties'
+          FULL_VERSION=$(grep -oP 'version=\K\d+\.\d+\.\d+(-[a-f0-9]+)?' "$GRADLE_FILE")
+          VERSION_NAME=$(echo "$FULL_VERSION" | cut -d'-' -f1)
+          BUILD_NUMBER=$(grep -oP 'buildNumber=\K\d+' "$GRADLE_FILE" || echo "0")
+
+          echo "version_name=${VERSION_NAME}" >> $GITHUB_OUTPUT
+          echo "build_number=${BUILD_NUMBER}" >> $GITHUB_OUTPUT
+          echo "Version: ${VERSION_NAME}, Build: ${BUILD_NUMBER}"
+
+  build:
+    name: Build QA APK
+    runs-on: ubuntu-latest
+    needs: prepare
+    timeout-minutes: 30
+    environment: DailyAnime
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Setup Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+        run: |
+          echo "${KEYSTORE_BASE64}" | base64 -d > release.jks
+
+      - name: Setup Configuration Files
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          mkdir -p app/src/release app/src/debug app/src/qa
+          echo "$GOOGLE_SERVICES_JSON" > app/src/release/google-services.json
+          echo "$GOOGLE_SERVICES_JSON" > app/src/debug/google-services.json
+          echo "$GOOGLE_SERVICES_JSON" > app/src/qa/google-services.json
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build QA APK
+        env:
+          KEYSTORE_FILE: ${{ github.workspace }}/release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleQa --no-configuration-cache --stacktrace
+
+      - name: Upload QA APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-qa-${{ needs.prepare.outputs.version_name }}
+          path: app/build/outputs/apk/qa/app-qa.apk
+
+  notify:
+    name: Send to Telegram
+    runs-on: ubuntu-latest
+    needs: [ prepare, build ]
+    timeout-minutes: 5
+
+    steps:
+      - name: Download QA APK
+        uses: actions/download-artifact@v4
+        with:
+          name: app-qa-${{ needs.prepare.outputs.version_name }}
+          path: ./apk
+
+      - name: Send APK to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          VERSION="${{ needs.prepare.outputs.version_name }}"
+          BUILD="${{ needs.prepare.outputs.build_number }}"
+          COMMIT="${{ github.sha }}"
+          SHORT_COMMIT="${COMMIT:0:7}"
+          ACTOR="${{ github.actor }}"
+          BRANCH="${{ github.ref_name }}"
+          COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | head -1)
+
+          CAPTION="🚀 *QA Build*
+
+          📦 Version: \`${VERSION}\` (build ${BUILD})
+          🌿 Branch: \`${BRANCH}\`
+          📝 ${COMMIT_MSG}
+          👤 ${ACTOR}
+          🔗 \`${SHORT_COMMIT}\`"
+
+          CAPTION=$(echo "$CAPTION" | sed 's/^[[:space:]]*//')
+
+          APK_FILE=$(find ./apk -name "*.apk" | head -1)
+
+          if [ -z "$APK_FILE" ]; then
+            echo "No APK file found"
+            exit 1
+          fi
+
+          echo "Sending APK to Telegram..."
+          curl -s -X POST \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
+            -F chat_id="${TELEGRAM_CHAT_ID}" \
+            -F document=@"${APK_FILE}" \
+            -F caption="${CAPTION}" \
+            -F parse_mode="Markdown"
+
+          echo "APK sent to Telegram"
