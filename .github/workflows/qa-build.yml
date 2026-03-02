@@ -47,6 +47,11 @@ jobs:
     permissions:
       contents: read
 
+    outputs:
+      status: ${{ steps.build.outcome }}
+      duration: ${{ steps.timer.outputs.duration }}
+      apk_size: ${{ steps.apk_info.outputs.size }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -79,7 +84,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      - name: Start timer
+        id: start
+        run: echo "time=$(date +%s)" >> $GITHUB_OUTPUT
+
       - name: Build QA APK
+        id: build
+        continue-on-error: true
         env:
           KEYSTORE_FILE: ${{ github.workspace }}/release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -87,17 +98,51 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew assembleQa --no-configuration-cache --stacktrace
 
+      - name: Stop timer
+        id: timer
+        if: always()
+        run: |
+          START=${{ steps.start.outputs.time }}
+          END=$(date +%s)
+          DURATION=$((END - START))
+          MINUTES=$((DURATION / 60))
+          SECONDS=$((DURATION % 60))
+          echo "duration=${MINUTES}m ${SECONDS}s" >> $GITHUB_OUTPUT
+
+      - name: Get APK info
+        id: apk_info
+        if: always()
+        run: |
+          APK="app/build/outputs/apk/qa/app-qa.apk"
+          if [ -f "$APK" ]; then
+            SIZE_BYTES=$(stat -c%s "$APK")
+            SIZE_MB=$(awk "BEGIN {printf \"%.2f\", $SIZE_BYTES / 1048576}")
+            echo "size=${SIZE_MB} MB" >> $GITHUB_OUTPUT
+          else
+            echo "size=N/A" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload QA APK
+        if: steps.build.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: app-qa-${{ needs.prepare.outputs.version_name }}
           path: app/build/outputs/apk/qa/app-qa.apk
 
+      - name: Fail if build failed
+        if: steps.build.outcome == 'failure'
+        run: exit 1
+
   notify:
     name: Send to Telegram
     runs-on: ubuntu-latest
     needs: [ prepare, build ]
+    if: needs.build.result == 'success'
     timeout-minutes: 5
+    environment: DailyAnime
+
+    outputs:
+      status: ${{ steps.send.outcome }}
 
     steps:
       - name: Download QA APK
@@ -107,6 +152,7 @@ jobs:
           path: ./apk
 
       - name: Send APK to Telegram
+        id: send
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -117,17 +163,21 @@ jobs:
           SHORT_COMMIT="${COMMIT:0:7}"
           ACTOR="${{ github.actor }}"
           BRANCH="${{ github.ref_name }}"
+          BUILD_DURATION="${{ needs.build.outputs.duration }}"
+          APK_SIZE="${{ needs.build.outputs.apk_size }}"
           COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | head -1)
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-          CAPTION="🚀 *QA Build*
-
-          📦 Version: \`${VERSION}\` (build ${BUILD})
-          🌿 Branch: \`${BRANCH}\`
-          📝 ${COMMIT_MSG}
-          👤 ${ACTOR}
-          🔗 \`${SHORT_COMMIT}\`"
-
-          CAPTION=$(echo "$CAPTION" | sed 's/^[[:space:]]*//')
+          NL=$'\n'
+          CAPTION="🚀 *QA Build*${NL}${NL}"
+          CAPTION+="📦 Version: \`${VERSION}\` (build ${BUILD})${NL}"
+          CAPTION+="📐 Size: ${APK_SIZE:-N/A}${NL}"
+          CAPTION+="🌿 Branch: \`${BRANCH}\`${NL}"
+          CAPTION+="📝 ${COMMIT_MSG}${NL}"
+          CAPTION+="👤 ${ACTOR}${NL}"
+          CAPTION+="🔗 \`${SHORT_COMMIT}\`${NL}"
+          CAPTION+="⏱ Build time: ${BUILD_DURATION:-N/A}${NL}"
+          CAPTION+="🔗 [Workflow run](${RUN_URL})"
 
           APK_FILE=$(find ./apk -name "*.apk" | head -1)
 
@@ -137,11 +187,80 @@ jobs:
           fi
 
           echo "Sending APK to Telegram..."
-          curl -s -X POST \
+          RESPONSE=$(curl -s -X POST \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
             -F chat_id="${TELEGRAM_CHAT_ID}" \
             -F document=@"${APK_FILE}" \
             -F caption="${CAPTION}" \
-            -F parse_mode="Markdown"
+            -F parse_mode="Markdown")
 
-          echo "APK sent to Telegram"
+          echo "Telegram API response: ${RESPONSE}"
+
+          OK=$(echo "$RESPONSE" | grep -o '"ok":true' || true)
+          if [ -z "$OK" ]; then
+            echo "Failed to send APK to Telegram"
+            exit 1
+          fi
+
+          echo "APK sent to Telegram successfully"
+
+  summary:
+    name: QA Summary
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [ prepare, build, notify ]
+    timeout-minutes: 5
+
+    steps:
+      - name: Create Rich Summary
+        run: |
+          status_icon() {
+            case "$1" in
+              success) echo "✅" ;;
+              failure) echo "❌" ;;
+              cancelled) echo "⏭️" ;;
+              *) echo "⚠️" ;;
+            esac
+          }
+
+          BUILD_STATUS="${{ needs.build.result }}"
+          NOTIFY_STATUS="${{ needs.notify.result }}"
+
+          BUILD_ICON=$(status_icon "$BUILD_STATUS")
+          NOTIFY_ICON=$(status_icon "$NOTIFY_STATUS")
+
+          if [ "$BUILD_STATUS" = "success" ] && [ "$NOTIFY_STATUS" = "success" ]; then
+            OVERALL="✅ QA build delivered successfully"
+          else
+            OVERALL="❌ QA pipeline has failures"
+          fi
+
+          VERSION="${{ needs.prepare.outputs.version_name }}"
+          BUILD_NUMBER="${{ needs.prepare.outputs.build_number }}"
+          APK_SIZE="${{ needs.build.outputs.apk_size }}"
+          BUILD_DURATION="${{ needs.build.outputs.duration }}"
+
+          {
+            echo "## 🚀 QA Build & Delivery Results"
+            echo ""
+            echo "**${OVERALL}**"
+            echo ""
+            echo "### Pipeline"
+            echo ""
+            echo "| Stage | Status | Details | Duration |"
+            echo "|-------|--------|---------|----------|"
+            echo "| Prepare | ✅ success | Version \`${VERSION}\` (build ${BUILD_NUMBER}) | - |"
+            echo "| Build QA APK | ${BUILD_ICON} ${BUILD_STATUS} | APK size: ${APK_SIZE:-N/A} | ${BUILD_DURATION:-N/A} |"
+            echo "| Telegram Delivery | ${NOTIFY_ICON} ${NOTIFY_STATUS} | - | - |"
+            echo ""
+            echo "### 📦 Build Info"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| **Version** | \`${VERSION}\` |"
+            echo "| **Build Number** | ${BUILD_NUMBER} |"
+            echo "| **APK Size** | ${APK_SIZE:-N/A} |"
+            echo "| **Branch** | \`${{ github.ref_name }}\` |"
+            echo "| **Commit** | \`${{ github.sha }}\` |"
+            echo "| **Triggered by** | ${{ github.actor }} |"
+          } >> $GITHUB_STEP_SUMMARY

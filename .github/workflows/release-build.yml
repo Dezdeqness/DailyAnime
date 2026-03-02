@@ -87,6 +87,10 @@ jobs:
     permissions:
       contents: read
 
+    outputs:
+      status: ${{ steps.quality_result.outputs.status }}
+      duration: ${{ steps.timer.outputs.duration }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -111,6 +115,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      - name: Start timer
+        id: start
+        run: echo "time=$(date +%s)" >> $GITHUB_OUTPUT
+
       - name: Run Detekt
         run: ./gradlew detekt --no-configuration-cache
 
@@ -119,6 +127,22 @@ jobs:
 
       - name: Run Screenshot Validation
         run: ./gradlew app:validateDebugScreenshotTest --no-configuration-cache
+
+      - name: Set quality result
+        id: quality_result
+        if: always()
+        run: echo "status=success" >> $GITHUB_OUTPUT
+
+      - name: Stop timer
+        id: timer
+        if: always()
+        run: |
+          START=${{ steps.start.outputs.time }}
+          END=$(date +%s)
+          DURATION=$((END - START))
+          MINUTES=$((DURATION / 60))
+          SECONDS=$((DURATION % 60))
+          echo "duration=${MINUTES}m ${SECONDS}s" >> $GITHUB_OUTPUT
 
   build:
     name: Build Release
@@ -130,6 +154,12 @@ jobs:
 
     permissions:
       contents: read
+
+    outputs:
+      status: ${{ steps.build.outcome }}
+      duration: ${{ steps.timer.outputs.duration }}
+      apk_size: ${{ steps.artifacts_info.outputs.apk_size }}
+      aab_size: ${{ steps.artifacts_info.outputs.aab_size }}
 
     steps:
       - name: Checkout
@@ -161,7 +191,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      - name: Start timer
+        id: start
+        run: echo "time=$(date +%s)" >> $GITHUB_OUTPUT
+
       - name: Build Release AAB and APK
+        id: build
         env:
           BUILD_NUMBER: ${{ needs.prepare.outputs.build_number }}
           KEYSTORE_FILE: ${{ github.workspace }}/release.jks
@@ -172,6 +207,38 @@ jobs:
           echo "Building with build number: ${BUILD_NUMBER}"
           echo "Expected version code: ${{ needs.prepare.outputs.version_code }}"
           ./gradlew clean bundleRelease assembleRelease --no-configuration-cache --stacktrace
+
+      - name: Stop timer
+        id: timer
+        if: always()
+        run: |
+          START=${{ steps.start.outputs.time }}
+          END=$(date +%s)
+          DURATION=$((END - START))
+          MINUTES=$((DURATION / 60))
+          SECONDS=$((DURATION % 60))
+          echo "duration=${MINUTES}m ${SECONDS}s" >> $GITHUB_OUTPUT
+
+      - name: Get Artifacts Info
+        id: artifacts_info
+        if: always()
+        run: |
+          APK="app/build/outputs/apk/release/app-release.apk"
+          AAB="app/build/outputs/bundle/release/app-release.aab"
+
+          if [ -f "$APK" ]; then
+            SIZE_BYTES=$(stat -c%s "$APK")
+            echo "apk_size=$(awk "BEGIN {printf \"%.2f\", $SIZE_BYTES / 1048576}") MB" >> $GITHUB_OUTPUT
+          else
+            echo "apk_size=N/A" >> $GITHUB_OUTPUT
+          fi
+
+          if [ -f "$AAB" ]; then
+            SIZE_BYTES=$(stat -c%s "$AAB")
+            echo "aab_size=$(awk "BEGIN {printf \"%.2f\", $SIZE_BYTES / 1048576}") MB" >> $GITHUB_OUTPUT
+          else
+            echo "aab_size=N/A" >> $GITHUB_OUTPUT
+          fi
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
@@ -236,20 +303,82 @@ jobs:
             echo "Build number updated and pushed"
           fi
 
-      - name: Create Release Summary
+  summary:
+    name: Release Summary
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [ prepare, quality, build, finalize ]
+    timeout-minutes: 5
+
+    steps:
+      - name: Create Rich Summary
         run: |
+          status_icon() {
+            case "$1" in
+              success) echo "✅" ;;
+              failure) echo "❌" ;;
+              skipped) echo "⏭️" ;;
+              cancelled) echo "🚫" ;;
+              *) echo "⚠️" ;;
+            esac
+          }
+
+          QUALITY_STATUS="${{ needs.quality.result }}"
+          BUILD_STATUS="${{ needs.build.result }}"
+          FINALIZE_STATUS="${{ needs.finalize.result }}"
+
+          QUALITY_ICON=$(status_icon "$QUALITY_STATUS")
+          BUILD_ICON=$(status_icon "$BUILD_STATUS")
+          FINALIZE_ICON=$(status_icon "$FINALIZE_STATUS")
+
+          if [ "$BUILD_STATUS" = "success" ] && [ "$FINALIZE_STATUS" = "success" ]; then
+            OVERALL="✅ Release build completed successfully"
+          else
+            OVERALL="❌ Release pipeline has failures"
+          fi
+
+          VERSION="${{ needs.prepare.outputs.version_name }}"
+          BUILD_NUMBER="${{ needs.prepare.outputs.build_number }}"
+          VERSION_CODE="${{ needs.prepare.outputs.version_code }}"
+          ARTIFACT="${{ needs.prepare.outputs.artifact_name }}"
+          QUALITY_DURATION="${{ needs.quality.outputs.duration }}"
+          BUILD_DURATION="${{ needs.build.outputs.duration }}"
+          APK_SIZE="${{ needs.build.outputs.apk_size }}"
+          AAB_SIZE="${{ needs.build.outputs.aab_size }}"
+
           {
-            echo "## 🚀 Release Build Complete"
+            echo "## 🚀 Release Build Results"
+            echo ""
+            echo "**${OVERALL}**"
+            echo ""
+            echo "### Pipeline"
+            echo ""
+            echo "| Stage | Status | Duration |"
+            echo "|-------|--------|----------|"
+            echo "| Prepare | ✅ success | - |"
+            if [ "$QUALITY_STATUS" = "skipped" ]; then
+              echo "| Quality Checks | ⏭️ skipped (skip_tests) | - |"
+            else
+              echo "| Quality Checks | ${QUALITY_ICON} ${QUALITY_STATUS} | ${QUALITY_DURATION:-N/A} |"
+            fi
+            echo "| Build Release | ${BUILD_ICON} ${BUILD_STATUS} | ${BUILD_DURATION:-N/A} |"
+            echo "| Finalize | ${FINALIZE_ICON} ${FINALIZE_STATUS} | - |"
+            echo ""
+            echo "### 📋 Build Info"
             echo ""
             echo "| | |"
             echo "|---|---|"
-            echo "| **Version Name** | ${{ needs.prepare.outputs.version_name }} |"
-            echo "| **Build Number** | ${{ needs.prepare.outputs.build_number }} |"
-            echo "| **Version Code** | ${{ needs.prepare.outputs.version_code }} |"
-            echo "| **Branch** | ${{ github.ref_name }} |"
+            echo "| **Version Name** | \`${VERSION}\` |"
+            echo "| **Build Number** | ${BUILD_NUMBER} |"
+            echo "| **Version Code** | ${VERSION_CODE} |"
+            echo "| **Branch** | \`${{ github.ref_name }}\` |"
+            echo "| **Triggered by** | ${{ github.actor }} |"
             echo ""
             echo "### 📦 Artifacts"
-            echo "- AAB: \`app-release-${{ needs.prepare.outputs.artifact_name }}.aab\`"
-            echo "- APK: \`app-release-${{ needs.prepare.outputs.artifact_name }}.apk\`"
-            echo "- Mapping: \`mapping-${{ needs.prepare.outputs.artifact_name }}.txt\`"
+            echo ""
+            echo "| Artifact | Size |"
+            echo "|----------|------|"
+            echo "| \`app-release-${ARTIFACT}.aab\` | ${AAB_SIZE:-N/A} |"
+            echo "| \`app-release-${ARTIFACT}.apk\` | ${APK_SIZE:-N/A} |"
+            echo "| \`mapping-${ARTIFACT}.txt\` | - |"
           } >> $GITHUB_STEP_SUMMARY
