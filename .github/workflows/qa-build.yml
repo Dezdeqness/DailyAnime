@@ -69,11 +69,12 @@ jobs:
       - name: Setup Configuration Files
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          GOOGLE_SERVICES_JSON_QA: ${{ secrets.GOOGLE_SERVICES_JSON_QA }}
         run: |
           mkdir -p app/src/release app/src/debug app/src/qa
           echo "$GOOGLE_SERVICES_JSON" > app/src/release/google-services.json
           echo "$GOOGLE_SERVICES_JSON" > app/src/debug/google-services.json
-          echo "$GOOGLE_SERVICES_JSON" > app/src/qa/google-services.json
+          echo "$GOOGLE_SERVICES_JSON_QA" > app/src/qa/google-services.json
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
