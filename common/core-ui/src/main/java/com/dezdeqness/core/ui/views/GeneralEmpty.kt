@@ -31,6 +31,8 @@ import com.dezdeqness.core.ui.theme.AppTheme
 fun GeneralEmpty(
     modifier: Modifier = Modifier,
     title: String = stringResource(id = R.string.search_empty_state_title),
+    description: String? = null,
+    showAnimation: Boolean = true,
 ) {
     Column(
         modifier = modifier
@@ -39,15 +41,17 @@ fun GeneralEmpty(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val compositionLoading by rememberLottieComposition(
-            LottieCompositionSpec.RawRes(R.raw.empty)
-        )
+        if (showAnimation) {
+            val compositionLoading by rememberLottieComposition(
+                LottieCompositionSpec.RawRes(R.raw.empty)
+            )
 
-        LottieAnimation(
-            composition = compositionLoading,
-            iterations = LottieConstants.IterateForever,
-            modifier = Modifier.height(120.dp)
-        )
+            LottieAnimation(
+                composition = compositionLoading,
+                iterations = LottieConstants.IterateForever,
+                modifier = Modifier.height(120.dp)
+            )
+        }
 
         Text(
             text = title,
@@ -57,6 +61,17 @@ fun GeneralEmpty(
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.textPrimary,
         )
+
+        if (description != null) {
+            Text(
+                text = description,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
+            )
+        }
     }
 }
 

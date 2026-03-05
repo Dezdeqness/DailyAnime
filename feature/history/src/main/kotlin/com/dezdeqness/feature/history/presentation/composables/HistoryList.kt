@@ -5,14 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.core.ui.views.PaginationEffect
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
-
-private const val PAGINATION_LOAD_FACTOR = 0.75
 
 @Composable
 fun HistoryList(
@@ -22,21 +18,14 @@ fun HistoryList(
     isPageLoading: Boolean,
     onLoadMore: () -> Unit,
 ) {
-
     val state = rememberLazyListState()
 
-    val shouldStartPaginate = remember {
-        derivedStateOf {
-            hasNextPage && (state.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: -1) >= (state.layoutInfo.totalItemsCount * PAGINATION_LOAD_FACTOR)
-        }
-    }
-
-    LaunchedEffect(isPageLoading, shouldStartPaginate.value) {
-        if (shouldStartPaginate.value && isPageLoading.not()) {
-            onLoadMore()
-        }
-    }
+    PaginationEffect(
+        listState = state,
+        hasNextPage = hasNextPage,
+        isPageLoading = isPageLoading,
+        onLoadMore = onLoadMore,
+    )
 
     LazyColumn(
         state = state,
