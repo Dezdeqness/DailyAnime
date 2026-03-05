@@ -15,12 +15,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dezdeqness.core.ui.views.GeneralEmpty
 import com.dezdeqness.core.ui.views.GeneralError
+import com.dezdeqness.feature.personallist.R
 import com.dezdeqness.feature.personallist.composable.PersonalList
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
-import com.dezdeqness.feature.personallist.composable.UserRateEmptyState
 import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
 import com.dezdeqness.feature.personallist.tab.store.PersonalListStatus
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +49,11 @@ fun PersonalListPage(
     ) {
         when (state.dataStatus) {
             PersonalListStatus.Error -> GeneralError(modifier = Modifier.fillMaxSize())
-            PersonalListStatus.Empty -> UserRateEmptyState(modifier = Modifier.fillMaxSize())
+            PersonalListStatus.Empty -> GeneralEmpty(
+                modifier = Modifier.fillMaxSize(),
+                title = stringResource(R.string.personal_list_empty_state),
+                showAnimation = false,
+            )
             PersonalListStatus.Loading -> ShimmerPersonalLoading(
                 modifier = Modifier
                     .fillMaxSize()

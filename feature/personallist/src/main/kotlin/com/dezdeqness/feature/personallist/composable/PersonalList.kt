@@ -4,15 +4,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.core.ui.views.PaginationEffect
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
 import com.dezdeqness.feature.personallist.tab.PersonalListAction
-
-private const val PAGINATION_LOAD_FACTOR = 0.75
 
 @Composable
 fun PersonalList(
@@ -25,18 +21,12 @@ fun PersonalList(
 ) {
     val listState = rememberLazyListState()
 
-    val shouldStartPaginate = remember(hasNextPage) {
-        derivedStateOf {
-            hasNextPage && (listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: -1) >= (listState.layoutInfo.totalItemsCount * PAGINATION_LOAD_FACTOR)
-        }
-    }
-
-    LaunchedEffect(isPageLoading, shouldStartPaginate.value) {
-        if (shouldStartPaginate.value && isPageLoading.not()) {
-            onLoadMore()
-        }
-    }
+    PaginationEffect(
+        listState = listState,
+        hasNextPage = hasNextPage,
+        isPageLoading = isPageLoading,
+        onLoadMore = onLoadMore,
+    )
 
     LazyColumn(
         state = listState,

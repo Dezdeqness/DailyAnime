@@ -13,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.GeneralEmpty
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.achievements.R
-import com.dezdeqness.feature.achievements.presentation.composable.AchievementsEmpty
-import com.dezdeqness.feature.achievements.presentation.composable.AchievementsError
 import com.dezdeqness.feature.achievements.presentation.composable.AchievementsList
 import com.dezdeqness.feature.achievements.presentation.composable.ShimmerAchievementsLoading
 import kotlinx.coroutines.flow.StateFlow
@@ -55,11 +55,11 @@ fun AchievementsPage(
                 }
 
                 Status.Error -> {
-                    AchievementsError()
+                    GeneralError()
                 }
 
                 Status.Empty -> {
-                    AchievementsEmpty()
+                    GeneralEmpty(title = stringResource(R.string.title_empty_state))
                 }
 
                 Status.Loaded -> {

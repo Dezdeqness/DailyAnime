@@ -13,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.GeneralEmpty
+import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.core.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.favourite.R
-import com.dezdeqness.feature.favourite.presentation.composables.FavouritesEmpty
-import com.dezdeqness.feature.favourite.presentation.composables.FavouritesError
 import com.dezdeqness.feature.favourite.presentation.composables.FavouritesGrid
 import com.dezdeqness.feature.favourite.presentation.composables.FavouritesLoading
 import kotlinx.coroutines.flow.StateFlow
@@ -55,11 +55,11 @@ fun FavouritesPage(
                 }
 
                 Status.Error -> {
-                    FavouritesError()
+                    GeneralError()
                 }
 
                 Status.Empty -> {
-                    FavouritesEmpty()
+                    GeneralEmpty(title = stringResource(R.string.title_empty_state))
                 }
 
                 Status.Loaded -> {

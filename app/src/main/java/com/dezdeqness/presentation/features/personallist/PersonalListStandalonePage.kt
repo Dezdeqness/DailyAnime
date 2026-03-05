@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,12 +28,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.core.ui.views.GeneralEmpty
 import com.dezdeqness.core.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.BottomSheet
 import com.dezdeqness.feature.personallist.DataStatus
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
+import com.dezdeqness.feature.personallist.R as PersonalListR
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
-import com.dezdeqness.feature.personallist.composable.RibbonEmptyState
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.presentation.Details
@@ -138,7 +140,12 @@ fun PersonalListStandalonePage(
                     )
 
                     DataStatus.Error -> GeneralError(modifier = Modifier.fillMaxSize())
-                    DataStatus.Empty -> RibbonEmptyState(modifier = Modifier.fillMaxSize())
+                    DataStatus.Empty -> GeneralEmpty(
+                        modifier = Modifier.fillMaxSize(),
+                        title = stringResource(PersonalListR.string.ribbon_empty_state_title),
+                        description = stringResource(PersonalListR.string.ribbon_empty_state_description),
+                        showAnimation = false,
+                    )
                     else -> {
                         if (ribbon.isNotEmpty()) {
                             PersonalListPageStandalonePage(
