@@ -1,8 +1,8 @@
 package com.dezdeqness.core
 
 import com.dezdeqness.R
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.provider.ResourceProvider
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.provider.ResourceProvider
 import javax.inject.Inject
 
 class MessageProvider @Inject constructor(

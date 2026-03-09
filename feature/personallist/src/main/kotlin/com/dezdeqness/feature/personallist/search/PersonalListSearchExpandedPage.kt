@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.contract.anime.model.UserRateStatusEntity
-import com.dezdeqness.core.ui.views.GeneralEmpty
-import com.dezdeqness.core.ui.views.GeneralError
+import com.dezdeqness.foundation.ui.views.GeneralEmpty
+import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.search.composables.PersonalListTabs
 import com.dezdeqness.feature.personallist.search.composables.PersonalSearchList
 import com.dezdeqness.feature.personallist.search.model.SearchUserRateUiModel

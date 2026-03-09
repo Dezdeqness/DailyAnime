@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.history.presentation
 
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Command
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Effect
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Event

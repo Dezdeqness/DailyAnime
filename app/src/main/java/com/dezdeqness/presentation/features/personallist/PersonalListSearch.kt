@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.personallist.search.PersonalListSearchActions
 import com.dezdeqness.feature.personallist.search.PersonalListSearchExpandedPage
 import com.dezdeqness.feature.personallist.search.PersonalListSearchViewModel

@@ -12,7 +12,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.details.composables.list.DetailAnimes
 import com.dezdeqness.presentation.features.details.composables.list.DetailMoreInfo

@@ -24,7 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.contract.anime.model.UserRateStatusEntity
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.userrate.R
 
 @OptIn(ExperimentalMaterial3Api::class)

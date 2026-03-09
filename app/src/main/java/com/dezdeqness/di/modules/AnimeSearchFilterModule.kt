@@ -1,9 +1,9 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.core.provider.ResourceProvider
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.data.repository.SearchFilterRepositoryImpl
-import com.dezdeqness.core.di.ViewModelKey
+import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.domain.repository.SearchFilterRepository
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterComposer
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterViewModel

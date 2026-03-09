@@ -3,8 +3,8 @@ package com.dezdeqness.feature.favourite.presentation
 import app.cash.turbine.test
 import com.dezdeqness.contract.favourite.model.FavouriteEntity
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.feature.favourite.presentation.models.FavouritesUiModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -34,7 +34,7 @@ class FavouritesViewModelTest {
     private lateinit var favouriteMapper: FavouriteMapper
 
     @MockK
-    private lateinit var appLogger: AppLogger
+    private lateinit var logger: Logger
 
     private lateinit var viewModel: FavouritesViewModel
 
@@ -51,13 +51,13 @@ class FavouritesViewModelTest {
                 override fun io() = Dispatchers.Main
                 override fun computation() = Dispatchers.Main
             },
-            appLogger = appLogger,
+            logger = logger,
             favouriteRepository = favouriteRepository,
             favouriteMapper = favouriteMapper,
         )
 
-        every { appLogger.logInfo(any(), any()) } returns Unit
-        every { appLogger.logInfo(any(), any(), any()) } returns Unit
+        every { logger.logInfo(any(), any()) } returns Unit
+        every { logger.logInfo(any(), any(), any()) } returns Unit
     }
 
     @After
@@ -160,7 +160,7 @@ class FavouritesViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        verify { appLogger.logInfo("FavouritesViewModel", throwable = error) }
+        verify { logger.logInfo("FavouritesViewModel", throwable = error) }
     }
 
     @Test
@@ -192,7 +192,7 @@ class FavouritesViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
-        verify { appLogger.logInfo("FavouritesViewModel", throwable = error) }
+        verify { logger.logInfo("FavouritesViewModel", throwable = error) }
     }
 
     companion object {

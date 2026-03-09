@@ -2,8 +2,8 @@ package com.dezdeqness.di
 
 import android.content.Context
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.di.ViewModelBuilderModule
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.di.modules.AccountModule

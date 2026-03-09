@@ -2,7 +2,7 @@ package com.dezdeqness.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventListener
@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+@Deprecated("Do not use app version, prefer foundation")
 abstract class BaseViewModel(
     protected val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     protected val appLogger: AppLogger,

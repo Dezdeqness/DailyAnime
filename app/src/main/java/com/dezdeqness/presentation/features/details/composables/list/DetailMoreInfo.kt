@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.views.chips.AppChip
+import com.dezdeqness.foundation.ui.views.chips.AppChip
 import com.dezdeqness.presentation.action.Action
 
 @Composable

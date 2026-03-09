@@ -1,8 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.core.di.AssistedViewModelFactory
-import com.dezdeqness.core.di.AssistedViewModelKey
+import com.dezdeqness.foundation.di.AssistedViewModelFactory
+import com.dezdeqness.foundation.di.AssistedViewModelKey
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel

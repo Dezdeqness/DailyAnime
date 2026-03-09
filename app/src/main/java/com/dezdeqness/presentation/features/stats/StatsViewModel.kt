@@ -2,7 +2,7 @@ package com.dezdeqness.presentation.features.stats
 
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.page.StatsState
 import com.dezdeqness.contract.user.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow

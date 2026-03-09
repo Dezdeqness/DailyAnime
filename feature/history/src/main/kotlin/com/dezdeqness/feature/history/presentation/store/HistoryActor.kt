@@ -1,6 +1,6 @@
 package com.dezdeqness.feature.history.presentation.store
 
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.feature.history.presentation.HistoryComposer
 import kotlinx.coroutines.flow.flow
@@ -10,7 +10,7 @@ import javax.inject.Inject
 class HistoryActor @Inject constructor(
     private val getHistoryUseCase: GetHistoryUseCase,
     private val historyComposer: HistoryComposer,
-    private val appLogger: AppLogger,
+    private val logger: Logger,
 ) : Actor<HistoryNamespace.Command, HistoryNamespace.Event>() {
     override fun execute(command: HistoryNamespace.Command) =
         when (command) {
@@ -44,7 +44,7 @@ class HistoryActor @Inject constructor(
                         HistoryNamespace.Event.OnLoadPageError(message, e)
                     }
 
-                    appLogger.logInfo(TAG, message, e)
+                    logger.logInfo(TAG, message, e)
                     emit(event)
                 }
             }

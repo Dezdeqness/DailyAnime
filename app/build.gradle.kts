@@ -199,8 +199,8 @@ dependencies {
     add("qaImplementation", libs.leak.canary)
 
     // Common
-    implementation(project(":common:core-ui"))
-    implementation(project(":common:core"))
+    implementation(project(":common:foundation-ui"))
+    implementation(project(":common:foundation"))
 
     // Shared
     implementation(project(":shared:shared-presentation"))

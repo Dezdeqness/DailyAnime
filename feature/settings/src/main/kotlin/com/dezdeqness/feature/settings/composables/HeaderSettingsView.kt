@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
 fun HeaderSettingsView(

@@ -1,6 +1,6 @@
 package com.dezdeqness.feature.personallist.tab.store
 
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
 import com.dezdeqness.feature.personallist.tab.PersonalListComposer
@@ -12,7 +12,7 @@ class PersonalListActor @Inject constructor(
     private val useCase: GetPersonalListByStatusUseCase,
     private val personalListComposer: PersonalListComposer,
     private val userRatesRepository: UserRatesRepository,
-    private val appLogger: AppLogger,
+    private val logger: Logger,
 ) : Actor<PersonalListNamespace.Command, PersonalListNamespace.Event>() {
 
     override fun execute(command: PersonalListNamespace.Command) =
@@ -54,7 +54,7 @@ class PersonalListActor @Inject constructor(
                                 PersonalListNamespace.Event.OnLoadPageError(message, e)
                             }
 
-                            appLogger.logInfo(TAG, message, e)
+                            logger.logInfo(TAG, message, e)
                             emit(event)
                         }
                     )
@@ -78,7 +78,7 @@ class PersonalListActor @Inject constructor(
                         }
                     }
                     .onFailure { throwable ->
-                        appLogger.logInfo(
+                        logger.logInfo(
                             TAG,
                             "Error during user rate changes of personal list",
                             throwable
@@ -111,7 +111,7 @@ class PersonalListActor @Inject constructor(
                         }
                     }
                     .onFailure { throwable ->
-                        appLogger.logInfo(
+                        logger.logInfo(
                             TAG,
                             "Error during user rate changes of personal list",
                             throwable

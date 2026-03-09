@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.views.chips.AppChip
+import com.dezdeqness.foundation.ui.views.chips.AppChip
 import com.dezdeqness.presentation.models.AnimeCellList
 
 @OptIn(ExperimentalLayoutApi::class)

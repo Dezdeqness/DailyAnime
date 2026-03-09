@@ -1,7 +1,6 @@
 package com.dezdeqness.feature.settings
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.feature.settings.store.core.CloseDialog
 import com.dezdeqness.feature.settings.store.core.InitialLoad
 import com.dezdeqness.feature.settings.store.core.Invalidate
@@ -13,47 +12,35 @@ import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Command
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Effect
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Event
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.State
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import money.vivid.elmslie.core.store.ElmStore
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    private val store: ElmStore<Event, State, Effect, Command>,
-) : ViewModel() {
-
-    val state = store
-        .states
-        .onStart {
-            store.accept(InitialLoad)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = State()
-        )
-
-    val effects = store.effects
+    store: ElmStore<Event, State, Effect, Command>,
+) : BaseStoreViewModel<Event, State, Effect, Command>(
+    store = store,
+    initialState = State(),
+    initialEvent = InitialLoad,
+) {
 
     fun onSettingClicked(id: String) {
-        store.accept(OnSettingClicked(id))
+        accept(OnSettingClicked(id))
     }
 
     fun onSwitchChanged(id: String, checked: Boolean) {
-        store.accept(OnSettingSwitchChanged(id, checked))
+        accept(OnSettingSwitchChanged(id, checked))
     }
 
     fun onDialogClosed() {
-        store.accept(CloseDialog)
+        accept(CloseDialog)
     }
 
     fun onDialogResult(id: String, data: SettingsNamespace.DialogState.DialogResult) {
-        store.accept(OnDialogResult(id = id, data = data))
+        accept(OnDialogResult(id = id, data = data))
     }
 
     fun invalidate() {
-        store.accept(Invalidate)
+        accept(Invalidate)
     }
 
 }

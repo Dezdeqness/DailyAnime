@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.achievements.presentation
 
 import app.cash.turbine.test
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.domain.model.AchievementConfigDataEntity
 import com.dezdeqness.domain.model.AchievementEntity
@@ -36,7 +36,7 @@ class AchievementsViewModelTest {
     private lateinit var configurationProvider: ConfigurationProvider
 
     @MockK
-    private lateinit var appLogger: AppLogger
+    private lateinit var logger: Logger
 
     @MockK
     private lateinit var achievementsComposer: AchievementsComposer
@@ -56,14 +56,14 @@ class AchievementsViewModelTest {
                 override fun io() = Dispatchers.Main
                 override fun computation() = Dispatchers.Main
             },
-            appLogger = appLogger,
+            logger = logger,
             achievementRepository = achievementRepository,
             configurationProvider = configurationProvider,
             achievementsComposer = achievementsComposer,
         )
 
-        every { appLogger.logInfo(any(), any()) } returns Unit
-        every { appLogger.logInfo(any(), any(), any()) } returns Unit
+        every { logger.logInfo(any(), any()) } returns Unit
+        every { logger.logInfo(any(), any(), any()) } returns Unit
     }
 
     @After
@@ -141,7 +141,7 @@ class AchievementsViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        verify { appLogger.logInfo("AchievementsViewModel", throwable = error) }
+        verify { logger.logInfo("AchievementsViewModel", throwable = error) }
     }
 
     @Test
@@ -176,7 +176,7 @@ class AchievementsViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
-        verify { appLogger.logInfo("AchievementsViewModel", throwable = error) }
+        verify { logger.logInfo("AchievementsViewModel", throwable = error) }
     }
 
     @Test

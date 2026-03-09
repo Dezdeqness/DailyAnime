@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.shimmer
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.shimmer
 
 @Composable
 fun ProfileSkeleton(modifier: Modifier = Modifier) {

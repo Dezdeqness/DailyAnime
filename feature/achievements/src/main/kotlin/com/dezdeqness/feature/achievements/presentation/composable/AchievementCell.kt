@@ -24,7 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.core.ui.views.image.AppImage
+import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.achievements.R
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
 

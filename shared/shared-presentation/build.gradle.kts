@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
 
     // Common
-    implementation(project(":common:core"))
+    implementation(project(":common:foundation"))
 
     // Dagger
     implementation(libs.dagger.dagger)

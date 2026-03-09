@@ -5,7 +5,7 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
-import com.dezdeqness.core.provider.ResourceProvider
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.presentation.AnimeUiMapper

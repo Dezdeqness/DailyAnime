@@ -21,8 +21,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppTextButton
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppTextButton
 
 @Composable
 fun UnauthorizedScreen(

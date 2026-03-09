@@ -3,8 +3,8 @@ package com.dezdeqness.presentation
 import com.dezdeqness.contract.settings.models.LanguageDisclaimerPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.LocaleProvider
 import com.dezdeqness.presentation.event.LanguageDisclaimer

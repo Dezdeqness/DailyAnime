@@ -3,9 +3,9 @@ package com.dezdeqness.presentation.features.profile
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.usecases.GetUserUseCase
 import com.dezdeqness.domain.usecases.LogoutUseCase

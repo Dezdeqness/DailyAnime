@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.image.AppImage
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.presentation.models.HeaderItemUiModel
 
 @Composable

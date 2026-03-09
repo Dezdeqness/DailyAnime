@@ -1,6 +1,6 @@
 package com.dezdeqness.shared.presentation.mapper
 
-import com.dezdeqness.core.provider.ResourceProvider
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.shared.domain.model.StatusEntity
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import javax.inject.Inject

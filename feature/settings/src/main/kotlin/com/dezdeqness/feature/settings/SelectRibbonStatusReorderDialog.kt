@@ -27,10 +27,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.dezdeqness.core.ui.effects.ReorderHapticFeedbackType
-import com.dezdeqness.core.ui.effects.rememberReorderHapticFeedback
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.effects.ReorderHapticFeedbackType
+import com.dezdeqness.foundation.ui.effects.rememberReorderHapticFeedback
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState

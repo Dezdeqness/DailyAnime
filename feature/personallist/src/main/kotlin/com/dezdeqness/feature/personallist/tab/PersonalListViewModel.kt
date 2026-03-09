@@ -1,20 +1,18 @@
 package com.dezdeqness.feature.personallist.tab
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.di.AssistedViewModelFactory
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.foundation.BaseStoreViewModel
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.di.AssistedViewModelFactory
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
 import com.dezdeqness.feature.userrate.EditRateUiModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import money.vivid.elmslie.core.store.ElmStore
 import javax.inject.Inject
@@ -22,23 +20,16 @@ import javax.inject.Inject
 object StatusIdKey : CreationExtras.Key<String>
 
 class PersonalListViewModel(
-    private val store: ElmStore<PersonalListNamespace.Event, PersonalListNamespace.State, PersonalListNamespace.Effect, PersonalListNamespace.Command>,
+    store: ElmStore<PersonalListNamespace.Event, PersonalListNamespace.State, PersonalListNamespace.Effect, PersonalListNamespace.Command>,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
     private val statusId: String,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-) : ViewModel() {
-
-    val state = store
-        .states
-        .onStart {
-            store.accept(PersonalListNamespace.Event.InitialLoad(status = statusId))
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = PersonalListNamespace.State()
-        )
+) : BaseStoreViewModel<PersonalListNamespace.Event, PersonalListNamespace.State, PersonalListNamespace.Effect, PersonalListNamespace.Command>(
+    store = store,
+    initialState = PersonalListNamespace.State(),
+    initialEvent = PersonalListNamespace.Event.InitialLoad(status = statusId),
+) {
 
     init {
         store
@@ -57,19 +48,19 @@ class PersonalListViewModel(
     }
 
     fun onLoadMore() {
-        store.accept(PersonalListNamespace.Event.LoadMore)
+        accept(PersonalListNamespace.Event.LoadMore)
     }
 
     fun onRefresh() {
-        store.accept(PersonalListNamespace.Event.Refresh)
+        accept(PersonalListNamespace.Event.Refresh)
     }
 
     fun onUserRateChanged(userRate: EditRateUiModel?) {
-        store.accept(PersonalListNamespace.Event.UserRateChanged(userRate, statusId))
+        accept(PersonalListNamespace.Event.UserRateChanged(userRate, statusId))
     }
 
     fun onUserRateIncrement(userRateId: Long) {
-        store.accept(PersonalListNamespace.Event.UserRateIncrement(userRateId, statusId))
+        accept(PersonalListNamespace.Event.UserRateIncrement(userRateId, statusId))
     }
 
     private fun onEditErrorMessage() {

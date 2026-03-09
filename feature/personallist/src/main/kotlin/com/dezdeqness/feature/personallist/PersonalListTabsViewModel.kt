@@ -1,13 +1,13 @@
 package com.dezdeqness.feature.personallist
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.contract.user.repository.UserRepository
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.BaseViewModel
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.empty
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loaded
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loading
@@ -37,11 +37,11 @@ class PersonalListTabsViewModel @Inject constructor(
     private val personalListComposer: PersonalListComposer,
     private val userRepository: UserRepository,
     private val settingsRepository: SettingsRepository,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val appLogger: AppLogger,
-) : ViewModel() {
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    logger: Logger,
+) : BaseViewModel(coroutineDispatcherProvider, logger) {
 
-    private val viewModelTag = "PersonalListViewModel"
+    override val viewModelTag = "PersonalListViewModel"
 
     private val loadEvents = MutableSharedFlow<LoadEvent>(extraBufferCapacity = 1)
 
@@ -159,21 +159,6 @@ class PersonalListTabsViewModel @Inject constructor(
 
     fun onUserRateBottomDialogClosed() {
         _bottomSheetFlow.value = BottomSheet.None
-    }
-
-    private fun logInfo(message: String, throwable: Throwable? = null) {
-        if (throwable == null) {
-            appLogger.logInfo(
-                tag = viewModelTag,
-                message = message,
-            )
-        } else {
-            appLogger.logInfo(
-                tag = viewModelTag,
-                message = message,
-                throwable = throwable,
-            )
-        }
     }
 
     private sealed class LoadEvent {

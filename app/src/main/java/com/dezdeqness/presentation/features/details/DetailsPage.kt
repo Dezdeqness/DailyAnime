@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.details.composables.DetailsList
 import com.dezdeqness.presentation.features.details.composables.DetailsToolbar
 import com.dezdeqness.presentation.features.details.composables.ShimmerDetailsLoading

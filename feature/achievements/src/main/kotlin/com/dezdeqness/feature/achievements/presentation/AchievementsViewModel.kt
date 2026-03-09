@@ -1,29 +1,31 @@
 package com.dezdeqness.feature.achievements.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.BaseViewModel
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.domain.repository.AchievementRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import javax.inject.Named
 
 class AchievementsViewModel @Inject constructor(
     @Named("userId") private val userId: Long,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val appLogger: AppLogger,
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    logger: Logger,
     private val achievementRepository: AchievementRepository,
     private val configurationProvider: ConfigurationProvider,
     private val achievementsComposer: AchievementsComposer,
-) : ViewModel() {
+) : BaseViewModel(coroutineDispatcherProvider, logger) {
+
+    override val viewModelTag = "AchievementsViewModel"
 
     val achievementsState: StateFlow<AchievementsUiState> =
         flow {
@@ -51,12 +53,12 @@ class AchievementsViewModel @Inject constructor(
                     )
                 }
                 .onFailure {
-                    appLogger.logInfo(TAG, throwable = it)
+                    logInfo("Error fetching achievements", it)
                     emit(AchievementsUiState(status = Status.Error))
                 }
         }
             .catch {
-                appLogger.logInfo(TAG, throwable = it)
+                logInfo("Error in achievements flow", it)
                 emit(AchievementsUiState(status = Status.Error))
             }
             .flowOn(coroutineDispatcherProvider.io())
@@ -66,8 +68,4 @@ class AchievementsViewModel @Inject constructor(
                 started = SharingStarted.Lazily,
                 initialValue = AchievementsUiState(status = Status.Initial)
             )
-
-    companion object {
-        private const val TAG = "AchievementsViewModel"
-    }
 }

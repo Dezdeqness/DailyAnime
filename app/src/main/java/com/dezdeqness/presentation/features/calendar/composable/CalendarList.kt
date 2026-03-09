@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.calendar.CalendarListUiModel
 

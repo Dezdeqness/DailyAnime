@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel
 import kotlinx.coroutines.delay

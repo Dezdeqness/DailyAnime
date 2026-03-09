@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.views.PaginationEffect
+import com.dezdeqness.foundation.ui.views.PaginationEffect
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
 
 @Composable

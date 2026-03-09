@@ -85,6 +85,8 @@ dependencies {
     implementation(project(":contract:favourite"))
 
     implementation(project(":shared:shared-domain"))
+
+    implementation(project(":common:foundation"))
 }
 
 apollo {

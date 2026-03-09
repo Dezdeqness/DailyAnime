@@ -6,13 +6,14 @@ import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProviderImpl
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
-import com.dezdeqness.core.provider.ResourceProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProviderImpl
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.ConfigSettingsProvider
@@ -91,7 +92,11 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideAppLogger() = AppLogger()
+    fun provideAppLogger(): AppLogger = AppLogger()
+
+    @Singleton
+    @Provides
+    fun provideLogger(appLogger: AppLogger): Logger = appLogger
 
     @Provides
     fun provideActionConsumer() = ActionConsumer()

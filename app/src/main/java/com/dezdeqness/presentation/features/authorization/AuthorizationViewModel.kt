@@ -4,7 +4,7 @@ import androidx.core.net.toUri
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess

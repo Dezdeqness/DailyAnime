@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.screenshotsviewer.store
 
 import app.cash.turbine.test
-import com.dezdeqness.core.test.MainDispatcherExtension
+import com.dezdeqness.foundation.test.MainDispatcherExtension
 import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event

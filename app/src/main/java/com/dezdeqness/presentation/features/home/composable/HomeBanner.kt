@@ -14,8 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.image.AppImage
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.presentation.features.home.AuthorizedState
 
 @Composable

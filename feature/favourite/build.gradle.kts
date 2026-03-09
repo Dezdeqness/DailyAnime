@@ -40,8 +40,8 @@ dependencies {
     ksp(libs.dagger.compilier)
 
     // Common
-    implementation(project(":common:core-ui"))
-    implementation(project(":common:core"))
+    implementation(project(":common:foundation-ui"))
+    implementation(project(":common:foundation"))
 
     //Elm
     implementation(libs.elmslie.core)

@@ -2,8 +2,8 @@ package com.dezdeqness.feature.history.presentation.store
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.history.model.HistoryEntity
-import com.dezdeqness.core.test.MainDispatcherExtension
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.test.MainDispatcherExtension
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.domain.usecases.GetHistoryUseCase
 import com.dezdeqness.feature.history.presentation.HistoryComposer
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class HistoryActorTest {
 
     @MockK(relaxed = true)
-    lateinit var appLogger: AppLogger
+    lateinit var logger: Logger
 
     @MockK
     lateinit var getHistoryUseCase: GetHistoryUseCase
@@ -37,7 +37,7 @@ class HistoryActorTest {
     fun setup() {
         MockKAnnotations.init(this)
 
-        actor = HistoryActor(getHistoryUseCase, historyComposer, appLogger)
+        actor = HistoryActor(getHistoryUseCase, historyComposer, logger)
     }
 
     @Test

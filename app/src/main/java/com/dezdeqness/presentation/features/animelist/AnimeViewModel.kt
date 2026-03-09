@@ -4,9 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase

@@ -25,9 +25,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppButton
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.dezdeqness.feature.settings.composables.SwitchSettingsView
 import com.dezdeqness.feature.settings.composables.TextSettingsView
