@@ -141,7 +141,7 @@ class AchievementsViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        verify { logger.logInfo("AchievementsViewModel", throwable = error) }
+        verify { logger.logInfo("AchievementsViewModel", any(), error) }
     }
 
     @Test
@@ -176,7 +176,7 @@ class AchievementsViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
-        verify { logger.logInfo("AchievementsViewModel", throwable = error) }
+        verify { logger.logInfo("AchievementsViewModel", any(), error) }
     }
 
     @Test

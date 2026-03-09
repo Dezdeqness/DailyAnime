@@ -160,7 +160,7 @@ class FavouritesViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        verify { logger.logInfo("FavouritesViewModel", throwable = error) }
+        verify { logger.logInfo("FavouritesViewModel", any(), error) }
     }
 
     @Test
@@ -192,7 +192,7 @@ class FavouritesViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
-        verify { logger.logInfo("FavouritesViewModel", throwable = error) }
+        verify { logger.logInfo("FavouritesViewModel", any(), error) }
     }
 
     companion object {
