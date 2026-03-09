@@ -41,9 +41,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.header.Header
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.header.Header
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.userrate.composable.CommentTextField
 import com.dezdeqness.feature.userrate.composable.ScoreSlider
 import com.dezdeqness.feature.userrate.composable.SelectStatusDialog

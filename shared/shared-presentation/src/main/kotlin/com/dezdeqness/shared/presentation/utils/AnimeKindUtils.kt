@@ -1,7 +1,7 @@
 package com.dezdeqness.shared.presentation.utils
 
 import com.dezdeqness.contract.anime.model.AnimeKind
-import com.dezdeqness.core.provider.ResourceProvider
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.shared.presentation.R
 import javax.inject.Inject
 

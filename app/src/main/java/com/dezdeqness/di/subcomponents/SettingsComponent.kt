@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.core.di.ViewModelKey
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.di.ViewModelKey
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -89,10 +89,10 @@ abstract class SettingsModule {
         @Provides
         fun provideSettingsActor(
             sectionActors: List<@JvmSuppressWildcards SectionActor>,
-            appLogger: AppLogger,
+            logger: Logger,
         ) = SettingsActor(
             sectionActors = sectionActors,
-            appLogger = appLogger,
+            logger = logger,
         )
 
         @Provides

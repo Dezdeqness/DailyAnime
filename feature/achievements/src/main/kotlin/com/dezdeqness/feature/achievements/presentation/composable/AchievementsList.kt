@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.feature.achievements.R
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
 

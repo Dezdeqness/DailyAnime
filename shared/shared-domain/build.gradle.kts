@@ -32,5 +32,5 @@ android {
 
 dependencies {
     // Common
-    implementation(project(":common:core"))
+    implementation(project(":common:foundation"))
 }

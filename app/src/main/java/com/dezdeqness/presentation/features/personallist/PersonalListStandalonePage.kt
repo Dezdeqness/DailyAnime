@@ -27,9 +27,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.GeneralEmpty
-import com.dezdeqness.core.ui.views.GeneralError
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.GeneralEmpty
+import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.BottomSheet
 import com.dezdeqness.feature.personallist.DataStatus
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel

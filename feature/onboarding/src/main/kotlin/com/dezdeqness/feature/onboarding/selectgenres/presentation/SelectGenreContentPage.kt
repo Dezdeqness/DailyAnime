@@ -23,9 +23,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppButton
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.onboarding.R
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.composables.SelectGenresContent
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel

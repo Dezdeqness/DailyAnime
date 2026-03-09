@@ -31,9 +31,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.ExpandableContent
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.foundation.ui.ExpandableContent
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import com.dezdeqness.presentation.models.SectionType
 import kotlinx.coroutines.flow.StateFlow

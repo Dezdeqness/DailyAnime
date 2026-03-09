@@ -31,8 +31,8 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
-import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.screenshotsviewer.composables.ScreenshotPager
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace
 import kotlinx.coroutines.flow.Flow

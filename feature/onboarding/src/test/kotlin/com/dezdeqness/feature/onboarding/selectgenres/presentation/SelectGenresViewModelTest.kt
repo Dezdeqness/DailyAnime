@@ -4,8 +4,8 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.GenreEntity
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel
@@ -38,7 +38,7 @@ class SelectGenresViewModelTest {
     private lateinit var mapper: SelectGenresMapper
 
     @MockK
-    private lateinit var appLogger: AppLogger
+    private lateinit var logger: Logger
 
     @MockK
     private lateinit var settingsRepository: SettingsRepository
@@ -65,7 +65,7 @@ class SelectGenresViewModelTest {
                 override fun io() = Dispatchers.Main
                 override fun computation() = Dispatchers.Main
             },
-            appLogger = appLogger,
+            logger = logger,
             settingsRepository = settingsRepository,
             homeGenresProvider = homeGenresProvider,
         )
@@ -96,8 +96,8 @@ class SelectGenresViewModelTest {
             )
         } returns Unit
 
-        every { appLogger.logInfo(any(), any()) } returns Unit
-        every { appLogger.logInfo(any(), any(), any()) } returns Unit
+        every { logger.logInfo(any(), any()) } returns Unit
+        every { logger.logInfo(any(), any(), any()) } returns Unit
     }
 
     @After
@@ -221,6 +221,6 @@ class SelectGenresViewModelTest {
             ensureAllEventsConsumed()
         }
 
-        verify { appLogger.logInfo(tag = "SelectGenresViewModel", "flow error", throwable = error) }
+        verify { logger.logInfo(tag = "SelectGenresViewModel", "flow error", throwable = error) }
     }
 }

@@ -53,8 +53,8 @@ dependencies {
     testImplementation(libs.mockk.mockk)
 
     // Common
-    implementation(project(":common:core-ui"))
-    implementation(project(":common:core"))
+    implementation(project(":common:foundation-ui"))
+    implementation(project(":common:foundation"))
 
     implementation(project(":data"))
     implementation(project(":domain"))

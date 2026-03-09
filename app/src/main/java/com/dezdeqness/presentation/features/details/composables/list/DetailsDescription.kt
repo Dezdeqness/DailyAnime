@@ -19,8 +19,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.ExpandableText
-import com.dezdeqness.core.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.ExpandableText
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.presentation.models.DescriptionUiModel
 
 @Composable

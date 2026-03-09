@@ -3,7 +3,7 @@ package com.dezdeqness.presentation.features.routing
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.presentation.event.HandlePermission

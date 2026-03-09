@@ -20,10 +20,10 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.contract.settings.models.ThemeMode
-import com.dezdeqness.core.ui.dialogs.TimeData
-import com.dezdeqness.core.ui.dialogs.TimePickerDialog
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.dialogs.TimeData
+import com.dezdeqness.foundation.ui.dialogs.TimePickerDialog
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.settings.composables.HeaderCustomSettingsView
 import com.dezdeqness.feature.settings.composables.ListPreferencesDialog
 import com.dezdeqness.feature.settings.composables.ProgressSettingsView

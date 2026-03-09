@@ -1,9 +1,10 @@
 package com.dezdeqness.feature.userrate
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.BaseViewModel
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.UserRatesRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,11 @@ import javax.inject.Inject
 
 class UserRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-) : ViewModel() {
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    logger: Logger,
+) : BaseViewModel(coroutineDispatcherProvider, logger) {
+
+    override val viewModelTag = "UserRateViewModel"
 
     private var rateId: Long = 0
     private var title: String = ""

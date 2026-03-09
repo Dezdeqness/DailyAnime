@@ -19,9 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppButton
-import com.dezdeqness.core.ui.views.buttons.AppOutlinedButton
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.views.buttons.AppOutlinedButton
 
 @Composable
 fun UnauthorizedCard(
@@ -42,7 +42,7 @@ fun UnauthorizedCard(
             verticalArrangement = Arrangement.Center,
         ) {
             Image(
-                painter = painterResource(id = com.dezdeqness.core.ui.R.drawable.ic_placeholder),
+                painter = painterResource(id = com.dezdeqness.foundation.ui.R.drawable.ic_placeholder),
                 contentDescription = null,
             )
 

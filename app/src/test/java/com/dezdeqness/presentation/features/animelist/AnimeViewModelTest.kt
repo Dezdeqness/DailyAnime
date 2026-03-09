@@ -5,7 +5,7 @@ import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.MessageProvider
-import com.dezdeqness.core.message.MessageConsumer
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase

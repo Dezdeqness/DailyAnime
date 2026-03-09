@@ -5,8 +5,8 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.chips.AppChip
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.chips.AppChip
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)

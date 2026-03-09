@@ -1,7 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.core.di.ViewModelKey
+import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.SearchPersonalListUseCase
 import com.dezdeqness.feature.personallist.search.PersonalListSearchViewModel

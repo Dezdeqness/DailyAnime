@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.history.presentation.HistoryActions
 import com.dezdeqness.feature.history.presentation.HistoryPage
 import com.dezdeqness.feature.history.presentation.HistoryViewModel

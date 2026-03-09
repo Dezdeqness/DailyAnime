@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.image.AppImage
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.Action.AnimeClick
 import com.dezdeqness.presentation.features.home.model.HomeCalendarUiModel

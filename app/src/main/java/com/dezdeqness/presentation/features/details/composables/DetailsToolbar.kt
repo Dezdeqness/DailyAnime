@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

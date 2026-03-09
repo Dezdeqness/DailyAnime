@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.core.AuthorizedUiState
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.features.profile.composables.ProfileCard
 import com.dezdeqness.presentation.features.profile.composables.ProfileSkeleton
 import com.dezdeqness.presentation.features.profile.composables.UnauthorizedCard

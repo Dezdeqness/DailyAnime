@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.views.header.Header
+import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.feature.history.presentation.composables.HistoryItem
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import com.dezdeqness.presentation.action.Action

@@ -1,6 +1,6 @@
 package com.dezdeqness.feature.settings.store
 
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.Logger
 import com.dezdeqness.feature.settings.store.actors.SectionActor
 import com.dezdeqness.feature.settings.store.core.CloseDialog
 import com.dezdeqness.feature.settings.store.core.DeployEffect
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class SettingsActor @Inject constructor(
     private val sectionActors: List<@JvmSuppressWildcards SectionActor>,
-    private val appLogger: AppLogger,
+    private val logger: Logger,
 ) : Actor<SettingsNamespace.Command, SettingsNamespace.Event>() {
 
     override fun execute(command: SettingsNamespace.Command) = when (command) {
@@ -29,7 +29,7 @@ class SettingsActor @Inject constructor(
 
                 emit(OnInitialStateLoaded(allSettings))
             } catch (e: Throwable) {
-                appLogger.logInfo(TAG, "Error loading initial state", e)
+                logger.logInfo(TAG, "Error loading initial state", e)
             }
         }
 
@@ -56,7 +56,7 @@ class SettingsActor @Inject constructor(
                     }
                 }
             } catch (e: Throwable) {
-                appLogger.logInfo(TAG, "Error handling click for ${command.id}", e)
+                logger.logInfo(TAG, "Error handling click for ${command.id}", e)
             }
         }
 
@@ -83,7 +83,7 @@ class SettingsActor @Inject constructor(
                     }
                 }
             } catch (e: Throwable) {
-                appLogger.logInfo(TAG, "Error handling switch change for ${command.id}", e)
+                logger.logInfo(TAG, "Error handling switch change for ${command.id}", e)
             }
         }
 
@@ -113,7 +113,7 @@ class SettingsActor @Inject constructor(
 
                 emit(CloseDialog)
             } catch (e: Throwable) {
-                appLogger.logInfo(TAG, "Error saving dialog result for ${command.id}", e)
+                logger.logInfo(TAG, "Error saving dialog result for ${command.id}", e)
             }
         }
 

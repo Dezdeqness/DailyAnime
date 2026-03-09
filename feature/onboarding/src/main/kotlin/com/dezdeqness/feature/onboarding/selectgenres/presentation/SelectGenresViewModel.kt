@@ -1,11 +1,11 @@
 package com.dezdeqness.feature.onboarding.selectgenres.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.BaseViewModel
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
 import kotlinx.coroutines.channels.Channel
@@ -25,11 +25,13 @@ import javax.inject.Inject
 class SelectGenresViewModel @Inject constructor(
     private val configurationProvider: ConfigurationProvider,
     private val mapper: SelectGenresMapper,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val appLogger: AppLogger,
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    logger: Logger,
     private val settingsRepository: SettingsRepository,
     private val homeGenresProvider: HomeGenresProvider,
-) : ViewModel() {
+) : BaseViewModel(coroutineDispatcherProvider, logger) {
+
+    override val viewModelTag = "SelectGenresViewModel"
 
     private val _events = Channel<SelectGenresEvent>()
     val events = _events.receiveAsFlow()
@@ -59,7 +61,7 @@ class SelectGenresViewModel @Inject constructor(
             }
         }
             .catch { throwable ->
-                appLogger.logInfo(tag = TAG, "flow error", throwable)
+                logInfo("Error in select genres flow", throwable)
                 emit(SelectGenresUiState(genres = emptyList()))
             }
             .flowOn(coroutineDispatcherProvider.io())
@@ -94,7 +96,6 @@ class SelectGenresViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "SelectGenresViewModel"
         private const val MAX_GENRE_COUNT = 3
     }
 }

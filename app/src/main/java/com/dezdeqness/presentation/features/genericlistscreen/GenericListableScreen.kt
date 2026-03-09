@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.event.ConsumableEvent
 import com.dezdeqness.presentation.event.Event

@@ -22,9 +22,9 @@ include(":data")
 include(":domain")
 
 // common
-include(":common:core-ui")
-include(":common:core")
-include(":common:core-test")
+include(":common:foundation-ui")
+include(":common:foundation")
+include(":common:foundation-test")
 
 // contracts
 include(":contract:auth")

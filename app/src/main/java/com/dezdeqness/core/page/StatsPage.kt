@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.DiagramChart
-import com.dezdeqness.core.ui.GenericHeader
-import com.dezdeqness.core.ui.HorizontalChart
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.ui.DiagramChart
+import com.dezdeqness.foundation.ui.GenericHeader
+import com.dezdeqness.foundation.ui.HorizontalChart
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.DiagramChartUiModel
 import com.dezdeqness.presentation.models.ScoreChartUiModel

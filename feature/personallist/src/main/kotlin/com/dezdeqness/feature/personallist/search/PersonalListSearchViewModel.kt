@@ -1,12 +1,12 @@
 package com.dezdeqness.feature.personallist.search
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.core.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.core.message.BaseMessageProvider
-import com.dezdeqness.core.message.MessageConsumer
-import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.BaseViewModel
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.domain.usecases.SearchPersonalListUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,9 +26,11 @@ class PersonalListSearchViewModel @Inject constructor(
     private val userRateUiMapper: SearchUserRateUiMapper,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val appLogger: AppLogger,
-) : ViewModel() {
+    coroutineDispatcherProvider: CoroutineDispatcherProvider,
+    logger: Logger,
+) : BaseViewModel(coroutineDispatcherProvider, logger) {
+
+    override val viewModelTag = "PersonalListSearchViewModel"
 
     private val events = MutableSharedFlow<SearchEvent>(extraBufferCapacity = 1)
 
@@ -88,8 +90,7 @@ class PersonalListSearchViewModel @Inject constructor(
                             )
                         } else {
                             onErrorMessage()
-                            appLogger.logInfo(
-                                tag = TAG,
+                            logInfo(
                                 "Error while personal search",
                                 result.result.exceptionOrNull() ?: Exception(),
                             )
@@ -146,9 +147,5 @@ class PersonalListSearchViewModel @Inject constructor(
             val query: String,
             val result: kotlin.Result<List<UserRateEntity>>
         ) : SearchResult
-    }
-
-    companion object {
-        private const val TAG = "PersonalListSearchViewModel"
     }
 }

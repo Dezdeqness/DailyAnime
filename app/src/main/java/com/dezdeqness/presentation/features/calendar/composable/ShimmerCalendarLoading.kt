@@ -14,7 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.views.shimmer
+import com.dezdeqness.foundation.ui.views.shimmer
 
 @Composable
 fun ShimmerCalendarLoading(

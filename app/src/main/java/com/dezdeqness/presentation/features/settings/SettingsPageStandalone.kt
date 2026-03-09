@@ -11,7 +11,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.core.utils.collectEvents
+import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.settings.SettingActions
 import com.dezdeqness.feature.settings.SettingsPage
 import com.dezdeqness.feature.settings.SettingsViewModel

@@ -12,8 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.ExpandableContent
-import com.dezdeqness.core.ui.views.buttons.AppTextButton
+import com.dezdeqness.foundation.ui.ExpandableContent
+import com.dezdeqness.foundation.ui.views.buttons.AppTextButton
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 
 private const val ITEMS_EXPAND_THRESHOLD = 6

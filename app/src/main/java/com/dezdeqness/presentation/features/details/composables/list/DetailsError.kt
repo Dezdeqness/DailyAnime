@@ -24,8 +24,8 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
 
 @Composable
 fun DetailsError(
@@ -46,7 +46,7 @@ fun DetailsError(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val compositionLoading by rememberLottieComposition(
-                LottieCompositionSpec.RawRes(com.dezdeqness.core.ui.R.raw.error)
+                LottieCompositionSpec.RawRes(com.dezdeqness.foundation.ui.R.raw.error)
             )
 
             LottieAnimation(
@@ -56,7 +56,7 @@ fun DetailsError(
             )
 
             Text(
-                text = stringResource(id = com.dezdeqness.core.ui.R.string.error_state_title),
+                text = stringResource(id = com.dezdeqness.foundation.ui.R.string.error_state_title),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 16.dp),
                 fontSize = 16.sp,

@@ -25,10 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.core.ui.HorizontalAnimationLayout
-import com.dezdeqness.core.ui.theme.AppTheme
-import com.dezdeqness.core.ui.views.buttons.AppButton
-import com.dezdeqness.core.ui.views.buttons.AppOutlinedButton
+import com.dezdeqness.foundation.ui.HorizontalAnimationLayout
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.views.buttons.AppOutlinedButton
 import com.dezdeqness.presentation.features.searchfilter.composables.Section
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

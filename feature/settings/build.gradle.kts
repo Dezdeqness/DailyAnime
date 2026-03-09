@@ -44,8 +44,8 @@ dependencies {
     ksp(libs.dagger.compilier)
 
     // Common
-    implementation(project(":common:core-ui"))
-    implementation(project(":common:core"))
+    implementation(project(":common:foundation-ui"))
+    implementation(project(":common:foundation"))
 
     // Unit Testing
     testImplementation(libs.junit.api)

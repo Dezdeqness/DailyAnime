@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.core.ui.views.image.AppImage
+import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.favourite.presentation.models.FavouritesUiModel
 
 @Composable
