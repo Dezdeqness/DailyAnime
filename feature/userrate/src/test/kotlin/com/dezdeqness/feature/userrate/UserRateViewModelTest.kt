@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.foundation.Logger
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -25,6 +26,9 @@ class UserRateViewModelTest {
     @MockK
     private lateinit var userRatesRepository: UserRatesRepository
 
+    @MockK
+    private lateinit var logger: Logger
+
     private lateinit var viewModel: UserRateViewModel
 
     @Before
@@ -40,6 +44,7 @@ class UserRateViewModelTest {
                 override fun io() = Dispatchers.Main
                 override fun computation() = Dispatchers.Main
             },
+            logger = logger,
         )
     }
 

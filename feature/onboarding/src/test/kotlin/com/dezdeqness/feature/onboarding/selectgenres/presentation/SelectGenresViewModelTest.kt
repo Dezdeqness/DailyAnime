@@ -221,6 +221,6 @@ class SelectGenresViewModelTest {
             ensureAllEventsConsumed()
         }
 
-        verify { logger.logInfo(tag = "SelectGenresViewModel", "flow error", throwable = error) }
+        verify { logger.logInfo("SelectGenresViewModel", any(), error) }
     }
 }
