@@ -1,6 +1,5 @@
 package com.dezdeqness.domain.usecases
 
-import com.dezdeqness.contract.auth.model.AuthorizationState
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 
@@ -33,8 +32,6 @@ class LoginUseCase(
         userRepository.saveProfileLocal(
             profileResult.getOrNull() ?: return Result.failure(Throwable("Save profile failure"))
         )
-
-        authRepository.emitAuthorizationState(AuthorizationState.LoggedIn)
 
         return Result.success(true)
     }

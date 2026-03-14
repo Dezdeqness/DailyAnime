@@ -1,11 +1,8 @@
 package com.dezdeqness.contract.auth.repository
 
-import com.dezdeqness.contract.auth.model.AuthorizationState
 import com.dezdeqness.contract.auth.model.TokenEntity
-import kotlinx.coroutines.flow.SharedFlow
 
 interface AuthRepository {
-    fun authorizationState(): SharedFlow<AuthorizationState>
 
     fun getAuthorizationCodeUrl(): Result<String>
 
@@ -24,6 +21,4 @@ interface AuthRepository {
     fun refresh(): Result<TokenEntity>
 
     fun logout(): Result<Boolean>
-
-    suspend fun emitAuthorizationState(state: AuthorizationState)
 }
