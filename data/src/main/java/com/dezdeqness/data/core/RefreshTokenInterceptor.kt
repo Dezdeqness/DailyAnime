@@ -1,6 +1,6 @@
 package com.dezdeqness.data.core
 
-import com.dezdeqness.domain.usecases.RefreshTokenUseCase
+import com.dezdeqness.contract.auth.TokenProvider
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -9,7 +9,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class RefreshTokenInterceptor @Inject constructor(
-    private val refreshTokenUseCase: Lazy<RefreshTokenUseCase>,
+    private val tokenProvider: Lazy<TokenProvider>,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -18,17 +18,15 @@ class RefreshTokenInterceptor @Inject constructor(
         val token: String
 
         if (request.header(AUTHORIZATION_HEADER) != null) {
-            synchronized(this) {
-                val tokenResult = runBlocking(Dispatchers.IO) {
-                    refreshTokenUseCase.get().invoke()
-                }
-
-                if (tokenResult.isFailure) {
-                    throw RefreshTokenExpiredException()
-                }
-
-                token = tokenResult.getOrDefault("")
+            val tokenResult = runBlocking(Dispatchers.IO) {
+                tokenProvider.get().getValidToken()
             }
+
+            if (tokenResult.isFailure) {
+                throw RefreshTokenExpiredException()
+            }
+
+            token = tokenResult.getOrDefault("")
 
             if (token.isNotEmpty()) {
                 request = request.withAccessToken("$AUTHORIZATION_BEARER$token")

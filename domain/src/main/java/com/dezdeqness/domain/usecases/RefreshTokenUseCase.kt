@@ -7,27 +7,15 @@ class RefreshTokenUseCase(
 ) {
 
     operator fun invoke(): Result<String> {
-
-        val isExpired = authRepository.isSessionExpired()
-
-        if (!isExpired) {
-            return Result.success("")
+        if (!authRepository.isSessionExpired()) {
+            return Result.success(authRepository.getToken().accessToken)
         }
 
-        val refreshResult = authRepository.refresh()
-        refreshResult.onFailure {
-            return Result.failure(it)
-        }
-
-        val token = refreshResult.getOrElse {
-            return Result.failure(it)
-        }
-        val tokenResult = authRepository.saveToken(token)
-        tokenResult.onFailure {
-            return Result.failure(it)
-        }
-
-        return Result.success(token.accessToken)
+        return authRepository.refresh()
+            .onSuccess { token ->
+                authRepository.saveToken(token)
+            }
+            .map { it.accessToken }
     }
 
 }
