@@ -1,5 +1,6 @@
 package com.dezdeqness.di.modules
 
+import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.history.repository.HistoryRepository
 import com.dezdeqness.data.core.CookieCleaner
@@ -8,6 +9,8 @@ import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.AccountRemoteDataSourceImpl
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSourceImpl
+import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
+import com.dezdeqness.data.manager.SessionManagerImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
 import com.dezdeqness.contract.user.repository.UserRepository
@@ -78,7 +81,7 @@ abstract class AccountModule {
 
         @Provides
         fun provideRefreshTokenUseCase(authRepository: AuthRepository) = RefreshTokenUseCase(
-            authRepository = authRepository
+            authRepository = authRepository,
         )
 
         @Provides
@@ -89,6 +92,28 @@ abstract class AccountModule {
         @Provides
         fun provideAccountDao(shikimoriDatabase: ShikimoriDatabase) =
             shikimoriDatabase.accountDao()
+
+        @Provides
+        fun provideAccountSessionDao(shikimoriDatabase: ShikimoriDatabase) =
+            shikimoriDatabase.accountSessionDao()
+
+        @Singleton
+        @Provides
+        fun provideSessionManager(
+            loginUseCase: LoginUseCase,
+            logoutUseCase: LogoutUseCase,
+            refreshTokenUseCase: RefreshTokenUseCase,
+            authRepository: AuthRepository,
+            userRepository: UserRepository,
+            accountSessionDao: AccountSessionDao,
+        ): SessionManager = SessionManagerImpl(
+            loginUseCase = loginUseCase,
+            logoutUseCase = logoutUseCase,
+            refreshTokenUseCase = refreshTokenUseCase,
+            authRepository = authRepository,
+            userRepository = userRepository,
+            accountSessionDao = accountSessionDao,
+        )
 
     }
 

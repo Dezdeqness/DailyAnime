@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.features.routing
 
-import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.contract.user.repository.UserRepository
+import com.dezdeqness.contract.auth.SessionManager
+import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
@@ -10,11 +10,11 @@ import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
 import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class RoutingViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager,
     private val configManager: ConfigManager,
     private val workSchedulerManager: WorkSchedulerManager,
     permissionCheckProvider: PermissionCheckProvider,
@@ -39,24 +39,9 @@ class RoutingViewModel @Inject constructor(
             workSchedulerManager.scheduleDailyWork()
             configManager.invalidate()
 
-            if (authRepository.isAuthorized()) {
-                userRepository
-                    .getProfileRemote()
-                    .onSuccess {
-                        userRepository.saveProfileLocal(it)
+            sessionManager.sessionState.first { it !is SessionState.Loading }
 
-                        onEventReceive(NavigateToMainFlow)
-                    }
-                    .onFailure {
-                        // TODO: Retry
-                        logInfo("Error during fetch of profile on splash page", it)
-
-                        onEventReceive(NavigateToMainFlow)
-
-                    }
-            } else {
-                onEventReceive(NavigateToMainFlow)
-            }
+            onEventReceive(NavigateToMainFlow)
         }
     }
 

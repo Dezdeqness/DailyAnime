@@ -1,6 +1,7 @@
 package com.dezdeqness.di
 
 import android.content.Context
+import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.ViewModelBuilderModule
@@ -120,4 +121,6 @@ interface AppComponent {
     val permissionCheckProvider: PermissionCheckProvider
 
     val workSchedulerManager: WorkSchedulerManager
+
+    val sessionManager: SessionManager
 }
