@@ -1,6 +1,6 @@
 package com.dezdeqness.data.core
 
-import com.dezdeqness.contract.auth.TokenProvider
+import com.dezdeqness.contract.auth.SessionManager
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -9,7 +9,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class RefreshTokenInterceptor @Inject constructor(
-    private val tokenProvider: Lazy<TokenProvider>,
+    private val sessionManager: Lazy<SessionManager>,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -19,7 +19,7 @@ class RefreshTokenInterceptor @Inject constructor(
 
         if (request.header(AUTHORIZATION_HEADER) != null) {
             val tokenResult = runBlocking(Dispatchers.IO) {
-                tokenProvider.get().getValidToken()
+                sessionManager.get().getValidToken()
             }
 
             if (tokenResult.isFailure) {
