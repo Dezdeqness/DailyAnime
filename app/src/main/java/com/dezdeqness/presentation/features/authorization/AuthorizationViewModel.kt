@@ -1,11 +1,11 @@
 package com.dezdeqness.presentation.features.authorization
 
 import androidx.core.net.toUri
+import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class AuthorizationViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
+    private val sessionManager: SessionManager,
     authRepository: AuthRepository,
     networkUtils: NetworkUtils,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -61,8 +61,8 @@ class AuthorizationViewModel @Inject constructor(
                 it.copy(isLoading = true)
             }
             launchOnIo {
-                loginUseCase
-                    .invoke(code)
+                sessionManager
+                    .login(code)
                     .onSuccess {
                         onEventReceive(AuthorizationSuccess)
                     }

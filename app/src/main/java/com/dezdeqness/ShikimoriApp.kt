@@ -41,6 +41,10 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
                 )
             }
 
+        launch(appComponent.coroutineDispatcherProvider().io()) {
+            appComponent.sessionManager.restoreSession()
+        }
+
         launch {
             Coil.setImageLoader(
                 createImageLoader(

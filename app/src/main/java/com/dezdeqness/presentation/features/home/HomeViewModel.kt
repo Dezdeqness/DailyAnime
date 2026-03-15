@@ -2,10 +2,10 @@ package com.dezdeqness.presentation.features.home
 
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
-import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.auth.SessionManager
+import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
@@ -31,8 +31,7 @@ class HomeViewModel @Inject constructor(
     private val actionConsumer: ActionConsumer,
     private val animeUiMapper: AnimeUiMapper,
     private val homeGenresProvider: HomeGenresProvider,
-    private val authRepository: AuthRepository,
-    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager,
     private val configManager: ConfigManager,
     private val getLatestHistoryItemUseCase: GetLatestHistoryItemUseCase,
     private val imageUrlUtils: ImageUrlUtils,
@@ -52,7 +51,7 @@ class HomeViewModel @Inject constructor(
         actionConsumer.attachListener(this)
 
         launchOnIo {
-            authRepository.authorizationState().collect { _ ->
+            sessionManager.sessionState.collect { _ ->
                 handleProfileState()
             }
         }
@@ -228,10 +227,10 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun handleProfileState() {
-        val isAuthorized = authRepository.isAuthorized()
-        val profile = userRepository.getProfileLocal()
-        val userName = profile?.nickname.orEmpty()
-        val avatarUrl = profile?.avatar.orEmpty()
+        val state = sessionManager.sessionState.value
+        val isAuthorized = state is SessionState.Authenticated
+        val userName = (state as? SessionState.Authenticated)?.nickname.orEmpty()
+        val avatarUrl = (state as? SessionState.Authenticated)?.avatar.orEmpty()
 
         _homeStateFlow.update {
             it.copy(

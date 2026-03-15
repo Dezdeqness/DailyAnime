@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.profile
 
-import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.auth.SessionManager
+import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
@@ -8,15 +9,13 @@ import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.usecases.GetUserUseCase
-import com.dezdeqness.domain.usecases.LogoutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val logoutUseCase: LogoutUseCase,
-    private val authRepository: AuthRepository,
+    private val sessionManager: SessionManager,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -31,25 +30,25 @@ class ProfileViewModel @Inject constructor(
 
     init {
         launchOnIo {
-            handleProfileState()
-        }
-
-        launchOnIo {
-            authRepository.authorizationState().collect { state ->
-                handleProfileState()
+            sessionManager.sessionState.collect { state ->
+                handleSessionState(state)
             }
         }
-
     }
 
-    private fun handleProfileState() {
-        val isAuthorized = authRepository.isAuthorized()
-        if (isAuthorized) {
-            fetchProfile()
-        } else {
-            _profileStateFlow.value = _profileStateFlow.value.copy(
-                authorizedState = AuthorizedUiState.Unauthorized,
-            )
+    private fun handleSessionState(state: SessionState) {
+        when (state) {
+            is SessionState.Authenticated -> {
+                fetchProfile()
+            }
+            is SessionState.Unauthenticated -> {
+                _profileStateFlow.value = _profileStateFlow.value.copy(
+                    authorizedState = AuthorizedUiState.Unauthorized,
+                )
+            }
+            is SessionState.Loading -> {
+                // no-op
+            }
         }
     }
 
@@ -61,8 +60,8 @@ class ProfileViewModel @Inject constructor(
 
     fun onLogoutClicked() {
         launchOnIo {
-            logoutUseCase
-                .invoke()
+            sessionManager
+                .logout()
                 .onFailure {
                     messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
                 }

@@ -4,11 +4,10 @@ import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.ImageEntity
-import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.auth.SessionManager
+import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.contract.user.model.AccountEntity
-import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -31,7 +30,7 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -60,10 +59,7 @@ class HomeViewModelTest {
     private lateinit var homeGenresProvider: HomeGenresProvider
 
     @MockK
-    private lateinit var userRepository: UserRepository
-
-    @MockK
-    private lateinit var authRepository: AuthRepository
+    private lateinit var sessionManager: SessionManager
 
     @MockK
     private lateinit var appLogger: AppLogger
@@ -97,18 +93,18 @@ class HomeViewModelTest {
 
         every { configManager.isCalendarEnabled } returns true
 
-        every { authRepository.authorizationState() } returns MutableSharedFlow()
+        every { sessionManager.sessionState } returns MutableStateFlow(
+            SessionState.Authenticated(
+                userId = 1L,
+                nickname = DEFAULT_USERNAME,
+                avatar = DEFAULT_AVATAR_URL,
+            )
+        )
 
         coEvery { homeComposer.composeSectionsInitial() } returns SectionsState(genreSections = DEFAULT_SECTIONS)
         coEvery { homeGenresProvider.getHomeSectionGenresIds() } returns DEFAULT_SECTIONS_IDS
-        every { authRepository.isAuthorized() } returns true
 
         every { getLatestHistoryItemUseCase.invoke() } returns Result.success(null)
-
-        val accountEntity = mockk<AccountEntity>()
-        every { userRepository.getProfileLocal() } returns accountEntity
-        every { accountEntity.nickname } returns DEFAULT_USERNAME
-        every { accountEntity.avatar } returns DEFAULT_AVATAR_URL
 
         coEvery {
             settingsRepository.observePreference(UserSelectedInterestsPreference)
@@ -118,13 +114,12 @@ class HomeViewModelTest {
             animeUiMapper = animeUiMapper,
             actionConsumer = actionConsumer,
             homeGenresProvider = homeGenresProvider,
-            userRepository = userRepository,
             homeRepository = homeRepository,
             coroutineDispatcherProvider = TestCoroutineDispatcherProvider(),
             appLogger = appLogger,
             homeComposer = homeComposer,
             configManager = configManager,
-            authRepository = authRepository,
+            sessionManager = sessionManager,
             imageUrlUtils = imageUrlUtils,
             getLatestHistoryItemUseCase = getLatestHistoryItemUseCase,
             settingsRepository = settingsRepository,

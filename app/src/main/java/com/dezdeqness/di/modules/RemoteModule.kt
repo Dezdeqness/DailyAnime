@@ -14,7 +14,7 @@ import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
-import com.dezdeqness.domain.usecases.RefreshTokenUseCase
+import com.dezdeqness.contract.auth.SessionManager
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
@@ -187,8 +187,8 @@ class RemoteModule {
     @Named("refresh")
     @Singleton
     @Provides
-    fun provideRefreshTokenInterceptor(refreshTokenUseCase: Lazy<RefreshTokenUseCase>): Interceptor =
-        RefreshTokenInterceptor(refreshTokenUseCase = refreshTokenUseCase)
+    fun provideRefreshTokenInterceptor(sessionManager: Lazy<SessionManager>): Interceptor =
+        RefreshTokenInterceptor(sessionManager = sessionManager)
 
     @Named("authorization")
     @Singleton
