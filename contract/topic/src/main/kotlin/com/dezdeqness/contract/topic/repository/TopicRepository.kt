@@ -4,6 +4,6 @@ import com.dezdeqness.contract.topic.model.TopicEntity
 
 interface TopicRepository {
 
-    fun getTopics(forumType: String, page: Int, limit: Int): Result<List<TopicEntity>>
+    fun getTopicsByType(forumType: String, page: Int, limit: Int): Result<List<TopicEntity>>
 
 }
