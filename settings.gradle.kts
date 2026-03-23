@@ -33,6 +33,7 @@ include(":contract:user")
 include(":contract:anime")
 include(":contract:settings")
 include(":contract:favourite")
+include(":contract:topic")
 
 // features
 include(":feature:achievements")
@@ -43,6 +44,7 @@ include(":feature:onboarding")
 include(":feature:personallist")
 include(":feature:userrate")
 include(":feature:settings")
+include(":feature:news")
 
 // shared
 include(":shared:shared-presentation")
