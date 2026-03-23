@@ -46,6 +46,7 @@ dependencies {
     // Domain
     implementation(project(":domain"))
     implementation(project(":contract:topic"))
+    implementation(project(":contract:anime"))
     testImplementation(project(":common:foundation-test"))
 
     //Elm
