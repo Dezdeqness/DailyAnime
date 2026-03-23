@@ -219,6 +219,7 @@ dependencies {
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
     implementation(project(":contract:favourite"))
+    implementation(project(":contract:topic"))
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:screenshotviewer"))
@@ -228,6 +229,7 @@ dependencies {
     implementation(project(":feature:personallist"))
     implementation(project(":feature:userrate"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:news"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
