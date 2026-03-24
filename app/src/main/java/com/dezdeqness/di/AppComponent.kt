@@ -24,6 +24,7 @@ import com.dezdeqness.di.subcomponents.FavouriteSubcomponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
+import com.dezdeqness.di.subcomponents.NewsComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.PersonalListSearchComponent
 import com.dezdeqness.di.subcomponents.PersonalListTabComponent
@@ -109,6 +110,8 @@ interface AppComponent {
     fun favouriteComponent() : FavouriteSubcomponent.Builder
 
     fun selectGenresComponent() : SelectGenresSubcomponent.Factory
+
+    fun newsComponent(): NewsComponent.Factory
 
     val appLogger: AppLogger
 
