@@ -21,6 +21,9 @@ sealed interface BottomBarNav {
 
     @Serializable
     object Profile : BottomBarNav
+
+    @Serializable
+    object News : BottomBarNav
 }
 
 @Serializable

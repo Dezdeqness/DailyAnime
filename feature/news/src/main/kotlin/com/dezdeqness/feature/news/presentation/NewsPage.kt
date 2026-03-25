@@ -56,7 +56,7 @@ fun NewsPage(
 
         Box(
             modifier = Modifier
-                .padding(contentPadding)
+                .padding(top = contentPadding.calculateTopPadding())
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.Center,

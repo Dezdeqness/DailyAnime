@@ -82,7 +82,7 @@ fun NewsItem(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            ContentBlockRenderer(blocks = item.contentBlocks)
+            ContentBlockRenderer(blocks = item.contentBlocks, isPreview = true)
 
             if (item.footerBlocks.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
