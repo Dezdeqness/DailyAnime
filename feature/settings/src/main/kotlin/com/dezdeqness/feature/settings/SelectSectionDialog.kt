@@ -117,6 +117,10 @@ data class SelectSectionItem(
                         section = InitialSection.SEARCH,
                         titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search
                     ),
+                    SelectSectionItem(
+                        section = InitialSection.NEWS,
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_news
+                    ),
                 )
             } else {
                 listOf(
@@ -135,6 +139,10 @@ data class SelectSectionItem(
                     SelectSectionItem(
                         section = InitialSection.SEARCH,
                         titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search
+                    ),
+                    SelectSectionItem(
+                        section = InitialSection.NEWS,
+                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_news
                     ),
                 )
             }

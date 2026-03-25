@@ -78,6 +78,7 @@ import com.dezdeqness.presentation.features.details.deserializeListFromString
 import com.dezdeqness.presentation.features.favourite.FavouriteStandalonePage
 import com.dezdeqness.presentation.features.history.HistoryStandalonePage
 import com.dezdeqness.presentation.features.home.HomePageStandalone
+import com.dezdeqness.presentation.features.news.NewsStandalonePage
 import com.dezdeqness.presentation.features.personallist.PersonalHostStandalonePage
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
@@ -243,8 +244,7 @@ class MainActivity : AppCompatActivity() {
                                 },
                                 containerColor = AppTheme.colors.background,
                             ) { padding ->
-                                val localSection = section
-                                if (localSection == null) return@Scaffold
+                                val localSection = section ?: return@Scaffold
 
                                 NavHost(
                                     navController = navController,
@@ -285,6 +285,18 @@ class MainActivity : AppCompatActivity() {
                                         CalendarStandalonePage(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = rootController,
+                                        )
+                                    }
+                                    composable<BottomBarNav.News>(
+                                        enterTransition = {
+                                            slideInFromTop()
+                                        },
+                                        popExitTransition = {
+                                            slideOutToTop()
+                                        },
+                                    ) {
+                                        NewsStandalonePage(
+                                            modifier = Modifier.fillMaxSize(),
                                         )
                                     }
                                     composable<BottomBarNav.Search>(
@@ -568,6 +580,7 @@ class MainActivity : AppCompatActivity() {
             InitialSection.CALENDAR -> BottomBarNav.Calendar
             InitialSection.SEARCH -> BottomBarNav.Search
             InitialSection.PROFILE -> BottomBarNav.Profile
+            InitialSection.NEWS -> BottomBarNav.News
         }
 
     private fun showLanguageDisclaimer() {
@@ -592,6 +605,10 @@ class MainActivity : AppCompatActivity() {
         HOME(
             route = BottomBarNav.Home,
             resIcon = R.drawable.ic_personal_home_filled,
+        ),
+        NEWS(
+            route = BottomBarNav.News,
+            resIcon = R.drawable.ic_news_filled,
         ),
         CALENDAR(
             route = BottomBarNav.Calendar,

@@ -18,5 +18,6 @@
     <string name="bottom_navigation_home">Home</string>
     <string name="bottom_navigation_calendar">Calendar</string>
     <string name="bottom_navigation_search">Search</string>
+    <string name="bottom_navigation_news">News</string>
     <string name="bottom_navigation_profile">Profile</string>
 </resources>
