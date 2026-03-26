@@ -5,4 +5,5 @@ import com.dezdeqness.contract.topic.model.TopicEntity
 interface TopicRemoteDataSource {
 
     fun getTopics(forumType: String, page: Int, limit: Int): Result<List<TopicEntity>>
+    fun getTopicsById(id: Int): Result<TopicEntity>
 }
