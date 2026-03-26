@@ -23,4 +23,16 @@ class TopicRemoteDataSourceImpl @Inject constructor(
             throw response.createApiException()
         }
     }
+
+    override fun getTopicsById(id: Int): Result<TopicEntity> = tryWithCatch {
+        val response = topicApiService.get().getTopic(id = id).execute()
+
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            val topic = topicMapper.fromResponse(responseBody)
+            Result.success(topic)
+        } else {
+            throw response.createApiException()
+        }
+    }
 }
