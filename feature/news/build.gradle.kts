@@ -42,6 +42,7 @@ dependencies {
     // Common
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
+    implementation(project(":shared:shared-presentation"))
 
     // Domain
     implementation(project(":domain"))
@@ -65,6 +66,4 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
-    // HTML parsing (Android core)
-    implementation(libs.androidx.core)
 }

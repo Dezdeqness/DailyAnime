@@ -21,10 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.feature.news.presentation.composables.blocks.ContentBlockRenderer
 import com.dezdeqness.feature.news.presentation.models.NewsUiModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
+import com.dezdeqness.shared.presentation.feature.topic.composables.blocks.ContentBlockRenderer
 
 @Composable
 fun NewsItem(
@@ -51,18 +51,18 @@ fun NewsItem(
                     modifier = Modifier
                         .size(32.dp)
                         .clip(CircleShape),
-                    item.userAvatarUrl,
+                    item.content.userAvatarUrl,
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = item.userNickname,
+                        text = item.content.userNickname,
                         color = AppTheme.colors.textPrimary,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Medium,
                     )
                     Text(
-                        text = item.date,
+                        text = item.content.date,
                         color = AppTheme.colors.textSecondary,
                         fontSize = 11.sp,
                     )
@@ -72,7 +72,7 @@ fun NewsItem(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = item.title,
+                text = item.content.title,
                 color = AppTheme.colors.textPrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
@@ -82,12 +82,12 @@ fun NewsItem(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            ContentBlockRenderer(blocks = item.contentBlocks, isPreview = true)
+            ContentBlockRenderer(blocks = item.content.contentBlocks, isPreview = true)
 
-            if (item.footerBlocks.isNotEmpty()) {
+            if (item.content.footerBlocks.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 ContentBlockRenderer(
-                    blocks = item.footerBlocks,
+                    blocks = item.content.footerBlocks,
                 )
             }
         }

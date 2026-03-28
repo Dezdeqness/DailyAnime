@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.news.presentation.models
+package com.dezdeqness.shared.presentation.feature.topic.model
 
 sealed class ParagraphBlock {
     data class InlineContent(val blocks: List<ContentBlock>) : ParagraphBlock()

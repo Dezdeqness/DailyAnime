@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.news.presentation.composables.blocks
+package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.feature.news.presentation.models.ParagraphBlock
+import com.dezdeqness.shared.presentation.feature.topic.model.ParagraphBlock
 
 private const val MAX_PREVIEW_PARAGRAPHS = 2
 private const val MAX_PREVIEW_TEXT_LINES = 6

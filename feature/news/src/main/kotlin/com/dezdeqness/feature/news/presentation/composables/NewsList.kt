@@ -42,7 +42,7 @@ fun NewsList(
                 is NewsUiModel.NewsItem -> {
                     NewsItem(
                         item = item,
-                        onClick = { onItemClicked(item.topicId) },
+                        onClick = { onItemClicked(item.content.topicId) },
                         modifier = Modifier.animateItem(),
                     )
                 }

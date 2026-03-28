@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.news.presentation.composables.blocks
+package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,8 +12,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.feature.news.presentation.models.ContentBlock
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
 
 @Composable
 fun InlineContentBlock(
