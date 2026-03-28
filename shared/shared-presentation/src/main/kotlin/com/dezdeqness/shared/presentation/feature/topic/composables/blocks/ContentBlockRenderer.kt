@@ -1,4 +1,4 @@
-package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
+﻿package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +17,7 @@ fun ContentBlockRenderer(
     blocks: List<ParagraphBlock>,
     modifier: Modifier = Modifier,
     isPreview: Boolean = false,
+    onVideoClick: ((String) -> Unit)? = null,
 ) {
     Column(modifier = modifier) {
         var paragraphCount = 0
@@ -38,7 +39,12 @@ fun ContentBlockRenderer(
                 }
 
                 is ParagraphBlock.VideoContent -> {
-                    VideoBlock(thumbnailUrl = paragraph.thumbnailUrl)
+                    VideoBlock(
+                        thumbnailUrl = paragraph.thumbnailUrl,
+                        onClick = paragraph.videoUrl.takeIf { onVideoClick != null }?.let { url ->
+                            { onVideoClick?.invoke(url) }
+                        },
+                    )
                 }
 
                 is ParagraphBlock.ImageContent -> {

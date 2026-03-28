@@ -1,6 +1,7 @@
-package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
+﻿package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
 
 import android.R
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -24,10 +25,19 @@ import com.dezdeqness.foundation.ui.views.image.AppImage
 internal fun VideoBlock(
     thumbnailUrl: String,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
     Column(modifier = modifier.padding(vertical = 4.dp)) {
         Box(
             contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .then(
+                    if (onClick != null) {
+                        Modifier.clickable(onClick = onClick)
+                    } else {
+                        Modifier
+                    }
+                ),
         ) {
             AppImage(
                 modifier = Modifier

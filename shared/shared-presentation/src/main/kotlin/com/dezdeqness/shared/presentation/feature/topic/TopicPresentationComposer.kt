@@ -1,4 +1,4 @@
-package com.dezdeqness.shared.presentation.feature.topic
+﻿package com.dezdeqness.shared.presentation.feature.topic
 
 import com.dezdeqness.contract.topic.model.TopicEntity
 import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
@@ -34,7 +34,7 @@ class TopicPresentationComposer @Inject constructor(
             linkedImageUrl = linked?.image
                 ?.let { it.preview.ifEmpty { it.original } }
                 ?.normalizeUrl(),
-            linkedId = topic.linkedId,
+            linkedId = linked?.let { topic.linkedId },
         )
     }
 
