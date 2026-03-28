@@ -1,10 +1,11 @@
-package com.dezdeqness.feature.news.presentation.parser
+package com.dezdeqness.shared.presentation.feature.topic.parser
 
+import android.graphics.Typeface
 import android.text.Html
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
-import com.dezdeqness.feature.news.presentation.models.ContentBlock
+import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
 import org.json.JSONObject
 
 import javax.inject.Inject
@@ -192,8 +193,8 @@ class HtmlParser @Inject constructor() {
         for (span in styleSpans) {
             val start = spanned.getSpanStart(span)
             val end = spanned.getSpanEnd(span)
-            val bold = span.style == android.graphics.Typeface.BOLD || span.style == android.graphics.Typeface.BOLD_ITALIC
-            val italic = span.style == android.graphics.Typeface.ITALIC || span.style == android.graphics.Typeface.BOLD_ITALIC
+            val bold = span.style == Typeface.BOLD || span.style == Typeface.BOLD_ITALIC
+            val italic = span.style == Typeface.ITALIC || span.style == Typeface.BOLD_ITALIC
             ranges.add(StyledRange(start, end, bold, italic, false))
         }
         for (span in underlineSpans) {

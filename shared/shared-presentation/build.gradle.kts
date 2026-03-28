@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.com.dezdeqness.compose)
 }
 
 java {
@@ -33,9 +34,11 @@ android {
 dependencies {
     // Appcompat
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core)
 
     // Common
     implementation(project(":common:foundation"))
+    implementation(project(":common:foundation-ui"))
 
     // Dagger
     implementation(libs.dagger.dagger)
@@ -44,6 +47,7 @@ dependencies {
     // Contracts
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
+    implementation(project(":contract:topic"))
 
     implementation(project(":shared:shared-domain"))
 }

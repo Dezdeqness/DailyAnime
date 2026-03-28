@@ -1,6 +1,6 @@
-package com.dezdeqness.feature.news.presentation.parser
+package com.dezdeqness.shared.presentation.feature.topic.parser
 
-import com.dezdeqness.feature.news.presentation.models.ContentBlock
+import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
 
 import javax.inject.Inject
 

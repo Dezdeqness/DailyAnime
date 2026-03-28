@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.news.presentation.composables.blocks
+package com.dezdeqness.shared.presentation.feature.topic.composables.blocks
 
 import android.R
 import androidx.compose.foundation.layout.Box
