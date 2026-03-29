@@ -5,8 +5,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.presentation.TopicDetails
 import com.dezdeqness.feature.news.presentation.NewsActions
 import com.dezdeqness.feature.news.presentation.NewsPage
 import com.dezdeqness.feature.news.presentation.NewsViewModel
@@ -15,6 +17,7 @@ import com.dezdeqness.feature.news.presentation.store.NewsNamespace
 @Composable
 fun NewsStandalonePage(
     modifier: Modifier = Modifier,
+    navController: NavHostController,
 ) {
     val context = LocalContext.current
     val newsComponent = remember {
@@ -37,7 +40,9 @@ fun NewsStandalonePage(
                 viewModel.onLoadMore()
             }
 
-            override fun onNewsItemClicked(topicId: Long) {}
+            override fun onNewsItemClicked(topicId: Long) {
+                navController.navigate(TopicDetails(topicId))
+            }
         },
     )
 
