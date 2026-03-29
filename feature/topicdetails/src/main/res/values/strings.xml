@@ -1,0 +1,9 @@
+﻿<resources>
+    <string name="topic_details_toolbar_title">Topic</string>
+    <string name="topic_details_related_anime">Related anime</string>
+    <string name="topic_details_status_anons">Announced</string>
+    <string name="topic_details_status_ongoing">Ongoing</string>
+    <string name="topic_details_status_released">Released</string>
+    <string name="topic_details_status_latest">Coming soon</string>
+    <string name="topic_details_status_unknown">Unknown</string>
+</resources>
