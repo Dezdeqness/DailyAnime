@@ -48,7 +48,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
-    testImplementation(project(":common:foundation-test"))
 
     //Elm
     implementation(libs.elmslie.core)
@@ -58,6 +57,7 @@ dependencies {
     testImplementation(libs.junit.engine)
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(project(":common:foundation-test"))
 
     // Android Testing
     testImplementation(libs.androidx.test.junit)

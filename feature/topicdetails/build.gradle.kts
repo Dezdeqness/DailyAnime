@@ -36,24 +36,35 @@ android {
 }
 
 dependencies {
+
+    // Dagger
     implementation(libs.dagger.dagger)
     ksp(libs.dagger.compilier)
 
+    // Common
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
     implementation(project(":shared:shared-presentation"))
 
+    // Domain
     implementation(project(":domain"))
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
 
+    //Elm
     implementation(libs.elmslie.core)
 
+    // Unit Testing
     testImplementation(libs.junit.api)
     testImplementation(libs.junit.engine)
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.mockk.mockk)
-    testImplementation(libs.androidx.test.junit)
     testImplementation(project(":common:foundation-test"))
+
+    // Android Testing
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.androidx.test.espresso)
+
+    // Mock
+    testImplementation(libs.mockk.mockk)
 }
