@@ -45,6 +45,7 @@ include(":feature:personallist")
 include(":feature:userrate")
 include(":feature:settings")
 include(":feature:news")
+include(":feature:topicdetails")
 
 // shared
 include(":shared:shared-presentation")

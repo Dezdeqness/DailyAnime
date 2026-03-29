@@ -84,6 +84,7 @@ import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
 import com.dezdeqness.presentation.features.stats.StatsStandalonePage
+import com.dezdeqness.presentation.features.topicdetails.TopicDetailsStandalonePage
 import com.dezdeqness.presentation.features.useroboarding.selectgenres.SelectGenresStandalonePage
 import com.dezdeqness.presentation.routing.slideInFromBottom
 import com.dezdeqness.presentation.routing.slideInFromStart
@@ -297,6 +298,7 @@ class MainActivity : AppCompatActivity() {
                                     ) {
                                         NewsStandalonePage(
                                             modifier = Modifier.fillMaxSize(),
+                                            navController = rootController,
                                         )
                                     }
                                     composable<BottomBarNav.Search>(
@@ -411,6 +413,22 @@ class MainActivity : AppCompatActivity() {
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
                                 target = target,
+                            )
+                        }
+                        composable<TopicDetails>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            popExitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
+                            val topicDetails = backStackEntry.toRoute<TopicDetails>()
+
+                            TopicDetailsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                topicId = topicDetails.id,
                             )
                         }
                         composable<Achievements>(

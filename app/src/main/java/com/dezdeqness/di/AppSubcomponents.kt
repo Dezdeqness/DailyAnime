@@ -13,6 +13,7 @@ import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.NewsComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
+import com.dezdeqness.di.subcomponents.TopicDetailsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 import dagger.Module
 
@@ -32,6 +33,7 @@ import dagger.Module
         ScreenshotsViewerComponent::class,
         DebugComponent::class,
         NewsComponent::class,
+        TopicDetailsComponent::class,
     ]
 )
 class AppSubcomponents

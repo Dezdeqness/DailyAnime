@@ -51,6 +51,11 @@ data class Details(
 )
 
 @Serializable
+data class TopicDetails(
+    val id: Long,
+)
+
+@Serializable
 data class DetailsStats(
     val scoreString: String,
     val statusesString: String,

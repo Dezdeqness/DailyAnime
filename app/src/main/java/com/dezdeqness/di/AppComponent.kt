@@ -34,6 +34,7 @@ import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.SelectGenresSubcomponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
+import com.dezdeqness.di.subcomponents.TopicDetailsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
@@ -112,6 +113,8 @@ interface AppComponent {
     fun selectGenresComponent() : SelectGenresSubcomponent.Factory
 
     fun newsComponent(): NewsComponent.Factory
+
+    fun topicDetailsComponent(): TopicDetailsComponent.Factory
 
     val appLogger: AppLogger
 
