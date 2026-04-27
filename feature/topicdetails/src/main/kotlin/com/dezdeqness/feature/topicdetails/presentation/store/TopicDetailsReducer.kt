@@ -37,7 +37,7 @@ val topicDetailsReducer = object :
                     state.copy(
                         topic = event.topic,
                         topicId = event.topic.topicId,
-                        relatedAnime = if (linkedId != null) BaseRelatedAnime.Loading else BaseRelatedAnime.Initial,
+                        relatedAnime = if (linkedId != null) BaseRelatedAnime.Loading else BaseRelatedAnime.Empty,
                         status = TopicDetailsStatus.Loaded,
                         isPullDownRefreshing = false,
                     )
@@ -68,7 +68,7 @@ val topicDetailsReducer = object :
             is TopicDetailsNamespace.Event.OnRelatedAnimeLoadError -> {
                 state {
                     state.copy(
-                        relatedAnime = BaseRelatedAnime.Error,
+                        relatedAnime = BaseRelatedAnime.Empty,
                     )
                 }
             }
