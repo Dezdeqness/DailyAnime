@@ -97,7 +97,7 @@ class TopicDetailsReducerTest {
     }
 
     @Test
-    fun `WHEN OnTopicLoaded without linked anime SHOULD set loaded and keep related anime initial`(): Unit = runTest {
+    fun `WHEN OnTopicLoaded without linked anime SHOULD set loaded and keep related anime empty`(): Unit = runTest {
         val topic = TopicPresentationModel(
             topicId = 42L,
             title = "Title",
@@ -124,7 +124,7 @@ class TopicDetailsReducerTest {
                     topicId = 42L,
                     topic = topic,
                     status = TopicDetailsStatus.Loaded,
-                    relatedAnime = BaseRelatedAnime.Initial,
+                    relatedAnime = BaseRelatedAnime.Empty,
                 ),
                 awaitItem(),
             )
