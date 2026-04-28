@@ -46,7 +46,7 @@ class PersonalListComposer @Inject constructor(
         val anime = item.anime ?: return null
 
         val score = if (item.score == 0L) {
-            "-"
+            ""
         } else {
             item.score.toString()
         }
@@ -68,7 +68,7 @@ class PersonalListComposer @Inject constructor(
 
     fun convertOnlyUserAnime(item: UserRateEntity): UserRateUiModel? {
         val score = if (item.score == 0L) {
-            "-"
+            ""
         } else {
             item.score.toString()
         }

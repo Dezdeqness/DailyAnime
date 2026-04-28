@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.personallist
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExpandedFullScreenSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.foundation.ui.theme.AppTheme
@@ -27,6 +29,8 @@ fun PersonalListSearch(
     scrollBehavior: SearchBarScrollBehavior,
     onDetailsClick: (animeId: Long, title: String) -> Unit,
 ) {
+    val shape = RoundedCornerShape(16.dp)
+
     val context = LocalContext.current
     val personalListSearchComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
@@ -57,6 +61,7 @@ fun PersonalListSearch(
         PersonalSearchTextField(
             searchBarState = searchBarState,
             textFieldState = textFieldState,
+            shape = shape,
             onSearch = {
                 viewModel.onQueryChanged(it)
             },
@@ -65,6 +70,7 @@ fun PersonalListSearch(
     }
 
     TopSearchBar(
+        shape = shape,
         scrollBehavior = scrollBehavior,
         state = searchBarState,
         inputField = inputField,

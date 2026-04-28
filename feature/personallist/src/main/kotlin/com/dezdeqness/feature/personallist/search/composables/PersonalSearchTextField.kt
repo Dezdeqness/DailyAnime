@@ -19,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.dezdeqness.foundation.ui.theme.AppTheme
@@ -31,6 +32,7 @@ fun PersonalSearchTextField(
     modifier: Modifier,
     searchBarState: SearchBarState,
     textFieldState: TextFieldState,
+    shape: Shape,
     onSearch: (String) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -41,6 +43,7 @@ fun PersonalSearchTextField(
         modifier = modifier.focusRequester(focusRequester),
         searchBarState = searchBarState,
         textFieldState = textFieldState,
+        shape = shape,
         textStyle = AppTheme.typography.titleMedium.copy(
             color = AppTheme.colors.textPrimary,
         ),
