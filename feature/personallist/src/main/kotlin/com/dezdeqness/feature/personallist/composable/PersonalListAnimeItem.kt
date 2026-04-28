@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -65,36 +63,22 @@ fun PersonalListAnimeItem(
             .fillMaxWidth(),
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Max)) {
-            Box {
-                AppImage(
-                    data = userRateUiModel.logoUrl,
-                    contentScale = ContentScale.FillHeight,
-                    modifier = Modifier
-                        .height(150.dp)
-                        .aspectRatio(2f / 3)
-                )
-
-                Text(
-                    text = remember(userRateUiModel.score) { "${userRateUiModel.score} ★" },
-                    color = Color.White,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(Color.Black.copy(alpha = 0.6f))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                        .align(alignment = Alignment.BottomStart)
-                )
-            }
+            AppImage(
+                data = userRateUiModel.logoUrl,
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier
+                    .height(180.dp)
+                    .aspectRatio(2f / 3)
+            )
 
             Column(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Column {
+                Column(modifier = Modifier.padding(8.dp).weight(1f)) {
                     Text(
                         text = userRateUiModel.name,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         maxLines = 2,
                         color = AppTheme.colors.textPrimary,
                         style = AppTheme.typography.bodyMedium,
@@ -107,8 +91,22 @@ fun PersonalListAnimeItem(
                         fontSize = 12.sp,
                         style = AppTheme.typography.bodyMedium,
                         color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
-                        modifier = Modifier.padding(start = 8.dp),
                     )
+
+                    userRateUiModel
+                        .score
+                        .takeIf { it.isNotEmpty() }
+                        ?.let { score ->
+                            Text(
+                                text = score,
+                                modifier = Modifier.fillMaxWidth(),
+                                maxLines = 2,
+                                color = AppTheme.colors.textPrimary,
+                                style = AppTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                 }
 
                 Column {
@@ -186,7 +184,7 @@ fun PersonalListAnimeItem(
     }
 }
 
-@Preview
+@Preview(fontScale = 1f)
 @Composable
 fun PersonalListAnimeItemPreview() {
     AppTheme {
