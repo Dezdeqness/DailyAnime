@@ -8,7 +8,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -65,7 +64,9 @@ fun UserRateContent(
     val context = LocalContext.current
 
     val scope = rememberCoroutineScope()
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
 
     val listStatuses = remember {
         SelectStatusItem.composeList(context)
@@ -210,19 +211,8 @@ fun UserRateContent(
                 color = AppTheme.colors.textPrimary,
             )
 
-            Text(
-                state.episode.toString(),
-                style = AppTheme.typography.titleMedium.copy(
-                    color = AppTheme.colors.textPrimary,
-                ),
-                maxLines = 1,
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
             MaterialTheme {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = actions::onDecrementEpisode) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_minus),
@@ -230,6 +220,16 @@ fun UserRateContent(
                             tint = MaterialTheme.colorScheme.primary,
                         )
                     }
+
+                    Text(
+                        state.episode.toString(),
+                        style = AppTheme.typography.titleMedium.copy(
+                            color = AppTheme.colors.textPrimary,
+                        ),
+                        maxLines = 1,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    )
+
                     IconButton(onClick = actions::onIncrementEpisode) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_plus),
@@ -258,7 +258,7 @@ fun UserRateContent(
             onCommentChanged = {
                 actions.onCommentChanged(it)
             },
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp),
             trailingIcon = {
                 IconButton(
                     onClick = {

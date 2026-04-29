@@ -13,6 +13,7 @@
     <string name="userrate_edit_rate_episodes_title">Watched:</string>
     <string name="userrate_edit_rate_episodes_header">Episodes</string>
     <string name="userrate_edit_rate_comment_header">Comment</string>
+    <string name="userrate_edit_rate_comment_hint">Add comment</string>
     <string name="userrate_edit_rate_score_header">Score</string>
 
     <string name="userrate_edit_rate_reset_title">Reset</string>

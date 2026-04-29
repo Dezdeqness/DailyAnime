@@ -46,7 +46,13 @@ class UserRepositoryImpl @Inject constructor(
         return accountRemoteDataSource.refresh(tokenData.refreshToken)
     }
 
-    override fun logout() = accountRemoteDataSource.logout()
+    override fun logout(): Result<Boolean> {
+        return if (isSessionExpired()) {
+            Result.success(true)
+        } else {
+            accountRemoteDataSource.logout()
+        }
+    }
 
     override fun getProfileRemote(): Result<AccountEntity> {
         return accountRemoteDataSource.getBriefAccountInfo()

@@ -13,6 +13,7 @@
     <string name="userrate_edit_rate_episodes_title">Просмотрено:</string>
     <string name="userrate_edit_rate_episodes_header">Эпизоды</string>
     <string name="userrate_edit_rate_comment_header">Комментарий</string>
+    <string name="userrate_edit_rate_comment_hint">Добавить комментарий</string>
     <string name="userrate_edit_rate_score_header">Оценка</string>
 
     <string name="userrate_edit_rate_reset_title">Сбросить</string>
