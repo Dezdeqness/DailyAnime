@@ -80,12 +80,6 @@ fun SelectStatusDialog(
                     )
                 }
             }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(36.dp)
-            )
         }
     }
 }

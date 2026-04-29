@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,10 +25,12 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.feature.userrate.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
@@ -40,7 +43,6 @@ fun CommentTextField(
     onCommentChanged: (String) -> Unit,
     containerColor: Color = AppTheme.colors.surfaceVariant,
     shape: Shape = RoundedCornerShape(16.dp),
-    placeholder: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(
         imeAction = ImeAction.Done,
@@ -69,10 +71,13 @@ fun CommentTextField(
             state.comment = it
             onCommentChanged(it)
         },
-        placeholder = if (editTextFocused) {
-            placeholder
-        } else {
-            null
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.userrate_edit_rate_comment_hint),
+                style = textStyle.copy(
+                    color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
+                ),
+            )
         },
         modifier = modifier
             .fillMaxWidth()
@@ -82,7 +87,6 @@ fun CommentTextField(
                 editTextFocused = it.isFocused
             },
         textStyle = textStyle,
-        singleLine = true,
         trailingIcon = if (state.comment.isNotBlank()) {
             trailingIcon
         } else {
@@ -96,6 +100,7 @@ fun CommentTextField(
         ),
         colors = colors,
         minLines = 3,
+        maxLines = 3,
     )
 }
 

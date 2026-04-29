@@ -53,19 +53,18 @@ fun ShimmerPersonalItem(
 
             Box(
                 modifier = Modifier
-                    .height(150.dp)
+                    .height(180.dp)
                     .aspectRatio(2f / 3)
                     .shimmer()
             )
 
             Column(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Column {
+                Column(modifier = Modifier.padding(8.dp).weight(1f)) {
                     Box(
                         modifier = Modifier
-                            .padding(8.dp)
                             .width(100.dp)
                             .height(16.dp)
                             .shimmer()
@@ -73,7 +72,7 @@ fun ShimmerPersonalItem(
 
                     Box(
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(top = 4.dp)
                             .width(30.dp)
                             .height(14.dp)
                             .shimmer()
