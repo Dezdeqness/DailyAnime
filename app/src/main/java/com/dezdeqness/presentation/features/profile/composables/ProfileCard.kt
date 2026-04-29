@@ -8,14 +8,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.InsertChartOutlined
+import androidx.compose.material.icons.outlined.AutoAwesome
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
@@ -55,27 +61,27 @@ fun ProfileCard(
 
         ProfileButton(
             title = stringResource(id = R.string.profile_statistics),
-            icon = R.drawable.ic_profile_label_statistics,
+            icon = Icons.Default.InsertChartOutlined,
             onClick = onStatsClicked,
         )
         ProfileButton(
             title = stringResource(id = R.string.profile_achievements),
-            icon = R.drawable.ic_profile_label_achievements,
+            icon = Icons.Outlined.AutoAwesome,
             onClick = onAchievementsClicked,
         )
         ProfileButton(
             title = stringResource(id = R.string.profile_favourites),
-            icon = R.drawable.ic_profile_label_favouritte,
+            icon = Icons.Outlined.Favorite,
             onClick = onFavouriteClicked,
         )
         ProfileButton(
             title = stringResource(id = R.string.profile_history),
-            icon = R.drawable.ic_profile_label_history,
+            icon = Icons.Default.History,
             onClick = onHistoryClicked,
         )
         ProfileButton(
             title = stringResource(id = R.string.profile_logout),
-            icon = R.drawable.ic_logout,
+            icon = Icons.AutoMirrored.Filled.Logout,
             onClick = onLogoutClicked,
         )
     }
