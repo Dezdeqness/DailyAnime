@@ -84,13 +84,15 @@ fun HomePage(
 
             if (latestHistory.status == SectionStatus.Loading) {
                 item {
-                    HistoryShimmerItem(modifier = Modifier.padding(horizontal = 16.dp))
+                    HistoryShimmerItem(modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 8.dp))
                 }
             } else {
                 latestHistory.historyUiModel?.let {
                     item {
                         HistoryLatestSection(
-                            modifier = Modifier.padding(vertical = 8.dp),
+                            modifier = Modifier.padding(vertical = 8.dp).animateItem(),
                             item = it,
                             onActionReceive = actions::onActionReceived,
                         )

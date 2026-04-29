@@ -49,7 +49,7 @@ fun HomeCalendarItem(
             data = item.imageUrl,
             modifier = Modifier
                 .height(160.dp)
-                .aspectRatio(9f / 16)
+                .aspectRatio(2 / 3f)
         )
 
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
