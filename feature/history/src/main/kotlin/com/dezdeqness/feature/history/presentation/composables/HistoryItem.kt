@@ -3,6 +3,7 @@ package com.dezdeqness.feature.history.presentation.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -22,7 +23,6 @@ import com.dezdeqness.feature.history.presentation.models.HistoryModel
 
 @Composable
 fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel) {
-
     Card(modifier = modifier) {
         Box(contentAlignment = Alignment.Center) {
             AppImage(
@@ -31,7 +31,9 @@ fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel
                     AppTheme.colors.onPrimary.copy(alpha = 0.7f),
                     blendMode = BlendMode.SrcOver,
                 ),
-                modifier = Modifier.matchParentSize()
+                modifier = Modifier
+                    .matchParentSize()
+                    .aspectRatio(16 / 9f)
             )
 
             Column(
@@ -43,6 +45,8 @@ fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel
                     color = AppTheme.colors.textPrimary,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 Text(

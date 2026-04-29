@@ -61,8 +61,8 @@ private fun ShimmerHomeItem(
                 ) {
                     Box(
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(120.dp)
+                            .width(110.dp)
+                            .height(140.dp)
                             .shimmer()
                     )
                     Spacer(modifier = Modifier.size(8.dp))

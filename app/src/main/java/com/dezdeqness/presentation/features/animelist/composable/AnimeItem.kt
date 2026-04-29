@@ -59,6 +59,7 @@ fun AnimeItem(
             Text(
                 text = item.kind,
                 color = Color.White,
+                style = AppTheme.typography.bodySmall,
                 modifier = Modifier
                     .clip(RoundedCornerShape(6.dp))
                     .background(colorResource(id = R.color.background_shadow))
