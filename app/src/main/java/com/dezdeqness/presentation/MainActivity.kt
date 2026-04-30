@@ -657,7 +657,7 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 private fun StatusBarProtection(
-    color: Color = MaterialTheme.colorScheme.surfaceContainer,
+    color: Color = AppTheme.colors.onPrimary,
     heightProvider: () -> Float = calculateGradientHeight(),
 ) {
 

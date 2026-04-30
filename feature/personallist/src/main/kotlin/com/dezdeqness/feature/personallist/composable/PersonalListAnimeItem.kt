@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.trace
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
@@ -171,6 +172,7 @@ fun PersonalListAnimeItem(
 
                     LinearProgressIndicator(
                         progress = { progressValue },
+                        trackColor = AppTheme.colors.border,
                         modifier = Modifier
                             .padding(horizontal = 4.dp)
                             .height(4.dp)

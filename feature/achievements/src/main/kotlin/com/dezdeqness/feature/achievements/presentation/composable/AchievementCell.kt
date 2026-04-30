@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.achievements.R
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
 fun AchievementCell(
@@ -79,6 +80,7 @@ fun AchievementCell(
 
             LinearProgressIndicator(
                 progress = { item.progress },
+                trackColor = AppTheme.colors.border,
                 modifier = Modifier.fillMaxWidth(),
                 drawStopIndicator = {}
             )

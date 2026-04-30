@@ -10,6 +10,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarDefaults.inputFieldColors
 import androidx.compose.material3.SearchBarState
 import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
@@ -44,6 +45,10 @@ fun PersonalSearchTextField(
         searchBarState = searchBarState,
         textFieldState = textFieldState,
         shape = shape,
+        colors = inputFieldColors().copy(
+            unfocusedContainerColor = AppTheme.colors.surfaceVariant,
+            focusedContainerColor = AppTheme.colors.surfaceVariant,
+        ),
         textStyle = AppTheme.typography.titleMedium.copy(
             color = AppTheme.colors.textPrimary,
         ),

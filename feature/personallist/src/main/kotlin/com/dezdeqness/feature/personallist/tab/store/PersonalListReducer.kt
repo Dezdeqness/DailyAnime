@@ -59,11 +59,20 @@ val personalListReducer = object :
             }
 
             is PersonalListNamespace.Event.OnLoadPageError -> {
-                state {
-                    state.copy(
-                        dataStatus = PersonalListStatus.Error,
-                        isPullDownRefreshing = false
-                    )
+                if (state.list.isNotEmpty()) {
+                    state {
+                        state.copy(
+                            isPullDownRefreshing = false
+                        )
+                    }
+                    effects { +PersonalListNamespace.Effect.Error }
+                } else {
+                    state {
+                        state.copy(
+                            dataStatus = PersonalListStatus.Error,
+                            isPullDownRefreshing = false
+                        )
+                    }
                 }
             }
 

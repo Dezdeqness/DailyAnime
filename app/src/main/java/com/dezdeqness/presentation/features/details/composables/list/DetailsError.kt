@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.details.composables.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ fun DetailsError(
     Box(
         modifier = modifier
             .fillMaxSize()
+            .background(AppTheme.colors.background)
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center,
@@ -68,7 +70,7 @@ fun DetailsError(
         AppButton(
             title = stringResource(id = com.dezdeqness.R.string.anime_details_state_error_title),
             onClick = onRetryClick,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp).align(Alignment.BottomCenter)
+            modifier = Modifier.fillMaxWidth().padding(bottom = 36.dp).align(Alignment.BottomCenter)
         )
     }
 }

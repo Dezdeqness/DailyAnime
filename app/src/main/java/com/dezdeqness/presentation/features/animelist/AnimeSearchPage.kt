@@ -119,8 +119,8 @@ fun AnimeSearchPage(
                 exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut(),
             ) {
                 FloatingActionButton(
-                    containerColor = AppTheme.colors.accent,
-                    contentColor = AppTheme.colors.onPrimary,
+                    containerColor = AppTheme.colors.primary,
+                    contentColor = AppTheme.colors.white,
                     onClick = { actions.onFabClicked() }
                 ) {
                     Icon(
