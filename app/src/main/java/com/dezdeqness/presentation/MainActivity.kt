@@ -162,6 +162,9 @@ class MainActivity : AppCompatActivity() {
             val rootController = rememberNavController()
             val snackbarHostState = remember { SnackbarHostState() }
 
+            val navBackStackEntry by rootController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+
             val coroutineScope = rememberCoroutineScope()
 
             val themeMode by themeModeFlow.collectAsStateWithLifecycle()
@@ -564,7 +567,11 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
 
-                StatusBarProtection()
+                val isNotScreenshots = currentRoute?.contains(Screenshots::class.simpleName.toString()) == false
+
+                if (isNotScreenshots) {
+                    StatusBarProtection()
+                }
 
                 mainViewModel.messageState.collectEvents { event ->
                     coroutineScope.launch {
@@ -614,7 +621,7 @@ class MainActivity : AppCompatActivity() {
 
     enum class AppBottomTabModel(
         val route: BottomBarNav,
-        @DrawableRes val resIcon: Int
+        @DrawableRes val resIcon: Int,
     ) {
         PERSONAL_LIST(
             route = BottomBarNav.PersonalList,

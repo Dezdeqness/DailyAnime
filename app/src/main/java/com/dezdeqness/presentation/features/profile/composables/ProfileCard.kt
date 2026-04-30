@@ -10,10 +10,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.InsertChartOutlined
 import androidx.compose.material.icons.outlined.AutoAwesome
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -71,7 +71,7 @@ fun ProfileCard(
         )
         ProfileButton(
             title = stringResource(id = R.string.profile_favourites),
-            icon = Icons.Outlined.Favorite,
+            icon = Icons.Default.FavoriteBorder,
             onClick = onFavouriteClicked,
         )
         ProfileButton(

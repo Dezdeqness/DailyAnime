@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
@@ -24,9 +25,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
@@ -34,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.screenshotsviewer.composables.ScreenshotPager
+import com.dezdeqness.feature.screenshotsviewer.composables.ScreenshotPreview
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -64,16 +68,27 @@ fun ScreenshotViewerPage(
             }
         }
 
-        ScreenshotPager(
-            state = pagerState,
-            items = state.screenshotsList,
-            onShow = {
-                isToolbarVisible = true
-            },
-            onHide = {
-                isToolbarVisible = false
-            }
-        )
+        Box {
+            ScreenshotPager(
+                state = pagerState,
+                items = state.screenshotsList,
+                onShow = {
+                    isToolbarVisible = true
+                },
+                onHide = {
+                    isToolbarVisible = false
+                }
+            )
+
+            ScreenshotPreview(
+                items = state.screenshotsList,
+                pagerState = pagerState,
+                isToolbarVisible = isToolbarVisible,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 20.dp)
+            )
+        }
 
         effectFlow
             .collectEvents { effect ->
