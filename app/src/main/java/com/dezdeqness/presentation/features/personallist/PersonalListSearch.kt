@@ -81,6 +81,7 @@ fun PersonalListSearch(
     ExpandedFullScreenSearchBar(
         state = searchBarState,
         inputField = inputField,
+        colors = SearchBarDefaults.colors(containerColor = AppTheme.colors.surfaceVariant),
     ) {
         PersonalListSearchExpandedPage(
             stateFlow = viewModel.searchState,

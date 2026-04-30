@@ -54,6 +54,7 @@ fun ProgressSettingsView(
                     .padding(vertical = 8.dp)
                     .fillMaxWidth(1f)
                     .height(4.dp),
+                trackColor = AppTheme.colors.border,
                 progress = { progress },
                 drawStopIndicator = {},
             )

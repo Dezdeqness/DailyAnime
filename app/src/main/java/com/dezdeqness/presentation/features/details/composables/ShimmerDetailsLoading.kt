@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.details.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,12 +19,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.shimmer
 
 @Composable
 fun ShimmerDetailsLoading(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
+            .background(AppTheme.colors.background)
             .fillMaxWidth()
             .padding(top = 56.dp)
             .verticalScroll(

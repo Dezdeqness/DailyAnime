@@ -27,6 +27,8 @@ fun lightColors(): AppColors = AppColors(
     successColor = LightAnimeColors.Success,
     warningColor = LightAnimeColors.Warning,
     accentColor = LightAnimeColors.Accent,
+    whiteColor = LightAnimeColors.White,
+    blackColor = LightAnimeColors.Black,
 )
 
 fun darkColors(): AppColors = AppColors(
@@ -49,6 +51,8 @@ fun darkColors(): AppColors = AppColors(
     successColor = DarkAnimeColors.Success,
     warningColor = DarkAnimeColors.Warning,
     accentColor = DarkAnimeColors.Accent,
+    whiteColor = DarkAnimeColors.White,
+    blackColor = DarkAnimeColors.Black,
 )
 
 fun amoledColors(): AppColors = AppColors(
@@ -71,6 +75,8 @@ fun amoledColors(): AppColors = AppColors(
     successColor = AmoledAnimeColors.Success,
     warningColor = AmoledAnimeColors.Warning,
     accentColor = AmoledAnimeColors.Accent,
+    whiteColor = AmoledAnimeColors.White,
+    blackColor = AmoledAnimeColors.Black,
 )
 
 @Immutable
@@ -94,6 +100,8 @@ class AppColors(
     private val successColor: Color,
     private val warningColor: Color,
     private val accentColor: Color,
+    private val whiteColor: Color,
+    private val blackColor: Color,
 ) {
 
     var primary by mutableStateOf(primaryColor)
@@ -134,6 +142,10 @@ class AppColors(
         private set
     var accent by mutableStateOf(accentColor)
         private set
+    var white by mutableStateOf(whiteColor)
+        private set
+    var black by mutableStateOf(blackColor)
+        private set
 
     fun updateColorsFrom(other: AppColors) {
         primary = other.primary
@@ -155,6 +167,8 @@ class AppColors(
         success = other.success
         warning = other.warning
         accent = other.accent
+        white = other.white
+        black = other.black
     }
 
     fun copy(
@@ -177,6 +191,8 @@ class AppColors(
         success: Color = this.success,
         warning: Color = this.warning,
         accent: Color = this.accent,
+        white: Color = this.white,
+        black: Color = this.black,
     ): AppColors = AppColors(
         primaryColor = primary,
         primaryVariantColor = primaryVariant,
@@ -197,6 +213,8 @@ class AppColors(
         onBackgroundColor = onBackground,
         onSurfaceColor = onSurface,
         accentColor = accent,
+        whiteColor = white,
+        blackColor = black,
     )
 }
 

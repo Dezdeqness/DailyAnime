@@ -42,7 +42,7 @@ fun PersonalListTabs(
             val isSelected = targetPage == index
 
             val localModifier = if (isSelected) {
-                Modifier.background(AppTheme.colors.accent)
+                Modifier.background(AppTheme.colors.primary)
             } else {
                 Modifier.border(
                     border = BorderStroke(1.dp, AppTheme.colors.surface),
