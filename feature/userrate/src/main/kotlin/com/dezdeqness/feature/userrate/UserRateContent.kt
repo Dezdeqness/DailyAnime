@@ -19,7 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -145,31 +144,29 @@ fun UserRateContent(
             verticalPadding = 8.dp,
         )
 
-        MaterialTheme {
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 4.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(
-                        BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-                        RoundedCornerShape(8.dp)
-                    )
-                    .clickable(
-                        onClick = actions::onSelectStatusClicked,
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(color = AppTheme.colors.ripple)
-                    )
-            ) {
-                Text(
-                    text = listStatuses
-                        .firstOrNull { it.id == state.selectedStatus }
-                        ?.title
-                        ?: stringResource(id = R.string.userrate_edit_rate_status_no_status),
-                    modifier = Modifier.padding(16.dp),
-                    color = AppTheme.colors.textPrimary,
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 4.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .border(
+                    BorderStroke(1.dp, AppTheme.colors.primary),
+                    RoundedCornerShape(8.dp)
                 )
-            }
+                .clickable(
+                    onClick = actions::onSelectStatusClicked,
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple(color = AppTheme.colors.ripple)
+                )
+        ) {
+            Text(
+                text = listStatuses
+                    .firstOrNull { it.id == state.selectedStatus }
+                    ?.title
+                    ?: stringResource(id = R.string.userrate_edit_rate_status_no_status),
+                modifier = Modifier.padding(16.dp),
+                color = AppTheme.colors.textPrimary,
+            )
         }
 
         Header(
@@ -211,32 +208,30 @@ fun UserRateContent(
                 color = AppTheme.colors.textPrimary,
             )
 
-            MaterialTheme {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = actions::onDecrementEpisode) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_minus),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                    }
-
-                    Text(
-                        state.episode.toString(),
-                        style = AppTheme.typography.titleMedium.copy(
-                            color = AppTheme.colors.textPrimary,
-                        ),
-                        maxLines = 1,
-                        modifier = Modifier.padding(horizontal = 16.dp),
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = actions::onDecrementEpisode) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_minus),
+                        contentDescription = null,
+                        tint = AppTheme.colors.primary,
                     )
+                }
 
-                    IconButton(onClick = actions::onIncrementEpisode) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_plus),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                    }
+                Text(
+                    state.episode.toString(),
+                    style = AppTheme.typography.titleMedium.copy(
+                        color = AppTheme.colors.textPrimary,
+                    ),
+                    maxLines = 1,
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                )
+
+                IconButton(onClick = actions::onIncrementEpisode) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_plus),
+                        contentDescription = null,
+                        tint = AppTheme.colors.primary,
+                    )
                 }
             }
 
