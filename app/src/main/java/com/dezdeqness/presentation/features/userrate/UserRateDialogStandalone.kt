@@ -17,6 +17,7 @@ import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.feature.userrate.UserRateActions
 import com.dezdeqness.feature.userrate.UserRateContent
 import com.dezdeqness.feature.userrate.UserRateViewModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +55,8 @@ fun UserRateDialogStandalone(
         sheetState = sheetState,
         dragHandle = null,
         sheetGesturesEnabled = false,
-        properties = ModalBottomSheetProperties()
+        properties = ModalBottomSheetProperties(),
+        containerColor = AppTheme.colors.onPrimary,
     ) {
         UserRateContent(
             stateFlow = viewModel.userRateStateFlow,

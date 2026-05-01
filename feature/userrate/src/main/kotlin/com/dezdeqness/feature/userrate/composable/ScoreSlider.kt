@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -97,6 +97,7 @@ fun CustomSlider(
         value = value,
         valueRange = valueRange,
         steps = steps,
+        colors = SliderDefaults.colors(inactiveTrackColor = AppTheme.colors.surfaceVariant),
         onValueChange = { onValueChange(it) },
         thumb = {
             Label(value = value)
@@ -112,20 +113,18 @@ private fun Label(
     value: Float,
 ) {
     val data = if (value == 0.0f) "" else value.toInt().toString()
-    MaterialTheme {
-        Text(
-            data,
-            style = AppTheme.typography.titleSmall.copy(fontWeight = FontWeight.Normal),
-            textAlign = TextAlign.Center,
-            color = Color.White,
-            modifier = modifier
-                .defaultMinSize(minWidth = 25.dp, minHeight = 25.dp)
-                .clip(CircleShape)
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = CircleShape
-                )
-                .padding(4.dp)
-        )
-    }
+    Text(
+        data,
+        style = AppTheme.typography.titleSmall.copy(fontWeight = FontWeight.Normal),
+        textAlign = TextAlign.Center,
+        color = Color.White,
+        modifier = modifier
+            .defaultMinSize(minWidth = 25.dp, minHeight = 25.dp)
+            .clip(CircleShape)
+            .background(
+                color = AppTheme.colors.primary,
+                shape = CircleShape
+            )
+            .padding(4.dp)
+    )
 }
