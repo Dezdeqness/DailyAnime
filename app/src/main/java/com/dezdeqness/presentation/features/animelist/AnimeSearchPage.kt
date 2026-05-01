@@ -39,6 +39,7 @@ import com.dezdeqness.foundation.ui.views.GeneralEmpty
 import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearch
 import com.dezdeqness.presentation.features.animelist.composable.AnimeSearchGrid
+import com.dezdeqness.presentation.features.animelist.composable.FilterFab
 import com.dezdeqness.presentation.features.animelist.composable.HistoryItem
 import com.dezdeqness.presentation.features.animelist.composable.ShimmerSearchLoading
 import kotlinx.coroutines.flow.StateFlow
@@ -118,17 +119,11 @@ fun AnimeSearchPage(
                 enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }) + fadeIn(),
                 exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut(),
             ) {
-                FloatingActionButton(
-                    containerColor = AppTheme.colors.primary,
-                    contentColor = AppTheme.colors.white,
-                    onClick = { actions.onFabClicked() }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.filter_list),
-                        contentDescription = null,
-                        tint = AppTheme.colors.white,
-                    )
-                }
+                FilterFab(
+                    isFilterApplied = state.input.filters.isNotEmpty(),
+                    onFilterClick = actions::onFabClicked,
+                    onClearClick = actions::onFilterChanged,
+                )
             }
         }
     ) { contentPadding ->

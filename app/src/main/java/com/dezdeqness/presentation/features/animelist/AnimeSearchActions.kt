@@ -10,7 +10,7 @@ interface AnimeSearchActions {
     fun onActionReceived(action: Action)
     fun onFabClicked()
     fun onQueryChanged(query: String)
-    fun onFilterChanged(filtersList: List<SearchSectionUiModel>)
+    fun onFilterChanged(filtersList: List<SearchSectionUiModel> = listOf())
     fun onScrollInProgress(isScrollInProgress: Boolean)
     fun removeSearchHistoryItem(item: String)
 }
