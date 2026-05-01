@@ -87,7 +87,7 @@ fun DetailsPage(
             FloatingActionButton(
                 onClick = actions::onFabClicked,
                 containerColor = AppTheme.colors.accent,
-                contentColor = AppTheme.colors.onPrimary,
+                contentColor = AppTheme.colors.white,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(16.dp)
@@ -96,7 +96,7 @@ fun DetailsPage(
                 Icon(
                     painterResource(R.drawable.ic_edit),
                     contentDescription = null,
-                    tint = AppTheme.colors.onSurface,
+                    tint = AppTheme.colors.white,
                 )
             }
         }

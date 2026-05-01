@@ -200,12 +200,14 @@ class AnimeViewModel @Inject constructor(
     fun onFilterChanged(filtersList: List<SearchSectionUiModel>) {
         val input = animeSearchState.value.input.copy(filters = filtersList)
         loadEvents.tryEmit(LoadEvent.Refresh(input, isScrollNeed = true))
+        _pullRefreshFlow.tryEmit(true)
     }
 
     fun onQueryChanged(query: String) {
         if (animeSearchState.value.input.query == query) return
         val input = animeSearchState.value.input.copy(query = query)
         loadEvents.tryEmit(LoadEvent.Refresh(input, isScrollNeed = true))
+        _pullRefreshFlow.tryEmit(true)
         launchOnIo {
             historySearchRepository.addSearchHistory(query)
         }

@@ -126,7 +126,7 @@ fun AnimeSearchPage(
                     Icon(
                         painter = painterResource(id = R.drawable.filter_list),
                         contentDescription = null,
-                        tint = AppTheme.colors.onSurface,
+                        tint = AppTheme.colors.white,
                     )
                 }
             }

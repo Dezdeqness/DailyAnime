@@ -33,7 +33,7 @@ fun <T> ListPreferencesDialog(
         Surface(
             modifier = Modifier.padding(24.dp),
             shape = AlertDialogDefaults.shape,
-            color = AlertDialogDefaults.containerColor,
+            color = AppTheme.colors.background,
             tonalElevation = AlertDialogDefaults.TonalElevation
         )  {
             LazyColumn(modifier = modifier) {

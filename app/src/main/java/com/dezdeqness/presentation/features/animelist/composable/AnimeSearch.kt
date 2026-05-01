@@ -1,6 +1,7 @@
 package com.dezdeqness.presentation.features.animelist.composable
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -11,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarDefaults.inputFieldColors
 import androidx.compose.material3.SearchBarScrollBehavior
 import androidx.compose.material3.SearchBarState
 import androidx.compose.material3.SearchBarValue
@@ -23,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
@@ -36,6 +39,8 @@ fun AnimeSearch(
     onQueryChanged: (String) -> Unit,
     historyContent: @Composable ColumnScope.(TextFieldState, SearchBarState) -> Unit,
 ) {
+    val shape = RoundedCornerShape(16.dp)
+
     val searchBarState = rememberSearchBarState()
 
     val textFieldState = rememberTextFieldState()
@@ -53,9 +58,14 @@ fun AnimeSearch(
             SearchBarDefaults.InputField(
                 modifier = modifier,
                 searchBarState = searchBarState,
+                shape = shape,
                 textFieldState = textFieldState,
                 textStyle = AppTheme.typography.titleMedium.copy(
                     color = AppTheme.colors.textPrimary,
+                ),
+                colors = inputFieldColors().copy(
+                    unfocusedContainerColor = AppTheme.colors.surfaceVariant,
+                    focusedContainerColor = AppTheme.colors.surfaceVariant,
                 ),
                 onSearch = {
                     onQueryChanged(textFieldState.text.toString())
@@ -111,6 +121,7 @@ fun AnimeSearch(
         }
 
     TopSearchBar(
+        shape = shape,
         scrollBehavior = scrollBehavior,
         state = searchBarState,
         inputField = inputField,
@@ -121,6 +132,7 @@ fun AnimeSearch(
     ExpandedFullScreenSearchBar(
         state = searchBarState,
         inputField = inputField,
+        colors = SearchBarDefaults.colors(containerColor = AppTheme.colors.surfaceVariant),
     ) {
         historyContent(textFieldState, searchBarState)
     }
