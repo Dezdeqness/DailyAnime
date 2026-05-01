@@ -64,7 +64,6 @@ fun TimePickerDialog(
         },
         sheetState = sheetState,
         sheetGesturesEnabled = false,
-        dragHandle = null,
         containerColor = AppTheme.colors.onPrimary,
     ) {
         Column(

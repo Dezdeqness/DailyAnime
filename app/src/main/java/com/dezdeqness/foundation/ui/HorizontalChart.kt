@@ -67,7 +67,7 @@ fun HorizontalChart(
                     Spacer(modifier = Modifier.weight(1f))
 
                     Text(
-                        text = value.toString(),
+                        text = value,
                         fontSize = 14.sp,
                         textAlign = TextAlign.End,
                         color = AppTheme.colors.textPrimary,
@@ -85,6 +85,7 @@ fun HorizontalChart(
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth(fraction = animatedProgress.value)
+                            .clip(RoundedCornerShape(4.dp))
                             .background(AppTheme.colors.accent)
                     )
                 }

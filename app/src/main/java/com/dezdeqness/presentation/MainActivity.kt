@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -224,6 +225,9 @@ class MainActivity : AppCompatActivity() {
                                             }
                                             NavigationBarItem(
                                                 selected = isSelected,
+                                                colors = NavigationBarItemDefaults.colors(
+                                                    indicatorColor = AppTheme.colors.border,
+                                                ),
                                                 onClick = {
                                                     if (currentDestination != item.route) {
                                                         navController.navigate(item.route) {
@@ -567,7 +571,8 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
 
-                val isNotScreenshots = currentRoute?.contains(Screenshots::class.simpleName.toString()) == false
+                val isNotScreenshots =
+                    currentRoute?.contains(Screenshots::class.simpleName.toString()) == false
 
                 if (isNotScreenshots) {
                     StatusBarProtection()
