@@ -1,0 +1,25 @@
+query Person($id: ID!) {
+    people(ids: [$id]) {
+        id
+        name
+        russian
+        japanese
+        malId
+        isMangaka
+        isProducer
+        isSeyu
+        synonyms
+        url
+        website
+        birthOn {
+            date
+            day
+            month
+            year
+        }
+        poster {
+            originalUrl
+            previewUrl
+        }
+    }
+}
