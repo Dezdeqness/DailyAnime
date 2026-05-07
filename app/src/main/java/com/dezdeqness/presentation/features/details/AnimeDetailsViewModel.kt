@@ -8,7 +8,9 @@ import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.model.CharacterDetailsEntity
+import com.dezdeqness.domain.model.PersonDetailsEntity
 import com.dezdeqness.domain.repository.CharacterRepository
+import com.dezdeqness.domain.repository.PersonRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.presentation.action.Action
@@ -21,6 +23,7 @@ import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.presentation.event.ShareUrl
 import com.dezdeqness.presentation.features.details.Target.Anime
 import com.dezdeqness.feature.userrate.EditRateUiModel
+import com.dezdeqness.presentation.event.NavigateToPersonDetails
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -32,6 +35,7 @@ class AnimeDetailsViewModel @Inject constructor(
     @Named("target") private val target: Target,
     private val getAnimeDetailsUseCase: GetAnimeDetailsUseCase,
     private val characterRepository: CharacterRepository,
+    private val personRepository: PersonRepository,
     private val animeDetailsComposer: AnimeDetailsComposer,
     private val createOrUpdateUserRateUseCase: CreateOrUpdateUserRateUseCase,
     private val authRepository: AuthRepository,
@@ -51,6 +55,7 @@ class AnimeDetailsViewModel @Inject constructor(
 
     private var animeDetails: AnimeDetailsFullEntity? = null
     private var characterDetails: CharacterDetailsEntity? = null
+    private var personDetails: PersonDetailsEntity? = null
 
     init {
         actionConsumer.attachListener(this)
@@ -89,6 +94,10 @@ class AnimeDetailsViewModel @Inject constructor(
                     onCharacterCLicked(action.characterId)
                 }
 
+                is Action.PersonClick -> {
+                    onPersonCLicked(action.personId)
+                }
+
                 else -> {
                     actionConsumer.consume(action)
                 }
@@ -98,6 +107,10 @@ class AnimeDetailsViewModel @Inject constructor(
 
     private fun onCharacterCLicked(characterId: Long) {
         onEventReceive(NavigateToCharacterDetails(characterId = characterId))
+    }
+
+    private fun onPersonCLicked(personId: Long) {
+        onEventReceive(NavigateToPersonDetails(personId = personId))
     }
 
     fun onEditRateClicked() {
@@ -150,7 +163,11 @@ class AnimeDetailsViewModel @Inject constructor(
 
     fun onShareButtonClicked() {
         onEventReceive(
-            ShareUrl(url = animeDetails?.animeDetailsEntity?.url ?: characterDetails?.url.orEmpty())
+            ShareUrl(
+                url = animeDetails?.animeDetailsEntity?.url
+                    ?: characterDetails?.url
+                    ?: personDetails?.url.orEmpty()
+            )
         )
     }
 
@@ -277,6 +294,30 @@ class AnimeDetailsViewModel @Inject constructor(
                     }
                 )
             }
+
+            is Target.Person -> {
+                onInitialLoad(
+                    collector = flow { emit(personRepository.getPersonDetailsById(target.id)) },
+                    onSuccess = { details ->
+                        personDetails = details
+                        val uiItems = animeDetailsComposer.compose(details)
+                        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                            title = details.russian.ifEmpty { details.name },
+                            uiModels = uiItems,
+                            isEditRateFabShown = false,
+                            status = DetailsStatus.Loaded,
+                        )
+                    },
+                    onFailure = {
+                        logInfo("Error during initial load of details with ${target.id}", it)
+
+                        _animeDetailsStateFlow.value = _animeDetailsStateFlow.value.copy(
+                            isEditRateFabShown = false,
+                            status = DetailsStatus.Error,
+                        )
+                    }
+                )
+            }
         }
     }
 
@@ -297,4 +338,5 @@ class AnimeDetailsViewModel @Inject constructor(
 sealed class Target(open val id: Long) {
     data class Anime(override val id: Long) : Target(id = id)
     data class Character(override val id: Long) : Target(id = id)
+    data class Person(override val id: Long) : Target(id = id)
 }

@@ -21,6 +21,7 @@ import com.dezdeqness.presentation.event.EventConsumer
 import com.dezdeqness.presentation.event.NavigateToAnimeStats
 import com.dezdeqness.presentation.event.NavigateToCharacterDetails
 import com.dezdeqness.presentation.event.NavigateToChronology
+import com.dezdeqness.presentation.event.NavigateToPersonDetails
 import com.dezdeqness.presentation.event.NavigateToScreenshotViewer
 import com.dezdeqness.presentation.event.NavigateToSimilar
 import com.dezdeqness.feature.userrate.EditRateUiModel
@@ -118,6 +119,12 @@ fun DetailsStandalonePage(
 
             is NavigateToCharacterDetails -> {
                 navController.navigate(Details(event.characterId, isAnime = false))
+            }
+
+            is NavigateToPersonDetails -> {
+                navController.navigate(
+                    Details(event.personId, isAnime = false, isPerson = true)
+                )
             }
 
             is ConsumableEvent -> {

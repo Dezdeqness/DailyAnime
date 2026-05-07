@@ -1,4 +1,11 @@
 <resources>
+    <string name="person_details_role_title">Role</string>
+    <string name="person_details_birth_title">Birth date</string>
+    <string name="person_details_japanese_title">Japanese</string>
+    <string name="person_role_mangaka">Mangaka</string>
+    <string name="person_role_producer">Producer</string>
+    <string name="person_role_seyu">Seiyuu</string>
+
     <string name="search_filter_title">Filter</string>
     <string name="search_filter_reset">Reset</string>
     <string name="search_filter_apply">Apply</string>
