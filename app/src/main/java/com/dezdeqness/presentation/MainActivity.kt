@@ -410,10 +410,10 @@ class MainActivity : AppCompatActivity() {
                         ) { backStackEntry ->
                             val details = backStackEntry.toRoute<Details>()
 
-                            val target = if (details.isAnime) {
-                                Target.Anime(details.id)
-                            } else {
-                                Target.Character(details.id)
+                            val target = when {
+                                details.isPerson -> Target.Person(details.id)
+                                details.isAnime -> Target.Anime(details.id)
+                                else -> Target.Character(details.id)
                             }
 
                             DetailsStandalonePage(

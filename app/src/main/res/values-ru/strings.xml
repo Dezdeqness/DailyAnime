@@ -1,4 +1,11 @@
 <resources>
+    <string name="person_details_role_title">Род деятельности</string>
+    <string name="person_details_birth_title">Дата рождения</string>
+    <string name="person_details_japanese_title">Японское имя</string>
+    <string name="person_role_mangaka">Мангака</string>
+    <string name="person_role_producer">Продюсер</string>
+    <string name="person_role_seyu">Сэйю</string>
+
     <string name="search_filter_title">Фильтр</string>
     <string name="search_filter_reset">Сбросить</string>
     <string name="search_filter_apply">Применить</string>

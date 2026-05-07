@@ -69,6 +69,8 @@ data class NavigateToChronology(val animeId: Long) : Event()
 
 data class NavigateToCharacterDetails(val characterId: Long) : Event()
 
+data class NavigateToPersonDetails(val personId: Long) : Event()
+
 object CloseAuthorization: Event()
 
 object AuthorizationSuccess : Event()

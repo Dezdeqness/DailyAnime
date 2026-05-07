@@ -8,6 +8,8 @@ import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.model.CharacterDetailsEntity
+import com.dezdeqness.domain.model.PersonDetailsEntity
+import com.dezdeqness.domain.model.PersonRole
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.models.AdapterItem
 import com.dezdeqness.presentation.models.AnimeCell
@@ -342,6 +344,64 @@ class AnimeDetailsComposer @Inject constructor(
 
         return ImmutableList.copyOf(uiItems)
     }
+
+    fun compose(entity: PersonDetailsEntity): ImmutableList<AdapterItem> {
+        val uiItems = mutableListOf<AdapterItem>()
+
+        uiItems.add(HeaderItemUiModel(imageUrl = entity.image.original))
+
+        uiItems.add(NameUiModel(title = entity.russian.ifEmpty { entity.name }))
+
+        composePersonBriefInfoList(entity)
+            .takeIf { it.list.isNotEmpty() }
+            ?.let(uiItems::add)
+
+        uiItems.add(SpacerUiItem)
+
+        return ImmutableList.copyOf(uiItems)
+    }
+
+    private fun composePersonBriefInfoList(entity: PersonDetailsEntity): BriefInfoUiModelList {
+        val list = mutableListOf<BriefInfoUiModel>()
+
+        if (entity.roles.isNotEmpty()) {
+            list.add(
+                BriefInfoUiModel(
+                    info = entity.roles.joinToString(separator = ", ", transform = ::mapPersonRole),
+                    title = resourceProvider.getString(R.string.person_details_role_title),
+                )
+            )
+        }
+
+        if (entity.birthOn.isNotEmpty()) {
+            list.add(
+                BriefInfoUiModel(
+                    info = entity.birthOn,
+                    title = resourceProvider.getString(R.string.person_details_birth_title),
+                )
+            )
+        }
+
+        if (entity.japanese.isNotEmpty()) {
+            list.add(
+                BriefInfoUiModel(
+                    info = entity.japanese,
+                    title = resourceProvider.getString(R.string.person_details_japanese_title),
+                )
+            )
+        }
+
+        return BriefInfoUiModelList(ImmutableList.copyOf(list))
+    }
+
+    private fun mapPersonRole(role: PersonRole): String =
+        resourceProvider.getString(
+            when (role) {
+                PersonRole.MANGAKA -> R.string.person_role_mangaka
+                PersonRole.PRODUCER -> R.string.person_role_producer
+                PersonRole.SEYU -> R.string.person_role_seyu
+            }
+        )
 
     companion object {
         private const val EXCLUDED_HOSTING = "vk"

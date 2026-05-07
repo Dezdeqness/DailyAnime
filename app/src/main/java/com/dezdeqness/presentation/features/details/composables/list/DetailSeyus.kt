@@ -1,5 +1,7 @@
 package com.dezdeqness.presentation.features.details.composables.list
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,10 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,7 +32,8 @@ import com.dezdeqness.presentation.models.RoleUiModel
 @Composable
 fun DetailSeyus(
     modifier: Modifier = Modifier,
-    characters: List<RoleUiModel>,
+    roles: List<RoleUiModel>,
+    onClick: (Long) -> Unit
 ) {
     Column(modifier = modifier) {
         Header(
@@ -40,24 +47,35 @@ fun DetailSeyus(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            items(characters.size) { index ->
-                val character = characters[index]
-                CharacterItem(character = character)
+            items(roles.size) { index ->
+                val role = roles[index]
+                SeyurItem(
+                    role = role,
+                    onClick = onClick,
+                )
             }
         }
     }
 }
 
 @Composable
-private fun CharacterItem(
+private fun SeyurItem(
     modifier: Modifier = Modifier,
-    character: RoleUiModel,
+    role: RoleUiModel,
+    onClick: (Long) -> Unit
 ) {
     Column(
-        modifier = modifier.width(80.dp)
+        modifier = modifier
+            .width(80.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(
+                onClick = { onClick(role.id) },
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple(color = AppTheme.colors.ripple),
+            )
     ) {
         AppImage(
-            data = character.imageUrl,
+            data = role.imageUrl,
             modifier = Modifier.size(80.dp),
         )
 
@@ -66,7 +84,7 @@ private fun CharacterItem(
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                character.name,
+                role.name,
                 color = AppTheme.colors.textPrimary,
                 style = AppTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,

@@ -48,6 +48,7 @@ object Stats
 data class Details(
     val id: Long,
     val isAnime: Boolean = true,
+    val isPerson: Boolean = false,
 )
 
 @Serializable

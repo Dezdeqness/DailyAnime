@@ -6,6 +6,8 @@ interface Action {
 
     data class CharacterClick(val characterId: Long) : Action
 
+    data class PersonClick(val personId: Long) : Action
+
     data class VideoClick(val url: String) : Action
 
     data object CalendarHeaderClicked : Action

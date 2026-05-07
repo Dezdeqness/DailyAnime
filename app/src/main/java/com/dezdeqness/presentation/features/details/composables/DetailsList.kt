@@ -62,9 +62,7 @@ fun DetailsList(
                 item.id() + item.hashCode()
             }
         ) { index ->
-            val item = list[index]
-
-            when (item) {
+            when (val item = list[index]) {
                 is HeaderItemUiModel -> {
                     DetailsHeader(detailsHeader = item)
                 }
@@ -108,7 +106,12 @@ fun DetailsList(
                     )
                 }
                 is SeyuModelList -> {
-                    DetailSeyus(characters = item.list)
+                    DetailSeyus(
+                        roles = item.list,
+                        onClick = {
+                            onClick(Action.PersonClick(it))
+                        }
+                    )
                 }
                 is AnimeItemListUiModel -> {
                     DetailAnimes(

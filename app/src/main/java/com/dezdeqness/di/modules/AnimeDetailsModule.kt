@@ -13,7 +13,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
-@Module(includes = [AnimeModule::class, PersonalModule::class, CharacterModule::class])
+@Module(includes = [AnimeModule::class, PersonalModule::class, CharacterModule::class, PersonModule::class])
 abstract class AnimeDetailsModule {
 
     companion object {
