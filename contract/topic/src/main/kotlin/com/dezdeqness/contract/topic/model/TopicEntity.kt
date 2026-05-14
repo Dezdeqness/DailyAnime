@@ -1,7 +1,5 @@
 package com.dezdeqness.contract.topic.model
 
-import com.dezdeqness.contract.anime.model.AnimeBriefEntity
-
 data class TopicEntity(
     val id: Long,
     val topicTitle: String,
@@ -15,8 +13,8 @@ data class TopicEntity(
     val userNickname: String,
     val userAvatarUrl: String,
     val linkedId: Long?,
-    val linkedType: String,
-    val linked: AnimeBriefEntity?,
+    val linkedType: String?,
+    val linked: TopicLinkedBriefEntity?,
     val viewed: Boolean,
     val lastCommentViewed: Boolean?,
     val event: String?,

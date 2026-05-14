@@ -6,6 +6,8 @@ interface TopicRepository {
 
     fun getTopicsByType(forumType: String, page: Int, limit: Int): Result<List<TopicEntity>>
 
+    fun getHotTopics(limit: Int): Result<List<TopicEntity>>
+
     fun getTopicsById(id: Int): Result<TopicEntity>
 
 }
