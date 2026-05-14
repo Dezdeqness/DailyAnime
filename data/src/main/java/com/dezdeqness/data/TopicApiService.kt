@@ -15,6 +15,11 @@ interface TopicApiService {
         @Query("limit") limit: Int,
     ): Call<List<TopicRemote>>
 
+    @GET("topics/hot")
+    fun getHotTopics(
+        @Query("limit") limit: Int,
+    ): Call<List<TopicRemote>>
+
     @GET("topics/{topicId}")
     fun getTopic(
         @Path("topicId") id: Int,

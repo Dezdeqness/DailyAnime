@@ -11,7 +11,7 @@ data class TopicRemote(
     @field:Json("html_body")
     val htmlBody: String,
     @field:Json("html_footer")
-    val htmlFooter: String,
+    val htmlFooter: String?,
     @field:Json("created_at")
     val createdAt: String,
     @field:Json("comments_count")
@@ -22,8 +22,8 @@ data class TopicRemote(
     @field:Json("linked_id")
     val linkedId: Long?,
     @field:Json("linked_type")
-    val linkedType: String,
-    val linked: AnimeBriefRemote?,
+    val linkedType: String?,
+    val linked: TopicLinkedBriefRemote?,
     val viewed: Boolean,
     @field:Json("last_comment_viewed")
     val lastCommentViewed: Boolean?,

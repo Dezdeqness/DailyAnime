@@ -43,5 +43,6 @@ dependencies {
     implementation(project(":contract:history"))
     implementation(project(":contract:settings"))
     implementation(project(":contract:topic"))
+    implementation(project(":contract:forum"))
 
 }
