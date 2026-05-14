@@ -34,6 +34,7 @@ include(":contract:anime")
 include(":contract:settings")
 include(":contract:favourite")
 include(":contract:topic")
+include(":contract:forum")
 
 // features
 include(":feature:achievements")
