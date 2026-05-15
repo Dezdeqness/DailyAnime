@@ -7,6 +7,7 @@ import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule
@@ -117,6 +118,8 @@ interface AppComponent {
     fun topicDetailsComponent(): TopicDetailsComponent.Factory
 
     val appLogger: AppLogger
+
+    val configManager: ConfigManager
 
     val applicationRouter: ApplicationRouter
 

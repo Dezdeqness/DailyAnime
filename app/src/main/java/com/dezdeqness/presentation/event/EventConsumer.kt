@@ -3,11 +3,15 @@ package com.dezdeqness.presentation.event
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.ShareCompat
-import com.dezdeqness.data.BuildConfig
 import androidx.core.net.toUri
+import com.dezdeqness.ShikimoriApp
 
 
 class EventConsumer(val context: Context) {
+
+    private val baseUrl: String =
+        (context.applicationContext as ShikimoriApp).appComponent
+            .configManager.baseUrl.trimEnd('/')
 
     fun consume(event: ConsumableEvent) {
         when (event) {
@@ -20,8 +24,8 @@ class EventConsumer(val context: Context) {
                 )
             }
             is ShareUrl -> {
-                val url = if (event.url.startsWith(BuildConfig.BASE_URL).not()) {
-                    BuildConfig.BASE_URL + event.url
+                val url = if (event.url.startsWith(baseUrl).not()) {
+                    baseUrl + event.url
                 } else {
                     event.url
                 }
