@@ -49,5 +49,6 @@ dependencies {
     implementation(project(":contract:settings"))
     implementation(project(":contract:topic"))
 
+    implementation(project(":data"))
     implementation(project(":shared:shared-domain"))
 }

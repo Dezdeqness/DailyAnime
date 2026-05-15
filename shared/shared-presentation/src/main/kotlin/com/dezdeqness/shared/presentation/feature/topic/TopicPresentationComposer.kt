@@ -6,6 +6,7 @@ import com.dezdeqness.shared.presentation.feature.topic.model.ParagraphBlock
 import com.dezdeqness.shared.presentation.feature.topic.model.TopicPresentationModel
 import com.dezdeqness.shared.presentation.feature.topic.parser.FooterParser
 import com.dezdeqness.shared.presentation.feature.topic.parser.HtmlParser
+import com.dezdeqness.shared.presentation.utils.UrlNormalizer
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
@@ -13,13 +14,14 @@ import javax.inject.Inject
 class TopicPresentationComposer @Inject constructor(
     private val htmlParser: HtmlParser,
     private val footerParser: FooterParser,
+    private val urlNormalizer: UrlNormalizer,
 ) {
 
     private val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
     private val outputDateFormat = SimpleDateFormat("d MMM yyyy, HH:mm", Locale.getDefault())
 
     fun compose(topic: TopicEntity): TopicPresentationModel {
-        val linked = topic.linked.takeIf { topic.linkedType == LINKED_TYPE_ANIME }
+        val linked = topic.linked
 
         return TopicPresentationModel(
             topicId = topic.id,
@@ -33,19 +35,14 @@ class TopicPresentationComposer @Inject constructor(
             linkedTitle = linked?.russian?.ifEmpty { linked.name },
             linkedImageUrl = linked?.image
                 ?.let { it.preview.ifEmpty { it.original } }
-                ?.normalizeUrl(),
+                ?.let(urlNormalizer::normalize),
             linkedId = linked?.let { topic.linkedId },
+            linkedType = linked?.let { topic.linkedType },
+            linkedUrl = linked?.url?.let(urlNormalizer::normalize),
         )
     }
 
     fun compose(topics: List<TopicEntity>): List<TopicPresentationModel> = topics.map(::compose)
-
-    private fun String.normalizeUrl(): String =
-        when {
-            startsWith("//") -> "https:$this"
-            startsWith("/") -> "https://shikimori.one$this"
-            else -> this
-        }
 
     private fun groupIntoParagraphs(blocks: List<ContentBlock>): List<ParagraphBlock> =
         buildList {
@@ -95,7 +92,8 @@ class TopicPresentationComposer @Inject constructor(
         }
     }
 
-    private companion object {
+    companion object {
         const val LINKED_TYPE_ANIME = "Anime"
+        const val LINKED_TYPE_CHARACTER = "Character"
     }
 }
