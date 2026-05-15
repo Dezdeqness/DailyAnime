@@ -1,9 +1,11 @@
-﻿package com.dezdeqness.feature.topicdetails.presentation.store
+package com.dezdeqness.feature.topicdetails.presentation.store
 
 import app.cash.turbine.test
-import com.dezdeqness.feature.topicdetails.presentation.models.BaseRelatedAnime
-import com.dezdeqness.feature.topicdetails.presentation.models.LinkedAnimeUiModel
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityState
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.foundation.test.MainDispatcherExtension
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_ANIME
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_CHARACTER
 import com.dezdeqness.shared.presentation.feature.topic.model.TopicPresentationModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -48,7 +50,7 @@ class TopicDetailsReducerTest {
                 TopicDetailsNamespace.State(
                     topicId = 42L,
                     status = TopicDetailsStatus.Loading,
-                    relatedAnime = BaseRelatedAnime.Initial,
+                    linkedEntity = LinkedEntityState.Initial,
                 ),
                 awaitItem(),
             )
@@ -58,7 +60,7 @@ class TopicDetailsReducerTest {
     }
 
     @Test
-    fun `WHEN OnTopicLoaded with linked anime SHOULD set loaded and request related anime`(): Unit = runTest {
+    fun `WHEN OnTopicLoaded with linked anime SHOULD set loaded and request linked entity`(): Unit = runTest {
         val topic = TopicPresentationModel(
             topicId = 42L,
             title = "Title",
@@ -69,6 +71,7 @@ class TopicDetailsReducerTest {
             contentBlocks = emptyList(),
             footerBlocks = emptyList(),
             linkedId = 10L,
+            linkedType = LINKED_TYPE_ANIME,
         )
 
         val store = ElmStore(
@@ -77,7 +80,9 @@ class TopicDetailsReducerTest {
             actor = actor,
         )
 
-        every { actor.execute(TopicDetailsNamespace.Command.LoadRelatedAnime(animeId = 10L)) } returns flow { }
+        every {
+            actor.execute(TopicDetailsNamespace.Command.LoadLinkedEntity(id = 10L, type = LINKED_TYPE_ANIME))
+        } returns flow { }
 
         store.states.drop(1).test {
             store.accept(TopicDetailsNamespace.Event.OnTopicLoaded(topic))
@@ -87,7 +92,7 @@ class TopicDetailsReducerTest {
                     topicId = 42L,
                     topic = topic,
                     status = TopicDetailsStatus.Loaded,
-                    relatedAnime = BaseRelatedAnime.Loading,
+                    linkedEntity = LinkedEntityState.Loading,
                 ),
                 awaitItem(),
             )
@@ -97,7 +102,49 @@ class TopicDetailsReducerTest {
     }
 
     @Test
-    fun `WHEN OnTopicLoaded without linked anime SHOULD set loaded and keep related anime empty`(): Unit = runTest {
+    fun `WHEN OnTopicLoaded with linked character SHOULD set loaded and request linked entity`(): Unit = runTest {
+        val topic = TopicPresentationModel(
+            topicId = 42L,
+            title = "Title",
+            userNickname = "User",
+            userAvatarUrl = "avatar",
+            date = "date",
+            commentsCount = 0,
+            contentBlocks = emptyList(),
+            footerBlocks = emptyList(),
+            linkedId = 246959L,
+            linkedType = LINKED_TYPE_CHARACTER,
+        )
+
+        val store = ElmStore(
+            initialState = TopicDetailsNamespace.State(status = TopicDetailsStatus.Loading),
+            reducer = topicDetailsReducer,
+            actor = actor,
+        )
+
+        every {
+            actor.execute(TopicDetailsNamespace.Command.LoadLinkedEntity(id = 246959L, type = LINKED_TYPE_CHARACTER))
+        } returns flow { }
+
+        store.states.drop(1).test {
+            store.accept(TopicDetailsNamespace.Event.OnTopicLoaded(topic))
+
+            assertEquals(
+                TopicDetailsNamespace.State(
+                    topicId = 42L,
+                    topic = topic,
+                    status = TopicDetailsStatus.Loaded,
+                    linkedEntity = LinkedEntityState.Loading,
+                ),
+                awaitItem(),
+            )
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `WHEN OnTopicLoaded without linked id SHOULD set loaded and keep linked entity empty`(): Unit = runTest {
         val topic = TopicPresentationModel(
             topicId = 42L,
             title = "Title",
@@ -124,7 +171,7 @@ class TopicDetailsReducerTest {
                     topicId = 42L,
                     topic = topic,
                     status = TopicDetailsStatus.Loaded,
-                    relatedAnime = BaseRelatedAnime.Empty,
+                    linkedEntity = LinkedEntityState.Empty,
                 ),
                 awaitItem(),
             )
@@ -134,9 +181,47 @@ class TopicDetailsReducerTest {
     }
 
     @Test
-    fun `WHEN OnRelatedAnimeLoaded SHOULD update related anime state`(): Unit = runTest {
+    fun `WHEN OnTopicLoaded with unsupported linkedType SHOULD keep linked entity empty`(): Unit = runTest {
+        val topic = TopicPresentationModel(
+            topicId = 42L,
+            title = "Title",
+            userNickname = "User",
+            userAvatarUrl = "avatar",
+            date = "date",
+            commentsCount = 0,
+            contentBlocks = emptyList(),
+            footerBlocks = emptyList(),
+            linkedId = 10L,
+            linkedType = "Manga",
+        )
+
+        val store = ElmStore(
+            initialState = TopicDetailsNamespace.State(status = TopicDetailsStatus.Loading),
+            reducer = topicDetailsReducer,
+            actor = actor,
+        )
+
+        store.states.drop(1).test {
+            store.accept(TopicDetailsNamespace.Event.OnTopicLoaded(topic))
+
+            assertEquals(
+                TopicDetailsNamespace.State(
+                    topicId = 42L,
+                    topic = topic,
+                    status = TopicDetailsStatus.Loaded,
+                    linkedEntity = LinkedEntityState.Empty,
+                ),
+                awaitItem(),
+            )
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `WHEN OnLinkedEntityLoaded SHOULD update linked entity state`(): Unit = runTest {
         val topic = mockk<TopicPresentationModel>()
-        val anime = LinkedAnimeUiModel(
+        val anime = LinkedEntityUiModel.Anime(
             id = 10L,
             imageUrl = "image",
             title = "Anime",
@@ -147,7 +232,7 @@ class TopicDetailsReducerTest {
             topicId = 42L,
             topic = topic,
             status = TopicDetailsStatus.Loaded,
-            relatedAnime = BaseRelatedAnime.Loading,
+            linkedEntity = LinkedEntityState.Loading,
         )
         val store = ElmStore(
             initialState = initialState,
@@ -156,10 +241,10 @@ class TopicDetailsReducerTest {
         )
 
         store.states.drop(1).test {
-            store.accept(TopicDetailsNamespace.Event.OnRelatedAnimeLoaded(anime))
+            store.accept(TopicDetailsNamespace.Event.OnLinkedEntityLoaded(anime))
 
             assertEquals(
-                initialState.copy(relatedAnime = BaseRelatedAnime.Loaded(anime)),
+                initialState.copy(linkedEntity = LinkedEntityState.Loaded(anime)),
                 awaitItem(),
             )
 

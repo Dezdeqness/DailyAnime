@@ -59,7 +59,7 @@ fun TopicDetailsLoading(
                         .height(14.dp)
                         .shimmer(shape = AppTheme.shapes.small),
                 )
-                LinkedAnimeShimmerCard()
+                LinkedEntityShimmerCard()
             }
         }
     }

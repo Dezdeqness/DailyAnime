@@ -69,8 +69,8 @@ fun TopicDetailsPage(
                     state.topic?.let { topic ->
                         TopicDetailsContent(
                             topic = topic,
-                            relatedAnime = state.relatedAnime,
-                            onRelatedAnimeClick = actions::onRelatedAnimeClicked,
+                            linkedEntity = state.linkedEntity,
+                            onLinkedEntityClick = actions::onLinkedEntityClicked,
                             onVideoClick = actions::onVideoClicked,
                             modifier = Modifier.fillMaxSize(),
                         )

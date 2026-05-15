@@ -1,7 +1,11 @@
-﻿package com.dezdeqness.feature.topicdetails.presentation.store
+package com.dezdeqness.feature.topicdetails.presentation.store
 
-import com.dezdeqness.feature.topicdetails.presentation.models.BaseRelatedAnime
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityState
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_ANIME
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_CHARACTER
 import money.vivid.elmslie.core.store.StateReducer
+
+private val SUPPORTED_LINKED_TYPES = setOf(LINKED_TYPE_ANIME, LINKED_TYPE_CHARACTER)
 
 val topicDetailsReducer = object :
     StateReducer<TopicDetailsNamespace.Event, TopicDetailsNamespace.State, TopicDetailsNamespace.Effect, TopicDetailsNamespace.Command>() {
@@ -12,7 +16,7 @@ val topicDetailsReducer = object :
                     state.copy(
                         topicId = event.topicId,
                         topic = null,
-                        relatedAnime = BaseRelatedAnime.Initial,
+                        linkedEntity = LinkedEntityState.Initial,
                         status = TopicDetailsStatus.Loading,
                         isPullDownRefreshing = false,
                     )
@@ -24,7 +28,7 @@ val topicDetailsReducer = object :
                 state {
                     state.copy(
                         topicId = event.topicId,
-                        relatedAnime = BaseRelatedAnime.Initial,
+                        linkedEntity = LinkedEntityState.Initial,
                         isPullDownRefreshing = true,
                     )
                 }
@@ -33,17 +37,25 @@ val topicDetailsReducer = object :
 
             is TopicDetailsNamespace.Event.OnTopicLoaded -> {
                 val linkedId = event.topic.linkedId
+                val linkedType = event.topic.linkedType
+                val shouldLoadLinked = linkedId != null && linkedType in SUPPORTED_LINKED_TYPES
+
                 state {
                     state.copy(
                         topic = event.topic,
                         topicId = event.topic.topicId,
-                        relatedAnime = if (linkedId != null) BaseRelatedAnime.Loading else BaseRelatedAnime.Empty,
+                        linkedEntity = if (shouldLoadLinked) LinkedEntityState.Loading else LinkedEntityState.Empty,
                         status = TopicDetailsStatus.Loaded,
                         isPullDownRefreshing = false,
                     )
                 }
-                if (linkedId != null) {
-                    commands { +TopicDetailsNamespace.Command.LoadRelatedAnime(linkedId) }
+                if (shouldLoadLinked && linkedType != null) {
+                    commands {
+                        +TopicDetailsNamespace.Command.LoadLinkedEntity(
+                            id = linkedId,
+                            type = linkedType,
+                        )
+                    }
                 }
             }
 
@@ -57,18 +69,18 @@ val topicDetailsReducer = object :
                 effects { +TopicDetailsNamespace.Effect.Error }
             }
 
-            is TopicDetailsNamespace.Event.OnRelatedAnimeLoaded -> {
+            is TopicDetailsNamespace.Event.OnLinkedEntityLoaded -> {
                 state {
                     state.copy(
-                        relatedAnime = BaseRelatedAnime.Loaded(event.anime),
+                        linkedEntity = LinkedEntityState.Loaded(event.entity),
                     )
                 }
             }
 
-            is TopicDetailsNamespace.Event.OnRelatedAnimeLoadError -> {
+            is TopicDetailsNamespace.Event.OnLinkedEntityLoadError -> {
                 state {
                     state.copy(
-                        relatedAnime = BaseRelatedAnime.Empty,
+                        linkedEntity = LinkedEntityState.Empty,
                     )
                 }
             }

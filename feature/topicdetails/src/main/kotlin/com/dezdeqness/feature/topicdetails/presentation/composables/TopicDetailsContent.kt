@@ -1,4 +1,4 @@
-﻿package com.dezdeqness.feature.topicdetails.presentation.composables
+package com.dezdeqness.feature.topicdetails.presentation.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,15 +13,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.feature.topicdetails.R
-import com.dezdeqness.feature.topicdetails.presentation.models.BaseRelatedAnime
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityState
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_ANIME
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_CHARACTER
 import com.dezdeqness.shared.presentation.feature.topic.model.TopicPresentationModel
 
 @Composable
 fun TopicDetailsContent(
     topic: TopicPresentationModel,
-    relatedAnime: BaseRelatedAnime,
-    onRelatedAnimeClick: (Long) -> Unit,
+    linkedEntity: LinkedEntityState,
+    onLinkedEntityClick: (LinkedEntityUiModel) -> Unit,
     onVideoClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -36,26 +39,31 @@ fun TopicDetailsContent(
             )
         }
 
-        if (relatedAnime != BaseRelatedAnime.Empty) {
+        if (linkedEntity != LinkedEntityState.Empty) {
+            val headerRes = when (topic.linkedType) {
+                LINKED_TYPE_CHARACTER -> R.string.topic_details_related_character
+                LINKED_TYPE_ANIME -> R.string.topic_details_related_anime
+                else -> R.string.topic_details_related_anime
+            }
             item {
                 Column {
                     Text(
-                        text = stringResource(R.string.topic_details_related_anime),
+                        text = stringResource(headerRes),
                         color = AppTheme.colors.textSecondary,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(horizontal = 16.dp),
                     )
-                    when (relatedAnime) {
-                        is BaseRelatedAnime.Loaded -> {
-                            LinkedAnimeCard(
-                                anime = relatedAnime.anime,
+                    when (linkedEntity) {
+                        is LinkedEntityState.Loaded -> {
+                            LinkedEntityCard(
+                                entity = linkedEntity.entity,
                                 modifier = Modifier.padding(bottom = 24.dp),
-                                onClick = { onRelatedAnimeClick(relatedAnime.anime.id) },
+                                onClick = { onLinkedEntityClick(linkedEntity.entity) },
                             )
                         }
 
-                        else -> LinkedAnimeShimmerCard(modifier = Modifier.padding(bottom = 24.dp))
+                        else -> LinkedEntityShimmerCard(modifier = Modifier.padding(bottom = 24.dp))
                     }
                 }
             }

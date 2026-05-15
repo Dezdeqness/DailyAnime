@@ -1,8 +1,10 @@
-﻿package com.dezdeqness.feature.topicdetails.presentation
+package com.dezdeqness.feature.topicdetails.presentation
+
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 
 interface TopicDetailsActions {
     fun onBackPressed()
     fun onPullDownRefreshed()
-    fun onRelatedAnimeClicked(animeId: Long)
+    fun onLinkedEntityClicked(entity: LinkedEntityUiModel)
     fun onVideoClicked(url: String)
 }
