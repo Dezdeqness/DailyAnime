@@ -1,4 +1,4 @@
-﻿package com.dezdeqness.feature.topicdetails.presentation.composables
+package com.dezdeqness.feature.topicdetails.presentation.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,14 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.feature.topicdetails.presentation.models.LinkedAnimeUiModel
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.foundation.ui.views.shimmer
 
 @Composable
-fun LinkedAnimeCard(
-    anime: LinkedAnimeUiModel,
+fun LinkedEntityCard(
+    entity: LinkedEntityUiModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -49,7 +49,7 @@ fun LinkedAnimeCard(
                 modifier = Modifier
                     .size(width = 68.dp, height = 90.dp)
                     .clip(RoundedCornerShape(12.dp)),
-                data = anime.imageUrl,
+                data = entity.imageUrl,
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column(
@@ -57,27 +57,33 @@ fun LinkedAnimeCard(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
-                    text = anime.title,
+                    text = entity.title,
                     color = AppTheme.colors.textPrimary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Text(
-                    text = "${anime.status} • ${anime.type}",
-                    color = AppTheme.colors.textSecondary,
-                    fontSize = 13.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                val subtitle = when (entity) {
+                    is LinkedEntityUiModel.Anime -> "${entity.status} • ${entity.type}"
+                    is LinkedEntityUiModel.Character -> null
+                }
+                if (subtitle != null) {
+                    Text(
+                        text = subtitle,
+                        color = AppTheme.colors.textSecondary,
+                        fontSize = 13.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun LinkedAnimeShimmerCard(
+fun LinkedEntityShimmerCard(
     modifier: Modifier = Modifier,
 ) {
     Card(

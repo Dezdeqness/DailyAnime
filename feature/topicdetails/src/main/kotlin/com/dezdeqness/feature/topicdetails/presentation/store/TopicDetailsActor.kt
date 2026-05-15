@@ -1,10 +1,13 @@
-﻿package com.dezdeqness.feature.topicdetails.presentation.store
+package com.dezdeqness.feature.topicdetails.presentation.store
 
 import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.contract.topic.repository.TopicRepository
-import com.dezdeqness.feature.topicdetails.presentation.LinkedAnimeComposer
+import com.dezdeqness.domain.repository.CharacterRepository
+import com.dezdeqness.feature.topicdetails.presentation.LinkedEntityComposer
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_ANIME
+import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_CHARACTER
 import kotlinx.coroutines.flow.flow
 import money.vivid.elmslie.core.store.Actor
 import javax.inject.Inject
@@ -12,7 +15,8 @@ import javax.inject.Inject
 class TopicDetailsActor @Inject constructor(
     private val topicRepository: TopicRepository,
     private val animeRepository: AnimeRepository,
-    private val linkedAnimeComposer: LinkedAnimeComposer,
+    private val characterRepository: CharacterRepository,
+    private val linkedEntityComposer: LinkedEntityComposer,
     private val topicPresentationComposer: TopicPresentationComposer,
     private val logger: Logger,
 ) : Actor<TopicDetailsNamespace.Command, TopicDetailsNamespace.Event>() {
@@ -36,20 +40,31 @@ class TopicDetailsActor @Inject constructor(
                 }
             }
 
-            is TopicDetailsNamespace.Command.LoadRelatedAnime -> flow {
+            is TopicDetailsNamespace.Command.LoadLinkedEntity -> flow {
                 try {
-                    val result = animeRepository.getDetails(id = command.animeId, isAuthorized = false)
-                    result.onFailure { throw it }
+                    val entity = when (command.type) {
+                        LINKED_TYPE_ANIME -> {
+                            val anime = animeRepository
+                                .getDetails(id = command.id, isAuthorized = false)
+                                .getOrThrow()
+                            linkedEntityComposer.compose(anime)
+                        }
 
-                    emit(
-                        TopicDetailsNamespace.Event.OnRelatedAnimeLoaded(
-                            anime = linkedAnimeComposer.compose(result.getOrThrow()),
-                        )
-                    )
+                        LINKED_TYPE_CHARACTER -> {
+                            val character = characterRepository
+                                .getCharacterDetailsById(id = command.id)
+                                .getOrThrow()
+                            linkedEntityComposer.compose(character)
+                        }
+
+                        else -> error("Unsupported linked type: ${command.type}")
+                    }
+
+                    emit(TopicDetailsNamespace.Event.OnLinkedEntityLoaded(entity = entity))
                 } catch (error: Throwable) {
-                    val message = "Error during loading related anime, id: ${command.animeId}"
+                    val message = "Error during loading linked entity, id: ${command.id}, type: ${command.type}"
                     logger.logInfo(TAG, message, error)
-                    emit(TopicDetailsNamespace.Event.OnRelatedAnimeLoadError(message, error))
+                    emit(TopicDetailsNamespace.Event.OnLinkedEntityLoadError(message, error))
                 }
             }
         }
