@@ -11,8 +11,6 @@ plugins {
 
 android {
     defaultConfig {
-        buildConfigField("String", "BASE_URL", "\"https://shikimori.one\"")
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }

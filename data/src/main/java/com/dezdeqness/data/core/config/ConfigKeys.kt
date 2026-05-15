@@ -6,11 +6,11 @@ enum class ConfigKeys(
 ) {
     BASE_URL(
         key = "base_url",
-        defaultValue = "https://shikimori.one/",
+        defaultValue = "https://shikimori.io/",
     ),
     BASE_SHIKIMORI_GRAPHQL_URL(
         key = "base_graphql_url",
-        defaultValue = "https://shikimori.one/api/graphql"
+        defaultValue = "https://shikimori.io/api/graphql"
     ),
     BASE_ANILIST_GRAPHQL_URL(
         key = "base_anilist_graphql_url",

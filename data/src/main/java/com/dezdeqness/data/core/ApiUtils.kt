@@ -11,5 +11,5 @@ fun Request.withAccessToken(token: String) =
 fun Request.withUserAgent() =
     newBuilder()
         .removeHeader(AUTHORIZATION_USER_AGENT)
-        .addHeader(AUTHORIZATION_USER_AGENT, "Shikimori Android APP")
+        .addHeader(AUTHORIZATION_USER_AGENT, "Daily Anime")
         .build()

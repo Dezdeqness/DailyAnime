@@ -2,7 +2,6 @@ package com.dezdeqness.feature.screenshotsviewer.store
 
 import app.cash.turbine.test
 import com.dezdeqness.foundation.test.MainDispatcherExtension
-import com.dezdeqness.data.BuildConfig
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Effect
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Event
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.State
@@ -16,6 +15,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.extension.ExtendWith
 
+private const val TEST_BASE_URL = "https://shikimori.io"
+
 @ExtendWith(MainDispatcherExtension::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class ScreenshotReducerTest {
@@ -23,7 +24,7 @@ class ScreenshotReducerTest {
     fun `WHEN Initial SHOULD update to state`(): Unit = runTest {
         val store = ElmStore(
             initialState = State(),
-            reducer = screenshotReducer,
+            reducer = screenshotReducer(TEST_BASE_URL),
             actor = NoOpActor()
         )
 
@@ -53,7 +54,7 @@ class ScreenshotReducerTest {
                 screenshotsList = listOf("url1", "url2"),
                 index = 0,
             ),
-            reducer = screenshotReducer,
+            reducer = screenshotReducer(TEST_BASE_URL),
             actor = NoOpActor()
         )
 
@@ -73,14 +74,14 @@ class ScreenshotReducerTest {
     fun `WHEN ShareUrlClicked emits ShareUrl with raw url SHOULD emit effect with BASE_URL`(): Unit =
         runTest {
             val screenshotUrl = "image.jpg"
-            val expectedUrl = BuildConfig.BASE_URL + screenshotUrl
+            val expectedUrl = TEST_BASE_URL + screenshotUrl
 
             val store = ElmStore(
                 initialState = State(
                     screenshotsList = listOf(screenshotUrl),
                     index = 0,
                 ),
-                reducer = screenshotReducer,
+                reducer = screenshotReducer(TEST_BASE_URL),
                 actor = NoOpActor()
             )
 
@@ -96,14 +97,14 @@ class ScreenshotReducerTest {
 
     @Test
     fun `WHEN ShareUrlClicked emits ShareUrl SHOULD emit effect with BASE_URL`(): Unit = runTest {
-        val screenshotUrl = BuildConfig.BASE_URL + "image.jpg"
+        val screenshotUrl = TEST_BASE_URL + "image.jpg"
 
         val store = ElmStore(
             initialState = State(
                 screenshotsList = listOf(screenshotUrl),
                 index = 0,
             ),
-            reducer = screenshotReducer,
+            reducer = screenshotReducer(TEST_BASE_URL),
             actor = NoOpActor()
         )
 
@@ -121,14 +122,14 @@ class ScreenshotReducerTest {
     fun `WHEN DownloadClicked with relative URL SHOULD emit DownloadImage with BASE_URL`() =
         runTest {
             val screenshotUrl = "image.jpg"
-            val expectedUrl = BuildConfig.BASE_URL + screenshotUrl
+            val expectedUrl = TEST_BASE_URL + screenshotUrl
 
             val store = ElmStore(
                 initialState = State(
                     screenshotsList = listOf(screenshotUrl),
                     index = 0,
                 ),
-                reducer = screenshotReducer,
+                reducer = screenshotReducer(TEST_BASE_URL),
                 actor = NoOpActor()
             )
 
@@ -148,14 +149,14 @@ class ScreenshotReducerTest {
     @Test
     fun `WHEN DownloadClicked with absolute URL SHOULD emit DownloadImage with same URL`() =
         runTest {
-            val screenshotUrl = "${BuildConfig.BASE_URL}image.jpg"
+            val screenshotUrl = "${TEST_BASE_URL}image.jpg"
 
             val store = ElmStore(
                 initialState = State(
                     screenshotsList = listOf(screenshotUrl),
                     index = 0,
                 ),
-                reducer = screenshotReducer,
+                reducer = screenshotReducer(TEST_BASE_URL),
                 actor = NoOpActor()
             )
 
@@ -182,7 +183,7 @@ class ScreenshotReducerTest {
                     screenshotsList = listOf(screenshotUrl),
                     index = 0,
                 ),
-                reducer = screenshotReducer,
+                reducer = screenshotReducer(TEST_BASE_URL),
                 actor = NoOpActor()
             )
 

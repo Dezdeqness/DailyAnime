@@ -42,6 +42,10 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
             }
 
         launch(appComponent.coroutineDispatcherProvider().io()) {
+            appComponent.configManager.invalidate()
+        }
+
+        launch(appComponent.coroutineDispatcherProvider().io()) {
             appComponent.sessionManager.restoreSession()
         }
 

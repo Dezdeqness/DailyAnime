@@ -5,7 +5,6 @@ import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
@@ -15,7 +14,6 @@ import javax.inject.Inject
 
 class RoutingViewModel @Inject constructor(
     private val sessionManager: SessionManager,
-    private val configManager: ConfigManager,
     private val workSchedulerManager: WorkSchedulerManager,
     permissionCheckProvider: PermissionCheckProvider,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -37,7 +35,6 @@ class RoutingViewModel @Inject constructor(
     fun fetchData() {
         launchOnIo {
             workSchedulerManager.scheduleDailyWork()
-            configManager.invalidate()
 
             sessionManager.sessionState.first { it !is SessionState.Loading }
 

@@ -3,24 +3,30 @@ package com.dezdeqness.data.datasource
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
 import com.dezdeqness.contract.auth.model.TokenEntity
 import dagger.Lazy
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
 
 class AccountRemoteDataSourceImpl @Inject constructor(
     private val accountApiService: Lazy<AccountApiService>,
     private val authorizationApiService: Lazy<AuthorizationApiService>,
     private val accountMapper: AccountMapper,
+    private val configManager: ConfigManager,
 ) : AccountRemoteDataSource, BaseDataSource() {
 
     override fun getAuthorizationCodeUrl(): Result<String> {
-        val url = HttpUrl.Builder().scheme("https").host("shikimori.one").addPathSegment("oauth")
-            .addPathSegment("authorize").addQueryParameter("client_id", CLIENT_ID)
+        val url = configManager.baseUrl.toHttpUrl()
+            .newBuilder()
+            .addPathSegment("oauth")
+            .addPathSegment("authorize")
+            .addQueryParameter("client_id", CLIENT_ID)
             .addQueryParameter("redirect_uri", REDIRECT_URI)
-            .addQueryParameter("response_type", RESPONSE_TYPE).addQueryParameter("scope", SCOPE)
+            .addQueryParameter("response_type", RESPONSE_TYPE)
+            .addQueryParameter("scope", SCOPE)
             .build()
 
         return Result.success(url.toString())
