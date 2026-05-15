@@ -1,10 +1,13 @@
 package com.dezdeqness.shared.presentation.feature.topic.parser
 
 import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
+import com.dezdeqness.shared.presentation.utils.UrlNormalizer
 
 import javax.inject.Inject
 
-class FooterParser @Inject constructor() {
+class FooterParser @Inject constructor(
+    private val urlNormalizer: UrlNormalizer,
+) {
 
     private val videoRegex = Regex(
         """<div\s+class="b-video\s+unprocessed\s+(\w+)">\s*<a\s+class="video-link"\s+data-href="([^"]*)"[^>]*>\s*<img[^>]*src="([^"]*)"[^>]*>\s*</a>\s*(?:<span\s+class="name"[^>]*>([^<]*)</span>)?""",
@@ -19,7 +22,7 @@ class FooterParser @Inject constructor() {
         for (match in videoRegex.findAll(htmlFooter)) {
             val platform = match.groupValues[1]
             val videoUrl = match.groupValues[2]
-            val thumbnailUrl = match.groupValues[3].normalizeUrl()
+            val thumbnailUrl = urlNormalizer.normalize(match.groupValues[3])
             val title = match.groupValues[4].ifEmpty { "" }
 
             blocks.add(
@@ -34,11 +37,4 @@ class FooterParser @Inject constructor() {
 
         return blocks
     }
-
-    private fun String.normalizeUrl(): String =
-        when {
-            startsWith("//") -> "https:$this"
-            startsWith("/") -> "https://shikimori.one$this"
-            else -> this
-        }
 }

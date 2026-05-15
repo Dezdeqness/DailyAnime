@@ -6,17 +6,27 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
+import com.dezdeqness.shared.presentation.utils.UrlNormalizer
 import org.json.JSONObject
 
 import javax.inject.Inject
 
-class HtmlParser @Inject constructor() {
+class HtmlParser @Inject constructor(
+    private val urlNormalizer: UrlNormalizer,
+) {
 
     private val quoteStartRegex = Regex(
         """<(?:div\s+class="b-quote"|blockquote\s+class="b-quote-v2")>""",
     )
 
     private val quoteContentStartTag = Regex("""<div\s+class="quote-content">""")
+
+    private val imageAnchorClassPattern = Regex("""\bclass="(?:[^"]*\s)?b-image(?:\s[^"]*)?"""")
+
+    private val imgSrcPattern = Regex(
+        """<img\b[^>]*?\bsrc="([^"]*)"[^>]*?/?>""",
+        RegexOption.DOT_MATCHES_ALL,
+    )
 
     fun parse(htmlBody: String): List<ContentBlock> {
         if (htmlBody.isBlank()) return emptyList()
@@ -111,11 +121,23 @@ class HtmlParser @Inject constructor() {
                     blocks.addAll(parseTextWithBreaks(beforeLink))
                 }
 
+                val matchValue = linkMatch.value
+                val openTagEnd = matchValue.indexOf('>')
+                val openTag = if (openTagEnd != -1) matchValue.substring(0, openTagEnd) else matchValue
+                val href = linkMatch.groupValues[2]
+                val innerHtml = linkMatch.groupValues[4]
+
+                val imageBlock = tryParseImageAnchor(openTag, innerHtml, href)
+                if (imageBlock != null) {
+                    blocks.add(imageBlock)
+                    remaining = remaining.substring(linkMatch.range.last + 1)
+                    continue
+                }
+
                 val dataAttrsRaw = (linkMatch.groupValues[1].ifEmpty { linkMatch.groupValues[3] })
                     .replace("&quot;", "\"")
                     .replace("&amp;", "&")
-                val href = linkMatch.groupValues[2]
-                val linkText = stripHtmlTags(linkMatch.groupValues[4])
+                val linkText = stripHtmlTags(innerHtml)
 
                 var entityType: String? = null
                 var entityId: Long? = null
@@ -148,6 +170,16 @@ class HtmlParser @Inject constructor() {
         }
 
         return blocks
+    }
+
+    private fun tryParseImageAnchor(openTag: String, innerHtml: String, href: String): ContentBlock.Image? {
+        if (!imageAnchorClassPattern.containsMatchIn(openTag)) return null
+        val imgSrc = imgSrcPattern.find(innerHtml)?.groupValues?.get(1).orEmpty()
+        if (imgSrc.isBlank()) return null
+        return ContentBlock.Image(
+            previewUrl = urlNormalizer.normalize(imgSrc),
+            originalUrl = urlNormalizer.normalize(href.ifBlank { imgSrc }),
+        )
     }
 
     private fun parseTextWithBreaks(html: String): List<ContentBlock> {

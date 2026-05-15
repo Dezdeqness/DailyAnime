@@ -11,6 +11,7 @@ import com.dezdeqness.shared.presentation.feature.topic.model.ParagraphBlock
 
 private const val MAX_PREVIEW_PARAGRAPHS = 2
 private const val MAX_PREVIEW_TEXT_LINES = 6
+private const val MAX_PREVIEW_IMAGES = 1
 
 @Composable
 fun ContentBlockRenderer(
@@ -21,6 +22,7 @@ fun ContentBlockRenderer(
 ) {
     Column(modifier = modifier) {
         var paragraphCount = 0
+        var imageCount = 0
         for (paragraph in blocks) {
             when (paragraph) {
                 is ParagraphBlock.InlineContent -> {
@@ -48,7 +50,9 @@ fun ContentBlockRenderer(
                 }
 
                 is ParagraphBlock.ImageContent -> {
+                    if (isPreview && imageCount >= MAX_PREVIEW_IMAGES) continue
                     ImageBlock(previewUrl = paragraph.previewUrl)
+                    imageCount++
                 }
 
                 is ParagraphBlock.Spacer -> {
