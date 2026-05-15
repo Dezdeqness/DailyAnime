@@ -229,7 +229,7 @@ dependencies {
     implementation(project(":feature:personallist"))
     implementation(project(":feature:userrate"))
     implementation(project(":feature:settings"))
-    implementation(project(":feature:news"))
+    implementation(project(":feature:topics"))
     implementation(project(":feature:topicdetails"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
