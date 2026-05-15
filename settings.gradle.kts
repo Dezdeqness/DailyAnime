@@ -45,7 +45,7 @@ include(":feature:onboarding")
 include(":feature:personallist")
 include(":feature:userrate")
 include(":feature:settings")
-include(":feature:news")
+include(":feature:topics")
 include(":feature:topicdetails")
 
 // shared
