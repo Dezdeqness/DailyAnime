@@ -49,7 +49,7 @@ fun ForumPage(
         containerColor = AppTheme.colors.onPrimary,
         modifier = modifier.fillMaxSize(),
         topBar = {
-            AppToolbar(title = stringResource(R.string.forum_toolbar_title))
+            AppToolbar(title = stringResource(R.string.forum_toolbar_title), navigationIcon = null)
         },
     ) { contentPadding ->
         val pullRefreshState = rememberPullRefreshState(
