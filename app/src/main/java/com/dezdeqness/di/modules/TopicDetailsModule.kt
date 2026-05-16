@@ -16,7 +16,7 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import money.vivid.elmslie.core.store.ElmStore
 
-@Module(includes = [AnimeModule::class, TopicModule::class])
+@Module(includes = [AnimeModule::class, TopicModule::class, CharacterModule::class])
 abstract class TopicDetailsModule {
 
     companion object {

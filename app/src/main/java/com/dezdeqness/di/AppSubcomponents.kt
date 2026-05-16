@@ -11,7 +11,8 @@ import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.di.subcomponents.MainComponent
-import com.dezdeqness.di.subcomponents.NewsComponent
+import com.dezdeqness.di.subcomponents.ForumComponent
+import com.dezdeqness.di.subcomponents.TopicsComponent
 import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
 import com.dezdeqness.di.subcomponents.TopicDetailsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
@@ -32,7 +33,8 @@ import dagger.Module
         MainComponent::class,
         ScreenshotsViewerComponent::class,
         DebugComponent::class,
-        NewsComponent::class,
+        TopicsComponent::class,
+        ForumComponent::class,
         TopicDetailsComponent::class,
     ]
 )

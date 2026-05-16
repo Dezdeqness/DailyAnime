@@ -1,6 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotsViewModel
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace.Command
@@ -26,10 +27,11 @@ abstract class ScreenshotsModule {
     companion object {
         @Provides
         fun provideScreenshotStore(
+            configManager: ConfigManager,
         ): ElmStore<Event, State, Effect, Command> =
             ElmStore(
                 initialState = State(),
-                reducer = screenshotReducer,
+                reducer = screenshotReducer(configManager.baseUrl.trimEnd('/')),
                 actor = NoOpActor(),
             )
     }
