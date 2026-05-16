@@ -1,11 +1,11 @@
-﻿package com.dezdeqness.presentation.features.topicdetails
+package com.dezdeqness.presentation.features.topicdetails
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.MutableCreationExtras
@@ -17,10 +17,10 @@ import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsActions
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsPage
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsViewModel
 import com.dezdeqness.feature.topicdetails.presentation.TopicIdKey
+import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.feature.topicdetails.presentation.store.TopicDetailsNamespace
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.Details
-import androidx.core.net.toUri
 
 @Composable
 fun TopicDetailsStandalonePage(
@@ -62,8 +62,11 @@ fun TopicDetailsStandalonePage(
                 viewModel.onPullDownRefreshed()
             }
 
-            override fun onRelatedAnimeClicked(animeId: Long) {
-                navController.navigate(Details(animeId))
+            override fun onLinkedEntityClicked(entity: LinkedEntityUiModel) {
+                when (entity) {
+                    is LinkedEntityUiModel.Anime -> navController.navigate(Details(entity.id))
+                    is LinkedEntityUiModel.Character -> navController.navigate(Details(entity.id, isAnime = false))
+                }
             }
 
             override fun onVideoClicked(url: String) {

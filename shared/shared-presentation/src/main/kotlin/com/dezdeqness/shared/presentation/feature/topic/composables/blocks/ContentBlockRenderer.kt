@@ -51,7 +51,7 @@ fun ContentBlockRenderer(
 
                 is ParagraphBlock.ImageContent -> {
                     if (isPreview && imageCount >= MAX_PREVIEW_IMAGES) continue
-                    ImageBlock(previewUrl = paragraph.previewUrl)
+                    ImageBlock(url = paragraph.originalUrl)
                     imageCount++
                 }
 

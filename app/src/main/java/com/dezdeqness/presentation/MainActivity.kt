@@ -77,9 +77,10 @@ import com.dezdeqness.presentation.features.details.DetailsStandalonePage
 import com.dezdeqness.presentation.features.details.Target
 import com.dezdeqness.presentation.features.details.deserializeListFromString
 import com.dezdeqness.presentation.features.favourite.FavouriteStandalonePage
+import com.dezdeqness.presentation.features.forum.ForumStandalonePage
+import com.dezdeqness.presentation.features.forum.ForumTopicsStandalonePage
 import com.dezdeqness.presentation.features.history.HistoryStandalonePage
 import com.dezdeqness.presentation.features.home.HomePageStandalone
-import com.dezdeqness.presentation.features.news.NewsStandalonePage
 import com.dezdeqness.presentation.features.personallist.PersonalHostStandalonePage
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
@@ -303,7 +304,7 @@ class MainActivity : AppCompatActivity() {
                                             slideOutToTop()
                                         },
                                     ) {
-                                        NewsStandalonePage(
+                                        ForumStandalonePage(
                                             modifier = Modifier.fillMaxSize(),
                                             navController = rootController,
                                         )
@@ -542,6 +543,38 @@ class MainActivity : AppCompatActivity() {
                                 navController = rootController,
                                 screenshots = screenshots.screenshots,
                                 index = screenshots.index,
+                            )
+                        }
+
+                        composable<Forum>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            popExitTransition = {
+                                slideOutToStart()
+                            }
+                        ) {
+                            ForumStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                            )
+                        }
+
+                        composable<ForumTopics>(
+                            enterTransition = {
+                                slideInFromStart()
+                            },
+                            popExitTransition = {
+                                slideOutToStart()
+                            }
+                        ) { backStackEntry ->
+                            val forumTopics = backStackEntry.toRoute<ForumTopics>()
+
+                            ForumTopicsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                permalink = forumTopics.permalink,
+                                title = forumTopics.title,
                             )
                         }
                     }
