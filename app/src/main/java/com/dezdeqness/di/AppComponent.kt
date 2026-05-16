@@ -25,7 +25,8 @@ import com.dezdeqness.di.subcomponents.FavouriteSubcomponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
-import com.dezdeqness.di.subcomponents.NewsComponent
+import com.dezdeqness.di.subcomponents.ForumComponent
+import com.dezdeqness.di.subcomponents.TopicsComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.PersonalListSearchComponent
 import com.dezdeqness.di.subcomponents.PersonalListTabComponent
@@ -113,7 +114,9 @@ interface AppComponent {
 
     fun selectGenresComponent() : SelectGenresSubcomponent.Factory
 
-    fun newsComponent(): NewsComponent.Factory
+    fun topicsComponent(): TopicsComponent.Builder
+
+    fun forumComponent(): ForumComponent.Factory
 
     fun topicDetailsComponent(): TopicDetailsComponent.Factory
 

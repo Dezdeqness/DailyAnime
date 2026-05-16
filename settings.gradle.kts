@@ -47,6 +47,7 @@ include(":feature:userrate")
 include(":feature:settings")
 include(":feature:topics")
 include(":feature:topicdetails")
+include(":feature:forum")
 
 // shared
 include(":shared:shared-presentation")
