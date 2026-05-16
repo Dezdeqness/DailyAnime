@@ -12,7 +12,7 @@ import com.dezdeqness.foundation.ui.views.image.AppImage
 
 @Composable
 fun ImageBlock(
-    previewUrl: String,
+    url: String,
     modifier: Modifier = Modifier,
 ) {
     AppImage(
@@ -20,7 +20,7 @@ fun ImageBlock(
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .padding(vertical = 4.dp),
-        data = previewUrl,
+        data = url,
         contentScale = ContentScale.FillWidth,
     )
 }

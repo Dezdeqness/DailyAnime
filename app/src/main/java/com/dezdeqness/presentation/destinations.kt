@@ -77,3 +77,12 @@ data class Screenshots(
     val screenshots: List<String>,
     val index: Int,
 )
+
+@Serializable
+object Forum
+
+@Serializable
+data class ForumTopics(
+    val permalink: String,
+    val title: String,
+)
