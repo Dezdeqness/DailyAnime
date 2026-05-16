@@ -21,6 +21,14 @@ class GetForumsUseCase(
     }
 
     companion object {
-        private val HIDDEN_PERMALINKS = setOf("hidden", "premoderation", "contests")
+        private val HIDDEN_PERMALINKS = setOf(
+            "hidden",
+            "premoderation",
+            "contests",
+            "clubs",
+            "vn",
+            "animanga",
+            "site",
+        )
     }
 }
