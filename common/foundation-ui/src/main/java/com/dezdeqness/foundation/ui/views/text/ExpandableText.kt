@@ -1,4 +1,4 @@
-package com.dezdeqness.foundation.ui
+package com.dezdeqness.foundation.ui.views.text
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import com.dezdeqness.R
+import com.dezdeqness.foundation.ui.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
 private const val MAX_LINES_COLLAPSED = 5
@@ -42,12 +42,9 @@ fun ExpandableText(
 
     Box(
         modifier = Modifier
-            .clickable(clickable) {
-                isExpanded = !isExpanded
-            }
+            .clickable(clickable) { isExpanded = !isExpanded }
             .then(modifier)
     ) {
-
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,10 +54,10 @@ fun ExpandableText(
                     if (isExpanded) {
                         append(text)
                         withStyle(style = labelStyle) {
-                            append(stringResource(R.string.details_synopsis_label_show_less))
+                            append(stringResource(R.string.expandable_text_show_less))
                         }
                     } else {
-                        val showMore = stringResource(R.string.details_synopsis_label_show_more)
+                        val showMore = stringResource(R.string.expandable_text_show_more)
                         val adjustText = text.substring(startIndex = 0, endIndex = lastCharIndex)
                             .dropLast(showMore.length)
                             .dropLastWhile { Character.isWhitespace(it) || it == '.' }
@@ -79,7 +76,7 @@ fun ExpandableText(
                 }
             },
             style = AppTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal),
-            color = AppTheme.colors.textPrimary
+            color = AppTheme.colors.textPrimary,
         )
     }
 }
