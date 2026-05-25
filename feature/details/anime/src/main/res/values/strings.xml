@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anime_details_section_description">Synopsis</string>
+    <string name="anime_details_section_related">Related</string>
+    <string name="anime_details_section_characters">Characters</string>
+    <string name="anime_details_section_screenshots">Screenshots</string>
+    <string name="anime_details_section_videos">Video</string>
+
+    <string name="anime_details_brief_status">Status</string>
+    <string name="anime_details_brief_date">Release date</string>
+    <string name="anime_details_brief_type">Type</string>
+    <string name="anime_details_brief_episodes">Episodes</string>
+    <string name="anime_details_brief_episode_time">Episode time</string>
+    <string name="anime_details_brief_episode_time_value">%1$s min</string>
+    <string name="anime_details_brief_age_rating">Age rating</string>
+    <string name="anime_details_brief_next_episode_title">Up to %1$d episode</string>
+    <string name="anime_details_brief_next_episode_value">A few moments</string>
+
+    <string name="anime_details_action_similar">Similar</string>
+    <string name="anime_details_action_chronology">Chronology</string>
+    <string name="anime_details_action_stats">Stats</string>
+
+    <string name="anime_details_fab_edit_rate">Edit rate</string>
+</resources>
