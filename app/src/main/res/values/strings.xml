@@ -134,9 +134,6 @@
     <string name="home_title_authorized">Welcome back,\n%s</string>
     <string name="home_calendar_title">New this week</string>
 
-    <string name="details_synopsis_label_show_less">Show less</string>
-    <string name="details_synopsis_label_show_more">… Show more</string>
-
     <string name="section_history_title">Latest history</string>
 
 </resources>

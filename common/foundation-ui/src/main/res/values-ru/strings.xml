@@ -2,6 +2,10 @@
 <resources>
     <string name="search_empty_state_title">По запросу ничего не найдено</string>
     <string name="error_state_title">Отсутствует интернет или произошла ошибка</string>
+    <string name="error_state_retry">Повторить</string>
 
     <string name="timepicker_save_title">Сохранить</string>
+
+    <string name="expandable_text_show_more">… Показать больше</string>
+    <string name="expandable_text_show_less">Показать меньше</string>
 </resources>
