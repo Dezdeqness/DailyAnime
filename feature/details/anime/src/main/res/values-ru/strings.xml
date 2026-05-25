@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anime_details_section_description">Описание</string>
+    <string name="anime_details_section_related">Связанное</string>
+    <string name="anime_details_section_characters">Персонажи</string>
+    <string name="anime_details_section_screenshots">Скриншоты</string>
+    <string name="anime_details_section_videos">Видео</string>
+
+    <string name="anime_details_brief_status">Статус</string>
+    <string name="anime_details_brief_date">Дата выхода</string>
+    <string name="anime_details_brief_type">Тип</string>
+    <string name="anime_details_brief_episodes">Эпизоды</string>
+    <string name="anime_details_brief_episode_time">Длительность</string>
+    <string name="anime_details_brief_episode_time_value">%1$s мин</string>
+    <string name="anime_details_brief_age_rating">Возрастной рейтинг</string>
+    <string name="anime_details_brief_next_episode_title">До %1$d эпизода</string>
+    <string name="anime_details_brief_next_episode_value">Совсем скоро</string>
+
+    <string name="anime_details_action_similar">Похожее</string>
+    <string name="anime_details_action_chronology">Хронология</string>
+    <string name="anime_details_action_stats">Статистика</string>
+
+    <string name="anime_details_fab_edit_rate">Изменить оценку</string>
+</resources>
