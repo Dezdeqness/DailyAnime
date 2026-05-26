@@ -20,7 +20,7 @@ fun <UiEvent : Any, State : DetailsState> DetailsPage(
     onRetry: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    overlay: @Composable BoxScope.(State, (UiEvent) -> Unit) -> Unit,
+    overlay: @Composable BoxScope.(State, (UiEvent) -> Unit) -> Unit = { _, _ ->},
     loading: @Composable (Modifier) -> Unit,
 ) {
     val state by stateFlow.collectAsStateWithLifecycle()
