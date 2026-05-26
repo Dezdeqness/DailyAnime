@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="person_details_brief_role">Role</string>
+    <string name="person_details_brief_birth">Birth</string>
+    <string name="person_details_brief_japanese">Japanese</string>
+
+    <string name="person_role_mangaka">Mangaka</string>
+    <string name="person_role_producer">Producer</string>
+    <string name="person_role_seyu">Voice actor</string>
+</resources>
