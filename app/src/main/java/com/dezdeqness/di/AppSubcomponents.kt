@@ -2,8 +2,10 @@ package com.dezdeqness.di
 
 import com.dezdeqness.di.subcomponents.AnimeComponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
-import com.dezdeqness.di.subcomponents.AnimeDetailsComponent
+import com.dezdeqness.di.subcomponents.AnimeDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
+import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
+import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.ProfileComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
@@ -21,7 +23,9 @@ import dagger.Module
 @Module(
     subcomponents = [
         AnimeComponent::class,
-        AnimeDetailsComponent::class,
+        AnimeDetailsFeatureComponent::class,
+        CharacterDetailsFeatureComponent::class,
+        PersonDetailsFeatureComponent::class,
         AnimeChronologyComponent::class,
         AnimeStatsComponent::class,
         AuthorizationComponent::class,

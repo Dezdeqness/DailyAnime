@@ -8,7 +8,7 @@ import com.dezdeqness.presentation.models.AdapterItem
 
 interface GenericRenderer {
     @Composable
-    fun Render(modifier: Modifier = Modifier, item: AdapterItem, onClick: (Action) -> Unit)
+    fun Render(modifier: Modifier, item: AdapterItem, onClick: (Action) -> Unit)
 }
 
 val LocalAdapterItemRenderer = staticCompositionLocalOf<GenericRenderer?> {
