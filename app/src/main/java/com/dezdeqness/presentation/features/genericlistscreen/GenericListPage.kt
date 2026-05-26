@@ -10,8 +10,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.RetryError
 import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
-import com.dezdeqness.presentation.features.details.composables.list.DetailsError
 import com.dezdeqness.presentation.features.genericlistscreen.composable.GenericList
 import com.dezdeqness.presentation.features.genericlistscreen.composable.GenericListLoading
 import kotlinx.coroutines.flow.StateFlow
@@ -52,7 +52,7 @@ fun GenericListPage(
                 }
 
                 GenericListableStatus.Error -> {
-                    DetailsError(onRetryClick = actions::onRetryClicked)
+                    RetryError(onRetryClick = actions::onRetryClicked)
                 }
             }
         }

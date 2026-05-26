@@ -15,7 +15,9 @@ import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
 import com.dezdeqness.di.subcomponents.AnimeComponent
-import com.dezdeqness.di.subcomponents.AnimeDetailsComponent
+import com.dezdeqness.di.subcomponents.AnimeDetailsFeatureComponent
+import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
+import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
@@ -70,7 +72,11 @@ interface AppComponent {
 
     fun authorizationComponent(): AuthorizationComponent.Builder
 
-    fun animeDetailsComponent(): AnimeDetailsComponent.Builder
+    fun animeDetailsFeatureComponent(): AnimeDetailsFeatureComponent.Factory
+
+    fun characterDetailsFeatureComponent(): CharacterDetailsFeatureComponent.Factory
+
+    fun personDetailsFeatureComponent(): PersonDetailsFeatureComponent.Factory
 
     fun personalListComponent(): PersonalListComponent.Factory
 

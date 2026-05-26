@@ -233,6 +233,10 @@ dependencies {
     implementation(project(":feature:topics"))
     implementation(project(":feature:topicdetails"))
     implementation(project(":feature:forum"))
+    implementation(project(":feature:details:common"))
+    implementation(project(":feature:details:anime"))
+    implementation(project(":feature:details:character"))
+    implementation(project(":feature:details:person"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
