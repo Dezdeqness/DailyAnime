@@ -71,17 +71,18 @@ import com.dezdeqness.presentation.features.achievements.AchievementsStandaloneP
 import com.dezdeqness.presentation.features.animechronology.AnimeChronologyStandalonePage
 import com.dezdeqness.presentation.features.animelist.SearchPageStandalone
 import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarStandalonePage
+import com.dezdeqness.presentation.features.animedetails.AnimeDetailsStandalonePage
 import com.dezdeqness.presentation.features.animestats.AnimeStatsStandalonePage
+import com.dezdeqness.presentation.features.animestats.deserializeListFromString
 import com.dezdeqness.presentation.features.calendar.CalendarStandalonePage
-import com.dezdeqness.presentation.features.details.DetailsStandalonePage
-import com.dezdeqness.presentation.features.details.Target
-import com.dezdeqness.presentation.features.details.deserializeListFromString
+import com.dezdeqness.presentation.features.characterdetails.CharacterDetailsStandalonePage
 import com.dezdeqness.presentation.features.favourite.FavouriteStandalonePage
 import com.dezdeqness.presentation.features.forum.ForumStandalonePage
 import com.dezdeqness.presentation.features.forum.ForumTopicsStandalonePage
 import com.dezdeqness.presentation.features.history.HistoryStandalonePage
 import com.dezdeqness.presentation.features.home.HomePageStandalone
 import com.dezdeqness.presentation.features.personallist.PersonalHostStandalonePage
+import com.dezdeqness.presentation.features.persondetails.PersonDetailsStandalonePage
 import com.dezdeqness.presentation.features.profile.ProfilePageStandalone
 import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerStandalone
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
@@ -401,26 +402,37 @@ class MainActivity : AppCompatActivity() {
                                 navController = rootController,
                             )
                         }
-                        composable<Details>(
-                            enterTransition = {
-                                slideInFromStart()
-                            },
-                            popExitTransition = {
-                                slideOutToStart()
-                            }
+                        composable<AnimeDetails>(
+                            enterTransition = { slideInFromStart() },
+                            popExitTransition = { slideOutToStart() },
                         ) { backStackEntry ->
-                            val details = backStackEntry.toRoute<Details>()
-
-                            val target = when {
-                                details.isPerson -> Target.Person(details.id)
-                                details.isAnime -> Target.Anime(details.id)
-                                else -> Target.Character(details.id)
-                            }
-
-                            DetailsStandalonePage(
+                            val route = backStackEntry.toRoute<AnimeDetails>()
+                            AnimeDetailsStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = rootController,
-                                target = target,
+                                animeId = route.id,
+                            )
+                        }
+                        composable<CharacterDetails>(
+                            enterTransition = { slideInFromStart() },
+                            popExitTransition = { slideOutToStart() },
+                        ) { backStackEntry ->
+                            val route = backStackEntry.toRoute<CharacterDetails>()
+                            CharacterDetailsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                characterId = route.id,
+                            )
+                        }
+                        composable<PersonDetails>(
+                            enterTransition = { slideInFromStart() },
+                            popExitTransition = { slideOutToStart() },
+                        ) { backStackEntry ->
+                            val route = backStackEntry.toRoute<PersonDetails>()
+                            PersonDetailsStandalonePage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = rootController,
+                                personId = route.id,
                             )
                         }
                         composable<TopicDetails>(

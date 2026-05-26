@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.core.page.StatsPage
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
-import com.dezdeqness.presentation.features.details.AnimeStatsTransferModel
 
 @Composable
 fun AnimeStatsStandalonePage(

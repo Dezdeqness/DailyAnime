@@ -45,11 +45,13 @@ object SelectGenres
 object Stats
 
 @Serializable
-data class Details(
-    val id: Long,
-    val isAnime: Boolean = true,
-    val isPerson: Boolean = false,
-)
+data class AnimeDetails(val id: Long)
+
+@Serializable
+data class CharacterDetails(val id: Long)
+
+@Serializable
+data class PersonDetails(val id: Long)
 
 @Serializable
 data class TopicDetails(

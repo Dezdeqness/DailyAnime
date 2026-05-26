@@ -9,9 +9,9 @@ import androidx.navigation.NavHostController
 import com.dezdeqness.R
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.di.subcomponents.SimilarArgsModule
-import com.dezdeqness.presentation.Details
+import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.AnimeDetails
+import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.features.animesimilar.composable.SimilarItem
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableScreen
 import com.dezdeqness.presentation.features.genericlistscreen.GenericListableViewModel
@@ -58,12 +58,12 @@ fun AnimeSimilarStandalonePage(
         titleRes = R.string.anime_similar_title,
         onEvent = { event ->
             when (event) {
-                is AnimeDetails -> {
+                is OpenAnimeDetails -> {
                     analyticsManager.detailsTracked(
                         id = event.animeId.toString(),
                         title = event.title
                     )
-                    navController.navigate(Details(event.animeId))
+                    navController.navigate(AnimeDetails(event.animeId))
                     true
                 }
 

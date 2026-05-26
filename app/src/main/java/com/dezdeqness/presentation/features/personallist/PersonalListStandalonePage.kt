@@ -37,7 +37,7 @@ import com.dezdeqness.feature.personallist.R as PersonalListR
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
-import com.dezdeqness.presentation.Details
+import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -106,7 +106,7 @@ fun PersonalListStandalonePage(
                         id = animeId.toString(),
                         title = title,
                     )
-                    navController.navigate(Details(animeId))
+                    navController.navigate(AnimeDetails(animeId))
                 },
             )
         },
@@ -162,7 +162,7 @@ fun PersonalListStandalonePage(
                                         id = animeId.toString(),
                                         title = title,
                                     )
-                                    navController.navigate(Details(animeId))
+                                    navController.navigate(AnimeDetails(animeId))
                                 },
                             )
                         }

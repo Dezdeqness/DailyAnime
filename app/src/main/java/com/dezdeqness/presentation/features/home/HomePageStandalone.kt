@@ -9,11 +9,11 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.BottomBarNav
-import com.dezdeqness.presentation.Details
 import com.dezdeqness.presentation.History
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.AnimeDetails
+import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.presentation.event.OpenHistoryPage
 
@@ -52,13 +52,13 @@ fun HomePageStandalone(
 
     viewModel.events.collectEvents { event ->
         when (event) {
-            is AnimeDetails -> {
+            is OpenAnimeDetails -> {
                 analyticsManager.detailsTracked(
                     id = event.animeId.toString(),
                     title = event.title
                 )
 
-                rootController.navigate(Details(event.animeId))
+                rootController.navigate(AnimeDetails(event.animeId))
             }
             is OpenCalendarTab -> {
                 navController.navigate(BottomBarNav.Calendar) {
