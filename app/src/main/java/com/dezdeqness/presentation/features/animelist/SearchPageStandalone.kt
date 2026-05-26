@@ -9,9 +9,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.foundation.utils.collectEvents
-import com.dezdeqness.presentation.Details
+import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.AnimeDetails
+import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.event.ApplyFilter
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilter
@@ -121,13 +121,13 @@ fun SearchPageStandalone(
                 filterViewModel.onFiltersReceived(event.filters)
             }
 
-            is AnimeDetails -> {
+            is OpenAnimeDetails -> {
                 analyticsManager.detailsTracked(
                     id = event.animeId.toString(),
                     title = event.title
                 )
 
-                navController.navigate(Details(event.animeId))
+                navController.navigate(AnimeDetails(event.animeId))
             }
 
             else -> {}

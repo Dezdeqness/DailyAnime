@@ -1,6 +1,6 @@
 package com.dezdeqness.presentation.action
 
-import com.dezdeqness.presentation.event.AnimeDetails
+import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.event.EventListener
 import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.presentation.event.OpenHistoryPage
@@ -22,7 +22,7 @@ class ActionConsumer {
         when (action) {
             is Action.AnimeClick -> {
                 eventListener?.onEventReceive(
-                    AnimeDetails(
+                    OpenAnimeDetails(
                         animeId = action.animeId,
                         title = action.title
                     )

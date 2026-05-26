@@ -20,7 +20,8 @@ import com.dezdeqness.feature.topicdetails.presentation.TopicIdKey
 import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.feature.topicdetails.presentation.store.TopicDetailsNamespace
 import com.dezdeqness.foundation.utils.collectEvents
-import com.dezdeqness.presentation.Details
+import com.dezdeqness.presentation.AnimeDetails
+import com.dezdeqness.presentation.CharacterDetails
 
 @Composable
 fun TopicDetailsStandalonePage(
@@ -64,8 +65,8 @@ fun TopicDetailsStandalonePage(
 
             override fun onLinkedEntityClicked(entity: LinkedEntityUiModel) {
                 when (entity) {
-                    is LinkedEntityUiModel.Anime -> navController.navigate(Details(entity.id))
-                    is LinkedEntityUiModel.Character -> navController.navigate(Details(entity.id, isAnime = false))
+                    is LinkedEntityUiModel.Anime -> navController.navigate(AnimeDetails(entity.id))
+                    is LinkedEntityUiModel.Character -> navController.navigate(CharacterDetails(entity.id))
                 }
             }
 
