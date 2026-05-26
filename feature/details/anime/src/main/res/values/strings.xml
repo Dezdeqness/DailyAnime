@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="anime_details_section_description">Synopsis</string>
     <string name="anime_details_section_related">Related</string>
     <string name="anime_details_section_characters">Characters</string>
     <string name="anime_details_section_screenshots">Screenshots</string>
