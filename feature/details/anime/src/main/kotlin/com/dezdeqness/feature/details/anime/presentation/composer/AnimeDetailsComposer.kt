@@ -11,6 +11,12 @@ import com.dezdeqness.feature.details.anime.presentation.models.GenreChip
 import com.dezdeqness.feature.details.anime.presentation.models.RelatedItem
 import com.dezdeqness.feature.details.anime.presentation.models.ScreenshotItem
 import com.dezdeqness.feature.details.anime.presentation.models.VideoItem
+import com.dezdeqness.feature.details.common.presentation.DetailsSection
+import com.dezdeqness.feature.details.common.presentation.sections.BottomSpacerSection
+import com.dezdeqness.feature.details.common.presentation.sections.BriefInfoSection
+import com.dezdeqness.feature.details.common.presentation.sections.DescriptionSection
+import com.dezdeqness.feature.details.common.presentation.sections.HeaderSection
+import com.dezdeqness.feature.details.common.presentation.sections.TitleSection
 import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.foundation.ui.views.details.BriefInfoEntry
 import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
@@ -33,18 +39,18 @@ class AnimeDetailsComposer @Inject constructor(
     private val shortDateFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
     private val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
 
-    fun compose(full: AnimeDetailsFullEntity): List<AnimeDetailsSection> {
+    fun compose(full: AnimeDetailsFullEntity): List<DetailsSection> {
         val details = full.animeDetailsEntity
-        val sections = mutableListOf<AnimeDetailsSection>()
+        val sections = mutableListOf<DetailsSection>()
 
-        sections += AnimeDetailsSection.Header(
+        sections += HeaderSection(
             imageUrl = urlNormalizer.normalize(details.image.original),
             rating = details.score,
         )
 
-        sections += AnimeDetailsSection.Title(text = details.russian)
+        sections += TitleSection(text = details.russian)
 
-        sections += AnimeDetailsSection.BriefInfo(items = composeBriefInfo(details))
+        sections += BriefInfoSection(items = composeBriefInfo(details))
 
         if (details.genreList.isNotEmpty()) {
             sections += AnimeDetailsSection.Genres(
@@ -55,7 +61,7 @@ class AnimeDetailsComposer @Inject constructor(
         }
 
         if (details.description != null) {
-            sections += AnimeDetailsSection.Description(html = details.descriptionHTML)
+            sections += DescriptionSection(html = details.descriptionHTML)
         }
 
         sections += AnimeDetailsSection.MoreInfo
@@ -108,7 +114,7 @@ class AnimeDetailsComposer @Inject constructor(
             .takeIf { it.isNotEmpty() }
             ?.let { sections += AnimeDetailsSection.Videos(items = it) }
 
-        sections += AnimeDetailsSection.BottomSpacer
+        sections += BottomSpacerSection
 
         return sections
     }

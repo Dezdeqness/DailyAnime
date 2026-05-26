@@ -2,7 +2,7 @@ package com.dezdeqness.feature.details.anime
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.dezdeqness.feature.details.anime.presentation.composables.AnimeDetailsContentPreview
+import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsContentPreview
 import com.dezdeqness.feature.details.anime.presentation.composables.sections.CharactersSectionPreview
 import com.dezdeqness.feature.details.anime.presentation.composables.sections.GenresSectionPreview
 import com.dezdeqness.feature.details.anime.presentation.composables.sections.MoreInfoSectionPreview

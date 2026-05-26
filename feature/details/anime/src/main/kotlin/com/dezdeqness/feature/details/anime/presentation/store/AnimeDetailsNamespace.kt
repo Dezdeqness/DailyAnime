@@ -3,7 +3,7 @@ package com.dezdeqness.feature.details.anime.presentation.store
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.user.model.StatsItemEntity
-import com.dezdeqness.feature.details.anime.presentation.models.AnimeDetailsSection
+import com.dezdeqness.feature.details.common.presentation.DetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
@@ -20,7 +20,7 @@ interface AnimeDetailsNamespace {
         override val shareUrl: String = "",
         val isAuthorized: Boolean = false,
         val details: AnimeDetailsFullEntity? = null,
-        val sections: List<AnimeDetailsSection> = emptyList(),
+        override val sections: List<DetailsSection> = emptyList(),
         val editRateSheet: EditRateSheetState = EditRateSheetState.None,
     ) : DetailsState
 
@@ -29,7 +29,7 @@ interface AnimeDetailsNamespace {
 
         data class OnDetailsLoaded(
             val details: AnimeDetailsFullEntity,
-            val sections: List<AnimeDetailsSection>,
+            val sections: List<DetailsSection>,
             val isAuthorized: Boolean,
         ) : Event
 
