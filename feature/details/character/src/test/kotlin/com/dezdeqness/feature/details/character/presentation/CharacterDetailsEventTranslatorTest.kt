@@ -3,8 +3,8 @@ package com.dezdeqness.feature.details.character.presentation
 import com.dezdeqness.feature.details.character.presentation.store.CharacterDetailsNamespace
 import com.dezdeqness.feature.details.common.presentation.DetailsBaseUiEvent
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
+import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 
 class CharacterDetailsEventTranslatorTest {
 
