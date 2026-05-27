@@ -3,8 +3,8 @@ package com.dezdeqness.feature.details.person.presentation
 import com.dezdeqness.feature.details.common.presentation.DetailsBaseUiEvent
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.feature.details.person.presentation.store.PersonDetailsNamespace
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
 
 class PersonDetailsEventTranslatorTest {
 
