@@ -48,6 +48,10 @@ include(":feature:settings")
 include(":feature:topics")
 include(":feature:topicdetails")
 include(":feature:forum")
+include(":feature:details:common")
+include(":feature:details:anime")
+include(":feature:details:character")
+include(":feature:details:person")
 
 // shared
 include(":shared:shared-presentation")
