@@ -24,6 +24,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
+import com.dezdeqness.feature.topicdetails.presentation.preview.TopicDetailsPreviewData
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.foundation.ui.views.shimmer
@@ -129,3 +132,17 @@ fun LinkedEntityShimmerCard(
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+fun LinkedEntityCardPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            LinkedEntityCard(
+                entity = TopicDetailsPreviewData.linkedEntityCard,
+                onClick = {},
+            )
+        }
+    }
+}
+

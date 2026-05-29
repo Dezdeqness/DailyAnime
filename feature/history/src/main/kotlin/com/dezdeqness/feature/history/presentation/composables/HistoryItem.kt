@@ -17,9 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
+import com.dezdeqness.feature.history.presentation.preview.HistoryPreviewData
 
 @Composable
 fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel) {
@@ -59,5 +62,17 @@ fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel
             }
         }
 
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun HistoryItemPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            HistoryItem(
+                item = HistoryPreviewData.item,
+            )
+        }
     }
 }

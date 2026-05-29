@@ -9,10 +9,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.feature.achievements.R
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
+import com.dezdeqness.feature.achievements.presentation.preview.AchievementsPreviewData
 
 @Composable
 fun AchievementsList(
@@ -62,6 +66,19 @@ fun AchievementsList(
 
         item {
             Spacer(modifier = Modifier.height(50.dp))
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun AchievementsListPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            AchievementsList(
+                common = AchievementsPreviewData.commonList,
+                genres = AchievementsPreviewData.genresList,
+            )
         }
     }
 }

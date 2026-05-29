@@ -6,8 +6,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.feature.topics.presentation.models.TopicListUiModel
+import com.dezdeqness.feature.topics.presentation.preview.TopicsPreviewData
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.PaginationEffect
 
 @Composable
@@ -46,6 +50,22 @@ fun TopicListContent(
                     )
                 }
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun TopicListContentPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            TopicListContent(
+                list = TopicsPreviewData.list,
+                hasNextPage = false,
+                isPageLoading = false,
+                onLoadMore = {},
+                onItemClicked = {},
+            )
         }
     }
 }
