@@ -3,6 +3,7 @@ package com.dezdeqness.feature.topicdetails.presentation.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
@@ -10,11 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.feature.topicdetails.R
 import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityState
 import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
+import com.dezdeqness.feature.topicdetails.presentation.preview.TopicDetailsPreviewData
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_ANIME
 import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer.Companion.LINKED_TYPE_CHARACTER
@@ -71,6 +75,22 @@ fun TopicDetailsContent(
 
         item {
             Box(Modifier.padding(bottom = 36.dp))
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun TopicDetailsContentPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            TopicDetailsContent(
+                topic = TopicDetailsPreviewData.topic,
+                linkedEntity = TopicDetailsPreviewData.linkedEntityState,
+                onLinkedEntityClick = {},
+                onVideoClick = {},
+                modifier = Modifier.fillMaxSize(),
+            )
         }
     }
 }

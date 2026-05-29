@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.com.dezdeqness.compose)
+    alias(libs.plugins.screenshot)
 }
 
 java {
@@ -32,9 +33,13 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 dependencies {
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+
     // Dagger
     implementation(libs.dagger.dagger)
     ksp(libs.dagger.compilier)

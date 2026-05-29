@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.sp
 import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.achievements.R
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
+import com.dezdeqness.feature.achievements.presentation.preview.AchievementsPreviewData
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
@@ -101,6 +104,18 @@ fun AchievementCell(
                     fontSize = 12.sp,
                 )
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun AchievementCellPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            AchievementCell(
+                item = AchievementsPreviewData.cell,
+            )
         }
     }
 }

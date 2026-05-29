@@ -5,6 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.dezdeqness.feature.history.presentation.preview.HistoryPreviewData
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
@@ -16,4 +19,14 @@ fun HistoryHeader(modifier: Modifier = Modifier, header: String) {
         fontSize = 16.sp,
         modifier = modifier,
     )
+}
+
+@PreviewLightDark
+@Composable
+fun HistoryHeaderPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            HistoryHeader(header = HistoryPreviewData.header)
+        }
+    }
 }

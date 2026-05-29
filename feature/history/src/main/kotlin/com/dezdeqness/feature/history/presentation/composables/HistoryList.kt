@@ -6,9 +6,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.PaginationEffect
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
+import com.dezdeqness.feature.history.presentation.preview.HistoryPreviewData
 
 @Composable
 fun HistoryList(
@@ -64,5 +68,20 @@ fun HistoryList(
             }
         }
 
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun HistoryListPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            HistoryList(
+                list = HistoryPreviewData.list,
+                hasNextPage = false,
+                isPageLoading = false,
+                onLoadMore = {},
+            )
+        }
     }
 }

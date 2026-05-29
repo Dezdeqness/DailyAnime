@@ -17,6 +17,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,6 +31,7 @@ import com.dezdeqness.feature.forum.presentation.store.ForumNamespace
 import com.dezdeqness.feature.forum.presentation.store.ForumStatus
 import com.dezdeqness.feature.forum.presentation.store.HotTopicsStatus
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.feature.forum.presentation.preview.ForumPreviewData
 import com.dezdeqness.foundation.ui.views.GeneralEmpty
 import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.foundation.ui.views.header.Header
@@ -140,6 +143,22 @@ private fun ForumLoadedList(
                     modifier = Modifier.animateItem(),
                 )
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun ForumContentPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            ForumLoadedList(
+                sections = ForumPreviewData.sections,
+                hotTopics = ForumPreviewData.hotTopics,
+                hotTopicsStatus = HotTopicsStatus.Loaded,
+                onSectionClicked = {},
+                onHotTopicClicked = {},
+            )
         }
     }
 }

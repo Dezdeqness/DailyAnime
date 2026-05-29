@@ -39,6 +39,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dezdeqness.feature.forum.presentation.models.ForumUiModel
+import com.dezdeqness.feature.forum.presentation.preview.ForumPreviewData
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
@@ -170,3 +173,16 @@ private val ForumIconByPermalink: Map<String, ForumIconVisuals> = mapOf(
 
 private fun forumIconVisualsFor(permalink: String): ForumIconVisuals =
     ForumIconByPermalink[permalink] ?: ForumFallbackVisuals
+
+@PreviewLightDark
+@Composable
+fun ForumSectionItemPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            ForumSectionItem(
+                item = ForumPreviewData.sectionItem,
+                onClick = {},
+            )
+        }
+    }
+}

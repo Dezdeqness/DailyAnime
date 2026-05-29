@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Update Compose screenshot test reference images.
+#
+# Usage:
+#  ./scripts/update-screenshots/update-screenshots                 # all modules with screenshot tests enabled
+#  ./scripts/update-screenshots/update-screenshots all             # same as above
+#  ./scripts/update-screenshots/update-screenshots forum           # single feature module by short name
+#  ./scripts/update-screenshots/update-screenshots app             # the :app module
+#  ./scripts/update-screenshots/update-screenshots :feature:forum  # full Gradle path
+
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
+cd "$ROOT_DIR"
+
+resolve_module_path() {
+    local name="$1"
+    case "$name" in
+        :*)            echo "$name" ;;
+        app)           echo ":app" ;;
+        foundation-ui) echo ":common:foundation-ui" ;;
+        *)             echo ":feature:$name" ;;
+    esac
+}
+
+discover_enabled_modules() {
+    local files=()
+    [ -f "app/build.gradle.kts" ] && files+=("app/build.gradle.kts")
+    for f in common/*/build.gradle.kts feature/*/build.gradle.kts; do
+        [ -f "$f" ] && files+=("$f")
+    done
+
+    for file in "${files[@]}"; do
+        if grep -q "libs.plugins.screenshot" "$file"; then
+            local dir="${file%/build.gradle.kts}"
+            echo ":${dir//\//:}"
+        fi
+    done
+}
+
+run_update() {
+    local module="$1"
+    echo "==> Updating screenshots for ${module}"
+    ./gradlew "${module}:updateDebugScreenshotTest"
+}
+
+target="${1:-all}"
+
+if [ "$target" = "all" ]; then
+    mapfile -t modules < <(discover_enabled_modules)
+    if [ ${#modules[@]} -eq 0 ]; then
+        echo "No modules with screenshot tests enabled found."
+        exit 1
+    fi
+    echo "Enabled modules: ${modules[*]}"
+    for m in "${modules[@]}"; do
+        run_update "$m"
+    done
+else
+    run_update "$(resolve_module_path "$target")"
+fi
