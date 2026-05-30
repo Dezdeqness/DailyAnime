@@ -1,7 +1,9 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.contract.favourite.model.ActionFavouriteEntity
 import com.dezdeqness.contract.favourite.model.FavouriteEntity
 import com.dezdeqness.contract.favourite.model.FavouriteType
+import com.dezdeqness.data.model.ActionFavouriteResponse
 import com.dezdeqness.data.model.favorite.FavouriteItemResponse
 import com.dezdeqness.data.model.favorite.FavouritesResponse
 import javax.inject.Inject
@@ -35,4 +37,9 @@ class FavouriteMapper @Inject constructor() {
             type = favouriteType
         )
 
+    fun fromResponse(response: ActionFavouriteResponse): ActionFavouriteEntity =
+        ActionFavouriteEntity(
+            isSuccess = response.success,
+            notice = response.notice,
+        )
 }

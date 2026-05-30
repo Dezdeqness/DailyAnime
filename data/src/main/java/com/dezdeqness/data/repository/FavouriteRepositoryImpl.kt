@@ -1,5 +1,6 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.favourite.model.ActionFavouriteEntity
 import com.dezdeqness.contract.favourite.model.FavouriteKind
 import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
@@ -15,22 +16,12 @@ class FavouriteRepositoryImpl @Inject constructor(
     override suspend fun addToFavourites(
         targetId: Long,
         type: FavouriteLinkedType,
-        kind: FavouriteKind?
-    ): Result<Unit> {
-        TODO("Not yet implemented")
-    }
+        kind: FavouriteKind?,
+    ) = remoteDataSource.addToFavourites(targetId = targetId, type = type, kind = kind)
 
     override suspend fun removeFromFavourites(
         targetId: Long,
         type: FavouriteLinkedType
-    ): Result<Unit> {
-        TODO("Not yet implemented")
-    }
+    ) = remoteDataSource.removeFromFavourites(targetId = targetId, type = type)
 
-    override suspend fun reorderFavourite(
-        targetId: Long,
-        index: Int
-    ): Result<Unit> {
-        TODO("Not yet implemented")
-    }
 }
