@@ -41,4 +41,7 @@ dependencies {
 
     //Elm
     implementation(libs.elmslie.core)
+
+    // Contract
+    implementation(project(":contract:favourite"))
 }

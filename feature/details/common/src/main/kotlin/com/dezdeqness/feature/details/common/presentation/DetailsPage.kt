@@ -19,6 +19,7 @@ fun <UiEvent : Any, State : DetailsState> DetailsPage(
     onShare: () -> Unit,
     onRetry: () -> Unit,
     onBack: () -> Unit,
+    onFavouriteClick: () -> Unit,
     modifier: Modifier = Modifier,
     overlay: @Composable BoxScope.(State, (UiEvent) -> Unit) -> Unit = { _, _ ->},
     loading: @Composable (Modifier) -> Unit,
@@ -42,8 +43,10 @@ fun <UiEvent : Any, State : DetailsState> DetailsPage(
             DetailsToolbar(
                 isLoaded = state.status == DetailsStatus.Loaded,
                 toolbarColor = toolbarColor,
+                favouriteState = state.favouriteButton,
                 onBackClick = onBack,
                 onShareClick = onShare,
+                onFavouriteClick = onFavouriteClick,
             )
         },
         overlay = { overlay(state, onUiEvent) },
