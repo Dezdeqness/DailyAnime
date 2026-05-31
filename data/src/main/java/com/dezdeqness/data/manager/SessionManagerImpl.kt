@@ -5,6 +5,7 @@ import com.dezdeqness.contract.auth.model.AccountType
 
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
 import com.dezdeqness.data.model.db.AccountSessionLocal
@@ -27,6 +28,7 @@ class SessionManagerImpl @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val accountSessionDao: AccountSessionDao,
+    private val favouriteRepository: FavouriteRepository,
 ) : SessionManager {
 
     private val _sessionState = MutableStateFlow<SessionState>(SessionState.Loading)
@@ -41,6 +43,7 @@ class SessionManagerImpl @Inject constructor(
         val result = loginUseCase(code)
 
         if (result.isSuccess) {
+            favouriteRepository.clearCache()
             val state = resolveFromLocal()
             if (state != null) {
                 val authenticated = state as SessionState.Authenticated
@@ -67,6 +70,7 @@ class SessionManagerImpl @Inject constructor(
             if (activeAccount != null) {
                 accountSessionDao.deleteAccount(activeAccount.id)
             }
+            favouriteRepository.clearCache()
             _sessionState.value = SessionState.Unauthenticated
         }
 

@@ -1,11 +1,9 @@
 package com.dezdeqness.data
 
+import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.ActionFavouriteResponse
 import com.dezdeqness.data.model.favorite.FavouritesResponse
-import com.dezdeqness.data.model.requet.FavouriteReorderRequest
-import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,6 +15,7 @@ interface FavouriteApiService {
         @Path("id") userId: Long
     ): Call<FavouritesResponse>
 
+    @NeedAuthorization
     @POST("/api/favorites/{linked_type}/{linked_id}/{kind}")
     fun addFavoriteWithKind(
         @Path("linked_type") linkedType: String,
@@ -24,12 +23,14 @@ interface FavouriteApiService {
         @Path("kind") kind: String
     ): Call<ActionFavouriteResponse>
 
+    @NeedAuthorization
     @POST("/api/favorites/{linked_type}/{linked_id}")
     fun addFavorite(
         @Path("linked_type") linkedType: String,
         @Path("linked_id") linkedId: Long
     ): Call<ActionFavouriteResponse>
 
+    @NeedAuthorization
     @DELETE("/api/favorites/{linked_type}/{linked_id}")
     fun deleteFavorite(
         @Path("linked_type") linkedType: String,

@@ -9,6 +9,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.dezdeqness.contract.favourite.model.FavouriteButtonState
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 
@@ -18,8 +19,10 @@ fun DetailsToolbar(
     modifier: Modifier = Modifier,
     toolbarColor: Color = AppTheme.colors.onPrimary,
     isLoaded: Boolean,
+    favouriteState: FavouriteButtonState = FavouriteButtonState.Hidden,
     onBackClick: () -> Unit,
     onShareClick: () -> Unit,
+    onFavouriteClick: () -> Unit = {},
 ) {
     AppToolbar(
         modifier = modifier,
@@ -28,6 +31,7 @@ fun DetailsToolbar(
         colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = toolbarColor),
         actions = {
             if (isLoaded) {
+                FavouriteIconButton(state = favouriteState, onClick = onFavouriteClick)
                 IconButton(onClick = onShareClick) {
                     Icon(
                         imageVector = Icons.Filled.Share,

@@ -1,5 +1,6 @@
 package com.dezdeqness.feature.details.common.presentation.store
 
+import com.dezdeqness.contract.favourite.model.FavouriteButtonState
 import money.vivid.elmslie.core.store.StateReducer
 
 abstract class BaseDetailsReducer<
@@ -17,6 +18,8 @@ abstract class BaseDetailsReducer<
         onInitialLoad: (id: Long) -> State,
         onLoading: () -> State,
         onError: () -> State,
+        onFavouriteButtonChanged: (FavouriteButtonState) -> State,
+        onFavouriteToggleClicked: Result.() -> Unit = {},
     ) {
         when (event) {
             is BaseDetailsEvent.InitialLoad -> {
@@ -39,6 +42,23 @@ abstract class BaseDetailsReducer<
                 val url = state.shareUrl.takeIf { it.isNotEmpty() } ?: return
                 effects { +wrapEffect(BaseDetailsEffect.Share(url)) }
             }
+
+            is BaseDetailsEvent.FavouriteStatusChanged -> {
+                state { onFavouriteButtonChanged(event.state) }
+            }
+
+            is BaseDetailsEvent.FavouriteToggleSucceeded -> Unit
+
+            is BaseDetailsEvent.FavouriteToggleFailed -> {
+                val previous = (state.favouriteButton as? FavouriteButtonState.Processing)
+                    ?.let { FavouriteButtonState.Idle(isFavourite = !it.targetIsFavourite) }
+                if (previous != null) {
+                    state { onFavouriteButtonChanged(previous) }
+                }
+                effects { +wrapEffect(BaseDetailsEffect.FavouriteActionFailed) }
+            }
+
+            is BaseDetailsEvent.FavouriteToggleClicked -> onFavouriteToggleClicked()
         }
     }
 }
