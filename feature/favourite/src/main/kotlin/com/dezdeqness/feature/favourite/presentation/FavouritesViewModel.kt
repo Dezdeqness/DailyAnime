@@ -1,6 +1,7 @@
 package com.dezdeqness.feature.favourite.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.contract.favourite.model.FavouritesCacheState
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
@@ -9,8 +10,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import javax.inject.Named
@@ -26,27 +28,14 @@ class FavouritesViewModel @Inject constructor(
     override val viewModelTag = "FavouritesViewModel"
 
     val favouritesState: StateFlow<FavouritesUiState> =
-        flow {
-            emit(FavouritesUiState(status = Status.Loading))
-
-            val result = favouriteRepository.getFavourites(userId)
-
-            result
-                .onSuccess { favourites ->
-                    val uiItems = favourites.map(favouriteMapper::map)
-
-                    emit(
-                        FavouritesUiState(
-                            status = if (uiItems.isEmpty()) Status.Empty else Status.Loaded,
-                            items = uiItems,
-                        )
-                    )
+        favouriteRepository.favourites
+            .onStart {
+                launchOnIo {
+                    favouriteRepository.fetchFavourites(userId)
+                        .onFailure { logInfo("Error fetching favourites", it) }
                 }
-                .onFailure { throwable ->
-                    logInfo("Error fetching favourites", throwable)
-                    emit(FavouritesUiState(status = Status.Error))
-                }
-        }
+            }
+            .map(::toUiState)
             .catch { throwable ->
                 logInfo("Error in favourites flow", throwable)
                 emit(FavouritesUiState(status = Status.Error))
@@ -58,4 +47,17 @@ class FavouritesViewModel @Inject constructor(
                 started = SharingStarted.Lazily,
                 initialValue = FavouritesUiState(status = Status.Initial)
             )
+
+    private fun toUiState(cache: FavouritesCacheState): FavouritesUiState = when (cache) {
+        FavouritesCacheState.Empty -> FavouritesUiState(status = Status.Initial)
+        FavouritesCacheState.Loading -> FavouritesUiState(status = Status.Loading)
+        is FavouritesCacheState.Error -> FavouritesUiState(status = Status.Error)
+        is FavouritesCacheState.Loaded -> {
+            val items = cache.items.map(favouriteMapper::map)
+            FavouritesUiState(
+                status = if (items.isEmpty()) Status.Empty else Status.Loaded,
+                items = items,
+            )
+        }
+    }
 }
