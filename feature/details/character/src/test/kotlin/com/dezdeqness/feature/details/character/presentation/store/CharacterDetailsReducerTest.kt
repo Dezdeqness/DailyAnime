@@ -58,6 +58,7 @@ class CharacterDetailsReducerTest {
                     title = "Тандзиро",
                     shareUrl = "/characters/1",
                     sections = sections,
+                    isAuthorized = false,
                 ),
             )
 

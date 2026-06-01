@@ -1,5 +1,6 @@
 package com.dezdeqness.feature.details.character.presentation.store
 
+import com.dezdeqness.contract.favourite.model.FavouriteButtonState
 import com.dezdeqness.feature.details.common.presentation.DetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
@@ -15,6 +16,7 @@ interface CharacterDetailsNamespace {
         override val title: String = "",
         override val shareUrl: String = "",
         override val sections: List<DetailsSection> = emptyList(),
+        override val favouriteButton: FavouriteButtonState = FavouriteButtonState.Hidden,
     ) : DetailsState
 
     sealed interface Event {
@@ -23,6 +25,7 @@ interface CharacterDetailsNamespace {
             val title: String,
             val shareUrl: String,
             val sections: List<DetailsSection>,
+            val isAuthorized: Boolean,
         ) : Event
         data class SeyuClicked(val personId: Long) : Event
         data class AnimeClicked(val animeId: Long) : Event

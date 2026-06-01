@@ -15,6 +15,7 @@ class AnimeDetailsEventTranslator @Inject constructor() :
                 when (uiEvent.event) {
                     DetailsBaseUiEvent.SharePressed -> BaseDetailsEvent.SharePressed
                     DetailsBaseUiEvent.RetryClicked -> BaseDetailsEvent.RetryClicked
+                    DetailsBaseUiEvent.FavouriteToggled -> BaseDetailsEvent.FavouriteToggleClicked
                 },
             )
 

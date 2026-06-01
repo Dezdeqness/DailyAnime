@@ -2,6 +2,7 @@ package com.dezdeqness.feature.details.anime.presentation.store
 
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.contract.favourite.model.FavouriteButtonState
 import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.feature.details.common.presentation.DetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
@@ -18,6 +19,7 @@ interface AnimeDetailsNamespace {
         override val status: DetailsStatus = DetailsStatus.Initial,
         override val title: String = "",
         override val shareUrl: String = "",
+        override val favouriteButton: FavouriteButtonState = FavouriteButtonState.Hidden,
         val isAuthorized: Boolean = false,
         val details: AnimeDetailsFullEntity? = null,
         override val sections: List<DetailsSection> = emptyList(),

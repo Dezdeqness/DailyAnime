@@ -1,5 +1,8 @@
 package com.dezdeqness.feature.details.anime.presentation.store
 
+import com.dezdeqness.contract.favourite.model.FavouriteButtonState
+import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
+import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsReducer
 import com.dezdeqness.feature.details.common.presentation.store.DetailsStatus
 
@@ -24,6 +27,24 @@ val animeDetailsReducer = object : BaseDetailsReducer<
                 },
                 onLoading = { state.copy(status = DetailsStatus.Loading) },
                 onError = { state.copy(status = DetailsStatus.Error) },
+                onFavouriteButtonChanged = { state.copy(favouriteButton = it) },
+                onFavouriteToggleClicked = {
+                    val current = state.favouriteButton as? FavouriteButtonState.Idle ?: return@handleBaseDetailsEvent
+                    val target = !current.isFavourite
+                    state {
+                        state.copy(
+                            favouriteButton = FavouriteButtonState.Processing(targetIsFavourite = target),
+                        )
+                    }
+                    commands {
+                        +AnimeDetailsNamespace.Command.Base(
+                            BaseDetailsCommand.ToggleFavourite(
+                                targetId = state.id,
+                                type = FavouriteLinkedType.ANIME,
+                            ),
+                        )
+                    }
+                },
             )
 
             is AnimeDetailsNamespace.Event.OnDetailsLoaded -> {
@@ -37,6 +58,19 @@ val animeDetailsReducer = object : BaseDetailsReducer<
                         title = entity.russian,
                         shareUrl = entity.url,
                     )
+                }
+                if (event.isAuthorized) {
+                    commands {
+                        +AnimeDetailsNamespace.Command.Base(
+                            BaseDetailsCommand.ObserveFavouriteStatus(
+                                targetId = entity.id,
+                                type = FavouriteLinkedType.ANIME,
+                            ),
+                        )
+                        +AnimeDetailsNamespace.Command.Base(
+                            BaseDetailsCommand.FetchFavourites(),
+                        )
+                    }
                 }
             }
 

@@ -1,5 +1,8 @@
 package com.dezdeqness.feature.details.character.presentation.store
 
+import com.dezdeqness.contract.favourite.model.FavouriteButtonState
+import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
+import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsReducer
 import com.dezdeqness.feature.details.common.presentation.store.DetailsStatus
 
@@ -24,6 +27,22 @@ val characterDetailsReducer = object : BaseDetailsReducer<
                 },
                 onLoading = { state.copy(status = DetailsStatus.Loading) },
                 onError = { state.copy(status = DetailsStatus.Error) },
+                onFavouriteButtonChanged = { state.copy(favouriteButton = it) },
+                onFavouriteToggleClicked = {
+                    val current = state.favouriteButton as? FavouriteButtonState.Idle ?: return@handleBaseDetailsEvent
+                    val target = !current.isFavourite
+                    state {
+                        state.copy(favouriteButton = FavouriteButtonState.Processing(targetIsFavourite = target))
+                    }
+                    commands {
+                        +CharacterDetailsNamespace.Command.Base(
+                            BaseDetailsCommand.ToggleFavourite(
+                                targetId = state.id,
+                                type = FavouriteLinkedType.CHARACTER,
+                            ),
+                        )
+                    }
+                },
             )
 
             is CharacterDetailsNamespace.Event.OnDetailsLoaded -> {
@@ -34,6 +53,19 @@ val characterDetailsReducer = object : BaseDetailsReducer<
                         shareUrl = event.shareUrl,
                         sections = event.sections,
                     )
+                }
+                if (event.isAuthorized) {
+                    commands {
+                        +CharacterDetailsNamespace.Command.Base(
+                            BaseDetailsCommand.ObserveFavouriteStatus(
+                                targetId = state.id,
+                                type = FavouriteLinkedType.CHARACTER,
+                            ),
+                        )
+                        +CharacterDetailsNamespace.Command.Base(
+                            BaseDetailsCommand.FetchFavourites(),
+                        )
+                    }
                 }
             }
 
