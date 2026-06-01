@@ -1,25 +1,33 @@
 package com.dezdeqness.di.modules
 
-import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.data.FavouriteApiService
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSource
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSourceImpl
 import com.dezdeqness.data.repository.FavouriteRepositoryImpl
-import com.dezdeqness.foundation.di.ViewModelKey
-import com.dezdeqness.feature.favourite.presentation.FavouritesViewModel
+import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
+import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 
 @Module
 abstract class FavouriteModule {
     companion object {
         @Provides
-        fun provideAchievementService(retrofit: Retrofit): FavouriteApiService =
+        fun provideFavouriteApiService(retrofit: Retrofit): FavouriteApiService =
             retrofit.create(FavouriteApiService::class.java)
+
+        @Provides
+        fun provideObserveFavouriteStatusUseCase(
+            favouriteRepository: FavouriteRepository,
+        ) = ObserveFavouriteStatusUseCase(favouriteRepository = favouriteRepository)
+
+        @Provides
+        fun provideFetchFavouritesUseCase(
+            favouriteRepository: FavouriteRepository,
+        ) = FetchFavouritesUseCase(favouriteRepository = favouriteRepository)
     }
 
     @Binds
@@ -29,10 +37,4 @@ abstract class FavouriteModule {
 
     @Binds
     abstract fun bindFavouriteRepository(favouriteRepository: FavouriteRepositoryImpl): FavouriteRepository
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(FavouritesViewModel::class)
-    abstract fun bindFavouritesViewModel(viewModel: FavouritesViewModel): ViewModel
-
 }

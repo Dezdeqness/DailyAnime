@@ -77,6 +77,11 @@ fun PersonDetailsStandalonePage(
                         .setText(absolute)
                         .startChooser()
                 }
+                is BaseDetailsEffect.FavouriteActionFailed -> {
+                    scope.launch(dispatcherProvider.io()) {
+                        messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
+                    }
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.DatabaseModule
+import com.dezdeqness.di.modules.FavouriteModule
 import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
@@ -57,6 +58,7 @@ import javax.inject.Singleton
         AccountModule::class,
         DataModule::class,
         DatabaseModule::class,
+        FavouriteModule::class,
     ]
 )
 interface AppComponent {
