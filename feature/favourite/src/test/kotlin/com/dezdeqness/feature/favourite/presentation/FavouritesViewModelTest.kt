@@ -2,6 +2,7 @@ package com.dezdeqness.feature.favourite.presentation
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.favourite.model.FavouriteEntity
+import com.dezdeqness.contract.favourite.model.FavouritesCacheState
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.Logger
@@ -11,10 +12,10 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -36,6 +37,7 @@ class FavouritesViewModelTest {
     @MockK
     private lateinit var logger: Logger
 
+    private lateinit var favouritesFlow: MutableStateFlow<FavouritesCacheState>
     private lateinit var viewModel: FavouritesViewModel
 
     @Before
@@ -43,6 +45,13 @@ class FavouritesViewModelTest {
         Dispatchers.setMain(StandardTestDispatcher())
 
         MockKAnnotations.init(this)
+
+        favouritesFlow = MutableStateFlow(FavouritesCacheState.Empty)
+        every { favouriteRepository.favourites } returns favouritesFlow
+        coEvery { favouriteRepository.fetchFavourites(any(), any()) } returns Result.success(Unit)
+
+        every { logger.logInfo(any(), any()) } returns Unit
+        every { logger.logInfo(any(), any(), any()) } returns Unit
 
         viewModel = FavouritesViewModel(
             userId = USER_ID,
@@ -55,9 +64,6 @@ class FavouritesViewModelTest {
             favouriteRepository = favouriteRepository,
             favouriteMapper = favouriteMapper,
         )
-
-        every { logger.logInfo(any(), any()) } returns Unit
-        every { logger.logInfo(any(), any(), any()) } returns Unit
     }
 
     @After
@@ -66,35 +72,28 @@ class FavouritesViewModelTest {
     }
 
     @Test
-    fun `WHEN favourites loaded successfully SHOULD emit loaded state with data`() = runTest {
-        val favourites = listOf(mockk<FavouriteEntity>())
+    fun `WHEN favourites loaded with items SHOULD emit loaded state`() = runTest {
+        val favourite = mockk<FavouriteEntity>()
         val uiItem = mockk<FavouritesUiModel>()
-
-        coEvery { favouriteRepository.getFavourites(USER_ID) } returns Result.success(favourites)
-        every { favouriteMapper.map(any()) } returns uiItem
+        every { favouriteMapper.map(favourite) } returns uiItem
 
         viewModel.favouritesState.test {
             advanceUntilIdle()
 
-            val initial = awaitItem()
+            assertEquals(FavouritesUiState(status = Status.Initial), awaitItem())
 
-            assertEquals(
-                FavouritesUiState(status = Status.Initial),
-                initial
+            favouritesFlow.value = FavouritesCacheState.Loading
+            advanceUntilIdle()
+            assertEquals(FavouritesUiState(status = Status.Loading), awaitItem())
+
+            favouritesFlow.value = FavouritesCacheState.Loaded(
+                items = listOf(favourite),
+                loadedAtMillis = 0L,
             )
-
-            val loading = awaitItem()
-
-            assertEquals(
-                FavouritesUiState(status = Status.Loading),
-                loading
-            )
-
-            val loaded = awaitItem()
-
+            advanceUntilIdle()
             assertEquals(
                 FavouritesUiState(status = Status.Loaded, items = listOf(uiItem)),
-                loaded
+                awaitItem(),
             )
 
             cancelAndIgnoreRemainingEvents()
@@ -103,28 +102,14 @@ class FavouritesViewModelTest {
 
     @Test
     fun `WHEN favourites are empty SHOULD emit empty state`() = runTest {
-        coEvery { favouriteRepository.getFavourites(USER_ID) } returns Result.success(listOf())
-
         viewModel.favouritesState.test {
             advanceUntilIdle()
 
-            val initial = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Initial),
-                initial
-            )
+            assertEquals(FavouritesUiState(status = Status.Initial), awaitItem())
 
-            val loading = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Loading),
-                loading
-            )
-
-            val empty = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Empty),
-                empty
-            )
+            favouritesFlow.value = FavouritesCacheState.Loaded(items = emptyList(), loadedAtMillis = 0L)
+            advanceUntilIdle()
+            assertEquals(FavouritesUiState(status = Status.Empty), awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -134,65 +119,17 @@ class FavouritesViewModelTest {
     fun `WHEN favourites fetch fails SHOULD emit error state`() = runTest {
         val error = Exception("Network error")
 
-        coEvery { favouriteRepository.getFavourites(USER_ID) } returns Result.failure(error)
-
         viewModel.favouritesState.test {
             advanceUntilIdle()
 
-            val initial = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Initial),
-                initial
-            )
+            assertEquals(FavouritesUiState(status = Status.Initial), awaitItem())
 
-            val loading = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Loading),
-                loading
-            )
-
-            val error = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Error),
-                error
-            )
-
-            cancelAndIgnoreRemainingEvents()
-        }
-
-        verify { logger.logInfo("FavouritesViewModel", any(), error) }
-    }
-
-    @Test
-    fun `WHEN flow throws exception SHOULD emit error state`() = runTest {
-        val error = Exception("Flow error")
-
-        coEvery { favouriteRepository.getFavourites(USER_ID) } throws error
-
-        viewModel.favouritesState.test {
+            favouritesFlow.value = FavouritesCacheState.Error(error)
             advanceUntilIdle()
-
-            val initial = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Initial),
-                initial
-            )
-
-            val loading = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Loading),
-                loading
-            )
-
-            val error = awaitItem()
-            assertEquals(
-                FavouritesUiState(status = Status.Error),
-                error
-            )
+            assertEquals(FavouritesUiState(status = Status.Error), awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
-        verify { logger.logInfo("FavouritesViewModel", any(), error) }
     }
 
     companion object {

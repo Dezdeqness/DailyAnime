@@ -65,6 +65,7 @@ fun FavouritesPage(
                 Status.Loaded -> {
                     FavouritesGrid(
                         items = state.items,
+                        onItemClicked = { actions.onItemClicked(it.id, it.type) },
                     )
                 }
 

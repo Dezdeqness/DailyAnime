@@ -1,5 +1,6 @@
 package com.dezdeqness.feature.favourite.presentation.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,12 +17,14 @@ import com.dezdeqness.feature.favourite.presentation.models.FavouritesUiModel
 @Composable
 fun FavouriteCell(
     modifier: Modifier = Modifier,
-    item: FavouritesUiModel
+    item: FavouritesUiModel,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(6.dp))
+            .clickable(onClick = onClick),
     ) {
         Box {
             AppImage(

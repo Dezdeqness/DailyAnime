@@ -23,6 +23,7 @@ private const val LANDSCAPE_MAX_CELLS = 6
 fun FavouritesGrid(
     modifier: Modifier = Modifier,
     items: List<FavouritesUiModel>,
+    onItemClicked: (FavouritesUiModel) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
     val configuration = LocalConfiguration.current
@@ -54,6 +55,7 @@ fun FavouritesGrid(
 
             FavouriteCell(
                 item = item,
+                onClick = { onItemClicked(item) },
                 modifier = Modifier
                     .animateItem()
                     .padding(padding),

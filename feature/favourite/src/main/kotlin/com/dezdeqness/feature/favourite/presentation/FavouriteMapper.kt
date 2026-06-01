@@ -10,8 +10,9 @@ class FavouriteMapper @Inject constructor(
 ) {
 
     fun map(item: FavouriteEntity) = FavouritesUiModel(
-        id = item.id.toString(),
+        id = item.id,
         title = item.name.ifEmpty { item.russian.orEmpty() },
         imageUrl = configManager.baseUrl + item.image?.replace("x64", "original"),
+        type = item.type,
     )
 }
