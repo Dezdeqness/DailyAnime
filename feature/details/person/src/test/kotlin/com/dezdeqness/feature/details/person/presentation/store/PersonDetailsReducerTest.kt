@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.details.person.presentation.store
 
 import app.cash.turbine.test
-import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
+import com.dezdeqness.contract.favourite.model.FavouriteKind
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.feature.details.common.presentation.store.DetailsStatus
@@ -59,6 +59,8 @@ class PersonDetailsReducerTest {
                     title = "Natsuki",
                     shareUrl = "/people/1",
                     sections = sections,
+                    favouriteKind = FavouriteKind.PERSON,
+                    isAuthorized = false,
                 ),
             )
 
@@ -67,6 +69,7 @@ class PersonDetailsReducerTest {
             assertEquals("Natsuki", loaded.title)
             assertEquals("/people/1", loaded.shareUrl)
             assertEquals(sections, loaded.sections)
+            assertEquals(FavouriteKind.PERSON, loaded.favouriteKind)
 
             cancelAndIgnoreRemainingEvents()
         }

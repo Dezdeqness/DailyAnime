@@ -33,6 +33,7 @@ fun PersonDetailsPage(
             onShare = { onUiEvent(PersonDetailsUiEvent.Base(DetailsBaseUiEvent.SharePressed)) },
             onRetry = { onUiEvent(PersonDetailsUiEvent.Base(DetailsBaseUiEvent.RetryClicked)) },
             onBack = onBackPressed,
+            onFavouriteClick = { onUiEvent(PersonDetailsUiEvent.Base(DetailsBaseUiEvent.FavouriteToggled)) },
             loading = { modifier ->
                 DetailsLoadingSkeleton(modifier = modifier, descriptionLines = 3)
             },

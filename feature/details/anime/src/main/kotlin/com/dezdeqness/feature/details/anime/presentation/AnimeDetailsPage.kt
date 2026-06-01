@@ -37,6 +37,7 @@ fun AnimeDetailsPage(
             onShare = { onUiEvent(AnimeDetailsUiEvent.Base(DetailsBaseUiEvent.SharePressed)) },
             onRetry = { onUiEvent(AnimeDetailsUiEvent.Base(DetailsBaseUiEvent.RetryClicked)) },
             onBack = onBackPressed,
+            onFavouriteClick = { onUiEvent(AnimeDetailsUiEvent.Base(DetailsBaseUiEvent.FavouriteToggled)) },
             loading = { modifier ->
                 DetailsLoadingSkeleton(modifier = modifier) {
                     ShimmerRow(

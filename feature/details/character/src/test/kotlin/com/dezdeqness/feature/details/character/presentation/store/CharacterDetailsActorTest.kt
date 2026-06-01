@@ -1,8 +1,16 @@
 package com.dezdeqness.feature.details.character.presentation.store
 
 import app.cash.turbine.test
+import com.dezdeqness.contract.auth.SessionManager
+import com.dezdeqness.contract.auth.model.AccountType
+import com.dezdeqness.contract.auth.model.SessionState
+import com.dezdeqness.contract.favourite.model.FavouriteKind
+import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
+import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.domain.model.CharacterDetailsEntity
 import com.dezdeqness.domain.repository.CharacterRepository
+import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
+import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.character.presentation.composer.CharacterDetailsComposer
 import com.dezdeqness.feature.details.character.presentation.models.CharacterDetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
@@ -10,6 +18,8 @@ import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.test.MainDispatcherExtension
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -32,6 +42,18 @@ class CharacterDetailsActorTest {
     @MockK
     lateinit var composer: CharacterDetailsComposer
 
+    @MockK(relaxed = true)
+    lateinit var observeFavouriteStatusUseCase: ObserveFavouriteStatusUseCase
+
+    @MockK(relaxed = true)
+    lateinit var fetchFavouritesUseCase: FetchFavouritesUseCase
+
+    @MockK(relaxed = true)
+    lateinit var favouriteRepository: FavouriteRepository
+
+    @MockK(relaxed = true)
+    lateinit var sessionManager: SessionManager
+
     private lateinit var actor: CharacterDetailsActor
 
     @Before
@@ -41,6 +63,10 @@ class CharacterDetailsActorTest {
         actor = CharacterDetailsActor(
             characterRepository = characterRepository,
             composer = composer,
+            observeFavouriteStatusUseCase = observeFavouriteStatusUseCase,
+            fetchFavouritesUseCase = fetchFavouritesUseCase,
+            favouriteRepository = favouriteRepository,
+            sessionManager = sessionManager,
             logger = logger,
         )
     }
@@ -106,4 +132,115 @@ class CharacterDetailsActorTest {
             awaitComplete()
         }
     }
+
+    @Test
+    fun `WHEN ToggleFavourite succeeds for authorized user SHOULD emit FavouriteToggleSucceeded`() = runTest {
+        every { sessionManager.currentSession } returns authenticatedSession(userId = 42L)
+        coEvery {
+            favouriteRepository.toggleFavourite(
+                userId = 42L,
+                targetId = 7L,
+                type = FavouriteLinkedType.CHARACTER,
+                kind = null,
+            )
+        } returns Result.success(Unit)
+
+        actor.execute(
+            CharacterDetailsNamespace.Command.Base(
+                BaseDetailsCommand.ToggleFavourite(
+                    targetId = 7L,
+                    type = FavouriteLinkedType.CHARACTER,
+                ),
+            ),
+        ).test {
+            val event = awaitItem()
+            assertTrue(event is CharacterDetailsNamespace.Event.Base)
+            event as CharacterDetailsNamespace.Event.Base
+            assertTrue(event.event is BaseDetailsEvent.FavouriteToggleSucceeded)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `WHEN ToggleFavourite fails for authorized user SHOULD emit FavouriteToggleFailed`() = runTest {
+        every { sessionManager.currentSession } returns authenticatedSession(userId = 42L)
+        val error = RuntimeException("network")
+        coEvery {
+            favouriteRepository.toggleFavourite(
+                userId = 42L,
+                targetId = 7L,
+                type = FavouriteLinkedType.CHARACTER,
+                kind = null,
+            )
+        } returns Result.failure(error)
+
+        actor.execute(
+            CharacterDetailsNamespace.Command.Base(
+                BaseDetailsCommand.ToggleFavourite(
+                    targetId = 7L,
+                    type = FavouriteLinkedType.CHARACTER,
+                ),
+            ),
+        ).test {
+            val event = awaitItem()
+            assertTrue(event is CharacterDetailsNamespace.Event.Base)
+            event as CharacterDetailsNamespace.Event.Base
+            val inner = event.event
+            assertTrue(inner is BaseDetailsEvent.FavouriteToggleFailed)
+            assertEquals(error, (inner as BaseDetailsEvent.FavouriteToggleFailed).error)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `WHEN ToggleFavourite invoked without session SHOULD emit nothing`() = runTest {
+        every { sessionManager.currentSession } returns null
+
+        actor.execute(
+            CharacterDetailsNamespace.Command.Base(
+                BaseDetailsCommand.ToggleFavourite(
+                    targetId = 7L,
+                    type = FavouriteLinkedType.CHARACTER,
+                    kind = FavouriteKind.COMMON,
+                ),
+            ),
+        ).test {
+            awaitComplete()
+        }
+        coVerify(exactly = 0) {
+            favouriteRepository.toggleFavourite(any(), any(), any(), any())
+        }
+    }
+
+    @Test
+    fun `WHEN FetchFavourites invoked for authorized user SHOULD call use case`() = runTest {
+        every { sessionManager.currentSession } returns authenticatedSession(userId = 42L)
+        coEvery { fetchFavouritesUseCase(userId = 42L, force = true) } returns Result.success(Unit)
+
+        actor.execute(
+            CharacterDetailsNamespace.Command.Base(BaseDetailsCommand.FetchFavourites(force = true)),
+        ).test {
+            awaitComplete()
+        }
+        coVerify(exactly = 1) { fetchFavouritesUseCase(userId = 42L, force = true) }
+    }
+
+    @Test
+    fun `WHEN FetchFavourites invoked without session SHOULD not call use case`() = runTest {
+        every { sessionManager.currentSession } returns null
+
+        actor.execute(
+            CharacterDetailsNamespace.Command.Base(BaseDetailsCommand.FetchFavourites()),
+        ).test {
+            awaitComplete()
+        }
+        coVerify(exactly = 0) { fetchFavouritesUseCase(any(), any()) }
+    }
+
+    private fun authenticatedSession(userId: Long) = SessionState.Authenticated(
+        userId = userId,
+        nickname = "tester",
+        avatar = "",
+        accountType = AccountType.SHIKIMORI,
+    )
 }

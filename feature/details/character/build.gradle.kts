@@ -54,6 +54,8 @@ dependencies {
     // Domain
     implementation(project(":domain"))
     implementation(project(":contract:anime"))
+    implementation(project(":contract:auth"))
+    implementation(project(":contract:favourite"))
 
     //Elm
     implementation(libs.elmslie.core)

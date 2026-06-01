@@ -36,6 +36,7 @@ fun CharacterDetailsPage(
             onShare = { onUiEvent(CharacterDetailsUiEvent.Base(DetailsBaseUiEvent.SharePressed)) },
             onRetry = { onUiEvent(CharacterDetailsUiEvent.Base(DetailsBaseUiEvent.RetryClicked)) },
             onBack = onBackPressed,
+            onFavouriteClick = { onUiEvent(CharacterDetailsUiEvent.Base(DetailsBaseUiEvent.FavouriteToggled)) },
             loading = { modifier ->
                 DetailsLoadingSkeleton(modifier = modifier) {
                     ShimmerRow(

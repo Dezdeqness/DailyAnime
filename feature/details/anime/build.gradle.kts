@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":contract:anime"))
     implementation(project(":contract:auth"))
     implementation(project(":contract:user"))
+    implementation(project(":contract:favourite"))
 
     // Features
     implementation(project(":feature:userrate"))
