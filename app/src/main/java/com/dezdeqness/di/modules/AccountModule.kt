@@ -10,6 +10,7 @@ import com.dezdeqness.data.datasource.AccountRemoteDataSourceImpl
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSourceImpl
 import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
+import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.data.manager.SessionManagerImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
@@ -106,6 +107,7 @@ abstract class AccountModule {
             authRepository: AuthRepository,
             userRepository: UserRepository,
             accountSessionDao: AccountSessionDao,
+            favouriteRepository: FavouriteRepository,
         ): SessionManager = SessionManagerImpl(
             loginUseCase = loginUseCase,
             logoutUseCase = logoutUseCase,
@@ -113,6 +115,7 @@ abstract class AccountModule {
             authRepository = authRepository,
             userRepository = userRepository,
             accountSessionDao = accountSessionDao,
+            favouriteRepository = favouriteRepository,
         )
 
     }

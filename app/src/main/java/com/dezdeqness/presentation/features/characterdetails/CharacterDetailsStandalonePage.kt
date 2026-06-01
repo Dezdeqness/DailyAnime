@@ -79,6 +79,11 @@ fun CharacterDetailsStandalonePage(
                         .setText(absolute)
                         .startChooser()
                 }
+                is BaseDetailsEffect.FavouriteActionFailed -> {
+                    scope.launch(dispatcherProvider.io()) {
+                        messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
+                    }
+                }
             }
             is CharacterDetailsNamespace.Effect.NavigateToAnime -> {
                 navController.navigate(AnimeDetails(effect.animeId))

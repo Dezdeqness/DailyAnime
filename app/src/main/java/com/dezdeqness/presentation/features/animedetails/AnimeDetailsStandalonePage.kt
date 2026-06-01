@@ -105,6 +105,11 @@ fun AnimeDetailsStandalonePage(
                         .setText(absolute)
                         .startChooser()
                 }
+                is BaseDetailsEffect.FavouriteActionFailed -> {
+                    scope.launch(dispatcherProvider.io()) {
+                        messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
+                    }
+                }
             }
             is AnimeDetailsNamespace.Effect.EditRateError -> {
                 scope.launch(dispatcherProvider.io()) {
