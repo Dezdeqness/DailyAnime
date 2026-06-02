@@ -3,7 +3,12 @@
 import money.vivid.elmslie.core.store.StateReducer
 
 val topicListReducer = object :
-    StateReducer<TopicListNamespace.Event, TopicListNamespace.State, TopicListNamespace.Effect, TopicListNamespace.Command>() {
+    StateReducer<
+        TopicListNamespace.Event,
+        TopicListNamespace.State,
+        TopicListNamespace.Effect,
+        TopicListNamespace.Command,
+        >() {
     override fun Result.reduce(event: TopicListNamespace.Event) {
         when (event) {
             is TopicListNamespace.Event.InitialLoad -> {
@@ -49,7 +54,11 @@ val topicListReducer = object :
             is TopicListNamespace.Event.OnPageLoaded -> {
                 state {
                     TopicListNamespace.State(
-                        status = if (event.list.isEmpty()) TopicListStatus.Empty else TopicListStatus.Loaded,
+                        status = if (event.list.isEmpty()) {
+                            TopicListStatus.Empty
+                        } else {
+                            TopicListStatus.Loaded
+                        },
                         hasNextPage = event.hasNextPage,
                         list = event.list,
                         isPullDownRefreshing = false,

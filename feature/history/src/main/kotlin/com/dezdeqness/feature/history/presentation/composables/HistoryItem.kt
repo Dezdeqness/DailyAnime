@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,14 +16,13 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.Surface
-import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import com.dezdeqness.feature.history.presentation.preview.HistoryPreviewData
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.image.AppImage
 
 @Composable
 fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel) {
@@ -36,7 +36,7 @@ fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel
                 ),
                 modifier = Modifier
                     .matchParentSize()
-                    .aspectRatio(16 / 9f)
+                    .aspectRatio(16 / 9f),
             )
 
             Column(
@@ -61,7 +61,6 @@ fun HistoryItem(modifier: Modifier = Modifier, item: HistoryModel.HistoryUiModel
                 )
             }
         }
-
     }
 }
 

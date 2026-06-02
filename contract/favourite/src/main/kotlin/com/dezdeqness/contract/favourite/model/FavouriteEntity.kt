@@ -6,7 +6,7 @@ data class FavouriteEntity(
     val russian: String?,
     val image: String?,
     val url: String?,
-    val type: FavouriteType
+    val type: FavouriteType,
 )
 
 enum class FavouriteType {
@@ -17,5 +17,5 @@ enum class FavouriteType {
     PERSON,
     MANGAKA,
     SEYU,
-    PRODUCER
+    PRODUCER,
 }

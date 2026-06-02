@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.favourite.presentation.models.FavouritesUiModel
+import com.dezdeqness.foundation.ui.views.image.AppImage
 
 @Composable
 fun FavouriteCell(
@@ -32,7 +32,7 @@ fun FavouriteCell(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .align(alignment = Alignment.Center)
+                    .align(alignment = Alignment.Center),
             )
         }
     }

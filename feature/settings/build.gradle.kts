@@ -53,7 +53,7 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinx.coroutines.test)
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Android Testing

@@ -10,7 +10,8 @@ enum class AnimeKind(val kind: String) {
     MUSIC("music"),
     PROMO("pv"),
     AD("cm"),
-    UNKNOWN("");
+    UNKNOWN(""),
+    ;
 
     companion object {
         fun fromString(value: String?) = entries.find { it.kind == value } ?: UNKNOWN

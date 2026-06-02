@@ -1,22 +1,32 @@
 package com.dezdeqness.feature.history.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
 import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
-import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 import money.vivid.elmslie.core.store.ElmStore
-import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
-    store: ElmStore<HistoryNamespace.Event, HistoryNamespace.State, HistoryNamespace.Effect, HistoryNamespace.Command>,
+    store: ElmStore<
+        HistoryNamespace.Event,
+        HistoryNamespace.State,
+        HistoryNamespace.Effect,
+        HistoryNamespace.Command,
+        >,
     private val messageConsumer: MessageConsumer,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val messageProvider: BaseMessageProvider,
-) : BaseStoreViewModel<HistoryNamespace.Event, HistoryNamespace.State, HistoryNamespace.Effect, HistoryNamespace.Command>(
+) : BaseStoreViewModel<
+    HistoryNamespace.Event,
+    HistoryNamespace.State,
+    HistoryNamespace.Effect,
+    HistoryNamespace.Command,
+    >(
     store = store,
     initialState = HistoryNamespace.State(),
     sharingStarted = SharingStarted.WhileSubscribed(5000),

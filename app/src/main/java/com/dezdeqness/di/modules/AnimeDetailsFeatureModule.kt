@@ -42,7 +42,12 @@ abstract class AnimeDetailsFeatureModule {
         )
 
         @Provides
-        fun provideAnimeDetailsStore(actor: AnimeDetailsActor): ElmStore<AnimeDetailsNamespace.Event, AnimeDetailsNamespace.State, AnimeDetailsNamespace.Effect, AnimeDetailsNamespace.Command> =
+        fun provideAnimeDetailsStore(actor: AnimeDetailsActor): ElmStore<
+                AnimeDetailsNamespace.Event,
+                AnimeDetailsNamespace.State,
+                AnimeDetailsNamespace.Effect,
+                AnimeDetailsNamespace.Command,
+                > =
             ElmStore(
                 initialState = AnimeDetailsNamespace.State(),
                 reducer = animeDetailsReducer,

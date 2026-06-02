@@ -22,8 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.contract.anime.model.UserRateStatusEntity
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.userrate.R
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +41,6 @@ fun SelectStatusDialog(
         sheetState = state,
         containerColor = AppTheme.colors.onPrimary,
     ) {
-
         Column {
             Text(
                 text = stringResource(R.string.userrate_select_status_dialog_title),
@@ -61,15 +60,15 @@ fun SelectStatusDialog(
                                 onCloseClicked()
                             },
                             interactionSource = remember { MutableInteractionSource() },
-                            indication = ripple(color = AppTheme.colors.ripple)
+                            indication = ripple(color = AppTheme.colors.ripple),
                         )
                         .padding(horizontal = 16.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     RadioButton(
                         selected = item.id == selectedId,
                         onClick = null,
-                        modifier = Modifier.padding(end = 12.dp)
+                        modifier = Modifier.padding(end = 12.dp),
                     )
 
                     Text(
@@ -87,32 +86,31 @@ data class SelectStatusItem(
     val title: String,
 ) {
     companion object {
-        fun composeList(context: Context) =
-            listOf(
-                SelectStatusItem(
-                    id = UserRateStatusEntity.WATCHING.status,
-                    title = context.getString(R.string.userrate_edit_rate_status_watching)
-                ),
-                SelectStatusItem(
-                    id = UserRateStatusEntity.PLANNED.status,
-                    title = context.getString(R.string.userrate_edit_rate_status_planned)
-                ),
-                SelectStatusItem(
-                    id = UserRateStatusEntity.REWATCHING.status,
-                    title = context.getString(R.string.userrate_edit_rate_status_rewatching)
-                ),
-                SelectStatusItem(
-                    id = UserRateStatusEntity.COMPLETED.status,
-                    title = context.getString(R.string.userrate_edit_rate_status_completed)
-                ),
-                SelectStatusItem(
-                    id = UserRateStatusEntity.ON_HOLD.status,
-                    title = context.getString(R.string.userrate_edit_rate_status_on_hold)
-                ),
-                SelectStatusItem(
-                    id = UserRateStatusEntity.DROPPED.status,
-                    title = context.getString(R.string.userrate_edit_rate_status_dropped)
-                )
-            )
+        fun composeList(context: Context) = listOf(
+            SelectStatusItem(
+                id = UserRateStatusEntity.WATCHING.status,
+                title = context.getString(R.string.userrate_edit_rate_status_watching),
+            ),
+            SelectStatusItem(
+                id = UserRateStatusEntity.PLANNED.status,
+                title = context.getString(R.string.userrate_edit_rate_status_planned),
+            ),
+            SelectStatusItem(
+                id = UserRateStatusEntity.REWATCHING.status,
+                title = context.getString(R.string.userrate_edit_rate_status_rewatching),
+            ),
+            SelectStatusItem(
+                id = UserRateStatusEntity.COMPLETED.status,
+                title = context.getString(R.string.userrate_edit_rate_status_completed),
+            ),
+            SelectStatusItem(
+                id = UserRateStatusEntity.ON_HOLD.status,
+                title = context.getString(R.string.userrate_edit_rate_status_on_hold),
+            ),
+            SelectStatusItem(
+                id = UserRateStatusEntity.DROPPED.status,
+                title = context.getString(R.string.userrate_edit_rate_status_dropped),
+            ),
+        )
     }
 }

@@ -17,7 +17,7 @@ class TopicListComposer @Inject constructor(
             TopicListUiModel.Item(
                 content = content.copy(
                     footerBlocks = content.footerBlocks.filterIsInstance<ParagraphBlock.VideoContent>(),
-                )
+                ),
             )
         }
     }

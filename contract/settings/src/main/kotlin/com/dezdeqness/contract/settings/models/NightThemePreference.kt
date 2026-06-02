@@ -13,7 +13,8 @@ enum class ThemeMode(val id: Int) {
     LIGHT(1),
     DARK(2),
     AMOLED(3),
-    SYSTEM(0);
+    SYSTEM(0),
+    ;
 
     companion object {
         fun fromId(id: Int?): ThemeMode? = ThemeMode.entries.find { it.id == id }

@@ -18,9 +18,7 @@ import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.shimmer
 
 @Composable
-fun TopicListShimmerLoading(
-    modifier: Modifier = Modifier,
-) {
+fun TopicListShimmerLoading(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         repeat(5) {
             TopicListShimmerItem()

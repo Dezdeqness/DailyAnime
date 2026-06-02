@@ -2,11 +2,11 @@ package com.dezdeqness.data.core
 
 import com.dezdeqness.contract.auth.SessionManager
 import dagger.Lazy
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 class RefreshTokenInterceptor @Inject constructor(
     private val sessionManager: Lazy<SessionManager>,
@@ -35,7 +35,6 @@ class RefreshTokenInterceptor @Inject constructor(
 
         return chain.proceed(request)
     }
-
 }
 
 class RefreshTokenExpiredException : Throwable()

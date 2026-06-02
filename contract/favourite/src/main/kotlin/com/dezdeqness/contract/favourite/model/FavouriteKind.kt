@@ -5,5 +5,5 @@ enum class FavouriteKind(val kind: String) {
     SEYU("seyu"),
     MANGAKA("mangaka"),
     PRODUCER("producer"),
-    PERSON("person")
+    PERSON("person"),
 }

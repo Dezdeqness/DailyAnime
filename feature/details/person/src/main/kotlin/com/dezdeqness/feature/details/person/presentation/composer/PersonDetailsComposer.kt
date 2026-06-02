@@ -61,12 +61,11 @@ class PersonDetailsComposer @Inject constructor(
         return list
     }
 
-    private fun mapPersonRole(role: PersonRole): String =
-        resourceProvider.getString(
-            when (role) {
-                PersonRole.MANGAKA -> R.string.person_role_mangaka
-                PersonRole.PRODUCER -> R.string.person_role_producer
-                PersonRole.SEYU -> R.string.person_role_seyu
-            }
-        )
+    private fun mapPersonRole(role: PersonRole): String = resourceProvider.getString(
+        when (role) {
+            PersonRole.MANGAKA -> R.string.person_role_mangaka
+            PersonRole.PRODUCER -> R.string.person_role_producer
+            PersonRole.SEYU -> R.string.person_role_seyu
+        },
+    )
 }

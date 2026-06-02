@@ -8,7 +8,7 @@ abstract class BaseDetailsReducer<
     State : DetailsState,
     Effect : Any,
     Command : Any,
->(
+    >(
     private val wrapCommand: (BaseDetailsCommand) -> Command,
     private val wrapEffect: (BaseDetailsEffect) -> Effect,
 ) : StateReducer<Event, State, Effect, Command>() {

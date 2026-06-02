@@ -3,8 +3,8 @@ package com.dezdeqness.data.core
 import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
 import com.dezdeqness.domain.mapper.ErrorMapper
-import retrofit2.Response
 import javax.inject.Inject
+import retrofit2.Response
 
 abstract class BaseDataSource {
 
@@ -22,17 +22,13 @@ abstract class BaseDataSource {
     } catch (exception: Throwable) {
         Result.failure(errorMapper.map(exception))
     }
-
-
 }
 
-fun <T> Response<T>.createApiException() =
-    ApiException(code(), errorBody()?.string() ?: "No mappable error")
+fun <T> Response<T>.createApiException() = ApiException(code(), errorBody()?.string() ?: "No mappable error")
 
-fun <T : Operation.Data> ApolloResponse<T>.createGraphqlException() =
-    GraphqlException(
-        operation.name(),
-        errors?.toString()
-            ?: exception?.toString()
-            ?: "No mappable error",
-    )
+fun <T : Operation.Data> ApolloResponse<T>.createGraphqlException() = GraphqlException(
+    operation.name(),
+    errors?.toString()
+        ?: exception?.toString()
+        ?: "No mappable error",
+)

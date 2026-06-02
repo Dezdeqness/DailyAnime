@@ -4,7 +4,8 @@ enum class GenreKindEntity(val kind: String) {
     GENRE("genre"),
     THEME("theme"),
     DEMOGRAPHIC("demographic"),
-    UNKNOWN("");
+    UNKNOWN(""),
+    ;
 
     companion object {
         fun fromString(value: String?) = GenreKindEntity.entries

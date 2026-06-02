@@ -9,5 +9,4 @@ interface TopicRepository {
     fun getHotTopics(limit: Int): Result<List<TopicEntity>>
 
     fun getTopicsById(id: Int): Result<TopicEntity>
-
 }

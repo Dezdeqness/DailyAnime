@@ -41,7 +41,6 @@ android {
 dependencies {
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
-
     // Dagger
     implementation(libs.dagger.dagger)
     ksp(libs.dagger.compilier)
@@ -56,7 +55,7 @@ dependencies {
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Unit Testing

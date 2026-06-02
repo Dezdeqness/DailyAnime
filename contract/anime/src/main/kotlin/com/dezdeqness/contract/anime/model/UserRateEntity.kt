@@ -12,7 +12,7 @@ data class UserRateEntity(
     val rewatches: Long,
     val createdAtTimestamp: Long,
     val updatedAtTimestamp: Long,
-    val anime: AnimeBriefEntity? = null
+    val anime: AnimeBriefEntity? = null,
 ) {
     fun isEmptyUserRate() = id == NO_ID
 

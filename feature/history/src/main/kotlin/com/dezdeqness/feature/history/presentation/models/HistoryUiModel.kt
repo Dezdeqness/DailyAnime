@@ -16,5 +16,4 @@ sealed class HistoryModel {
     ) : HistoryModel() {
         override fun id() = header
     }
-
 }

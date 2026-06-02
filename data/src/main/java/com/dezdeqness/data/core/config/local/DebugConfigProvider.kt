@@ -21,14 +21,13 @@ class DebugConfigProvider(
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "debug_config")
 
-    override fun getStringValue(key: String) =
-        runBlocking {
-            context
-                .dataStore
-                .data
-                .map { preferences -> preferences[stringPreferencesKey(key)] }
-                .first()
-        }
+    override fun getStringValue(key: String) = runBlocking {
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[stringPreferencesKey(key)] }
+            .first()
+    }
 
     fun setStringValue(key: String, value: String) {
         runBlocking {
@@ -38,14 +37,13 @@ class DebugConfigProvider(
         }
     }
 
-    override fun getIntValue(key: String) =
-        runBlocking {
-            context
-                .dataStore
-                .data
-                .map { preferences -> preferences[intPreferencesKey(key)] }
-                .first()
-        }
+    override fun getIntValue(key: String) = runBlocking {
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[intPreferencesKey(key)] }
+            .first()
+    }
 
     fun setIntValue(key: String, value: Int) {
         runBlocking {
@@ -55,14 +53,13 @@ class DebugConfigProvider(
         }
     }
 
-    override fun getDoubleValue(key: String) =
-        runBlocking {
-            context
-                .dataStore
-                .data
-                .map { preferences -> preferences[doublePreferencesKey(key)] }
-                .first()
-        }
+    override fun getDoubleValue(key: String) = runBlocking {
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[doublePreferencesKey(key)] }
+            .first()
+    }
 
     fun setDoubleValue(key: String, value: Double) {
         runBlocking {
@@ -72,19 +69,18 @@ class DebugConfigProvider(
         }
     }
 
-    override fun getBooleanValue(key: String) =
-        runBlocking {
-            context
-                .dataStore
-                .data
-                .map { preferences ->
-                    runCatching {
-                        preferences[booleanPreferencesKey(key)]
-                    }
-                        .getOrNull()
+    override fun getBooleanValue(key: String) = runBlocking {
+        context
+            .dataStore
+            .data
+            .map { preferences ->
+                runCatching {
+                    preferences[booleanPreferencesKey(key)]
                 }
-                .first()
-        }
+                    .getOrNull()
+            }
+            .first()
+    }
 
     fun setBooleanValue(key: String, value: Boolean) {
         runBlocking {
@@ -93,5 +89,4 @@ class DebugConfigProvider(
             }
         }
     }
-
 }

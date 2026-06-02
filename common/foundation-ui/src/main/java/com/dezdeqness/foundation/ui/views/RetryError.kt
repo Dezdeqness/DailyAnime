@@ -49,7 +49,7 @@ fun RetryError(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val composition by rememberLottieComposition(
-                LottieCompositionSpec.RawRes(R.raw.error)
+                LottieCompositionSpec.RawRes(R.raw.error),
             )
             LottieAnimation(
                 composition = composition,

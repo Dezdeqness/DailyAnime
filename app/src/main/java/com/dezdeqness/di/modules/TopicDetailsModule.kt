@@ -33,5 +33,7 @@ abstract class TopicDetailsModule {
     @Binds
     @IntoMap
     @AssistedViewModelKey(TopicDetailsViewModel::class)
-    abstract fun bindTopicDetailsViewModelFactory(factory: TopicDetailsViewModel.Factory): AssistedViewModelFactory<out ViewModel>
+    abstract fun bindTopicDetailsViewModelFactory(
+        factory: TopicDetailsViewModel.Factory,
+    ): AssistedViewModelFactory<out ViewModel>
 }

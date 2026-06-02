@@ -14,7 +14,7 @@ open class AnimeBriefEntity(
     open val airedOnTimestamp: Long,
     open val releasedOnTimestamp: Long,
     open val nextEpisodeTimestamp: Long = 0,
-): Entity {
+) : Entity {
 
     @Suppress("CyclomaticComplexMethod")
     override fun equals(other: Any?): Boolean {
@@ -55,20 +55,18 @@ open class AnimeBriefEntity(
         return result
     }
 
-    override fun toString() =
-        "AnimeBriefEntity(" +
-                "id=$id, " +
-                "name='$name', " +
-                "russian='$russian', " +
-                "images=$image, " +
-                "url='$url', " +
-                "kind=$kind, " +
-                "score=$score, " +
-                "status=$status, " +
-                "episodes=$episodes, " +
-                "episodesAired=$episodesAired, " +
-                "airedOn='$airedOnTimestamp', " +
-                "releasedOn='$releasedOnTimestamp')" +
-                "nextEpisodeTimestamp='$nextEpisodeTimestamp')"
-
+    override fun toString() = "AnimeBriefEntity(" +
+        "id=$id, " +
+        "name='$name', " +
+        "russian='$russian', " +
+        "images=$image, " +
+        "url='$url', " +
+        "kind=$kind, " +
+        "score=$score, " +
+        "status=$status, " +
+        "episodes=$episodes, " +
+        "episodesAired=$episodesAired, " +
+        "airedOn='$airedOnTimestamp', " +
+        "releasedOn='$releasedOnTimestamp')" +
+        "nextEpisodeTimestamp='$nextEpisodeTimestamp')"
 }

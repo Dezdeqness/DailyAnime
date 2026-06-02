@@ -54,7 +54,7 @@ dependencies {
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Unit Testing
@@ -70,5 +70,4 @@ dependencies {
 
     // Mock
     testImplementation(libs.mockk.mockk)
-
 }

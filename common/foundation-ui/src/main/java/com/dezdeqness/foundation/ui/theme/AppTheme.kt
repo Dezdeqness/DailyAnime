@@ -26,10 +26,14 @@ object AppTheme {
 @Composable
 fun AppTheme(
     colors: AppColors = if (isSystemInDarkTheme()) darkColors() else lightColors(),
-    materialDefaultTheme: ColorScheme = if (isSystemInDarkTheme()) toDarkMaterialScheme() else toLightMaterialScheme(),
+    materialDefaultTheme: ColorScheme = if (isSystemInDarkTheme()) {
+        toDarkMaterialScheme()
+    } else {
+        toLightMaterialScheme()
+    },
     typography: AppTypography = AppTypography(),
     shapes: AppShapes = AppShapes(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
     CompositionLocalProvider(

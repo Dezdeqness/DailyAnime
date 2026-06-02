@@ -61,7 +61,7 @@ dependencies {
     // Features
     implementation(project(":feature:userrate"))
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Unit Testing

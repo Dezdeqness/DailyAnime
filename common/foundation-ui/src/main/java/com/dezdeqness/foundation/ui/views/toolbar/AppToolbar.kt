@@ -22,7 +22,9 @@ fun AppToolbar(
     modifier: Modifier = Modifier,
     title: String = "",
     titleColor: Color = AppTheme.colors.textPrimary,
-    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(containerColor = AppTheme.colors.onPrimary),
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(
+        containerColor = AppTheme.colors.onPrimary,
+    ),
     navigationIcon: ImageVector? = Icons.AutoMirrored.Filled.ArrowBack,
     navigationColor: Color = AppTheme.colors.onSurface,
     navigationClick: () -> Unit = {},

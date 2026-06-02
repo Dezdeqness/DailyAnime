@@ -48,26 +48,24 @@ class ConfigManager(
         }
 
     @Suppress("UNCHECKED_CAST")
-    private fun <T> getValue(provider: BaseConfigProvider, key: ConfigKeys) =
-        try {
-            when (key.defaultValue) {
-                is String -> provider.getStringValue(key.key) ?: key.defaultValue
-                is Int -> provider.getIntValue(key.key) ?: key.defaultValue
-                is Double -> provider.getDoubleValue(key.key) ?: key.defaultValue
-                is Boolean -> provider.getBooleanValue(key.key) ?: key.defaultValue
-                else -> key.defaultValue
-            } as T
-        } catch (exception: Exception) {
-            appLogger.logInfo(
-                TAG,
-                "Provider: ${provider.javaClass.simpleName}. Error while reading key = ${key.key}: ${exception.message}"
-            )
+    private fun <T> getValue(provider: BaseConfigProvider, key: ConfigKeys) = try {
+        when (key.defaultValue) {
+            is String -> provider.getStringValue(key.key) ?: key.defaultValue
+            is Int -> provider.getIntValue(key.key) ?: key.defaultValue
+            is Double -> provider.getDoubleValue(key.key) ?: key.defaultValue
+            is Boolean -> provider.getBooleanValue(key.key) ?: key.defaultValue
+            else -> key.defaultValue
+        } as T
+    } catch (exception: Exception) {
+        appLogger.logInfo(
+            TAG,
+            "Provider: ${provider.javaClass.simpleName}. Error while reading key = ${key.key}: ${exception.message}",
+        )
 
-            key.defaultValue as T
-        }
+        key.defaultValue as T
+    }
 
     companion object {
         private const val TAG = "ConfigManager"
     }
-
 }

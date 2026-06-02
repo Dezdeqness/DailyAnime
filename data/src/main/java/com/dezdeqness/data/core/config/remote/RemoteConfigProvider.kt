@@ -8,10 +8,10 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.resume
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 class RemoteConfigProvider(
     private val appLogger: AppLogger,
@@ -83,5 +83,4 @@ class RemoteConfigProvider(
     companion object {
         private const val TAG = "RemoteConfigProvider"
     }
-
 }

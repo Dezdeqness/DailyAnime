@@ -1,12 +1,12 @@
 package com.dezdeqness.feature.history.presentation.composables
 
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
-import androidx.compose.material3.Surface
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.sp
 import com.dezdeqness.feature.history.presentation.preview.HistoryPreviewData
 import com.dezdeqness.foundation.ui.theme.AppTheme
 

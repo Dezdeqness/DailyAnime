@@ -12,7 +12,8 @@ class AnimeFilterResponseConverter @Inject constructor(){
                     .filter { it.id in filter.selectedCells }
                     .joinToString(separator = ",") { animeCell ->
                         // Currently disabled
-                        if (false /*animeCell.state == CellState.EXCLUDE*/) {
+                        // animeCell.state == CellState.EXCLUDE
+                        if (false) {
                             "!${animeCell.id}"
                         } else {
                             animeCell.id

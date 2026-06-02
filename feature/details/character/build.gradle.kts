@@ -57,7 +57,7 @@ dependencies {
     implementation(project(":contract:auth"))
     implementation(project(":contract:favourite"))
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Unit Testing

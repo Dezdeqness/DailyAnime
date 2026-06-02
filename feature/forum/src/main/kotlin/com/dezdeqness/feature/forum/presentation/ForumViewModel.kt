@@ -6,13 +6,18 @@ import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 import money.vivid.elmslie.core.store.ElmStore
-import javax.inject.Inject
 
 class ForumViewModel @Inject constructor(
-    store: ElmStore<ForumNamespace.Event, ForumNamespace.State, ForumNamespace.Effect, ForumNamespace.Command>,
+    store: ElmStore<
+        ForumNamespace.Event,
+        ForumNamespace.State,
+        ForumNamespace.Effect,
+        ForumNamespace.Command,
+        >,
     private val messageConsumer: MessageConsumer,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val messageProvider: BaseMessageProvider,

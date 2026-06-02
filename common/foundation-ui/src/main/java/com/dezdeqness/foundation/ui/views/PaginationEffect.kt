@@ -18,8 +18,10 @@ fun PaginationEffect(
 ) {
     val shouldStartPaginate = remember(hasNextPage) {
         derivedStateOf {
-            hasNextPage && (listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: -1) >= (listState.layoutInfo.totalItemsCount * loadFactor)
+            hasNextPage && (
+                listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                    ?: -1
+                ) >= (listState.layoutInfo.totalItemsCount * loadFactor)
         }
     }
 
