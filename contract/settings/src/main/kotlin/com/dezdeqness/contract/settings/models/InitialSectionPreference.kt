@@ -15,7 +15,8 @@ enum class InitialSection(val id: Int) {
     CALENDAR(2),
     PROFILE(3),
     SEARCH(4),
-    NEWS(5);
+    NEWS(5),
+    ;
 
     companion object {
         fun fromId(id: Int?): InitialSection? = InitialSection.entries.find { it.id == id }

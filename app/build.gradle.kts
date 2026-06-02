@@ -59,8 +59,12 @@ android {
             val keystorePassword = System.getenv("KEYSTORE_PASSWORD")
             val keyAlias = System.getenv("KEY_ALIAS")
             val keyPassword = System.getenv("KEY_PASSWORD")
-            
-            if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null) {
+
+            if (keystoreFile != null &&
+                keystorePassword != null &&
+                keyAlias != null &&
+                keyPassword != null
+            ) {
                 storeFile = file(keystoreFile)
                 storePassword = keystorePassword
                 this.keyAlias = keyAlias
@@ -92,7 +96,7 @@ android {
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("release")
         }
@@ -244,13 +248,15 @@ dependencies {
 fun Project.getParsedVersionCode(projectName: String): Int {
     println("Project name: $projectName")
     val versionName = properties["version"].toString()
-    
+
     val versionWithoutHash = versionName.split("-")[0]
     val parts = versionWithoutHash.split(".")
     println("Parts: $parts")
 
     if (parts.size != 3) {
-        throw IllegalArgumentException("Version name must have three parts: major.minor.patch (optional: -hash)")
+        throw IllegalArgumentException(
+            "Version name must have three parts: major.minor.patch (optional: -hash)",
+        )
     }
 
     val major = parts[0].toInt()
@@ -258,7 +264,7 @@ fun Project.getParsedVersionCode(projectName: String): Int {
     val patch = parts[2].toInt()
 
     val buildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull()
-        ?: properties["buildNumber"]?.toString()?.toIntOrNull() 
+        ?: properties["buildNumber"]?.toString()?.toIntOrNull()
         ?: 999
 
     println("Version is $versionName")

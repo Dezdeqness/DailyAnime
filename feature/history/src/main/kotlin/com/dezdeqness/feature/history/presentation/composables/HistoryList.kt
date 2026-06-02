@@ -4,15 +4,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.material3.Surface
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.PaginationEffect
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import com.dezdeqness.feature.history.presentation.preview.HistoryPreviewData
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.PaginationEffect
 
 @Composable
 fun HistoryList(
@@ -40,7 +40,7 @@ fun HistoryList(
             key = { index ->
                 val item = list[index]
                 item.id() + item.hashCode()
-            }
+            },
         ) { index ->
             when (val item = list[index]) {
                 is HistoryModel.HistoryUiModel -> {
@@ -48,7 +48,7 @@ fun HistoryList(
                         item = item,
                         modifier = Modifier
                             .animateItem()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
                     )
                 }
                 is HistoryModel.HistoryHeaderUiModel -> {
@@ -56,7 +56,7 @@ fun HistoryList(
                         header = item.header,
                         modifier = Modifier
                             .animateItem()
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .padding(vertical = 8.dp, horizontal = 16.dp),
                     )
                 }
             }
@@ -67,7 +67,6 @@ fun HistoryList(
                 HistoryShimmerItem(modifier = Modifier.padding(horizontal = 16.dp))
             }
         }
-
     }
 }
 

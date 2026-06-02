@@ -5,6 +5,7 @@ import com.dezdeqness.contract.anime.model.RoleEntity
 import com.dezdeqness.contract.anime.model.ScreenshotEntity
 
 typealias DetailsAdditionalInfo = Triple<
-        List<ScreenshotEntity>,
-        List<RelatedItemEntity>,
-        List<RoleEntity>>
+    List<ScreenshotEntity>,
+    List<RelatedItemEntity>,
+    List<RoleEntity>,
+    >

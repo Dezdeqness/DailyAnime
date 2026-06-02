@@ -76,14 +76,14 @@ fun TimePickerDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Max),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 val height = (fontSize + 10).dp
 
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 100.dp, end = 100.dp)
+                        .padding(start = 100.dp, end = 100.dp),
                 ) {
                     WheelView(
                         modifier = Modifier.weight(3f),
@@ -102,7 +102,8 @@ fun TimePickerDialog(
                                 fontSize = fontSize.sp,
                                 color = AppTheme.colors.textPrimary.copy(alpha = alpha),
                             )
-                        })
+                        },
+                    )
 
                     WheelView(
                         modifier = Modifier.weight(3f),
@@ -121,7 +122,8 @@ fun TimePickerDialog(
                                 fontSize = fontSize.sp,
                                 color = AppTheme.colors.textPrimary.copy(alpha = alpha),
                             )
-                        })
+                        },
+                    )
                 }
 
                 SelectorView(visibleItems = VISIBLE_ITEMS)
@@ -142,36 +144,40 @@ data class TimeData(val hours: Int, val minutes: Int)
 @Composable
 private fun SelectorView(modifier: Modifier = Modifier, visibleItems: Int) {
     Column(
-        modifier.fillMaxSize()
+        modifier.fillMaxSize(),
     ) {
-        Box(modifier = Modifier
-            .weight(visibleItems.toFloat())
-            .fillMaxWidth())
+        Box(
+            modifier = Modifier
+                .weight(visibleItems.toFloat())
+                .fillMaxWidth(),
+        )
 
         Column(
             modifier = Modifier
                 .weight(1.13f)
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Box(
                 modifier = Modifier
                     .height(0.5.dp)
                     .alpha(0.5f)
                     .background(AppTheme.colors.onSurface)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
             Box(
                 modifier = Modifier
                     .height(0.5.dp)
                     .alpha(0.5f)
                     .background(AppTheme.colors.onSurface)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
         }
 
-        Box(modifier = Modifier
-            .weight(visibleItems.toFloat())
-            .fillMaxWidth())
+        Box(
+            modifier = Modifier
+                .weight(visibleItems.toFloat())
+                .fillMaxWidth(),
+        )
     }
 }

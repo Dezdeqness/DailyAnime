@@ -46,7 +46,7 @@ val historyReducer = object :
                 state {
                     HistoryNamespace.State(
                         status = HistoryStatus.Error,
-                        isPullDownRefreshing = false
+                        isPullDownRefreshing = false,
                     )
                 }
             }

@@ -9,5 +9,4 @@ interface CoroutineDispatcherProvider {
     fun io(): CoroutineDispatcher
 
     fun computation(): CoroutineDispatcher
-
 }

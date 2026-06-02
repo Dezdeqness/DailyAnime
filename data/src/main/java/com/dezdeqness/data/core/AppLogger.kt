@@ -18,5 +18,4 @@ class AppLogger : Logger {
         Firebase.crashlytics.sendUnsentReports()
         Log.e(tag, message, throwable)
     }
-
 }

@@ -20,7 +20,7 @@ fun FavouritesLoading(
     times: Int = 4,
 ) {
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState(), enabled = false)
+        modifier = modifier.verticalScroll(rememberScrollState(), enabled = false),
     ) {
         repeat(times) { _ ->
             ShimmerFavouritePair()
@@ -29,9 +29,7 @@ fun FavouritesLoading(
 }
 
 @Composable
-private fun ShimmerFavouritePair(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerFavouritePair(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -43,14 +41,12 @@ private fun ShimmerFavouritePair(
 }
 
 @Composable
-private fun ShimmerFavouriteItem(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerFavouriteItem(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .padding(bottom = 8.dp)
             .fillMaxWidth()
             .height(150.dp)
-            .shimmer()
+            .shimmer(),
     )
 }

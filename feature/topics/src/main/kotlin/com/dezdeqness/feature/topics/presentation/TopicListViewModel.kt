@@ -6,17 +6,27 @@ import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 import money.vivid.elmslie.core.store.ElmStore
-import javax.inject.Inject
 
 class TopicListViewModel @Inject constructor(
-    store: ElmStore<TopicListNamespace.Event, TopicListNamespace.State, TopicListNamespace.Effect, TopicListNamespace.Command>,
+    store: ElmStore<
+        TopicListNamespace.Event,
+        TopicListNamespace.State,
+        TopicListNamespace.Effect,
+        TopicListNamespace.Command,
+        >,
     private val messageConsumer: MessageConsumer,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val messageProvider: BaseMessageProvider,
-) : BaseStoreViewModel<TopicListNamespace.Event, TopicListNamespace.State, TopicListNamespace.Effect, TopicListNamespace.Command>(
+) : BaseStoreViewModel<
+    TopicListNamespace.Event,
+    TopicListNamespace.State,
+    TopicListNamespace.Effect,
+    TopicListNamespace.Command,
+    >(
     store = store,
     initialState = TopicListNamespace.State(),
     sharingStarted = SharingStarted.Lazily,

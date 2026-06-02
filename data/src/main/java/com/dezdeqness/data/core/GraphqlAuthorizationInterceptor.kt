@@ -1,9 +1,9 @@
 package com.dezdeqness.data.core
 
 import com.dezdeqness.data.manager.TokenManager
+import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 class GraphqlAuthorizationInterceptor @Inject constructor(
     private val tokenManager: TokenManager,

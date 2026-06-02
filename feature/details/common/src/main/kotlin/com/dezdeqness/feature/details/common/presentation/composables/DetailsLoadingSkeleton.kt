@@ -44,7 +44,7 @@ fun DetailsLoadingSkeleton(
                 .size(width = 200.dp, height = 264.dp)
                 .clip(RoundedCornerShape(15.dp))
                 .shimmer()
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         )
         Box(
             modifier = Modifier
@@ -52,7 +52,7 @@ fun DetailsLoadingSkeleton(
                 .width(120.dp)
                 .height(20.dp)
                 .shimmer()
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         )
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -63,7 +63,7 @@ fun DetailsLoadingSkeleton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(20.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
             }
         }
@@ -90,7 +90,7 @@ fun ShimmerRow(
                 modifier = Modifier
                     .width(itemWidth)
                     .height(itemHeight)
-                    .shimmer()
+                    .shimmer(),
             )
         }
     }

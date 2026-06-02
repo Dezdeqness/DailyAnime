@@ -3,10 +3,10 @@ package com.dezdeqness.foundation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel(
     protected val coroutineDispatcherProvider: CoroutineDispatcherProvider,
@@ -26,33 +26,27 @@ abstract class BaseViewModel(
         logger.logInfo(tag = viewModelTag, message = message, throwable = throwable)
     }
 
-    protected fun launchOnIo(lambda: suspend () -> Unit) =
-        launch(coroutineDispatcherProvider.io()) {
-            lambda.invoke()
-        }
+    protected fun launchOnIo(lambda: suspend () -> Unit) = launch(coroutineDispatcherProvider.io()) {
+        lambda.invoke()
+    }
 
-    protected fun launchOnMain(lambda: suspend () -> Unit) =
-        launch(coroutineDispatcherProvider.main()) {
-            lambda.invoke()
-        }
+    protected fun launchOnMain(lambda: suspend () -> Unit) = launch(coroutineDispatcherProvider.main()) {
+        lambda.invoke()
+    }
 
-    protected fun launchOnComputation(lambda: suspend () -> Unit) =
-        launch(coroutineDispatcherProvider.computation()) {
-            lambda.invoke()
-        }
+    protected fun launchOnComputation(lambda: suspend () -> Unit) = launch(coroutineDispatcherProvider.computation()) {
+        lambda.invoke()
+    }
 
-    protected fun <T> asyncOnIo(lambda: suspend () -> T) =
-        async(coroutineDispatcherProvider.io()) {
-            lambda.invoke()
-        }
+    protected fun <T> asyncOnIo(lambda: suspend () -> T) = async(coroutineDispatcherProvider.io()) {
+        lambda.invoke()
+    }
 
-    protected fun <T> asyncOnMain(lambda: suspend () -> T) =
-        async(coroutineDispatcherProvider.main()) {
-            lambda.invoke()
-        }
+    protected fun <T> asyncOnMain(lambda: suspend () -> T) = async(coroutineDispatcherProvider.main()) {
+        lambda.invoke()
+    }
 
-    protected fun <T> asyncOnComputation(lambda: suspend () -> T) =
-        async(coroutineDispatcherProvider.computation()) {
-            lambda.invoke()
-        }
+    protected fun <T> asyncOnComputation(lambda: suspend () -> T) = async(coroutineDispatcherProvider.computation()) {
+        lambda.invoke()
+    }
 }

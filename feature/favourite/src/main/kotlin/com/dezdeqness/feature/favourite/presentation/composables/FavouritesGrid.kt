@@ -29,8 +29,8 @@ fun FavouritesGrid(
     val configuration = LocalConfiguration.current
 
     val cellCount = remember(configuration.orientation) {
-        if (configuration.orientation == ORIENTATION_PORTRAIT
-            || configuration.orientation == ORIENTATION_UNDEFINED
+        if (configuration.orientation == ORIENTATION_PORTRAIT ||
+            configuration.orientation == ORIENTATION_UNDEFINED
         ) {
             PORTRAIT_MAX_CELLS
         } else {
@@ -47,7 +47,7 @@ fun FavouritesGrid(
             key = { index ->
                 val item = items[index]
                 item.id + item.title.hashCode()
-            }
+            },
         ) { index ->
             val item = items[index]
 

@@ -17,19 +17,19 @@ fun rememberReorderHapticFeedback(): ReorderHapticFeedback {
                     ReorderHapticFeedbackType.START ->
                         ViewCompat.performHapticFeedback(
                             view,
-                            HapticFeedbackConstantsCompat.GESTURE_START
+                            HapticFeedbackConstantsCompat.GESTURE_START,
                         )
 
                     ReorderHapticFeedbackType.MOVE ->
                         ViewCompat.performHapticFeedback(
                             view,
-                            HapticFeedbackConstantsCompat.SEGMENT_FREQUENT_TICK
+                            HapticFeedbackConstantsCompat.SEGMENT_FREQUENT_TICK,
                         )
 
                     ReorderHapticFeedbackType.END ->
                         ViewCompat.performHapticFeedback(
                             view,
-                            HapticFeedbackConstantsCompat.GESTURE_END
+                            HapticFeedbackConstantsCompat.GESTURE_END,
                         )
                 }
             }

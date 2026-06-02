@@ -12,12 +12,12 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.material3.Surface
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,11 +27,11 @@ import com.dezdeqness.feature.forum.presentation.composables.ForumSectionItem
 import com.dezdeqness.feature.forum.presentation.composables.ForumShimmerLoading
 import com.dezdeqness.feature.forum.presentation.composables.HotTopicCard
 import com.dezdeqness.feature.forum.presentation.models.ForumUiModel
+import com.dezdeqness.feature.forum.presentation.preview.ForumPreviewData
 import com.dezdeqness.feature.forum.presentation.store.ForumNamespace
 import com.dezdeqness.feature.forum.presentation.store.ForumStatus
 import com.dezdeqness.feature.forum.presentation.store.HotTopicsStatus
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.feature.forum.presentation.preview.ForumPreviewData
 import com.dezdeqness.foundation.ui.views.GeneralEmpty
 import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.foundation.ui.views.header.Header

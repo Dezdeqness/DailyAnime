@@ -5,16 +5,27 @@ import com.dezdeqness.feature.details.common.presentation.DetailsViewModel
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.feature.details.person.presentation.store.PersonDetailsNamespace
 import com.dezdeqness.foundation.di.AssistedViewModelFactory
-import money.vivid.elmslie.core.store.ElmStore
 import javax.inject.Inject
+import money.vivid.elmslie.core.store.ElmStore
 
 object PersonIdKey : CreationExtras.Key<Long>
 
 class PersonDetailsViewModel(
-    store: ElmStore<PersonDetailsNamespace.Event, PersonDetailsNamespace.State, PersonDetailsNamespace.Effect, PersonDetailsNamespace.Command>,
+    store: ElmStore<
+        PersonDetailsNamespace.Event,
+        PersonDetailsNamespace.State,
+        PersonDetailsNamespace.Effect,
+        PersonDetailsNamespace.Command,
+        >,
     translator: PersonDetailsEventTranslator,
     personId: Long,
-) : DetailsViewModel<PersonDetailsUiEvent, PersonDetailsNamespace.Event, PersonDetailsNamespace.State, PersonDetailsNamespace.Effect, PersonDetailsNamespace.Command>(
+) : DetailsViewModel<
+    PersonDetailsUiEvent,
+    PersonDetailsNamespace.Event,
+    PersonDetailsNamespace.State,
+    PersonDetailsNamespace.Effect,
+    PersonDetailsNamespace.Command,
+    >(
     store = store,
     initialState = PersonDetailsNamespace.State(id = personId),
     initialEvent = PersonDetailsNamespace.Event.Base(BaseDetailsEvent.InitialLoad(personId)),
@@ -23,10 +34,11 @@ class PersonDetailsViewModel(
 
     class Factory @Inject constructor(
         private val store: ElmStore<
-                PersonDetailsNamespace.Event,
-                PersonDetailsNamespace.State,
-                PersonDetailsNamespace.Effect,
-                PersonDetailsNamespace.Command>,
+            PersonDetailsNamespace.Event,
+            PersonDetailsNamespace.State,
+            PersonDetailsNamespace.Effect,
+            PersonDetailsNamespace.Command,
+            >,
         private val translator: PersonDetailsEventTranslator,
     ) : AssistedViewModelFactory<PersonDetailsViewModel> {
 

@@ -4,15 +4,12 @@ package com.dezdeqness.foundation.ui.theme
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -177,7 +174,7 @@ fun ColorListPreview(title: String, colors: List<NamedColor>) {
         modifier = Modifier
             .fillMaxWidth()
             .background(AppTheme.colors.background)
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Text(
             text = title,
@@ -192,19 +189,19 @@ fun ColorListPreview(title: String, colors: List<NamedColor>) {
                     .padding(vertical = 4.dp)
                     .height(48.dp)
                     .background(colorItem.color),
-                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
             ) {
                 Text(
                     text = colorItem.name,
                     modifier = Modifier
                         .padding(start = 16.dp)
                         .weight(1f),
-                    color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black
+                    color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black,
                 )
                 Text(
                     text = "#${colorItem.color.value.toString(16).uppercase().take(8)}",
                     modifier = Modifier.padding(end = 16.dp),
-                    color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black
+                    color = if (colorItem.color.luminance() < 0.5f) Color.White else Color.Black,
                 )
             }
         }
@@ -222,7 +219,7 @@ fun LightAnimeColorsPreview() {
 @Preview(
     showBackground = true,
     uiMode = UI_MODE_NIGHT_YES,
-    heightDp = 1250
+    heightDp = 1250,
 )
 @Composable
 fun DarkAnimeColorsPreview() {
@@ -234,7 +231,7 @@ fun DarkAnimeColorsPreview() {
 @Preview(
     showBackground = true,
     uiMode = UI_MODE_NIGHT_YES,
-    heightDp = 1250
+    heightDp = 1250,
 )
 @Composable
 fun AmoledAnimeColorsPreview() {

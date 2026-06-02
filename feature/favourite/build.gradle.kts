@@ -43,7 +43,7 @@ dependencies {
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Unit Testing

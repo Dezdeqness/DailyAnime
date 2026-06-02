@@ -37,5 +37,4 @@ class TimestampConverter @Inject constructor() {
         }
         return timeStampFormatter.parse(value)?.time ?: 0L
     }
-
 }

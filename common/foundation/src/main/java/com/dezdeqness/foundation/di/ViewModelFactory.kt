@@ -61,23 +61,28 @@ abstract class ViewModelBuilderModule {
     abstract fun viewModelCreators(): Map<Class<out ViewModel>, ViewModel>
 
     @Multibinds
-    abstract fun assistedViewModelCreators(): Map<Class<out ViewModel>, AssistedViewModelFactory<out ViewModel>>
+    abstract fun assistedViewModelCreators(): Map<
+        Class<out ViewModel>,
+        AssistedViewModelFactory<out ViewModel>,
+        >
 
     @Binds
-    abstract fun bindViewModelFactory(
-        factory: ViewModelFactory
-    ): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }
 
 @Target(
-    AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER,
 )
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
 @Target(
-    AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER,
 )
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey

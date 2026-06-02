@@ -5,10 +5,10 @@ enum class AnimeStatus(val status: String) {
     ONGOING("ongoing"),
     RELEASED("released"),
     LATEST("latest"),
-    UNKNOWN("");
+    UNKNOWN(""),
+    ;
 
     companion object {
         fun fromString(value: String) = entries.find { it.status == value } ?: UNKNOWN
     }
-
 }

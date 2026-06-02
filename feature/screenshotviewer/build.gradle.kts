@@ -39,7 +39,7 @@ dependencies {
     implementation(libs.dagger.dagger)
     ksp(libs.dagger.compilier)
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Zoomable

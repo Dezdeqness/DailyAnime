@@ -20,15 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.GeneralEmpty
-import com.dezdeqness.foundation.ui.views.GeneralError
-import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.history.R
 import com.dezdeqness.feature.history.presentation.composables.HistoryList
 import com.dezdeqness.feature.history.presentation.composables.HistoryShimmerLoading
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
 import com.dezdeqness.feature.history.presentation.store.HistoryStatus
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.GeneralEmpty
+import com.dezdeqness.foundation.ui.views.GeneralError
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -105,10 +105,8 @@ fun HistoryPage(
             PullRefreshIndicator(
                 refreshing = state.isPullDownRefreshing,
                 pullRefreshState,
-                Modifier.align(Alignment.TopCenter)
+                Modifier.align(Alignment.TopCenter),
             )
-
         }
     }
-
 }

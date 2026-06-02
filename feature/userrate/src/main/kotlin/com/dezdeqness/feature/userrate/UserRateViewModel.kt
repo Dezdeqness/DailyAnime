@@ -2,17 +2,17 @@ package com.dezdeqness.feature.userrate
 
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.repository.UserRatesRepository
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class UserRateViewModel @Inject constructor(
     private val userRatesRepository: UserRatesRepository,
@@ -140,7 +140,6 @@ class UserRateViewModel @Inject constructor(
         emitDefaultState()
 
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
-
             val userRate = userRatesRepository.getLocalUserRate(rateId = rateId)
             localUserRate = userRate ?: UserRateEntity.EMPTY_USER_RATE
 
@@ -166,15 +165,15 @@ class UserRateViewModel @Inject constructor(
             score = score,
             episode = episode,
             isContentChanged = isUserRateChanged,
-            comment = userRate.text
+            comment = userRate.text,
         )
     }
 
     private fun isUserRateChanged(): Boolean {
         val uiEditRate = _userRateStateFlow.value
         return uiEditRate.selectedStatus != localUserRate?.status ||
-                uiEditRate.episode != localUserRate?.episodes ||
-                uiEditRate.score != localUserRate?.score ||
-                uiEditRate.comment != localUserRate?.text
+            uiEditRate.episode != localUserRate?.episodes ||
+            uiEditRate.score != localUserRate?.score ||
+            uiEditRate.comment != localUserRate?.text
     }
 }

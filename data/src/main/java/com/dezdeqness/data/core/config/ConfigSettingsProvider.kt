@@ -15,14 +15,13 @@ class ConfigSettingsProvider(
 ) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "config_settings")
 
-    fun isOverrideRemoteEnabled() =
-        runBlocking {
-            context
-                .dataStore
-                .data
-                .map { preferences -> preferences[booleanPreferencesKey(CONFIG_SETTING_OVERRIDE_REMOTE)] }
-                .first()
-        }
+    fun isOverrideRemoteEnabled() = runBlocking {
+        context
+            .dataStore
+            .data
+            .map { preferences -> preferences[booleanPreferencesKey(CONFIG_SETTING_OVERRIDE_REMOTE)] }
+            .first()
+    }
 
     fun setOverrideRemoteEnabled(value: Boolean) {
         runBlocking {

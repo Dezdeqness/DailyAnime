@@ -1,8 +1,8 @@
 package com.dezdeqness.foundation.ui.theme
 
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 
 private val defaultTypography = Typography()

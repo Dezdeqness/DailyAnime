@@ -5,5 +5,5 @@ enum class FavouriteLinkedType(val type: String) {
     MANGA("Manga"),
     RANOBE("Ranobe"),
     PERSON("Person"),
-    CHARACTER("Character")
+    CHARACTER("Character"),
 }

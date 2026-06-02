@@ -39,14 +39,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.header.Header
-import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.userrate.composable.CommentTextField
 import com.dezdeqness.feature.userrate.composable.ScoreSlider
 import com.dezdeqness.feature.userrate.composable.SelectStatusDialog
 import com.dezdeqness.feature.userrate.composable.SelectStatusItem
 import com.dezdeqness.feature.userrate.composable.rememberCommentState
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.header.Header
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -64,7 +64,7 @@ fun UserRateContent(
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
+        skipPartiallyExpanded = true,
     )
 
     val listStatuses = remember {
@@ -76,7 +76,7 @@ fun UserRateContent(
     Column(
         modifier = modifier
             .background(AppTheme.colors.onPrimary)
-            .verticalScroll(verticalState)
+            .verticalScroll(verticalState),
     ) {
         AppToolbar(
             navigationIcon = Icons.Default.Close,
@@ -108,7 +108,7 @@ fun UserRateContent(
                             disabledContentColor = ButtonDefaults
                                 .textButtonColors()
                                 .contentColor
-                                .copy(alpha = 0.4F)
+                                .copy(alpha = 0.4F),
                         ),
                 ) {
                     Text(
@@ -132,7 +132,7 @@ fun UserRateContent(
             modifier = Modifier.padding(
                 vertical = 8.dp,
                 horizontal = 16.dp,
-            )
+            ),
         )
 
         Header(
@@ -151,13 +151,13 @@ fun UserRateContent(
                 .clip(RoundedCornerShape(8.dp))
                 .border(
                     BorderStroke(1.dp, AppTheme.colors.primary),
-                    RoundedCornerShape(8.dp)
+                    RoundedCornerShape(8.dp),
                 )
                 .clickable(
                     onClick = actions::onSelectStatusClicked,
                     interactionSource = remember { MutableInteractionSource() },
-                    indication = ripple(color = AppTheme.colors.ripple)
-                )
+                    indication = ripple(color = AppTheme.colors.ripple),
+                ),
         ) {
             Text(
                 text = listStatuses
@@ -234,7 +234,6 @@ fun UserRateContent(
                     )
                 }
             }
-
         }
 
         Header(
@@ -259,13 +258,12 @@ fun UserRateContent(
                     onClick = {
                         commentState.comment = ""
                         actions.onCommentChanged("")
-
                     },
                 ) {
                     Icon(
                         Icons.Default.Close,
                         contentDescription = null,
-                        tint = AppTheme.colors.onSurface
+                        tint = AppTheme.colors.onSurface,
                     )
                 }
             },
@@ -283,10 +281,9 @@ fun UserRateContent(
                             actions.onCloseSelectStatusClicked()
                         }
                     }
-                }
+                },
             )
         }
-
     }
 }
 
@@ -297,8 +294,8 @@ fun UserRatePagePreview() {
         UserRateContent(
             stateFlow = MutableStateFlow(
                 UserRateState(
-                    title = "Восстание Лелуша"
-                )
+                    title = "Восстание Лелуша",
+                ),
             ),
             actions = object : UserRateActions {
                 override fun onStatusChanged(id: String) = Unit
@@ -311,7 +308,7 @@ fun UserRatePagePreview() {
                 override fun onIncrementEpisode() = Unit
                 override fun onDecrementEpisode() = Unit
                 override fun onCommentChanged(comment: String) = Unit
-            }
+            },
         )
     }
 }

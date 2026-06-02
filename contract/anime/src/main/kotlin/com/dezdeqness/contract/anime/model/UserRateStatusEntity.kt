@@ -8,7 +8,8 @@ enum class UserRateStatusEntity(val status: String) {
     ON_HOLD("on_hold"),
     DROPPED("dropped"),
     NONE("none"),
-    UNKNOWN("none");
+    UNKNOWN("none"),
+    ;
 
     companion object {
         fun fromString(value: String) = entries.find { item -> item.status == value } ?: UNKNOWN

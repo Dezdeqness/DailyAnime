@@ -12,17 +12,16 @@ class MessageConsumer() {
     suspend fun onSuccessMessage(text: String) {
         _messageState.send(
             MessageEvent.SuccessMessageEvent(
-                successText = text
-            )
+                successText = text,
+            ),
         )
     }
 
     suspend fun onErrorMessage(text: String) {
         _messageState.send(
             MessageEvent.ErrorMessageEvent(
-                errorText = text
-            )
+                errorText = text,
+            ),
         )
     }
-
 }

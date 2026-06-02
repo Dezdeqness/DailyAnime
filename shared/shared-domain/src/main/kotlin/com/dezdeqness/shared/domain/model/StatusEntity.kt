@@ -5,5 +5,5 @@ data class StatusEntity(
     val groupedId: String,
     val name: String,
     val size: Long,
-    val type: String
+    val type: String,
 )

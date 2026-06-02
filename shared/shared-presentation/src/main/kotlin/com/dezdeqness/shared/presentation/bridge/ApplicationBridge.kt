@@ -7,6 +7,7 @@ import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
 interface ApplicationBridge {
     fun getSettingsRepository(): SettingsRepository
     fun getPermissionCheckProvider(): PermissionCheckProvider
+
     @DrawableRes
     fun getAppForegroundIcon(): Int
 

@@ -12,5 +12,4 @@ class CookieCleaner @Inject constructor() {
         cookieManager.removeAllCookies(null)
         cookieManager.flush()
     }
-
 }

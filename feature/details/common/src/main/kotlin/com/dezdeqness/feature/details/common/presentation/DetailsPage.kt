@@ -21,7 +21,7 @@ fun <UiEvent : Any, State : DetailsState> DetailsPage(
     onBack: () -> Unit,
     onFavouriteClick: () -> Unit,
     modifier: Modifier = Modifier,
-    overlay: @Composable BoxScope.(State, (UiEvent) -> Unit) -> Unit = { _, _ ->},
+    overlay: @Composable BoxScope.(State, (UiEvent) -> Unit) -> Unit = { _, _ -> },
     loading: @Composable (Modifier) -> Unit,
 ) {
     val state by stateFlow.collectAsStateWithLifecycle()

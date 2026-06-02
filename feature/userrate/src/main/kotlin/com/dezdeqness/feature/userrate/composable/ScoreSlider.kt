@@ -20,10 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.feature.userrate.R
 import com.dezdeqness.foundation.ui.effects.ReorderHapticFeedbackType
 import com.dezdeqness.foundation.ui.effects.rememberReorderHapticFeedback
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.feature.userrate.R
 import kotlin.math.roundToInt
 
 @Composable
@@ -36,7 +36,7 @@ fun ScoreSlider(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CustomSlider(
             onValueChange = { newValue ->
@@ -63,7 +63,7 @@ fun ScoreSlider(
             },
             style = AppTheme.typography.titleMedium,
             color = AppTheme.colors.textPrimary,
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp),
         )
     }
 }
@@ -75,7 +75,7 @@ fun ScoreSliderPreview() {
         ScoreSlider(
             score = 0,
             onScoreChanged = {},
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }
@@ -102,9 +102,8 @@ fun CustomSlider(
         thumb = {
             Label(value = value)
         },
-        enabled = enabled
+        enabled = enabled,
     )
-
 }
 
 @Composable
@@ -123,8 +122,8 @@ private fun Label(
             .clip(CircleShape)
             .background(
                 color = AppTheme.colors.primary,
-                shape = CircleShape
+                shape = CircleShape,
             )
-            .padding(4.dp)
+            .padding(4.dp),
     )
 }

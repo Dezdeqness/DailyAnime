@@ -33,7 +33,7 @@ fun StatusRibbon(
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(color = AppTheme.colors.ripple)
+                indication = ripple(color = AppTheme.colors.ripple),
             )
             .background(AppTheme.colors.onPrimary.copy(alpha = 0f))
             .padding(vertical = 12.dp, horizontal = 8.dp),
@@ -54,7 +54,7 @@ fun StatusRibbonPreview() {
         StatusRibbon(
             title = "Смотрю",
             onClick = {},
-            modifier = Modifier.width(80.dp)
+            modifier = Modifier.width(80.dp),
         )
     }
 }

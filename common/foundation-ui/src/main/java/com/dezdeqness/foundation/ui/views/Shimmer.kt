@@ -27,7 +27,7 @@ fun Modifier.shimmer(
     widthOfShadowBrush: Int = DEFAULT_WIDTH_SHADOW_BRUSH,
     angleOfAxisY: Float = DEFAULT_ANGLE_AXIS_X,
     durationMillis: Int = DEFAULT_DURATION,
-    color: Color = Color.Unspecified
+    color: Color = Color.Unspecified,
 ): Modifier = composed {
     val shimmerBaseColor = if (color == Color.Unspecified) {
         DEFAULT_COLOR
@@ -64,7 +64,7 @@ fun Modifier.shimmer(
                 start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
                 end = Offset(x = translateAnimation.value, y = angleOfAxisY),
             ),
-            shape = shape
-        )
+            shape = shape,
+        ),
     )
 }

@@ -38,9 +38,8 @@ data class AccountEntity(
     }
 }
 
-
 data class FullAnimeStatusesEntity(
-    val list: List<StatusEntity>
+    val list: List<StatusEntity>,
 )
 
 data class StatsItemEntity(

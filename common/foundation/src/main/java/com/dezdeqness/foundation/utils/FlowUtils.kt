@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun <T> Flow<T>.collectEvents(
     lifecycleState: Lifecycle.State = Lifecycle.State.STARTED,
-    sideEffect: (suspend (event: T) -> Unit)
+    sideEffect: (suspend (event: T) -> Unit),
 ) {
     val sideEffectFlow = this
     val lifecycleOwner = LocalLifecycleOwner.current

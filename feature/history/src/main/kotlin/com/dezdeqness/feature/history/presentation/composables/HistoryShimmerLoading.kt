@@ -23,7 +23,7 @@ fun HistoryShimmerLoading(
                 state = rememberScrollState(),
                 enabled = false,
             ),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         repeat(times) { _ ->
             HistoryShimmerItem()
@@ -32,13 +32,11 @@ fun HistoryShimmerLoading(
 }
 
 @Composable
-fun HistoryShimmerItem(
-    modifier: Modifier = Modifier,
-) {
+fun HistoryShimmerItem(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(120.dp)
-            .shimmer()
+            .shimmer(),
     )
 }

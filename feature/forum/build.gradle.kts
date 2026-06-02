@@ -56,7 +56,7 @@ dependencies {
     // Shared
     implementation(project(":shared:shared-presentation"))
 
-    //Elm
+    // Elm
     implementation(libs.elmslie.core)
 
     // Unit Testing
@@ -72,5 +72,4 @@ dependencies {
 
     // Mock
     testImplementation(libs.mockk.mockk)
-
 }

@@ -9,14 +9,13 @@ import javax.inject.Inject
 class PersonDetailsEventTranslator @Inject constructor() :
     DetailsEventTranslator<PersonDetailsUiEvent, PersonDetailsNamespace.Event> {
 
-    override fun translate(uiEvent: PersonDetailsUiEvent): PersonDetailsNamespace.Event =
-        when (uiEvent) {
-            is PersonDetailsUiEvent.Base -> PersonDetailsNamespace.Event.Base(
-                when (uiEvent.event) {
-                    DetailsBaseUiEvent.SharePressed -> BaseDetailsEvent.SharePressed
-                    DetailsBaseUiEvent.RetryClicked -> BaseDetailsEvent.RetryClicked
-                    DetailsBaseUiEvent.FavouriteToggled -> BaseDetailsEvent.FavouriteToggleClicked
-                },
-            )
-        }
+    override fun translate(uiEvent: PersonDetailsUiEvent): PersonDetailsNamespace.Event = when (uiEvent) {
+        is PersonDetailsUiEvent.Base -> PersonDetailsNamespace.Event.Base(
+            when (uiEvent.event) {
+                DetailsBaseUiEvent.SharePressed -> BaseDetailsEvent.SharePressed
+                DetailsBaseUiEvent.RetryClicked -> BaseDetailsEvent.RetryClicked
+                DetailsBaseUiEvent.FavouriteToggled -> BaseDetailsEvent.FavouriteToggleClicked
+            },
+        )
+    }
 }

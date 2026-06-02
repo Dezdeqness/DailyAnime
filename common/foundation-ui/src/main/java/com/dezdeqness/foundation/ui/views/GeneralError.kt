@@ -40,13 +40,13 @@ fun GeneralError(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val compositionLoading by rememberLottieComposition(
-            LottieCompositionSpec.RawRes(R.raw.error)
+            LottieCompositionSpec.RawRes(R.raw.error),
         )
 
         LottieAnimation(
             composition = compositionLoading,
             iterations = LottieConstants.IterateForever,
-            modifier = Modifier.height(120.dp)
+            modifier = Modifier.height(120.dp),
         )
 
         Text(
@@ -67,7 +67,7 @@ fun GeneralErrorPreview() {
         GeneralError(
             modifier = Modifier
                 .background(AppTheme.colors.onPrimary)
-                .size(300.dp)
+                .size(300.dp),
         )
     }
 }

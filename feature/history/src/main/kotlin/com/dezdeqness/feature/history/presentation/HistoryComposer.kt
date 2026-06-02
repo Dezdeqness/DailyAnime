@@ -10,7 +10,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 class HistoryComposer @Inject constructor(
-    private val imageUrlUtils: ImageUrlUtils
+    private val imageUrlUtils: ImageUrlUtils,
 ) {
 
     private val dateFormatter = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
@@ -34,10 +34,9 @@ class HistoryComposer @Inject constructor(
                         FROM_HTML_MODE_COMPACT,
                     ).toString(),
                     imageUrl = imageUrlUtils.getImageWithBaseUrl(item.image),
-                )
+                ),
             )
         }
         return uiItems
     }
-
 }

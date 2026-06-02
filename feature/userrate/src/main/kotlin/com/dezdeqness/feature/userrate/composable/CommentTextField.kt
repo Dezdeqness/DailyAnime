@@ -51,7 +51,7 @@ fun CommentTextField(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors().copy(
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
-    )
+    ),
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -96,7 +96,7 @@ fun CommentTextField(
         keyboardActions = KeyboardActions(
             onDone = {
                 focusManager.clearFocus()
-            }
+            },
         ),
         colors = colors,
         minLines = 3,
@@ -114,10 +114,9 @@ class CommentState {
                 CommentState().apply {
                     comment = it[0]
                 }
-            }
+            },
         )
     }
-
 }
 
 @Composable

@@ -22,6 +22,6 @@ sealed class MessageEvent(
     enum class MessageEventStatus {
         Success,
         Error,
-        Unknown;
+        Unknown,
     }
 }

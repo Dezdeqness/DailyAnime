@@ -17,7 +17,7 @@ interface AnimeRepository {
         queryMap: Map<String, String>,
         pageNumber: Int,
         sizeOfPage: Int,
-        searchQuery: String
+        searchQuery: String,
     ): Result<List<AnimeBriefEntity>>
 
     suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo>

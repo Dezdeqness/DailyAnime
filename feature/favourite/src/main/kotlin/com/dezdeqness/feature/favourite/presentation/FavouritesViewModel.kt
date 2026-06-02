@@ -6,6 +6,8 @@ import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -14,8 +16,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import javax.inject.Inject
-import javax.inject.Named
 
 class FavouritesViewModel @Inject constructor(
     @Named("userId") private val userId: Long,
@@ -45,7 +45,7 @@ class FavouritesViewModel @Inject constructor(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = FavouritesUiState(status = Status.Initial)
+                initialValue = FavouritesUiState(status = Status.Initial),
             )
 
     private fun toUiState(cache: FavouritesCacheState): FavouritesUiState = when (cache) {
