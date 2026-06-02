@@ -23,6 +23,7 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.arturbosch.detekt)
     alias(libs.plugins.ksp) apply true
+    alias(libs.plugins.spotless) apply false
     id("jacoco")
 }
 
@@ -34,6 +35,24 @@ detekt {
     buildUponDefaultConfig = true
     parallel = true
     allRules = false
+}
+
+subprojects {
+    apply(plugin = "com.diffplug.spotless")
+
+    configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+        kotlin {
+            target("src/main/**/*.kt")
+            targetExclude("**/build/**/*.kt")
+            ktlint(libs.versions.ktlint.get())
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint(libs.versions.ktlint.get())
+        }
+    }
 }
 
 tasks.register<JacocoReport>("jacocoRootReport") {

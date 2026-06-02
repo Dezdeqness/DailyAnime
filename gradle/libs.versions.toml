@@ -60,6 +60,8 @@ protobuf = "4.28.3"
 screenshot = "0.0.1-alpha09"
 runtimeVersion = "1.9.4"
 runtime = "1.10.0"
+spotless = "6.25.0"
+ktlint = "1.2.1"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "coreVersion" }
@@ -163,6 +165,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinAndroidVersion" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 # Internal
 com-dezdeqness-compose = { id = "com.dezdeqness.compose", version = "unspecified" }
