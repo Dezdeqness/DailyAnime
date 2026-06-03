@@ -30,7 +30,7 @@ class AchievementsComposer @Inject constructor(
                     level = maxAchievement.level,
                     progress = maxAchievement.progress / 100f,
                     progressValue = maxAchievement.progress,
-                    imageUrl = configManager.baseUrl + configLevel.image
+                    imageUrl = configManager.baseUrl + configLevel.image,
                 )
             }
     }

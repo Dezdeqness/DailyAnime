@@ -48,7 +48,7 @@ data class StatusLocal(
     val size: Long,
 
     @ColumnInfo(name = "type")
-    val type: String
+    val type: String,
 ) : DataModel.Db
 
 data class StatsLocal(

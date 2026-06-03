@@ -7,12 +7,11 @@ class LogoutUseCase(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
 ) {
-    suspend operator fun invoke() =
-        authRepository
-            .logout()
-            .onSuccess {
-                userRepository.deleteAccountLocal()
-                authRepository.clearToken()
-                userRepository.clearUserCookie()
-            }
+    suspend operator fun invoke() = authRepository
+        .logout()
+        .onSuccess {
+            userRepository.deleteAccountLocal()
+            authRepository.clearToken()
+            userRepository.clearUserCookie()
+        }
 }

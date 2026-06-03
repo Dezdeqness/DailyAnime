@@ -9,5 +9,4 @@ interface AccountLocalDataSource {
     fun getAccount(): AccountEntity?
 
     fun deleteAccount()
-
 }

@@ -3,7 +3,12 @@ package com.dezdeqness.feature.settings.store.core
 import money.vivid.elmslie.core.store.StateReducer
 
 val settingsReducer = object :
-    StateReducer<SettingsNamespace.Event, SettingsNamespace.State, SettingsNamespace.Effect, SettingsNamespace.Command>() {
+    StateReducer<
+        SettingsNamespace.Event,
+        SettingsNamespace.State,
+        SettingsNamespace.Effect,
+        SettingsNamespace.Command,
+        >() {
     override fun Result.reduce(event: SettingsNamespace.Event) {
         when (event) {
             is InitialLoad, Invalidate -> {
@@ -38,7 +43,7 @@ val settingsReducer = object :
                     state.copy(
                         settings = state.settings.map {
                             if (it.id == event.setting.id) event.setting else it
-                        }
+                        },
                     )
                 }
             }
@@ -53,7 +58,7 @@ val settingsReducer = object :
             is ShowDialog -> {
                 state {
                     state.copy(
-                        dialogState = event.dialogState
+                        dialogState = event.dialogState,
                     )
                 }
             }
@@ -78,11 +83,10 @@ val settingsReducer = object :
             is CloseDialog -> {
                 state {
                     state.copy(
-                        dialogState = SettingsNamespace.DialogState.None
+                        dialogState = SettingsNamespace.DialogState.None,
                     )
                 }
             }
-
         }
     }
 }

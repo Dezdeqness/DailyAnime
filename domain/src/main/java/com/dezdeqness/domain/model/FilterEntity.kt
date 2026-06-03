@@ -15,11 +15,11 @@ enum class FilterType(val filterName: String) {
     SEASON("season"),
     DURATION("duration"),
     RATING("rating"),
-    UNKNOWN("");
+    UNKNOWN(""),
+    ;
 
     companion object {
         fun fromString(value: String) = entries
             .find { it.filterName == value } ?: UNKNOWN
     }
-
 }

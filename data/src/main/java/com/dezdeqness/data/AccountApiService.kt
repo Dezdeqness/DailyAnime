@@ -5,7 +5,6 @@ import com.dezdeqness.data.model.AccountRemote
 import com.dezdeqness.data.model.HistoryRemote
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -18,9 +17,7 @@ interface AccountApiService {
     fun getProfile(): Call<AccountRemote>
 
     @GET("users/{id}")
-    fun getProfileDetails(
-        @Path(value = "id") id: Long,
-    ): Call<AccountRemote>
+    fun getProfileDetails(@Path(value = "id") id: Long): Call<AccountRemote>
 
     @GET("users/{id}/history")
     fun getUserHistory(
@@ -33,5 +30,4 @@ interface AccountApiService {
     @NeedAuthorization
     @POST("users/sign_out")
     fun logout(): Call<ResponseBody>
-
 }

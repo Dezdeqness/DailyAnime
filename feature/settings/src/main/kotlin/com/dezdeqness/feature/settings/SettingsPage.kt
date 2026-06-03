@@ -20,10 +20,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.contract.settings.models.ThemeMode
-import com.dezdeqness.foundation.ui.dialogs.TimeData
-import com.dezdeqness.foundation.ui.dialogs.TimePickerDialog
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.settings.composables.HeaderCustomSettingsView
 import com.dezdeqness.feature.settings.composables.ListPreferencesDialog
 import com.dezdeqness.feature.settings.composables.ProgressSettingsView
@@ -43,6 +39,10 @@ import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.utils.formatSize
 import com.dezdeqness.feature.settings.utils.fromMode
+import com.dezdeqness.foundation.ui.dialogs.TimeData
+import com.dezdeqness.foundation.ui.dialogs.TimePickerDialog
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +50,7 @@ import kotlinx.coroutines.flow.StateFlow
 fun SettingsPage(
     stateFlow: StateFlow<SettingsNamespace.State>,
     modifier: Modifier = Modifier,
-    actions: SettingActions
+    actions: SettingActions,
 ) {
     val state by stateFlow.collectAsStateWithLifecycle()
 
@@ -83,14 +83,13 @@ fun SettingsPage(
                 navigationClick = actions::onBackPressed,
                 navigationIcon = Icons.Filled.Close,
             )
-        }
+        },
     ) { padding ->
         LazyColumn(
             modifier = Modifier
                 .padding(padding)
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
-
             items(
                 count = items.size,
                 key = { index -> items[index].uniqueId },
@@ -125,7 +124,7 @@ fun SettingsPage(
                             },
                             onClick = {
                                 actions.onSettingClicked(item.id)
-                            }
+                            },
                         )
                     }
 
@@ -186,7 +185,7 @@ fun SettingsPage(
                         },
                         onDismissRequest = {
                             actions.onDialogClosed()
-                        }
+                        },
                     )
                 }
 
@@ -203,7 +202,7 @@ fun SettingsPage(
                         },
                         onCloseClicked = {
                             actions.onDialogClosed()
-                        }
+                        },
                     )
                 }
 
@@ -243,4 +242,3 @@ fun SettingsPage(
         }
     }
 }
-

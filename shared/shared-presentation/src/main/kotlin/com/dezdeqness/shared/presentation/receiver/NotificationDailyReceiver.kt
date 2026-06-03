@@ -44,7 +44,6 @@ class NotificationDailyReceiver : BroadcastReceiver() {
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(NOTIFICATION_ID, builder.build())
         }
-
     }
 
     private fun createNotificationChannel(context: Context) {

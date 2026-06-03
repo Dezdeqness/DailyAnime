@@ -9,12 +9,12 @@ import com.dezdeqness.feature.details.character.presentation.composer.CharacterD
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.foundation.Logger
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import money.vivid.elmslie.core.store.Actor
-import javax.inject.Inject
 
 class CharacterDetailsActor @Inject constructor(
     private val characterRepository: CharacterRepository,
@@ -26,10 +26,9 @@ class CharacterDetailsActor @Inject constructor(
     private val logger: Logger,
 ) : Actor<CharacterDetailsNamespace.Command, CharacterDetailsNamespace.Event>() {
 
-    override fun execute(command: CharacterDetailsNamespace.Command) =
-        when (command) {
-            is CharacterDetailsNamespace.Command.Base -> mapBaseEvents(command.command)
-        }
+    override fun execute(command: CharacterDetailsNamespace.Command) = when (command) {
+        is CharacterDetailsNamespace.Command.Base -> mapBaseEvents(command.command)
+    }
 
     private fun mapBaseEvents(command: BaseDetailsCommand): Flow<CharacterDetailsNamespace.Event> = when (command) {
         is BaseDetailsCommand.LoadDetails -> flow {
@@ -51,7 +50,7 @@ class CharacterDetailsActor @Inject constructor(
                 emit(
                     CharacterDetailsNamespace.Event.Base(
                         BaseDetailsEvent.OnDetailsLoadError(message, error),
-                    )
+                    ),
                 )
             }
         }

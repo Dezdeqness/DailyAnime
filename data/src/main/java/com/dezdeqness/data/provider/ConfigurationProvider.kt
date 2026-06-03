@@ -1,6 +1,7 @@
 package com.dezdeqness.data.provider
 
 import android.content.res.AssetManager
+import com.dezdeqness.contract.anime.model.GenreEntity
 import com.dezdeqness.data.mapper.AchievementMapper
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
@@ -10,7 +11,6 @@ import com.dezdeqness.data.model.GenreRemote
 import com.dezdeqness.domain.model.AchievementConfigDataEntity
 import com.dezdeqness.domain.model.AchievementConfigEntity
 import com.dezdeqness.domain.model.FilterEntity
-import com.dezdeqness.contract.anime.model.GenreEntity
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import okio.buffer
@@ -60,7 +60,7 @@ class ConfigurationProvider(
 
     private fun parseAchievementByTag(
         rootJson: Map<String, Any>,
-        tag: String
+        tag: String,
     ): Map<String, List<AchievementConfigEntity>> {
         val commonRaw = rootJson[tag] ?: return emptyMap()
         val commonJson = moshi.adapter(Any::class.java).toJson(commonRaw)
@@ -81,5 +81,4 @@ class ConfigurationProvider(
         private const val ACHIEVEMENTS_TAG_COMMON = "common"
         private const val ACHIEVEMENTS_TAG_GENRES = "genres"
     }
-
 }

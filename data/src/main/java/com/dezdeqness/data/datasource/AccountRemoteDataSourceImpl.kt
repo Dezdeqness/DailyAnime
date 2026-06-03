@@ -1,15 +1,15 @@
 package com.dezdeqness.data.datasource
 
+import com.dezdeqness.contract.auth.model.TokenEntity
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
-import com.dezdeqness.contract.auth.model.TokenEntity
 import dagger.Lazy
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
+import okhttp3.HttpUrl.Companion.toHttpUrl
 
 class AccountRemoteDataSourceImpl @Inject constructor(
     private val accountApiService: Lazy<AccountApiService>,
@@ -48,7 +48,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                     refreshToken = responseBody.refreshToken,
                     createdIn = responseBody.createdAt,
                     expiresIn = responseBody.expiresIn,
-                )
+                ),
             )
         } else {
             throw response.createApiException()
@@ -72,7 +72,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
             Result.success(
-                accountMapper.fromResponse(responseBody)
+                accountMapper.fromResponse(responseBody),
             )
         } else {
             throw response.createApiException()
@@ -85,7 +85,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
             Result.success(
-                accountMapper.fromResponse(responseBody)
+                accountMapper.fromResponse(responseBody),
             )
         } else {
             throw response.createApiException()
@@ -96,13 +96,13 @@ class AccountRemoteDataSourceImpl @Inject constructor(
         val response = accountApiService.get().getUserHistory(
             id = userId,
             page = page,
-            limit = limit
+            limit = limit,
         ).execute()
 
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
             Result.success(
-                responseBody.map(accountMapper::fromResponse)
+                responseBody.map(accountMapper::fromResponse),
             )
         } else {
             throw response.createApiException()
@@ -125,7 +125,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
                     refreshToken = responseBody.refreshToken,
                     createdIn = responseBody.createdAt,
                     expiresIn = responseBody.expiresIn,
-                )
+                ),
             )
         } else {
             throw response.createApiException()

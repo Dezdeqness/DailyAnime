@@ -57,7 +57,7 @@ fun SelectRibbonStatusReorderDialog(
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = modifier,
-            colors = CardDefaults.cardColors(containerColor = AppTheme.colors.onPrimary)
+            colors = CardDefaults.cardColors(containerColor = AppTheme.colors.onPrimary),
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -81,8 +81,8 @@ fun SelectRibbonStatusReorderDialog(
                                 onClick = {},
                                 interactionSource = interactionSource,
                                 colors = CardDefaults.cardColors(
-                                    containerColor = AppTheme.colors.onPrimary
-                                )
+                                    containerColor = AppTheme.colors.onPrimary,
+                                ),
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxSize(),
@@ -99,12 +99,12 @@ fun SelectRibbonStatusReorderDialog(
                                             .draggableHandle(
                                                 onDragStarted = {
                                                     haptic.performHapticFeedback(
-                                                        ReorderHapticFeedbackType.START
+                                                        ReorderHapticFeedbackType.START,
                                                     )
                                                 },
                                                 onDragStopped = {
                                                     haptic.performHapticFeedback(
-                                                        ReorderHapticFeedbackType.END
+                                                        ReorderHapticFeedbackType.END,
                                                     )
                                                 },
                                                 interactionSource = interactionSource,
@@ -129,10 +129,9 @@ fun SelectRibbonStatusReorderDialog(
                     onClick = {
                         onDoneClicked(list)
                     },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
             }
         }
     }
-
 }

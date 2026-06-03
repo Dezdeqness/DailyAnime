@@ -42,7 +42,6 @@ fun SelectSectionDialog(
         sheetState = state,
         containerColor = AppTheme.colors.onPrimary,
     ) {
-
         Column {
             Text(
                 text = stringResource(R.string.select_section_dialog_title),
@@ -62,15 +61,15 @@ fun SelectSectionDialog(
                                 onCloseClicked()
                             },
                             interactionSource = remember { MutableInteractionSource() },
-                            indication = ripple(color = AppTheme.colors.ripple)
+                            indication = ripple(color = AppTheme.colors.ripple),
                         )
                         .padding(horizontal = 16.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     RadioButton(
                         selected = item.section.id == selectedId,
                         onClick = null,
-                        modifier = Modifier.padding(end = 12.dp)
+                        modifier = Modifier.padding(end = 12.dp),
                     )
 
                     Text(
@@ -83,7 +82,7 @@ fun SelectSectionDialog(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(36.dp)
+                    .height(36.dp),
             )
         }
     }
@@ -94,58 +93,57 @@ data class SelectSectionItem(
     @StringRes val titleId: Int,
 ) {
     companion object {
-        fun getSections(isCalendarEnabled: Boolean = true) =
-            if (isCalendarEnabled) {
-                listOf(
-                    SelectSectionItem(
-                        section = InitialSection.HOME,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_home
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.FAVORITES,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_personal_lists
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.CALENDAR,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_calendar
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.PROFILE,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_profile
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.SEARCH,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.NEWS,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_news
-                    ),
-                )
-            } else {
-                listOf(
-                    SelectSectionItem(
-                        section = InitialSection.HOME,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_home
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.FAVORITES,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_personal_lists
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.PROFILE,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_profile
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.SEARCH,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search
-                    ),
-                    SelectSectionItem(
-                        section = InitialSection.NEWS,
-                        titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_news
-                    ),
-                )
-            }
+        fun getSections(isCalendarEnabled: Boolean = true) = if (isCalendarEnabled) {
+            listOf(
+                SelectSectionItem(
+                    section = InitialSection.HOME,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_home,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.FAVORITES,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_personal_lists,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.CALENDAR,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_calendar,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.PROFILE,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_profile,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.SEARCH,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.NEWS,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_news,
+                ),
+            )
+        } else {
+            listOf(
+                SelectSectionItem(
+                    section = InitialSection.HOME,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_home,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.FAVORITES,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_personal_lists,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.PROFILE,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_profile,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.SEARCH,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_search,
+                ),
+                SelectSectionItem(
+                    section = InitialSection.NEWS,
+                    titleId = com.dezdeqness.shared.presentation.R.string.bottom_navigation_news,
+                ),
+            )
+        }
 
         fun getById(sectionId: Int): SelectSectionItem {
             val items = getSections()

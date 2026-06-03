@@ -8,7 +8,12 @@ import money.vivid.elmslie.core.store.StateReducer
 private val SUPPORTED_LINKED_TYPES = setOf(LINKED_TYPE_ANIME, LINKED_TYPE_CHARACTER)
 
 val topicDetailsReducer = object :
-    StateReducer<TopicDetailsNamespace.Event, TopicDetailsNamespace.State, TopicDetailsNamespace.Effect, TopicDetailsNamespace.Command>() {
+    StateReducer<
+        TopicDetailsNamespace.Event,
+        TopicDetailsNamespace.State,
+        TopicDetailsNamespace.Effect,
+        TopicDetailsNamespace.Command,
+        >() {
     override fun Result.reduce(event: TopicDetailsNamespace.Event) {
         when (event) {
             is TopicDetailsNamespace.Event.InitialLoad -> {

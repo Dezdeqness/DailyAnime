@@ -5,16 +5,27 @@ import com.dezdeqness.feature.details.anime.presentation.store.AnimeDetailsNames
 import com.dezdeqness.feature.details.common.presentation.DetailsViewModel
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.foundation.di.AssistedViewModelFactory
-import money.vivid.elmslie.core.store.ElmStore
 import javax.inject.Inject
+import money.vivid.elmslie.core.store.ElmStore
 
 object AnimeIdKey : CreationExtras.Key<Long>
 
 class AnimeDetailsViewModel(
-    store: ElmStore<AnimeDetailsNamespace.Event, AnimeDetailsNamespace.State, AnimeDetailsNamespace.Effect, AnimeDetailsNamespace.Command>,
+    store: ElmStore<
+        AnimeDetailsNamespace.Event,
+        AnimeDetailsNamespace.State,
+        AnimeDetailsNamespace.Effect,
+        AnimeDetailsNamespace.Command,
+        >,
     translator: AnimeDetailsEventTranslator,
     animeId: Long,
-) : DetailsViewModel<AnimeDetailsUiEvent, AnimeDetailsNamespace.Event, AnimeDetailsNamespace.State, AnimeDetailsNamespace.Effect, AnimeDetailsNamespace.Command>(
+) : DetailsViewModel<
+    AnimeDetailsUiEvent,
+    AnimeDetailsNamespace.Event,
+    AnimeDetailsNamespace.State,
+    AnimeDetailsNamespace.Effect,
+    AnimeDetailsNamespace.Command,
+    >(
     store = store,
     initialState = AnimeDetailsNamespace.State(id = animeId),
     initialEvent = AnimeDetailsNamespace.Event.Base(BaseDetailsEvent.InitialLoad(animeId)),
@@ -23,10 +34,11 @@ class AnimeDetailsViewModel(
 
     class Factory @Inject constructor(
         private val store: ElmStore<
-                AnimeDetailsNamespace.Event,
-                AnimeDetailsNamespace.State,
-                AnimeDetailsNamespace.Effect,
-                AnimeDetailsNamespace.Command>,
+            AnimeDetailsNamespace.Event,
+            AnimeDetailsNamespace.State,
+            AnimeDetailsNamespace.Effect,
+            AnimeDetailsNamespace.Command,
+            >,
         private val translator: AnimeDetailsEventTranslator,
     ) : AssistedViewModelFactory<AnimeDetailsViewModel> {
 

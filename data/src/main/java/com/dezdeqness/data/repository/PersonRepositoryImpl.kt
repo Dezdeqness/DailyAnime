@@ -8,7 +8,5 @@ class PersonRepositoryImpl @Inject constructor(
     private val personRemoteDataSource: PersonRemoteDataSource,
 ) : PersonRepository {
 
-    override suspend fun getPersonDetailsById(id: Long) =
-        personRemoteDataSource.getPersonDetailsById(id)
-
+    override suspend fun getPersonDetailsById(id: Long) = personRemoteDataSource.getPersonDetailsById(id)
 }

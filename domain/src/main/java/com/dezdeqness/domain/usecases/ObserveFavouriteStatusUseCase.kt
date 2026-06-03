@@ -35,7 +35,8 @@ class ObserveFavouriteStatusUseCase(
         return when (state) {
             FavouritesCacheState.Empty,
             FavouritesCacheState.Loading,
-            is FavouritesCacheState.Error -> FavouriteButtonState.Disabled
+            is FavouritesCacheState.Error,
+            -> FavouriteButtonState.Disabled
 
             is FavouritesCacheState.Loaded -> {
                 val isFavourite = state.items.any { it.id == targetId && it.type in matchingTypes }

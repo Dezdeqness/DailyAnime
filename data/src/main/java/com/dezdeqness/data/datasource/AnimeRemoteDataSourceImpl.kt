@@ -35,55 +35,55 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         sizeOfPage: Int,
         searchQuery: String,
         isAdultContentEnabled: Boolean,
-    ) =
-        tryWithCatchSuspend {
-            val response = apolloClient.query(
-                AnimeListQuery(
-                    page = pageNumber,
-                    limit = sizeOfPage,
-                    order = Optional.presentIfNotNull(queryMap["order"]?.let {
+    ) = tryWithCatchSuspend {
+        val response = apolloClient.query(
+            AnimeListQuery(
+                page = pageNumber,
+                limit = sizeOfPage,
+                order = Optional.presentIfNotNull(
+                    queryMap["order"]?.let {
                         OrderEnum.safeValueOf(
-                            it
+                            it,
                         )
-                    }),
-                    kind = Optional.presentIfNotNull(queryMap["kind"]),
-                    status = Optional.presentIfNotNull(queryMap["status"]),
-                    season = Optional.presentIfNotNull(queryMap["season"]),
-                    score = Optional.presentIfNotNull(queryMap["score"]?.toIntOrNull()),
-                    duration = Optional.presentIfNotNull(queryMap["duration"]),
-                    rating = Optional.presentIfNotNull(queryMap["rating"]),
-                    origin = Optional.presentIfNotNull(queryMap["origin"]),
-                    genre = Optional.presentIfNotNull(queryMap["genre"]),
-                    studio = Optional.presentIfNotNull(queryMap["studio"]),
-                    franchise = Optional.presentIfNotNull(queryMap["franchise"]),
-                    censored = Optional.Present(isAdultContentEnabled),
-                    mylist = Optional.presentIfNotNull(queryMap["mylist"]),
-                    search = Optional.presentIfNotNull(searchQuery.ifEmpty { null })
-                )
-            ).execute()
+                    },
+                ),
+                kind = Optional.presentIfNotNull(queryMap["kind"]),
+                status = Optional.presentIfNotNull(queryMap["status"]),
+                season = Optional.presentIfNotNull(queryMap["season"]),
+                score = Optional.presentIfNotNull(queryMap["score"]?.toIntOrNull()),
+                duration = Optional.presentIfNotNull(queryMap["duration"]),
+                rating = Optional.presentIfNotNull(queryMap["rating"]),
+                origin = Optional.presentIfNotNull(queryMap["origin"]),
+                genre = Optional.presentIfNotNull(queryMap["genre"]),
+                studio = Optional.presentIfNotNull(queryMap["studio"]),
+                franchise = Optional.presentIfNotNull(queryMap["franchise"]),
+                censored = Optional.Present(isAdultContentEnabled),
+                mylist = Optional.presentIfNotNull(queryMap["mylist"]),
+                search = Optional.presentIfNotNull(searchQuery.ifEmpty { null }),
+            ),
+        ).execute()
 
-            val data = response.data
+        val data = response.data
 
-            if (data != null && response.hasErrors().not()) {
-                val list = data.animes.map { item -> animeMapper.fromResponseGraphql(item) }
-                Result.success(list)
-            } else {
-                throw response.createGraphqlException()
-            }
+        if (data != null && response.hasErrors().not()) {
+            val list = data.animes.map { item -> animeMapper.fromResponseGraphql(item) }
+            Result.success(list)
+        } else {
+            throw response.createGraphqlException()
         }
+    }
 
-    override suspend fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean) =
-        tryWithCatchSuspend {
-            val response = apolloClient.query(AnimeDetailsQuery(id.toString())).execute()
+    override suspend fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean) = tryWithCatchSuspend {
+        val response = apolloClient.query(AnimeDetailsQuery(id.toString())).execute()
 
-            val data = response.data
+        val data = response.data
 
-            if (data != null && response.hasErrors().not()) {
-                val animeData = data.animes.first()
-                val details = animeMapper.fromResponseGraphql(animeData)
+        if (data != null && response.hasErrors().not()) {
+            val animeData = data.animes.first()
+            val details = animeMapper.fromResponseGraphql(animeData)
             Result.success(details)
         } else {
-                throw response.createGraphqlException()
+            throw response.createGraphqlException()
         }
     }
 
@@ -98,7 +98,6 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         } else {
             throw response.createApiException()
         }
-
     }
 
     override suspend fun getDetailsChronology(id: Long) = tryWithCatchSuspend {
@@ -117,25 +116,23 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo> =
-        tryWithCatchSuspend {
-            val response = apolloClient.query(DetailsQuery(id.toString())).execute()
+    override suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo> = tryWithCatchSuspend {
+        val response = apolloClient.query(DetailsQuery(id.toString())).execute()
 
-            val data = response.data
+        val data = response.data
 
-            if (data != null && response.hasErrors().not()) {
-                val detailsData = data.animes.first()
-                val screenshots = detailsData.screenshots.map(screenshotMapper::fromResponse)
-                val related =
-                    detailsData.related?.mapNotNull(relatedItemMapper::fromResponse).orEmpty()
-                val characters = roleMapper.fromResponseGraphql(detailsData.characterRoles)
+        if (data != null && response.hasErrors().not()) {
+            val detailsData = data.animes.first()
+            val screenshots = detailsData.screenshots.map(screenshotMapper::fromResponse)
+            val related =
+                detailsData.related?.mapNotNull(relatedItemMapper::fromResponse).orEmpty()
+            val characters = roleMapper.fromResponseGraphql(detailsData.characterRoles)
 
-                Result.success(
-                    Triple(screenshots, related, characters)
-                )
-            } else {
-                throw response.createGraphqlException()
-            }
+            Result.success(
+                Triple(screenshots, related, characters),
+            )
+        } else {
+            throw response.createGraphqlException()
         }
-
+    }
 }

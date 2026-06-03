@@ -9,5 +9,4 @@ interface PersonalListFilterRepository {
     suspend fun setFilter(personalListFilterEntity: PersonalListFilterEntity)
 
     suspend fun setSort(sort: String)
-
 }

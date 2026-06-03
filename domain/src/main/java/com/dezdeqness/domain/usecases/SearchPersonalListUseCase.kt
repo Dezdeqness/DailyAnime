@@ -6,9 +6,7 @@ import com.dezdeqness.domain.repository.UserRatesRepository
 class SearchPersonalListUseCase(
     private val userRatesRepository: UserRatesRepository,
 ) {
-    suspend operator fun invoke(
-        search: String,
-    ) = userRatesRepository.searchUserRates(
+    suspend operator fun invoke(search: String) = userRatesRepository.searchUserRates(
         search = search,
         statuses = getAllStatusesString(),
     )

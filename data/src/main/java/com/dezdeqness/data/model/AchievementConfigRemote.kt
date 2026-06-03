@@ -11,7 +11,7 @@ data class AchievementConfigRemote(
     val level: Int,
 
     @field:Json(name = "metadata")
-    val metadata: AchievementMetadataRemote
+    val metadata: AchievementMetadataRemote,
 ) : DataModel.Api
 
 data class AchievementMetadataRemote(
@@ -27,5 +27,5 @@ data class AchievementMetadataRemote(
     @field:Json(name = "text_en")
     val textEn: String?,
 
-    val image: String
+    val image: String,
 )

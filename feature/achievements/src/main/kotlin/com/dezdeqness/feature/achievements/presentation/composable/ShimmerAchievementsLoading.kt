@@ -19,7 +19,7 @@ fun ShimmerAchievementsLoading(
     times: Int = 3,
 ) {
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState(), enabled = false)
+        modifier = modifier.verticalScroll(rememberScrollState(), enabled = false),
     ) {
         repeat(times) { _ ->
             ShimmerAchievementsHeader()
@@ -31,27 +31,23 @@ fun ShimmerAchievementsLoading(
 }
 
 @Composable
-private fun ShimmerAchievementsHeader(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerAchievementsHeader(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .padding(vertical = 16.dp)
             .width(100.dp)
             .height(20.dp)
-            .shimmer()
+            .shimmer(),
     )
 }
 
 @Composable
-private fun ShimmerAchievementsItem(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerAchievementsItem(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .padding(bottom = 8.dp)
             .fillMaxWidth()
             .height(150.dp)
-            .shimmer()
+            .shimmer(),
     )
 }

@@ -17,11 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dezdeqness.contract.anime.model.UserRateStatusEntity
-import com.dezdeqness.foundation.ui.views.GeneralEmpty
-import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.search.composables.PersonalListTabs
 import com.dezdeqness.feature.personallist.search.composables.PersonalSearchList
 import com.dezdeqness.feature.personallist.search.model.SearchUserRateUiModel
+import com.dezdeqness.foundation.ui.views.GeneralEmpty
+import com.dezdeqness.foundation.ui.views.GeneralError
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,7 +37,6 @@ fun PersonalListSearchExpandedPage(
     val state by stateFlow.collectAsStateWithLifecycle()
 
     Box(modifier = modifier.fillMaxSize()) {
-
         when (state.status) {
             PersonalListSearchStatus.Loaded -> {
                 val availableTabs = remember(state.list) {
@@ -58,7 +57,7 @@ fun PersonalListSearchExpandedPage(
                 }
 
                 val pager = rememberPagerState(
-                    pageCount = { availableTabs.size.coerceAtLeast(1) }
+                    pageCount = { availableTabs.size.coerceAtLeast(1) },
                 )
 
                 LaunchedEffect(selectedIndex, availableTabs.size) {
@@ -83,7 +82,7 @@ fun PersonalListSearchExpandedPage(
                                 pager.animateScrollToPage(index)
                             }
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                     HorizontalPager(
                         state = pager,
@@ -119,21 +118,17 @@ fun PersonalListSearchExpandedPage(
     }
 }
 
-fun UserRateStatusEntity.toTab(): PersonalListTab? =
-    when (this) {
-        UserRateStatusEntity.PLANNED -> PersonalListTab.Planned
-        UserRateStatusEntity.WATCHING -> PersonalListTab.Watching
-        UserRateStatusEntity.REWATCHING -> PersonalListTab.Rewatching
-        UserRateStatusEntity.COMPLETED -> PersonalListTab.Completed
-        UserRateStatusEntity.ON_HOLD -> PersonalListTab.OnHold
-        UserRateStatusEntity.DROPPED -> PersonalListTab.Dropped
-        else -> null
-    }
+fun UserRateStatusEntity.toTab(): PersonalListTab? = when (this) {
+    UserRateStatusEntity.PLANNED -> PersonalListTab.Planned
+    UserRateStatusEntity.WATCHING -> PersonalListTab.Watching
+    UserRateStatusEntity.REWATCHING -> PersonalListTab.Rewatching
+    UserRateStatusEntity.COMPLETED -> PersonalListTab.Completed
+    UserRateStatusEntity.ON_HOLD -> PersonalListTab.OnHold
+    UserRateStatusEntity.DROPPED -> PersonalListTab.Dropped
+    else -> null
+}
 
-fun filterList(
-    list: List<SearchUserRateUiModel>,
-    tab: PersonalListTab
-): List<SearchUserRateUiModel> = when (tab) {
+fun filterList(list: List<SearchUserRateUiModel>, tab: PersonalListTab): List<SearchUserRateUiModel> = when (tab) {
     PersonalListTab.All -> list
     PersonalListTab.Planned -> list.filter { it.status == UserRateStatusEntity.PLANNED }
     PersonalListTab.Watching -> list.filter { it.status == UserRateStatusEntity.WATCHING }

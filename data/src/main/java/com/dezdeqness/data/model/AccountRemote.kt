@@ -38,9 +38,9 @@ data class Stats(
     val types: StatsItemHolder,
 )
 
-data class FullStatuses (
+data class FullStatuses(
     @field:Json(name = "anime")
-    val anime: List<Status>
+    val anime: List<Status>,
 )
 
 data class StatsItemHolder(
@@ -48,7 +48,7 @@ data class StatsItemHolder(
     val items: List<StatsItem>,
 )
 
-data class Status (
+data class Status(
     @field:Json(name = "id")
     val id: Long,
 
@@ -62,7 +62,7 @@ data class Status (
     val size: Long,
 
     @field:Json(name = "type")
-    val type: String
+    val type: String,
 )
 
 data class StatsItem(

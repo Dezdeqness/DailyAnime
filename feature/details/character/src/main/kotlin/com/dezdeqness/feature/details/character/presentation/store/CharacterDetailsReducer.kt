@@ -7,11 +7,11 @@ import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsReduc
 import com.dezdeqness.feature.details.common.presentation.store.DetailsStatus
 
 val characterDetailsReducer = object : BaseDetailsReducer<
-        CharacterDetailsNamespace.Event,
-        CharacterDetailsNamespace.State,
-        CharacterDetailsNamespace.Effect,
-        CharacterDetailsNamespace.Command,
-        >(
+    CharacterDetailsNamespace.Event,
+    CharacterDetailsNamespace.State,
+    CharacterDetailsNamespace.Effect,
+    CharacterDetailsNamespace.Command,
+    >(
     wrapCommand = CharacterDetailsNamespace.Command::Base,
     wrapEffect = CharacterDetailsNamespace.Effect::Base,
 ) {

@@ -23,7 +23,7 @@ fun AppButton(
     title: String,
     titleStyle: TextStyle = AppTheme.typography.titleMedium,
     shape: Shape = AppTheme.shapes.medium,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Button(
         shape = shape,
@@ -45,13 +45,15 @@ fun AppOutlinedButton(
     title: String,
     titleStyle: TextStyle = AppTheme.typography.titleMedium,
     shape: Shape = AppTheme.shapes.medium,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     OutlinedButton(
         shape = shape,
         modifier = Modifier
             .then(modifier),
-        colors = ButtonDefaults.outlinedButtonColors().copy(containerColor = AppTheme.colors.onPrimary),
+        colors = ButtonDefaults.outlinedButtonColors().copy(
+            containerColor = AppTheme.colors.onPrimary,
+        ),
         onClick = { onClick() },
     ) {
         Text(
@@ -67,7 +69,7 @@ fun AppTextButton(
     title: String,
     titleStyle: TextStyle = AppTheme.typography.titleMedium,
     shape: Shape = AppTheme.shapes.medium,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     TextButton(
         shape = shape,
@@ -94,7 +96,7 @@ fun AppButtonPreview() {
             title = LoremIpsum(2).values.joinToString(),
             modifier = Modifier
                 .background(AppTheme.colors.background)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }
@@ -107,7 +109,7 @@ fun AppOutlinedButtonPreview() {
             title = LoremIpsum(2).values.joinToString(),
             modifier = Modifier
                 .background(AppTheme.colors.background)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }
@@ -120,8 +122,7 @@ fun AppTextButtonPreview() {
             title = LoremIpsum(2).values.joinToString(),
             modifier = Modifier
                 .background(AppTheme.colors.background)
-                .padding(16.dp)
+                .padding(16.dp),
         )
     }
 }
-

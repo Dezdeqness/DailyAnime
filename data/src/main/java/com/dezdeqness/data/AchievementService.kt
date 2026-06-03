@@ -7,7 +7,5 @@ import retrofit2.http.Query
 
 interface AchievementService {
     @GET("achievements/")
-    fun getAchievementList(
-        @Query(value = "user_id") userId: Long,
-    ): Call<List<AchievementRemote>>
+    fun getAchievementList(@Query(value = "user_id") userId: Long): Call<List<AchievementRemote>>
 }

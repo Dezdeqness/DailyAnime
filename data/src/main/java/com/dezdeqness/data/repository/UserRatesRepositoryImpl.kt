@@ -57,8 +57,7 @@ class UserRatesRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun getLocalUserRate(rateId: Long) =
-        userRatesLocalDataSource.getUserRate(rateId = rateId)
+    override fun getLocalUserRate(rateId: Long) = userRatesLocalDataSource.getUserRate(rateId = rateId)
 
     override fun updateUserRate(
         rateId: Long,

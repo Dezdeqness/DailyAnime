@@ -17,11 +17,10 @@ class AchievementRemoteDataSourceImpl @Inject constructor(
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
             Result.success(
-                responseBody.map(achievementMapper::fromResponse)
+                responseBody.map(achievementMapper::fromResponse),
             )
         } else {
             throw response.createApiException()
         }
-
     }
 }

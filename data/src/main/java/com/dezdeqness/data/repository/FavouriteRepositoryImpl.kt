@@ -6,13 +6,13 @@ import com.dezdeqness.contract.favourite.model.FavouritesCacheState
 import com.dezdeqness.contract.favourite.model.matchingCacheTypes
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSource
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class FavouriteRepositoryImpl @Inject constructor(
@@ -24,11 +24,10 @@ class FavouriteRepositoryImpl @Inject constructor(
 
     private val loadMutex = Mutex()
 
-    override suspend fun fetchFavourites(userId: Long, force: Boolean): Result<Unit> =
-        loadMutex.withLock {
-            if (!force && !needsLoad()) return Result.success(Unit)
-            loadFromRemote(userId).map { }
-        }
+    override suspend fun fetchFavourites(userId: Long, force: Boolean): Result<Unit> = loadMutex.withLock {
+        if (!force && !needsLoad()) return Result.success(Unit)
+        loadFromRemote(userId).map { }
+    }
 
     override suspend fun toggleFavourite(
         userId: Long,
@@ -79,7 +78,8 @@ class FavouriteRepositoryImpl @Inject constructor(
 
     private fun needsLoad(): Boolean = when (val current = _favourites.value) {
         FavouritesCacheState.Empty,
-        is FavouritesCacheState.Error -> true
+        is FavouritesCacheState.Error,
+        -> true
 
         is FavouritesCacheState.Loaded ->
             System.currentTimeMillis() - current.loadedAtMillis >= TTL_MILLIS

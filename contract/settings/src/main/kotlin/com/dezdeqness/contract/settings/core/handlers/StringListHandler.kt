@@ -16,7 +16,7 @@ object StringListHandler : PreferenceHandler<List<String>> {
     override fun write(
         prefs: MutablePreferences,
         key: SettingsPreference<List<String>>,
-        value: List<String>
+        value: List<String>,
     ) {
         prefs[stringPreferencesKey(key.name)] = value.joinToString(SEPARATOR)
     }

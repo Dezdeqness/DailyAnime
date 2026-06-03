@@ -23,7 +23,6 @@ interface SettingsNamespace {
         interface DialogPayload
         interface DialogResult
     }
-
 }
 
 data object InitialLoad : SettingsNamespace.Event
@@ -47,7 +46,7 @@ data class OnSettingClicked(val id: String) : SettingsNamespace.Event
 
 data class OnSettingSwitchChanged(
     val id: String,
-    val checked: Boolean
+    val checked: Boolean,
 ) : SettingsNamespace.Event
 
 data class DeployEffect(val effect: SettingsNamespace.Effect) : SettingsNamespace.Event

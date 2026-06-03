@@ -35,7 +35,7 @@ fun ScreenshotPager(
 
     HorizontalPager(
         state = state,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) { page ->
 
         var scale by remember {
@@ -72,5 +72,4 @@ fun ScreenshotPager(
             }
         }
     }
-
 }

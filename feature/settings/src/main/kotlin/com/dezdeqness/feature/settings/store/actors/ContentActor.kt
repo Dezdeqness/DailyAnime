@@ -31,7 +31,7 @@ class ContentActor @Inject constructor(
             SettingUiPref.HeaderSetting(
                 id = CONTENT_HEADER_ID,
                 sectionType = sectionType,
-                titleResId = R.string.settings_content_section
+                titleResId = R.string.settings_content_section,
             ),
             SettingUiPref.ActionSetting(
                 id = SELECT_INTERESTS_ID,
@@ -44,14 +44,14 @@ class ContentActor @Inject constructor(
                 id = ADULT_ID,
                 sectionType = sectionType,
                 titleResId = R.string.settings_adult_content_title,
-                checked = !isAdultContentEnabled
-            )
+                checked = !isAdultContentEnabled,
+            ),
         )
     }
 
     override suspend fun handleClick(
         settingId: String,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         if (settingId == "select_interests") {
             return ActorResult(effect = OpenSelectInterests)
@@ -62,7 +62,7 @@ class ContentActor @Inject constructor(
     override suspend fun handleSwitchChange(
         settingId: String,
         checked: Boolean,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         when (settingId) {
             ADULT_ID -> {

@@ -44,44 +44,43 @@ class TopicPresentationComposer @Inject constructor(
 
     fun compose(topics: List<TopicEntity>): List<TopicPresentationModel> = topics.map(::compose)
 
-    private fun groupIntoParagraphs(blocks: List<ContentBlock>): List<ParagraphBlock> =
-        buildList {
-            val currentInline = mutableListOf<ContentBlock>()
+    private fun groupIntoParagraphs(blocks: List<ContentBlock>): List<ParagraphBlock> = buildList {
+        val currentInline = mutableListOf<ContentBlock>()
 
-            fun flushInline() {
-                if (currentInline.isNotEmpty()) {
-                    add(ParagraphBlock.InlineContent(currentInline.toList()))
-                    currentInline.clear()
-                }
+        fun flushInline() {
+            if (currentInline.isNotEmpty()) {
+                add(ParagraphBlock.InlineContent(currentInline.toList()))
+                currentInline.clear()
             }
-
-            for (block in blocks) {
-                val paragraph = when (block) {
-                    is ContentBlock.ParagraphBreak -> ParagraphBlock.Spacer
-                    is ContentBlock.Quote -> ParagraphBlock.QuoteContent(groupIntoParagraphs(block.blocks))
-                    is ContentBlock.Video -> ParagraphBlock.VideoContent(
-                        thumbnailUrl = block.thumbnailUrl,
-                        videoUrl = block.videoUrl,
-                        title = block.title,
-                    )
-                    is ContentBlock.Image -> ParagraphBlock.ImageContent(
-                        previewUrl = block.previewUrl,
-                        originalUrl = block.originalUrl,
-                    )
-                    else -> {
-                        currentInline.add(block)
-                        null
-                    }
-                }
-
-                if (paragraph != null) {
-                    flushInline()
-                    add(paragraph)
-                }
-            }
-
-            flushInline()
         }
+
+        for (block in blocks) {
+            val paragraph = when (block) {
+                is ContentBlock.ParagraphBreak -> ParagraphBlock.Spacer
+                is ContentBlock.Quote -> ParagraphBlock.QuoteContent(groupIntoParagraphs(block.blocks))
+                is ContentBlock.Video -> ParagraphBlock.VideoContent(
+                    thumbnailUrl = block.thumbnailUrl,
+                    videoUrl = block.videoUrl,
+                    title = block.title,
+                )
+                is ContentBlock.Image -> ParagraphBlock.ImageContent(
+                    previewUrl = block.previewUrl,
+                    originalUrl = block.originalUrl,
+                )
+                else -> {
+                    currentInline.add(block)
+                    null
+                }
+            }
+
+            if (paragraph != null) {
+                flushInline()
+                add(paragraph)
+            }
+        }
+
+        flushInline()
+    }
 
     private fun formatDate(dateString: String): String {
         return try {

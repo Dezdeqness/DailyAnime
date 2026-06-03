@@ -13,18 +13,16 @@ class PersonRemoteDataSourceImpl @Inject constructor(
     private val personMapper: PersonMapper,
 ) : BaseDataSource(), PersonRemoteDataSource {
 
-    override suspend fun getPersonDetailsById(id: Long) =
-        tryWithCatchSuspend {
-            val response = apolloClient.query(PersonQuery(id.toString())).execute()
+    override suspend fun getPersonDetailsById(id: Long) = tryWithCatchSuspend {
+        val response = apolloClient.query(PersonQuery(id.toString())).execute()
 
-            val data = response.data
+        val data = response.data
 
-            if (data != null && response.hasErrors().not()) {
-                val person = data.people.first()
-                Result.success(personMapper.fromResponse(person))
-            } else {
-                throw response.createGraphqlException()
-            }
+        if (data != null && response.hasErrors().not()) {
+            val person = data.people.first()
+            Result.success(personMapper.fromResponse(person))
+        } else {
+            throw response.createGraphqlException()
         }
-
+    }
 }

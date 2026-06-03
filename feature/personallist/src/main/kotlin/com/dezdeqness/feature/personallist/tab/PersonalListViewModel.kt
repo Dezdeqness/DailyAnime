@@ -2,30 +2,40 @@ package com.dezdeqness.feature.personallist.tab
 
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
+import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.AssistedViewModelFactory
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
-import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
-import com.dezdeqness.feature.userrate.EditRateUiModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import money.vivid.elmslie.core.store.ElmStore
-import javax.inject.Inject
 
 object StatusIdKey : CreationExtras.Key<String>
 
 class PersonalListViewModel(
-    store: ElmStore<PersonalListNamespace.Event, PersonalListNamespace.State, PersonalListNamespace.Effect, PersonalListNamespace.Command>,
+    store: ElmStore<
+        PersonalListNamespace.Event,
+        PersonalListNamespace.State,
+        PersonalListNamespace.Effect,
+        PersonalListNamespace.Command,
+        >,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
     private val statusId: String,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-) : BaseStoreViewModel<PersonalListNamespace.Event, PersonalListNamespace.State, PersonalListNamespace.Effect, PersonalListNamespace.Command>(
+) : BaseStoreViewModel<
+    PersonalListNamespace.Event,
+    PersonalListNamespace.State,
+    PersonalListNamespace.Effect,
+    PersonalListNamespace.Command,
+    >(
     store = store,
     initialState = PersonalListNamespace.State(),
     initialEvent = PersonalListNamespace.Event.InitialLoad(status = statusId),
@@ -80,10 +90,11 @@ class PersonalListViewModel(
         private val messageProvider: BaseMessageProvider,
         private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
         private val store: ElmStore<
-                PersonalListNamespace.Event,
-                PersonalListNamespace.State,
-                PersonalListNamespace.Effect,
-                PersonalListNamespace.Command>
+            PersonalListNamespace.Event,
+            PersonalListNamespace.State,
+            PersonalListNamespace.Effect,
+            PersonalListNamespace.Command,
+            >,
     ) : AssistedViewModelFactory<PersonalListViewModel> {
 
         override fun create(extras: CreationExtras): PersonalListViewModel {

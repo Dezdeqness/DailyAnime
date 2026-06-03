@@ -1,6 +1,5 @@
 package com.dezdeqness.feature.settings
 
-import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.feature.settings.store.core.CloseDialog
 import com.dezdeqness.feature.settings.store.core.InitialLoad
 import com.dezdeqness.feature.settings.store.core.Invalidate
@@ -12,8 +11,9 @@ import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Command
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Effect
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.Event
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace.State
-import money.vivid.elmslie.core.store.ElmStore
+import com.dezdeqness.foundation.BaseStoreViewModel
 import javax.inject.Inject
+import money.vivid.elmslie.core.store.ElmStore
 
 class SettingsViewModel @Inject constructor(
     store: ElmStore<Event, State, Effect, Command>,
@@ -42,5 +42,4 @@ class SettingsViewModel @Inject constructor(
     fun invalidate() {
         accept(Invalidate)
     }
-
 }

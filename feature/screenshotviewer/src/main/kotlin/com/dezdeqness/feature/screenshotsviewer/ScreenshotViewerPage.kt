@@ -34,11 +34,11 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
-import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.screenshotsviewer.composables.ScreenshotPager
 import com.dezdeqness.feature.screenshotsviewer.composables.ScreenshotPreview
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
+import com.dezdeqness.foundation.utils.collectEvents
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -77,7 +77,7 @@ fun ScreenshotViewerPage(
                 },
                 onHide = {
                     isToolbarVisible = false
-                }
+                },
             )
 
             ScreenshotPreview(
@@ -86,7 +86,7 @@ fun ScreenshotViewerPage(
                 isToolbarVisible = isToolbarVisible,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 20.dp)
+                    .padding(bottom = 20.dp),
             )
         }
 
@@ -111,12 +111,11 @@ fun ScreenshotViewerPage(
                                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                                 .setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    effect.fileName
+                                    effect.fileName,
                                 )
                                 .setAllowedOverMetered(true)
                                 .setAllowedOverRoaming(true)
                             downloadManager?.enqueue(request)
-
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -174,6 +173,5 @@ fun ScreenshotViewerPage(
                 },
             )
         }
-
     }
 }

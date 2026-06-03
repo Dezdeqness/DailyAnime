@@ -7,9 +7,8 @@ import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
 import com.dezdeqness.shared.presentation.utils.UrlNormalizer
-import org.json.JSONObject
-
 import javax.inject.Inject
+import org.json.JSONObject
 
 class HtmlParser @Inject constructor(
     private val urlNormalizer: UrlNormalizer,
@@ -99,7 +98,11 @@ class HtmlParser @Inject constructor(
             divClose == -1 && blockquoteClose == -1 -> html.length
             divClose == -1 -> blockquoteClose + "</blockquote>".length
             blockquoteClose == -1 -> divClose + "</div>".length
-            else -> if (divClose < blockquoteClose) divClose + "</div>".length else blockquoteClose + "</blockquote>".length
+            else -> if (divClose < blockquoteClose) {
+                divClose + "</div>".length
+            } else {
+                blockquoteClose + "</blockquote>".length
+            }
         }
         return end
     }
@@ -107,9 +110,10 @@ class HtmlParser @Inject constructor(
     private fun parseInlineHtml(html: String): List<ContentBlock> {
         val blocks = mutableListOf<ContentBlock>()
 
+        @Suppress("ktlint:standard:max-line-length")
         val linkPattern = Regex(
             """<a\s[^>]*?(?:data-attrs="([^"]*)")?[^>]*?href="([^"]*)"[^>]*?(?:data-attrs="([^"]*)")?[^>]*?>(.*?)</a>""",
-            RegexOption.DOT_MATCHES_ALL
+            RegexOption.DOT_MATCHES_ALL,
         )
 
         var remaining = html
@@ -158,7 +162,7 @@ class HtmlParser @Inject constructor(
                             url = href,
                             entityType = entityType,
                             entityId = entityId,
-                        )
+                        ),
                     )
                 }
 
@@ -219,7 +223,13 @@ class HtmlParser @Inject constructor(
         val styleSpans = spanned.getSpans(0, spanned.length, StyleSpan::class.java)
         val underlineSpans = spanned.getSpans(0, spanned.length, UnderlineSpan::class.java)
 
-        data class StyledRange(val start: Int, val end: Int, val bold: Boolean, val italic: Boolean, val underline: Boolean)
+        data class StyledRange(
+            val start: Int,
+            val end: Int,
+            val bold: Boolean,
+            val italic: Boolean,
+            val underline: Boolean,
+        )
 
         val ranges = mutableListOf<StyledRange>()
         for (span in styleSpans) {
@@ -255,7 +265,7 @@ class HtmlParser @Inject constructor(
                             bold = range.bold,
                             italic = range.italic,
                             underline = range.underline,
-                        )
+                        ),
                     )
                 }
                 pos = minOf(range.end, text.length)

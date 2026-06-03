@@ -24,8 +24,7 @@ interface SectionActor {
         settingId: String,
         data: SettingsNamespace.DialogState.DialogResult,
         currentSetting: SettingUiPref,
-    ) =
-        ActorResult()
+    ) = ActorResult()
 }
 
 data class ActorResult(

@@ -40,14 +40,14 @@ class StorageActor @Inject constructor(
         val imageCacheMaxSize = imageDiskCache?.maxSize ?: 1
         val imageCacheProgress = (imageCacheSize.toFloat() / imageCacheMaxSize).coerceIn(
             0f,
-            1f
+            1f,
         )
 
         return listOf(
             SettingUiPref.HeaderSetting(
                 id = STORAGE_HEADER_ID,
                 sectionType = sectionType,
-                titleResId = R.string.settings_storage_title
+                titleResId = R.string.settings_storage_title,
             ),
             SettingUiPref.ProgressSetting(
                 id = IMAGE_CACHE_PROGRESS_ID,
@@ -58,7 +58,7 @@ class StorageActor @Inject constructor(
                     formatSize(imageCacheSize),
                     formatSize(imageCacheMaxSize),
                 ),
-                progress = imageCacheProgress
+                progress = imageCacheProgress,
             ),
             SettingUiPref.ActionSetting(
                 id = MAX_CACHE_SIZE_ID,
@@ -70,13 +70,13 @@ class StorageActor @Inject constructor(
                 id = CLEAR_CACHE_ID,
                 sectionType = sectionType,
                 titleResId = R.string.settings_image_cache_clear_title,
-            )
+            ),
         )
     }
 
     override suspend fun handleClick(
         settingId: String,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         when (settingId) {
             MAX_CACHE_SIZE_ID -> {

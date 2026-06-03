@@ -7,10 +7,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.dezdeqness.contract.settings.core.SettingsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
     private val context: Context,
@@ -18,13 +18,12 @@ class SettingsRepositoryImpl @Inject constructor(
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_settings")
 
-    override suspend fun <T> getPreference(key: SettingsPreference<T>) =
-        context
-            .dataStore
-            .data
-            .firstOrNull()
-            ?.let { key.handler.read(it, key) }
-            ?: key.default
+    override suspend fun <T> getPreference(key: SettingsPreference<T>) = context
+        .dataStore
+        .data
+        .firstOrNull()
+        ?.let { key.handler.read(it, key) }
+        ?: key.default
 
     override suspend fun <T> setPreference(key: SettingsPreference<T>, value: T) {
         context.dataStore.edit { prefs -> key.handler.write(prefs, key, value) }
@@ -35,5 +34,4 @@ class SettingsRepositoryImpl @Inject constructor(
             key.handler.read(prefs, key) ?: key.default
         }
     }
-
 }

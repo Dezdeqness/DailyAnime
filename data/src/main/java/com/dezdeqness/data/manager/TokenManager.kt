@@ -3,19 +3,18 @@ package com.dezdeqness.data.manager
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.dezdeqness.contract.auth.model.TokenEntity
 import com.dezdeqness.data.TokenEntityProto
 import com.dezdeqness.data.serializer.TokenSerializer
-import com.dezdeqness.contract.auth.model.TokenEntity
+import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
-
 
 class TokenManager @Inject constructor(private val context: Context) {
 
     private val Context.tokenDataStore: DataStore<TokenEntityProto> by dataStore(
         fileName = "token_preferences.pb",
-        serializer = TokenSerializer(context)
+        serializer = TokenSerializer(context),
     )
 
     fun setTokenData(tokenEntity: TokenEntity) {
@@ -43,7 +42,7 @@ class TokenManager @Inject constructor(private val context: Context) {
             accessToken = protoData.accessToken,
             refreshToken = protoData.refreshToken,
             createdIn = protoData.createdIn,
-            expiresIn = protoData.expiresIn
+            expiresIn = protoData.expiresIn,
         )
     }
 
@@ -59,5 +58,4 @@ class TokenManager @Inject constructor(private val context: Context) {
         private const val TIME_SHIFT = 60
         private const val DIVIDE_VALUE = 1000
     }
-
 }

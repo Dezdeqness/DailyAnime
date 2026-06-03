@@ -48,7 +48,7 @@ internal fun BaseSettingsView(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),
             )
-            .padding(contentPadding)
+            .padding(contentPadding),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -68,7 +68,7 @@ internal fun BaseSettingsView(
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .background(contentColor.copy(alpha = 0.7f))
+                    .background(contentColor.copy(alpha = 0.7f)),
             )
         }
     }

@@ -1,6 +1,5 @@
 package com.dezdeqness.feature.settings.store
 
-import com.dezdeqness.foundation.Logger
 import com.dezdeqness.feature.settings.store.actors.SectionActor
 import com.dezdeqness.feature.settings.store.core.CloseDialog
 import com.dezdeqness.feature.settings.store.core.DeployEffect
@@ -12,10 +11,11 @@ import com.dezdeqness.feature.settings.store.core.OnSettingUpdated
 import com.dezdeqness.feature.settings.store.core.SaveDialogResult
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.core.ShowDialog
+import com.dezdeqness.foundation.Logger
+import javax.inject.Inject
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import money.vivid.elmslie.core.store.Actor
-import javax.inject.Inject
 
 class SettingsActor @Inject constructor(
     private val sectionActors: List<@JvmSuppressWildcards SectionActor>,
@@ -70,7 +70,7 @@ class SettingsActor @Inject constructor(
                     val result = actor.handleSwitchChange(
                         command.id,
                         command.checked,
-                        command.setting
+                        command.setting,
                     )
                     result.updatedSettings?.let { settings ->
                         settings.forEach { updated ->

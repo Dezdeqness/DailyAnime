@@ -5,7 +5,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -60,19 +59,18 @@ fun ScreenshotPreview(
     AnimatedVisibility(
         visible = isToolbarVisible,
         enter = slideInVertically(
-            initialOffsetY = { it }
+            initialOffsetY = { it },
         ) + fadeIn(),
         exit = slideOutVertically(
-            targetOffsetY = { it }
+            targetOffsetY = { it },
         ) + fadeOut(),
         modifier = modifier,
     ) {
-
         LazyRow(
             state = listState,
             modifier = Modifier.fillMaxWidth().height(80.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(horizontal = 12.dp)
+            contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
             itemsIndexed(items) { index, item ->
                 val isSelected = pagerState.currentPage == index
@@ -86,13 +84,13 @@ fun ScreenshotPreview(
                         .border(
                             width = if (isSelected) 1.dp else 0.dp,
                             color = if (isSelected) Color.White else Color.Transparent,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(8.dp),
                         )
                         .clickable {
                             scope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
-                        }
+                        },
                 )
             }
         }

@@ -10,7 +10,7 @@ import java.lang.reflect.ParameterizedType
 class StatsConverter {
 
     private val moshi = Moshi.Builder().build()
-    private val listMyData : ParameterizedType = Types.newParameterizedType(List::class.java, StatsLocal::class.java)
+    private val listMyData: ParameterizedType = Types.newParameterizedType(List::class.java, StatsLocal::class.java)
     private val jsonAdapter: JsonAdapter<List<StatsLocal>> = moshi.adapter(listMyData)
 
     @TypeConverter
@@ -22,5 +22,4 @@ class StatsConverter {
     fun jsonStrToListMyModel(jsonStr: String): List<StatsLocal> {
         return jsonAdapter.fromJson(jsonStr) ?: listOf()
     }
-
 }

@@ -11,22 +11,19 @@ import javax.inject.Singleton
 @Singleton
 class GenreMapper @Inject constructor() {
 
-    fun fromResponse(item: GenreRemote) =
-        GenreEntity(
-            numericId = item.id.toString(),
-            id = "${item.id}-${item.name}",
-            name = item.russian,
-            type = TypeEntity.fromString(item.type),
-            kind = GenreKindEntity.fromString(item.kind),
-        )
+    fun fromResponse(item: GenreRemote) = GenreEntity(
+        numericId = item.id.toString(),
+        id = "${item.id}-${item.name}",
+        name = item.russian,
+        type = TypeEntity.fromString(item.type),
+        kind = GenreKindEntity.fromString(item.kind),
+    )
 
-    fun fromResponseGraphql(item: AnimeDetailsQuery.Genre) =
-        GenreEntity(
-            numericId = item.id,
-            id = "${item.id}-${item.name}",
-            name = item.russian,
-            type = TypeEntity.fromString(item.entryType.rawValue),
-            kind = GenreKindEntity.fromString(item.kind.rawValue),
-        )
-
+    fun fromResponseGraphql(item: AnimeDetailsQuery.Genre) = GenreEntity(
+        numericId = item.id,
+        id = "${item.id}-${item.name}",
+        name = item.russian,
+        type = TypeEntity.fromString(item.entryType.rawValue),
+        kind = GenreKindEntity.fromString(item.kind.rawValue),
+    )
 }

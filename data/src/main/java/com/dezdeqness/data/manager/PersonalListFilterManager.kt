@@ -7,9 +7,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class PersonalListFilterManager @Inject constructor(
     private val context: Context,
@@ -23,13 +23,12 @@ class PersonalListFilterManager @Inject constructor(
         }
     }
 
-    suspend fun getOrder(defaultValue: Boolean) =
-        context
-            .dataStore
-            .data
-            .map { preferences -> preferences[ORDER] }
-            .first()
-            ?: defaultValue
+    suspend fun getOrder(defaultValue: Boolean) = context
+        .dataStore
+        .data
+        .map { preferences -> preferences[ORDER] }
+        .first()
+        ?: defaultValue
 
     suspend fun setSort(sort: String) {
         context.dataStore.edit { settings ->
@@ -37,17 +36,15 @@ class PersonalListFilterManager @Inject constructor(
         }
     }
 
-    suspend fun getSort(defaultValue: String) =
-        context
-            .dataStore
-            .data
-            .map { preferences -> preferences[SORT] }
-            .first()
-            ?: defaultValue
+    suspend fun getSort(defaultValue: String) = context
+        .dataStore
+        .data
+        .map { preferences -> preferences[SORT] }
+        .first()
+        ?: defaultValue
 
     companion object {
         private val ORDER = booleanPreferencesKey("order")
         private val SORT = stringPreferencesKey("sort")
     }
-
 }

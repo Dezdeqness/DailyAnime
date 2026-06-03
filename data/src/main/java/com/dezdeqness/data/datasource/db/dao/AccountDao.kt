@@ -17,5 +17,4 @@ interface AccountDao {
 
     @Query("DELETE FROM 'account'")
     fun deleteAccount()
-
 }

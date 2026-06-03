@@ -12,11 +12,11 @@ data class PersonalTabsListPagerState(
 
     companion object {
         fun PersonalTabsListPagerState.loading() = PersonalTabsListPagerState(
-            status = DataStatus.Loading
+            status = DataStatus.Loading,
         )
 
         fun loading() = PersonalTabsListPagerState(
-            status = DataStatus.Loading
+            status = DataStatus.Loading,
         )
 
         fun PersonalTabsListPagerState.empty() = this.copy(
@@ -35,7 +35,7 @@ data class PersonalTabsListPagerState(
         )
 
         fun error() = PersonalTabsListPagerState(
-            status = DataStatus.Error
+            status = DataStatus.Error,
         )
     }
 }

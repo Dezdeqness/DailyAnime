@@ -15,5 +15,4 @@ class AnimeCalendarRemote {
 
     @field:Json(name = "anime")
     val anime: AnimeBriefRemote? = null
-
 }

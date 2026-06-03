@@ -70,7 +70,7 @@ fun PersonalRibbon(
                         indication = ripple(color = AppTheme.colors.ripple),
                     )
                     .then(localModifier)
-                    .padding(vertical = 8.dp, horizontal = 16.dp)
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
             ) {
                 Text(
                     item.displayName,

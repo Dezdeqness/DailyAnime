@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
-private const val SubTitleAlpha = 0.8f
+private const val SUB_TITLE_ALPHA = 0.8f
 
 @Composable
 fun TextSettingsView(
@@ -46,7 +46,7 @@ fun TextSettingsView(
             {
                 Text(
                     text = subtitle,
-                    modifier = Modifier.alpha(SubTitleAlpha),
+                    modifier = Modifier.alpha(SUB_TITLE_ALPHA),
                     style = AppTheme.typography.bodySmall,
                     color = AppTheme.colors.textPrimary,
                 )
@@ -111,7 +111,7 @@ fun TextSettingPreview() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(AppTheme.colors.onPrimary)
+                .background(AppTheme.colors.onPrimary),
         ) {
             TextSettingsView(
                 title = "Title1",
@@ -143,7 +143,7 @@ fun TextSettingPreview() {
                         tint = AppTheme.colors.textPrimary,
                     )
                 },
-                enabled = false
+                enabled = false,
             )
         }
     }

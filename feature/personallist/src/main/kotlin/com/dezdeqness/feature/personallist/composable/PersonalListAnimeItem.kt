@@ -33,12 +33,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.trace
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.image.AppImage
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
 import com.dezdeqness.feature.personallist.tab.PersonalListAction
-
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.image.AppImage
 
 @Composable
 fun PersonalListAnimeItem(
@@ -54,8 +52,8 @@ fun PersonalListAnimeItem(
                     onActionReceive(
                         PersonalListAction.AnimeClick(
                             userRateUiModel.id,
-                            userRateUiModel.name
-                        )
+                            userRateUiModel.name,
+                        ),
                     )
                 },
                 interactionSource = remember { MutableInteractionSource() },
@@ -69,12 +67,12 @@ fun PersonalListAnimeItem(
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .height(180.dp)
-                    .aspectRatio(2f / 3)
+                    .aspectRatio(2f / 3),
             )
 
             Column(
                 modifier = Modifier,
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.padding(8.dp).weight(1f)) {
                     Text(
@@ -117,8 +115,10 @@ fun PersonalListAnimeItem(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Row {
+                            val episodes = userRateUiModel.episodes
+                            val overallEpisodes = userRateUiModel.overallEpisodes
                             Text(
-                                text = "${userRateUiModel.episodes}/${userRateUiModel.overallEpisodes}",
+                                text = "$episodes/$overallEpisodes",
                                 modifier = Modifier.padding(8.dp),
                                 color = AppTheme.colors.textPrimary,
                                 fontWeight = FontWeight.Bold,
@@ -132,15 +132,15 @@ fun PersonalListAnimeItem(
                                     onClick = {
                                         onActionReceive(
                                             PersonalListAction.UserRateIncrement(
-                                                userRateUiModel.rateId
-                                            )
+                                                userRateUiModel.rateId,
+                                            ),
                                         )
-                                    }
+                                    },
                                 ) {
                                     Icon(
                                         Icons.Default.ExposurePlus1,
                                         contentDescription = null,
-                                        tint = AppTheme.colors.onSurface
+                                        tint = AppTheme.colors.onSurface,
                                     )
                                 }
                             }
@@ -151,14 +151,14 @@ fun PersonalListAnimeItem(
                                         PersonalListAction.EditRateClicked(
                                             editRateId = userRateUiModel.rateId,
                                             displayName = userRateUiModel.name,
-                                        )
+                                        ),
                                     )
-                                }
+                                },
                             ) {
                                 Icon(
                                     Icons.Default.Edit,
                                     contentDescription = null,
-                                    tint = AppTheme.colors.onSurface
+                                    tint = AppTheme.colors.onSurface,
                                 )
                             }
                         }
@@ -177,11 +177,10 @@ fun PersonalListAnimeItem(
                             .padding(horizontal = 4.dp)
                             .height(4.dp)
                             .fillMaxWidth(),
-                        drawStopIndicator = {}
+                        drawStopIndicator = {},
                     )
                 }
             }
-
         }
     }
 }

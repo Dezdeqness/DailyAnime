@@ -22,5 +22,4 @@ class PersonalListFilterRepositoryImpl @Inject constructor(
     override suspend fun setSort(sort: String) {
         personalListFilterManager.setSort(sort = sort)
     }
-
 }

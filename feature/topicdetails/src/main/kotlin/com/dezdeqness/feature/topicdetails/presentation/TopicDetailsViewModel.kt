@@ -8,20 +8,30 @@ import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.AssistedViewModelFactory
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 import money.vivid.elmslie.core.store.ElmStore
-import javax.inject.Inject
 
 object TopicIdKey : CreationExtras.Key<Long>
 
 class TopicDetailsViewModel(
-    store: ElmStore<TopicDetailsNamespace.Event, TopicDetailsNamespace.State, TopicDetailsNamespace.Effect, TopicDetailsNamespace.Command>,
+    store: ElmStore<
+        TopicDetailsNamespace.Event,
+        TopicDetailsNamespace.State,
+        TopicDetailsNamespace.Effect,
+        TopicDetailsNamespace.Command,
+        >,
     private val messageConsumer: MessageConsumer,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val messageProvider: BaseMessageProvider,
     private val topicId: Long,
-) : BaseStoreViewModel<TopicDetailsNamespace.Event, TopicDetailsNamespace.State, TopicDetailsNamespace.Effect, TopicDetailsNamespace.Command>(
+) : BaseStoreViewModel<
+    TopicDetailsNamespace.Event,
+    TopicDetailsNamespace.State,
+    TopicDetailsNamespace.Effect,
+    TopicDetailsNamespace.Command,
+    >(
     store = store,
     initialState = TopicDetailsNamespace.State(),
     sharingStarted = SharingStarted.Lazily,
@@ -40,10 +50,11 @@ class TopicDetailsViewModel(
 
     class Factory @Inject constructor(
         private val store: ElmStore<
-                TopicDetailsNamespace.Event,
-                TopicDetailsNamespace.State,
-                TopicDetailsNamespace.Effect,
-                TopicDetailsNamespace.Command>,
+            TopicDetailsNamespace.Event,
+            TopicDetailsNamespace.State,
+            TopicDetailsNamespace.Effect,
+            TopicDetailsNamespace.Command,
+            >,
         private val messageConsumer: MessageConsumer,
         private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
         private val messageProvider: BaseMessageProvider,

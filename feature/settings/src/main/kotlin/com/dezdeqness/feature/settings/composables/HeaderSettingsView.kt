@@ -13,12 +13,12 @@ import com.dezdeqness.foundation.ui.theme.AppTheme
 @Composable
 fun HeaderSettingsView(
     modifier: Modifier = Modifier,
-    title: String
+    title: String,
 ) {
     TextSettingsView(
         modifier = modifier,
         title = title,
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     )
 }
 
@@ -40,6 +40,6 @@ fun HeaderCustomSettingsView(
                 color = titleColor,
             )
         },
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     )
 }

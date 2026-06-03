@@ -26,7 +26,7 @@ class WorkSchedulerManager @Inject constructor(
             context,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
         val calendar = Calendar.getInstance().apply {
@@ -50,8 +50,7 @@ class WorkSchedulerManager @Inject constructor(
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            pendingIntent
+            pendingIntent,
         )
     }
-
 }

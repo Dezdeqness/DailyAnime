@@ -3,7 +3,12 @@ package com.dezdeqness.feature.personallist.tab.store
 import money.vivid.elmslie.core.store.StateReducer
 
 val personalListReducer = object :
-    StateReducer<PersonalListNamespace.Event, PersonalListNamespace.State, PersonalListNamespace.Effect, PersonalListNamespace.Command>() {
+    StateReducer<
+        PersonalListNamespace.Event,
+        PersonalListNamespace.State,
+        PersonalListNamespace.Effect,
+        PersonalListNamespace.Command,
+        >() {
     override fun Result.reduce(event: PersonalListNamespace.Event) {
         when (event) {
             is PersonalListNamespace.Event.InitialLoad -> {
@@ -16,7 +21,8 @@ val personalListReducer = object :
                 }
                 commands {
                     +PersonalListNamespace.Command.LoadPage(
-                        status = event.status, page = 1,
+                        status = event.status,
+                        page = 1,
                     )
                 }
             }
@@ -62,7 +68,7 @@ val personalListReducer = object :
                 if (state.list.isNotEmpty()) {
                     state {
                         state.copy(
-                            isPullDownRefreshing = false
+                            isPullDownRefreshing = false,
                         )
                     }
                     effects { +PersonalListNamespace.Effect.Error }
@@ -70,7 +76,7 @@ val personalListReducer = object :
                     state {
                         state.copy(
                             dataStatus = PersonalListStatus.Error,
-                            isPullDownRefreshing = false
+                            isPullDownRefreshing = false,
                         )
                     }
                 }
@@ -101,7 +107,7 @@ val personalListReducer = object :
                     commands {
                         +PersonalListNamespace.Command.UpdateUserRate(
                             userRate,
-                            event.statusId
+                            event.statusId,
                         )
                     }
                 }
@@ -138,7 +144,7 @@ val personalListReducer = object :
                     }
 
                     state.copy(
-                        list = finalList
+                        list = finalList,
                     )
                 }
             }
@@ -150,7 +156,6 @@ val personalListReducer = object :
                         event.statusId,
                     )
                 }
-
             }
         }
     }

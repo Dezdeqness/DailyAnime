@@ -16,7 +16,7 @@ object InitialSectionHandler : PreferenceHandler<InitialSection> {
     override fun write(
         prefs: MutablePreferences,
         key: SettingsPreference<InitialSection>,
-        value: InitialSection
+        value: InitialSection,
     ) {
         prefs[intPreferencesKey(key.name)] = value.id
     }

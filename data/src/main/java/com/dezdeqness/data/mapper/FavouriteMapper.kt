@@ -27,19 +27,17 @@ class FavouriteMapper @Inject constructor() {
         return result
     }
 
-    fun fromResponse(favourite: FavouriteItemResponse, favouriteType: FavouriteType): FavouriteEntity =
-        FavouriteEntity(
-            id = favourite.id,
-            name = favourite.name,
-            russian = favourite.russian,
-            image = favourite.image,
-            url = favourite.url,
-            type = favouriteType
-        )
+    fun fromResponse(favourite: FavouriteItemResponse, favouriteType: FavouriteType): FavouriteEntity = FavouriteEntity(
+        id = favourite.id,
+        name = favourite.name,
+        russian = favourite.russian,
+        image = favourite.image,
+        url = favourite.url,
+        type = favouriteType,
+    )
 
-    fun fromResponse(response: ActionFavouriteResponse): ActionFavouriteEntity =
-        ActionFavouriteEntity(
-            isSuccess = response.success,
-            notice = response.notice,
-        )
+    fun fromResponse(response: ActionFavouriteResponse): ActionFavouriteEntity = ActionFavouriteEntity(
+        isSuccess = response.success,
+        notice = response.notice,
+    )
 }

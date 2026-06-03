@@ -7,11 +7,10 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import java.lang.reflect.ParameterizedType
 
-
 class StatusConverter {
 
     private val moshi = Moshi.Builder().build()
-    private val listMyData : ParameterizedType = Types.newParameterizedType(List::class.java, StatusLocal::class.java)
+    private val listMyData: ParameterizedType = Types.newParameterizedType(List::class.java, StatusLocal::class.java)
     private val jsonAdapter: JsonAdapter<List<StatusLocal>> = moshi.adapter(listMyData)
 
     @TypeConverter

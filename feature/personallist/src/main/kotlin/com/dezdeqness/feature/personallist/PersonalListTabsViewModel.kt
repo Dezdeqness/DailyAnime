@@ -5,14 +5,15 @@ import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.model.FullAnimeStatusesEntity
 import com.dezdeqness.contract.user.repository.UserRepository
-import com.dezdeqness.foundation.BaseViewModel
-import com.dezdeqness.foundation.Logger
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.empty
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loaded
 import com.dezdeqness.feature.personallist.PersonalTabsListPagerState.Companion.loading
 import com.dezdeqness.feature.personallist.tab.PersonalListComposer
+import com.dezdeqness.foundation.BaseViewModel
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,7 +32,6 @@ import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class PersonalListTabsViewModel @Inject constructor(
     private val personalListComposer: PersonalListComposer,
@@ -61,7 +61,7 @@ class PersonalListTabsViewModel @Inject constructor(
                 }
                 .shareIn(
                     scope = viewModelScope,
-                    started = SharingStarted.Lazily
+                    started = SharingStarted.Lazily,
                 )
                 .collect()
         }
@@ -74,7 +74,8 @@ class PersonalListTabsViewModel @Inject constructor(
             .flatMapLatest { event ->
                 when (event) {
                     LoadEvent.Initial,
-                    LoadEvent.RefreshTabs -> userRepository.getProfileDetails()
+                    LoadEvent.RefreshTabs,
+                    -> userRepository.getProfileDetails()
                         .map { result ->
                             result.fold(
                                 onSuccess = { account ->
@@ -84,17 +85,17 @@ class PersonalListTabsViewModel @Inject constructor(
                                 },
                                 onFailure = { exception ->
                                     Change.Error(exception)
-                                }
+                                },
                             )
                         }
                         .onStart { emit(Change.Loading) }
 
                     is LoadEvent.SelectRibbon -> flowOf(
-                        Change.RibbonSelected(event.ribbonId)
+                        Change.RibbonSelected(event.ribbonId),
                     )
 
                     LoadEvent.RefreshTabSelected -> flowOf(
-                        Change.RemapSelected
+                        Change.RemapSelected,
                     )
                 }
             }
@@ -119,7 +120,7 @@ class PersonalListTabsViewModel @Inject constructor(
 
                             previous.loaded(
                                 ribbon = change.ribbon,
-                                selectedRibbonId = selectedId
+                                selectedRibbonId = selectedId,
                             )
                         }
                     }
@@ -142,7 +143,7 @@ class PersonalListTabsViewModel @Inject constructor(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = loading()
+                initialValue = loading(),
             )
 
     fun onRibbonItemSelected(id: String) {

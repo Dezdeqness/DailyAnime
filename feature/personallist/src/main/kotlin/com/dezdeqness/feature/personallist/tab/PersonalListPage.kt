@@ -18,13 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dezdeqness.foundation.ui.views.GeneralEmpty
-import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.R
 import com.dezdeqness.feature.personallist.composable.PersonalList
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
 import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
 import com.dezdeqness.feature.personallist.tab.store.PersonalListStatus
+import com.dezdeqness.foundation.ui.views.GeneralEmpty
+import com.dezdeqness.foundation.ui.views.GeneralError
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterialApi::class)

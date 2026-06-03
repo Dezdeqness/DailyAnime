@@ -24,7 +24,7 @@ class GetPersonalListByStatusUseCase(
                 list = list,
                 hasNextPage = hasNextPage,
                 currentPage = if (list.isEmpty()) page else page + 1,
-            )
+            ),
         )
     }
 

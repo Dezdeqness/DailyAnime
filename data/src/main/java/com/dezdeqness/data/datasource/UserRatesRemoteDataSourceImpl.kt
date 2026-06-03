@@ -28,39 +28,33 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
     private val userRatesMapper: UserRatesMapper,
 ) : UserRatesRemoteDataSource, BaseDataSource() {
 
-    override suspend fun getUserRates(
-        userId: Long,
-        status: String,
-        page: Int,
-        limit: Int,
-    ) =
-        tryWithCatchSuspend {
-            val statusEnum = UserRateStatusEnum.safeValueOf(status)
-            val response = apolloClient.query(
-                UserRatesQuery(
-                    page = page,
-                    limit = limit,
-                    status = statusEnum,
-                    order = Optional.present(
-                        UserRateOrderInputType(
-                            field = UserRateOrderFieldEnum.updated_at,
-                            order = SortOrderEnum.desc,
-                        ),
+    override suspend fun getUserRates(userId: Long, status: String, page: Int, limit: Int) = tryWithCatchSuspend {
+        val statusEnum = UserRateStatusEnum.safeValueOf(status)
+        val response = apolloClient.query(
+            UserRatesQuery(
+                page = page,
+                limit = limit,
+                status = statusEnum,
+                order = Optional.present(
+                    UserRateOrderInputType(
+                        field = UserRateOrderFieldEnum.updated_at,
+                        order = SortOrderEnum.desc,
                     ),
-                )
-            ).execute()
+                ),
+            ),
+        ).execute()
 
-            val data = response.data
+        val data = response.data
 
-            if (data != null) {
-                val userRates = data.userRates.mapNotNull { userRate ->
-                    userRatesMapper.fromResponseGraphql(userRate)
-                }
-                Result.success(userRates)
-            } else {
-                throw response.createGraphqlException()
+        if (data != null) {
+            val userRates = data.userRates.mapNotNull { userRate ->
+                userRatesMapper.fromResponseGraphql(userRate)
             }
+            Result.success(userRates)
+        } else {
+            throw response.createGraphqlException()
         }
+    }
 
     override suspend fun searchUserRates(
         search: String,
@@ -68,32 +62,31 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
         page: Int,
         limit: Int,
         isAdultContentEnabled: Boolean,
-    ) =
-        tryWithCatchSuspend {
-            val response = apolloClient
-                .query(
-                    UserRatesSearchQuery(
-                        page = page,
-                        limit = limit,
-                        mylist = statuses,
-                        censored = Optional.presentIfNotNull(!isAdultContentEnabled),
-                        order = Optional.presentIfNotNull(OrderEnum.ranked),
-                        search = Optional.presentIfNotNull(search),
-                    )
-                )
-                .execute()
+    ) = tryWithCatchSuspend {
+        val response = apolloClient
+            .query(
+                UserRatesSearchQuery(
+                    page = page,
+                    limit = limit,
+                    mylist = statuses,
+                    censored = Optional.presentIfNotNull(!isAdultContentEnabled),
+                    order = Optional.presentIfNotNull(OrderEnum.ranked),
+                    search = Optional.presentIfNotNull(search),
+                ),
+            )
+            .execute()
 
-            val data = response.data
+        val data = response.data
 
-            if (data != null) {
-                val userRates = data.animes.mapNotNull { anime ->
-                    userRatesMapper.fromResponseGraphql(anime)
-                }
-                Result.success(userRates)
-            } else {
-                throw response.createGraphqlException()
+        if (data != null) {
+            val userRates = data.animes.mapNotNull { anime ->
+                userRatesMapper.fromResponseGraphql(anime)
             }
+            Result.success(userRates)
+        } else {
+            throw response.createGraphqlException()
         }
+    }
 
     override fun updateUserRate(
         rateId: Long,
@@ -113,8 +106,8 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
                 score = score.toString(),
                 status = status,
                 text = comment,
-                volumes = volumes.toString()
-            )
+                volumes = volumes.toString(),
+            ),
         )
         val response = apiService.get().updateUserRate(
             id = rateId,
@@ -153,7 +146,7 @@ class UserRatesRemoteDataSourceImpl @Inject constructor(
                 status = status,
                 text = comment,
                 volumes = volumes.toString(),
-            )
+            ),
         )
         val response = apiService.get().createUserRate(body = body).execute()
 

@@ -5,5 +5,4 @@ import com.dezdeqness.domain.model.ErrorEntity
 interface ErrorMapper {
 
     fun map(exception: Throwable): ErrorEntity
-
 }

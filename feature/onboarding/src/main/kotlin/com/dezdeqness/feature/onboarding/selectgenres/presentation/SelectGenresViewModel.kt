@@ -3,11 +3,12 @@ package com.dezdeqness.feature.onboarding.selectgenres.presentation
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.data.provider.ConfigurationProvider
+import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.data.provider.HomeGenresProvider
+import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class SelectGenresViewModel @Inject constructor(
     private val configurationProvider: ConfigurationProvider,
@@ -55,8 +55,8 @@ class SelectGenresViewModel @Inject constructor(
                 emit(
                     SelectGenresUiState(
                         genres = mappedGenres,
-                        selectedGenres = selected
-                    )
+                        selectedGenres = selected,
+                    ),
                 )
             }
         }
@@ -69,7 +69,7 @@ class SelectGenresViewModel @Inject constructor(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = SelectGenresUiState(genres = emptyList())
+                initialValue = SelectGenresUiState(genres = emptyList()),
             )
 
     fun onGenreClick(id: String) {

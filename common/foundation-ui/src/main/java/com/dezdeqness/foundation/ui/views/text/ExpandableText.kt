@@ -33,7 +33,7 @@ fun ExpandableText(
         fontSize = AppTheme.typography.bodyMedium.fontSize,
         fontStyle = AppTheme.typography.bodyMedium.fontStyle,
         fontFamily = AppTheme.typography.bodyMedium.fontFamily,
-        color = AppTheme.colors.textPrimary.copy(alpha = 0.6f)
+        color = AppTheme.colors.textPrimary.copy(alpha = 0.6f),
     )
 
     var isExpanded by remember { mutableStateOf(false) }
@@ -43,7 +43,7 @@ fun ExpandableText(
     Box(
         modifier = Modifier
             .clickable(clickable) { isExpanded = !isExpanded }
-            .then(modifier)
+            .then(modifier),
     ) {
         Text(
             modifier = Modifier

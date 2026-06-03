@@ -46,7 +46,7 @@ fun screenshotReducer(baseUrl: String): StateReducer<Event, State, Effect, Comma
                     state {
                         copy(
                             screenshotsList = event.screenshots,
-                            index = event.index
+                            index = event.index,
                         )
                     }
                 }

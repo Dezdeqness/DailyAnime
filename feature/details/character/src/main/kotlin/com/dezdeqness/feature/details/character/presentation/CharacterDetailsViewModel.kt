@@ -5,16 +5,27 @@ import com.dezdeqness.feature.details.character.presentation.store.CharacterDeta
 import com.dezdeqness.feature.details.common.presentation.DetailsViewModel
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.foundation.di.AssistedViewModelFactory
-import money.vivid.elmslie.core.store.ElmStore
 import javax.inject.Inject
+import money.vivid.elmslie.core.store.ElmStore
 
 object CharacterIdKey : CreationExtras.Key<Long>
 
 class CharacterDetailsViewModel(
-    store: ElmStore<CharacterDetailsNamespace.Event, CharacterDetailsNamespace.State, CharacterDetailsNamespace.Effect, CharacterDetailsNamespace.Command>,
+    store: ElmStore<
+        CharacterDetailsNamespace.Event,
+        CharacterDetailsNamespace.State,
+        CharacterDetailsNamespace.Effect,
+        CharacterDetailsNamespace.Command,
+        >,
     translator: CharacterDetailsEventTranslator,
     characterId: Long,
-) : DetailsViewModel<CharacterDetailsUiEvent, CharacterDetailsNamespace.Event, CharacterDetailsNamespace.State, CharacterDetailsNamespace.Effect, CharacterDetailsNamespace.Command>(
+) : DetailsViewModel<
+    CharacterDetailsUiEvent,
+    CharacterDetailsNamespace.Event,
+    CharacterDetailsNamespace.State,
+    CharacterDetailsNamespace.Effect,
+    CharacterDetailsNamespace.Command,
+    >(
     store = store,
     initialState = CharacterDetailsNamespace.State(id = characterId),
     initialEvent = CharacterDetailsNamespace.Event.Base(BaseDetailsEvent.InitialLoad(characterId)),
@@ -23,10 +34,11 @@ class CharacterDetailsViewModel(
 
     class Factory @Inject constructor(
         private val store: ElmStore<
-                CharacterDetailsNamespace.Event,
-                CharacterDetailsNamespace.State,
-                CharacterDetailsNamespace.Effect,
-                CharacterDetailsNamespace.Command>,
+            CharacterDetailsNamespace.Event,
+            CharacterDetailsNamespace.State,
+            CharacterDetailsNamespace.Effect,
+            CharacterDetailsNamespace.Command,
+            >,
         private val translator: CharacterDetailsEventTranslator,
     ) : AssistedViewModelFactory<CharacterDetailsViewModel> {
 

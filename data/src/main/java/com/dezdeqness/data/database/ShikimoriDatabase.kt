@@ -22,5 +22,4 @@ abstract class ShikimoriDatabase : RoomDatabase() {
     abstract fun accountSessionDao(): AccountSessionDao
 
     abstract fun userRatesDao(): UserRatesDao
-
 }
