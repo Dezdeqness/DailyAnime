@@ -22,7 +22,7 @@ class RoleMapper @Inject constructor(
                 RoleEntity(
                     roles = item.rolesEn,
                     rolesRussian = item.rolesRu,
-                    character = characterMapper.fromResponse(item.character)
+                    character = characterMapper.fromResponse(item.character),
                 )
             }
 
@@ -40,14 +40,11 @@ class RoleMapper @Inject constructor(
                 }
             }
 
-
         return main + supporting
-
     }
 
     companion object {
         private const val MAIN_ROLE = "Main"
         private const val SUPPORTING_ROLE = "Supporting"
     }
-
 }

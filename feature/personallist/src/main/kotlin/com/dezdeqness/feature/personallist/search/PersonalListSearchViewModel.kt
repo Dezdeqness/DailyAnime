@@ -2,12 +2,13 @@ package com.dezdeqness.feature.personallist.search
 
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.domain.usecases.SearchPersonalListUseCase
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
-import com.dezdeqness.domain.usecases.SearchPersonalListUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class PersonalListSearchViewModel @Inject constructor(
     private val searchPersonalListUseCase: SearchPersonalListUseCase,
@@ -41,7 +41,7 @@ class PersonalListSearchViewModel @Inject constructor(
             when (event) {
                 is SearchEvent.Search -> flow {
                     emit(
-                        SearchResult.Loading
+                        SearchResult.Loading,
                     )
 
                     val result = searchPersonalListUseCase(event.query)
@@ -49,8 +49,8 @@ class PersonalListSearchViewModel @Inject constructor(
                     emit(
                         SearchResult.Result(
                             query = event.query,
-                            result = result
-                        )
+                            result = result,
+                        ),
                     )
                 }.flowOn(coroutineDispatcherProvider.io())
 
@@ -102,9 +102,8 @@ class PersonalListSearchViewModel @Inject constructor(
             .stateIn(
                 viewModelScope,
                 SharingStarted.Lazily,
-                PersonalListSearchState()
+                PersonalListSearchState(),
             )
-
 
     fun onQueryChanged(query: String) {
         if (searchState.value.query == query) return
@@ -124,7 +123,7 @@ class PersonalListSearchViewModel @Inject constructor(
     private fun onErrorMessage() {
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
             messageConsumer.onErrorMessage(
-                messageProvider.getGeneralErrorMessage()
+                messageProvider.getGeneralErrorMessage(),
             )
         }
     }
@@ -138,14 +137,14 @@ class PersonalListSearchViewModel @Inject constructor(
     private sealed interface SearchResult {
 
         data class Event(
-            val event: SearchEvent
+            val event: SearchEvent,
         ) : SearchResult
 
         data object Loading : SearchResult
 
         data class Result(
             val query: String,
-            val result: kotlin.Result<List<UserRateEntity>>
+            val result: kotlin.Result<List<UserRateEntity>>,
         ) : SearchResult
     }
 }

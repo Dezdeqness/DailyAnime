@@ -1,13 +1,23 @@
 package com.dezdeqness.feature.screenshotsviewer
 
-import com.dezdeqness.foundation.BaseStoreViewModel
 import com.dezdeqness.feature.screenshotsviewer.store.ScreenshotsNamespace
-import money.vivid.elmslie.core.store.ElmStore
+import com.dezdeqness.foundation.BaseStoreViewModel
 import javax.inject.Inject
+import money.vivid.elmslie.core.store.ElmStore
 
 class ScreenshotsViewModel @Inject constructor(
-    store: ElmStore<ScreenshotsNamespace.Event, ScreenshotsNamespace.State, ScreenshotsNamespace.Effect, ScreenshotsNamespace.Command>,
-) : BaseStoreViewModel<ScreenshotsNamespace.Event, ScreenshotsNamespace.State, ScreenshotsNamespace.Effect, ScreenshotsNamespace.Command>(
+    store: ElmStore<
+        ScreenshotsNamespace.Event,
+        ScreenshotsNamespace.State,
+        ScreenshotsNamespace.Effect,
+        ScreenshotsNamespace.Command,
+        >,
+) : BaseStoreViewModel<
+    ScreenshotsNamespace.Event,
+    ScreenshotsNamespace.State,
+    ScreenshotsNamespace.Effect,
+    ScreenshotsNamespace.Command,
+    >(
     store = store,
     initialState = ScreenshotsNamespace.State(),
 ) {
@@ -17,7 +27,7 @@ class ScreenshotsViewModel @Inject constructor(
             event = ScreenshotsNamespace.Event.Initial(
                 screenshots = screenshots,
                 index = index,
-            )
+            ),
         )
     }
 

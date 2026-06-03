@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.onboarding.R
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 private const val MAX_SELECTION = 3
 
@@ -42,7 +42,7 @@ fun SelectGenresContent(
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 text = stringResource(R.string.onboarding_select_genres_header),
@@ -54,15 +54,15 @@ fun SelectGenresContent(
                 modifier = Modifier
                     .background(
                         color = AppTheme.colors.primary.copy(alpha = 0.15f),
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp),
                     )
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
             ) {
                 Text(
                     text = "${selectedIds.size} / $MAX_SELECTION",
                     style = AppTheme.typography.bodySmall.copy(
-                        color = AppTheme.colors.primary
-                    )
+                        color = AppTheme.colors.primary,
+                    ),
                 )
             }
         }
@@ -70,20 +70,20 @@ fun SelectGenresContent(
         Column(
             modifier = Modifier
                 .animateContentSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
         ) {
             SectionBlock(
                 title = stringResource(R.string.onboarding_select_genres_title_genres),
                 items = genres,
                 selectedIds = selectedIds,
-                onItemClick = onGenreClick
+                onItemClick = onGenreClick,
             )
 
             SectionBlock(
                 title = stringResource(R.string.onboarding_select_genres_title_themes),
                 items = themes,
                 selectedIds = selectedIds,
-                onItemClick = onGenreClick
+                onItemClick = onGenreClick,
             )
 
             Spacer(modifier = Modifier.size(64.dp))

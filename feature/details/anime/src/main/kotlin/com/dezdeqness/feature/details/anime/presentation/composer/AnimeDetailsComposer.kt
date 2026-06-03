@@ -74,8 +74,8 @@ class AnimeDetailsComposer @Inject constructor(
                     imageUrl = urlNormalizer.normalize(brief.image.original),
                     type = it.relationTitleRussian.ifEmpty { it.relationTitle },
                     briefInfo = animeKindUtils.mapKind(brief.kind) +
-                            " • " +
-                            yearFormatter.format(brief.airedOnTimestamp),
+                        " • " +
+                        yearFormatter.format(brief.airedOnTimestamp),
                 )
             }
             .takeIf { it.isNotEmpty() }
@@ -191,8 +191,11 @@ class AnimeDetailsComposer @Inject constructor(
         val isSameYear = releasedYear == airedYear
 
         val released = if (details.releasedOnTimestamp != 0L) {
-            if (isSameYear) dateFormatter.format(details.releasedOnTimestamp)
-            else fullDateFormatter.format(details.releasedOnTimestamp)
+            if (isSameYear) {
+                dateFormatter.format(details.releasedOnTimestamp)
+            } else {
+                fullDateFormatter.format(details.releasedOnTimestamp)
+            }
         } else {
             ""
         }

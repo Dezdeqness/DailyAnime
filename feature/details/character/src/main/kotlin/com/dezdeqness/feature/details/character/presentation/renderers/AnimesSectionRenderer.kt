@@ -11,10 +11,7 @@ object AnimesSectionRenderer :
     override val rendererType: String = CharacterDetailsSection.Animes.TYPE
 
     @Composable
-    override fun Render(
-        section: CharacterDetailsSection.Animes,
-        onEvent: (CharacterDetailsUiEvent) -> Unit,
-    ) {
+    override fun Render(section: CharacterDetailsSection.Animes, onEvent: (CharacterDetailsUiEvent) -> Unit) {
         AnimesSection(
             items = section.items,
             onItemClick = { onEvent(CharacterDetailsUiEvent.AnimeClicked(it)) },

@@ -23,12 +23,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.buttons.AppButton
-import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import com.dezdeqness.feature.onboarding.R
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.composables.SelectGenresContent
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.buttons.AppButton
+import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -54,7 +54,7 @@ fun SelectGenresContentPage(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .padding(contentPadding)
+                .padding(contentPadding),
         ) {
             SelectGenresContent(
                 modifier = modifier.fillMaxSize(),
@@ -67,11 +67,11 @@ fun SelectGenresContentPage(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 visible = state.selectedGenres.size >= 3,
                 enter = slideInVertically(
-                    initialOffsetY = { it }
+                    initialOffsetY = { it },
                 ) + fadeIn(),
                 exit = slideOutVertically(
-                    targetOffsetY = { it }
-                ) + fadeOut()
+                    targetOffsetY = { it },
+                ) + fadeOut(),
             ) {
                 AppButton(
                     title = stringResource(R.string.onboarding_select_genres_save),
@@ -79,7 +79,7 @@ fun SelectGenresContentPage(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(bottom = 8.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                 )
             }
         }
@@ -118,7 +118,7 @@ fun SelectGenresContentPageNonSavePreview() {
 
                 override fun onSaveClicked() {
                 }
-            }
+            },
         )
     }
 }
@@ -155,7 +155,7 @@ fun SelectGenresContentPagePreview() {
 
                 override fun onSaveClicked() {
                 }
-            }
+            },
         )
     }
 }

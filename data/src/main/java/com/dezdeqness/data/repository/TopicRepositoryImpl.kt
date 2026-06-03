@@ -11,8 +11,7 @@ class TopicRepositoryImpl @Inject constructor(
     override fun getTopicsByType(forumType: String, page: Int, limit: Int) =
         topicRemoteDataSource.getTopics(forumType = forumType, page = page, limit = limit)
 
-    override fun getHotTopics(limit: Int) =
-        topicRemoteDataSource.getHotTopics(limit = limit)
+    override fun getHotTopics(limit: Int) = topicRemoteDataSource.getHotTopics(limit = limit)
 
     override fun getTopicsById(id: Int) = topicRemoteDataSource.getTopicsById(id = id)
 }

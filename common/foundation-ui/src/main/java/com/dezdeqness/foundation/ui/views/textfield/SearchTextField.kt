@@ -128,14 +128,12 @@ class SearchState {
                     query = it[0] as String
                     hasUserInteracted = it[1] as Boolean
                 }
-            }
+            },
         )
     }
-
 }
 
 @Composable
 fun rememberSearchState() = rememberSaveable(saver = SearchState.Saver) {
     SearchState()
 }
-

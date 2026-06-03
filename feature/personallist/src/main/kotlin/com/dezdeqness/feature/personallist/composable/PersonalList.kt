@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.views.PaginationEffect
 import com.dezdeqness.feature.personallist.model.UserRateUiModel
 import com.dezdeqness.feature.personallist.tab.PersonalListAction
+import com.dezdeqness.foundation.ui.views.PaginationEffect
 
 @Composable
 fun PersonalList(
@@ -54,7 +54,7 @@ fun PersonalList(
                     modifier = Modifier.padding(
                         vertical = 4.dp,
                         horizontal = 16.dp,
-                    )
+                    ),
                 )
             }
         }

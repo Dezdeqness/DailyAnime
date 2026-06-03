@@ -7,5 +7,5 @@ data class AchievementConfigEntity(
     val textRu: String?,
     val titleEn: String,
     val textEn: String?,
-    val image: String
+    val image: String,
 )

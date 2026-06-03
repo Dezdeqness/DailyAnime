@@ -20,7 +20,7 @@ object NotificationTimeHandler : PreferenceHandler<TimeEntity> {
     override fun write(
         prefs: MutablePreferences,
         key: SettingsPreference<TimeEntity>,
-        value: TimeEntity
+        value: TimeEntity,
     ) {
         prefs[hoursKey()] = value.hours
         prefs[minutesKey()] = value.minutes

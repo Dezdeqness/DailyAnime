@@ -6,11 +6,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.text.split
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 @Singleton
 class HistorySearchListProvider @Inject constructor(

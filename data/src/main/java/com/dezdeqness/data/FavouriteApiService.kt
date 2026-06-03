@@ -11,29 +11,27 @@ import retrofit2.http.Path
 
 interface FavouriteApiService {
     @GET("/api/users/{id}/favourites")
-    fun getUserFavourites(
-        @Path("id") userId: Long
-    ): Call<FavouritesResponse>
+    fun getUserFavourites(@Path("id") userId: Long): Call<FavouritesResponse>
 
     @NeedAuthorization
     @POST("/api/favorites/{linked_type}/{linked_id}/{kind}")
     fun addFavoriteWithKind(
         @Path("linked_type") linkedType: String,
         @Path("linked_id") linkedId: Long,
-        @Path("kind") kind: String
+        @Path("kind") kind: String,
     ): Call<ActionFavouriteResponse>
 
     @NeedAuthorization
     @POST("/api/favorites/{linked_type}/{linked_id}")
     fun addFavorite(
         @Path("linked_type") linkedType: String,
-        @Path("linked_id") linkedId: Long
+        @Path("linked_id") linkedId: Long,
     ): Call<ActionFavouriteResponse>
 
     @NeedAuthorization
     @DELETE("/api/favorites/{linked_type}/{linked_id}")
     fun deleteFavorite(
         @Path("linked_type") linkedType: String,
-        @Path("linked_id") linkedId: Long
+        @Path("linked_id") linkedId: Long,
     ): Call<ActionFavouriteResponse>
 }

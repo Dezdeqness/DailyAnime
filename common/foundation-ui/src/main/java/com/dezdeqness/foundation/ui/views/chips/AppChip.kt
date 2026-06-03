@@ -19,9 +19,9 @@ fun AppChip(
     titleStyle: TextStyle = AppTheme.typography.bodyMedium,
     titleColor: Color = AppTheme.colors.textPrimary,
     shape: Shape = RoundedCornerShape(50),
-    colors: SelectableChipColors =  FilterChipDefaults.filterChipColors().copy(
+    colors: SelectableChipColors = FilterChipDefaults.filterChipColors().copy(
         containerColor = AppTheme.colors.onPrimary,
-        selectedContainerColor = AppTheme.colors.onPrimary
+        selectedContainerColor = AppTheme.colors.onPrimary,
     ),
     onClick: (() -> Unit)? = null,
 ) {

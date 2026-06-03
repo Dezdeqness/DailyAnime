@@ -2,13 +2,13 @@ package com.dezdeqness.shared.presentation.feature.topic.parser
 
 import com.dezdeqness.shared.presentation.feature.topic.model.ContentBlock
 import com.dezdeqness.shared.presentation.utils.UrlNormalizer
-
 import javax.inject.Inject
 
 class FooterParser @Inject constructor(
     private val urlNormalizer: UrlNormalizer,
 ) {
 
+    @Suppress("ktlint:standard:max-line-length")
     private val videoRegex = Regex(
         """<div\s+class="b-video\s+unprocessed\s+(\w+)">\s*<a\s+class="video-link"\s+data-href="([^"]*)"[^>]*>\s*<img[^>]*src="([^"]*)"[^>]*>\s*</a>\s*(?:<span\s+class="name"[^>]*>([^<]*)</span>)?""",
         RegexOption.DOT_MATCHES_ALL,
@@ -31,7 +31,7 @@ class FooterParser @Inject constructor(
                     videoUrl = videoUrl,
                     title = title,
                     platform = platform,
-                )
+                ),
             )
         }
 

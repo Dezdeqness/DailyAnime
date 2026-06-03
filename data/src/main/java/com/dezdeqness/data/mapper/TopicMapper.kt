@@ -11,7 +11,7 @@ class TopicMapper @Inject constructor(
 ) {
 
     fun fromResponse(remote: TopicRemote): TopicEntity {
-        val linked = remote.linked;
+        val linked = remote.linked
         return TopicEntity(
             id = remote.id,
             topicTitle = remote.topicTitle,
@@ -34,13 +34,11 @@ class TopicMapper @Inject constructor(
         )
     }
 
-    fun fromResponse(remote: TopicLinkedBriefRemote): TopicLinkedBriefEntity =
-        TopicLinkedBriefEntity(
-            id = remote.id,
-            name = remote.name,
-            russian = remote.russian,
-            image = imageMapper.fromResponse(remote.image),
-            url = remote.url,
-        )
-
+    fun fromResponse(remote: TopicLinkedBriefRemote): TopicLinkedBriefEntity = TopicLinkedBriefEntity(
+        id = remote.id,
+        name = remote.name,
+        russian = remote.russian,
+        image = imageMapper.fromResponse(remote.image),
+        url = remote.url,
+    )
 }

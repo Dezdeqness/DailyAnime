@@ -22,7 +22,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
@@ -70,7 +69,7 @@ fun Header(
             title,
             style = titleStyle,
             modifier = Modifier.padding(vertical = verticalPadding),
-            color = titleColor
+            color = titleColor,
         )
 
         if (onClick != null) {

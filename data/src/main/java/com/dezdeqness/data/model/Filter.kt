@@ -4,7 +4,6 @@ import com.dezdeqness.domain.model.FilterType
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 
-
 data class FilterItem(
     val id: String,
     val name: String,
@@ -18,5 +17,4 @@ class FilterTypeAdapter {
 
     @FromJson
     fun fromJson(value: String) = FilterType.fromString(value)
-
 }

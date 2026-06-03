@@ -67,7 +67,7 @@ private fun VideoCard(
                 onClick = { onClick(item.sourceUrl) },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),
-            )
+            ),
     ) {
         AppImage(
             data = item.imageUrl,

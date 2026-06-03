@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.view.HapticFeedbackConstantsCompat
 import androidx.core.view.ViewCompat
-import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlinx.coroutines.launch
 
 @Composable
 fun WheelView(
@@ -80,14 +80,15 @@ fun WheelView(
         snapshotFlow { state.firstVisibleItemIndex }.collect {
             ViewCompat.performHapticFeedback(
                 view,
-                HapticFeedbackConstantsCompat.CLOCK_TICK
+                HapticFeedbackConstantsCompat.CLOCK_TICK,
             )
         }
     }
 
-    Box(modifier = modifier
-        .height(size.height)
-        .fillMaxWidth()
+    Box(
+        modifier = modifier
+            .height(size.height)
+            .fillMaxWidth(),
     ) {
         LazyColumn(
             modifier = Modifier
@@ -114,10 +115,8 @@ fun WheelView(
                         content((it - rowOffsetCount) % itemCount, alpha)
                     }
                 }
-
             }
         }
-
     }
 }
 

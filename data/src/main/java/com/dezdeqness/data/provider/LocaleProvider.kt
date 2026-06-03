@@ -9,5 +9,4 @@ class LocaleProvider @Inject constructor(
 ) {
 
     fun getCurrentLocale(): Locale = context.resources.configuration.locales.get(0)
-
 }

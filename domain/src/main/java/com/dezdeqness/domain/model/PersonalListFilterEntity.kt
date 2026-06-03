@@ -18,7 +18,8 @@ enum class Sort(val sort: String) {
     SCORE("score"),
     EPISODES("episodes"),
     ADDED_TIME("added_time"),
-    UPDATED_TIME("updated_time");
+    UPDATED_TIME("updated_time"),
+    ;
 
     companion object {
         fun fromString(value: String) = entries.find { it.sort == value } ?: NAME

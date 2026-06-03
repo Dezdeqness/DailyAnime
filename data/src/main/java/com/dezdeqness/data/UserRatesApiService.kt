@@ -26,12 +26,9 @@ interface UserRatesApiService {
 
     @NeedAuthorization
     @POST("v2/user_rates")
-    fun createUserRate(
-        @Body body: PostUserRateRequestBody,
-    ): Call<UserRateRemote>
+    fun createUserRate(@Body body: PostUserRateRequestBody): Call<UserRateRemote>
 
     @NeedAuthorization
     @DELETE("v2/user_rates/{id}")
     fun deleteUserRate(@Path(value = "id") id: Long): Call<ResponseBody>
-
 }

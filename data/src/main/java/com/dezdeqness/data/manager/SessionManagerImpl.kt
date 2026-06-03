@@ -2,7 +2,6 @@ package com.dezdeqness.data.manager
 
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.AccountType
-
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
@@ -12,13 +11,13 @@ import com.dezdeqness.data.model.db.AccountSessionLocal
 import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.domain.usecases.LogoutUseCase
 import com.dezdeqness.domain.usecases.RefreshTokenUseCase
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class SessionManagerImpl @Inject constructor(
@@ -53,7 +52,7 @@ class SessionManagerImpl @Inject constructor(
                         id = authenticated.userId.toString(),
                         accountType = AccountType.SHIKIMORI.name,
                         isActive = true,
-                    )
+                    ),
                 )
                 _sessionState.value = state
             }
@@ -144,5 +143,4 @@ class SessionManagerImpl @Inject constructor(
             avatar = profile.avatar,
         )
     }
-
 }

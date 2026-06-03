@@ -45,7 +45,7 @@ fun SwitchSettingsViewPreview() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(AppTheme.colors.onPrimary)
+                .background(AppTheme.colors.onPrimary),
         ) {
             SwitchSettingsView(
                 title = "Title1",

@@ -14,5 +14,4 @@ class CalendarRepositoryImpl @Inject constructor(
     override suspend fun getCalendar() = calendarRemoteDataSource.getCalendar(
         isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference),
     )
-
 }

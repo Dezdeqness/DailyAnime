@@ -7,11 +7,11 @@ import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsReduc
 import com.dezdeqness.feature.details.common.presentation.store.DetailsStatus
 
 val animeDetailsReducer = object : BaseDetailsReducer<
-        AnimeDetailsNamespace.Event,
-        AnimeDetailsNamespace.State,
-        AnimeDetailsNamespace.Effect,
-        AnimeDetailsNamespace.Command,
-        >(
+    AnimeDetailsNamespace.Event,
+    AnimeDetailsNamespace.State,
+    AnimeDetailsNamespace.Effect,
+    AnimeDetailsNamespace.Command,
+    >(
     wrapCommand = AnimeDetailsNamespace.Command::Base,
     wrapEffect = AnimeDetailsNamespace.Effect::Base,
 ) {
@@ -112,8 +112,11 @@ val animeDetailsReducer = object : BaseDetailsReducer<
                     )
                 }
                 effects {
-                    if (event.isCreate) +AnimeDetailsNamespace.Effect.EditRateCreated(event.rate)
-                    else +AnimeDetailsNamespace.Effect.EditRateUpdated(event.rate)
+                    if (event.isCreate) {
+                        +AnimeDetailsNamespace.Effect.EditRateCreated(event.rate)
+                    } else {
+                        +AnimeDetailsNamespace.Effect.EditRateUpdated(event.rate)
+                    }
                 }
             }
 

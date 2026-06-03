@@ -44,8 +44,8 @@ fun PosterHeader(
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(Color.Transparent, AppTheme.colors.onPrimary),
-                    )
-                )
+                    ),
+                ),
         )
 
         Column(

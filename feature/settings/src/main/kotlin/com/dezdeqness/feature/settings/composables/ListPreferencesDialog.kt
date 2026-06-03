@@ -28,14 +28,14 @@ fun <T> ListPreferencesDialog(
 ) {
     Dialog(
         onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false)
+        properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         Surface(
             modifier = Modifier.padding(24.dp),
             shape = AlertDialogDefaults.shape,
             color = AppTheme.colors.background,
-            tonalElevation = AlertDialogDefaults.TonalElevation
-        )  {
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+        ) {
             LazyColumn(modifier = modifier) {
                 items(values.size) { index ->
                     val value = values[index]
@@ -46,17 +46,17 @@ fun <T> ListPreferencesDialog(
                             .clickable {
                                 onValueSelected(value)
                             }
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
                     ) {
                         RadioButton(
                             selected = value == selectedValue,
-                            onClick = null
+                            onClick = null,
                         )
 
                         Text(
                             text = valueText(value),
                             style = AppTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier.padding(start = 16.dp),
                         )
                     }
                 }

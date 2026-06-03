@@ -36,7 +36,7 @@ internal fun VideoBlock(
                         Modifier.clickable(onClick = onClick)
                     } else {
                         Modifier
-                    }
+                    },
                 ),
         ) {
             AppImage(

@@ -11,5 +11,4 @@ interface HomeRemoteDatasource {
         order: OrderEnum,
         isAdultContentEnabled: Boolean,
     ): Result<HomeEntity>
-
 }

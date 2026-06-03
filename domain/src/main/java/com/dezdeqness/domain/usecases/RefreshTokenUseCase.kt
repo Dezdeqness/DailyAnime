@@ -17,5 +17,4 @@ class RefreshTokenUseCase(
             }
             .map { it.accessToken }
     }
-
 }

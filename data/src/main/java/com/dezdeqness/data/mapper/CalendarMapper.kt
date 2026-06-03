@@ -16,8 +16,7 @@ class CalendarMapper @Inject constructor(
                 duration = calendarRemote.duration ?: 0,
                 nextEpisode = calendarRemote.nextEpisode ?: 0,
                 nextEpisodeAtTimestamp = converter.convertToTimeStampWithTime(calendarRemote.nextEpisodeAt),
-                anime = animeEntity
+                anime = animeEntity,
             )
         }
-
 }

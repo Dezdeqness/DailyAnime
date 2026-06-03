@@ -4,5 +4,5 @@ import com.squareup.moshi.Json
 
 data class FavouriteReorderRequest(
     @field:Json("new_index")
-    val newIndex: Int
+    val newIndex: Int,
 )

@@ -6,5 +6,5 @@ enum class SectionType {
     Content,
     Navigation,
     Storage,
-    About
+    About,
 }

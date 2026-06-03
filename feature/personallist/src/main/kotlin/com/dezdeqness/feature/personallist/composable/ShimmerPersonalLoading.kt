@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,7 +32,7 @@ fun ShimmerPersonalLoading(
             .verticalScroll(
                 state = rememberScrollState(),
                 enabled = false,
-            )
+            ),
     ) {
         repeat(times) { _ ->
             ShimmerPersonalItem()
@@ -43,31 +42,28 @@ fun ShimmerPersonalLoading(
 }
 
 @Composable
-fun ShimmerPersonalItem(
-    modifier: Modifier = Modifier,
-) {
+fun ShimmerPersonalItem(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Row(
-            modifier = Modifier.height(IntrinsicSize.Max)
+            modifier = Modifier.height(IntrinsicSize.Max),
         ) {
-
             Box(
                 modifier = Modifier
                     .height(180.dp)
                     .aspectRatio(2f / 3)
-                    .shimmer()
+                    .shimmer(),
             )
 
             Column(
                 modifier = Modifier,
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.padding(8.dp).weight(1f)) {
                     Box(
                         modifier = Modifier
                             .width(100.dp)
                             .height(16.dp)
-                            .shimmer()
+                            .shimmer(),
                     )
 
                     Box(
@@ -75,7 +71,7 @@ fun ShimmerPersonalItem(
                             .padding(top = 4.dp)
                             .width(30.dp)
                             .height(14.dp)
-                            .shimmer()
+                            .shimmer(),
                     )
                 }
 
@@ -90,7 +86,7 @@ fun ShimmerPersonalItem(
                                 .padding(8.dp)
                                 .width(30.dp)
                                 .height(16.dp)
-                                .shimmer()
+                                .shimmer(),
                         )
 
                         Row(horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
@@ -99,7 +95,7 @@ fun ShimmerPersonalItem(
                                     .size(48.dp)
                                     .padding(12.dp)
                                     .clip(CircleShape)
-                                    .shimmer()
+                                    .shimmer(),
                             )
 
                             Box(
@@ -107,13 +103,12 @@ fun ShimmerPersonalItem(
                                     .size(48.dp)
                                     .padding(12.dp)
                                     .clip(CircleShape)
-                                    .shimmer()
+                                    .shimmer(),
                             )
                         }
                     }
                 }
             }
-
         }
     }
 }

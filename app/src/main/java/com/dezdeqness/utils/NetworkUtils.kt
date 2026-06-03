@@ -16,9 +16,10 @@ class NetworkUtils @Inject constructor(
             return if (activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI) {
                 // connected to wifi
                 true
-            } else activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE
+            } else {
+                activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE
+            }
         }
         return false
     }
-
 }

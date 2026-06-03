@@ -2,7 +2,6 @@ package com.dezdeqness.data
 
 import com.dezdeqness.data.model.TokenRemote
 import retrofit2.Call
-import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -25,5 +24,4 @@ interface AuthorizationApiService {
         @Query(value = "client_secret") secret: String,
         @Query(value = "client_id") id: String,
     ): Call<TokenRemote>
-
 }

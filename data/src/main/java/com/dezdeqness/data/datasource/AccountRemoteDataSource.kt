@@ -1,8 +1,8 @@
 package com.dezdeqness.data.datasource
 
+import com.dezdeqness.contract.auth.model.TokenEntity
 import com.dezdeqness.contract.history.model.HistoryEntity
 import com.dezdeqness.contract.user.model.AccountEntity
-import com.dezdeqness.contract.auth.model.TokenEntity
 
 interface AccountRemoteDataSource {
 
@@ -19,5 +19,4 @@ interface AccountRemoteDataSource {
     fun getDetailsAccountInfo(userId: Long): Result<AccountEntity>
 
     fun getHistory(userId: Long, page: Int, limit: Int): Result<List<HistoryEntity>>
-
 }

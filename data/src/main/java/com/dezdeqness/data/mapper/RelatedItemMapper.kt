@@ -18,10 +18,7 @@ class RelatedItemMapper @Inject constructor(
         return RelatedItemEntity(
             relationTitle = item.relationKind.name,
             relationTitleRussian = item.relationText,
-            animeBriefEntity = animeMapper.fromResponse(item.anime)
+            animeBriefEntity = animeMapper.fromResponse(item.anime),
         )
     }
-
-
-
 }

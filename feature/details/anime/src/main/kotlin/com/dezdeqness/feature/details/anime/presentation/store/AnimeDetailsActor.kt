@@ -11,12 +11,12 @@ import com.dezdeqness.feature.details.anime.presentation.composer.AnimeDetailsCo
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.foundation.Logger
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import money.vivid.elmslie.core.store.Actor
-import javax.inject.Inject
 
 class AnimeDetailsActor @Inject constructor(
     private val getAnimeDetailsUseCase: GetAnimeDetailsUseCase,
@@ -30,28 +30,27 @@ class AnimeDetailsActor @Inject constructor(
     private val logger: Logger,
 ) : Actor<AnimeDetailsNamespace.Command, AnimeDetailsNamespace.Event>() {
 
-    override fun execute(command: AnimeDetailsNamespace.Command) =
-        when (command) {
-            is AnimeDetailsNamespace.Command.Base -> mapBaseEvents(command.command)
+    override fun execute(command: AnimeDetailsNamespace.Command) = when (command) {
+        is AnimeDetailsNamespace.Command.Base -> mapBaseEvents(command.command)
 
-            is AnimeDetailsNamespace.Command.CreateOrUpdateUserRate -> flow {
-                try {
-                    val isCreate = !command.model.isUserRateExist
-                    val rate = createOrUpdateUserRateUseCase.invoke(
-                        rateId = command.model.rateId,
-                        targetId = command.animeId.toString(),
-                        status = command.model.status,
-                        episodes = command.model.episodes,
-                        score = command.model.score,
-                        comment = command.model.comment,
-                    ).getOrThrow()
-                    emit(AnimeDetailsNamespace.Event.OnUserRateSaved(isCreate = isCreate, rate = rate))
-                } catch (error: Throwable) {
-                    logger.logInfo(TAG, "Error during edit user rate", error)
-                    emit(AnimeDetailsNamespace.Event.OnUserRateSaveError)
-                }
+        is AnimeDetailsNamespace.Command.CreateOrUpdateUserRate -> flow {
+            try {
+                val isCreate = !command.model.isUserRateExist
+                val rate = createOrUpdateUserRateUseCase.invoke(
+                    rateId = command.model.rateId,
+                    targetId = command.animeId.toString(),
+                    status = command.model.status,
+                    episodes = command.model.episodes,
+                    score = command.model.score,
+                    comment = command.model.comment,
+                ).getOrThrow()
+                emit(AnimeDetailsNamespace.Event.OnUserRateSaved(isCreate = isCreate, rate = rate))
+            } catch (error: Throwable) {
+                logger.logInfo(TAG, "Error during edit user rate", error)
+                emit(AnimeDetailsNamespace.Event.OnUserRateSaveError)
             }
         }
+    }
 
     private fun mapBaseEvents(command: BaseDetailsCommand): Flow<AnimeDetailsNamespace.Event> = when (command) {
         is BaseDetailsCommand.LoadDetails -> flow {

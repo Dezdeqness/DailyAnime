@@ -22,9 +22,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.domain.model.Sort
 import com.dezdeqness.feature.personallist.R
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
 fun PersonalListSelectOrderDialog(
@@ -40,7 +40,6 @@ fun PersonalListSelectOrderDialog(
     }
 
     Dialog(onDismissRequest = onDismissRequest) {
-
         Card(
             modifier = modifier,
             shape = RoundedCornerShape(12.dp),
@@ -48,11 +47,12 @@ fun PersonalListSelectOrderDialog(
                 .cardColors()
                 .copy(containerColor = AppTheme.colors.onPrimary),
         ) {
-
             Column(modifier = Modifier.padding(8.dp)) {
                 Column {
                     Text(
-                        text = stringResource(com.dezdeqness.feature.userrate.R.string.userrate_select_status_dialog_title),
+                        text = stringResource(
+                            com.dezdeqness.feature.userrate.R.string.userrate_select_status_dialog_title,
+                        ),
                         modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
                         style = AppTheme.typography.titleMedium,
                         color = AppTheme.colors.textPrimary,
@@ -68,15 +68,15 @@ fun PersonalListSelectOrderDialog(
                                         onSelectedItem(item.id)
                                     },
                                     interactionSource = remember { MutableInteractionSource() },
-                                    indication = ripple(color = AppTheme.colors.ripple)
+                                    indication = ripple(color = AppTheme.colors.ripple),
                                 )
                                 .padding(horizontal = 16.dp, vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = item.id == selectedId,
                                 onClick = null,
-                                modifier = Modifier.padding(end = 12.dp)
+                                modifier = Modifier.padding(end = 12.dp),
                             )
 
                             Text(
@@ -86,13 +86,10 @@ fun PersonalListSelectOrderDialog(
                             )
                         }
                     }
-
-
                 }
             }
         }
     }
-
 }
 
 data class SelectOrderItem(
@@ -100,24 +97,23 @@ data class SelectOrderItem(
     val title: String,
 ) {
     companion object {
-        fun composeList(context: Context) =
-            listOf(
-                SelectOrderItem(
-                    id = Sort.NAME.sort,
-                    title = context.getString(R.string.personal_list_select_order_name)
-                ),
-                SelectOrderItem(
-                    id = Sort.PROGRESS.sort,
-                    title = context.getString(R.string.personal_list_select_order_progress)
-                ),
-                SelectOrderItem(
-                    id = Sort.SCORE.sort,
-                    title = context.getString(R.string.personal_list_select_order_score)
-                ),
-                SelectOrderItem(
-                    id = Sort.EPISODES.sort,
-                    title = context.getString(R.string.personal_list_select_order_episodes)
-                ),
-            )
+        fun composeList(context: Context) = listOf(
+            SelectOrderItem(
+                id = Sort.NAME.sort,
+                title = context.getString(R.string.personal_list_select_order_name),
+            ),
+            SelectOrderItem(
+                id = Sort.PROGRESS.sort,
+                title = context.getString(R.string.personal_list_select_order_progress),
+            ),
+            SelectOrderItem(
+                id = Sort.SCORE.sort,
+                title = context.getString(R.string.personal_list_select_order_score),
+            ),
+            SelectOrderItem(
+                id = Sort.EPISODES.sort,
+                title = context.getString(R.string.personal_list_select_order_episodes),
+            ),
+        )
     }
 }

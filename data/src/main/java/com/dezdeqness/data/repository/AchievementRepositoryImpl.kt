@@ -7,7 +7,5 @@ import javax.inject.Inject
 class AchievementRepositoryImpl @Inject constructor(
     private val achievementRemoteDataSource: AchievementRemoteDataSource,
 ) : AchievementRepository {
-    override fun fetchAchievementsByUserId(id: Long) =
-        achievementRemoteDataSource.getAchievementList(userId = id)
-
+    override fun fetchAchievementsByUserId(id: Long) = achievementRemoteDataSource.getAchievementList(userId = id)
 }

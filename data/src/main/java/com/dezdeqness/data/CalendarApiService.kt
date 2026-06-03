@@ -9,5 +9,4 @@ interface CalendarApiService {
 
     @GET("calendar/")
     fun getCalendar(@Query("censored") isAdultContentEnabled: Boolean): Call<List<AnimeCalendarRemote>>
-
 }

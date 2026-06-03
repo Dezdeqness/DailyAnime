@@ -11,7 +11,7 @@ interface FavouriteRemoteDataSource {
     suspend fun addToFavourites(
         targetId: Long,
         type: FavouriteLinkedType,
-        kind: FavouriteKind? = null
+        kind: FavouriteKind? = null,
     ): Result<ActionFavouriteEntity>
 
     suspend fun removeFromFavourites(targetId: Long, type: FavouriteLinkedType): Result<ActionFavouriteEntity>

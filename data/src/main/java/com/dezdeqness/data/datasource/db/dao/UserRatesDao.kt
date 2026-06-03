@@ -41,5 +41,4 @@ interface UserRatesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUserRate(userRate: UserRateLocal)
-
 }

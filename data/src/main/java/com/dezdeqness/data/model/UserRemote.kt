@@ -12,4 +12,4 @@ data class UserRemote(
     @field:Json("last_online_at")
     val lastOnlineAt: String,
     val url: String,
-): DataModel.Api
+) : DataModel.Api

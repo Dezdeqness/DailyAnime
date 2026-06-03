@@ -50,7 +50,7 @@ class NotificationActor @Inject constructor(
             SettingUiPref.HeaderSetting(
                 id = NOTIFICATION_HEADER_ID,
                 sectionType = sectionType,
-                titleResId = R.string.settings_notification_section
+                titleResId = R.string.settings_notification_section,
             ),
             SettingUiPref.SwitchSetting(
                 id = NOTIFICATION_ENABLE_ID,
@@ -58,7 +58,7 @@ class NotificationActor @Inject constructor(
                 titleResId = R.string.settings_notification_title,
                 subtitleResId = R.string.settings_notification_subtitle,
                 enabled = hasPermission,
-                checked = finalEnabled
+                checked = finalEnabled,
             ),
             SettingUiPref.ActionSetting(
                 id = NOTIFICATION_TIME_ID,
@@ -68,16 +68,16 @@ class NotificationActor @Inject constructor(
                     Locale.getDefault(),
                     "%02d:%02d",
                     notificationTime.hours,
-                    notificationTime.minutes
+                    notificationTime.minutes,
                 ),
                 enabled = hasPermission,
-            )
+            ),
         )
     }
 
     override suspend fun handleClick(
         settingId: String,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         when (settingId) {
             NOTIFICATION_TIME_ID -> {
@@ -101,7 +101,7 @@ class NotificationActor @Inject constructor(
     override suspend fun handleSwitchChange(
         settingId: String,
         checked: Boolean,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         when (settingId) {
             NOTIFICATION_ENABLE_ID -> {
@@ -116,7 +116,9 @@ class NotificationActor @Inject constructor(
 
                 val effect = if (checked && !canScheduleAlarms) {
                     OpenAlarmSettings
-                } else null
+                } else {
+                    null
+                }
 
                 return ActorResult(updatedSettings = listOf(updated), effect = effect)
             }
@@ -127,7 +129,7 @@ class NotificationActor @Inject constructor(
     override suspend fun saveDialogResult(
         settingId: String,
         data: SettingsNamespace.DialogState.DialogResult,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         when (settingId) {
             NOTIFICATION_TIME_ID -> {

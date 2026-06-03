@@ -18,13 +18,9 @@ class PersonalListComposer @Inject constructor(
     private val statusesProvider: StatusesProvider,
 ) {
 
-    fun compose(
-        entityList: List<UserRateEntity>,
-    ) = entityList.mapNotNull(::convert)
+    fun compose(entityList: List<UserRateEntity>) = entityList.mapNotNull(::convert)
 
-    suspend fun composeStatuses(
-        fullAnimeStatusesEntity: FullAnimeStatusesEntity,
-    ): List<RibbonStatusUiModel> {
+    suspend fun composeStatuses(fullAnimeStatusesEntity: FullAnimeStatusesEntity): List<RibbonStatusUiModel> {
         val list = fullAnimeStatusesEntity
             .list
             .filter { item -> item.size != 0L }
@@ -38,7 +34,6 @@ class PersonalListComposer @Inject constructor(
     }
 
     private fun convert(item: UserRateEntity): UserRateUiModel? {
-
         if (item.anime == null) {
             return null
         }
@@ -85,5 +80,4 @@ class PersonalListComposer @Inject constructor(
             updatedAtTimestamp = item.updatedAtTimestamp,
         )
     }
-
 }

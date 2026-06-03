@@ -15,8 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
 fun SectionBlock(
@@ -29,11 +29,10 @@ fun SectionBlock(
     var expanded by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.animateContentSize()) {
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = title,

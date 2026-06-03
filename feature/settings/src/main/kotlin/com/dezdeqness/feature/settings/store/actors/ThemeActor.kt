@@ -22,7 +22,7 @@ data class ThemeSelectResult(
 ) : SettingsNamespace.DialogState.DialogResult
 
 class ThemeActor @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
 ) : SectionActor {
 
     override val sectionType: SectionType = SectionType.Theme
@@ -41,13 +41,13 @@ class ThemeActor @Inject constructor(
                 sectionType = sectionType,
                 titleResId = R.string.settings_dark_theme_title,
                 subtitleResId = themeMode.fromMode(),
-            )
+            ),
         )
     }
 
     override suspend fun handleClick(
         settingId: String,
-        currentSetting: SettingUiPref
+        currentSetting: SettingUiPref,
     ): ActorResult {
         when (settingId) {
             THEME_SELECTOR_ID -> {

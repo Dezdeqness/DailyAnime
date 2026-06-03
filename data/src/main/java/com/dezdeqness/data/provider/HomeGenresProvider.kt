@@ -29,5 +29,4 @@ class HomeGenresProvider @Inject constructor(
             .filter { it.type == TypeEntity.ANIME }
             .filter { ids.contains(it.numericId) }
     }
-
 }

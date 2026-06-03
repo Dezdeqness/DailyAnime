@@ -1,11 +1,13 @@
 package com.dezdeqness.feature.achievements.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.data.provider.ConfigurationProvider
+import com.dezdeqness.domain.repository.AchievementRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.domain.repository.AchievementRepository
+import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -13,8 +15,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
-import javax.inject.Inject
-import javax.inject.Named
 
 class AchievementsViewModel @Inject constructor(
     @Named("userId") private val userId: Long,
@@ -46,10 +46,14 @@ class AchievementsViewModel @Inject constructor(
 
                     emit(
                         AchievementsUiState(
-                            status = if (common.isEmpty() && genres.isEmpty()) Status.Empty else Status.Loaded,
+                            status = if (common.isEmpty() && genres.isEmpty()) {
+                                Status.Empty
+                            } else {
+                                Status.Loaded
+                            },
                             common = common,
-                            genres = genres
-                        )
+                            genres = genres,
+                        ),
                     )
                 }
                 .onFailure {
@@ -66,6 +70,6 @@ class AchievementsViewModel @Inject constructor(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = AchievementsUiState(status = Status.Initial)
+                initialValue = AchievementsUiState(status = Status.Initial),
             )
 }

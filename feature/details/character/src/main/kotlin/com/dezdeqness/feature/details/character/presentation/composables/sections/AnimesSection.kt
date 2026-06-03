@@ -69,7 +69,7 @@ private fun AnimeCard(
                 onClick = { onClick(item.id) },
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(color = AppTheme.colors.ripple),
-            )
+            ),
     ) {
         AppImage(
             data = item.imageUrl,

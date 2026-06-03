@@ -13,18 +13,16 @@ class CharacterRemoteDataSourceImpl @Inject constructor(
     private val characterMapper: CharacterMapper,
 ) : CharacterRemoteDataSource, BaseDataSource() {
 
-    override fun getCharacterDetailsById(id: Long): Result<CharacterDetailsEntity> =
-        tryWithCatch {
-            val response = apiService.get().getCharacterDetails(id).execute()
+    override fun getCharacterDetailsById(id: Long): Result<CharacterDetailsEntity> = tryWithCatch {
+        val response = apiService.get().getCharacterDetails(id).execute()
 
-            val responseBody = response.body()
+        val responseBody = response.body()
 
-            if (response.isSuccessful && responseBody != null) {
-                val screenshots = characterMapper.fromResponse(responseBody)
-                Result.success(screenshots)
-            } else {
-                throw response.createApiException()
-            }
+        if (response.isSuccessful && responseBody != null) {
+            val screenshots = characterMapper.fromResponse(responseBody)
+            Result.success(screenshots)
+        } else {
+            throw response.createApiException()
         }
-
+    }
 }

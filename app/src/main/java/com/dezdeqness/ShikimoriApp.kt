@@ -12,12 +12,12 @@ import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
 
@@ -37,7 +37,7 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
                     CustomUncaughtExceptionHandler(
                         application = this,
                         defaultUncaughtExceptionHandler,
-                    )
+                    ),
                 )
             }
 
@@ -52,7 +52,7 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
         launch {
             Coil.setImageLoader(
                 createImageLoader(
-                    appComponent.settingsRepository.getPreference(ImageCacheMaxSizePreference)
+                    appComponent.settingsRepository.getPreference(ImageCacheMaxSizePreference),
                 ),
             )
         }
@@ -81,7 +81,7 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
             DiskCache.Builder()
                 .directory(cacheDir.resolve("coil"))
                 .maxSizeBytes(cacheSizeMb * 1024 * 1024L)
-                .build()
+                .build(),
         )
         .build()
 
@@ -94,7 +94,6 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
     override fun getVersionName() = BuildConfig.VERSION_NAME
 
     override fun isDebug() = BuildConfig.DEBUG
-
 }
 
 fun Application.getComponent(): AppComponent {
@@ -106,7 +105,7 @@ fun Application.getComponent(): AppComponent {
 // Suppress issue related CannotDeliverBroadcastException
 private class CustomUncaughtExceptionHandler(
     private val application: Application,
-    private val uncaughtExceptionHandler: Thread.UncaughtExceptionHandler
+    private val uncaughtExceptionHandler: Thread.UncaughtExceptionHandler,
 ) : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(thread: Thread, exception: Throwable) {
@@ -130,7 +129,6 @@ private class CustomUncaughtExceptionHandler(
      */
     private fun shouldAbsorb(exception: Throwable): Boolean {
         return when (exception::class.simpleName) {
-
             "CannotDeliverBroadcastException" -> true
 
             else -> false

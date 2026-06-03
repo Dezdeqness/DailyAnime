@@ -5,7 +5,6 @@ import com.dezdeqness.data.HomeQuery
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createGraphqlException
 import com.dezdeqness.data.mapper.AnimeMapper
-
 import com.dezdeqness.data.type.OrderEnum
 import com.dezdeqness.domain.model.HomeEntity
 import javax.inject.Inject
@@ -30,7 +29,7 @@ class HomeRemoteDatasourceImpl @Inject constructor(
                 limit = limit,
                 order = order,
                 adultContent = isAdultContentEnabled,
-            )
+            ),
         ).execute()
 
         val data = response.data
@@ -54,8 +53,8 @@ class HomeRemoteDatasourceImpl @Inject constructor(
                         genreIds[0] to sectionQ1,
                         genreIds[1] to sectionQ2,
                         genreIds[2] to sectionQ3,
-                    )
-                )
+                    ),
+                ),
             )
         } else {
             throw response.createGraphqlException()

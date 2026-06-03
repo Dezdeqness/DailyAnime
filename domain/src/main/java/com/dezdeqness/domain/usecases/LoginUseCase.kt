@@ -30,10 +30,9 @@ class LoginUseCase(
         }
 
         userRepository.saveProfileLocal(
-            profileResult.getOrNull() ?: return Result.failure(Throwable("Save profile failure"))
+            profileResult.getOrNull() ?: return Result.failure(Throwable("Save profile failure")),
         )
 
         return Result.success(true)
     }
-
 }

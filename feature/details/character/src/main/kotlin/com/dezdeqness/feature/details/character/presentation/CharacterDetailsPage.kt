@@ -44,7 +44,7 @@ fun CharacterDetailsPage(
                         contentPadding = PaddingValues(horizontal = 16.dp),
                     )
                 }
-            }
+            },
         )
     }
 }

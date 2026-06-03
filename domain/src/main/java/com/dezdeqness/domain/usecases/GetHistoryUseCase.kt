@@ -24,7 +24,7 @@ class GetHistoryUseCase(
                 list = list,
                 hasNextPage = hasNextPage,
                 currentPage = if (list.isEmpty()) pageNumber else pageNumber + 1,
-            )
+            ),
         )
     }
 

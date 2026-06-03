@@ -51,12 +51,12 @@ class NavigationActor @Inject constructor(
         val section = settingsRepository.getPreference(InitialSectionPreference)
         val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
         val orderedStatuses = (
-                settingsRepository
-                    .getPreference(StatusesOrderPreference)
-                    .ifEmpty {
-                        statusesProvider.getStatuses().map { it.groupedId }
-                    }
-                ).mapNotNull { statuses[it] }
+            settingsRepository
+                .getPreference(StatusesOrderPreference)
+                .ifEmpty {
+                    statusesProvider.getStatuses().map { it.groupedId }
+                }
+            ).mapNotNull { statuses[it] }
         val isAuthorized = authRepository.isAuthorized()
         val sectionItem = SelectSectionItem.getById(section.id)
 
@@ -64,14 +64,14 @@ class NavigationActor @Inject constructor(
             SettingUiPref.HeaderSetting(
                 id = NAVIGATION_HEADER_ID,
                 sectionType = sectionType,
-                titleResId = R.string.settings_navigation_section
+                titleResId = R.string.settings_navigation_section,
             ),
             SettingUiPref.ActionSetting(
                 id = INITIAL_SECTION_ID,
                 sectionType = sectionType,
                 titleResId = R.string.settings_initial_tab_page,
                 subtitleResId = sectionItem.titleId,
-            )
+            ),
         )
 
         if (isAuthorized) {
@@ -82,17 +82,14 @@ class NavigationActor @Inject constructor(
                     titleResId = R.string.settings_order_of_statuses,
                     subtitle = orderedStatuses.map(ribbonMapper::map)
                         .joinToString(", ") { it.displayName },
-                )
+                ),
             )
         }
 
         return items
     }
 
-    override suspend fun handleClick(
-        settingId: String,
-        currentSetting: SettingUiPref
-    ): ActorResult {
+    override suspend fun handleClick(settingId: String, currentSetting: SettingUiPref): ActorResult {
         when (settingId) {
             INITIAL_SECTION_ID -> {
                 val selected = settingsRepository.getPreference(InitialSectionPreference)
@@ -114,12 +111,12 @@ class NavigationActor @Inject constructor(
             ORDER_SECTION_ID -> {
                 val statuses = statusesProvider.getStatuses().associateBy { it.groupedId }
                 val orderedStatuses = (
-                        settingsRepository
-                            .getPreference(StatusesOrderPreference)
-                            .ifEmpty {
-                                statusesProvider.getStatuses().map { it.groupedId }
-                            }
-                        ).mapNotNull { statuses[it] }
+                    settingsRepository
+                        .getPreference(StatusesOrderPreference)
+                        .ifEmpty {
+                            statusesProvider.getStatuses().map { it.groupedId }
+                        }
+                    ).mapNotNull { statuses[it] }
 
                 return ActorResult(
                     dialog = SettingsNamespace.DialogState.ShowModal(

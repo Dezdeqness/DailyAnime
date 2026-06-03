@@ -15,18 +15,11 @@ interface AnimeRemoteDataSource {
         isAdultContentEnabled: Boolean,
     ): Result<List<AnimeBriefEntity>>
 
-    suspend fun getDetailsAnimeMainInfo(
-        id: Long,
-        isAuthorized: Boolean,
-    ): Result<AnimeDetailsEntity>
+    suspend fun getDetailsAnimeMainInfo(id: Long, isAuthorized: Boolean): Result<AnimeDetailsEntity>
 
-    suspend fun getDetailsAnimeSimilar(
-        id: Long,
-    ): Result<List<AnimeBriefEntity>>
+    suspend fun getDetailsAnimeSimilar(id: Long): Result<List<AnimeBriefEntity>>
 
-    suspend fun getDetailsChronology(
-        id: Long
-    ): Result<List<AnimeChronologyEntity>>
+    suspend fun getDetailsChronology(id: Long): Result<List<AnimeChronologyEntity>>
 
     suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo>
 }

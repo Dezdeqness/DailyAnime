@@ -18,7 +18,7 @@ class CalendarRemoteDataSourceImpl @Inject constructor(
         val responseBody = response.body()
         if (response.isSuccessful && responseBody != null) {
             Result.success(
-                responseBody.mapNotNull(calendarMapper::fromResponse)
+                responseBody.mapNotNull(calendarMapper::fromResponse),
             )
         } else {
             throw response.createApiException()

@@ -27,15 +27,14 @@ class AnimeRepositoryImpl @Inject constructor(
         queryMap: Map<String, String>,
         pageNumber: Int,
         sizeOfPage: Int,
-        searchQuery: String
-    ) =
-        animeRemoteDataSource.getListAnime(
-            queryMap,
-            pageNumber,
-            sizeOfPage,
-            searchQuery,
-            isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference))
+        searchQuery: String,
+    ) = animeRemoteDataSource.getListAnime(
+        queryMap,
+        pageNumber,
+        sizeOfPage,
+        searchQuery,
+        isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference),
+    )
 
     override suspend fun getAdditionalInfo(id: Long) = animeRemoteDataSource.getAdditionalInfo(id)
-
 }

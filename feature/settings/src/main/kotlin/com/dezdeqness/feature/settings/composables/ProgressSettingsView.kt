@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.foundation.ui.theme.AppTheme
 
-private const val SubTitleAlpha = 0.8f
+private const val SUB_TITLE_ALPHA = 0.8f
 
 @Composable
 fun ProgressSettingsView(
@@ -43,7 +43,7 @@ fun ProgressSettingsView(
         subTitle = {
             Text(
                 text = subtitle,
-                modifier = Modifier.alpha(SubTitleAlpha),
+                modifier = Modifier.alpha(SUB_TITLE_ALPHA),
                 style = AppTheme.typography.bodySmall,
                 color = AppTheme.colors.textPrimary,
             )
@@ -76,7 +76,7 @@ fun ProgressSettingsView(
     Box(
         modifier = modifier
             .background(contentColor)
-            .padding(contentPadding)
+            .padding(contentPadding),
     ) {
         Column {
             title.invoke(this)

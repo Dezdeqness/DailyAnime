@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.onboarding.R
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @Composable
 fun ExpandButton(
@@ -41,7 +41,7 @@ fun ExpandButton(
             label = "expand collapse text",
             transitionSpec = {
                 fadeIn() togetherWith fadeOut()
-            }
+            },
         ) { isExpanded ->
             Text(
                 text = stringResource(
@@ -60,7 +60,7 @@ fun ExpandButton(
 
         val rotation by animateFloatAsState(
             targetValue = if (expanded) 270f else 90f,
-            label = "arrow rotation"
+            label = "arrow rotation",
         )
 
         Icon(
@@ -69,7 +69,7 @@ fun ExpandButton(
             tint = AppTheme.colors.textPrimary,
             modifier = Modifier
                 .size(16.dp)
-                .graphicsLayer { rotationZ = rotation }
+                .graphicsLayer { rotationZ = rotation },
         )
     }
 }

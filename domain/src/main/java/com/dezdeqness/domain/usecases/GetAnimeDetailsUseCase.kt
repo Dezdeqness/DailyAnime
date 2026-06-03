@@ -41,8 +41,7 @@ class GetAnimeDetailsUseCase(
                 screenshots = screenshots,
                 relates = relates,
                 roles = roles,
-            )
+            ),
         )
     }
-
 }

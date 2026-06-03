@@ -40,5 +40,4 @@ class UserRateRemote : DataModel.Api {
 
     @field:Json(name = "anime")
     val anime: AnimeBriefRemote? = null
-
 }

@@ -45,7 +45,6 @@ fun AppImage(
         error = painterResource(id = errorId),
         modifier = modifier.clip(shape),
     )
-
 }
 
 @Composable
@@ -78,8 +77,6 @@ fun AppImage(
         onError = onError,
         placeholder = painterResource(id = placeholderId),
         error = painterResource(id = errorId),
-        modifier = modifier
+        modifier = modifier,
     )
-
 }
-

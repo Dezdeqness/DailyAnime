@@ -23,8 +23,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.personallist.R
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -34,7 +34,7 @@ fun PersonalSearchTextField(
     searchBarState: SearchBarState,
     textFieldState: TextFieldState,
     shape: Shape,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -69,19 +69,19 @@ fun PersonalSearchTextField(
                 IconButton(
                     onClick = {
                         scope.launch { searchBarState.animateToCollapsed() }
-                    }
+                    },
                 ) {
                     Icon(
                         Icons.AutoMirrored.Default.ArrowBack,
                         contentDescription = null,
-                        tint = AppTheme.colors.onSurface
+                        tint = AppTheme.colors.onSurface,
                     )
                 }
             } else {
                 Icon(
                     Icons.Default.Search,
                     contentDescription = null,
-                    tint = AppTheme.colors.onSurface
+                    tint = AppTheme.colors.onSurface,
                 )
             }
         },
@@ -97,7 +97,7 @@ fun PersonalSearchTextField(
                     Icon(
                         Icons.Default.Clear,
                         contentDescription = null,
-                        tint = AppTheme.colors.onSurface
+                        tint = AppTheme.colors.onSurface,
                     )
                 }
             }

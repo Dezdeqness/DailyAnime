@@ -24,15 +24,15 @@ class AboutActor @Inject constructor(
             SettingUiPref.HeaderSetting(
                 id = ABOUT_HEADER_ID,
                 sectionType = sectionType,
-                titleResId = R.string.settings_about_section
+                titleResId = R.string.settings_about_section,
             ),
 
             SettingUiPref.ActionLessSetting(
                 id = VERSION_ID,
                 sectionType = sectionType,
                 titleResId = R.string.settings_version_title,
-                subtitle = applicationBridge.getVersionName()
-            )
+                subtitle = applicationBridge.getVersionName(),
+            ),
         )
 
         if (applicationBridge.isDebug()) {
@@ -41,8 +41,8 @@ class AboutActor @Inject constructor(
                     id = DEBUG_OPTION_ID,
                     sectionType = sectionType,
                     titleResId = R.string.settings_debug_option,
-                    isPostfixShown = true
-                )
+                    isPostfixShown = true,
+                ),
             )
         }
 

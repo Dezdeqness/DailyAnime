@@ -17,5 +17,5 @@ data class CharacterRemote(
     val image: ImageRemote,
 
     @field:Json(name = "url")
-    val url: String
+    val url: String,
 ) : DataModel.Api

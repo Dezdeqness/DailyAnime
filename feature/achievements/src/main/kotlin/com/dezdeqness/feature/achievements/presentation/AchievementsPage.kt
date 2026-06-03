@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dezdeqness.feature.achievements.R
+import com.dezdeqness.feature.achievements.presentation.composable.AchievementsList
+import com.dezdeqness.feature.achievements.presentation.composable.ShimmerAchievementsLoading
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.GeneralEmpty
 import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
-import com.dezdeqness.feature.achievements.R
-import com.dezdeqness.feature.achievements.presentation.composable.AchievementsList
-import com.dezdeqness.feature.achievements.presentation.composable.ShimmerAchievementsLoading
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -38,7 +38,7 @@ fun AchievementsPage(
                 title = stringResource(R.string.toolbar_title),
                 navigationClick = {
                     actions.onBackPressed()
-                }
+                },
             )
         },
     ) { contentPadding ->
@@ -68,9 +68,7 @@ fun AchievementsPage(
                         genres = state.genres,
                     )
                 }
-
             }
-
         }
     }
 }

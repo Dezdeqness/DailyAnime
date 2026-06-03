@@ -25,9 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dezdeqness.feature.personallist.search.model.SearchUserRateUiModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
-import com.dezdeqness.feature.personallist.search.model.SearchUserRateUiModel
 
 @Composable
 fun PersonalListSearchItem(
@@ -42,7 +42,7 @@ fun PersonalListSearchItem(
                 onClick = {
                     onAnimeClick(
                         model.id,
-                        model.name
+                        model.name,
                     )
                 },
                 interactionSource = remember { MutableInteractionSource() },
@@ -56,12 +56,12 @@ fun PersonalListSearchItem(
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .height(150.dp)
-                    .aspectRatio(2f / 3)
+                    .aspectRatio(2f / 3),
             )
 
             Column(
                 modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column {
                     Text(
@@ -85,7 +85,6 @@ fun PersonalListSearchItem(
                     )
                 }
             }
-
         }
     }
 }
