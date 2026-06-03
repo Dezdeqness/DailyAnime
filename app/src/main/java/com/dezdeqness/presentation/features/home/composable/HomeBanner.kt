@@ -34,7 +34,7 @@ fun HomeBanner(
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .padding(vertical = 8.dp)
-                .size(60.dp)
+                .size(60.dp),
         )
         val isAuthorized = authorizedState.isAuthorized
 
@@ -55,5 +55,4 @@ fun HomeBanner(
             color = AppTheme.colors.textPrimary,
         )
     }
-
 }

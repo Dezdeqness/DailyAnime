@@ -26,9 +26,8 @@ import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+import kotlinx.coroutines.launch
 
 class AuthorizationActivity : AppCompatActivity() {
 
@@ -44,7 +43,7 @@ class AuthorizationActivity : AppCompatActivity() {
     private val authorizationViewModel by viewModels<AuthorizationViewModel>(
         factoryProducer = {
             viewModelFactory
-        }
+        },
     )
 
     private lateinit var binding: ActivityAuthorizationBinding
@@ -59,9 +58,9 @@ class AuthorizationActivity : AppCompatActivity() {
                 AuthorizationArgsModule(
                     isLogin = intent.getBooleanExtra(
                         KEY_IS_LOGIN_FLOW,
-                        true
-                    )
-                )
+                        true,
+                    ),
+                ),
             )
             .build()
             .inject(this)
@@ -84,7 +83,6 @@ class AuthorizationActivity : AppCompatActivity() {
                 authorizationViewModel.authorizationStateFlow.collect { state ->
                     binding.loading.isVisible = state.isLoading
                 }
-
             }
         }
         lifecycleScope.launch {
@@ -95,7 +93,7 @@ class AuthorizationActivity : AppCompatActivity() {
                             Toast.makeText(
                                 this@AuthorizationActivity,
                                 R.string.general_no_internet_error,
-                                Toast.LENGTH_LONG
+                                Toast.LENGTH_LONG,
                             )
                                 .show()
                             finish()
@@ -117,8 +115,8 @@ class AuthorizationActivity : AppCompatActivity() {
                                     this@AuthorizationActivity.startActivity(
                                         Intent(
                                             Intent.ACTION_VIEW,
-                                            uri
-                                        )
+                                            uri,
+                                        ),
                                     )
                                 }
                             } else {
@@ -127,7 +125,7 @@ class AuthorizationActivity : AppCompatActivity() {
                                     .makeText(
                                         this@AuthorizationActivity,
                                         R.string.general_no_app_view,
-                                        Toast.LENGTH_LONG
+                                        Toast.LENGTH_LONG,
                                     )
                                     .show()
                                 finish()
@@ -165,5 +163,4 @@ class AuthorizationActivity : AppCompatActivity() {
                 putExtra(KEY_IS_LOGIN_FLOW, isLogin)
             }
     }
-
 }

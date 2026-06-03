@@ -18,7 +18,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             context.applicationContext,
             ShikimoriDatabase::class.java,
-            "shikimori"
+            "shikimori",
         )
             .addMigrations(MIGRATION_1_2)
             .build()
@@ -35,10 +35,9 @@ class DatabaseModule {
                         `is_active` INTEGER NOT NULL,
                         PRIMARY KEY(`id`)
                     )
-                    """.trimIndent()
+                    """.trimIndent(),
                 )
             }
         }
     }
-
 }

@@ -19,7 +19,6 @@ interface AuthorizationComponent {
     }
 
     fun inject(activity: AuthorizationActivity)
-
 }
 
 @Module
@@ -28,5 +27,4 @@ class AuthorizationArgsModule(private val isLogin: Boolean) {
     @Named("isLogin")
     @Provides
     fun provideIsLogin() = isLogin
-
 }

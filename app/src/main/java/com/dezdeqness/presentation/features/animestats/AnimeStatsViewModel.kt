@@ -1,13 +1,13 @@
 package com.dezdeqness.presentation.features.animestats
 
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.core.page.StatsState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import javax.inject.Inject
 import javax.inject.Named
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class AnimeStatsViewModel @Inject constructor(
     @Named("animeStatsArguments") private val arguments: AnimeStatsArguments,
@@ -31,7 +31,6 @@ class AnimeStatsViewModel @Inject constructor(
     }
 
     override val viewModelTag = "AnimeStatsViewModel"
-
 }
 
 data class AnimeStatsArguments(

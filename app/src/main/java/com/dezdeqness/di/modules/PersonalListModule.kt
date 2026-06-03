@@ -1,8 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
+import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
 import dagger.Binds
 import dagger.Module
@@ -20,5 +20,4 @@ abstract class PersonalListModule {
     @IntoMap
     @ViewModelKey(PersonalListHostViewModel::class)
     abstract fun bindPersonalListHostViewModel(viewModel: PersonalListHostViewModel): ViewModel
-
 }

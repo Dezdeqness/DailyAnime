@@ -3,12 +3,12 @@ package com.dezdeqness.presentation.features.unauthorized.host
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.core.AuthorizedUiState
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 
 class PersonalListHostViewModel @Inject constructor(
     private val sessionManager: SessionManager,
@@ -41,5 +41,4 @@ class PersonalListHostViewModel @Inject constructor(
     }
 
     override val viewModelTag = "PersonalListHostViewModel"
-
 }

@@ -58,7 +58,7 @@ fun Section(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .then(modifier)
+            .then(modifier),
     ) {
         Row(
             modifier = Modifier
@@ -86,7 +86,7 @@ fun Section(
                         Box(
                             modifier = Modifier
                                 .size(28.dp)
-                                .background(AppTheme.colors.accent, CircleShape)
+                                .background(AppTheme.colors.accent, CircleShape),
                         )
 
                         Text(
@@ -95,7 +95,6 @@ fun Section(
                             textAlign = TextAlign.Center,
                         )
                     }
-
                 }
 
                 Icon(
@@ -116,7 +115,7 @@ fun Section(
             Column(
                 modifier = Modifier
                     .wrapContentHeight()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 16.dp),
             ) {
                 if (state.sectionType == SectionType.CheckBox) {
                     SearchFilterCheckboxGroup(
@@ -139,7 +138,7 @@ fun Section(
                                 cellId,
                                 isSelected,
                             )
-                        }
+                        },
                     )
                 }
             }

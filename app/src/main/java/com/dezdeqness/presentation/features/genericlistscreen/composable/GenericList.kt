@@ -18,7 +18,7 @@ import com.google.common.collect.ImmutableList
 fun GenericList(
     modifier: Modifier = Modifier,
     list: ImmutableList<AdapterItem>,
-    onClick: (Action) -> Unit
+    onClick: (Action) -> Unit,
 ) {
     val renderer = LocalAdapterItemRenderer.current
 
@@ -32,14 +32,14 @@ fun GenericList(
             key = { index ->
                 val item = list[index]
                 item.id() + item.hashCode()
-            }
+            },
         ) { index ->
             val item = list[index]
 
             renderer?.Render(
                 modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp),
                 item = item,
-                onClick = onClick
+                onClick = onClick,
             ) ?: Text(item.toString())
         }
     }

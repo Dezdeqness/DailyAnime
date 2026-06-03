@@ -34,7 +34,7 @@ fun ProfileButton(
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(color = AppTheme.colors.ripple)
+                indication = ripple(color = AppTheme.colors.ripple),
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -43,17 +43,16 @@ fun ProfileButton(
             icon,
             tint = AppTheme.colors.onSurface,
             contentDescription = null,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         Text(
             title,
             style = AppTheme.typography.labelLarge,
             modifier = Modifier.padding(vertical = 16.dp),
-            color = AppTheme.colors.textPrimary
+            color = AppTheme.colors.textPrimary,
         )
     }
-
 }
 
 @Preview
@@ -64,7 +63,7 @@ fun ProfileButtonPreview() {
         ProfileButton(
             title = "Some title",
             Icons.Default.Favorite,
-            onClick = {}
+            onClick = {},
         )
     }
 }

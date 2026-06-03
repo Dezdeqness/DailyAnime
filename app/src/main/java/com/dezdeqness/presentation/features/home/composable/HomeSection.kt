@@ -28,14 +28,14 @@ fun HomeSection(
     Column(modifier = modifier) {
         Header(title = title)
         Box(
-            modifier = modifier.wrapContentHeight()
+            modifier = modifier.wrapContentHeight(),
         ) {
             when (status) {
                 SectionStatus.Error -> {
                     GeneralError(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(120.dp)
+                            .height(120.dp),
                     )
                 }
 

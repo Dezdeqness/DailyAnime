@@ -26,7 +26,7 @@ fun ShimmerCalendarLoading(
             .verticalScroll(
                 state = rememberScrollState(),
                 enabled = false,
-            )
+            ),
     ) {
         repeat(times) { _ ->
             ShimmerCalendarHeader(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
@@ -34,34 +34,30 @@ fun ShimmerCalendarLoading(
                 Modifier.padding(
                     vertical = 4.dp,
                     horizontal = 16.dp,
-                )
+                ),
             )
             ShimmerCalendarItem(
                 Modifier.padding(
                     vertical = 4.dp,
                     horizontal = 16.dp,
-                )
+                ),
             )
         }
     }
 }
 
 @Composable
-private fun ShimmerCalendarHeader(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerCalendarHeader(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .width(140.dp)
             .height(18.dp)
-            .shimmer()
+            .shimmer(),
     )
 }
 
 @Composable
-private fun ShimmerCalendarItem(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerCalendarItem(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(
@@ -69,26 +65,26 @@ private fun ShimmerCalendarItem(
                     .weight(1f)
                     .padding(end = 8.dp)
                     .height(18.dp)
-                    .shimmer()
+                    .shimmer(),
             )
 
             Box(
                 modifier = Modifier
                     .weight(2f)
                     .height(150.dp)
-                    .shimmer()
+                    .shimmer(),
             )
 
             Column(
                 modifier = Modifier
                     .weight(3f)
-                    .padding(start = 8.dp)
+                    .padding(start = 8.dp),
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(18.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
 
                 Spacer(modifier = Modifier.size(4.dp))
@@ -97,7 +93,7 @@ private fun ShimmerCalendarItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(18.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
 
                 Spacer(modifier = Modifier.size(4.dp))
@@ -106,7 +102,7 @@ private fun ShimmerCalendarItem(
                     modifier = Modifier
                         .width(80.dp)
                         .height(14.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
 
                 Spacer(modifier = Modifier.size(4.dp))
@@ -115,10 +111,9 @@ private fun ShimmerCalendarItem(
                     modifier = Modifier
                         .width(30.dp)
                         .height(14.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
             }
         }
     }
 }
-

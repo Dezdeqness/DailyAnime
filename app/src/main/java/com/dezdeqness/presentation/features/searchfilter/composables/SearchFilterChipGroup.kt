@@ -13,14 +13,14 @@ import com.dezdeqness.presentation.models.SearchSectionUiModel
 fun SearchFilterChipGroup(
     modifier: Modifier = Modifier,
     section: SearchSectionUiModel,
-    onClick: (String,String, Boolean) -> Unit,
+    onClick: (String, String, Boolean) -> Unit,
 ) {
     val items = section.items
     val selectedItems = section.selectedCells
 
     FlowRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items.forEach { item ->
             SearchFilterChip(
@@ -29,7 +29,7 @@ fun SearchFilterChipGroup(
                 isSelected = selectedItems.contains(item.id),
                 onClick = { id, isSelected ->
                     onClick.invoke(section.innerId, id, isSelected)
-                }
+                },
             )
         }
     }

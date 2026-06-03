@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dezdeqness.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import kotlinx.coroutines.launch
@@ -81,21 +80,20 @@ fun AnimeSearch(
                 },
                 leadingIcon = {
                     if (searchBarState.currentValue == SearchBarValue.Expanded) {
-
                         IconButton(
-                            onClick = { scope.launch { searchBarState.animateToCollapsed() } }
+                            onClick = { scope.launch { searchBarState.animateToCollapsed() } },
                         ) {
                             Icon(
                                 Icons.AutoMirrored.Default.ArrowBack,
                                 contentDescription = null,
-                                tint = AppTheme.colors.onSurface
+                                tint = AppTheme.colors.onSurface,
                             )
                         }
                     } else {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_search),
                             contentDescription = null,
-                            tint = AppTheme.colors.onSurface
+                            tint = AppTheme.colors.onSurface,
                         )
                     }
                 },
@@ -112,7 +110,7 @@ fun AnimeSearch(
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_close),
                                 contentDescription = null,
-                                tint = AppTheme.colors.onSurface
+                                tint = AppTheme.colors.onSurface,
                             )
                         }
                     }
@@ -127,7 +125,7 @@ fun AnimeSearch(
         inputField = inputField,
         colors = SearchBarDefaults.colors(
             containerColor = AppTheme.colors.onPrimary,
-        )
+        ),
     )
     ExpandedFullScreenSearchBar(
         state = searchBarState,

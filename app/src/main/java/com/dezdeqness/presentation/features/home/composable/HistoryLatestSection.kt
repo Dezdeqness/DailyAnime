@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
-import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.feature.history.presentation.composables.HistoryItem
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
+import com.dezdeqness.foundation.ui.views.header.Header
 import com.dezdeqness.presentation.action.Action
 
 @Composable
@@ -31,8 +31,7 @@ fun HistoryLatestSection(
         )
         HistoryItem(
             item = item,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
     }
-
 }

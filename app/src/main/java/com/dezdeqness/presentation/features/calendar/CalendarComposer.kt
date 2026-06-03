@@ -14,8 +14,12 @@ class CalendarComposer @Inject constructor(
     private val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     fun compose(items: List<AnimeCalendarEntity>, query: String): List<CalendarListUiModel> {
-        val filteredList = if (query.isEmpty()) items else items.filter {
-            it.anime.russian.contains(query, ignoreCase = true)
+        val filteredList = if (query.isEmpty()) {
+            items
+        } else {
+            items.filter {
+                it.anime.russian.contains(query, ignoreCase = true)
+            }
         }
         val map = linkedMapOf<String, MutableList<AnimeCalendarEntity>>()
         filteredList.forEach { item ->
@@ -40,8 +44,8 @@ class CalendarComposer @Inject constructor(
                         logoUrl = imageUrlUtils.getImageWithBaseUrl(it.anime.image.preview),
                         type = it.anime.kind.name,
                         score = it.anime.score.toString(),
-                        time = timeFormatter.format(it.nextEpisodeAtTimestamp)
-                    )
+                        time = timeFormatter.format(it.nextEpisodeAtTimestamp),
+                    ),
                 )
             }
 
@@ -49,11 +53,10 @@ class CalendarComposer @Inject constructor(
                 CalendarListUiModel(
                     header = entry.key,
                     items = calendarItems,
-                )
+                ),
             )
         }
 
         return uiItems
     }
-
 }

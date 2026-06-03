@@ -21,11 +21,11 @@ fun ShimmerHomeLoading(
     times: Int = 4,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         repeat(times) { _ ->
             ShimmerHomeHeader(
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             ShimmerHomeItem()
         }
@@ -33,25 +33,20 @@ fun ShimmerHomeLoading(
 }
 
 @Composable
-private fun ShimmerHomeHeader(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerHomeHeader(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .padding(vertical = 16.dp)
             .width(100.dp)
             .height(20.dp)
-            .shimmer()
+            .shimmer(),
     )
 }
 
 @Composable
-private fun ShimmerHomeItem(
-    modifier: Modifier = Modifier,
-    times: Int = 5,
-) {
+private fun ShimmerHomeItem(modifier: Modifier = Modifier, times: Int = 5) {
     Box(modifier = modifier) {
-        LazyRow (
+        LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
         ) {
             items(count = times) {
@@ -63,7 +58,7 @@ private fun ShimmerHomeItem(
                         modifier = Modifier
                             .width(110.dp)
                             .height(140.dp)
-                            .shimmer()
+                            .shimmer(),
                     )
                     Spacer(modifier = Modifier.size(8.dp))
 
@@ -71,7 +66,7 @@ private fun ShimmerHomeItem(
                         modifier = Modifier
                             .width(80.dp)
                             .height(14.dp)
-                            .shimmer()
+                            .shimmer(),
                     )
 
                     Spacer(modifier = Modifier.size(4.dp))
@@ -80,7 +75,7 @@ private fun ShimmerHomeItem(
                         modifier = Modifier
                             .width(80.dp)
                             .height(14.dp)
-                            .shimmer()
+                            .shimmer(),
                     )
                 }
             }

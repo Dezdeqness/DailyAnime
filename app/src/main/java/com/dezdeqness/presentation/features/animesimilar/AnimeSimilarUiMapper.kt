@@ -45,7 +45,7 @@ class AnimeSimilarUiMapper @Inject constructor(
             stringBuilder.append(SEPARATOR)
         }
         stringBuilder.append(
-            "" + item.episodes + " эп."
+            "" + item.episodes + " эп.",
         )
 
         return SimilarUiModel(

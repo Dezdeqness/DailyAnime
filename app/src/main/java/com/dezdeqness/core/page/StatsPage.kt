@@ -63,7 +63,7 @@ fun StatsPage(
                     is DiagramChartUiModel -> {
                         DiagramChart(
                             chartData = item.items,
-                            totalProgress = item.maxProgress
+                            totalProgress = item.maxProgress,
                         )
                     }
 
@@ -88,7 +88,6 @@ fun StatsPage(
             item { Box(modifier = Modifier.height(40.dp)) }
         }
     }
-
 }
 
 data class StatsState(

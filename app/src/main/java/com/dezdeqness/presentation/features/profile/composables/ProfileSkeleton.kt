@@ -34,14 +34,14 @@ fun ProfileSkeleton(modifier: Modifier = Modifier) {
                 .clip(RoundedCornerShape(10))
                 .width(80.dp)
                 .height(80.dp)
-                .shimmer()
+                .shimmer(),
         )
         Box(
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .height(28.dp)
                 .width(100.dp)
-                .shimmer()
+                .shimmer(),
         )
 
         repeat(4) {
@@ -51,9 +51,8 @@ fun ProfileSkeleton(modifier: Modifier = Modifier) {
                     .padding(vertical = 16.dp)
                     .height(20.dp)
                     .width(140.dp)
-                    .shimmer()
+                    .shimmer(),
             )
         }
     }
-
 }

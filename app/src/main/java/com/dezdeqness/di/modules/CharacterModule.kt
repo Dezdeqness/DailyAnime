@@ -16,9 +16,7 @@ abstract class CharacterModule {
     abstract fun bindCharacterRepository(repository: CharacterRepositoryImpl): CharacterRepository
 
     @Binds
-    abstract fun bindCharacterRemoteDataSource(
-        dataSourceImpl: CharacterRemoteDataSourceImpl
-    ): CharacterRemoteDataSource
+    abstract fun bindCharacterRemoteDataSource(dataSourceImpl: CharacterRemoteDataSourceImpl): CharacterRemoteDataSource
 
     companion object {
         @Provides

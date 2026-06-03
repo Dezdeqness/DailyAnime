@@ -5,7 +5,7 @@ import com.dezdeqness.di.modules.CalendarListModule
 import dagger.Subcomponent
 
 @Subcomponent(modules = [CalendarListModule::class])
-interface CalendarComponent : BaseComponent{
+interface CalendarComponent : BaseComponent {
 
     @Subcomponent.Factory
     interface Factory {

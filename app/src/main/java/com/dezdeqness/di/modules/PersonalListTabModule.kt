@@ -1,14 +1,14 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.foundation.di.AssistedViewModelFactory
-import com.dezdeqness.foundation.di.AssistedViewModelKey
 import com.dezdeqness.domain.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.feature.personallist.tab.store.PersonalListActor
 import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
 import com.dezdeqness.feature.personallist.tab.store.personalListReducer
+import com.dezdeqness.foundation.di.AssistedViewModelFactory
+import com.dezdeqness.foundation.di.AssistedViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,11 +24,14 @@ abstract class PersonalListTabModule {
             GetPersonalListByStatusUseCase(userRatesRepository = userRatesRepository)
 
         @Provides
-        fun providePersonalListStore(actor: PersonalListActor): ElmStore<
-                PersonalListNamespace.Event,
-                PersonalListNamespace.State,
-                PersonalListNamespace.Effect,
-                PersonalListNamespace.Command> =
+        fun providePersonalListStore(
+            actor: PersonalListActor,
+        ): ElmStore<
+            PersonalListNamespace.Event,
+            PersonalListNamespace.State,
+            PersonalListNamespace.Effect,
+            PersonalListNamespace.Command,
+            > =
             ElmStore(
                 initialState = PersonalListNamespace.State(),
                 reducer = personalListReducer,
@@ -40,6 +43,6 @@ abstract class PersonalListTabModule {
     @IntoMap
     @AssistedViewModelKey(PersonalListViewModel::class)
     abstract fun bindPersonalListViewModelFactory(
-        factory: PersonalListViewModel.Factory
+        factory: PersonalListViewModel.Factory,
     ): AssistedViewModelFactory<out ViewModel>
 }

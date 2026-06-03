@@ -30,7 +30,7 @@ fun SearchFilterCheckbox(
             checked = isSelected,
             onCheckedChange = {
                 onClick(id, isSelected)
-            }
+            },
         )
     }
 }

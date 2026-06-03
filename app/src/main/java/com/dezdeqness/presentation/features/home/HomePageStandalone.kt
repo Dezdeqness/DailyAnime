@@ -23,7 +23,6 @@ fun HomePageStandalone(
     navController: NavHostController,
     rootController: NavHostController,
 ) {
-
     val context = LocalContext.current
     val homeComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
@@ -49,13 +48,12 @@ fun HomePageStandalone(
         },
     )
 
-
     viewModel.events.collectEvents { event ->
         when (event) {
             is OpenAnimeDetails -> {
                 analyticsManager.detailsTracked(
                     id = event.animeId.toString(),
-                    title = event.title
+                    title = event.title,
                 )
 
                 rootController.navigate(AnimeDetails(event.animeId))

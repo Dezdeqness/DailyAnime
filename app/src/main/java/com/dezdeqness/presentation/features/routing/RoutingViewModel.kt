@@ -3,14 +3,14 @@ package com.dezdeqness.presentation.features.routing
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
 import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 class RoutingViewModel @Inject constructor(
     private val sessionManager: SessionManager,
@@ -45,5 +45,4 @@ class RoutingViewModel @Inject constructor(
     companion object {
         private const val TAG = "RoutingViewModel"
     }
-
 }

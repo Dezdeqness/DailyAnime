@@ -43,7 +43,7 @@ fun CalendarSearch(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_close),
                     contentDescription = null,
-                    tint = AppTheme.colors.onSurface
+                    tint = AppTheme.colors.onSurface,
                 )
             }
         },
@@ -51,9 +51,8 @@ fun CalendarSearch(
             Icon(
                 painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = null,
-                tint = AppTheme.colors.onSurface
+                tint = AppTheme.colors.onSurface,
             )
-        }
+        },
     )
-
 }

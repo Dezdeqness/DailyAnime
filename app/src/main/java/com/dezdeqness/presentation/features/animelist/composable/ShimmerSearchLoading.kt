@@ -26,7 +26,7 @@ fun ShimmerSearchLoading(
             .verticalScroll(
                 state = rememberScrollState(),
                 enabled = false,
-            )
+            ),
     ) {
         repeat(times) { _ ->
             ShimmerSearchPair()
@@ -35,17 +35,12 @@ fun ShimmerSearchLoading(
 }
 
 @Composable
-fun ShimmerSearchItemLoading(
-    modifier: Modifier = Modifier,
-) {
+fun ShimmerSearchItemLoading(modifier: Modifier = Modifier) {
     ShimmerSearchItem(modifier)
 }
 
-
 @Composable
-private fun ShimmerSearchPair(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerSearchPair(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -57,27 +52,25 @@ private fun ShimmerSearchPair(
 }
 
 @Composable
-private fun ShimmerSearchItem(
-    modifier: Modifier = Modifier,
-) {
+private fun ShimmerSearchItem(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Column {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .shimmer()
+                    .shimmer(),
             )
 
             Column(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(8.dp),
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(14.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
 
                 Spacer(modifier = Modifier.size(8.dp))
@@ -86,7 +79,7 @@ private fun ShimmerSearchItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(14.dp)
-                        .shimmer()
+                        .shimmer(),
                 )
             }
         }

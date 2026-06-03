@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.feature.userrate.UserRateActions
 import com.dezdeqness.feature.userrate.UserRateContent
 import com.dezdeqness.feature.userrate.UserRateViewModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.utils.collectEvents
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -100,9 +100,8 @@ fun UserRateDialogStandalone(
                 override fun onCommentChanged(comment: String) {
                     viewModel.onCommentChanged(comment)
                 }
-            }
+            },
         )
-
     }
 
     viewModel.events.collectEvents { userRateUiModel ->

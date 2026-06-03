@@ -8,11 +8,13 @@ import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
-@Subcomponent(modules = [
-    AnimeSimilarModule::class,
-    SimilarArgsModule::class,
-    GenericListableViewModelModule::class,
-])
+@Subcomponent(
+    modules = [
+        AnimeSimilarModule::class,
+        SimilarArgsModule::class,
+        GenericListableViewModelModule::class,
+    ],
+)
 interface AnimeSimilarComponent : BaseComponent {
     @Subcomponent.Builder
     interface Builder {
@@ -29,5 +31,4 @@ class SimilarArgsModule(private val id: Long) {
     @Named("animeId")
     @Provides
     fun provideAnimeId() = id
-
 }

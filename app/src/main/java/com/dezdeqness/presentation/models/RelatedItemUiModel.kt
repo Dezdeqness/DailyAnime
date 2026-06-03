@@ -10,5 +10,5 @@ data class RelatedItemUiModel(
 ) : AdapterItem()
 
 data class RelatedItemListUiModel(
-    val list: ImmutableList<RelatedItemUiModel>
+    val list: ImmutableList<RelatedItemUiModel>,
 ) : AdapterItem()

@@ -13,7 +13,5 @@ abstract class PersonModule {
     abstract fun bindPersonRepository(repository: PersonRepositoryImpl): PersonRepository
 
     @Binds
-    abstract fun bindPersonRemoteDataSource(
-        dataSourceImpl: PersonRemoteDataSourceImpl
-    ): PersonRemoteDataSource
+    abstract fun bindPersonRemoteDataSource(dataSourceImpl: PersonRemoteDataSourceImpl): PersonRemoteDataSource
 }

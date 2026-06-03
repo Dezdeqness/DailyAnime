@@ -12,8 +12,8 @@ import javax.inject.Named
     modules = [
         AnimeChronologyModule::class,
         ChronologyArgsModule::class,
-        GenericListableViewModelModule::class
-    ]
+        GenericListableViewModelModule::class,
+    ],
 )
 interface AnimeChronologyComponent : BaseComponent {
     @Subcomponent.Builder
@@ -31,5 +31,4 @@ class ChronologyArgsModule(private val id: Long) {
     @Named("animeId")
     @Provides
     fun provideAnimeId() = id
-
 }

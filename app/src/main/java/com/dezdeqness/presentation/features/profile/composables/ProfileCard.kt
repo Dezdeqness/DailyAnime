@@ -18,10 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.dezdeqness.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.image.AppImage
@@ -56,7 +56,7 @@ fun ProfileCard(
             nickname,
             style = AppTheme.typography.titleLarge,
             modifier = Modifier.padding(vertical = 16.dp),
-            color = AppTheme.colors.textPrimary
+            color = AppTheme.colors.textPrimary,
         )
 
         ProfileButton(
@@ -85,7 +85,6 @@ fun ProfileCard(
             onClick = onLogoutClicked,
         )
     }
-
 }
 
 @Preview

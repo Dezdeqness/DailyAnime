@@ -1,10 +1,10 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.data.repository.SearchFilterRepositoryImpl
-import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.foundation.di.ViewModelKey
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterComposer
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterViewModel
 import com.dezdeqness.presentation.features.searchfilter.AnimeSeasonCellComposer
@@ -22,17 +22,14 @@ abstract class AnimeSearchFilterModule {
         fun provideAnimeSearchFilterComposer(
             resourceManager: ResourceProvider,
             animeSeasonCellComposer: AnimeSeasonCellComposer,
-        ) =
-            AnimeSearchFilterComposer(
-                resourceManager = resourceManager,
-                animeSeasonCellComposer = animeSeasonCellComposer,
-            )
+        ) = AnimeSearchFilterComposer(
+            resourceManager = resourceManager,
+            animeSeasonCellComposer = animeSeasonCellComposer,
+        )
 
         @Provides
-        fun providesAnimeSeasonCellComposer(
-            resourceManager: ResourceProvider,
-        ) = AnimeSeasonCellComposer(resourceManager)
-
+        fun providesAnimeSeasonCellComposer(resourceManager: ResourceProvider) =
+            AnimeSeasonCellComposer(resourceManager)
     }
 
     @Binds
@@ -42,5 +39,4 @@ abstract class AnimeSearchFilterModule {
     @IntoMap
     @ViewModelKey(AnimeSearchFilterViewModel::class)
     abstract fun bindAnimeSearchFilterViewModel(viewModel: AnimeSearchFilterViewModel): ViewModel
-
 }

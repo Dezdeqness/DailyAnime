@@ -69,12 +69,11 @@ fun DiagramChart(
         if (state == AnimatedCircleProgress.START) 0f else 360f
     }
 
-
     Column(modifier = modifier.fillMaxWidth()) {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .height(150.dp),
         ) {
             val radius = (size.minDimension - stroke.width) / 4
             val center = size.center
@@ -93,7 +92,7 @@ fun DiagramChart(
                     topLeft = topLeft,
                     size = arcSize,
                     useCenter = false,
-                    style = stroke
+                    style = stroke,
                 )
 
                 startAngle += sweepAngle
@@ -110,7 +109,7 @@ fun DiagramChart(
                             .padding(end = 8.dp)
                             .size(12.dp)
                             .clip(CircleShape)
-                            .background(data.color)
+                            .background(data.color),
                     )
                     Text(
                         text = stringResource(data.name),

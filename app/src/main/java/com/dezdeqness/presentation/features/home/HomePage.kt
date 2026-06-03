@@ -14,8 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.history.presentation.composables.HistoryShimmerItem
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.presentation.features.home.composable.HistoryLatestSection
 import com.dezdeqness.presentation.features.home.composable.HomeBanner
 import com.dezdeqness.presentation.features.home.composable.HomeCalendarSection
@@ -45,13 +45,13 @@ fun HomePage(
         genreSections
             .map { it.status }
             .any { it == SectionStatus.Initial || it == SectionStatus.Loading } &&
-                calendarSection.status == SectionStatus.Initial
-                || calendarSection.status == SectionStatus.Loading
+            calendarSection.status == SectionStatus.Initial ||
+            calendarSection.status == SectionStatus.Loading
     }
 
     val isEmptyContent = remember(genreSections, calendarSection) {
         genreSections.map { it.items }.all { it.isEmpty() } &&
-                calendarSection.items.isEmpty()
+            calendarSection.items.isEmpty()
     }
 
     LazyColumn(
@@ -84,9 +84,11 @@ fun HomePage(
 
             if (latestHistory.status == SectionStatus.Loading) {
                 item {
-                    HistoryShimmerItem(modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 8.dp))
+                    HistoryShimmerItem(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 8.dp),
+                    )
                 }
             } else {
                 latestHistory.historyUiModel?.let {
@@ -114,5 +116,4 @@ fun HomePage(
             }
         }
     }
-
 }

@@ -8,5 +8,5 @@ data class BriefInfoUiModel(
 ) : AdapterItem()
 
 data class BriefInfoUiModelList(
-    val list: ImmutableList<BriefInfoUiModel>
+    val list: ImmutableList<BriefInfoUiModel>,
 ) : AdapterItem()

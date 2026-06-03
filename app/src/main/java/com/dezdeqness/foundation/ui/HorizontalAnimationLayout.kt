@@ -15,49 +15,43 @@ import androidx.compose.ui.unit.dp
 fun HorizontalAnimationLayout(
     modifier: Modifier,
     progress: Float,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val measurePolicy = remember(progress) {
-
         object : MeasurePolicy {
-            override fun MeasureScope.measure(
-                measurables: List<Measurable>,
-                constraints: Constraints
-            ): MeasureResult {
-
+            override fun MeasureScope.measure(measurables: List<Measurable>, constraints: Constraints): MeasureResult {
                 require(measurables.size == 2)
 
                 val mobileButtonPlaceable =
                     measurables.first().measure(constraints.copy(minWidth = 0))
 
                 val stationaryButtonPlaceable = measurables.last().measure(
-                    Constraints.fixedWidth((constraints.maxWidth - mobileButtonPlaceable.width * progress).toInt())
+                    Constraints.fixedWidth((constraints.maxWidth - mobileButtonPlaceable.width * progress).toInt()),
                 )
 
                 return layout(
-                    constraints.maxWidth, stationaryButtonPlaceable.height
+                    constraints.maxWidth,
+                    stationaryButtonPlaceable.height,
                 ) {
-
                     val width = mobileButtonPlaceable.width
                     val leftPadding = 16.dp.roundToPx()
 
                     mobileButtonPlaceable.placeRelative(
                         x = (-(width + leftPadding) * (1 - progress)).toInt(),
-                        y = 0
+                        y = 0,
                     )
 
                     stationaryButtonPlaceable.placeRelative(
                         x = ((width) * progress).toInt(),
-                        y = 0
+                        y = 0,
                     )
                 }
             }
-
         }
     }
     Layout(
         modifier = modifier,
         measurePolicy = measurePolicy,
-        content = content
+        content = content,
     )
 }

@@ -18,7 +18,6 @@ interface RoutingComponent {
     }
 
     fun inject(activity: RoutingActivity)
-
 }
 
 @Module
@@ -28,5 +27,4 @@ abstract class RoutingModule {
     @IntoMap
     @ViewModelKey(RoutingViewModel::class)
     abstract fun bindRoutingViewModel(viewModel: RoutingViewModel): ViewModel
-
 }

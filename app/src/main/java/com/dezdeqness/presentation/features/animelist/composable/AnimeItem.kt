@@ -53,7 +53,7 @@ fun AnimeItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .align(alignment = Alignment.Center)
+                    .align(alignment = Alignment.Center),
             )
 
             Text(
@@ -64,7 +64,7 @@ fun AnimeItem(
                     .clip(RoundedCornerShape(6.dp))
                     .background(colorResource(id = R.color.background_shadow))
                     .padding(4.dp)
-                    .align(alignment = Alignment.TopStart)
+                    .align(alignment = Alignment.TopStart),
             )
         }
 
@@ -97,7 +97,7 @@ fun AnimeItem(
 fun AnimeItemPreview() {
     AppTheme {
         Box(
-            modifier = Modifier.width(200.dp)
+            modifier = Modifier.width(200.dp),
         ) {
             AnimeItem(
                 item = AnimeUiModel(

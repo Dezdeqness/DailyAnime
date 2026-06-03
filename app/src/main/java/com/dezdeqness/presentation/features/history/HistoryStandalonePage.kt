@@ -7,11 +7,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.history.presentation.HistoryActions
 import com.dezdeqness.feature.history.presentation.HistoryPage
 import com.dezdeqness.feature.history.presentation.HistoryViewModel
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
+import com.dezdeqness.foundation.utils.collectEvents
 
 @Composable
 fun HistoryStandalonePage(
@@ -42,7 +42,7 @@ fun HistoryStandalonePage(
             override fun onBackPressed() {
                 navController.popBackStack()
             }
-        }
+        },
     )
 
     viewModel.effects.collectEvents {
@@ -52,5 +52,4 @@ fun HistoryStandalonePage(
             }
         }
     }
-
 }

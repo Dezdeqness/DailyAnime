@@ -2,17 +2,17 @@ package com.dezdeqness.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.event.Event
 import com.dezdeqness.presentation.event.EventListener
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 @Deprecated("Do not use app version, prefer foundation")
 abstract class BaseViewModel(
@@ -33,7 +33,6 @@ abstract class BaseViewModel(
             }
             return this
         }
-
 
     private val initialLoaded: InitialLoaded
         get() {
@@ -57,81 +56,76 @@ abstract class BaseViewModel(
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) =
-        launchOnIo {
-            onLoading(true)
-            action.invoke()
-                .onSuccess { value ->
-                    onLoading(false)
-                    onSuccess.invoke(value)
-                }
-                .onFailure { throwable ->
-                    onLoading(false)
-                    onFailure?.invoke(throwable)
+    ) = launchOnIo {
+        onLoading(true)
+        action.invoke()
+            .onSuccess { value ->
+                onLoading(false)
+                onSuccess.invoke(value)
+            }
+            .onFailure { throwable ->
+                onLoading(false)
+                onFailure?.invoke(throwable)
 
-                    appLogger.logInfo(
-                        tag = viewModelTag,
-                        message = errorMessage,
-                        throwable = throwable,
-                    )
-                }
-        }
+                appLogger.logInfo(
+                    tag = viewModelTag,
+                    message = errorMessage,
+                    throwable = throwable,
+                )
+            }
+    }
 
     protected fun <T> onPullDownRefreshed(
         action: suspend () -> (Result<T>),
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) =
-        makeRequest(
-            action = action,
-            onSuccess = onSuccess,
-            onFailure = onFailure,
-            errorMessage = errorMessage,
-            isPullDownRefresh = true,
-        )
+    ) = makeRequest(
+        action = action,
+        onSuccess = onSuccess,
+        onFailure = onFailure,
+        errorMessage = errorMessage,
+        isPullDownRefresh = true,
+    )
 
     protected fun <T> onPullDownRefreshed(
         collector: Flow<Result<T>>,
         onSuccess: suspend (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) =
-        makeRequest(
-            collector = collector,
-            onSuccess = onSuccess,
-            onFailure = onFailure,
-            errorMessage = errorMessage,
-            isPullDownRefresh = true,
-        )
+    ) = makeRequest(
+        collector = collector,
+        onSuccess = onSuccess,
+        onFailure = onFailure,
+        errorMessage = errorMessage,
+        isPullDownRefresh = true,
+    )
 
     protected fun <T> onInitialLoad(
         action: suspend () -> (Result<T>),
         onSuccess: (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) =
-        makeRequest(
-            action = action,
-            onSuccess = onSuccess,
-            onFailure = onFailure,
-            errorMessage = errorMessage,
-            isInitialLoad = true,
-        )
+    ) = makeRequest(
+        action = action,
+        onSuccess = onSuccess,
+        onFailure = onFailure,
+        errorMessage = errorMessage,
+        isInitialLoad = true,
+    )
 
     protected fun <T> onInitialLoad(
         collector: Flow<Result<T>>,
         onSuccess: suspend (T) -> (Unit),
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) =
-        makeRequest(
-            collector = collector,
-            onSuccess = onSuccess,
-            onFailure = onFailure,
-            errorMessage = errorMessage,
-            isInitialLoad = true,
-        )
+    ) = makeRequest(
+        collector = collector,
+        onSuccess = onSuccess,
+        onFailure = onFailure,
+        errorMessage = errorMessage,
+        isInitialLoad = true,
+    )
 
     private fun <T> makeRequest(
         action: suspend () -> (Result<T>),
@@ -140,15 +134,55 @@ abstract class BaseViewModel(
         isPullDownRefresh: Boolean = false,
         isInitialLoad: Boolean = false,
         errorMessage: String = "",
-    ) =
-        launchOnIo {
-            if (isPullDownRefresh) {
-                refreshable.setPullDownIndicatorVisible(isVisible = true)
+    ) = launchOnIo {
+        if (isPullDownRefresh) {
+            refreshable.setPullDownIndicatorVisible(isVisible = true)
+        }
+        if (isInitialLoad) {
+            initialLoaded.setLoadingIndicatorVisible(isVisible = true)
+        }
+        action.invoke()
+            .onSuccess { value ->
+                onSuccess.invoke(value)
+                if (isPullDownRefresh) {
+                    refreshable.setPullDownIndicatorVisible(isVisible = false)
+                }
+                if (isInitialLoad) {
+                    initialLoaded.setLoadingIndicatorVisible(isVisible = false)
+                }
             }
-            if (isInitialLoad) {
-                initialLoaded.setLoadingIndicatorVisible(isVisible = true)
+            .onFailure { throwable ->
+                onFailure?.invoke(throwable)
+                if (isPullDownRefresh) {
+                    refreshable.setPullDownIndicatorVisible(isVisible = false)
+                }
+                if (isInitialLoad) {
+                    initialLoaded.setLoadingIndicatorVisible(isVisible = false)
+                }
+                appLogger.logInfo(
+                    tag = viewModelTag,
+                    message = errorMessage,
+                    throwable = throwable,
+                )
             }
-            action.invoke()
+    }
+
+    private fun <T> makeRequest(
+        collector: Flow<Result<T>>,
+        onSuccess: suspend (T) -> (Unit),
+        onFailure: ((Throwable) -> (Unit))? = null,
+        isPullDownRefresh: Boolean = false,
+        isInitialLoad: Boolean = false,
+        errorMessage: String = "",
+    ) = launchOnIo {
+        if (isPullDownRefresh) {
+            refreshable.setPullDownIndicatorVisible(isVisible = true)
+        }
+        if (isInitialLoad) {
+            initialLoaded.setLoadingIndicatorVisible(isVisible = true)
+        }
+        collector.collect { flowValue ->
+            flowValue
                 .onSuccess { value ->
                     onSuccess.invoke(value)
                     if (isPullDownRefresh) {
@@ -173,49 +207,7 @@ abstract class BaseViewModel(
                     )
                 }
         }
-
-    private fun <T> makeRequest(
-        collector: Flow<Result<T>>,
-        onSuccess: suspend (T) -> (Unit),
-        onFailure: ((Throwable) -> (Unit))? = null,
-        isPullDownRefresh: Boolean = false,
-        isInitialLoad: Boolean = false,
-        errorMessage: String = "",
-    ) =
-        launchOnIo {
-            if (isPullDownRefresh) {
-                refreshable.setPullDownIndicatorVisible(isVisible = true)
-            }
-            if (isInitialLoad) {
-                initialLoaded.setLoadingIndicatorVisible(isVisible = true)
-            }
-            collector.collect { flowValue ->
-                flowValue
-                    .onSuccess { value ->
-                        onSuccess.invoke(value)
-                        if (isPullDownRefresh) {
-                            refreshable.setPullDownIndicatorVisible(isVisible = false)
-                        }
-                        if (isInitialLoad) {
-                            initialLoaded.setLoadingIndicatorVisible(isVisible = false)
-                        }
-                    }
-                    .onFailure { throwable ->
-                        onFailure?.invoke(throwable)
-                        if (isPullDownRefresh) {
-                            refreshable.setPullDownIndicatorVisible(isVisible = false)
-                        }
-                        if (isInitialLoad) {
-                            initialLoaded.setLoadingIndicatorVisible(isVisible = false)
-                        }
-                        appLogger.logInfo(
-                            tag = viewModelTag,
-                            message = errorMessage,
-                            throwable = throwable,
-                        )
-                    }
-            }
-        }
+    }
 
     protected fun <T> onInitialLoad(
         action: suspend () -> (Result<T>),
@@ -223,24 +215,23 @@ abstract class BaseViewModel(
         onLoading: (Boolean) -> Unit,
         onFailure: ((Throwable) -> (Unit))? = null,
         errorMessage: String = "",
-    ) =
-        launchOnIo {
-            onLoading(true)
-            action.invoke()
-                .onSuccess { value ->
-                    onSuccess.invoke(value)
-                    onLoading(false)
-                }
-                .onFailure { throwable ->
-                    onFailure?.invoke(throwable)
-                    onLoading(false)
-                    appLogger.logInfo(
-                        tag = viewModelTag,
-                        message = errorMessage,
-                        throwable = throwable,
-                    )
-                }
-        }
+    ) = launchOnIo {
+        onLoading(true)
+        action.invoke()
+            .onSuccess { value ->
+                onSuccess.invoke(value)
+                onLoading(false)
+            }
+            .onFailure { throwable ->
+                onFailure?.invoke(throwable)
+                onLoading(false)
+                appLogger.logInfo(
+                    tag = viewModelTag,
+                    message = errorMessage,
+                    throwable = throwable,
+                )
+            }
+    }
 
     fun logInfo(message: String) {
         appLogger.logInfo(
@@ -257,35 +248,29 @@ abstract class BaseViewModel(
         )
     }
 
-    fun launchOnIo(lambda: suspend () -> Unit) =
-        launch(coroutineDispatcherProvider.io()) {
-            lambda.invoke()
-        }
+    fun launchOnIo(lambda: suspend () -> Unit) = launch(coroutineDispatcherProvider.io()) {
+        lambda.invoke()
+    }
 
-    fun launchOnMain(lambda: suspend () -> Unit) =
-        launch(coroutineDispatcherProvider.main()) {
-            lambda.invoke()
-        }
+    fun launchOnMain(lambda: suspend () -> Unit) = launch(coroutineDispatcherProvider.main()) {
+        lambda.invoke()
+    }
 
-    fun launchOnComputation(lambda: suspend () -> Unit) =
-        launch(coroutineDispatcherProvider.computation()) {
-            lambda.invoke()
-        }
+    fun launchOnComputation(lambda: suspend () -> Unit) = launch(coroutineDispatcherProvider.computation()) {
+        lambda.invoke()
+    }
 
-    fun <T> asyncOnIo(lambda: suspend () -> T) =
-        async(coroutineDispatcherProvider.io()) {
-            lambda.invoke()
-        }
+    fun <T> asyncOnIo(lambda: suspend () -> T) = async(coroutineDispatcherProvider.io()) {
+        lambda.invoke()
+    }
 
-    fun <T> asyncOnMain(lambda: suspend () -> T) =
-        async(coroutineDispatcherProvider.main()) {
-            lambda.invoke()
-        }
+    fun <T> asyncOnMain(lambda: suspend () -> T) = async(coroutineDispatcherProvider.main()) {
+        lambda.invoke()
+    }
 
-    fun <T> asyncOnComputation(lambda: suspend () -> T) =
-        async(coroutineDispatcherProvider.computation()) {
-            lambda.invoke()
-        }
+    fun <T> asyncOnComputation(lambda: suspend () -> T) = async(coroutineDispatcherProvider.computation()) {
+        lambda.invoke()
+    }
 
     interface Refreshable {
         fun onPullDownRefreshed()
@@ -297,5 +282,4 @@ abstract class BaseViewModel(
     }
 
     class NotImplementedMethodException : Exception()
-
 }

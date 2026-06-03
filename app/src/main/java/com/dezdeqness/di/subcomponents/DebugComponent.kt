@@ -4,7 +4,6 @@ import com.dezdeqness.di.modules.DebugModule
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 import dagger.Subcomponent
 
-
 @Subcomponent(modules = [DebugModule::class])
 interface DebugComponent {
 
@@ -14,5 +13,4 @@ interface DebugComponent {
     }
 
     fun inject(activity: DebugScreenActivity)
-
 }

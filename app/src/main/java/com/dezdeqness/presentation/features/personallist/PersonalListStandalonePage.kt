@@ -20,16 +20,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.views.GeneralEmpty
-import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.feature.personallist.BottomSheet
 import com.dezdeqness.feature.personallist.DataStatus
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
@@ -37,6 +34,9 @@ import com.dezdeqness.feature.personallist.R as PersonalListR
 import com.dezdeqness.feature.personallist.composable.PersonalRibbon
 import com.dezdeqness.feature.personallist.composable.ShimmerPersonalLoading
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.GeneralEmpty
+import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
 import kotlinx.coroutines.flow.collectLatest

@@ -47,9 +47,9 @@ import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class RoutingActivity : AppCompatActivity() {
 
@@ -72,7 +72,7 @@ class RoutingActivity : AppCompatActivity() {
     private val viewModel: RoutingViewModel by viewModels(
         factoryProducer = {
             viewModelFactory
-        }
+        },
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +97,7 @@ class RoutingActivity : AppCompatActivity() {
                 ThemeMode.SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 ThemeMode.DARK,
                 ThemeMode.AMOLED,
-                    -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
                 ThemeMode.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
@@ -126,10 +126,10 @@ class RoutingActivity : AppCompatActivity() {
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(AppTheme.colors.onPrimary)
+                        .background(AppTheme.colors.onPrimary),
                 ) {
                     val compositionLoading by rememberLottieComposition(
-                        LottieCompositionSpec.RawRes(R.raw.loading)
+                        LottieCompositionSpec.RawRes(R.raw.loading),
                     )
 
                     Text(
@@ -143,7 +143,7 @@ class RoutingActivity : AppCompatActivity() {
                     LottieAnimation(
                         composition = compositionLoading,
                         iterations = LottieConstants.IterateForever,
-                        modifier = Modifier.height(120.dp)
+                        modifier = Modifier.height(120.dp),
                     )
                 }
             }

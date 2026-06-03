@@ -37,7 +37,7 @@ fun HistoryItem(
             Icons.Default.History,
             contentDescription = null,
             tint = AppTheme.colors.onSurface,
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier.padding(end = 8.dp),
         )
         Text(
             title,
@@ -47,7 +47,7 @@ fun HistoryItem(
                 fontSize = 14.sp,
                 color = AppTheme.colors.textPrimary,
             ),
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         IconButton(onClick = onRemoveClicked) {
             Icon(

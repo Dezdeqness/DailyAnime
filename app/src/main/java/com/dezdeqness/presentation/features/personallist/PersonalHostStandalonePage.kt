@@ -55,7 +55,7 @@ fun PersonalHostStandalonePage(
                             restoreState = true
                         }
                     }
-                }
+                },
             )
         }
 

@@ -61,7 +61,7 @@ fun AnimeSimilarStandalonePage(
                 is OpenAnimeDetails -> {
                     analyticsManager.detailsTracked(
                         id = event.animeId.toString(),
-                        title = event.title
+                        title = event.title,
                     )
                     navController.navigate(AnimeDetails(event.animeId))
                     true
@@ -75,5 +75,4 @@ fun AnimeSimilarStandalonePage(
         viewModel = viewModel,
         navController = navController,
     )
-
 }

@@ -69,7 +69,6 @@ fun ScreenshotsViewerStandalone(
             override fun onBackClicked() {
                 navController.popBackStack()
             }
-
-        }
+        },
     )
 }

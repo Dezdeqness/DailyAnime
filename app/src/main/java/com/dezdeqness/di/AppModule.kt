@@ -2,18 +2,11 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
-import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProviderImpl
-import com.dezdeqness.foundation.message.BaseMessageProvider
-import com.dezdeqness.foundation.message.MessageConsumer
-import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
-import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.ConfigSettingsProvider
@@ -30,6 +23,12 @@ import com.dezdeqness.data.provider.HistorySearchListProvider
 import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
 import com.dezdeqness.domain.repository.HistorySearchRepository
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProviderImpl
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
+import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
@@ -54,31 +53,27 @@ class AppModule {
         filterMapper: FilterMapper,
         achievementMapper: AchievementMapper,
         moshi: Moshi,
-    ) =
-        ConfigurationProvider(
-            assetManager = assetManager,
-            genreMapper = genreMapper,
-            filterMapper = filterMapper,
-            achievementMapper = achievementMapper,
-            moshi = moshi,
-        )
+    ) = ConfigurationProvider(
+        assetManager = assetManager,
+        genreMapper = genreMapper,
+        filterMapper = filterMapper,
+        achievementMapper = achievementMapper,
+        moshi = moshi,
+    )
 
     @Singleton
     @Provides
-    fun provideTokenManager(context: Context) =
-        TokenManager(context = context)
+    fun provideTokenManager(context: Context) = TokenManager(context = context)
 
     @Singleton
     @Provides
-    fun provideResourceProvider(context: Context) =
-        ResourceProvider(context = context)
+    fun provideResourceProvider(context: Context) = ResourceProvider(context = context)
 
     @Singleton
     @Provides
-    fun provideMoshi(): Moshi =
-        Moshi.Builder()
-            .add(FilterTypeAdapter())
-            .build()
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .add(FilterTypeAdapter())
+        .build()
 
     @Singleton
     @Provides
@@ -87,8 +82,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideCoroutineDispatcherProvider(): CoroutineDispatcherProvider =
-        CoroutineDispatcherProviderImpl()
+    fun provideCoroutineDispatcherProvider(): CoroutineDispatcherProvider = CoroutineDispatcherProviderImpl()
 
     @Singleton
     @Provides
@@ -144,19 +138,15 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePersonalListFilter(context: Context) =
-        PersonalListFilterManager(
-            context = context,
-        )
+    fun providePersonalListFilter(context: Context) = PersonalListFilterManager(
+        context = context,
+    )
 
     @Singleton
     @Provides
-    fun provideSettingsRepository(
-        context: Context,
-    ): SettingsRepository =
-        SettingsRepositoryImpl(
-            context = context,
-        )
+    fun provideSettingsRepository(context: Context): SettingsRepository = SettingsRepositoryImpl(
+        context = context,
+    )
 
     @Singleton
     @Provides
@@ -170,16 +160,13 @@ class AppModule {
     @Provides
     fun provideAnalyticsManager(
         userRepository: UserRepository,
-        firebaseAnalytics: FirebaseAnalytics
-    ): AnalyticsManager =
-        AnalyticsManagerImpl(
-            userRepository = userRepository,
-            firebaseAnalytics = firebaseAnalytics
-        )
+        firebaseAnalytics: FirebaseAnalytics,
+    ): AnalyticsManager = AnalyticsManagerImpl(
+        userRepository = userRepository,
+        firebaseAnalytics = firebaseAnalytics,
+    )
 
     @Singleton
     @Provides
-    fun provideApplicationBridge(context: Context) =
-        context.applicationContext as ApplicationBridge
-
+    fun provideApplicationBridge(context: Context) = context.applicationContext as ApplicationBridge
 }

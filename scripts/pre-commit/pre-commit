@@ -1,15 +1,22 @@
 #!/usr/bin/env bash
 echo "Running spotless check..."
 OUTPUT="/tmp/spotless-$(date +%s)"
-./gradlew spotlessCheck > $OUTPUT
+./gradlew spotlessCheck --continue > $OUTPUT 2>&1
 EXIT_CODE=$?
 if [ $EXIT_CODE -ne 0 ]; then
-  cat $OUTPUT
+  echo ""
+  echo "----------------- spotless violations -----------------"
+  awk '
+    /Step .ktlint. found problem in/ { sub(/.*found problem in /, ""); print "✗ " $0; p=1; next }
+    /java.lang.AssertionError/ { p=0; next }
+    p
+  ' "$OUTPUT"
+  grep -E "had format violations|^ +src[\\/].*\.kt$" "$OUTPUT"
   rm $OUTPUT
-  echo "***********************************************"
+  echo "-------------------------------------------------------"
   echo "                spotless failed                "
   echo "   Run './gradlew spotlessApply' to fix it     "
-  echo "***********************************************"
+  echo "-------------------------------------------------------"
   exit $EXIT_CODE
 fi
 rm $OUTPUT

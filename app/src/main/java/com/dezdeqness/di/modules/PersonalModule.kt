@@ -25,28 +25,24 @@ abstract class PersonalModule {
             retrofit.create(UserRatesApiService::class.java)
 
         @Provides
-        fun provideUserRatesDao(shikimoriDatabase: ShikimoriDatabase) =
-            shikimoriDatabase.userRatesDao()
+        fun provideUserRatesDao(shikimoriDatabase: ShikimoriDatabase) = shikimoriDatabase.userRatesDao()
     }
 
     @Binds
     abstract fun bindUserRatesRemoteDataSource(
         userRatesRemoteDataSource: UserRatesRemoteDataSourceImpl,
-        ): UserRatesRemoteDataSource
+    ): UserRatesRemoteDataSource
 
     @Binds
     abstract fun bindUserRatesLocalDataSource(
         userRatesLocalDataSource: UserRatesLocalDataSourceImpl,
-        ): UserRatesLocalDataSource
+    ): UserRatesLocalDataSource
 
     @Binds
-    abstract fun bindUserRatesRepository(
-        userRatesRepositoryImpl: UserRatesRepositoryImpl,
-        ): UserRatesRepository
+    abstract fun bindUserRatesRepository(userRatesRepositoryImpl: UserRatesRepositoryImpl): UserRatesRepository
 
     @Binds
     abstract fun bindPersonalListFilterRepository(
         userRatesRepositoryImpl: PersonalListFilterRepositoryImpl,
-        ): PersonalListFilterRepository
-
+    ): PersonalListFilterRepository
 }

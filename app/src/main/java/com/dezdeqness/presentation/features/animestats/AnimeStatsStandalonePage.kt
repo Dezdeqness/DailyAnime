@@ -17,7 +17,6 @@ fun AnimeStatsStandalonePage(
     statusesList: List<AnimeStatsTransferModel>,
     navController: NavHostController,
 ) {
-
     val context = LocalContext.current
     val animeSimilarComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
@@ -26,9 +25,9 @@ fun AnimeStatsStandalonePage(
                 AnimeStatsArgsModule(
                     AnimeStatsArguments(
                         scoresArgument = scoreList,
-                        statusesArgument = statusesList
-                    )
-                )
+                        statusesArgument = statusesList,
+                    ),
+                ),
             )
             .build()
     }
@@ -41,6 +40,6 @@ fun AnimeStatsStandalonePage(
         state = viewModel.statsStateFlow,
         onBackPressed = {
             navController.popBackStack()
-        }
+        },
     )
 }

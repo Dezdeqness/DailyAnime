@@ -25,8 +25,5 @@ abstract class CalendarModule {
     ): CalendarRemoteDataSource
 
     @Binds
-    abstract fun bindCalendarRepository(
-        calendarRepositoryImpl: CalendarRepositoryImpl,
-        ): CalendarRepository
-
+    abstract fun bindCalendarRepository(calendarRepositoryImpl: CalendarRepositoryImpl): CalendarRepository
 }

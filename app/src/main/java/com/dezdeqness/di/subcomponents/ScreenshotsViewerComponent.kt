@@ -5,7 +5,7 @@ import com.dezdeqness.di.modules.ScreenshotsModule
 import dagger.Subcomponent
 
 @Subcomponent(modules = [ScreenshotsModule::class])
-interface ScreenshotsViewerComponent : BaseComponent{
+interface ScreenshotsViewerComponent : BaseComponent {
 
     @Subcomponent.Builder
     interface Builder {

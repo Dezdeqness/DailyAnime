@@ -54,6 +54,8 @@ import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.contract.settings.models.InitialSectionPreference
 import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
+import com.dezdeqness.data.analytics.AnalyticsManager
+import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.foundation.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.theme.amoledColors
@@ -63,15 +65,13 @@ import com.dezdeqness.foundation.ui.theme.toAmoledMaterialScheme
 import com.dezdeqness.foundation.ui.theme.toDarkMaterialScheme
 import com.dezdeqness.foundation.ui.theme.toLightMaterialScheme
 import com.dezdeqness.foundation.utils.collectEvents
-import com.dezdeqness.data.analytics.AnalyticsManager
-import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.presentation.features.achievements.AchievementsStandalonePage
 import com.dezdeqness.presentation.features.animechronology.AnimeChronologyStandalonePage
+import com.dezdeqness.presentation.features.animedetails.AnimeDetailsStandalonePage
 import com.dezdeqness.presentation.features.animelist.SearchPageStandalone
 import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarStandalonePage
-import com.dezdeqness.presentation.features.animedetails.AnimeDetailsStandalonePage
 import com.dezdeqness.presentation.features.animestats.AnimeStatsStandalonePage
 import com.dezdeqness.presentation.features.animestats.deserializeListFromString
 import com.dezdeqness.presentation.features.calendar.CalendarStandalonePage
@@ -97,10 +97,10 @@ import com.dezdeqness.presentation.routing.slideOutToStart
 import com.dezdeqness.presentation.routing.slideOutToTop
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel by viewModels<MainViewModel>(
         factoryProducer = {
             viewModelFactory
-        }
+        },
     )
 
     private val initialSectionFlow = MutableStateFlow<InitialSection?>(null)
@@ -188,11 +188,9 @@ class MainActivity : AppCompatActivity() {
                         if (isSystemInDarkTheme()) toDarkMaterialScheme() else toLightMaterialScheme()
                 },
             ) {
-
                 val section by initialSectionFlow.collectAsStateWithLifecycle()
 
                 Box(modifier = Modifier.fillMaxSize()) {
-
                     NavHost(
                         navController = rootController,
                         startDestination = RootRoute,
@@ -216,12 +214,12 @@ class MainActivity : AppCompatActivity() {
                                             val isSelected =
                                                 currentDestination?.hierarchy?.any {
                                                     it.hasRoute(
-                                                        item.route::class
+                                                        item.route::class,
                                                     )
                                                 } == true
 
-                                            if (item == AppBottomTabModel.CALENDAR
-                                                && configManager.isCalendarEnabled.not()
+                                            if (item == AppBottomTabModel.CALENDAR &&
+                                                configManager.isCalendarEnabled.not()
                                             ) {
                                                 return@forEach
                                             }
@@ -261,7 +259,7 @@ class MainActivity : AppCompatActivity() {
                                     startDestination = sectionToRoute(localSection),
                                     modifier = Modifier
                                         .padding(padding)
-                                        .fillMaxSize()
+                                        .fillMaxSize(),
                                 ) {
                                     composable<BottomBarNav.PersonalList> {
                                         PersonalHostStandalonePage(
@@ -356,7 +354,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) {
                             HistoryStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
@@ -395,7 +393,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) {
                             StatsStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
@@ -441,7 +439,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val topicDetails = backStackEntry.toRoute<TopicDetails>()
 
@@ -457,7 +455,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val achievements = backStackEntry.toRoute<Achievements>()
 
@@ -473,7 +471,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val favourites = backStackEntry.toRoute<Favourites>()
 
@@ -490,7 +488,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val similar = backStackEntry.toRoute<Similar>()
 
@@ -507,7 +505,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val chronology = backStackEntry.toRoute<Chronology>()
 
@@ -524,7 +522,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val detailsStats = backStackEntry.toRoute<DetailsStats>()
 
@@ -546,7 +544,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val screenshots = backStackEntry.toRoute<Screenshots>()
 
@@ -564,7 +562,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) {
                             ForumStandalonePage(
                                 modifier = Modifier.fillMaxSize(),
@@ -578,7 +576,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             popExitTransition = {
                                 slideOutToStart()
-                            }
+                            },
                         ) { backStackEntry ->
                             val forumTopics = backStackEntry.toRoute<ForumTopics>()
 
@@ -612,7 +610,7 @@ class MainActivity : AppCompatActivity() {
                                 actionColor = Color.Transparent,
                                 contentColor = Color.White,
                             )
-                        }
+                        },
                     )
                 }
 
@@ -629,7 +627,7 @@ class MainActivity : AppCompatActivity() {
                             CustomSnackbarVisuals(
                                 message = event.text,
                                 messageStatus = event.status,
-                            )
+                            ),
                         )
                     }
                 }
@@ -648,22 +646,20 @@ class MainActivity : AppCompatActivity() {
         themeModeFlow.value = mode
     }
 
-    private fun sectionToRoute(section: InitialSection) =
-        when (section) {
-            InitialSection.FAVORITES -> BottomBarNav.PersonalList
-            InitialSection.HOME -> BottomBarNav.Home
-            InitialSection.CALENDAR -> BottomBarNav.Calendar
-            InitialSection.SEARCH -> BottomBarNav.Search
-            InitialSection.PROFILE -> BottomBarNav.Profile
-            InitialSection.NEWS -> BottomBarNav.News
-        }
+    private fun sectionToRoute(section: InitialSection) = when (section) {
+        InitialSection.FAVORITES -> BottomBarNav.PersonalList
+        InitialSection.HOME -> BottomBarNav.Home
+        InitialSection.CALENDAR -> BottomBarNav.Calendar
+        InitialSection.SEARCH -> BottomBarNav.Search
+        InitialSection.PROFILE -> BottomBarNav.Profile
+        InitialSection.NEWS -> BottomBarNav.News
+    }
 
     private fun showLanguageDisclaimer() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.language_disclaimer_title))
             .setMessage(resources.getString(R.string.language_disclaimer_description))
             .setPositiveButton(resources.getString(R.string.language_disclaimer_positive)) { _, _ ->
-
             }
             .show()
         dialog.setCanceledOnTouchOutside(false)
@@ -702,7 +698,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         fun newIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
-
 }
 
 @Composable
@@ -710,17 +705,16 @@ private fun StatusBarProtection(
     color: Color = AppTheme.colors.onPrimary,
     heightProvider: () -> Float = calculateGradientHeight(),
 ) {
-
     Canvas(Modifier.fillMaxSize()) {
         val calculatedHeight = heightProvider()
         val gradient = Brush.verticalGradient(
             colors = listOf(
                 color.copy(alpha = 1f),
                 color.copy(alpha = .8f),
-                Color.Transparent
+                Color.Transparent,
             ),
             startY = 0f,
-            endY = calculatedHeight
+            endY = calculatedHeight,
         )
         drawRect(
             brush = gradient,

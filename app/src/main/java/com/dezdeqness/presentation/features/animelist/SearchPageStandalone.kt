@@ -11,9 +11,9 @@ import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.event.ApplyFilter
 import com.dezdeqness.presentation.event.NavigateToFilter
+import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilter
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterActions
 import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterViewModel
@@ -24,7 +24,6 @@ fun SearchPageStandalone(
     modifier: Modifier = Modifier,
     navController: NavHostController,
 ) {
-
     val context = LocalContext.current
     val animeComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
@@ -81,8 +80,7 @@ fun SearchPageStandalone(
                 override fun onScrolled() {
                     viewModel.onScrolled()
                 }
-
-            }
+            },
         )
 
         AnimeSearchFilter(
@@ -95,7 +93,7 @@ fun SearchPageStandalone(
                 override fun onCellClicked(
                     innerId: String,
                     cellId: String,
-                    isSelected: Boolean
+                    isSelected: Boolean,
                 ) {
                     filterViewModel.onCellClicked(
                         innerId = innerId,
@@ -111,8 +109,7 @@ fun SearchPageStandalone(
                 override fun onResetFilter() {
                     filterViewModel.onResetButtonClicked()
                 }
-
-            }
+            },
         )
     }
     viewModel.events.collectEvents { event ->
@@ -124,7 +121,7 @@ fun SearchPageStandalone(
             is OpenAnimeDetails -> {
                 analyticsManager.detailsTracked(
                     id = event.animeId.toString(),
-                    title = event.title
+                    title = event.title,
                 )
 
                 navController.navigate(AnimeDetails(event.animeId))
@@ -143,5 +140,4 @@ fun SearchPageStandalone(
             else -> {}
         }
     }
-
 }

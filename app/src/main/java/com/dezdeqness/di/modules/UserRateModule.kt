@@ -1,8 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.feature.userrate.UserRateViewModel
+import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -14,5 +14,4 @@ abstract class UserRateModule {
     @IntoMap
     @ViewModelKey(UserRateViewModel::class)
     abstract fun bindEditRateViewModel(viewModel: UserRateViewModel): ViewModel
-
 }

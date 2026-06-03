@@ -4,18 +4,19 @@ import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.foundation.message.BaseMessageProvider
-import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.BaseMessageProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.presentation.AnimeFilterResponseConverter
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.event.NavigateToFilter
 import com.dezdeqness.presentation.models.SearchSectionUiModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,6 @@ import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 class AnimeViewModel @Inject constructor(
     private val getAnimeListUseCase: GetAnimeListUseCase,
@@ -66,7 +66,7 @@ class AnimeViewModel @Inject constructor(
     val historySearchFlow = historySearchRepository.getSearchHistoryFlow().stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
-        initialValue = listOf()
+        initialValue = listOf(),
     )
 
     init {
@@ -81,7 +81,7 @@ class AnimeViewModel @Inject constructor(
                 }
                 .shareIn(
                     scope = viewModelScope,
-                    started = SharingStarted.Lazily
+                    started = SharingStarted.Lazily,
                 )
                 .collect()
         }
@@ -95,14 +95,14 @@ class AnimeViewModel @Inject constructor(
                 val result = getAnimeListUseCase.invoke(
                     pageNumber = event.page,
                     searchQuery = event.input.query,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(event.input.filters)
+                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(event.input.filters),
                 )
 
                 emit(
                     LoadResult(
                         event = event,
                         result = result,
-                    )
+                    ),
                 )
             }.flowOn(coroutineDispatcherProvider.io())
         }
@@ -161,7 +161,7 @@ class AnimeViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = AnimeSearchState()
+            initialValue = AnimeSearchState(),
         )
 
     init {
@@ -243,11 +243,11 @@ class AnimeViewModel @Inject constructor(
     private sealed class LoadEvent(
         open val input: AnimeUserInput,
         open val page: Int,
-        open val isScrollNeed: Boolean
+        open val isScrollNeed: Boolean,
     ) {
         data class Refresh(
             override val input: AnimeUserInput,
-            override val isScrollNeed: Boolean = false
+            override val isScrollNeed: Boolean = false,
         ) :
             LoadEvent(input = input, page = INITIAL_PAGE, isScrollNeed = isScrollNeed)
 

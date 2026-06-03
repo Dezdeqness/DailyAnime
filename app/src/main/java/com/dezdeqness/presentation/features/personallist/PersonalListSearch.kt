@@ -15,12 +15,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.feature.personallist.search.PersonalListSearchActions
 import com.dezdeqness.feature.personallist.search.PersonalListSearchExpandedPage
 import com.dezdeqness.feature.personallist.search.PersonalListSearchViewModel
 import com.dezdeqness.feature.personallist.search.PersonalListTab
 import com.dezdeqness.feature.personallist.search.composables.PersonalSearchTextField
+import com.dezdeqness.foundation.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +53,6 @@ fun PersonalListSearch(
             override fun onAnimeClick(animeId: Long, title: String) {
                 onDetailsClick(animeId, title)
             }
-
         }
     }
 
@@ -76,7 +75,7 @@ fun PersonalListSearch(
         inputField = inputField,
         colors = SearchBarDefaults.colors(
             containerColor = AppTheme.colors.onPrimary,
-        )
+        ),
     )
     ExpandedFullScreenSearchBar(
         state = searchBarState,

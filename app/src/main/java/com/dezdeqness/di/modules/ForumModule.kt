@@ -2,9 +2,9 @@ package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.forum.repository.ForumRepository
+import com.dezdeqness.contract.topic.repository.TopicRepository
 import com.dezdeqness.data.ForumApiService
 import com.dezdeqness.data.datasource.ForumRemoteDataSource
-import com.dezdeqness.contract.topic.repository.TopicRepository
 import com.dezdeqness.data.datasource.ForumRemoteDataSourceImpl
 import com.dezdeqness.data.repository.ForumRepositoryImpl
 import com.dezdeqness.domain.usecases.GetForumsUseCase
@@ -30,8 +30,7 @@ abstract class ForumModule {
     companion object {
 
         @Provides
-        fun provideForumApiService(retrofit: Retrofit): ForumApiService =
-            retrofit.create(ForumApiService::class.java)
+        fun provideForumApiService(retrofit: Retrofit): ForumApiService = retrofit.create(ForumApiService::class.java)
 
         @Provides
         fun provideGetForumsUseCase(forumRepository: ForumRepository) =
@@ -42,23 +41,18 @@ abstract class ForumModule {
             GetHotTopicsUseCase(topicRepository = topicRepository)
 
         @Provides
-        fun provideForumStore(actor: ForumActor): ElmStore<Event, State, Effect, Command> =
-            ElmStore(
-                initialState = State(),
-                reducer = forumReducer,
-                actor = actor,
-            )
+        fun provideForumStore(actor: ForumActor): ElmStore<Event, State, Effect, Command> = ElmStore(
+            initialState = State(),
+            reducer = forumReducer,
+            actor = actor,
+        )
     }
 
     @Binds
-    abstract fun bindForumRemoteDataSource(
-        impl: ForumRemoteDataSourceImpl,
-    ): ForumRemoteDataSource
+    abstract fun bindForumRemoteDataSource(impl: ForumRemoteDataSourceImpl): ForumRemoteDataSource
 
     @Binds
-    abstract fun bindForumRepository(
-        impl: ForumRepositoryImpl,
-    ): ForumRepository
+    abstract fun bindForumRepository(impl: ForumRepositoryImpl): ForumRepository
 
     @Binds
     @IntoMap

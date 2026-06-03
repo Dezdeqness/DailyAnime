@@ -6,5 +6,4 @@ import com.dezdeqness.presentation.models.AdapterItem
 interface GenericListableUiMapper {
 
     fun map(item: Entity): AdapterItem?
-
 }

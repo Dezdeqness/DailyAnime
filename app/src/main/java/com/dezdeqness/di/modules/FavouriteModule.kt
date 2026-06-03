@@ -20,14 +20,12 @@ abstract class FavouriteModule {
             retrofit.create(FavouriteApiService::class.java)
 
         @Provides
-        fun provideObserveFavouriteStatusUseCase(
-            favouriteRepository: FavouriteRepository,
-        ) = ObserveFavouriteStatusUseCase(favouriteRepository = favouriteRepository)
+        fun provideObserveFavouriteStatusUseCase(favouriteRepository: FavouriteRepository) =
+            ObserveFavouriteStatusUseCase(favouriteRepository = favouriteRepository)
 
         @Provides
-        fun provideFetchFavouritesUseCase(
-            favouriteRepository: FavouriteRepository,
-        ) = FetchFavouritesUseCase(favouriteRepository = favouriteRepository)
+        fun provideFetchFavouritesUseCase(favouriteRepository: FavouriteRepository) =
+            FetchFavouritesUseCase(favouriteRepository = favouriteRepository)
     }
 
     @Binds

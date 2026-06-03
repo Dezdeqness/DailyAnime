@@ -21,14 +21,11 @@ abstract class PersonDetailsFeatureModule {
 
     companion object {
         @Provides
-        fun providePersonDetailsStore(
-            actor: PersonDetailsActor,
-        ): ElmStore<Event, State, Effect, Command> =
-            ElmStore(
-                initialState = State(),
-                reducer = personDetailsReducer,
-                actor = actor,
-            )
+        fun providePersonDetailsStore(actor: PersonDetailsActor): ElmStore<Event, State, Effect, Command> = ElmStore(
+            initialState = State(),
+            reducer = personDetailsReducer,
+            actor = actor,
+        )
     }
 
     @Binds

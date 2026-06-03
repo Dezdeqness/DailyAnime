@@ -2,7 +2,6 @@ package com.dezdeqness.presentation.models
 
 import com.google.common.collect.ImmutableList
 
-
 data class SearchSectionUiModel(
     val innerId: String,
     val queryId: String = innerId,
@@ -19,7 +18,7 @@ data class AnimeCell(
 )
 
 data class AnimeCellList(
-    val list: ImmutableList<AnimeCell>
+    val list: ImmutableList<AnimeCell>,
 ) : AdapterItem()
 
 enum class CellState {

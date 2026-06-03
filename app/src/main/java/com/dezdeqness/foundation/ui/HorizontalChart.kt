@@ -32,7 +32,7 @@ import kotlinx.coroutines.delay
 fun HorizontalChart(
     modifier: Modifier = Modifier,
     maxProgress: Int,
-    items: ImmutableList<StatsData>
+    items: ImmutableList<StatsData>,
 ) {
     Column(modifier = modifier) {
         items.forEachIndexed { index, item ->
@@ -48,8 +48,8 @@ fun HorizontalChart(
                     targetValue = progress / maxProgress.toFloat(),
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
+                        stiffness = Spring.StiffnessLow,
+                    ),
                 )
             }
 
@@ -79,17 +79,16 @@ fun HorizontalChart(
                         .height(10.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(4.dp))
-                        .background(AppTheme.colors.onSurface.copy(alpha = 0.15f))
+                        .background(AppTheme.colors.onSurface.copy(alpha = 0.15f)),
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth(fraction = animatedProgress.value)
                             .clip(RoundedCornerShape(4.dp))
-                            .background(AppTheme.colors.accent)
+                            .background(AppTheme.colors.accent),
                     )
                 }
-
             }
         }
     }

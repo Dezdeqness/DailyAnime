@@ -18,5 +18,4 @@ class HomeComposer(
 
         return SectionsState(genreSections = sections)
     }
-
 }

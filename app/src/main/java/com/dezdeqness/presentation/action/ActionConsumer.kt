@@ -1,7 +1,7 @@
 package com.dezdeqness.presentation.action
 
-import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.event.EventListener
+import com.dezdeqness.presentation.event.OpenAnimeDetails
 import com.dezdeqness.presentation.event.OpenCalendarTab
 import com.dezdeqness.presentation.event.OpenHistoryPage
 import com.dezdeqness.presentation.event.OpenVideo
@@ -24,8 +24,8 @@ class ActionConsumer {
                 eventListener?.onEventReceive(
                     OpenAnimeDetails(
                         animeId = action.animeId,
-                        title = action.title
-                    )
+                        title = action.title,
+                    ),
                 )
             }
             is Action.VideoClick -> {
@@ -39,5 +39,4 @@ class ActionConsumer {
             }
         }
     }
-
 }

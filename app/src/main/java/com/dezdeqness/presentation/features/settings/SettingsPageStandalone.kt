@@ -11,7 +11,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.feature.settings.SettingActions
 import com.dezdeqness.feature.settings.SettingsPage
 import com.dezdeqness.feature.settings.SettingsViewModel
@@ -19,6 +18,7 @@ import com.dezdeqness.feature.settings.store.actors.OpenAlarmSettings
 import com.dezdeqness.feature.settings.store.actors.OpenDebugMenu
 import com.dezdeqness.feature.settings.store.actors.OpenSelectInterests
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
+import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.SelectGenres
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
 
@@ -56,18 +56,14 @@ fun SettingsPageStandalone(
                 viewModel.onDialogClosed()
             }
 
-            override fun onDialogResult(
-                id: String,
-                data: SettingsNamespace.DialogState.DialogResult
-            ) {
+            override fun onDialogResult(id: String, data: SettingsNamespace.DialogState.DialogResult) {
                 viewModel.onDialogResult(id = id, data = data)
             }
 
             override fun invalidate() {
                 viewModel.invalidate()
             }
-
-        }
+        },
     )
 
     viewModel.effects.collectEvents { effect ->
