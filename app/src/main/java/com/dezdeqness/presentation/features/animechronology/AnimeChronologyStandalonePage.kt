@@ -61,7 +61,7 @@ fun AnimeChronologyStandalonePage(
                 is OpenAnimeDetails -> {
                     analyticsManager.detailsTracked(
                         id = event.animeId.toString(),
-                        title = event.title
+                        title = event.title,
                     )
                     navController.navigate(AnimeDetails(event.animeId))
                     true

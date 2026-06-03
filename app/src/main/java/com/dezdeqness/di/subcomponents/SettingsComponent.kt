@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.foundation.di.ViewModelKey
-import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.AlarmManagerProvider
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -22,6 +20,8 @@ import com.dezdeqness.feature.settings.store.actors.StorageActor
 import com.dezdeqness.feature.settings.store.actors.ThemeActor
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.core.settingsReducer
+import com.dezdeqness.foundation.Logger
+import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
 import com.dezdeqness.shared.presentation.mapper.PersonalRibbonMapper
@@ -59,48 +59,51 @@ abstract class SettingsModule {
             ribbonMapper: PersonalRibbonMapper,
             configManager: ConfigManager,
             context: Context,
-        ): List<SectionActor> =
-            listOf(
-                ThemeActor(settingsRepository = settingsRepository),
-                NotificationActor(
-                    settingsRepository = settingsRepository,
-                    permissionCheckProvider = permissionCheckProvider,
-                    alarmManagerProvider = alarmManagerProvider,
-                    workSchedulerManager = workSchedulerManager,
-                ),
-                ContentActor(
-                    settingsRepository = settingsRepository,
-                    homeGenresProvider = homeGenresProvider,
-                ),
-                NavigationActor(
-                    settingsRepository = settingsRepository,
-                    authRepository = authRepository,
-                    statusesProvider = statusesProvider,
-                    ribbonMapper = ribbonMapper,
-                    configManager = configManager,
-                ),
-                StorageActor(
-                    settingsRepository = settingsRepository,
-                    context = context,
-                ),
-                AboutActor(applicationBridge = applicationBridge),
-            )
+        ): List<SectionActor> = listOf(
+            ThemeActor(settingsRepository = settingsRepository),
+            NotificationActor(
+                settingsRepository = settingsRepository,
+                permissionCheckProvider = permissionCheckProvider,
+                alarmManagerProvider = alarmManagerProvider,
+                workSchedulerManager = workSchedulerManager,
+            ),
+            ContentActor(
+                settingsRepository = settingsRepository,
+                homeGenresProvider = homeGenresProvider,
+            ),
+            NavigationActor(
+                settingsRepository = settingsRepository,
+                authRepository = authRepository,
+                statusesProvider = statusesProvider,
+                ribbonMapper = ribbonMapper,
+                configManager = configManager,
+            ),
+            StorageActor(
+                settingsRepository = settingsRepository,
+                context = context,
+            ),
+            AboutActor(applicationBridge = applicationBridge),
+        )
 
         @Provides
         fun provideSettingsActor(
             sectionActors: List<@JvmSuppressWildcards SectionActor>,
             logger: Logger,
-        ) = SettingsActor(
-            sectionActors = sectionActors,
-            logger = logger,
-        )
+        ) =
+            SettingsActor(
+                sectionActors = sectionActors,
+                logger = logger,
+            )
 
         @Provides
-        fun provideHistoryStore(actor: SettingsActor): ElmStore<
-                SettingsNamespace.Event,
-                SettingsNamespace.State,
-                SettingsNamespace.Effect,
-                SettingsNamespace.Command> =
+        fun provideHistoryStore(
+            actor: SettingsActor,
+        ): ElmStore<
+            SettingsNamespace.Event,
+            SettingsNamespace.State,
+            SettingsNamespace.Effect,
+            SettingsNamespace.Command,
+            > =
             ElmStore(
                 initialState = SettingsNamespace.State(),
                 reducer = settingsReducer,

@@ -22,14 +22,13 @@ fun GenericListLoading(
         modifier = modifier
             .verticalScroll(state = rememberScrollState(), enabled = false)
             .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         repeat(times) { _ ->
             GenericItem()
         }
     }
 }
-
 
 @Composable
 private fun GenericItem(modifier: Modifier = Modifier) {
@@ -38,7 +37,7 @@ private fun GenericItem(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp)
-                .shimmer()
+                .shimmer(),
         )
     }
 }

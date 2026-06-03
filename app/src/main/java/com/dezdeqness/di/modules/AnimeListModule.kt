@@ -2,8 +2,8 @@ package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.anime.repository.AnimeRepository
-import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
+import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.presentation.features.animelist.AnimeViewModel
 import dagger.Binds
 import dagger.Module
@@ -17,15 +17,12 @@ abstract class AnimeListModule {
 
         @Provides
         fun provideGetAnimeListUseCase(animeRepository: AnimeRepository) = GetAnimeListUseCase(
-            animeRepository = animeRepository
+            animeRepository = animeRepository,
         )
-
     }
 
     @Binds
     @IntoMap
     @ViewModelKey(AnimeViewModel::class)
     abstract fun bindViewModel(viewModel: AnimeViewModel): ViewModel
-
-
 }

@@ -42,7 +42,7 @@ class AnimeSeasonCellComposer @Inject constructor(
                 AnimeCell(
                     id = "$currentYear",
                     displayName = "$currentYear год",
-                )
+                ),
             )
             counter++
         }
@@ -53,7 +53,7 @@ class AnimeSeasonCellComposer @Inject constructor(
                     AnimeCell(
                         id = "${milestoneYear}_$currentYear",
                         displayName = "$milestoneYear-$currentYear",
-                    )
+                    ),
                 )
                 currentYear = milestoneYear - 1
             }
@@ -63,7 +63,7 @@ class AnimeSeasonCellComposer @Inject constructor(
             AnimeCell(
                 id = "${MILESTONE_1950}_$currentYear",
                 displayName = resourceProvider.getString(R.string.filter_cell_season_old_enough),
-            )
+            ),
         )
 
         return cells
@@ -87,25 +87,25 @@ class AnimeSeasonCellComposer @Inject constructor(
                     AnimeCell(
                         id = "${listSeasons[SPRING_SEASON].first}_$cellNewYear",
                         displayName = "${listSeasons[SPRING_SEASON].second} $cellNewYear",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[WINTER_SEASON].first}_$cellNewYear",
                         displayName = "${listSeasons[WINTER_SEASON].second} $cellNewYear",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[FALL_SEASON].first}_$cellPastYear",
                         displayName = "${listSeasons[FALL_SEASON].second} $cellPastYear",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[SUMMER_SEASON].first}_$cellPastYear",
                         displayName = "${listSeasons[SUMMER_SEASON].second} $cellPastYear",
-                    )
+                    ),
                 )
             }
 
@@ -115,25 +115,25 @@ class AnimeSeasonCellComposer @Inject constructor(
                     AnimeCell(
                         id = "${listSeasons[SUMMER_SEASON].first}_$year",
                         displayName = "${listSeasons[SUMMER_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[SPRING_SEASON].first}_$year",
                         displayName = "${listSeasons[SPRING_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[WINTER_SEASON].first}_$year",
                         displayName = "${listSeasons[WINTER_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[FALL_SEASON].first}_$cellPastYear",
                         displayName = "${listSeasons[FALL_SEASON].second} $cellPastYear",
-                    )
+                    ),
                 )
             }
 
@@ -142,25 +142,25 @@ class AnimeSeasonCellComposer @Inject constructor(
                     AnimeCell(
                         id = "${listSeasons[FALL_SEASON].first}_$year",
                         displayName = "${listSeasons[FALL_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[SUMMER_SEASON].first}_$year",
                         displayName = "${listSeasons[SUMMER_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[SPRING_SEASON].first}_$year",
                         displayName = "${listSeasons[SPRING_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[WINTER_SEASON].first}_$year",
                         displayName = "${listSeasons[WINTER_SEASON].second} $year",
-                    )
+                    ),
                 )
             }
 
@@ -170,25 +170,25 @@ class AnimeSeasonCellComposer @Inject constructor(
                     AnimeCell(
                         id = "${listSeasons[WINTER_SEASON].first}_$cellNewYear",
                         displayName = "${listSeasons[WINTER_SEASON].second} $cellNewYear",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[FALL_SEASON].first}_$year",
                         displayName = "${listSeasons[FALL_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[SUMMER_SEASON].first}_$year",
                         displayName = "${listSeasons[SUMMER_SEASON].second} $year",
-                    )
+                    ),
                 )
                 cells.add(
                     AnimeCell(
                         id = "${listSeasons[SPRING_SEASON].first}_$year",
                         displayName = "${listSeasons[SPRING_SEASON].second} $year",
-                    )
+                    ),
                 )
             }
         }
@@ -211,16 +211,20 @@ class AnimeSeasonCellComposer @Inject constructor(
     companion object {
         private val listSeasons = listOf(
             Pair(
-                "winter", "Зима"
+                "winter",
+                "Зима",
             ),
             Pair(
-                "spring", "Весна"
+                "spring",
+                "Весна",
             ),
             Pair(
-                "summer", "Лето"
+                "summer",
+                "Лето",
             ),
             Pair(
-                "fall", "Осень"
+                "fall",
+                "Осень",
             ),
         )
 
@@ -244,5 +248,4 @@ class AnimeSeasonCellComposer @Inject constructor(
             MILESTONE_1990,
         )
     }
-
 }

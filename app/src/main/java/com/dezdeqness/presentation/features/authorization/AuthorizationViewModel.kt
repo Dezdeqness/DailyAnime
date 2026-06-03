@@ -3,17 +3,17 @@ package com.dezdeqness.presentation.features.authorization
 import androidx.core.net.toUri
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.event.AuthUrl
 import com.dezdeqness.presentation.event.AuthorizationSuccess
 import com.dezdeqness.presentation.event.CloseAuthorization
 import com.dezdeqness.utils.NetworkUtils
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 class AuthorizationViewModel @Inject constructor(
     private val sessionManager: SessionManager,
@@ -44,7 +44,6 @@ class AuthorizationViewModel @Inject constructor(
                 .onFailure {
                     logInfo("Url is incorrect")
                 }
-
         } else {
             onEventReceive(CloseAuthorization)
         }
@@ -70,12 +69,10 @@ class AuthorizationViewModel @Inject constructor(
                         logInfo("Sign in/Sign up is failed", it)
                     }
             }
-
         }
     }
 
     private companion object {
         private const val CODE_KEY = "code"
     }
-
 }

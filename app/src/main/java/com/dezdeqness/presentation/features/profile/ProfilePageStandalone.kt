@@ -39,14 +39,11 @@ fun ProfilePageStandalone(
         modifier = modifier,
         stateFlow = viewModel.profileStateFlow,
         actions = object : ProfileActions {
-            override fun onSettingIconClicked() =
-                viewModel.onEventReceive(NavigateToSettings)
+            override fun onSettingIconClicked() = viewModel.onEventReceive(NavigateToSettings)
 
-            override fun onStatsIconClicked() =
-                viewModel.onEventReceive(NavigateToStats)
+            override fun onStatsIconClicked() = viewModel.onEventReceive(NavigateToStats)
 
-            override fun onHistoryIconClicked() =
-                viewModel.onEventReceive(NavigateToHistory)
+            override fun onHistoryIconClicked() = viewModel.onEventReceive(NavigateToHistory)
 
             override fun onAchievementsClicked(userId: Long) {
                 viewModel.onEventReceive(NavigateToAchievements(userId))
@@ -58,8 +55,7 @@ fun ProfilePageStandalone(
                 viewModel.onLogoutClicked()
             }
 
-            override fun onRegistrationClicked() =
-                viewModel.onEventReceive(NavigateToSignUp)
+            override fun onRegistrationClicked() = viewModel.onEventReceive(NavigateToSignUp)
 
             override fun onFavouriteClicked(userId: Long) {
                 viewModel.onEventReceive(NavigateToFavourites(userId))

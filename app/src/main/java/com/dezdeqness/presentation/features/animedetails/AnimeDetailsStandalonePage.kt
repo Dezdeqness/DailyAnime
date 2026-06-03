@@ -160,5 +160,4 @@ fun AnimeDetailsStandalonePage(
             }
         }
     }
-
 }

@@ -47,7 +47,7 @@ fun AnimeSearchFilter(
 
     val progress by animateFloatAsState(
         if (state.selectedCells.isNotEmpty()) 1f else 0f,
-        animationSpec = tween(600)
+        animationSpec = tween(600),
     )
 
     if (state.isFilterVisible) {
@@ -61,12 +61,11 @@ fun AnimeSearchFilter(
                 .fillMaxSize()
                 .systemBarsPadding(),
             shape = RoundedCornerShape(0.dp),
-            dragHandle = null
+            dragHandle = null,
         ) {
             val listState = rememberLazyListState()
 
             Box(Modifier.fillMaxSize()) {
-
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
@@ -76,7 +75,7 @@ fun AnimeSearchFilter(
                         key = { index ->
                             val item = state.items[index].value
                             item.innerId + item.displayName
-                        }
+                        },
                     ) { index ->
                         Section(
                             sectionData = state.items[index],
@@ -87,7 +86,7 @@ fun AnimeSearchFilter(
                                 scope.launch {
                                     listState.animateScrollToItem(0)
                                 }
-                            }
+                            },
                         )
                     }
 
@@ -101,25 +100,23 @@ fun AnimeSearchFilter(
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
                         .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
-                    progress = progress
+                    progress = progress,
                 ) {
                     AppOutlinedButton(
                         modifier = Modifier.padding(end = 8.dp),
-                        title = stringResource(R.string.search_filter_reset)
+                        title = stringResource(R.string.search_filter_reset),
                     ) {
                         actions.onResetFilter()
                     }
 
                     AppButton(
                         modifier = Modifier.animateContentSize(),
-                        title = stringResource(R.string.search_filter_apply)
+                        title = stringResource(R.string.search_filter_apply),
                     ) {
                         actions.onApplyFilter()
                     }
                 }
-
             }
         }
     }
-
 }

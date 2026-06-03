@@ -1,10 +1,10 @@
 package com.dezdeqness.presentation.features.animestats
 
+import java.net.URLDecoder
+import java.net.URLEncoder
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import java.net.URLDecoder
-import java.net.URLEncoder
 
 @Serializable
 data class AnimeStatsTransferModel(

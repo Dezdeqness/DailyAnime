@@ -21,9 +21,7 @@ abstract class CharacterDetailsFeatureModule {
 
     companion object {
         @Provides
-        fun provideCharacterDetailsStore(
-            actor: CharacterDetailsActor,
-        ): ElmStore<Event, State, Effect, Command> =
+        fun provideCharacterDetailsStore(actor: CharacterDetailsActor): ElmStore<Event, State, Effect, Command> =
             ElmStore(
                 initialState = State(),
                 reducer = characterDetailsReducer,

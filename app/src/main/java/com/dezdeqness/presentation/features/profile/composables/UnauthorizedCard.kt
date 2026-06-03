@@ -52,20 +52,19 @@ fun UnauthorizedCard(
                 color = AppTheme.colors.textPrimary,
                 textAlign = TextAlign.Center,
             )
-
         }
 
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             AppButton(
                 title = stringResource(id = R.string.unauthorized_sign_in),
                 onClick = {
                     onLoginClick()
                 },
-                modifier = Modifier.widthIn(480.dp)
+                modifier = Modifier.widthIn(480.dp),
             )
 
             AppOutlinedButton(
@@ -73,7 +72,7 @@ fun UnauthorizedCard(
                 onClick = {
                     onRegisterClick()
                 },
-                modifier = Modifier.widthIn(480.dp)
+                modifier = Modifier.widthIn(480.dp),
             )
         }
     }

@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.ConfigSettingsProvider
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 class DebugScreenViewModel @Inject constructor(
     private val configManager: ConfigManager,
@@ -23,7 +23,7 @@ class DebugScreenViewModel @Inject constructor(
         }
         _uiState.value = DebugConfigState(
             configValues = current,
-            isOverrideEnabled = configSettingsProvider.isOverrideRemoteEnabled() == true
+            isOverrideEnabled = configSettingsProvider.isOverrideRemoteEnabled() == true,
         )
     }
 

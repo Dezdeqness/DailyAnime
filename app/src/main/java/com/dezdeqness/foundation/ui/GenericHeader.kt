@@ -9,12 +9,12 @@ import com.dezdeqness.foundation.ui.theme.AppTheme
 @Composable
 fun GenericHeader(
     modifier: Modifier = Modifier,
-    title: String
+    title: String,
 ) {
     Text(
         title,
         style = AppTheme.typography.labelLarge.copy(fontSize = 16.sp),
         modifier = modifier,
-        color = AppTheme.colors.textPrimary
+        color = AppTheme.colors.textPrimary,
     )
 }

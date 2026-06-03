@@ -37,5 +37,4 @@ fun SearchFilterChip(
         selected = isSelected,
         border = null,
     )
-
 }

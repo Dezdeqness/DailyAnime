@@ -57,7 +57,7 @@ fun CalendarItem(
             color = AppTheme.colors.textPrimary,
             modifier = Modifier
                 .weight(1f)
-                .align(Alignment.Top)
+                .align(Alignment.Top),
         )
         Box(
             modifier = Modifier
@@ -66,7 +66,7 @@ fun CalendarItem(
         ) {
             AppImage(
                 data = item.logoUrl,
-                modifier = Modifier.height(150.dp)
+                modifier = Modifier.height(150.dp),
             )
 
             Text(
@@ -76,15 +76,14 @@ fun CalendarItem(
                     .clip(RoundedCornerShape(6.dp))
                     .background(colorResource(id = R.color.background_shadow))
                     .padding(4.dp)
-                    .align(alignment = Alignment.BottomEnd)
+                    .align(alignment = Alignment.BottomEnd),
             )
         }
-
 
         Column(
             modifier = Modifier
                 .padding(start = 8.dp)
-                .weight(3f)
+                .weight(3f),
         ) {
             Text(
                 text = item.name,
@@ -94,7 +93,7 @@ fun CalendarItem(
                 color = AppTheme.colors.textPrimary,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Text(
                 text = stringResource(
@@ -130,7 +129,7 @@ fun CalendarItemPreview() {
                 time = "12:55",
                 logoUrl = "",
             ),
-            onClick = {_, _ -> },
+            onClick = { _, _ -> },
         )
     }
 }

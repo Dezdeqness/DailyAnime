@@ -35,10 +35,11 @@ fun GenericListPage(
         },
         containerColor = AppTheme.colors.onPrimary,
     ) { padding ->
-        Box(modifier = modifier
-            .padding(padding)
-            .fillMaxSize()) {
-
+        Box(
+            modifier = modifier
+                .padding(padding)
+                .fillMaxSize(),
+        ) {
             when (state.status) {
                 GenericListableStatus.Loading, GenericListableStatus.Initial -> {
                     GenericListLoading(modifier = Modifier.fillMaxSize())
@@ -47,7 +48,7 @@ fun GenericListPage(
                 GenericListableStatus.Loaded -> {
                     GenericList(
                         list = state.list,
-                        onClick = { action -> actions.onActionReceive(action) }
+                        onClick = { action -> actions.onActionReceive(action) },
                     )
                 }
 

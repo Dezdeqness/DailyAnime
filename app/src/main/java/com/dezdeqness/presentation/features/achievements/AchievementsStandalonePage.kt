@@ -32,7 +32,6 @@ fun AchievementsStandalonePage(
     val actions = remember {
         object : AchievementsActions {
             override fun onPullDownRefreshed() {
-
             }
 
             override fun onBackPressed() {

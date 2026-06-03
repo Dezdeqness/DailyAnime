@@ -7,7 +7,6 @@ import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
@@ -15,16 +14,17 @@ import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.feature.history.presentation.models.HistoryModel.HistoryUiModel
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.AnimeUiMapper
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.features.home.model.SectionStatus
 import com.dezdeqness.presentation.features.home.model.SectionUiModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
@@ -102,8 +102,8 @@ class HomeViewModel @Inject constructor(
                             sectionsState = it.sectionsState.copy(
                                 latestHistoryItem = _homeStateFlow.value.sectionsState.latestHistoryItem.copy(
                                     status = SectionStatus.Loading,
-                                )
-                            )
+                                ),
+                            ),
                         )
                     }
                 }
@@ -126,8 +126,8 @@ class HomeViewModel @Inject constructor(
                             latestHistoryItem = _homeStateFlow.value.sectionsState.latestHistoryItem.copy(
                                 status = SectionStatus.Loaded,
                                 historyUiModel = mappedItem,
-                            )
-                        )
+                            ),
+                        ),
                     )
                 }
             },
@@ -137,11 +137,11 @@ class HomeViewModel @Inject constructor(
                         sectionsState = it.sectionsState.copy(
                             latestHistoryItem = _homeStateFlow.value.sectionsState.latestHistoryItem.copy(
                                 status = SectionStatus.Error,
-                            )
-                        )
+                            ),
+                        ),
                     )
                 }
-            }
+            },
         )
     }
 
@@ -165,8 +165,8 @@ class HomeViewModel @Inject constructor(
                                 },
                                 calendarSection = _homeStateFlow.value.sectionsState.calendarSection.copy(
                                     status = SectionStatus.Loading,
-                                )
-                            )
+                                ),
+                            ),
                         )
                     }
                 }
@@ -188,7 +188,7 @@ class HomeViewModel @Inject constructor(
                             numericId = section.numericId,
                             title = section.title,
                             items = list,
-                            status = SectionStatus.Loaded
+                            status = SectionStatus.Loaded,
                         )
                     }
 
@@ -203,7 +203,7 @@ class HomeViewModel @Inject constructor(
                                 items = calendarSection,
                                 status = SectionStatus.Loaded,
                                 isCalendarActionVisible = configManager.isCalendarEnabled,
-                            )
+                            ),
                         ),
                     )
                 }
@@ -217,12 +217,12 @@ class HomeViewModel @Inject constructor(
                             },
                             calendarSection = _homeStateFlow.value.sectionsState.calendarSection.copy(
                                 status = SectionStatus.Error,
-                            )
-                        )
+                            ),
+                        ),
                     )
                 }
                 logInfo("Error during load home page", throwable)
-            }
+            },
         )
     }
 
@@ -238,9 +238,8 @@ class HomeViewModel @Inject constructor(
                     isAuthorized = isAuthorized,
                     userName = userName,
                     avatarUrl = avatarUrl,
-                )
+                ),
             )
         }
     }
-
 }

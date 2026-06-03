@@ -28,6 +28,6 @@ fun StatsStandalonePage(
         state = viewModel.statsStateFlow,
         onBackPressed = {
             navController.popBackStack()
-        }
+        },
     )
 }

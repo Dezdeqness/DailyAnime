@@ -1,9 +1,9 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
 import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.foundation.provider.ResourceProvider
-import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
 import com.dezdeqness.presentation.features.animestats.AnimeStatsComposer
 import com.dezdeqness.presentation.features.animestats.AnimeStatsViewModel
 import dagger.Binds
@@ -16,9 +16,7 @@ abstract class AnimeStatsModule {
 
     companion object {
         @Provides
-        fun provideAnimeStatsComposer(
-            resourceProvider: ResourceProvider,
-        ) = AnimeStatsComposer(
+        fun provideAnimeStatsComposer(resourceProvider: ResourceProvider) = AnimeStatsComposer(
             resourceProvider = resourceProvider,
         )
     }
@@ -27,5 +25,4 @@ abstract class AnimeStatsModule {
     @IntoMap
     @ViewModelKey(AnimeStatsViewModel::class)
     abstract fun bindAnimeStatsViewModel(viewModel: AnimeStatsViewModel): ViewModel
-
 }

@@ -8,7 +8,7 @@ import com.dezdeqness.presentation.features.home.model.SectionUiModel
 
 data class HomeState(
     val authorizedState: AuthorizedState = AuthorizedState(),
-    val sectionsState: SectionsState = SectionsState()
+    val sectionsState: SectionsState = SectionsState(),
 )
 
 @Immutable

@@ -24,8 +24,8 @@ class AnimeStatsComposer(
 
             statsList.add(
                 StatsHeaderUiModel(
-                    header = resourceProvider.getString(R.string.stats_header_scores)
-                )
+                    header = resourceProvider.getString(R.string.stats_header_scores),
+                ),
             )
 
             val scores = animeStatsFragment.scoresArgument
@@ -42,7 +42,7 @@ class AnimeStatsComposer(
                 ScoreChartUiModel(
                     maxProgress = maxProgress,
                     ImmutableList.copyOf(scores),
-                )
+                ),
             )
         }
 
@@ -53,8 +53,8 @@ class AnimeStatsComposer(
 
             statsList.add(
                 StatsHeaderUiModel(
-                    header = resourceProvider.getString(R.string.stats_header_lists)
-                )
+                    header = resourceProvider.getString(R.string.stats_header_lists),
+                ),
             )
             val statuses = animeStatsFragment
                 .statusesArgument
@@ -64,38 +64,36 @@ class AnimeStatsComposer(
                         value = value.value.toString(),
                         currentProgress = value.value,
                         textName = value.name,
-                        color = getColorByName(value.name)
+                        color = getColorByName(value.name),
                     )
                 }
             statsList.add(
                 DiagramChartUiModel(
                     maxProgress = maxProgress,
-                    ImmutableList.copyOf(statuses)
-                )
+                    ImmutableList.copyOf(statuses),
+                ),
             )
         }
 
         return statsList
     }
 
-    private fun getStatusByName(name: String) =
-        when (name) {
-            PLANNED -> R.string.stats_status_planned
-            WATCHING -> R.string.stats_status_watching
-            DROPPED -> R.string.stats_status_dropped
-            ON_HOLD -> R.string.stats_status_on_hold
-            else -> R.string.stats_status_completed
-        }
+    private fun getStatusByName(name: String) = when (name) {
+        PLANNED -> R.string.stats_status_planned
+        WATCHING -> R.string.stats_status_watching
+        DROPPED -> R.string.stats_status_dropped
+        ON_HOLD -> R.string.stats_status_on_hold
+        else -> R.string.stats_status_completed
+    }
 
-    private fun getColorByName(name: String) =
-        when (name) {
-            WATCHING -> Color(0xFF42A5F5)
-            COMPLETED -> Color(0xFF66BB6A)
-            DROPPED -> Color(0xFFEF5350)
-            PLANNED -> Color(0xFFFFA726)
-            ON_HOLD -> Color(0xFF26C6DA)
-            else -> Color.Gray
-        }
+    private fun getColorByName(name: String) = when (name) {
+        WATCHING -> Color(0xFF42A5F5)
+        COMPLETED -> Color(0xFF66BB6A)
+        DROPPED -> Color(0xFFEF5350)
+        PLANNED -> Color(0xFFFFA726)
+        ON_HOLD -> Color(0xFF26C6DA)
+        else -> Color.Gray
+    }
 
     companion object {
         private const val PLANNED = "planned"
@@ -104,5 +102,4 @@ class AnimeStatsComposer(
         private const val ON_HOLD = "on_hold"
         private const val COMPLETED = "completed"
     }
-
 }

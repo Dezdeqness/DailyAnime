@@ -15,9 +15,7 @@ abstract class StatsModule {
 
     companion object {
         @Provides
-        fun provideStatsComposer(
-            resourceProvider: ResourceProvider,
-        ) = StatsComposer(
+        fun provideStatsComposer(resourceProvider: ResourceProvider) = StatsComposer(
             resourceProvider = resourceProvider,
         )
     }
@@ -26,5 +24,4 @@ abstract class StatsModule {
     @IntoMap
     @ViewModelKey(StatsViewModel::class)
     abstract fun bindStatsViewModel(viewModel: StatsViewModel): ViewModel
-
 }

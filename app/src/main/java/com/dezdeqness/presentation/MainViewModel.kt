@@ -3,10 +3,10 @@ package com.dezdeqness.presentation
 import com.dezdeqness.contract.settings.models.LanguageDisclaimerPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.provider.LocaleProvider
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.utils.LocaleUtils
 import javax.inject.Inject
@@ -30,12 +30,12 @@ class MainViewModel @Inject constructor(
     init {
         launchOnIo {
             val locale = localeProvider.getCurrentLocale()
-            if (localeUtils.isNonRusLocale(locale)
-                && settingsRepository.getPreference(LanguageDisclaimerPreference).not()) {
+            if (localeUtils.isNonRusLocale(locale) &&
+                settingsRepository.getPreference(LanguageDisclaimerPreference).not()
+            ) {
                 onEventReceive(LanguageDisclaimer)
                 settingsRepository.setPreference(LanguageDisclaimerPreference, true)
             }
         }
-
     }
 }

@@ -1,17 +1,17 @@
 package com.dezdeqness.presentation.features.genericlistscreen
 
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.usecases.BaseListableUseCase
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
 import com.google.common.collect.ImmutableList
+import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
-import javax.inject.Named
 
 class GenericListableViewModel @Inject constructor(
     @Named("animeId") private val animeId: Long,
@@ -23,7 +23,8 @@ class GenericListableViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded {
+),
+    BaseViewModel.InitialLoaded {
 
     private val _genericListableStateFlow = MutableStateFlow(GenericListableState())
     val genericListableStateFlow: StateFlow<GenericListableState> get() = _genericListableStateFlow
@@ -35,7 +36,6 @@ class GenericListableViewModel @Inject constructor(
 
     override val viewModelTag: String
         get() = "GenericListableViewModel"
-
 
     override fun setLoadingIndicatorVisible(isVisible: Boolean) {}
 
@@ -72,8 +72,7 @@ class GenericListableViewModel @Inject constructor(
                 logInfo("Error during initial loading of state of generic list", it)
 
                 _genericListableStateFlow.update { it.copy(status = GenericListableStatus.Error) }
-            }
+            },
         )
     }
-
 }

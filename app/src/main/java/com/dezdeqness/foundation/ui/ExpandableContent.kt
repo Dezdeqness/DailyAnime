@@ -17,30 +17,29 @@ fun ExpandableContent(
     isVisible: Boolean,
     content: @Composable () -> Unit,
 ) {
-
     val enterTransition = remember {
         expandVertically(
             expandFrom = Alignment.Top,
             animationSpec = tween(
-                durationMillis = TRANSITION_DURATION
-            )
+                durationMillis = TRANSITION_DURATION,
+            ),
         ) + fadeIn(
             initialAlpha = 0.3f,
             animationSpec = tween(
-                durationMillis = TRANSITION_DURATION
-            )
+                durationMillis = TRANSITION_DURATION,
+            ),
         )
     }
     val exitTransition = remember {
         shrinkVertically(
             shrinkTowards = Alignment.Top,
             animationSpec = tween(
-                durationMillis = TRANSITION_DURATION
-            )
+                durationMillis = TRANSITION_DURATION,
+            ),
         ) + fadeOut(
             animationSpec = tween(
-                durationMillis = TRANSITION_DURATION
-            )
+                durationMillis = TRANSITION_DURATION,
+            ),
         )
     }
 

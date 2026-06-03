@@ -6,17 +6,17 @@ import com.google.common.collect.ImmutableList
 
 class DiagramChartUiModel(
     val maxProgress: Int,
-    val items: ImmutableList<StatsData>
+    val items: ImmutableList<StatsData>,
 ) : AdapterItem()
 
 class ScoreChartUiModel(
     val maxProgress: Int,
-    val items: ImmutableList<StatsData>
+    val items: ImmutableList<StatsData>,
 ) : AdapterItem()
 
 class StatsChartUiModel(
     val maxProgress: Int,
-    val items: ImmutableList<StatsData>
+    val items: ImmutableList<StatsData>,
 ) : AdapterItem()
 
 data class StatsData(

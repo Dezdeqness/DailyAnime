@@ -4,14 +4,14 @@ import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.core.BaseViewModel
+import com.dezdeqness.data.core.AppLogger
+import com.dezdeqness.domain.usecases.GetUserUseCase
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
-import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.domain.usecases.GetUserUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
@@ -23,7 +23,8 @@ class ProfileViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded {
+),
+    BaseViewModel.InitialLoaded {
 
     private val _profileStateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState())
     val profileStateFlow: StateFlow<ProfileState> get() = _profileStateFlow
@@ -84,12 +85,11 @@ class ProfileViewModel @Inject constructor(
                     messageConsumer.onErrorMessage(messageProvider.getGeneralErrorMessage())
                 }
                 logInfo("Error during fetch of profile on profile page", it)
-            }
+            },
         )
     }
 
     companion object {
         private const val TAG = "ProfileViewModel"
     }
-
 }

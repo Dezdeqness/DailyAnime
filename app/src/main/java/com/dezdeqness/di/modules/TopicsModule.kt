@@ -27,12 +27,11 @@ abstract class TopicsModule {
             GetTopicUseCase(topicRepository = topicRepository)
 
         @Provides
-        fun provideTopicListStore(actor: TopicListActor): ElmStore<Event, State, Effect, Command> =
-            ElmStore(
-                initialState = State(),
-                reducer = topicListReducer,
-                actor = actor,
-            )
+        fun provideTopicListStore(actor: TopicListActor): ElmStore<Event, State, Effect, Command> = ElmStore(
+            initialState = State(),
+            reducer = topicListReducer,
+            actor = actor,
+        )
     }
 
     @Binds

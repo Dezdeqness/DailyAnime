@@ -17,7 +17,6 @@ fun CalendarStandalonePage(
     modifier: Modifier = Modifier,
     navController: NavHostController,
 ) {
-
     val context = LocalContext.current
     val homeComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
@@ -52,7 +51,6 @@ fun CalendarStandalonePage(
             override fun onQueryChanged(query: String) {
                 viewModel.onQueryChanged(query)
             }
-
         },
     )
 
@@ -61,7 +59,7 @@ fun CalendarStandalonePage(
             is OpenAnimeDetails -> {
                 analyticsManager.detailsTracked(
                     id = event.animeId.toString(),
-                    title = event.title
+                    title = event.title,
                 )
 
                 navController.navigate(AnimeDetails(event.animeId))

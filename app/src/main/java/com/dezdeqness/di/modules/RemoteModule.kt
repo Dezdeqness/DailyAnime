@@ -5,6 +5,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.interceptor.ApolloInterceptor
 import com.apollographql.apollo.network.okHttpClient
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.AuthorizationTokenInterceptor
@@ -14,20 +15,19 @@ import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
-import com.dezdeqness.contract.auth.SessionManager
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 class RemoteModule {
@@ -35,16 +35,14 @@ class RemoteModule {
     @Named("logging")
     @Singleton
     @Provides
-    fun providesLoggingInterceptor(): Interceptor =
-        HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BASIC
-        }
+    fun providesLoggingInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BASIC
+    }
 
     @Named("chucker")
     @Singleton
     @Provides
-    fun provideChuckerInterceptor(context: Context): Interceptor =
-        ChuckerInterceptor(context)
+    fun provideChuckerInterceptor(context: Context): Interceptor = ChuckerInterceptor(context)
 
     @Singleton
     @Provides
@@ -52,14 +50,13 @@ class RemoteModule {
         @Named("user_agent") userAgentTokenInterceptor: Interceptor,
         @Named("logging") loggingInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(userAgentTokenInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(chuckerInterceptor)
-            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .build()
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(userAgentTokenInterceptor)
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(chuckerInterceptor)
+        .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .build()
 
     @Singleton
     @Provides
@@ -67,13 +64,12 @@ class RemoteModule {
         @Named("okhttp_refresh") okHttpClient: OkHttpClient,
         moshi: Moshi,
         configManager: ConfigManager,
-    ): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(configManager.baseUrl + "api/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .client(okHttpClient)
-            .build()
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(configManager.baseUrl + "api/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .client(okHttpClient)
+        .build()
 
     @Named("Authorization")
     @Singleton
@@ -82,13 +78,12 @@ class RemoteModule {
         okHttpClient: OkHttpClient,
         moshi: Moshi,
         configManager: ConfigManager,
-    ): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(configManager.baseUrl)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .client(okHttpClient)
-            .build()
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(configManager.baseUrl)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .client(okHttpClient)
+        .build()
 
     @Named("Account")
     @Singleton
@@ -97,13 +92,12 @@ class RemoteModule {
         @Named("okhttp_refresh") okHttpClient: OkHttpClient,
         moshi: Moshi,
         configManager: ConfigManager,
-    ): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(configManager.baseUrl + "api/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .client(okHttpClient)
-            .build()
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(configManager.baseUrl + "api/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .client(okHttpClient)
+        .build()
 
     @Named("okhttp_refresh")
     @Singleton
@@ -114,17 +108,15 @@ class RemoteModule {
         @Named("refresh") refreshInterceptor: Interceptor,
         @Named("logging") loggingInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(authorizationInterceptor)
-            .addInterceptor(userAgentTokenInterceptor)
-            .addInterceptor(refreshInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(chuckerInterceptor)
-            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .build()
-
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(authorizationInterceptor)
+        .addInterceptor(userAgentTokenInterceptor)
+        .addInterceptor(refreshInterceptor)
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(chuckerInterceptor)
+        .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .build()
 
     @Named("shikimori_graphql_okhttp")
     @Singleton
@@ -135,23 +127,20 @@ class RemoteModule {
         @Named("refresh") refreshInterceptor: Interceptor,
         @Named("logging") loggingInterceptor: Interceptor,
         @Named("chucker") chuckerInterceptor: Interceptor,
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(graphqlAuthorizationInterceptor)
-            .addInterceptor(userAgentTokenInterceptor)
-            .addInterceptor(refreshInterceptor)
-            .addInterceptor(chuckerInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .build()
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(graphqlAuthorizationInterceptor)
+        .addInterceptor(userAgentTokenInterceptor)
+        .addInterceptor(refreshInterceptor)
+        .addInterceptor(chuckerInterceptor)
+        .addInterceptor(loggingInterceptor)
+        .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+        .build()
 
     @Named("anilist_graphql_okhttp")
     @Singleton
     @Provides
-    fun providesAnilistGraphqlHttpClient(
-        @Named("chucker") chuckerInterceptor: Interceptor,
-    ): OkHttpClient =
+    fun providesAnilistGraphqlHttpClient(@Named("chucker") chuckerInterceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(chuckerInterceptor)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -205,14 +194,12 @@ class RemoteModule {
     @Named("graphql_operation_name")
     @Singleton
     @Provides
-    fun provideGraphqlOperationNameInterceptor(): ApolloInterceptor =
-        GraphqlOperationNameInterceptor()
+    fun provideGraphqlOperationNameInterceptor(): ApolloInterceptor = GraphqlOperationNameInterceptor()
 
     @Named("user_agent")
     @Singleton
     @Provides
-    fun provideUserAgentTokenInterceptor(): Interceptor =
-        UserAgentTokenInterceptor()
+    fun provideUserAgentTokenInterceptor(): Interceptor = UserAgentTokenInterceptor()
 
     @Singleton
     @Provides
@@ -221,13 +208,10 @@ class RemoteModule {
 
     @Singleton
     @Provides
-    fun provideAuthorizationApiService(
-        @Named("Authorization") retrofit: Retrofit
-    ): AuthorizationApiService =
+    fun provideAuthorizationApiService(@Named("Authorization") retrofit: Retrofit): AuthorizationApiService =
         retrofit.create(AuthorizationApiService::class.java)
 
     companion object {
         const val TIMEOUT = 15L
     }
-
 }

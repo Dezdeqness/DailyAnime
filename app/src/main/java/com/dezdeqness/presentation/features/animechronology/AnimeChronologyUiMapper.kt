@@ -50,5 +50,4 @@ class AnimeChronologyUiMapper @Inject constructor(
         private const val IMAGE_QUALITY_X96 = "x96"
         private const val IMAGE_QUALITY_ORIGINAL = "original"
     }
-
 }

@@ -7,7 +7,6 @@ import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
-
 @Subcomponent(modules = [AchievementsModule::class, AchievementsArgsModule::class])
 interface AchievementsSubcomponent : BaseComponent {
     @Subcomponent.Builder
@@ -25,5 +24,4 @@ class AchievementsArgsModule(private val userId: Long) {
     @Named("userId")
     @Provides
     fun provideUserId() = userId
-
 }

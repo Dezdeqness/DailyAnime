@@ -12,5 +12,4 @@ abstract class DataModule {
     @Singleton
     @Binds
     abstract fun bindErrorMapper(apiErrorMapper: ApiErrorMapper): ErrorMapper
-
 }

@@ -88,7 +88,7 @@ fun SearchFilterCheckboxGroup(
                     }
 
                     isCollapsed = !isCollapsed
-                }
+                },
             )
         }
     }

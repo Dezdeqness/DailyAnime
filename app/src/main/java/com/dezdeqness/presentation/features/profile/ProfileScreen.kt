@@ -55,9 +55,9 @@ fun ProfileScreen(
             modifier = modifier
                 .padding(top = padding.calculateTopPadding())
                 .fillMaxSize()
-                .background(AppTheme.colors.onPrimary)
+                .background(AppTheme.colors.onPrimary),
         ) {
-            when(state.authorizedState) {
+            when (state.authorizedState) {
                 AuthorizedUiState.Authorized -> {
                     ProfileCard(
                         nickname = state.nickname,
@@ -76,14 +76,14 @@ fun ProfileScreen(
                         },
                         onLogoutClicked = {
                             actions.onLogoutClicked()
-                        }
+                        },
                     )
                 }
                 AuthorizedUiState.Unauthorized -> {
                     UnauthorizedCard(
                         onLoginClick = actions::onLoginCLicked,
                         onRegisterClick = actions::onRegistrationClicked,
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier.padding(horizontal = 16.dp),
                     )
                 }
                 AuthorizedUiState.Pending -> {
@@ -92,7 +92,6 @@ fun ProfileScreen(
             }
         }
     }
-
 }
 
 @Preview
@@ -111,7 +110,7 @@ fun ProfileScreenPreview() {
                 override fun onRegistrationClicked() = Unit
                 override fun onFavouriteClicked(userId: Long) = Unit
                 override fun onLogoutClicked() = Unit
-            }
+            },
         )
     }
 }

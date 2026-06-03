@@ -7,8 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.data.core.config.ConfigKeys
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.getComponent
 import javax.inject.Inject
 import kotlin.getValue
@@ -21,7 +21,7 @@ class DebugScreenActivity : AppCompatActivity() {
     private val viewModel: DebugScreenViewModel by viewModels(
         factoryProducer = {
             viewModelFactory
-        }
+        },
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +59,7 @@ class DebugScreenActivity : AppCompatActivity() {
                             val mainIntent = Intent.makeRestartActivityTask(intent?.component)
                             startActivity(mainIntent)
                         }
-                    }
+                    },
                 )
             }
         }

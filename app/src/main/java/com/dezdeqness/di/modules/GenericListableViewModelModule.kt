@@ -14,5 +14,4 @@ abstract class GenericListableViewModelModule {
     @IntoMap
     @ViewModelKey(GenericListableViewModel::class)
     abstract fun bindAnimeSimilarViewModel(viewModel: GenericListableViewModel): ViewModel
-
 }

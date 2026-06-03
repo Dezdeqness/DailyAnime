@@ -1,15 +1,15 @@
 package com.dezdeqness.presentation.features.searchfilter
 
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.event.ApplyFilter
 import com.dezdeqness.presentation.models.SearchSectionUiModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 class AnimeSearchFilterViewModel @Inject constructor(
     private val animeSearchFilterComposer: AnimeSearchFilterComposer,
@@ -92,7 +92,7 @@ class AnimeSearchFilterViewModel @Inject constructor(
                             sectionId = innerId,
                             id = cellId,
                             displayName = cell?.displayName.orEmpty(),
-                        )
+                        ),
                     )
                 }
 
@@ -110,7 +110,7 @@ class AnimeSearchFilterViewModel @Inject constructor(
             .update {
                 _animeSearchFilterStateFlow.update {
                     it.copy(
-                        selectedCells = it.selectedCells.filter { it.id != cellId }.toSet()
+                        selectedCells = it.selectedCells.filter { it.id != cellId }.toSet(),
                     )
                 }
 
@@ -126,10 +126,9 @@ class AnimeSearchFilterViewModel @Inject constructor(
                 items = listOf(),
                 selectedCells = setOf(),
                 isFilterVisible = false,
-                generalSelectedCells = false
+                generalSelectedCells = false,
             )
         }
         onEventReceive(ApplyFilter(filters = listOf()))
     }
-
 }

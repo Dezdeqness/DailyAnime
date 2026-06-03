@@ -30,17 +30,17 @@ fun FilterFab(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         AnimatedVisibility(
             visible = isFilterApplied,
             enter = fadeIn() + scaleIn(),
-            exit = fadeOut() + scaleOut()
+            exit = fadeOut() + scaleOut(),
         ) {
             SmallFloatingActionButton(
                 containerColor = AppTheme.colors.primary,
                 contentColor = AppTheme.colors.white,
-                onClick = { onClearClick() }
+                onClick = { onClearClick() },
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
@@ -53,7 +53,7 @@ fun FilterFab(
         FloatingActionButton(
             containerColor = AppTheme.colors.primary,
             contentColor = AppTheme.colors.white,
-            onClick = { onFilterClick() }
+            onClick = { onFilterClick() },
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.filter_list),

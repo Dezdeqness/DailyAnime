@@ -15,8 +15,7 @@ abstract class AnimeModule {
 
     companion object {
         @Provides
-        fun provideAnimeApiService(retrofit: Retrofit): AnimeApiService =
-            retrofit.create(AnimeApiService::class.java)
+        fun provideAnimeApiService(retrofit: Retrofit): AnimeApiService = retrofit.create(AnimeApiService::class.java)
     }
 
     @Binds
@@ -24,5 +23,4 @@ abstract class AnimeModule {
 
     @Binds
     abstract fun bindAnimeRepository(animeRepositoryImpl: AnimeRepositoryImpl): AnimeRepository
-
 }

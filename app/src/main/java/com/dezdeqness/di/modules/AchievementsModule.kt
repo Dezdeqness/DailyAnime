@@ -5,9 +5,9 @@ import com.dezdeqness.data.AchievementService
 import com.dezdeqness.data.datasource.AchievementRemoteDataSource
 import com.dezdeqness.data.datasource.AchievementRemoteDataSourceImpl
 import com.dezdeqness.data.repository.AchievementRepositoryImpl
-import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.domain.repository.AchievementRepository
 import com.dezdeqness.feature.achievements.presentation.AchievementsViewModel
+import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -34,5 +34,4 @@ abstract class AchievementsModule {
     @IntoMap
     @ViewModelKey(AchievementsViewModel::class)
     abstract fun bindAchievementsViewModel(viewModel: AchievementsViewModel): ViewModel
-
 }

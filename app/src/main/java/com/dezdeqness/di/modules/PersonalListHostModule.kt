@@ -14,5 +14,4 @@ abstract class PersonalListHostModule {
     @IntoMap
     @ViewModelKey(PersonalListHostViewModel::class)
     abstract fun bindPersonalListHostViewModel(viewModel: PersonalListHostViewModel): ViewModel
-
 }

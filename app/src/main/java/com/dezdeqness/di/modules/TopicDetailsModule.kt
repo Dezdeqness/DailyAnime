@@ -22,12 +22,11 @@ abstract class TopicDetailsModule {
     companion object {
 
         @Provides
-        fun provideTopicDetailsStore(actor: TopicDetailsActor): ElmStore<Event, State, Effect, Command> =
-            ElmStore(
-                initialState = State(),
-                reducer = topicDetailsReducer,
-                actor = actor,
-            )
+        fun provideTopicDetailsStore(actor: TopicDetailsActor): ElmStore<Event, State, Effect, Command> = ElmStore(
+            initialState = State(),
+            reducer = topicDetailsReducer,
+            actor = actor,
+        )
     }
 
     @Binds

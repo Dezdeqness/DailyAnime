@@ -17,7 +17,6 @@ sealed class Event {
     override fun hashCode(): Int {
         return id.hashCode()
     }
-
 }
 
 sealed class ConsumableEvent : Event()
@@ -52,7 +51,7 @@ object NavigateToSignUp : Event()
 
 data class ShareUrl(val url: String) : ConsumableEvent()
 
-object CloseAuthorization: Event()
+object CloseAuthorization : Event()
 
 object AuthorizationSuccess : Event()
 

@@ -30,7 +30,7 @@ fun UnauthorizedScreen(
     modifier: Modifier = Modifier,
 ) {
     val compositionLoading by rememberLottieComposition(
-        LottieCompositionSpec.RawRes(R.raw.no_face)
+        LottieCompositionSpec.RawRes(R.raw.no_face),
     )
 
     Column(
@@ -48,7 +48,7 @@ fun UnauthorizedScreen(
             LottieAnimation(
                 composition = compositionLoading,
                 iterations = LottieConstants.IterateForever,
-                modifier = Modifier.height(250.dp)
+                modifier = Modifier.height(250.dp),
             )
 
             Text(
@@ -56,7 +56,7 @@ fun UnauthorizedScreen(
                 style = AppTheme.typography.titleMedium,
                 color = AppTheme.colors.textPrimary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(vertical = 8.dp),
             )
 
             AppTextButton(
@@ -65,8 +65,6 @@ fun UnauthorizedScreen(
                     actions.onNavigateProfileClicked()
                 },
             )
-
-
         }
     }
 }
@@ -81,7 +79,7 @@ fun PreviewUnauthorizedScreen() {
                 .width(400.dp),
             actions = object : UnauthorizedActions {
                 override fun onNavigateProfileClicked() = Unit
-            }
+            },
         )
     }
 }

@@ -54,7 +54,7 @@ fun CalendarPage(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 onQueryChanged = { query ->
                     actions.onQueryChanged(query)
-                }
+                },
             )
         },
     ) { contentPadding ->
@@ -95,7 +95,7 @@ fun CalendarPage(
                     },
                     onActionReceive = { action ->
                         actions.onActionReceived(action)
-                    }
+                    },
                 )
             }
 
@@ -106,10 +106,8 @@ fun CalendarPage(
             PullRefreshIndicator(
                 refreshing = state.isPullDownRefreshing,
                 pullRefreshState,
-                Modifier.align(Alignment.TopCenter)
+                Modifier.align(Alignment.TopCenter),
             )
-
         }
     }
-
 }

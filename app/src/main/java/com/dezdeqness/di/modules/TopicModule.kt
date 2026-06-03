@@ -16,17 +16,12 @@ abstract class TopicModule {
     companion object {
 
         @Provides
-        fun provideTopicApiService(retrofit: Retrofit): TopicApiService =
-            retrofit.create(TopicApiService::class.java)
+        fun provideTopicApiService(retrofit: Retrofit): TopicApiService = retrofit.create(TopicApiService::class.java)
     }
 
     @Binds
-    abstract fun bindTopicRemoteDataSource(
-        impl: TopicRemoteDataSourceImpl,
-    ): TopicRemoteDataSource
+    abstract fun bindTopicRemoteDataSource(impl: TopicRemoteDataSourceImpl): TopicRemoteDataSource
 
     @Binds
-    abstract fun bindTopicRepository(
-        impl: TopicRepositoryImpl,
-    ): TopicRepository
+    abstract fun bindTopicRepository(impl: TopicRepositoryImpl): TopicRepository
 }

@@ -26,5 +26,4 @@ class AnimeStatsArgsModule(private val arguments: AnimeStatsArguments) {
     @Named("animeStatsArguments")
     @Provides
     fun provideAnimeStatsArguments() = arguments
-
 }

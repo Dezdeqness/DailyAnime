@@ -44,7 +44,7 @@ fun HomeCalendarSection(
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val itemsSize = items.size
         val pagerSize = itemsSize * 1000
@@ -77,7 +77,9 @@ fun HomeCalendarSection(
                 {
                     onActionReceive(Action.CalendarHeaderClicked)
                 }
-            } else null,
+            } else {
+                null
+            },
         )
         HorizontalPager(state = pagerState) { index ->
             val currentItem = items[index % itemsSize]
@@ -86,7 +88,7 @@ fun HomeCalendarSection(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onActionReceive = { action ->
                     onActionReceive(action)
-                }
+                },
             )
         }
 
@@ -113,7 +115,7 @@ private fun Indicator(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         userScrollEnabled = false,
-        modifier = modifier.height(16.dp)
+        modifier = modifier.height(16.dp),
     ) {
         repeat(itemsSize) { iteration ->
             val color =
@@ -130,13 +132,13 @@ private fun Indicator(
                         10.dp
                     } else {
                         6.dp
-                    }
+                    },
                 )
                 Box(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .background(color, CircleShape)
-                        .size(size)
+                        .size(size),
                 )
             }
         }

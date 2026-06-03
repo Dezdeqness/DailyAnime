@@ -52,7 +52,7 @@ fun PersonalListPageStandalonePage(
             factory = viewModelFactory,
             extras = MutableCreationExtras(extras).apply {
                 set(StatusIdKey, statusId)
-            }
+            },
         )
 
         val actions = remember {
@@ -76,7 +76,6 @@ fun PersonalListPageStandalonePage(
                 override fun onUserRateIncrement(editRateId: Long) {
                     tabViewModel.onUserRateIncrement(editRateId)
                 }
-
             }
         }
 

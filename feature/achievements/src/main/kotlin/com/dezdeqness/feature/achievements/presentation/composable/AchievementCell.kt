@@ -35,7 +35,7 @@ import com.dezdeqness.foundation.ui.views.image.AppImage
 @Composable
 fun AchievementCell(
     modifier: Modifier = Modifier,
-    item: AchievementsUiModel
+    item: AchievementsUiModel,
 ) {
     val isRuLocale = LocalConfiguration.current.locales.get(0).language == "ru"
 

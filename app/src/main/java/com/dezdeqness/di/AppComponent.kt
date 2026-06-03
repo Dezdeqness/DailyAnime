@@ -3,8 +3,6 @@ package com.dezdeqness.di
 import android.content.Context
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
@@ -17,19 +15,18 @@ import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
 import com.dezdeqness.di.subcomponents.AnimeComponent
 import com.dezdeqness.di.subcomponents.AnimeDetailsFeatureComponent
-import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
-import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
+import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.di.subcomponents.FavouriteSubcomponent
+import com.dezdeqness.di.subcomponents.ForumComponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
-import com.dezdeqness.di.subcomponents.ForumComponent
-import com.dezdeqness.di.subcomponents.TopicsComponent
+import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.PersonalListSearchComponent
 import com.dezdeqness.di.subcomponents.PersonalListTabComponent
@@ -40,7 +37,10 @@ import com.dezdeqness.di.subcomponents.SelectGenresSubcomponent
 import com.dezdeqness.di.subcomponents.SettingsComponent
 import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.TopicDetailsComponent
+import com.dezdeqness.di.subcomponents.TopicsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
 import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
@@ -59,7 +59,7 @@ import javax.inject.Singleton
         DataModule::class,
         DatabaseModule::class,
         FavouriteModule::class,
-    ]
+    ],
 )
 interface AppComponent {
 
@@ -116,11 +116,11 @@ interface AppComponent {
 
     fun debugComponent(): DebugComponent.Factory
 
-    fun achievementsComponent() : AchievementsSubcomponent.Builder
+    fun achievementsComponent(): AchievementsSubcomponent.Builder
 
-    fun favouriteComponent() : FavouriteSubcomponent.Builder
+    fun favouriteComponent(): FavouriteSubcomponent.Builder
 
-    fun selectGenresComponent() : SelectGenresSubcomponent.Factory
+    fun selectGenresComponent(): SelectGenresSubcomponent.Factory
 
     fun topicsComponent(): TopicsComponent.Builder
 

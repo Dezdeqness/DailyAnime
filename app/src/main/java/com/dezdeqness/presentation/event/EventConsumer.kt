@@ -6,7 +6,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.net.toUri
 import com.dezdeqness.ShikimoriApp
 
-
 class EventConsumer(val context: Context) {
 
     private val baseUrl: String =
@@ -19,8 +18,8 @@ class EventConsumer(val context: Context) {
                 context.startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        event.url.toUri()
-                    )
+                        event.url.toUri(),
+                    ),
                 )
             }
             is ShareUrl -> {
@@ -36,5 +35,4 @@ class EventConsumer(val context: Context) {
             }
         }
     }
-
 }

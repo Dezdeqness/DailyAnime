@@ -9,5 +9,5 @@ data class VideoUiModel(
 ) : AdapterItem()
 
 data class VideoUiModelList(
-    val list: ImmutableList<VideoUiModel>
+    val list: ImmutableList<VideoUiModel>,
 ) : AdapterItem()

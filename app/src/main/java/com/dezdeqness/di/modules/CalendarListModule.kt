@@ -14,5 +14,4 @@ abstract class CalendarListModule {
     @IntoMap
     @ViewModelKey(CalendarViewModel::class)
     abstract fun bindViewModel(viewModel: CalendarViewModel): ViewModel
-
 }

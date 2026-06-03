@@ -17,14 +17,12 @@ class AnimeSimilarModule {
     fun provideAnimeSimilarUiMapper(
         imageUrlUtils: ImageUrlUtils,
         animeKindUtils: AnimeKindUtils,
-    ): GenericListableUiMapper =
-        AnimeSimilarUiMapper(
-            imageUrlUtils = imageUrlUtils,
-            animeKindUtils = animeKindUtils,
-        )
+    ): GenericListableUiMapper = AnimeSimilarUiMapper(
+        imageUrlUtils = imageUrlUtils,
+        animeKindUtils = animeKindUtils,
+    )
 
     @Provides
     fun provideGetSimilarListUseCase(animeRepository: AnimeRepository): BaseListableUseCase =
         GetSimilarListUseCase(animeRepository = animeRepository)
-
 }

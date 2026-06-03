@@ -19,5 +19,4 @@ class AnimeChronologyModule {
     @Provides
     fun provideGetSimilarListUseCase(animeRepository: AnimeRepository): BaseListableUseCase =
         GetChronologyUseCase(animeRepository = animeRepository)
-
 }

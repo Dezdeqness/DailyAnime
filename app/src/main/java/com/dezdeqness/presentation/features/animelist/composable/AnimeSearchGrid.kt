@@ -42,8 +42,8 @@ fun AnimeSearchGrid(
     val configuration = LocalConfiguration.current
 
     val cellCount = remember(configuration.orientation) {
-        if (configuration.orientation == ORIENTATION_PORTRAIT
-            || configuration.orientation == ORIENTATION_UNDEFINED
+        if (configuration.orientation == ORIENTATION_PORTRAIT ||
+            configuration.orientation == ORIENTATION_UNDEFINED
         ) {
             PORTRAIT_MAX_CELLS
         } else {
@@ -59,8 +59,10 @@ fun AnimeSearchGrid(
 
     val shouldStartPaginate = remember {
         derivedStateOf {
-            hasNextPage && (gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                ?: -1) >= (gridState.layoutInfo.totalItemsCount * PAGINATION_LOAD_FACTOR)
+            hasNextPage && (
+                gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                    ?: -1
+                ) >= (gridState.layoutInfo.totalItemsCount * PAGINATION_LOAD_FACTOR)
         }
     }
 
@@ -86,7 +88,7 @@ fun AnimeSearchGrid(
             key = { index ->
                 val item = list[index]
                 item.id + item.title.hashCode()
-            }
+            },
         ) { index ->
             val item = list[index]
 
@@ -99,7 +101,7 @@ fun AnimeSearchGrid(
                     .padding(padding),
                 onClick = { id ->
                     onActionReceive(Action.AnimeClick(animeId = id, title = item.title))
-                }
+                },
             )
         }
 
@@ -111,10 +113,8 @@ fun AnimeSearchGrid(
                 }
             }
         }
-
     }
 }
-
 
 private fun calculateItemPadding(index: Int, cellCount: Int): PaddingValues {
     val column = index % cellCount

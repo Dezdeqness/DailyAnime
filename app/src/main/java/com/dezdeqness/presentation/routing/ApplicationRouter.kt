@@ -9,19 +9,19 @@ class ApplicationRouter @Inject constructor() {
 
     fun navigateToMainScreen(context: Context) = with(context) {
         startActivity(
-            MainActivity.newIntent(this)
+            MainActivity.newIntent(this),
         )
     }
 
     fun navigateToLoginScreen(context: Context) = with(context) {
         startActivity(
-            AuthorizationActivity.loginIntent(context)
+            AuthorizationActivity.loginIntent(context),
         )
     }
 
     fun navigateToSignUpScreen(context: Context) = with(context) {
         startActivity(
-            AuthorizationActivity.signUpIntent(context)
+            AuthorizationActivity.signUpIntent(context),
         )
     }
 }

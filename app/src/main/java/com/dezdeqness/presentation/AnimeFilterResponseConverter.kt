@@ -3,7 +3,7 @@ package com.dezdeqness.presentation
 import com.dezdeqness.presentation.models.SearchSectionUiModel
 import javax.inject.Inject
 
-class AnimeFilterResponseConverter @Inject constructor(){
+class AnimeFilterResponseConverter @Inject constructor() {
 
     fun convertSearchFilterToQueryMap(list: Collection<SearchSectionUiModel>): Map<String, String> {
         return list
@@ -25,5 +25,4 @@ class AnimeFilterResponseConverter @Inject constructor(){
             }
             .toMap() // Convert the resulting list to a map
     }
-
 }

@@ -24,8 +24,8 @@ class StatsComposer(
 
             statsList.add(
                 StatsHeaderUiModel(
-                    header = resourceProvider.getString(R.string.stats_header_types)
-                )
+                    header = resourceProvider.getString(R.string.stats_header_types),
+                ),
             )
 
             val scores = account
@@ -35,15 +35,15 @@ class StatsComposer(
                         textName = value.name,
                         value = value.value.toString(),
                         currentProgress = value.value,
-                        name = 0
+                        name = 0,
                     )
                 }
 
             statsList.add(
                 StatsChartUiModel(
                     maxProgress = maxProgress,
-                    ImmutableList.copyOf(scores)
-                )
+                    ImmutableList.copyOf(scores),
+                ),
             )
         }
 
@@ -54,8 +54,8 @@ class StatsComposer(
 
             statsList.add(
                 StatsHeaderUiModel(
-                    header = resourceProvider.getString(R.string.stats_header_scores)
-                )
+                    header = resourceProvider.getString(R.string.stats_header_scores),
+                ),
             )
             val scores = account
                 .scores
@@ -71,12 +71,11 @@ class StatsComposer(
             statsList.add(
                 ScoreChartUiModel(
                     maxProgress = maxProgress,
-                    ImmutableList.copyOf(scores)
-                )
+                    ImmutableList.copyOf(scores),
+                ),
             )
         }
 
         return statsList
     }
-
 }

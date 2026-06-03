@@ -50,9 +50,8 @@ fun SimilarItem(
             .fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier.height(IntrinsicSize.Max)
+            modifier = Modifier.height(IntrinsicSize.Max),
         ) {
-
             Box {
                 AppImage(
                     data = item.logoUrl,
@@ -60,13 +59,13 @@ fun SimilarItem(
                     modifier = Modifier
                         .width(96.dp)
                         .height(120.dp)
-                        .aspectRatio(2f / 3)
+                        .aspectRatio(2f / 3),
                 )
             }
 
             Column(
                 modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column {
                     Text(
@@ -88,7 +87,6 @@ fun SimilarItem(
                     )
                 }
             }
-
         }
     }
 }

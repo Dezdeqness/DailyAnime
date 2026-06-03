@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,14 +41,14 @@ fun HomeCalendarItem(
                     onActionReceive(AnimeClick(item.id))
                 },
                 interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(color = AppTheme.colors.ripple)
+                indication = ripple(color = AppTheme.colors.ripple),
             ),
     ) {
         AppImage(
             data = item.imageUrl,
             modifier = Modifier
                 .height(160.dp)
-                .aspectRatio(2 / 3f)
+                .aspectRatio(2 / 3f),
         )
 
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -62,7 +61,7 @@ fun HomeCalendarItem(
                 color = AppTheme.colors.textPrimary,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Text(
                 text = item.description,
@@ -75,5 +74,4 @@ fun HomeCalendarItem(
             )
         }
     }
-
 }

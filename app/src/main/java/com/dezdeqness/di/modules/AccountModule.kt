@@ -2,7 +2,9 @@ package com.dezdeqness.di.modules
 
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.contract.history.repository.HistoryRepository
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.core.CookieCleaner
 import com.dezdeqness.data.database.ShikimoriDatabase
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
@@ -10,11 +12,9 @@ import com.dezdeqness.data.datasource.AccountRemoteDataSourceImpl
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSourceImpl
 import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
-import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.data.manager.SessionManagerImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
-import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.domain.usecases.GetUserUseCase
 import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.domain.usecases.LogoutUseCase
@@ -54,31 +54,24 @@ abstract class AccountModule {
             accountLocalDataSource: AccountLocalDataSource,
             tokenManager: TokenManager,
             cookieCleaner: CookieCleaner,
-        ): UserRepositoryImpl =
-            UserRepositoryImpl(
-                accountRemoteDataSource = accountRemoteDataSource,
-                accountLocalDataSource = accountLocalDataSource,
-                tokenManager = tokenManager,
-                cookieCleaner = cookieCleaner,
-            )
+        ): UserRepositoryImpl = UserRepositoryImpl(
+            accountRemoteDataSource = accountRemoteDataSource,
+            accountLocalDataSource = accountLocalDataSource,
+            tokenManager = tokenManager,
+            cookieCleaner = cookieCleaner,
+        )
 
         @Singleton
         @Provides
-        fun providerAccountRepository(
-            repository: UserRepositoryImpl,
-        ): UserRepository = repository
+        fun providerAccountRepository(repository: UserRepositoryImpl): UserRepository = repository
 
         @Singleton
         @Provides
-        fun providerHistoryRepository(
-            repository: UserRepositoryImpl,
-        ): HistoryRepository = repository
+        fun providerHistoryRepository(repository: UserRepositoryImpl): HistoryRepository = repository
 
         @Singleton
         @Provides
-        fun providerAuthRepository(
-            repository: UserRepositoryImpl,
-        ): AuthRepository = repository
+        fun providerAuthRepository(repository: UserRepositoryImpl): AuthRepository = repository
 
         @Provides
         fun provideRefreshTokenUseCase(authRepository: AuthRepository) = RefreshTokenUseCase(
@@ -87,16 +80,14 @@ abstract class AccountModule {
 
         @Provides
         fun provideGetProfileUseCase(userRepository: UserRepository) = GetUserUseCase(
-            userRepository = userRepository
+            userRepository = userRepository,
         )
 
         @Provides
-        fun provideAccountDao(shikimoriDatabase: ShikimoriDatabase) =
-            shikimoriDatabase.accountDao()
+        fun provideAccountDao(shikimoriDatabase: ShikimoriDatabase) = shikimoriDatabase.accountDao()
 
         @Provides
-        fun provideAccountSessionDao(shikimoriDatabase: ShikimoriDatabase) =
-            shikimoriDatabase.accountSessionDao()
+        fun provideAccountSessionDao(shikimoriDatabase: ShikimoriDatabase) = shikimoriDatabase.accountSessionDao()
 
         @Singleton
         @Provides
@@ -117,7 +108,6 @@ abstract class AccountModule {
             accountSessionDao = accountSessionDao,
             favouriteRepository = favouriteRepository,
         )
-
     }
 
     @Binds
@@ -125,5 +115,4 @@ abstract class AccountModule {
 
     @Binds
     abstract fun bindAccountLocalDataSource(dataSourceImpl: AccountLocalDataSourceImpl): AccountLocalDataSource
-
 }

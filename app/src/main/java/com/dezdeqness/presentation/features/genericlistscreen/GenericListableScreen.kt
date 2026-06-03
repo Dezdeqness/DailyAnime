@@ -64,5 +64,4 @@ fun GenericListableScreen(
             else -> {}
         }
     }
-
 }

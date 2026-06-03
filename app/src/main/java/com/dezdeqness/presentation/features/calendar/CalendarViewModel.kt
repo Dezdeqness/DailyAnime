@@ -1,16 +1,16 @@
 package com.dezdeqness.presentation.features.calendar
 
-import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.core.BaseViewModel
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.domain.model.AnimeCalendarEntity
 import com.dezdeqness.domain.repository.CalendarRepository
+import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.presentation.action.Action
 import com.dezdeqness.presentation.action.ActionConsumer
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 class CalendarViewModel @Inject constructor(
     private val calendarRepository: CalendarRepository,
@@ -21,7 +21,9 @@ class CalendarViewModel @Inject constructor(
 ) : BaseViewModel(
     coroutineDispatcherProvider = coroutineDispatcherProvider,
     appLogger = appLogger,
-), BaseViewModel.InitialLoaded, BaseViewModel.Refreshable {
+),
+    BaseViewModel.InitialLoaded,
+    BaseViewModel.Refreshable {
 
     private val _calendarStateFlow: MutableStateFlow<CalendarState> =
         MutableStateFlow(CalendarState())
@@ -52,7 +54,7 @@ class CalendarViewModel @Inject constructor(
                     isErrorStateShowing = true,
                 )
                 logInfo("Error during loading of initial of state of calendar list", it)
-            }
+            },
         )
     }
 
@@ -79,12 +81,12 @@ class CalendarViewModel @Inject constructor(
                 _calendarStateFlow.value = _calendarStateFlow.value.copy(
                     list = uiItems,
                     isEmptyStateShowing = uiItems.isEmpty(),
-                    isErrorStateShowing = false
+                    isErrorStateShowing = false,
                 )
             },
             onFailure = {
                 logInfo("Error during pull down of calendar list", it)
-            }
+            },
         )
     }
 
@@ -126,5 +128,4 @@ class CalendarViewModel @Inject constructor(
             )
         }
     }
-
 }
