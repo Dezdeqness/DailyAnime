@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.com.dezdeqness.compose)
+    alias(libs.plugins.screenshot)
 }
 
 java {
@@ -32,6 +33,8 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 dependencies {
@@ -59,8 +62,12 @@ dependencies {
     // Collection
     implementation(libs.androidx.collection)
 
+    // Screenshot testing
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
+    implementation(project(":shared:shared-presentation"))
 }

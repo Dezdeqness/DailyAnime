@@ -1,6 +1,7 @@
 package com.dezdeqness.foundation.ui.views.buttons
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +38,24 @@ fun AppButton(
             style = titleStyle,
         )
     }
+}
+
+@Composable
+fun AppButton(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    shape: Shape = AppTheme.shapes.medium,
+    onClick: () -> Unit = {},
+    content: @Composable RowScope.() -> Unit,
+) {
+    Button(
+        shape = shape,
+        enabled = enabled,
+        modifier = Modifier
+            .then(modifier),
+        onClick = { onClick() },
+        content = content,
+    )
 }
 
 @Composable

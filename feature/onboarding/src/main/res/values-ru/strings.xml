@@ -6,4 +6,34 @@
     <string name="onboarding_select_genres_save">Сохранить</string>
     <string name="onboarding_select_genres_collapse">Скрыть</string>
     <string name="onboarding_select_genres_expand">Показать все</string>
+
+    <!-- Onboarding flow -->
+    <string name="onboarding_skip">Пропустить</string>
+    <string name="onboarding_continue">Продолжить</string>
+
+    <string name="onboarding_welcome_app_name">Daily Anime</string>
+    <string name="onboarding_welcome_subtitle">Отслеживайте аниме, читайте новости и общайтесь с единомышленниками</string>
+    <string name="onboarding_welcome_start">Начать настройку</string>
+
+    <string name="onboarding_genres_title">Выберите любимые жанры</string>
+    <string name="onboarding_genres_subtitle">Выберите минимум 3 жанра для персональных рекомендаций на главной странице.</string>
+    <string name="onboarding_genres_counter">Выбрано: %1$d из %2$d минимум</string>
+
+    <string name="onboarding_notifications_title">Будьте в курсе</string>
+    <string name="onboarding_notifications_subtitle">Одно ненавязчивое напоминание в день — чтобы ничего не упустить.</string>
+    <string name="onboarding_notifications_switch_title">Ежедневное напоминание</string>
+    <string name="onboarding_notifications_switch_subtitle">Напомним один раз в день</string>
+    <string name="onboarding_notifications_time_label">Когда напомнить?</string>
+    <string name="onboarding_notifications_preview_label">Вот как это выглядит:</string>
+    <string name="onboarding_notifications_done">Готово!</string>
+
+    <string name="onboarding_done_title">Все готово!</string>
+    <string name="onboarding_done_subtitle">Ваш профиль настроен. Добро пожаловать в Daily Anime!</string>
+    <string name="onboarding_done_summary_label">Ваши настройки:</string>
+    <string name="onboarding_done_summary_genres">Жанры</string>
+    <string name="onboarding_done_summary_notifications">Уведомления</string>
+    <string name="onboarding_done_summary_notifications_on">Вкл. в %1$s</string>
+    <string name="onboarding_done_summary_notifications_off">Выкл.</string>
+    <string name="onboarding_done_summary_none">Не выбрано</string>
+    <string name="onboarding_done_continue">Перейти в приложение</string>
 </resources>
