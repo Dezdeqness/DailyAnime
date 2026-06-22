@@ -67,6 +67,14 @@ fun DebugScreenPage(
         ) {
             LazyColumn {
                 item {
+                    TextSettingsView(
+                        title = "Trigger onboarding",
+                        subtitle = "Launch the full onboarding flow",
+                        onClick = actions::onTriggerOnboardingClicked,
+                    )
+                }
+
+                item {
                     SwitchSettingsView(
                         title = "Override remote variables",
                         checked = state.isOverrideEnabled,

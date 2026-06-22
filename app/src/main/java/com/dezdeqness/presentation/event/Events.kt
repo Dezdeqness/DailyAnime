@@ -31,6 +31,8 @@ data class ApplyFilter(val filters: List<SearchSectionUiModel> = listOf()) : Eve
 
 data object LanguageDisclaimer : Event()
 
+data object NavigateToOnboarding : Event()
+
 data object OpenCalendarTab : Event()
 
 data object OpenHistoryPage : Event()

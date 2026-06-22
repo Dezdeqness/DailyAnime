@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.getComponent
+import com.dezdeqness.presentation.features.useroboarding.OnboardingActivity
 import javax.inject.Inject
 import kotlin.getValue
 
@@ -58,6 +59,10 @@ class DebugScreenActivity : AppCompatActivity() {
                             val intent = packageManager.getLaunchIntentForPackage(packageName)
                             val mainIntent = Intent.makeRestartActivityTask(intent?.component)
                             startActivity(mainIntent)
+                        }
+
+                        override fun onTriggerOnboardingClicked() {
+                            startActivity(OnboardingActivity.newIntent(this@DebugScreenActivity))
                         }
                     },
                 )

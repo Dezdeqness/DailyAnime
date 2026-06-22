@@ -1,0 +1,13 @@
+package com.dezdeqness.di.subcomponents
+
+import com.dezdeqness.di.core.BaseComponent
+import com.dezdeqness.di.modules.OnboardingModule
+import dagger.Subcomponent
+
+@Subcomponent(modules = [OnboardingModule::class])
+interface OnboardingSubcomponent : BaseComponent {
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): OnboardingSubcomponent
+    }
+}

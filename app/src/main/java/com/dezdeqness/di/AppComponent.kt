@@ -26,6 +26,7 @@ import com.dezdeqness.di.subcomponents.ForumComponent
 import com.dezdeqness.di.subcomponents.HistoryComponent
 import com.dezdeqness.di.subcomponents.HomeComponent
 import com.dezdeqness.di.subcomponents.MainComponent
+import com.dezdeqness.di.subcomponents.OnboardingSubcomponent
 import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.PersonalListComponent
 import com.dezdeqness.di.subcomponents.PersonalListSearchComponent
@@ -121,6 +122,8 @@ interface AppComponent {
     fun favouriteComponent(): FavouriteSubcomponent.Builder
 
     fun selectGenresComponent(): SelectGenresSubcomponent.Factory
+
+    fun onboardingComponent(): OnboardingSubcomponent.Factory
 
     fun topicsComponent(): TopicsComponent.Builder
 

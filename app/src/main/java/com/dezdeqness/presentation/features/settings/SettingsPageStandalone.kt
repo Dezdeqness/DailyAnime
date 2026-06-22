@@ -11,6 +11,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingType
 import com.dezdeqness.feature.settings.SettingActions
 import com.dezdeqness.feature.settings.SettingsPage
 import com.dezdeqness.feature.settings.SettingsViewModel
@@ -19,8 +20,8 @@ import com.dezdeqness.feature.settings.store.actors.OpenDebugMenu
 import com.dezdeqness.feature.settings.store.actors.OpenSelectInterests
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.foundation.utils.collectEvents
-import com.dezdeqness.presentation.SelectGenres
 import com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity
+import com.dezdeqness.presentation.features.useroboarding.OnboardingActivity
 
 @Composable
 fun SettingsPageStandalone(
@@ -82,7 +83,9 @@ fun SettingsPageStandalone(
             }
 
             is OpenSelectInterests -> {
-                navController.navigate(SelectGenres)
+                context.startActivity(
+                    OnboardingActivity.newIntent(context, OnboardingType.SelectGenres),
+                )
             }
 
             else -> {}

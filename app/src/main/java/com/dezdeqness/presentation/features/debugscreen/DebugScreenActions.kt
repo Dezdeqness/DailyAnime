@@ -8,4 +8,5 @@ interface DebugScreenActions {
     fun setValue(key: ConfigKeys, value: Any)
     fun onBackPressed()
     fun onApplyChangesClicked()
+    fun onTriggerOnboardingClicked()
 }
