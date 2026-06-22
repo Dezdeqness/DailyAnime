@@ -7,4 +7,7 @@ import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreU
 data class SelectGenresUiState(
     val genres: List<GenreUiModel>,
     val selectedGenres: Set<String> = emptySet(),
-)
+) {
+    val selectedGenreNames: List<String>
+        get() = genres.filter { it.id in selectedGenres }.map { it.name }
+}
