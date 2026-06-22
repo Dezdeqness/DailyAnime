@@ -84,15 +84,24 @@ class SelectGenresViewModel @Inject constructor(
         }
     }
 
+    fun saveSelection() {
+        viewModelScope.launch(coroutineDispatcherProvider.io()) {
+            persistSelection()
+        }
+    }
+
     fun onSaveClick() {
         viewModelScope.launch(coroutineDispatcherProvider.io()) {
-            val orderedSelectedIds = uiState.value.genres
-                .map { it.id }
-                .filter { it in selectedIds.value }
-            settingsRepository.setPreference(UserSelectedInterestsPreference, orderedSelectedIds)
-
+            persistSelection()
             _events.send(SelectGenresEvent.Close)
         }
+    }
+
+    private suspend fun persistSelection() {
+        val orderedSelectedIds = uiState.value.genres
+            .map { it.id }
+            .filter { it in selectedIds.value }
+        settingsRepository.setPreference(UserSelectedInterestsPreference, orderedSelectedIds)
     }
 
     companion object {

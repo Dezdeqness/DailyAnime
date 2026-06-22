@@ -6,4 +6,33 @@
     <string name="onboarding_select_genres_save">Save</string>
     <string name="onboarding_select_genres_collapse">Hide</string>
     <string name="onboarding_select_genres_expand">Show All</string>
+
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_continue">Continue</string>
+
+    <string name="onboarding_welcome_app_name">Daily Anime</string>
+    <string name="onboarding_welcome_subtitle">Track anime, read news and chat with like-minded fans</string>
+    <string name="onboarding_welcome_start">Start setup</string>
+
+    <string name="onboarding_genres_title">Choose your favorite genres</string>
+    <string name="onboarding_genres_subtitle">Pick at least 3 genres for personal recommendations on the home page.</string>
+    <string name="onboarding_genres_counter">Selected: %1$d of %2$d minimum</string>
+
+    <string name="onboarding_notifications_title">Stay in the loop</string>
+    <string name="onboarding_notifications_subtitle">A single gentle nudge a day so nothing slips by.</string>
+    <string name="onboarding_notifications_switch_title">Daily reminder</string>
+    <string name="onboarding_notifications_switch_subtitle">We\'ll ping you once a day</string>
+    <string name="onboarding_notifications_time_label">When should we remind you?</string>
+    <string name="onboarding_notifications_preview_label">Here\'s how it looks:</string>
+    <string name="onboarding_notifications_done">Done!</string>
+
+    <string name="onboarding_done_title">All set!</string>
+    <string name="onboarding_done_subtitle">Your profile is configured. Welcome to Daily Anime!</string>
+    <string name="onboarding_done_summary_label">Your settings:</string>
+    <string name="onboarding_done_summary_genres">Genres</string>
+    <string name="onboarding_done_summary_notifications">Notifications</string>
+    <string name="onboarding_done_summary_notifications_on">On at %1$s</string>
+    <string name="onboarding_done_summary_notifications_off">Off</string>
+    <string name="onboarding_done_summary_none">Not selected</string>
+    <string name="onboarding_done_continue">Go to app</string>
 </resources>

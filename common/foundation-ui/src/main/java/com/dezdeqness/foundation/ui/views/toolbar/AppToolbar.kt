@@ -53,3 +53,35 @@ fun AppToolbar(
         actions = actions,
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppToolbar(
+    modifier: Modifier = Modifier,
+    navigationIcon: ImageVector? = Icons.AutoMirrored.Filled.ArrowBack,
+    navigationColor: Color = AppTheme.colors.onSurface,
+    navigationClick: () -> Unit = {},
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(
+        containerColor = AppTheme.colors.onPrimary,
+    ),
+    actions: @Composable RowScope.() -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    TopAppBar(
+        modifier = modifier,
+        title = content,
+        navigationIcon = {
+            if (navigationIcon != null) {
+                IconButton(onClick = navigationClick) {
+                    Icon(
+                        navigationIcon,
+                        contentDescription = "Back button",
+                        tint = navigationColor,
+                    )
+                }
+            }
+        },
+        colors = colors,
+        actions = actions,
+    )
+}
