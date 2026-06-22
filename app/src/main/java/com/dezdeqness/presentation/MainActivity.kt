@@ -10,7 +10,6 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,15 +57,10 @@ import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.foundation.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.theme.amoledColors
-import com.dezdeqness.foundation.ui.theme.darkColors
-import com.dezdeqness.foundation.ui.theme.lightColors
-import com.dezdeqness.foundation.ui.theme.toAmoledMaterialScheme
-import com.dezdeqness.foundation.ui.theme.toDarkMaterialScheme
-import com.dezdeqness.foundation.ui.theme.toLightMaterialScheme
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
+import com.dezdeqness.presentation.event.NavigateToOnboarding
 import com.dezdeqness.presentation.features.achievements.AchievementsStandalonePage
 import com.dezdeqness.presentation.features.animechronology.AnimeChronologyStandalonePage
 import com.dezdeqness.presentation.features.animedetails.AnimeDetailsStandalonePage
@@ -88,6 +82,7 @@ import com.dezdeqness.presentation.features.screenshotsviewer.ScreenshotsViewerS
 import com.dezdeqness.presentation.features.settings.SettingsPageStandalone
 import com.dezdeqness.presentation.features.stats.StatsStandalonePage
 import com.dezdeqness.presentation.features.topicdetails.TopicDetailsStandalonePage
+import com.dezdeqness.presentation.features.useroboarding.OnboardingActivity
 import com.dezdeqness.presentation.features.useroboarding.selectgenres.SelectGenresStandalonePage
 import com.dezdeqness.presentation.routing.slideInFromBottom
 import com.dezdeqness.presentation.routing.slideInFromStart
@@ -161,6 +156,7 @@ class MainActivity : AppCompatActivity() {
 
             initialSectionFlow.value = section
         }
+
         setContent {
             val rootController = rememberNavController()
             val snackbarHostState = remember { SnackbarHostState() }
@@ -172,22 +168,7 @@ class MainActivity : AppCompatActivity() {
 
             val themeMode by themeModeFlow.collectAsStateWithLifecycle()
 
-            AppTheme(
-                colors = when (themeMode) {
-                    ThemeMode.AMOLED -> amoledColors()
-                    ThemeMode.DARK -> darkColors()
-                    ThemeMode.LIGHT -> lightColors()
-                    ThemeMode.SYSTEM, null ->
-                        if (isSystemInDarkTheme()) darkColors() else lightColors()
-                },
-                materialDefaultTheme = when (themeMode) {
-                    ThemeMode.AMOLED -> toAmoledMaterialScheme()
-                    ThemeMode.DARK -> toDarkMaterialScheme()
-                    ThemeMode.LIGHT -> toLightMaterialScheme()
-                    ThemeMode.SYSTEM, null ->
-                        if (isSystemInDarkTheme()) toDarkMaterialScheme() else toLightMaterialScheme()
-                },
-            ) {
+            AppContentTheme(themeMode = themeMode) {
                 val section by initialSectionFlow.collectAsStateWithLifecycle()
 
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -341,6 +322,14 @@ class MainActivity : AppCompatActivity() {
                                 when (event) {
                                     is LanguageDisclaimer -> {
                                         showLanguageDisclaimer()
+                                    }
+
+                                    is NavigateToOnboarding -> {
+                                        startActivity(
+                                            OnboardingActivity.newIntent(this@MainActivity),
+                                        )
+                                        @Suppress("DEPRECATION")
+                                        overridePendingTransition(R.anim.onboarding_slide_in_up, 0)
                                     }
 
                                     else -> {}

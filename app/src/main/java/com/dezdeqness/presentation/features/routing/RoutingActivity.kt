@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,13 +36,8 @@ import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.foundation.ui.theme.amoledColors
-import com.dezdeqness.foundation.ui.theme.darkColors
-import com.dezdeqness.foundation.ui.theme.lightColors
-import com.dezdeqness.foundation.ui.theme.toAmoledMaterialScheme
-import com.dezdeqness.foundation.ui.theme.toDarkMaterialScheme
-import com.dezdeqness.foundation.ui.theme.toLightMaterialScheme
 import com.dezdeqness.getComponent
+import com.dezdeqness.presentation.AppContentTheme
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.presentation.routing.ApplicationRouter
@@ -105,22 +99,7 @@ class RoutingActivity : AppCompatActivity() {
         setContent {
             val themeMode by themeModeFlow.collectAsStateWithLifecycle()
 
-            AppTheme(
-                colors = when (themeMode) {
-                    ThemeMode.AMOLED -> amoledColors()
-                    ThemeMode.DARK -> darkColors()
-                    ThemeMode.LIGHT -> lightColors()
-                    ThemeMode.SYSTEM, null ->
-                        if (isSystemInDarkTheme()) darkColors() else lightColors()
-                },
-                materialDefaultTheme = when (themeMode) {
-                    ThemeMode.AMOLED -> toAmoledMaterialScheme()
-                    ThemeMode.DARK -> toDarkMaterialScheme()
-                    ThemeMode.LIGHT -> toLightMaterialScheme()
-                    ThemeMode.SYSTEM, null ->
-                        if (isSystemInDarkTheme()) toDarkMaterialScheme() else toLightMaterialScheme()
-                },
-            ) {
+            AppContentTheme(themeMode = themeMode) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,

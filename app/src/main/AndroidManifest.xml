@@ -36,6 +36,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".presentation.features.useroboarding.OnboardingActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".presentation.features.routing.RoutingActivity"
             android:exported="true">
             <intent-filter>
