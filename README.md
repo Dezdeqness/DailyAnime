@@ -1,9 +1,4 @@
-<p align="center" id="title">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="images/readme_logo_dark.png">
-    <img src="images/readme_logo_light.png" alt="Daily Anime" width="360">
-  </picture>
-</p>
+<p align="center" id="title"><img src="images/readme_logo.png" alt="Daily Anime" width="360"></p>
 
 <h2>⚙️Features</h2>
 
