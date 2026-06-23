@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Running spotless check..."
 OUTPUT="/tmp/spotless-$(date +%s)"
-./gradlew spotlessCheck --continue > $OUTPUT 2>&1
+./gradlew spotlessCheck --continue --no-configuration-cache > $OUTPUT 2>&1
 EXIT_CODE=$?
 if [ $EXIT_CODE -ne 0 ]; then
   echo ""

@@ -1,6 +1,9 @@
-<h1 align="center" id="title">Daily Anime</h1>
-
-<p align="center"><img src="app/src/main/ic_launcher-playstore.png" alt="project-image" width="100" height="100"></p>
+<p align="center" id="title">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/readme_logo_dark.png">
+    <img src="images/readme_logo_light.png" alt="Daily Anime" width="360">
+  </picture>
+</p>
 
 <h2>⚙️Features</h2>
 
@@ -27,30 +30,31 @@
 
 <h2>🔮Future plans</h2>
 
-- [ ] Fancy stats
-- [ ] Onboarding
-- [ ] Migration to Material3
+- [x] Fancy stats
+- [x] Onboarding
+- [x] Migration to Material3
 - [ ] Manga/Ranobe functionality
 - [ ] Widget
 - [ ] User recap
 - [ ] Tech improvements
 - [ ] Anilist API
 - [ ] News
-- [ ] Migrfate rest app to compose
+- [x] Migrate rest app to compose
 - [ ] Modularization
 - [ ] KMP
-- [ ] Favourites
+- [x] Favourites
 - [ ] Customization in settings
-- [ ] Achievements
+- [x] Achievements
 
 <h2>🎨Project Screenshots:</h2>
 
 <p align="center">
-  <img src="images/search.png" width="300" />
-  <img src="images/calendar.png" width="300" />
-  <img src="images/details_1.png" width="300" />
-  <img src="images/details_2.png" width="300" />
-  <img src="images/details_3.png" width="300" />
+  <img src="images/home.png" width="300" />
   <img src="images/personal_list.png" width="300" />
+  <img src="images/search.png" width="300" />
+  <img src="images/details.png" width="300" />
   <img src="images/stats.png" width="300" />
+  <img src="images/achievements.png" width="300" />
+  <img src="images/favourites.png" width="300" />
+  <img src="images/history.png" width="300" />
 </p>
