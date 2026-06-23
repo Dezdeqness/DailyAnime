@@ -494,3 +494,21 @@ public static java.lang.String TABLENAME;
 # Keep all classes and methods used by Tink
 -keep class com.google.crypto.tink.** { *; }
 -dontwarn com.google.crypto.tink.**
+
+### kotlinx.serialization + type-safe Navigation Compose routes (destinations.kt)
+# R8 obfuscates the @Serializable route classes (e.g. "Home" -> "f0"); androidx.navigation
+# then looks up their serializer reflectively via serializer(KClass) and fails with
+# "Serializer for class '<obfuscated>' is not found". Keep the serializable classes
+# (including sealed route hierarchies and objects) together with their generated serializers.
+-keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+
+# Keep every @Serializable class and its members (routes, sealed subtypes, objects).
+-keep @kotlinx.serialization.Serializable class ** { *; }
+
+# Keep the compiler-generated serializers and the synthetic serializer() accessors.
+-keep,includedescriptorclasses class **$$serializer { *; }
+-keepclassmembers class ** {
+    *** Companion;
+    public static ** INSTANCE;
+    kotlinx.serialization.KSerializer serializer(...);
+}
