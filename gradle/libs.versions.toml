@@ -60,7 +60,7 @@ protobuf = "4.28.3"
 screenshot = "0.0.1-alpha09"
 runtimeVersion = "1.9.4"
 runtime = "1.10.0"
-spotless = "6.25.0"
+spotless = "7.2.1"
 ktlint = "1.2.1"
 
 [libraries]
