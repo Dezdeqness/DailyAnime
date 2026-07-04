@@ -40,15 +40,6 @@
 
     <string name="history_empty_state">Your history is empty</string>
 
-    <string name="stats_toolbar_title">Statistics</string>
-    <string name="stats_header_scores">Scores</string>
-    <string name="stats_header_types">Types</string>
-    <string name="stats_header_lists">Lists</string>
-    <string name="stats_status_planned">Planned</string>
-    <string name="stats_status_completed">Completed</string>
-    <string name="stats_status_dropped">dropped</string>
-    <string name="stats_status_on_hold">On hold</string>
-    <string name="stats_status_watching">Watching</string>
 
     <string name="anime_details_description_title">Synopsis</string>
     <string name="anime_details_related_title">Related</string>
@@ -100,8 +91,6 @@
     <string name="general_no_internet_error">No internet. Check your connection</string>
     <string name="general_no_app_view">No application found to proceed authorization</string>
 
-    <string name="anime_chronology_title">Chronology</string>
-    <string name="anime_similar_title">Similar</string>
 
     <string name="filter_cell_season_old_enough">More old</string>
 
