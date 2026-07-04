@@ -1,0 +1,107 @@
+package com.dezdeqness.feature.details.related.presentation.composables
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.dezdeqness.feature.details.related.presentation.models.RelatedListItem
+import com.dezdeqness.feature.details.related.presentation.preview.RelatedPreviewData
+import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.foundation.ui.views.image.AppImage
+
+@Composable
+fun RelatedItem(
+    modifier: Modifier = Modifier,
+    item: RelatedListItem,
+    onClick: (RelatedListItem) -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(6.dp))
+            .clickable(
+                onClick = {
+                    onClick(item)
+                },
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple(color = AppTheme.colors.ripple),
+            )
+            .fillMaxWidth(),
+    ) {
+        Row(
+            modifier = Modifier.height(IntrinsicSize.Max),
+        ) {
+            Box {
+                AppImage(
+                    data = item.imageUrl,
+                    contentScale = ContentScale.FillHeight,
+                    modifier = Modifier
+                        .width(96.dp)
+                        .height(120.dp)
+                        .aspectRatio(2f / 3),
+                )
+            }
+
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column {
+                    Text(
+                        text = item.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        maxLines = 2,
+                        color = AppTheme.colors.textPrimary,
+                        fontWeight = FontWeight.Bold,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Text(
+                        text = item.briefInfo,
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp,
+                        color = AppTheme.colors.textPrimary.copy(alpha = 0.8f),
+                        modifier = Modifier.padding(start = 8.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun RelatedItemPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            RelatedItem(
+                item = RelatedPreviewData.chronologyItem,
+                onClick = {},
+            )
+        }
+    }
+}

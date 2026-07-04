@@ -53,6 +53,7 @@ include(":feature:details:common")
 include(":feature:details:anime")
 include(":feature:details:character")
 include(":feature:details:person")
+include(":feature:details:related")
 
 // shared
 include(":shared:shared-presentation")
