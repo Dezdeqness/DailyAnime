@@ -2,7 +2,7 @@ package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.di.modules.AnimeSimilarModule
-import com.dezdeqness.di.modules.GenericListableViewModelModule
+import com.dezdeqness.di.modules.RelatedListViewModelModule
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -12,7 +12,7 @@ import javax.inject.Named
     modules = [
         AnimeSimilarModule::class,
         SimilarArgsModule::class,
-        GenericListableViewModelModule::class,
+        RelatedListViewModelModule::class,
     ],
 )
 interface AnimeSimilarComponent : BaseComponent {

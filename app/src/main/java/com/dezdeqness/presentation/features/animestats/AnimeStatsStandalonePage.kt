@@ -7,8 +7,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.core.page.StatsPage
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
+import com.dezdeqness.feature.stats.presentation.StatsPage
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsArguments
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsTransferModel
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsViewModel
 
 @Composable
 fun AnimeStatsStandalonePage(
@@ -18,7 +21,7 @@ fun AnimeStatsStandalonePage(
     navController: NavHostController,
 ) {
     val context = LocalContext.current
-    val animeSimilarComponent = remember {
+    val animeStatsComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
             .animeStatsComponent()
             .argsModule(
@@ -33,7 +36,7 @@ fun AnimeStatsStandalonePage(
     }
 
     val viewModel =
-        viewModel<AnimeStatsViewModel>(factory = animeSimilarComponent.viewModelFactory())
+        viewModel<AnimeStatsViewModel>(factory = animeStatsComponent.viewModelFactory())
 
     StatsPage(
         modifier = modifier,

@@ -234,6 +234,7 @@ dependencies {
     implementation(project(":feature:personallist"))
     implementation(project(":feature:userrate"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:stats"))
     implementation(project(":feature:topics"))
     implementation(project(":feature:topicdetails"))
     implementation(project(":feature:forum"))
@@ -241,6 +242,7 @@ dependencies {
     implementation(project(":feature:details:anime"))
     implementation(project(":feature:details:character"))
     implementation(project(":feature:details:person"))
+    implementation(project(":feature:details:related"))
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

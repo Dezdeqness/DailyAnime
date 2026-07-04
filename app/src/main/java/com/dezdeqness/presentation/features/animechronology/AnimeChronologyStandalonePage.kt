@@ -6,18 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.R
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.di.subcomponents.ChronologyArgsModule
+import com.dezdeqness.feature.details.related.presentation.ChronologyListPage
+import com.dezdeqness.feature.details.related.presentation.RelatedListActions
+import com.dezdeqness.feature.details.related.presentation.RelatedListViewModel
 import com.dezdeqness.presentation.AnimeDetails
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.OpenAnimeDetails
-import com.dezdeqness.presentation.features.animechronology.composable.ChronologyItem
-import com.dezdeqness.presentation.features.genericlistscreen.GenericListableScreen
-import com.dezdeqness.presentation.features.genericlistscreen.GenericListableViewModel
-import com.dezdeqness.presentation.features.genericlistscreen.GenericRenderer
-import com.dezdeqness.presentation.models.AdapterItem
-import com.dezdeqness.presentation.models.ChronologyUiModel
 
 @Composable
 fun AnimeChronologyStandalonePage(
@@ -33,46 +27,30 @@ fun AnimeChronologyStandalonePage(
             .build()
     }
 
-    val viewModel = viewModel<GenericListableViewModel>(factory = animeChronologyComponent.viewModelFactory())
+    val viewModel =
+        viewModel<RelatedListViewModel>(factory = animeChronologyComponent.viewModelFactory())
 
     val analyticsManager = animeChronologyComponent.analyticsManager()
 
-    val renderer = remember {
-        object : GenericRenderer {
-            @Composable
-            override fun Render(modifier: Modifier, item: AdapterItem, onClick: (Action) -> Unit) {
-                if (item !is ChronologyUiModel) return
-
-                ChronologyItem(
-                    modifier = modifier,
-                    item = item,
-                    onClick = onClick,
-                )
-            }
-        }
-    }
-
-    GenericListableScreen(
+    ChronologyListPage(
         modifier = modifier,
-        renderer = renderer,
-        titleRes = R.string.anime_chronology_title,
-        onEvent = { event ->
-            when (event) {
-                is OpenAnimeDetails -> {
-                    analyticsManager.detailsTracked(
-                        id = event.animeId.toString(),
-                        title = event.title,
-                    )
-                    navController.navigate(AnimeDetails(event.animeId))
-                    true
-                }
+        stateFlow = viewModel.stateFlow,
+        actions = object : RelatedListActions {
+            override fun onAnimeClicked(animeId: Long, title: String) {
+                analyticsManager.detailsTracked(
+                    id = animeId.toString(),
+                    title = title,
+                )
+                navController.navigate(AnimeDetails(animeId))
+            }
 
-                else -> {
-                    false
-                }
+            override fun onRetryClicked() {
+                viewModel.onRetryClicked()
+            }
+
+            override fun onBackPressed() {
+                navController.popBackStack()
             }
         },
-        viewModel = viewModel,
-        navController = navController,
     )
 }
