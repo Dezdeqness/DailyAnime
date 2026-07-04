@@ -47,6 +47,19 @@ dependencies {
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel)
 
+    // Unit Testing
+    testImplementation(libs.junit.api)
+    testImplementation(libs.junit.engine)
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Android Testing
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(libs.androidx.test.espresso)
+
+    // Mock
+    testImplementation(libs.mockk.mockk)
+
     // Common
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
