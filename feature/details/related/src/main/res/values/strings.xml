@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anime_chronology_title">Chronology</string>
+    <string name="anime_similar_title">Similar</string>
+    <string name="related_empty_state">Nothing here yet</string>
+</resources>
