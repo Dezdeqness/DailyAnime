@@ -4,8 +4,8 @@ import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.usecases.BaseListableUseCase
 import com.dezdeqness.domain.usecases.GetSimilarListUseCase
-import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarUiMapper
-import com.dezdeqness.presentation.features.genericlistscreen.GenericListableUiMapper
+import com.dezdeqness.feature.details.related.presentation.RelatedListUiMapper
+import com.dezdeqness.feature.details.related.presentation.mapper.SimilarUiMapper
 import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import dagger.Module
 import dagger.Provides
@@ -14,10 +14,10 @@ import dagger.Provides
 class AnimeSimilarModule {
 
     @Provides
-    fun provideAnimeSimilarUiMapper(
+    fun provideSimilarUiMapper(
         imageUrlUtils: ImageUrlUtils,
         animeKindUtils: AnimeKindUtils,
-    ): GenericListableUiMapper = AnimeSimilarUiMapper(
+    ): RelatedListUiMapper = SimilarUiMapper(
         imageUrlUtils = imageUrlUtils,
         animeKindUtils = animeKindUtils,
     )

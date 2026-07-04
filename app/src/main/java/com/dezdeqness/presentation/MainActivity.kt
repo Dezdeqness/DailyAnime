@@ -55,6 +55,7 @@ import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.feature.stats.presentation.anime.deserializeListFromString
 import com.dezdeqness.foundation.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.utils.collectEvents
@@ -67,7 +68,6 @@ import com.dezdeqness.presentation.features.animedetails.AnimeDetailsStandaloneP
 import com.dezdeqness.presentation.features.animelist.SearchPageStandalone
 import com.dezdeqness.presentation.features.animesimilar.AnimeSimilarStandalonePage
 import com.dezdeqness.presentation.features.animestats.AnimeStatsStandalonePage
-import com.dezdeqness.presentation.features.animestats.deserializeListFromString
 import com.dezdeqness.presentation.features.calendar.CalendarStandalonePage
 import com.dezdeqness.presentation.features.characterdetails.CharacterDetailsStandalonePage
 import com.dezdeqness.presentation.features.favourite.FavouriteStandalonePage

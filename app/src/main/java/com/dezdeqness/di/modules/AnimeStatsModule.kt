@@ -2,10 +2,10 @@ package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsComposer
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.foundation.provider.ResourceProvider
-import com.dezdeqness.presentation.features.animestats.AnimeStatsComposer
-import com.dezdeqness.presentation.features.animestats.AnimeStatsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

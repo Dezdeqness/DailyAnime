@@ -25,6 +25,8 @@ import com.dezdeqness.feature.details.anime.presentation.store.AnimeDetailsNames
 import com.dezdeqness.feature.details.anime.presentation.store.EditRateSheetState
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
 import com.dezdeqness.feature.details.common.presentation.store.DetailsStatus
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsTransferModel
+import com.dezdeqness.feature.stats.presentation.anime.serializeListToString
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.CharacterDetails
@@ -32,8 +34,6 @@ import com.dezdeqness.presentation.Chronology
 import com.dezdeqness.presentation.DetailsStats
 import com.dezdeqness.presentation.Screenshots
 import com.dezdeqness.presentation.Similar
-import com.dezdeqness.presentation.features.animestats.AnimeStatsTransferModel
-import com.dezdeqness.presentation.features.animestats.serializeListToString
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
 import kotlinx.coroutines.launch
 

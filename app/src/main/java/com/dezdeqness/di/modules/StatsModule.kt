@@ -1,10 +1,10 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.feature.stats.presentation.profile.ProfileStatsComposer
+import com.dezdeqness.feature.stats.presentation.profile.ProfileStatsViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.foundation.provider.ResourceProvider
-import com.dezdeqness.presentation.features.stats.StatsComposer
-import com.dezdeqness.presentation.features.stats.StatsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -15,13 +15,13 @@ abstract class StatsModule {
 
     companion object {
         @Provides
-        fun provideStatsComposer(resourceProvider: ResourceProvider) = StatsComposer(
+        fun provideProfileStatsComposer(resourceProvider: ResourceProvider) = ProfileStatsComposer(
             resourceProvider = resourceProvider,
         )
     }
 
     @Binds
     @IntoMap
-    @ViewModelKey(StatsViewModel::class)
-    abstract fun bindStatsViewModel(viewModel: StatsViewModel): ViewModel
+    @ViewModelKey(ProfileStatsViewModel::class)
+    abstract fun bindProfileStatsViewModel(viewModel: ProfileStatsViewModel): ViewModel
 }

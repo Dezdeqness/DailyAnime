@@ -2,7 +2,7 @@ package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.core.BaseComponent
 import com.dezdeqness.di.modules.AnimeStatsModule
-import com.dezdeqness.presentation.features.animestats.AnimeStatsArguments
+import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsArguments
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent

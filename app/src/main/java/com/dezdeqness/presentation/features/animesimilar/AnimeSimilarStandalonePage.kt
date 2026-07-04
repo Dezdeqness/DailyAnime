@@ -6,18 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.R
 import com.dezdeqness.ShikimoriApp
 import com.dezdeqness.di.subcomponents.SimilarArgsModule
+import com.dezdeqness.feature.details.related.presentation.RelatedListActions
+import com.dezdeqness.feature.details.related.presentation.RelatedListViewModel
+import com.dezdeqness.feature.details.related.presentation.SimilarListPage
 import com.dezdeqness.presentation.AnimeDetails
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.OpenAnimeDetails
-import com.dezdeqness.presentation.features.animesimilar.composable.SimilarItem
-import com.dezdeqness.presentation.features.genericlistscreen.GenericListableScreen
-import com.dezdeqness.presentation.features.genericlistscreen.GenericListableViewModel
-import com.dezdeqness.presentation.features.genericlistscreen.GenericRenderer
-import com.dezdeqness.presentation.models.AdapterItem
-import com.dezdeqness.presentation.models.SimilarUiModel
 
 @Composable
 fun AnimeSimilarStandalonePage(
@@ -33,46 +27,30 @@ fun AnimeSimilarStandalonePage(
             .build()
     }
 
-    val viewModel = viewModel<GenericListableViewModel>(factory = animeSimilarComponent.viewModelFactory())
+    val viewModel =
+        viewModel<RelatedListViewModel>(factory = animeSimilarComponent.viewModelFactory())
 
     val analyticsManager = animeSimilarComponent.analyticsManager()
 
-    val renderer = remember {
-        object : GenericRenderer {
-            @Composable
-            override fun Render(modifier: Modifier, item: AdapterItem, onClick: (Action) -> Unit) {
-                if (item !is SimilarUiModel) return
-
-                SimilarItem(
-                    modifier = modifier,
-                    item = item,
-                    onClick = onClick,
-                )
-            }
-        }
-    }
-
-    GenericListableScreen(
+    SimilarListPage(
         modifier = modifier,
-        renderer = renderer,
-        titleRes = R.string.anime_similar_title,
-        onEvent = { event ->
-            when (event) {
-                is OpenAnimeDetails -> {
-                    analyticsManager.detailsTracked(
-                        id = event.animeId.toString(),
-                        title = event.title,
-                    )
-                    navController.navigate(AnimeDetails(event.animeId))
-                    true
-                }
+        stateFlow = viewModel.stateFlow,
+        actions = object : RelatedListActions {
+            override fun onAnimeClicked(animeId: Long, title: String) {
+                analyticsManager.detailsTracked(
+                    id = animeId.toString(),
+                    title = title,
+                )
+                navController.navigate(AnimeDetails(animeId))
+            }
 
-                else -> {
-                    false
-                }
+            override fun onRetryClicked() {
+                viewModel.onRetryClicked()
+            }
+
+            override fun onBackPressed() {
+                navController.popBackStack()
             }
         },
-        viewModel = viewModel,
-        navController = navController,
     )
 }
