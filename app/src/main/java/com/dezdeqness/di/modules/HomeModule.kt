@@ -6,9 +6,9 @@ import com.dezdeqness.data.datasource.HomeRemoteDatasourceImpl
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.repository.HomeRepositoryImpl
 import com.dezdeqness.domain.repository.HomeRepository
+import com.dezdeqness.feature.home.presentation.HomeComposer
+import com.dezdeqness.feature.home.presentation.HomeViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
-import com.dezdeqness.presentation.features.home.HomeComposer
-import com.dezdeqness.presentation.features.home.HomeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

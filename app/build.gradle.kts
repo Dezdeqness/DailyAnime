@@ -229,6 +229,7 @@ dependencies {
     implementation(project(":feature:achievements"))
     implementation(project(":feature:screenshotviewer"))
     implementation(project(":feature:history"))
+    implementation(project(":feature:home"))
     implementation(project(":feature:favourite"))
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:personallist"))
