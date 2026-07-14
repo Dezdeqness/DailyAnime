@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">Добро пожаловать</string>
+    <string name="home_title_authorized">Добро пожаловать,\n%s</string>
+    <string name="home_calendar_title">Новое на этой недели</string>
+    <string name="section_history_title">Последнее в истории</string>
+</resources>
