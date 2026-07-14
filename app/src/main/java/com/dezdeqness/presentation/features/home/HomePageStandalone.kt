@@ -8,14 +8,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.feature.home.presentation.HomeActions
+import com.dezdeqness.feature.home.presentation.HomePage
+import com.dezdeqness.feature.home.presentation.HomeViewModel
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.History
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.OpenAnimeDetails
-import com.dezdeqness.presentation.event.OpenCalendarTab
-import com.dezdeqness.presentation.event.OpenHistoryPage
 
 @Composable
 fun HomePageStandalone(
@@ -42,23 +40,16 @@ fun HomePageStandalone(
                 viewModel.onInitialLoad()
             }
 
-            override fun onActionReceived(action: Action) {
-                viewModel.onActionReceive(action)
-            }
-        },
-    )
-
-    viewModel.events.collectEvents { event ->
-        when (event) {
-            is OpenAnimeDetails -> {
+            override fun onAnimeClicked(animeId: Long, title: String) {
                 analyticsManager.detailsTracked(
-                    id = event.animeId.toString(),
-                    title = event.title,
+                    id = animeId.toString(),
+                    title = title,
                 )
 
-                rootController.navigate(AnimeDetails(event.animeId))
+                rootController.navigate(AnimeDetails(animeId))
             }
-            is OpenCalendarTab -> {
+
+            override fun onCalendarHeaderClicked() {
                 navController.navigate(BottomBarNav.Calendar) {
                     popUpTo(navController.graph.findStartDestination().id) {
                         saveState = true
@@ -68,11 +59,9 @@ fun HomePageStandalone(
                 }
             }
 
-            is OpenHistoryPage -> {
+            override fun onHistoryHeaderClicked() {
                 rootController.navigate(History)
             }
-
-            else -> {}
-        }
-    }
+        },
+    )
 }
