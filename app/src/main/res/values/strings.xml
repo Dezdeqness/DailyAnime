@@ -119,11 +119,7 @@
     <string name="language_disclaimer_description" translatable="false">While using app you can see that content has no translations. It`s expected behavior, only russian translation is supported by API.\nThanks for attention</string>
     <string name="language_disclaimer_positive" translatable="false">Ok</string>
 
-    <string name="home_title">Welcome back</string>
-    <string name="home_title_authorized">Welcome back,\n%s</string>
-    <string name="home_calendar_title">New this week</string>
 
-    <string name="section_history_title">Latest history</string>
 
 </resources>
 

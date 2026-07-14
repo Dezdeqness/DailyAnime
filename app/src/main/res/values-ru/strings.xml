@@ -116,10 +116,6 @@
     <string name="anime_score_10">Эпик вин!</string>
 
 
-    <string name="home_title">Добро пожаловать</string>
-    <string name="home_title_authorized">Добро пожаловать,\n%s</string>
-    <string name="home_calendar_title">Новое на этой недели</string>
 
-    <string name="section_history_title">Последнее в истории</string>
 </resources>
 
