@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">Welcome back</string>
+    <string name="home_title_authorized">Welcome back,\n%s</string>
+    <string name="home_calendar_title">New this week</string>
+    <string name="section_history_title">Latest history</string>
+</resources>
