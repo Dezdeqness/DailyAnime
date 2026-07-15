@@ -227,6 +227,7 @@ dependencies {
     implementation(project(":contract:forum"))
 
     implementation(project(":feature:achievements"))
+    implementation(project(":feature:calendar"))
     implementation(project(":feature:screenshotviewer"))
     implementation(project(":feature:history"))
     implementation(project(":feature:home"))
