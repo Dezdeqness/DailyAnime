@@ -38,6 +38,7 @@ include(":contract:forum")
 
 // features
 include(":feature:achievements")
+include(":feature:calendar")
 include(":feature:screenshotviewer")
 include(":feature:history")
 include(":feature:home")

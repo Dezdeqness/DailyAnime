@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calendar_search_placeholder_hint">Upcoming anime</string>
+    <string name="cell_episode">Episode %d</string>
+</resources>
