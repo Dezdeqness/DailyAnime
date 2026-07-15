@@ -99,7 +99,6 @@
     <string name="anime_toolbar_chronology">Chronology</string>
     <string name="anime_toolbar_stats">Stats</string>
     <string name="toolbar_title_similar">Similar</string>
-    <string name="calendar_search_placeholder_hint">Upcoming anime</string>
 
     <string name="cell_episode">Episode %d</string>
 
