@@ -99,7 +99,6 @@
     <string name="anime_toolbar_chronology">Хронология</string>
     <string name="anime_toolbar_stats">Статистика</string>
     <string name="toolbar_title_similar">Похожее</string>
-    <string name="calendar_search_placeholder_hint">Выходящие аниме</string>
 
     <string name="cell_episode">Эпизод %d</string>
 

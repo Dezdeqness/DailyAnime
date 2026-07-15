@@ -7,10 +7,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.feature.calendar.presentation.CalendarActions
+import com.dezdeqness.feature.calendar.presentation.CalendarPage
+import com.dezdeqness.feature.calendar.presentation.CalendarViewModel
 import com.dezdeqness.presentation.AnimeDetails
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.OpenAnimeDetails
 
 @Composable
 fun CalendarStandalonePage(
@@ -18,24 +18,22 @@ fun CalendarStandalonePage(
     navController: NavHostController,
 ) {
     val context = LocalContext.current
-    val homeComponent = remember {
+    val calendarComponent = remember {
         (context.applicationContext as ShikimoriApp).appComponent
             .calendarComponent()
             .create()
     }
 
-    val viewModel = viewModel<CalendarViewModel>(factory = homeComponent.viewModelFactory())
+    val viewModel = viewModel<CalendarViewModel>(factory = calendarComponent.viewModelFactory())
 
-    val analyticsManager = homeComponent.analyticsManager()
+    val analyticsManager = calendarComponent.analyticsManager()
 
     CalendarPage(
         modifier = modifier,
         stateFlow = viewModel.calendarStateFlow,
+        pullRefreshFlow = viewModel.pullRefreshFlow,
+        scrollNeedFlow = viewModel.scrollNeedFlow,
         actions = object : CalendarActions {
-            override fun onInitialLoad() {
-                viewModel.onInitialLoad()
-            }
-
             override fun onPullDownRefreshed() {
                 viewModel.onPullDownRefreshed()
             }
@@ -44,8 +42,13 @@ fun CalendarStandalonePage(
                 viewModel.onScrolled()
             }
 
-            override fun onActionReceived(action: Action) {
-                viewModel.onActionReceive(action)
+            override fun onAnimeClicked(animeId: Long, title: String) {
+                analyticsManager.detailsTracked(
+                    id = animeId.toString(),
+                    title = title,
+                )
+
+                navController.navigate(AnimeDetails(animeId))
             }
 
             override fun onQueryChanged(query: String) {
@@ -53,19 +56,4 @@ fun CalendarStandalonePage(
             }
         },
     )
-
-    viewModel.events.collectEvents { event ->
-        when (event) {
-            is OpenAnimeDetails -> {
-                analyticsManager.detailsTracked(
-                    id = event.animeId.toString(),
-                    title = event.title,
-                )
-
-                navController.navigate(AnimeDetails(event.animeId))
-            }
-
-            else -> {}
-        }
-    }
 }
