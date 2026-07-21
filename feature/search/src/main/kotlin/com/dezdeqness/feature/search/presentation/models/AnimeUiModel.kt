@@ -1,0 +1,8 @@
+package com.dezdeqness.feature.search.presentation.models
+
+data class AnimeUiModel(
+    val id: Long,
+    val title: String,
+    val kind: String,
+    val logoUrl: String,
+)
