@@ -6,20 +6,7 @@
     <string name="person_role_producer">Продюсер</string>
     <string name="person_role_seyu">Сэйю</string>
 
-    <string name="search_filter_title">Фильтр</string>
-    <string name="search_filter_reset">Сбросить</string>
-    <string name="search_filter_apply">Применить</string>
-    <string name="search_filter_show_more_title">Показать еще</string>
-    <string name="search_filter_collapse_title">Свернуть</string>
 
-    <string name="anime_search_filter_genre">Жанр</string>
-    <string name="anime_search_filter_theme">Тема</string>
-    <string name="anime_search_filter_audience">Аудиенция</string>
-    <string name="anime_search_filter_season">Сезон</string>
-    <string name="anime_search_filter_status">Статус</string>
-    <string name="anime_search_filter_kind">Тип</string>
-    <string name="anime_search_filter_duration">Продолжительность эпизода</string>
-    <string name="anime_search_filter_rating">Возрастной рейтинг</string>
 
     <string name="anime_status_anons">Анонсировано</string>
     <string name="anime_status_ongoing">Выходящее</string>
@@ -92,9 +79,7 @@
     <string name="general_no_app_view">Не установлено приложение для проложения авторизации</string>
 
 
-    <string name="filter_cell_season_old_enough">Более старые</string>
 
-    <string name="search_placeholder_hint">Восстание Лелуша</string>
     <string name="anime_toolbar_similar">Похожее</string>
     <string name="anime_toolbar_chronology">Хронология</string>
     <string name="anime_toolbar_stats">Статистика</string>

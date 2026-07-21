@@ -3,11 +3,11 @@ package com.dezdeqness.di.modules
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.data.repository.SearchFilterRepositoryImpl
 import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterComposer
+import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterViewModel
+import com.dezdeqness.feature.searchfilter.presentation.AnimeSeasonCellComposer
 import com.dezdeqness.foundation.di.ViewModelKey
 import com.dezdeqness.foundation.provider.ResourceProvider
-import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterComposer
-import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterViewModel
-import com.dezdeqness.presentation.features.searchfilter.AnimeSeasonCellComposer
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
