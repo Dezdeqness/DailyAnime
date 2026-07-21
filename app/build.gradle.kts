@@ -225,6 +225,7 @@ dependencies {
     implementation(project(":contract:favourite"))
     implementation(project(":contract:topic"))
     implementation(project(":contract:forum"))
+    implementation(project(":contract:filter"))
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:calendar"))
@@ -235,6 +236,8 @@ dependencies {
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:personallist"))
     implementation(project(":feature:userrate"))
+    implementation(project(":feature:search"))
+    implementation(project(":feature:searchfilter"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:stats"))
     implementation(project(":feature:topics"))

@@ -1,6 +1,5 @@
 package com.dezdeqness.presentation.event
 
-import com.dezdeqness.presentation.models.SearchSectionUiModel
 import java.util.UUID
 
 sealed class Event {
@@ -24,10 +23,6 @@ sealed class ConsumableEvent : Event()
 data class OpenAnimeDetails(val animeId: Long, val title: String) : Event()
 
 data class OpenVideo(val url: String) : ConsumableEvent()
-
-data class NavigateToFilter(val filters: List<SearchSectionUiModel> = listOf()) : Event()
-
-data class ApplyFilter(val filters: List<SearchSectionUiModel> = listOf()) : Event()
 
 data object LanguageDisclaimer : Event()
 

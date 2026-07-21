@@ -8,16 +8,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.contract.filter.model.SearchSectionUiModel
+import com.dezdeqness.feature.search.presentation.AnimeSearchActions
+import com.dezdeqness.feature.search.presentation.AnimeSearchPage
+import com.dezdeqness.feature.search.presentation.AnimeViewModel
+import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilter
+import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterActions
+import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterViewModel
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.AnimeDetails
-import com.dezdeqness.presentation.action.Action
-import com.dezdeqness.presentation.event.ApplyFilter
-import com.dezdeqness.presentation.event.NavigateToFilter
-import com.dezdeqness.presentation.event.OpenAnimeDetails
-import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilter
-import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterActions
-import com.dezdeqness.presentation.features.searchfilter.AnimeSearchFilterViewModel
-import com.dezdeqness.presentation.models.SearchSectionUiModel
 
 @Composable
 fun SearchPageStandalone(
@@ -53,8 +52,12 @@ fun SearchPageStandalone(
                     viewModel.onLoadMore()
                 }
 
-                override fun onActionReceived(action: Action) {
-                    viewModel.onActionReceive(action = action)
+                override fun onAnimeClicked(animeId: Long, title: String) {
+                    analyticsManager.detailsTracked(
+                        id = animeId.toString(),
+                        title = title,
+                    )
+                    navController.navigate(AnimeDetails(animeId))
                 }
 
                 override fun onFabClicked() {
@@ -112,32 +115,12 @@ fun SearchPageStandalone(
             },
         )
     }
-    viewModel.events.collectEvents { event ->
-        when (event) {
-            is NavigateToFilter -> {
-                filterViewModel.onFiltersReceived(event.filters)
-            }
 
-            is OpenAnimeDetails -> {
-                analyticsManager.detailsTracked(
-                    id = event.animeId.toString(),
-                    title = event.title,
-                )
-
-                navController.navigate(AnimeDetails(event.animeId))
-            }
-
-            else -> {}
-        }
+    viewModel.navigateToFilter.collectEvents { filters ->
+        filterViewModel.onFiltersReceived(filters)
     }
 
-    filterViewModel.events.collectEvents { event ->
-        when (event) {
-            is ApplyFilter -> {
-                viewModel.onFilterChanged(event.filters)
-            }
-
-            else -> {}
-        }
+    filterViewModel.appliedFilters.collectEvents { filters ->
+        viewModel.onFilterChanged(filters)
     }
 }

@@ -3,8 +3,8 @@ package com.dezdeqness.di.modules
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
+import com.dezdeqness.feature.search.presentation.AnimeViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
-import com.dezdeqness.presentation.features.animelist.AnimeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
