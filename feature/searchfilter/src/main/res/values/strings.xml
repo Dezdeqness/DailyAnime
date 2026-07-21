@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_filter_title">Filter</string>
+    <string name="search_filter_reset">Reset</string>
+    <string name="search_filter_apply">Apply</string>
+    <string name="search_filter_show_more_title">Show more</string>
+    <string name="search_filter_collapse_title">Collapse</string>
+
+    <string name="anime_search_filter_genre">Genre</string>
+    <string name="anime_search_filter_theme">Theme</string>
+    <string name="anime_search_filter_audience">Audience</string>
+    <string name="anime_search_filter_season">Season</string>
+    <string name="anime_search_filter_status">Status</string>
+    <string name="anime_search_filter_kind">Type</string>
+    <string name="anime_search_filter_duration">Episode duration</string>
+    <string name="anime_search_filter_rating">Age rating</string>
+
+    <string name="filter_cell_season_old_enough">More old</string>
+</resources>
