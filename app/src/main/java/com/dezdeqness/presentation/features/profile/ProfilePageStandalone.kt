@@ -7,19 +7,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.feature.profile.presentation.ProfileActions
+import com.dezdeqness.feature.profile.presentation.ProfilePage
+import com.dezdeqness.feature.profile.presentation.ProfileViewModel
 import com.dezdeqness.presentation.Achievements
 import com.dezdeqness.presentation.Favourites
 import com.dezdeqness.presentation.History
 import com.dezdeqness.presentation.Settings
 import com.dezdeqness.presentation.Stats
-import com.dezdeqness.presentation.event.NavigateToAchievements
-import com.dezdeqness.presentation.event.NavigateToFavourites
-import com.dezdeqness.presentation.event.NavigateToHistory
-import com.dezdeqness.presentation.event.NavigateToLoginPage
-import com.dezdeqness.presentation.event.NavigateToSettings
-import com.dezdeqness.presentation.event.NavigateToSignUp
-import com.dezdeqness.presentation.event.NavigateToStats
 
 @Composable
 fun ProfilePageStandalone(
@@ -35,68 +30,47 @@ fun ProfilePageStandalone(
 
     val viewModel = viewModel<ProfileViewModel>(factory = profileComponent.viewModelFactory())
 
-    ProfileScreen(
+    val analyticsManager = profileComponent.analyticsManager()
+    val applicationRouter = profileComponent.applicationRouter()
+
+    ProfilePage(
         modifier = modifier,
         stateFlow = viewModel.profileStateFlow,
         actions = object : ProfileActions {
-            override fun onSettingIconClicked() = viewModel.onEventReceive(NavigateToSettings)
-
-            override fun onStatsIconClicked() = viewModel.onEventReceive(NavigateToStats)
-
-            override fun onHistoryIconClicked() = viewModel.onEventReceive(NavigateToHistory)
-
-            override fun onAchievementsClicked(userId: Long) {
-                viewModel.onEventReceive(NavigateToAchievements(userId))
+            override fun onSettingIconClicked() {
+                analyticsManager.settingsTracked()
+                navController.navigate(Settings)
             }
 
-            override fun onLoginCLicked() = viewModel.onEventReceive(NavigateToLoginPage)
+            override fun onStatsIconClicked() {
+                navController.navigate(Stats)
+            }
+
+            override fun onHistoryIconClicked() {
+                navController.navigate(History)
+            }
+
+            override fun onAchievementsClicked(userId: Long) {
+                navController.navigate(Achievements(userId = userId))
+            }
+
+            override fun onFavouriteClicked(userId: Long) {
+                navController.navigate(Favourites(userId = userId))
+            }
+
+            override fun onLoginClicked() {
+                analyticsManager.authTracked()
+                applicationRouter.navigateToLoginScreen(context)
+            }
+
+            override fun onRegistrationClicked() {
+                analyticsManager.authTracked(isLogin = false)
+                applicationRouter.navigateToSignUpScreen(context)
+            }
 
             override fun onLogoutClicked() {
                 viewModel.onLogoutClicked()
             }
-
-            override fun onRegistrationClicked() = viewModel.onEventReceive(NavigateToSignUp)
-
-            override fun onFavouriteClicked(userId: Long) {
-                viewModel.onEventReceive(NavigateToFavourites(userId))
-            }
         },
     )
-
-    viewModel.events.collectEvents { event ->
-        when (event) {
-            NavigateToHistory -> {
-                navController.navigate(History)
-            }
-
-            NavigateToSettings -> {
-                profileComponent.analyticsManager().settingsTracked()
-                navController.navigate(Settings)
-            }
-
-            NavigateToStats -> {
-                navController.navigate(Stats)
-            }
-
-            NavigateToLoginPage -> {
-                profileComponent.analyticsManager().authTracked()
-                profileComponent.applicationRouter().navigateToLoginScreen(context)
-            }
-
-            NavigateToSignUp -> {
-                profileComponent.analyticsManager().authTracked(isLogin = false)
-                profileComponent.applicationRouter().navigateToSignUpScreen(context)
-            }
-
-            is NavigateToAchievements -> {
-                navController.navigate(Achievements(userId = event.usedId))
-            }
-
-            is NavigateToFavourites -> {
-                navController.navigate(Favourites(userId = event.usedId))
-            }
-
-            else -> Unit
-        }
-    }
 }
