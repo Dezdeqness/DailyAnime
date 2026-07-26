@@ -228,6 +228,7 @@ dependencies {
     implementation(project(":contract:filter"))
 
     implementation(project(":feature:achievements"))
+    implementation(project(":feature:auth"))
     implementation(project(":feature:calendar"))
     implementation(project(":feature:screenshotviewer"))
     implementation(project(":feature:history"))

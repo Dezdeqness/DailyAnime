@@ -1,13 +1,13 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.feature.auth.presentation.AuthorizationViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
-import com.dezdeqness.presentation.features.authorization.AuthorizationViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
-@Module(includes = [])
+@Module
 abstract class AuthorizationModule {
 
     @Binds

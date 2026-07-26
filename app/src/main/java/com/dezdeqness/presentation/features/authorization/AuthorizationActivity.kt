@@ -6,26 +6,26 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.runtime.getValue
 import androidx.core.net.toUri
-import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.model.AuthStatus
-import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.databinding.ActivityAuthorizationBinding
-import com.dezdeqness.di.subcomponents.AuthorizationArgsModule
+import com.dezdeqness.feature.auth.presentation.AuthorizationEffect
+import com.dezdeqness.feature.auth.presentation.AuthorizationScreen
+import com.dezdeqness.feature.auth.presentation.AuthorizationViewModel
+import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.getComponent
-import com.dezdeqness.presentation.event.AuthUrl
-import com.dezdeqness.presentation.event.AuthorizationSuccess
-import com.dezdeqness.presentation.event.CloseAuthorization
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -35,18 +35,11 @@ class AuthorizationActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var configManager: ConfigManager
-
-    @Inject
     lateinit var analyticsManager: AnalyticsManager
 
     private val authorizationViewModel by viewModels<AuthorizationViewModel>(
-        factoryProducer = {
-            viewModelFactory
-        },
+        factoryProducer = { viewModelFactory },
     )
-
-    private lateinit var binding: ActivityAuthorizationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -54,113 +47,79 @@ class AuthorizationActivity : AppCompatActivity() {
         application
             .getComponent()
             .authorizationComponent()
-            .argsModule(
-                AuthorizationArgsModule(
-                    isLogin = intent.getBooleanExtra(
-                        KEY_IS_LOGIN_FLOW,
-                        true,
-                    ),
-                ),
-            )
-            .build()
+            .create()
             .inject(this)
 
         super.onCreate(savedInstanceState)
-        binding = ActivityAuthorizationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        setupObservers()
+        setContent {
+            AppTheme {
+                val state by authorizationViewModel.authorizationStateFlow.collectAsStateWithLifecycle()
+                AuthorizationScreen(isLoading = state.isLoading)
+            }
+        }
+
+        observeEffects()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        handleDeepLink(intent)
+        intent.data?.let { authorizationViewModel.onHandleDeeplink(it.toString()) }
     }
 
-    private fun setupObservers() {
+    private fun observeEffects() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                authorizationViewModel.authorizationStateFlow.collect { state ->
-                    binding.loading.isVisible = state.isLoading
-                }
-            }
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                authorizationViewModel.events.collect { event ->
-                    when (event) {
-                        is CloseAuthorization -> {
-                            Toast.makeText(
-                                this@AuthorizationActivity,
-                                R.string.general_no_internet_error,
-                                Toast.LENGTH_LONG,
-                            )
-                                .show()
-                            finish()
-                        }
+                authorizationViewModel.effects.collect { effect ->
+                    when (effect) {
+                        is AuthorizationEffect.OpenUrl -> openAuthorizationUrl(effect.url)
 
-                        is AuthUrl -> {
-                            val uri = event.url.toUri()
-                            val customTabsIntent = CustomTabsIntent
-                                .Builder()
-                                .build()
-
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            if (intent.resolveActivity(this@AuthorizationActivity.packageManager) != null) {
-                                try {
-                                    analyticsManager.authStatusTracked(AuthStatus.CustomTabOpen)
-                                    customTabsIntent.launchUrl(this@AuthorizationActivity, uri)
-                                } catch (_: ActivityNotFoundException) {
-                                    analyticsManager.authStatusTracked(AuthStatus.NoAppToOpen)
-                                    this@AuthorizationActivity.startActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW,
-                                            uri,
-                                        ),
-                                    )
-                                }
-                            } else {
-                                analyticsManager.authStatusTracked(AuthStatus.NoAppToOpen)
-                                Toast
-                                    .makeText(
-                                        this@AuthorizationActivity,
-                                        R.string.general_no_app_view,
-                                        Toast.LENGTH_LONG,
-                                    )
-                                    .show()
-                                finish()
-                            }
-                        }
-
-                        is AuthorizationSuccess -> {
+                        AuthorizationEffect.Success -> {
                             setResult(Activity.RESULT_OK, intent)
                             finish()
                         }
 
-                        else -> {}
+                        AuthorizationEffect.Close -> {
+                            Toast.makeText(
+                                this@AuthorizationActivity,
+                                R.string.general_no_internet_error,
+                                Toast.LENGTH_LONG,
+                            ).show()
+                            finish()
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun handleDeepLink(intent: Intent) {
-        intent.data?.let { uri ->
-            authorizationViewModel.onHandleDeeplink(uri.toString())
+    private fun openAuthorizationUrl(url: String) {
+        val uri = url.toUri()
+        val viewIntent = Intent(Intent.ACTION_VIEW, uri)
+
+        if (viewIntent.resolveActivity(packageManager) == null) {
+            analyticsManager.authStatusTracked(AuthStatus.NoAppToOpen)
+            Toast.makeText(this, R.string.general_no_app_view, Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
+        try {
+            analyticsManager.authStatusTracked(AuthStatus.CustomTabOpen)
+            CustomTabsIntent.Builder().build().launchUrl(this, uri)
+        } catch (_: ActivityNotFoundException) {
+            analyticsManager.authStatusTracked(AuthStatus.NoAppToOpen)
+            startActivity(viewIntent)
         }
     }
 
     companion object {
 
-        private const val KEY_IS_LOGIN_FLOW = "is_login_flow"
+        fun loginIntent(context: Context) = newIntent(context)
 
-        fun loginIntent(context: Context) = newIntent(context, isLogin = true)
+        fun signUpIntent(context: Context) = newIntent(context)
 
-        fun signUpIntent(context: Context) = newIntent(context, isLogin = false)
-
-        private fun newIntent(context: Context, isLogin: Boolean) =
-            Intent(context, AuthorizationActivity::class.java).apply {
-                putExtra(KEY_IS_LOGIN_FLOW, isLogin)
-            }
+        private fun newIntent(context: Context) =
+            Intent(context, AuthorizationActivity::class.java)
     }
 }
