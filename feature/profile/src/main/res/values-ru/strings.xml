@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_history">История</string>
+    <string name="profile_statistics">Статистика</string>
+    <string name="profile_achievements">Достижения</string>
+    <string name="profile_favourites">Избранное</string>
+    <string name="profile_logout">Выход из аккаунта</string>
+
+    <string name="unauthorized_title_profile">Войдите в аккаунт, чтобы отслеживать прогресс</string>
+    <string name="unauthorized_sign_in">Авторизация</string>
+    <string name="unauthorized_sign_up">Регистрация</string>
+</resources>
