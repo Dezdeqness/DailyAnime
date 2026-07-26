@@ -46,14 +46,6 @@ object NavigateToLoginPage : Event()
 
 object NavigateToSignUp : Event()
 
-data class ShareUrl(val url: String) : ConsumableEvent()
-
-object CloseAuthorization : Event()
-
-object AuthorizationSuccess : Event()
-
 object NavigateToMainFlow : Event()
-
-data class AuthUrl(val url: String) : Event()
 
 data object HandlePermission : Event()

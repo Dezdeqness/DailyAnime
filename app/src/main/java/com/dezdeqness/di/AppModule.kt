@@ -29,7 +29,6 @@ import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProviderImpl
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.foundation.provider.ResourceProvider
-import com.dezdeqness.presentation.action.ActionConsumer
 import com.dezdeqness.presentation.routing.ApplicationRouter
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -91,9 +90,6 @@ class AppModule {
     @Singleton
     @Provides
     fun provideLogger(appLogger: AppLogger): Logger = appLogger
-
-    @Provides
-    fun provideActionConsumer() = ActionConsumer()
 
     @Singleton
     @Provides
