@@ -10,11 +10,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.dezdeqness.ShikimoriApp
-import com.dezdeqness.core.AuthorizedUiState
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedActions
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedScreen
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
+import com.dezdeqness.shared.presentation.model.AuthorizedUiState
 
 @Composable
 fun PersonalHostStandalonePage(

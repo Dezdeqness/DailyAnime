@@ -235,6 +235,7 @@ dependencies {
     implementation(project(":feature:favourite"))
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:personallist"))
+    implementation(project(":feature:profile"))
     implementation(project(":feature:userrate"))
     implementation(project(":feature:search"))
     implementation(project(":feature:searchfilter"))
