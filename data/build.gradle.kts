@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -9,10 +11,30 @@ plugins {
     alias(libs.plugins.com.dezdeqness.room)
 }
 
+fun properties(fileName: String) = Properties().apply {
+    val file = rootProject.file(fileName)
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
+
+val localProperties = properties("local.properties")
+val buildProperties = properties("build.properties")
+
+fun secret(key: String): String =
+    System.getenv(key)
+        ?: localProperties.getProperty(key)
+        ?: buildProperties.getProperty(key)
+        ?: ""
+
 android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "SHIKIMORI_CLIENT_ID", "\"${secret("SHIKIMORI_CLIENT_ID")}\"")
+        buildConfigField("String", "SHIKIMORI_CLIENT_SECRET", "\"${secret("SHIKIMORI_CLIENT_SECRET")}\"")
+        buildConfigField("String", "SHIKIMORI_REDIRECT_URI", "\"${secret("SHIKIMORI_REDIRECT_URI")}\"")
     }
 
     buildFeatures {

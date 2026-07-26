@@ -39,6 +39,7 @@ include(":contract:filter")
 
 // features
 include(":feature:achievements")
+include(":feature:auth")
 include(":feature:calendar")
 include(":feature:screenshotviewer")
 include(":feature:history")

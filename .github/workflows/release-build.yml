@@ -203,6 +203,9 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SHIKIMORI_CLIENT_ID: ${{ secrets.SHIKIMORI_CLIENT_ID }}
+          SHIKIMORI_CLIENT_SECRET: ${{ secrets.SHIKIMORI_CLIENT_SECRET }}
+          SHIKIMORI_REDIRECT_URI: ${{ secrets.SHIKIMORI_REDIRECT_URI }}
         run: |
           echo "Building with build number: ${BUILD_NUMBER}"
           echo "Expected version code: ${{ needs.prepare.outputs.version_code }}"

@@ -96,6 +96,9 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SHIKIMORI_CLIENT_ID: ${{ secrets.SHIKIMORI_CLIENT_ID }}
+          SHIKIMORI_CLIENT_SECRET: ${{ secrets.SHIKIMORI_CLIENT_SECRET }}
+          SHIKIMORI_REDIRECT_URI: ${{ secrets.SHIKIMORI_REDIRECT_URI }}
         run: ./gradlew assembleQa --no-configuration-cache --stacktrace
 
       - name: Stop timer

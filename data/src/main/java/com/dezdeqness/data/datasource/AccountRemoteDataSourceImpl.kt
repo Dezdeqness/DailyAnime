@@ -4,6 +4,7 @@ import com.dezdeqness.contract.auth.model.TokenEntity
 import com.dezdeqness.data.AccountApiService
 import com.dezdeqness.data.AuthorizationApiService
 import com.dezdeqness.data.core.BaseDataSource
+import com.dezdeqness.data.core.config.AuthConfig
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.AccountMapper
@@ -16,6 +17,7 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     private val authorizationApiService: Lazy<AuthorizationApiService>,
     private val accountMapper: AccountMapper,
     private val configManager: ConfigManager,
+    private val authConfig: AuthConfig,
 ) : AccountRemoteDataSource, BaseDataSource() {
 
     override fun getAuthorizationCodeUrl(): Result<String> {
@@ -23,8 +25,8 @@ class AccountRemoteDataSourceImpl @Inject constructor(
             .newBuilder()
             .addPathSegment("oauth")
             .addPathSegment("authorize")
-            .addQueryParameter("client_id", CLIENT_ID)
-            .addQueryParameter("redirect_uri", REDIRECT_URI)
+            .addQueryParameter("client_id", authConfig.clientId)
+            .addQueryParameter("redirect_uri", authConfig.redirectUri)
             .addQueryParameter("response_type", RESPONSE_TYPE)
             .addQueryParameter("scope", SCOPE)
             .build()
@@ -35,9 +37,9 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     override fun login(code: String) = tryWithCatch {
         val response = authorizationApiService.get().login(
             code = code,
-            secret = CLIENT_CODE,
-            id = CLIENT_ID,
-            uri = REDIRECT_URI,
+            secret = authConfig.clientSecret,
+            id = authConfig.clientId,
+            uri = authConfig.redirectUri,
         ).execute()
 
         val responseBody = response.body()
@@ -112,9 +114,9 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     override fun refresh(token: String) = tryWithCatch {
         val response = authorizationApiService.get().refresh(
             token = token,
-            secret = CLIENT_CODE,
-            id = CLIENT_ID,
-            uri = REDIRECT_URI,
+            secret = authConfig.clientSecret,
+            id = authConfig.clientId,
+            uri = authConfig.redirectUri,
         ).execute()
 
         val responseBody = response.body()
@@ -133,9 +135,6 @@ class AccountRemoteDataSourceImpl @Inject constructor(
     }
 
     companion object {
-        private const val CLIENT_ID = "9Hx5uIoQ_dBr2VTVGo5L2EH6FrizLkYgsO_Y-0CAyQk"
-        private const val CLIENT_CODE = "mnEmuKPi5l5SIL2kwYcac0NcrHhH8FhW8TS0oHwEvT0"
-        private const val REDIRECT_URI = "dezdeqness://dailyAnime/auth"
         private const val RESPONSE_TYPE = "code"
         private const val SCOPE = "user_rates"
     }
