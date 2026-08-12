@@ -3,9 +3,12 @@ package com.dezdeqness.foundation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import money.vivid.elmslie.core.store.ElmStore
 
@@ -32,6 +35,12 @@ abstract class BaseStoreViewModel<Event : Any, State : Any, Effect : Any, Comman
         )
 
     val effects: Flow<Effect> = store.effects
+
+    val uiEffects: SharedFlow<Effect> = store.effects
+        .filter { !handleEffect(it) }
+        .shareIn(viewModelScope, SharingStarted.Eagerly)
+
+    protected open suspend fun handleEffect(effect: Effect): Boolean = false
 
     protected fun accept(event: Event) {
         store.accept(event)
