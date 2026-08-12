@@ -25,6 +25,7 @@ include(":domain")
 include(":common:foundation-ui")
 include(":common:foundation")
 include(":common:foundation-test")
+include(":common:architecture")
 
 // contracts
 include(":contract:auth")
