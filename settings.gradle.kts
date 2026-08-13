@@ -37,6 +37,12 @@ include(":contract:favourite")
 include(":contract:topic")
 include(":contract:forum")
 include(":contract:filter")
+include(":contract:achievements")
+include(":contract:calendar")
+include(":contract:character")
+include(":contract:home")
+include(":contract:person")
+include(":contract:userrate")
 
 // features
 include(":feature:achievements")
