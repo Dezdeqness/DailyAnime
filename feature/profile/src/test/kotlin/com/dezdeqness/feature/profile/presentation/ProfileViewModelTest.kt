@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.user.model.AccountEntity
-import com.dezdeqness.domain.usecases.GetUserUseCase
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.BaseMessageProvider
@@ -37,7 +37,7 @@ class ProfileViewModelTest {
     private lateinit var logger: Logger
 
     @MockK
-    private lateinit var getUserUseCase: GetUserUseCase
+    private lateinit var userRepository: UserRepository
 
     @MockK
     private lateinit var sessionManager: SessionManager
@@ -64,7 +64,7 @@ class ProfileViewModelTest {
     }
 
     private fun createViewModel() = ProfileViewModel(
-        getUserUseCase = getUserUseCase,
+        userRepository = userRepository,
         sessionManager = sessionManager,
         messageConsumer = messageConsumer,
         messageProvider = messageProvider,
@@ -103,7 +103,7 @@ class ProfileViewModelTest {
             every { avatar } returns "avatarUrl"
             every { nickname } returns "Staria"
         }
-        every { getUserUseCase.invoke() } returns flowOf(Result.success(account))
+        every { userRepository.getProfileDetails() } returns flowOf(Result.success(account))
 
         sessionStateFlow.value = SessionState.Authenticated(
             userId = 42L,
@@ -127,7 +127,7 @@ class ProfileViewModelTest {
 
     @Test
     fun `WHEN profile fetch fails SHOULD show error message`() = runTest {
-        every { getUserUseCase.invoke() } returns flowOf(Result.failure(Exception("boom")))
+        every { userRepository.getProfileDetails() } returns flowOf(Result.failure(Exception("boom")))
         coEvery { messageConsumer.onErrorMessage(any()) } returns Unit
         every { messageProvider.getGeneralErrorMessage() } returns "error"
 

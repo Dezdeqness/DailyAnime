@@ -3,7 +3,7 @@ package com.dezdeqness.feature.profile.presentation
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
-import com.dezdeqness.domain.usecases.GetUserUseCase
+import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 
 class ProfileViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
+    private val userRepository: UserRepository,
     private val sessionManager: SessionManager,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
@@ -61,7 +61,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun profileStateFor(state: SessionState): Flow<ProfileState> = when (state) {
         is SessionState.Authenticated -> flow {
-            getUserUseCase.invoke().collect { result ->
+            userRepository.getProfileDetails().collect { result ->
                 result
                     .onSuccess { account ->
                         emit(

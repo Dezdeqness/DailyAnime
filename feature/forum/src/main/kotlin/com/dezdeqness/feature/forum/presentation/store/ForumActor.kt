@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.forum.presentation.store
 
+import com.dezdeqness.contract.topic.repository.TopicRepository
 import com.dezdeqness.domain.usecases.GetForumsUseCase
-import com.dezdeqness.domain.usecases.GetHotTopicsUseCase
 import com.dezdeqness.feature.forum.presentation.ForumComposer
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer
@@ -11,7 +11,7 @@ import money.vivid.elmslie.core.store.Actor
 
 class ForumActor @Inject constructor(
     private val getForumsUseCase: GetForumsUseCase,
-    private val getHotTopicsUseCase: GetHotTopicsUseCase,
+    private val topicRepository: TopicRepository,
     private val forumComposer: ForumComposer,
     private val topicPresentationComposer: TopicPresentationComposer,
     private val logger: Logger,
@@ -34,7 +34,7 @@ class ForumActor @Inject constructor(
 
         is ForumNamespace.Command.LoadHotTopics -> flow {
             try {
-                val result = getHotTopicsUseCase()
+                val result = topicRepository.getHotTopics(limit = HOT_TOPICS_LIMIT)
                 result.onFailure { throw it }
 
                 val topics = topicPresentationComposer.compose(result.getOrThrow())
@@ -50,5 +50,6 @@ class ForumActor @Inject constructor(
 
     companion object {
         const val TAG = "ForumActor"
+        const val HOT_TOPICS_LIMIT = 5
     }
 }
