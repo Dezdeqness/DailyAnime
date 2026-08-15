@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.details.character.presentation.store
 
 import com.dezdeqness.contract.auth.SessionManager
+import com.dezdeqness.contract.character.repository.CharacterRepository
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.repository.CharacterRepository
 import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
 import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.character.presentation.composer.CharacterDetailsComposer

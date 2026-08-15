@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.topicdetails.presentation.store
 
 import com.dezdeqness.contract.anime.repository.AnimeRepository
+import com.dezdeqness.contract.character.repository.CharacterRepository
 import com.dezdeqness.contract.topic.repository.TopicRepository
-import com.dezdeqness.domain.repository.CharacterRepository
 import com.dezdeqness.feature.topicdetails.presentation.LinkedEntityComposer
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer

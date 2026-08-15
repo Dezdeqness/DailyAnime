@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.details.person.presentation.composer
 
-import com.dezdeqness.domain.model.PersonDetailsEntity
-import com.dezdeqness.domain.model.PersonRole
+import com.dezdeqness.contract.person.model.PersonDetailsEntity
+import com.dezdeqness.contract.person.model.PersonRole
 import com.dezdeqness.feature.details.common.presentation.DetailsSection
 import com.dezdeqness.feature.details.common.presentation.sections.BottomSpacerSection
 import com.dezdeqness.feature.details.common.presentation.sections.BriefInfoSection

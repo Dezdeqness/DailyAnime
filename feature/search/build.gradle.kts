@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
     implementation(project(":contract:filter"))
+    implementation(project(":contract:history"))
     implementation(project(":shared:shared-presentation"))
 
     implementation(project(":domain"))

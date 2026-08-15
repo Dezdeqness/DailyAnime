@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.reorderable)
 
     implementation(project(":data"))
-    implementation(project(":domain"))
 
     implementation(project(":contract:settings"))
     implementation(project(":contract:auth"))

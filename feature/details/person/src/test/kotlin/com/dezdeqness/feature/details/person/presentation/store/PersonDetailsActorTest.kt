@@ -7,8 +7,8 @@ import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.favourite.model.FavouriteKind
 import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.model.PersonDetailsEntity
-import com.dezdeqness.domain.repository.PersonRepository
+import com.dezdeqness.contract.person.model.PersonDetailsEntity
+import com.dezdeqness.contract.person.repository.PersonRepository
 import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
 import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand

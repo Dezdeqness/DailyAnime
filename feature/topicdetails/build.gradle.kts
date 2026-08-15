@@ -50,10 +50,9 @@ dependencies {
     implementation(project(":common:foundation"))
     implementation(project(":shared:shared-presentation"))
 
-    // Domain
-    implementation(project(":domain"))
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
+    implementation(project(":contract:character"))
 
     // Elm
     implementation(libs.elmslie.core)

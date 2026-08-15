@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":contract:user"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
+    implementation(project(":contract:userrate"))
 
     implementation(project(":shared:shared-presentation"))
     implementation(project(":shared:shared-domain"))

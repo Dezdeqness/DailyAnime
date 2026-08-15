@@ -1,6 +1,6 @@
 package com.dezdeqness.feature.personallist.tab.store
 
-import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
 import com.dezdeqness.feature.personallist.tab.PersonalListComposer
 import com.dezdeqness.foundation.Logger

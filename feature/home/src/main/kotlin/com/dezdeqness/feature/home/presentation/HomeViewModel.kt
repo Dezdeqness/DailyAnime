@@ -4,12 +4,12 @@ import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
+import com.dezdeqness.contract.home.repository.HomeRepository
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
-import com.dezdeqness.domain.repository.HomeRepository
 import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.feature.history.presentation.models.HistoryModel.HistoryUiModel
 import com.dezdeqness.feature.home.presentation.models.SectionStatus

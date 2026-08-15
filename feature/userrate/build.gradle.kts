@@ -58,7 +58,7 @@ dependencies {
     testImplementation(libs.mockk.mockk)
 
     implementation(project(":data"))
-    implementation(project(":domain"))
 
     implementation(project(":contract:anime"))
+    implementation(project(":contract:userrate"))
 }

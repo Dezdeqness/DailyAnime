@@ -68,5 +68,4 @@ dependencies {
     testImplementation(project(":common:foundation-test"))
 
     implementation(project(":data"))
-    implementation(project(":domain"))
 }

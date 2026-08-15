@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.achievements.presentation
 
+import com.dezdeqness.contract.achievements.model.AchievementConfigEntity
+import com.dezdeqness.contract.achievements.model.AchievementEntity
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.domain.model.AchievementConfigEntity
-import com.dezdeqness.domain.model.AchievementEntity
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
 import javax.inject.Inject
 

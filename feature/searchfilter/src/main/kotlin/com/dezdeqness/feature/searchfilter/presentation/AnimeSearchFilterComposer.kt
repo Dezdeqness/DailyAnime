@@ -1,10 +1,10 @@
 package com.dezdeqness.feature.searchfilter.presentation
 
 import com.dezdeqness.contract.filter.model.AnimeCell
+import com.dezdeqness.contract.filter.model.FilterEntity
+import com.dezdeqness.contract.filter.model.FilterType
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.contract.filter.model.SectionType
-import com.dezdeqness.domain.model.FilterEntity
-import com.dezdeqness.domain.model.FilterType
 import com.dezdeqness.foundation.provider.ResourceProvider
 import javax.inject.Inject
 

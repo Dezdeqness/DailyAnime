@@ -9,8 +9,8 @@ import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
-import com.dezdeqness.domain.model.HomeEntity
-import com.dezdeqness.domain.repository.HomeRepository
+import com.dezdeqness.contract.home.model.HomeEntity
+import com.dezdeqness.contract.home.repository.HomeRepository
 import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.feature.home.presentation.models.SectionAnimeUiModel
 import com.dezdeqness.feature.home.presentation.models.SectionStatus

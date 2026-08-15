@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.dezdeqness.domain.model.Sort
+import com.dezdeqness.contract.userrate.model.Sort
 import com.dezdeqness.feature.personallist.R
 import com.dezdeqness.foundation.ui.theme.AppTheme
 

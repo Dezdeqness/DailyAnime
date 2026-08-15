@@ -65,6 +65,4 @@ dependencies {
     implementation(project(":common:foundation"))
 
     implementation(project(":contract:filter"))
-
-    implementation(project(":domain"))
 }

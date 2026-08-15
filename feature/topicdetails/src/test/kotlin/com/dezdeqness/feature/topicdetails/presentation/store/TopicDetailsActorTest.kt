@@ -5,8 +5,8 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.contract.topic.model.TopicEntity
 import com.dezdeqness.contract.topic.repository.TopicRepository
-import com.dezdeqness.domain.model.CharacterDetailsEntity
-import com.dezdeqness.domain.repository.CharacterRepository
+import com.dezdeqness.contract.character.model.CharacterDetailsEntity
+import com.dezdeqness.contract.character.repository.CharacterRepository
 import com.dezdeqness.feature.topicdetails.presentation.LinkedEntityComposer
 import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.foundation.Logger

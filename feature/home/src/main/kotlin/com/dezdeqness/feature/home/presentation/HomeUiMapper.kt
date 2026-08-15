@@ -3,7 +3,7 @@ package com.dezdeqness.feature.home.presentation
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
-import com.dezdeqness.domain.model.HomeCalendarEntity
+import com.dezdeqness.contract.home.model.HomeCalendarEntity
 import com.dezdeqness.feature.home.presentation.models.HomeCalendarUiModel
 import com.dezdeqness.feature.home.presentation.models.SectionAnimeUiModel
 import javax.inject.Inject

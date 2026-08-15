@@ -2,7 +2,7 @@ package com.dezdeqness.feature.userrate
 
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
