@@ -3,7 +3,7 @@ package com.dezdeqness.feature.userrate
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
-import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.foundation.Logger
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

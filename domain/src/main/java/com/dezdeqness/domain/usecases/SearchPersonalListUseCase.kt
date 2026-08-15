@@ -1,7 +1,7 @@
 package com.dezdeqness.domain.usecases
 
 import com.dezdeqness.contract.anime.model.UserRateStatusEntity
-import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 
 class SearchPersonalListUseCase(
     private val userRatesRepository: UserRatesRepository,

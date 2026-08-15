@@ -1,6 +1,6 @@
 package com.dezdeqness.feature.details.character.presentation.composer
 
-import com.dezdeqness.domain.model.CharacterDetailsEntity
+import com.dezdeqness.contract.character.model.CharacterDetailsEntity
 import com.dezdeqness.feature.details.character.presentation.models.AnimeItem
 import com.dezdeqness.feature.details.character.presentation.models.CharacterDetailsSection
 import com.dezdeqness.feature.details.character.presentation.models.SeyuItem

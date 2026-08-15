@@ -3,7 +3,7 @@ package com.dezdeqness.domain.usecases
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 
 class GetAnimeDetailsUseCase(
     private val animeRepository: AnimeRepository,

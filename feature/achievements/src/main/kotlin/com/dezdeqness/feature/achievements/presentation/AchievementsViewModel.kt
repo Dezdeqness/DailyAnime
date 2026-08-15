@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.achievements.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.contract.achievements.repository.AchievementRepository
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.domain.repository.AchievementRepository
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider

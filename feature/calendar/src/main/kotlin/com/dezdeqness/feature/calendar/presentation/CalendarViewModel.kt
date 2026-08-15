@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.calendar.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.domain.model.AnimeCalendarEntity
-import com.dezdeqness.domain.repository.CalendarRepository
+import com.dezdeqness.contract.calendar.model.AnimeCalendarEntity
+import com.dezdeqness.contract.calendar.repository.CalendarRepository
 import com.dezdeqness.feature.calendar.presentation.models.CalendarListUiModel
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger

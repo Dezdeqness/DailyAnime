@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":contract:auth"))
     implementation(project(":contract:history"))
     implementation(project(":contract:settings"))
+    implementation(project(":contract:home"))
 
     implementation(project(":feature:history"))
 

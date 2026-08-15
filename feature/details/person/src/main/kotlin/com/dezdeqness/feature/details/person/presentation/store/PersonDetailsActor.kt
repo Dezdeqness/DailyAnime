@@ -2,8 +2,8 @@ package com.dezdeqness.feature.details.person.presentation.store
 
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.model.toPrimaryFavouriteKind
-import com.dezdeqness.domain.repository.PersonRepository
+import com.dezdeqness.contract.person.model.toPrimaryFavouriteKind
+import com.dezdeqness.contract.person.repository.PersonRepository
 import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
 import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand

@@ -2,7 +2,7 @@ package com.dezdeqness.feature.topicdetails.presentation
 
 import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeStatus
-import com.dezdeqness.domain.model.CharacterDetailsEntity
+import com.dezdeqness.contract.character.model.CharacterDetailsEntity
 import com.dezdeqness.feature.topicdetails.R
 import com.dezdeqness.feature.topicdetails.presentation.models.LinkedEntityUiModel
 import com.dezdeqness.foundation.provider.ResourceProvider

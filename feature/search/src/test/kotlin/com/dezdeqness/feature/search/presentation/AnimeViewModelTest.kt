@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.domain.repository.HistorySearchRepository
+import com.dezdeqness.contract.history.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.feature.search.presentation.models.AnimeUiModel
 import com.dezdeqness.foundation.Logger

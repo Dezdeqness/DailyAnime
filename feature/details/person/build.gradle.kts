@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":contract:anime"))
     implementation(project(":contract:auth"))
     implementation(project(":contract:favourite"))
+    implementation(project(":contract:person"))
 
     // Elm
     implementation(libs.elmslie.core)

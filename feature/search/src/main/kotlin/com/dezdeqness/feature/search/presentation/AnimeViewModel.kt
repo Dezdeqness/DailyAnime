@@ -2,9 +2,9 @@ package com.dezdeqness.feature.search.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
+import com.dezdeqness.contract.history.repository.HistorySearchRepository
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.domain.usecases.GetAnimeListUseCase
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger

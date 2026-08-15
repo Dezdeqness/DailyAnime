@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.searchfilter.presentation
 
 import app.cash.turbine.test
-import com.dezdeqness.domain.model.FilterEntity
-import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.contract.filter.model.FilterEntity
+import com.dezdeqness.contract.filter.repository.SearchFilterRepository
 import com.dezdeqness.contract.filter.model.AnimeCell
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.foundation.Logger

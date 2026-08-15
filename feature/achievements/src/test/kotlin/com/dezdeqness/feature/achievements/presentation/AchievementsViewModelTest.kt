@@ -4,9 +4,9 @@ import app.cash.turbine.test
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.domain.model.AchievementConfigDataEntity
-import com.dezdeqness.domain.model.AchievementEntity
-import com.dezdeqness.domain.repository.AchievementRepository
+import com.dezdeqness.contract.achievements.model.AchievementConfigDataEntity
+import com.dezdeqness.contract.achievements.model.AchievementEntity
+import com.dezdeqness.contract.achievements.repository.AchievementRepository
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

@@ -62,5 +62,6 @@ dependencies {
     implementation(project(":common:foundation"))
 
     implementation(project(":data"))
-    implementation(project(":domain"))
+
+    implementation(project(":contract:achievements"))
 }

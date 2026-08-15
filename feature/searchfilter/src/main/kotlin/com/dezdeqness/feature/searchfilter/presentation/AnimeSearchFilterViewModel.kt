@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.searchfilter.presentation
 
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
-import com.dezdeqness.domain.repository.SearchFilterRepository
+import com.dezdeqness.contract.filter.repository.SearchFilterRepository
 import com.dezdeqness.feature.searchfilter.presentation.models.SelectedCell
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
