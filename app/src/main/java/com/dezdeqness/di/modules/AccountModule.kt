@@ -15,7 +15,6 @@ import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
 import com.dezdeqness.data.manager.SessionManagerImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
-import com.dezdeqness.domain.usecases.GetUserUseCase
 import com.dezdeqness.domain.usecases.LoginUseCase
 import com.dezdeqness.domain.usecases.LogoutUseCase
 import com.dezdeqness.domain.usecases.RefreshTokenUseCase
@@ -76,11 +75,6 @@ abstract class AccountModule {
         @Provides
         fun provideRefreshTokenUseCase(authRepository: AuthRepository) = RefreshTokenUseCase(
             authRepository = authRepository,
-        )
-
-        @Provides
-        fun provideGetProfileUseCase(userRepository: UserRepository) = GetUserUseCase(
-            userRepository = userRepository,
         )
 
         @Provides

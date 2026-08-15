@@ -5,7 +5,6 @@ import com.dezdeqness.data.FavouriteApiService
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSource
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSourceImpl
 import com.dezdeqness.data.repository.FavouriteRepositoryImpl
-import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
 import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import dagger.Binds
 import dagger.Module
@@ -22,10 +21,6 @@ abstract class FavouriteModule {
         @Provides
         fun provideObserveFavouriteStatusUseCase(favouriteRepository: FavouriteRepository) =
             ObserveFavouriteStatusUseCase(favouriteRepository = favouriteRepository)
-
-        @Provides
-        fun provideFetchFavouritesUseCase(favouriteRepository: FavouriteRepository) =
-            FetchFavouritesUseCase(favouriteRepository = favouriteRepository)
     }
 
     @Binds

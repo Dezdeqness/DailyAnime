@@ -2,13 +2,11 @@ package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.forum.repository.ForumRepository
-import com.dezdeqness.contract.topic.repository.TopicRepository
 import com.dezdeqness.data.ForumApiService
 import com.dezdeqness.data.datasource.ForumRemoteDataSource
 import com.dezdeqness.data.datasource.ForumRemoteDataSourceImpl
 import com.dezdeqness.data.repository.ForumRepositoryImpl
 import com.dezdeqness.domain.usecases.GetForumsUseCase
-import com.dezdeqness.domain.usecases.GetHotTopicsUseCase
 import com.dezdeqness.feature.forum.presentation.ForumViewModel
 import com.dezdeqness.feature.forum.presentation.store.ForumActor
 import com.dezdeqness.feature.forum.presentation.store.ForumNamespace.Command
@@ -35,10 +33,6 @@ abstract class ForumModule {
         @Provides
         fun provideGetForumsUseCase(forumRepository: ForumRepository) =
             GetForumsUseCase(forumRepository = forumRepository)
-
-        @Provides
-        fun provideGetHotTopicsUseCase(topicRepository: TopicRepository) =
-            GetHotTopicsUseCase(topicRepository = topicRepository)
 
         @Provides
         fun provideForumStore(actor: ForumActor): ElmStore<Event, State, Effect, Command> = ElmStore(

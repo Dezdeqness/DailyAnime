@@ -3,8 +3,8 @@ package com.dezdeqness.feature.forum.presentation.store
 import app.cash.turbine.test
 import com.dezdeqness.contract.forum.model.ForumEntity
 import com.dezdeqness.contract.topic.model.TopicEntity
+import com.dezdeqness.contract.topic.repository.TopicRepository
 import com.dezdeqness.domain.usecases.GetForumsUseCase
-import com.dezdeqness.domain.usecases.GetHotTopicsUseCase
 import com.dezdeqness.feature.forum.presentation.ForumComposer
 import com.dezdeqness.feature.forum.presentation.models.ForumUiModel
 import com.dezdeqness.foundation.Logger
@@ -32,7 +32,7 @@ class ForumActorTest {
     lateinit var getForumsUseCase: GetForumsUseCase
 
     @MockK
-    lateinit var getHotTopicsUseCase: GetHotTopicsUseCase
+    lateinit var topicRepository: TopicRepository
 
     @MockK
     lateinit var forumComposer: ForumComposer
@@ -48,7 +48,7 @@ class ForumActorTest {
 
         actor = ForumActor(
             getForumsUseCase = getForumsUseCase,
-            getHotTopicsUseCase = getHotTopicsUseCase,
+            topicRepository = topicRepository,
             forumComposer = forumComposer,
             topicPresentationComposer = topicPresentationComposer,
             logger = logger,
@@ -88,7 +88,7 @@ class ForumActorTest {
         val rawTopics = listOf(mockk<TopicEntity>())
         val composedTopics = listOf(mockk<TopicPresentationModel>())
 
-        every { getHotTopicsUseCase.invoke() } returns Result.success(rawTopics)
+        every { topicRepository.getHotTopics(limit = 5) } returns Result.success(rawTopics)
         every { topicPresentationComposer.compose(rawTopics) } returns composedTopics
 
         actor.execute(ForumNamespace.Command.LoadHotTopics).test {
@@ -102,7 +102,7 @@ class ForumActorTest {
 
     @Test
     fun `WHEN LoadHotTopics fails SHOULD emit OnHotTopicsError`() = runTest {
-        every { getHotTopicsUseCase.invoke() } returns Result.failure(Exception())
+        every { topicRepository.getHotTopics(limit = 5) } returns Result.failure(Exception())
 
         actor.execute(ForumNamespace.Command.LoadHotTopics).test {
             val event = awaitItem()

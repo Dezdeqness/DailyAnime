@@ -12,7 +12,6 @@ import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.favourite.model.FavouriteKind
 import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
 import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.anime.presentation.composer.AnimeDetailsComposer
 import com.dezdeqness.feature.details.anime.presentation.models.AnimeDetailsSection
@@ -56,9 +55,6 @@ class AnimeDetailsActorTest {
     lateinit var observeFavouriteStatusUseCase: ObserveFavouriteStatusUseCase
 
     @MockK(relaxed = true)
-    lateinit var fetchFavouritesUseCase: FetchFavouritesUseCase
-
-    @MockK(relaxed = true)
     lateinit var favouriteRepository: FavouriteRepository
 
     @MockK(relaxed = true)
@@ -76,7 +72,6 @@ class AnimeDetailsActorTest {
             authRepository = authRepository,
             composer = composer,
             observeFavouriteStatusUseCase = observeFavouriteStatusUseCase,
-            fetchFavouritesUseCase = fetchFavouritesUseCase,
             favouriteRepository = favouriteRepository,
             sessionManager = sessionManager,
             logger = logger,
@@ -295,20 +290,20 @@ class AnimeDetailsActorTest {
     }
 
     @Test
-    fun `WHEN FetchFavourites invoked for authorized user SHOULD call use case`() = runTest {
+    fun `WHEN FetchFavourites invoked for authorized user SHOULD call repository`() = runTest {
         every { sessionManager.currentSession } returns authenticatedSession(userId = 42L)
-        coEvery { fetchFavouritesUseCase(userId = 42L, force = true) } returns Result.success(Unit)
+        coEvery { favouriteRepository.fetchFavourites(userId = 42L, force = true) } returns Result.success(Unit)
 
         actor.execute(
             AnimeDetailsNamespace.Command.Base(BaseDetailsCommand.FetchFavourites(force = true)),
         ).test {
             awaitComplete()
         }
-        coVerify(exactly = 1) { fetchFavouritesUseCase(userId = 42L, force = true) }
+        coVerify(exactly = 1) { favouriteRepository.fetchFavourites(userId = 42L, force = true) }
     }
 
     @Test
-    fun `WHEN FetchFavourites invoked without session SHOULD not call use case`() = runTest {
+    fun `WHEN FetchFavourites invoked without session SHOULD not call repository`() = runTest {
         every { sessionManager.currentSession } returns null
 
         actor.execute(
@@ -316,7 +311,7 @@ class AnimeDetailsActorTest {
         ).test {
             awaitComplete()
         }
-        coVerify(exactly = 0) { fetchFavouritesUseCase(any(), any()) }
+        coVerify(exactly = 0) { favouriteRepository.fetchFavourites(any(), any()) }
     }
 
     private fun authenticatedSession(userId: Long) = SessionState.Authenticated(

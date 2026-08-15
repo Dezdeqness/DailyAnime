@@ -3,7 +3,6 @@ package com.dezdeqness.feature.details.character.presentation.store
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.character.repository.CharacterRepository
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.usecases.FetchFavouritesUseCase
 import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.character.presentation.composer.CharacterDetailsComposer
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
@@ -20,7 +19,6 @@ class CharacterDetailsActor @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val composer: CharacterDetailsComposer,
     private val observeFavouriteStatusUseCase: ObserveFavouriteStatusUseCase,
-    private val fetchFavouritesUseCase: FetchFavouritesUseCase,
     private val favouriteRepository: FavouriteRepository,
     private val sessionManager: SessionManager,
     private val logger: Logger,
@@ -68,7 +66,7 @@ class CharacterDetailsActor @Inject constructor(
                 emptyFlow()
             } else {
                 flow {
-                    fetchFavouritesUseCase(userId = userId, force = command.force)
+                    favouriteRepository.fetchFavourites(userId = userId, force = command.force)
                         .onFailure { logger.logInfo(TAG, "Failed to load favourites", it) }
                 }
             }
