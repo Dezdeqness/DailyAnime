@@ -1,9 +1,9 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.userrate.model.PersonalListFilterEntity
+import com.dezdeqness.contract.userrate.model.Sort
+import com.dezdeqness.contract.userrate.repository.PersonalListFilterRepository
 import com.dezdeqness.data.manager.PersonalListFilterManager
-import com.dezdeqness.domain.model.PersonalListFilterEntity
-import com.dezdeqness.domain.model.Sort
-import com.dezdeqness.domain.repository.PersonalListFilterRepository
 import javax.inject.Inject
 
 class PersonalListFilterRepositoryImpl @Inject constructor(

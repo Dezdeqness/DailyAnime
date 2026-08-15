@@ -1,7 +1,7 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.achievements.repository.AchievementRepository
 import com.dezdeqness.data.datasource.AchievementRemoteDataSource
-import com.dezdeqness.domain.repository.AchievementRepository
 import javax.inject.Inject
 
 class AchievementRepositoryImpl @Inject constructor(

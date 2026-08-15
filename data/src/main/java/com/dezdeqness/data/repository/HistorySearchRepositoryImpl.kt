@@ -1,7 +1,7 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.history.repository.HistorySearchRepository
 import com.dezdeqness.data.provider.HistorySearchListProvider
-import com.dezdeqness.domain.repository.HistorySearchRepository
 
 class HistorySearchRepositoryImpl(
     private val historySearchProvider: HistorySearchListProvider,

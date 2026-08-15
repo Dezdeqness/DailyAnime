@@ -3,7 +3,7 @@ package com.dezdeqness.di.modules
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.anime.repository.AnimeRepository
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.domain.repository.UserRatesRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsViewModel

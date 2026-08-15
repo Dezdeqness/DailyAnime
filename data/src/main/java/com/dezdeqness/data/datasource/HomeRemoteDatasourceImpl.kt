@@ -1,12 +1,12 @@
 package com.dezdeqness.data.datasource
 
 import com.apollographql.apollo.ApolloClient
+import com.dezdeqness.contract.home.model.HomeEntity
 import com.dezdeqness.data.HomeQuery
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createGraphqlException
 import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.type.OrderEnum
-import com.dezdeqness.domain.model.HomeEntity
 import javax.inject.Inject
 import javax.inject.Named
 

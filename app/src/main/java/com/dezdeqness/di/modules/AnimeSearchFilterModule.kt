@@ -1,8 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.contract.filter.repository.SearchFilterRepository
 import com.dezdeqness.data.repository.SearchFilterRepositoryImpl
-import com.dezdeqness.domain.repository.SearchFilterRepository
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterComposer
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterViewModel
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSeasonCellComposer

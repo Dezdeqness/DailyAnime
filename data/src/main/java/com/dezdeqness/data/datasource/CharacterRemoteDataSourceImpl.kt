@@ -1,10 +1,10 @@
 package com.dezdeqness.data.datasource
 
+import com.dezdeqness.contract.character.model.CharacterDetailsEntity
 import com.dezdeqness.data.CharacterApiService
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.mapper.CharacterMapper
-import com.dezdeqness.domain.model.CharacterDetailsEntity
 import dagger.Lazy
 import javax.inject.Inject
 

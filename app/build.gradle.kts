@@ -226,6 +226,12 @@ dependencies {
     implementation(project(":contract:topic"))
     implementation(project(":contract:forum"))
     implementation(project(":contract:filter"))
+    implementation(project(":contract:achievements"))
+    implementation(project(":contract:calendar"))
+    implementation(project(":contract:character"))
+    implementation(project(":contract:home"))
+    implementation(project(":contract:person"))
+    implementation(project(":contract:userrate"))
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:auth"))

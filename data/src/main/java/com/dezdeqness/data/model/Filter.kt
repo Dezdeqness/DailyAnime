@@ -1,6 +1,6 @@
 package com.dezdeqness.data.model
 
-import com.dezdeqness.domain.model.FilterType
+import com.dezdeqness.contract.filter.model.FilterType
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 

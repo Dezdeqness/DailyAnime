@@ -1,6 +1,6 @@
 package com.dezdeqness.data.datasource
 
-import com.dezdeqness.domain.model.AnimeCalendarEntity
+import com.dezdeqness.contract.calendar.model.AnimeCalendarEntity
 
 interface CalendarRemoteDataSource {
 

@@ -1,10 +1,10 @@
 package com.dezdeqness.data.repository
 
 import com.dezdeqness.contract.anime.model.TypeEntity
+import com.dezdeqness.contract.filter.model.FilterEntity
+import com.dezdeqness.contract.filter.repository.SearchFilterRepository
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.domain.model.FilterEntity
-import com.dezdeqness.domain.repository.SearchFilterRepository
 import javax.inject.Inject
 
 class SearchFilterRepositoryImpl @Inject constructor(

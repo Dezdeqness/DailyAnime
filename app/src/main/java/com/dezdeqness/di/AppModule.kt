@@ -2,6 +2,7 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
+import com.dezdeqness.contract.history.repository.HistorySearchRepository
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
@@ -22,7 +23,6 @@ import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.data.provider.HistorySearchListProvider
 import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
 import com.dezdeqness.data.repository.SettingsRepositoryImpl
-import com.dezdeqness.domain.repository.HistorySearchRepository
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProviderImpl

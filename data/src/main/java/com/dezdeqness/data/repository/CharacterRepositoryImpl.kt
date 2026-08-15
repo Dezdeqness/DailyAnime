@@ -1,7 +1,7 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.character.repository.CharacterRepository
 import com.dezdeqness.data.datasource.CharacterRemoteDataSource
-import com.dezdeqness.domain.repository.CharacterRepository
 import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(

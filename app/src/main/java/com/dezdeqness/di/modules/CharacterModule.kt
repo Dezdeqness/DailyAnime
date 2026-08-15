@@ -1,10 +1,10 @@
 package com.dezdeqness.di.modules
 
+import com.dezdeqness.contract.character.repository.CharacterRepository
 import com.dezdeqness.data.CharacterApiService
 import com.dezdeqness.data.datasource.CharacterRemoteDataSource
 import com.dezdeqness.data.datasource.CharacterRemoteDataSourceImpl
 import com.dezdeqness.data.repository.CharacterRepositoryImpl
-import com.dezdeqness.domain.repository.CharacterRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

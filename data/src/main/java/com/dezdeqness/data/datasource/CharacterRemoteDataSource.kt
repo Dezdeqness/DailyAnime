@@ -1,6 +1,6 @@
 package com.dezdeqness.data.datasource
 
-import com.dezdeqness.domain.model.CharacterDetailsEntity
+import com.dezdeqness.contract.character.model.CharacterDetailsEntity
 
 interface CharacterRemoteDataSource {
     fun getCharacterDetailsById(id: Long): Result<CharacterDetailsEntity>
