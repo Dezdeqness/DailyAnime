@@ -1,7 +1,7 @@
 package com.dezdeqness.data.datasource
 
+import com.dezdeqness.contract.home.model.HomeEntity
 import com.dezdeqness.data.type.OrderEnum
-import com.dezdeqness.domain.model.HomeEntity
 
 interface HomeRemoteDatasource {
 

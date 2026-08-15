@@ -1,10 +1,10 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.home.repository.HomeRepository
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.datasource.HomeRemoteDatasource
 import com.dezdeqness.data.type.OrderEnum
-import com.dezdeqness.domain.repository.HomeRepository
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(

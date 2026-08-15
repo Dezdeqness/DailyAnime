@@ -1,9 +1,9 @@
 package com.dezdeqness.data.mapper
 
 import com.dezdeqness.contract.anime.model.ImageEntity
+import com.dezdeqness.contract.person.model.PersonDetailsEntity
+import com.dezdeqness.contract.person.model.PersonRole
 import com.dezdeqness.data.PersonQuery
-import com.dezdeqness.domain.model.PersonDetailsEntity
-import com.dezdeqness.domain.model.PersonRole
 import javax.inject.Inject
 import javax.inject.Singleton
 

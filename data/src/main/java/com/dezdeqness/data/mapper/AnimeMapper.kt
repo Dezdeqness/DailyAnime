@@ -7,6 +7,7 @@ import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.ImageEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.contract.home.model.HomeCalendarEntity
 import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.data.AnimeChronologyQuery
 import com.dezdeqness.data.AnimeDetailsQuery
@@ -18,7 +19,6 @@ import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.db.AnimeLocal
-import com.dezdeqness.domain.model.HomeCalendarEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

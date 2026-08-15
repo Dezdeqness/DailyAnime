@@ -1,10 +1,10 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.contract.achievements.model.AchievementConfigEntity
+import com.dezdeqness.contract.achievements.model.AchievementEntity
 import com.dezdeqness.data.core.TimestampConverter
 import com.dezdeqness.data.model.AchievementConfigRemote
 import com.dezdeqness.data.model.AchievementRemote
-import com.dezdeqness.domain.model.AchievementConfigEntity
-import com.dezdeqness.domain.model.AchievementEntity
 import javax.inject.Inject
 
 class AchievementMapper @Inject constructor(

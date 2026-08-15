@@ -1,9 +1,9 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.calendar.repository.CalendarRepository
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.datasource.CalendarRemoteDataSource
-import com.dezdeqness.domain.repository.CalendarRepository
 import javax.inject.Inject
 
 class CalendarRepositoryImpl @Inject constructor(

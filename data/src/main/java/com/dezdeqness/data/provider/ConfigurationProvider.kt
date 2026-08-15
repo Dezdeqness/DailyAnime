@@ -1,16 +1,16 @@
 package com.dezdeqness.data.provider
 
 import android.content.res.AssetManager
+import com.dezdeqness.contract.achievements.model.AchievementConfigDataEntity
+import com.dezdeqness.contract.achievements.model.AchievementConfigEntity
 import com.dezdeqness.contract.anime.model.GenreEntity
+import com.dezdeqness.contract.filter.model.FilterEntity
 import com.dezdeqness.data.mapper.AchievementMapper
 import com.dezdeqness.data.mapper.FilterMapper
 import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.AchievementConfigRemote
 import com.dezdeqness.data.model.FilterItem
 import com.dezdeqness.data.model.GenreRemote
-import com.dezdeqness.domain.model.AchievementConfigDataEntity
-import com.dezdeqness.domain.model.AchievementConfigEntity
-import com.dezdeqness.domain.model.FilterEntity
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import okio.buffer

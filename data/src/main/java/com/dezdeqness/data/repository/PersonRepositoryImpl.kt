@@ -1,7 +1,7 @@
 package com.dezdeqness.data.repository
 
+import com.dezdeqness.contract.person.repository.PersonRepository
 import com.dezdeqness.data.datasource.PersonRemoteDataSource
-import com.dezdeqness.domain.repository.PersonRepository
 import javax.inject.Inject
 
 class PersonRepositoryImpl @Inject constructor(

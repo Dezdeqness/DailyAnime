@@ -1,5 +1,7 @@
 package com.dezdeqness.di.modules
 
+import com.dezdeqness.contract.userrate.repository.PersonalListFilterRepository
+import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.data.UserRatesApiService
 import com.dezdeqness.data.database.ShikimoriDatabase
 import com.dezdeqness.data.datasource.UserRatesRemoteDataSource
@@ -8,8 +10,6 @@ import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import com.dezdeqness.data.datasource.db.UserRatesLocalDataSourceImpl
 import com.dezdeqness.data.repository.PersonalListFilterRepositoryImpl
 import com.dezdeqness.data.repository.UserRatesRepositoryImpl
-import com.dezdeqness.domain.repository.PersonalListFilterRepository
-import com.dezdeqness.domain.repository.UserRatesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

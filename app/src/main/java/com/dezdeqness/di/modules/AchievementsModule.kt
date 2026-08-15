@@ -1,11 +1,11 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.dezdeqness.contract.achievements.repository.AchievementRepository
 import com.dezdeqness.data.AchievementService
 import com.dezdeqness.data.datasource.AchievementRemoteDataSource
 import com.dezdeqness.data.datasource.AchievementRemoteDataSourceImpl
 import com.dezdeqness.data.repository.AchievementRepositoryImpl
-import com.dezdeqness.domain.repository.AchievementRepository
 import com.dezdeqness.feature.achievements.presentation.AchievementsViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds

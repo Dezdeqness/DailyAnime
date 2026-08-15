@@ -1,9 +1,9 @@
 package com.dezdeqness.di.modules
 
+import com.dezdeqness.contract.person.repository.PersonRepository
 import com.dezdeqness.data.datasource.PersonRemoteDataSource
 import com.dezdeqness.data.datasource.PersonRemoteDataSourceImpl
 import com.dezdeqness.data.repository.PersonRepositoryImpl
-import com.dezdeqness.domain.repository.PersonRepository
 import dagger.Binds
 import dagger.Module
 
