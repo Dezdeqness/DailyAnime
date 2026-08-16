@@ -215,7 +215,14 @@ dependencies {
     implementation(libs.elmslie.core)
 
     implementation(project(":data"))
-    implementation(project(":domain"))
+    implementation(project(":domain:core"))
+    implementation(project(":domain:anime"))
+    implementation(project(":domain:userrate"))
+    implementation(project(":domain:auth"))
+    implementation(project(":domain:forum"))
+    implementation(project(":domain:topic"))
+    implementation(project(":domain:history"))
+    implementation(project(":domain:favourite"))
 
     implementation(project(":contract:auth"))
     implementation(project(":contract:history"))

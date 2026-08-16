@@ -19,7 +19,16 @@ rootProject.name = "Daily Anime"
 
 include(":app")
 include(":data")
-include(":domain")
+
+// domain
+include(":domain:core")
+include(":domain:anime")
+include(":domain:userrate")
+include(":domain:auth")
+include(":domain:forum")
+include(":domain:topic")
+include(":domain:history")
+include(":domain:favourite")
 
 // common
 include(":common:foundation-ui")

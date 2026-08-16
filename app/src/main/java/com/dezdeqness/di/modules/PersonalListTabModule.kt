@@ -1,8 +1,8 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.userrate.repository.UserRatesRepository
-import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
+import com.dezdeqness.contract.userrate.usecases.GetPersonalListByStatusUseCase
+import com.dezdeqness.domain.userrate.usecases.GetPersonalListByStatusUseCaseImpl
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.feature.personallist.tab.store.PersonalListActor
 import com.dezdeqness.feature.personallist.tab.store.PersonalListNamespace
@@ -20,10 +20,6 @@ abstract class PersonalListTabModule {
 
     companion object {
         @Provides
-        fun provideGetPersonalListByStatusUseCase(userRatesRepository: UserRatesRepository) =
-            GetPersonalListByStatusUseCase(userRatesRepository = userRatesRepository)
-
-        @Provides
         fun providePersonalListStore(
             actor: PersonalListActor,
         ): ElmStore<
@@ -38,6 +34,11 @@ abstract class PersonalListTabModule {
                 actor = actor,
             )
     }
+
+    @Binds
+    abstract fun bindGetPersonalListByStatusUseCase(
+        getPersonalListByStatusUseCase: GetPersonalListByStatusUseCaseImpl,
+    ): GetPersonalListByStatusUseCase
 
     @Binds
     @IntoMap

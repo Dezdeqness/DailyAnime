@@ -1,8 +1,8 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.topic.repository.TopicRepository
-import com.dezdeqness.domain.usecases.GetTopicUseCase
+import com.dezdeqness.contract.topic.usecases.GetTopicUseCase
+import com.dezdeqness.domain.topic.usecases.GetTopicUseCaseImpl
 import com.dezdeqness.feature.topics.presentation.TopicListViewModel
 import com.dezdeqness.feature.topics.presentation.store.TopicListActor
 import com.dezdeqness.feature.topics.presentation.store.TopicListNamespace.Command
@@ -23,16 +23,15 @@ abstract class TopicsModule {
     companion object {
 
         @Provides
-        fun provideGetTopicUseCase(topicRepository: TopicRepository) =
-            GetTopicUseCase(topicRepository = topicRepository)
-
-        @Provides
         fun provideTopicListStore(actor: TopicListActor): ElmStore<Event, State, Effect, Command> = ElmStore(
             initialState = State(),
             reducer = topicListReducer,
             actor = actor,
         )
     }
+
+    @Binds
+    abstract fun bindGetTopicUseCase(getTopicUseCase: GetTopicUseCaseImpl): GetTopicUseCase
 
     @Binds
     @IntoMap
