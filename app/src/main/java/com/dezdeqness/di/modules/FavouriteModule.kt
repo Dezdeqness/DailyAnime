@@ -1,11 +1,12 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
+import com.dezdeqness.contract.favourite.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.data.FavouriteApiService
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSource
 import com.dezdeqness.data.datasource.FavouriteRemoteDataSourceImpl
 import com.dezdeqness.data.repository.FavouriteRepositoryImpl
-import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
+import com.dezdeqness.domain.favourite.usecases.ObserveFavouriteStatusUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -17,11 +18,12 @@ abstract class FavouriteModule {
         @Provides
         fun provideFavouriteApiService(retrofit: Retrofit): FavouriteApiService =
             retrofit.create(FavouriteApiService::class.java)
-
-        @Provides
-        fun provideObserveFavouriteStatusUseCase(favouriteRepository: FavouriteRepository) =
-            ObserveFavouriteStatusUseCase(favouriteRepository = favouriteRepository)
     }
+
+    @Binds
+    abstract fun bindObserveFavouriteStatusUseCase(
+        observeFavouriteStatusUseCase: ObserveFavouriteStatusUseCaseImpl,
+    ): ObserveFavouriteStatusUseCase
 
     @Binds
     abstract fun bindFavouriteRemoteDataSource(

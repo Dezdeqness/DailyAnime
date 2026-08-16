@@ -1,7 +1,10 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.auth.usecases.LoginUseCase
+import com.dezdeqness.contract.auth.usecases.LogoutUseCase
+import com.dezdeqness.contract.auth.usecases.RefreshTokenUseCase
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.contract.history.repository.HistoryRepository
 import com.dezdeqness.contract.user.repository.UserRepository
@@ -15,9 +18,9 @@ import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
 import com.dezdeqness.data.manager.SessionManagerImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
-import com.dezdeqness.domain.usecases.LoginUseCase
-import com.dezdeqness.domain.usecases.LogoutUseCase
-import com.dezdeqness.domain.usecases.RefreshTokenUseCase
+import com.dezdeqness.domain.auth.usecases.LoginUseCaseImpl
+import com.dezdeqness.domain.auth.usecases.LogoutUseCaseImpl
+import com.dezdeqness.domain.auth.usecases.RefreshTokenUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -27,24 +30,6 @@ import javax.inject.Singleton
 abstract class AccountModule {
 
     companion object {
-
-        @Provides
-        fun provideLoginUseCase(
-            userRepository: UserRepository,
-            authRepository: AuthRepository,
-        ) = LoginUseCase(
-            userRepository = userRepository,
-            authRepository = authRepository,
-        )
-
-        @Provides
-        fun provideLogoutUseCase(
-            userRepository: UserRepository,
-            authRepository: AuthRepository,
-        ) = LogoutUseCase(
-            userRepository = userRepository,
-            authRepository = authRepository,
-        )
 
         @Singleton
         @Provides
@@ -71,11 +56,6 @@ abstract class AccountModule {
         @Singleton
         @Provides
         fun providerAuthRepository(repository: UserRepositoryImpl): AuthRepository = repository
-
-        @Provides
-        fun provideRefreshTokenUseCase(authRepository: AuthRepository) = RefreshTokenUseCase(
-            authRepository = authRepository,
-        )
 
         @Provides
         fun provideAccountDao(shikimoriDatabase: ShikimoriDatabase) = shikimoriDatabase.accountDao()
@@ -109,4 +89,13 @@ abstract class AccountModule {
 
     @Binds
     abstract fun bindAccountLocalDataSource(dataSourceImpl: AccountLocalDataSourceImpl): AccountLocalDataSource
+
+    @Binds
+    abstract fun bindLoginUseCase(loginUseCase: LoginUseCaseImpl): LoginUseCase
+
+    @Binds
+    abstract fun bindLogoutUseCase(logoutUseCase: LogoutUseCaseImpl): LogoutUseCase
+
+    @Binds
+    abstract fun bindRefreshTokenUseCase(refreshTokenUseCase: RefreshTokenUseCaseImpl): RefreshTokenUseCase
 }

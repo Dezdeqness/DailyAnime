@@ -1,25 +1,19 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.anime.repository.AnimeRepository
-import com.dezdeqness.domain.usecases.GetAnimeListUseCase
+import com.dezdeqness.contract.anime.usecases.GetAnimeListUseCase
+import com.dezdeqness.domain.anime.usecases.GetAnimeListUseCaseImpl
 import com.dezdeqness.feature.search.presentation.AnimeViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.multibindings.IntoMap
 
 @Module(includes = [AnimeModule::class])
 abstract class AnimeListModule {
 
-    companion object {
-
-        @Provides
-        fun provideGetAnimeListUseCase(animeRepository: AnimeRepository) = GetAnimeListUseCase(
-            animeRepository = animeRepository,
-        )
-    }
+    @Binds
+    abstract fun bindGetAnimeListUseCase(getAnimeListUseCase: GetAnimeListUseCaseImpl): GetAnimeListUseCase
 
     @Binds
     @IntoMap

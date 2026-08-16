@@ -1,10 +1,10 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.contract.history.repository.HistoryRepository
-import com.dezdeqness.domain.usecases.GetHistoryUseCase
-import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
+import com.dezdeqness.contract.history.usecases.GetHistoryUseCase
+import com.dezdeqness.contract.history.usecases.GetLatestHistoryItemUseCase
+import com.dezdeqness.domain.history.usecases.GetHistoryUseCaseImpl
+import com.dezdeqness.domain.history.usecases.GetLatestHistoryItemUseCaseImpl
 import com.dezdeqness.feature.history.presentation.HistoryViewModel
 import com.dezdeqness.feature.history.presentation.store.HistoryActor
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Command
@@ -25,26 +25,20 @@ abstract class HistoryModule {
     companion object {
 
         @Provides
-        fun provideGetHistoryUseCase(historyRepository: HistoryRepository) =
-            GetHistoryUseCase(historyRepository = historyRepository)
-
-        @Provides
-        fun provideGetLatestHistoryItemUseCase(
-            historyRepository: HistoryRepository,
-            authRepository: AuthRepository,
-        ) =
-            GetLatestHistoryItemUseCase(
-                historyRepository = historyRepository,
-                authRepository = authRepository,
-            )
-
-        @Provides
         fun provideHistoryStore(actor: HistoryActor): ElmStore<Event, State, Effect, Command> = ElmStore(
             initialState = State(),
             reducer = historyReducer,
             actor = actor,
         )
     }
+
+    @Binds
+    abstract fun bindGetHistoryUseCase(getHistoryUseCase: GetHistoryUseCaseImpl): GetHistoryUseCase
+
+    @Binds
+    abstract fun bindGetLatestHistoryItemUseCase(
+        getLatestHistoryItemUseCase: GetLatestHistoryItemUseCaseImpl,
+    ): GetLatestHistoryItemUseCase
 
     @Binds
     @IntoMap

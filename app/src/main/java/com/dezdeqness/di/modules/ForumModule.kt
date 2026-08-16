@@ -1,12 +1,13 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.forum.repository.ForumRepository
+import com.dezdeqness.contract.forum.usecases.GetForumsUseCase
 import com.dezdeqness.data.ForumApiService
 import com.dezdeqness.data.datasource.ForumRemoteDataSource
 import com.dezdeqness.data.datasource.ForumRemoteDataSourceImpl
 import com.dezdeqness.data.repository.ForumRepositoryImpl
-import com.dezdeqness.domain.usecases.GetForumsUseCase
+import com.dezdeqness.domain.forum.usecases.GetForumsUseCaseImpl
 import com.dezdeqness.feature.forum.presentation.ForumViewModel
 import com.dezdeqness.feature.forum.presentation.store.ForumActor
 import com.dezdeqness.feature.forum.presentation.store.ForumNamespace.Command
@@ -31,16 +32,15 @@ abstract class ForumModule {
         fun provideForumApiService(retrofit: Retrofit): ForumApiService = retrofit.create(ForumApiService::class.java)
 
         @Provides
-        fun provideGetForumsUseCase(forumRepository: ForumRepository) =
-            GetForumsUseCase(forumRepository = forumRepository)
-
-        @Provides
         fun provideForumStore(actor: ForumActor): ElmStore<Event, State, Effect, Command> = ElmStore(
             initialState = State(),
             reducer = forumReducer,
             actor = actor,
         )
     }
+
+    @Binds
+    abstract fun bindGetForumsUseCase(getForumsUseCase: GetForumsUseCaseImpl): GetForumsUseCase
 
     @Binds
     abstract fun bindForumRemoteDataSource(impl: ForumRemoteDataSourceImpl): ForumRemoteDataSource

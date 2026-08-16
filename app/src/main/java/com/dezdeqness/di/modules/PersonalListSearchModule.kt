@@ -1,23 +1,21 @@
-package com.dezdeqness.di.modules
+﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.userrate.repository.UserRatesRepository
-import com.dezdeqness.domain.usecases.SearchPersonalListUseCase
+import com.dezdeqness.contract.userrate.usecases.SearchPersonalListUseCase
+import com.dezdeqness.domain.userrate.usecases.SearchPersonalListUseCaseImpl
 import com.dezdeqness.feature.personallist.search.PersonalListSearchViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.multibindings.IntoMap
 
 @Module(includes = [PersonalModule::class])
 abstract class PersonalListSearchModule {
 
-    companion object {
-        @Provides
-        fun provideSearchPersonalListUseCase(userRatesRepository: UserRatesRepository) =
-            SearchPersonalListUseCase(userRatesRepository = userRatesRepository)
-    }
+    @Binds
+    abstract fun bindSearchPersonalListUseCase(
+        searchPersonalListUseCase: SearchPersonalListUseCaseImpl,
+    ): SearchPersonalListUseCase
 
     @Binds
     @IntoMap
