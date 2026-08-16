@@ -1,7 +1,7 @@
-package com.dezdeqness.feature.personallist.tab.store
+﻿package com.dezdeqness.feature.personallist.tab.store
 
 import com.dezdeqness.contract.userrate.repository.UserRatesRepository
-import com.dezdeqness.domain.usecases.GetPersonalListByStatusUseCase
+import com.dezdeqness.contract.userrate.usecases.GetPersonalListByStatusUseCase
 import com.dezdeqness.feature.personallist.tab.PersonalListComposer
 import com.dezdeqness.foundation.Logger
 import javax.inject.Inject

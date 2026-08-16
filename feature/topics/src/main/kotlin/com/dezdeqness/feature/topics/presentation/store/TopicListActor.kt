@@ -1,6 +1,6 @@
 ﻿package com.dezdeqness.feature.topics.presentation.store
 
-import com.dezdeqness.domain.usecases.GetTopicUseCase
+import com.dezdeqness.contract.topic.usecases.GetTopicUseCase
 import com.dezdeqness.feature.topics.presentation.TopicListComposer
 import com.dezdeqness.foundation.Logger
 import javax.inject.Inject

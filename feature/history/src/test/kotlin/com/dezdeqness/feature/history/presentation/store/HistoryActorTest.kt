@@ -1,10 +1,10 @@
-package com.dezdeqness.feature.history.presentation.store
+﻿package com.dezdeqness.feature.history.presentation.store
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.history.model.HistoryEntity
 import com.dezdeqness.foundation.test.MainDispatcherExtension
 import com.dezdeqness.foundation.Logger
-import com.dezdeqness.domain.usecases.GetHistoryUseCase
+import com.dezdeqness.contract.history.usecases.GetHistoryUseCase
 import com.dezdeqness.feature.history.presentation.HistoryComposer
 import com.dezdeqness.feature.history.presentation.models.HistoryModel
 import io.mockk.MockKAnnotations

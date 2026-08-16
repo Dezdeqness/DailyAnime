@@ -1,7 +1,7 @@
-package com.dezdeqness.feature.forum.presentation.store
+﻿package com.dezdeqness.feature.forum.presentation.store
 
+import com.dezdeqness.contract.forum.usecases.GetForumsUseCase
 import com.dezdeqness.contract.topic.repository.TopicRepository
-import com.dezdeqness.domain.usecases.GetForumsUseCase
 import com.dezdeqness.feature.forum.presentation.ForumComposer
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.shared.presentation.feature.topic.TopicPresentationComposer

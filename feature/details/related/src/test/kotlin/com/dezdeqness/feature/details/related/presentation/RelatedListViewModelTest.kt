@@ -2,7 +2,7 @@ package com.dezdeqness.feature.details.related.presentation
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.Entity
-import com.dezdeqness.domain.usecases.BaseListableUseCase
+import com.dezdeqness.domain.anime.usecases.BaseListableUseCase
 import com.dezdeqness.feature.details.related.presentation.models.ChronologyUiModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider

@@ -68,5 +68,6 @@ dependencies {
     implementation(project(":shared:shared-presentation"))
 
     implementation(project(":data"))
-    implementation(project(":domain"))
+    implementation(project(":domain:anime"))
+    implementation(project(":domain:core"))
 }

@@ -49,7 +49,7 @@ dependencies {
     implementation(project(":common:foundation"))
 
     // Domain
-    implementation(project(":domain"))
+    implementation(project(":domain:forum"))
     implementation(project(":contract:forum"))
     implementation(project(":contract:topic"))
 

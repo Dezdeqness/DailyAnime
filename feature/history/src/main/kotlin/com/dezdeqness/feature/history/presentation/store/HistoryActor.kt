@@ -1,6 +1,6 @@
-package com.dezdeqness.feature.history.presentation.store
+﻿package com.dezdeqness.feature.history.presentation.store
 
-import com.dezdeqness.domain.usecases.GetHistoryUseCase
+import com.dezdeqness.contract.history.usecases.GetHistoryUseCase
 import com.dezdeqness.feature.history.presentation.HistoryComposer
 import com.dezdeqness.foundation.Logger
 import javax.inject.Inject

@@ -71,5 +71,5 @@ dependencies {
     implementation(project(":contract:history"))
     implementation(project(":shared:shared-presentation"))
 
-    implementation(project(":domain"))
+    implementation(project(":domain:anime"))
 }

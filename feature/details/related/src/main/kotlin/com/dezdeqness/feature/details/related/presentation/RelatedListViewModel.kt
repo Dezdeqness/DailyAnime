@@ -1,7 +1,7 @@
 package com.dezdeqness.feature.details.related.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.dezdeqness.domain.usecases.BaseListableUseCase
+import com.dezdeqness.domain.anime.usecases.BaseListableUseCase
 import com.dezdeqness.feature.details.related.presentation.models.RelatedListItem
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger

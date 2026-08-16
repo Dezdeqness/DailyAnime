@@ -52,10 +52,13 @@ dependencies {
     implementation(project(":feature:details:common"))
 
     // Domain
-    implementation(project(":domain"))
+    implementation(project(":domain:anime"))
+    implementation(project(":domain:userrate"))
+    implementation(project(":domain:favourite"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:auth"))
     implementation(project(":contract:user"))
+    implementation(project(":contract:userrate"))
     implementation(project(":contract:favourite"))
 
     // Features

@@ -60,7 +60,7 @@ dependencies {
     implementation(libs.elmslie.core)
 
     implementation(project(":data"))
-    implementation(project(":domain"))
+    implementation(project(":domain:userrate"))
 
     implementation(project(":contract:user"))
     implementation(project(":contract:anime"))

@@ -1,16 +1,16 @@
-package com.dezdeqness.data.manager
+﻿package com.dezdeqness.data.manager
 
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.AccountType
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.auth.repository.AuthRepository
+import com.dezdeqness.contract.auth.usecases.LoginUseCase
+import com.dezdeqness.contract.auth.usecases.LogoutUseCase
+import com.dezdeqness.contract.auth.usecases.RefreshTokenUseCase
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
 import com.dezdeqness.data.model.db.AccountSessionLocal
-import com.dezdeqness.domain.usecases.LoginUseCase
-import com.dezdeqness.domain.usecases.LogoutUseCase
-import com.dezdeqness.domain.usecases.RefreshTokenUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
