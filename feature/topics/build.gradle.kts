@@ -50,7 +50,7 @@ dependencies {
     implementation(project(":shared:shared-presentation"))
 
     // Domain
-    implementation(project(":domain"))
+    implementation(project(":domain:topic"))
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
 

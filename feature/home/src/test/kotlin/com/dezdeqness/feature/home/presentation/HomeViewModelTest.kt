@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.home.presentation
+﻿package com.dezdeqness.feature.home.presentation
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
@@ -11,7 +11,7 @@ import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.contract.home.model.HomeEntity
 import com.dezdeqness.contract.home.repository.HomeRepository
-import com.dezdeqness.domain.usecases.GetLatestHistoryItemUseCase
+import com.dezdeqness.contract.history.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.feature.home.presentation.models.SectionAnimeUiModel
 import com.dezdeqness.feature.home.presentation.models.SectionStatus
 import com.dezdeqness.feature.home.presentation.models.SectionUiModel

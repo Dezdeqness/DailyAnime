@@ -1,8 +1,8 @@
-package com.dezdeqness.feature.personallist.search
+﻿package com.dezdeqness.feature.personallist.search
 
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.domain.usecases.SearchPersonalListUseCase
+import com.dezdeqness.contract.userrate.usecases.SearchPersonalListUseCase
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider

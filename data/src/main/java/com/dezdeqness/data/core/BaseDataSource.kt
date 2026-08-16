@@ -2,7 +2,7 @@ package com.dezdeqness.data.core
 
 import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
-import com.dezdeqness.domain.mapper.ErrorMapper
+import com.dezdeqness.domain.core.mapper.ErrorMapper
 import javax.inject.Inject
 import retrofit2.Response
 

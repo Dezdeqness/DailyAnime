@@ -1,10 +1,10 @@
-package com.dezdeqness.feature.details.person.presentation.store
+﻿package com.dezdeqness.feature.details.person.presentation.store
 
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
+import com.dezdeqness.contract.favourite.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.contract.person.model.toPrimaryFavouriteKind
 import com.dezdeqness.contract.person.repository.PersonRepository
-import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
 import com.dezdeqness.feature.details.person.presentation.composer.PersonDetailsComposer

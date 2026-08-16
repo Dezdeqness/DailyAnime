@@ -1,18 +1,18 @@
-package com.dezdeqness.feature.details.anime.presentation.store
+﻿package com.dezdeqness.feature.details.anime.presentation.store
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.auth.repository.AuthRepository
-import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
-import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
+import com.dezdeqness.contract.userrate.usecases.CreateOrUpdateUserRateUseCase
+import com.dezdeqness.contract.anime.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.AccountType
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.favourite.model.FavouriteKind
 import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
+import com.dezdeqness.contract.favourite.usecases.ObserveFavouriteStatusUseCase
 import com.dezdeqness.feature.details.anime.presentation.composer.AnimeDetailsComposer
 import com.dezdeqness.feature.details.anime.presentation.models.AnimeDetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand

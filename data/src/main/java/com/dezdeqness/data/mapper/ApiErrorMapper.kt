@@ -2,8 +2,8 @@ package com.dezdeqness.data.mapper
 
 import com.dezdeqness.data.core.ApiException
 import com.dezdeqness.data.core.GraphqlException
-import com.dezdeqness.domain.mapper.ErrorMapper
-import com.dezdeqness.domain.model.ErrorEntity
+import com.dezdeqness.domain.core.mapper.ErrorMapper
+import com.dezdeqness.domain.core.model.ErrorEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

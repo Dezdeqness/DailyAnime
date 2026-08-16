@@ -67,6 +67,4 @@ dependencies {
     implementation(project(":contract:auth"))
     implementation(project(":contract:user"))
     implementation(project(":shared:shared-presentation"))
-
-    implementation(project(":domain"))
 }

@@ -73,5 +73,5 @@ dependencies {
     implementation(project(":feature:history"))
 
     implementation(project(":data"))
-    implementation(project(":domain"))
+    implementation(project(":domain:history"))
 }

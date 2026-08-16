@@ -61,7 +61,8 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":domain"))
+    implementation(project(":domain:core"))
+    implementation(project(":domain:auth"))
 
     // Crypto
     implementation(libs.google.tink)

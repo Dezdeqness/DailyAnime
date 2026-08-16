@@ -1,10 +1,10 @@
-package com.dezdeqness.feature.forum.presentation.store
+﻿package com.dezdeqness.feature.forum.presentation.store
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.forum.model.ForumEntity
 import com.dezdeqness.contract.topic.model.TopicEntity
 import com.dezdeqness.contract.topic.repository.TopicRepository
-import com.dezdeqness.domain.usecases.GetForumsUseCase
+import com.dezdeqness.contract.forum.usecases.GetForumsUseCase
 import com.dezdeqness.feature.forum.presentation.ForumComposer
 import com.dezdeqness.feature.forum.presentation.models.ForumUiModel
 import com.dezdeqness.foundation.Logger

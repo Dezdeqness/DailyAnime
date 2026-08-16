@@ -2,7 +2,7 @@
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.topic.model.TopicEntity
-import com.dezdeqness.domain.usecases.GetTopicUseCase
+import com.dezdeqness.contract.topic.usecases.GetTopicUseCase
 import com.dezdeqness.feature.topics.presentation.TopicListComposer
 import com.dezdeqness.feature.topics.presentation.models.TopicListUiModel
 import com.dezdeqness.foundation.Logger

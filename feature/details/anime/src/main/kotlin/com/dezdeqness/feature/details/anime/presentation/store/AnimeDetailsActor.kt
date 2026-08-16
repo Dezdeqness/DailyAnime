@@ -1,11 +1,11 @@
-package com.dezdeqness.feature.details.anime.presentation.store
+﻿package com.dezdeqness.feature.details.anime.presentation.store
 
+import com.dezdeqness.contract.anime.usecases.GetAnimeDetailsUseCase
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
-import com.dezdeqness.domain.usecases.CreateOrUpdateUserRateUseCase
-import com.dezdeqness.domain.usecases.GetAnimeDetailsUseCase
-import com.dezdeqness.domain.usecases.ObserveFavouriteStatusUseCase
+import com.dezdeqness.contract.favourite.usecases.ObserveFavouriteStatusUseCase
+import com.dezdeqness.contract.userrate.usecases.CreateOrUpdateUserRateUseCase
 import com.dezdeqness.feature.details.anime.presentation.composer.AnimeDetailsComposer
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEvent
