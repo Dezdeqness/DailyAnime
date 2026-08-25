@@ -59,7 +59,11 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
+
+    // Network
+    implementation(libs.square.retrofit)
+    implementation(libs.square.moshi)
 
     implementation(project(":contract:favourite"))
 }

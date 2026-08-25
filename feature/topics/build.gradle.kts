@@ -54,6 +54,13 @@ dependencies {
     implementation(project(":contract:topic"))
     implementation(project(":contract:anime"))
 
+    // Data
+    implementation(project(":data:core"))
+
+    // Network
+    implementation(libs.square.retrofit)
+    implementation(libs.square.moshi)
+
     // Elm
     implementation(libs.elmslie.core)
 

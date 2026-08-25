@@ -6,10 +6,8 @@ import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
 import com.dezdeqness.contract.history.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.contract.home.repository.HomeRepository
-import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
-import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.feature.history.presentation.models.HistoryModel.HistoryUiModel
 import com.dezdeqness.feature.home.presentation.models.SectionStatus
@@ -26,12 +24,11 @@ import kotlinx.coroutines.flow.update
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
     private val homeUiMapper: HomeUiMapper,
-    private val homeGenresProvider: HomeGenresProvider,
+    private val userInterestsProvider: UserInterestsProvider,
     private val sessionManager: SessionManager,
     private val configManager: ConfigManager,
     private val getLatestHistoryItemUseCase: GetLatestHistoryItemUseCase,
     private val imageUrlUtils: ImageUrlUtils,
-    private val settingsRepository: SettingsRepository,
     private val homeComposer: HomeComposer,
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     logger: Logger,
@@ -50,8 +47,8 @@ class HomeViewModel @Inject constructor(
         }
 
         launchOnIo {
-            settingsRepository
-                .observePreference(UserSelectedInterestsPreference)
+            userInterestsProvider
+                .observeInterests()
                 .drop(1)
                 .collect {
                     loadInterestsSections(resetSections = true)
@@ -119,7 +116,7 @@ class HomeViewModel @Inject constructor(
                 updateSectionStatuses(SectionStatus.Loading)
             }
 
-            homeRepository.getHomeSections(homeGenresProvider.getHomeSectionGenresIds())
+            homeRepository.getHomeSections(userInterestsProvider.getInterestIds())
                 .onSuccess { homeEntity ->
                     val genreSections = homeEntity
                         .genreSections

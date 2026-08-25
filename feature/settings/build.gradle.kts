@@ -67,12 +67,15 @@ dependencies {
 
     implementation(libs.reorderable)
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
 
     implementation(project(":contract:settings"))
     implementation(project(":contract:auth"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:user"))
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(project(":feature:personallist"))
 

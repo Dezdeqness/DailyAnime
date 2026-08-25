@@ -65,7 +65,7 @@ dependencies {
     // Screenshot testing
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:settings"))
     implementation(project(":shared:shared-presentation"))

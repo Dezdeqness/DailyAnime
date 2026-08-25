@@ -53,6 +53,12 @@ dependencies {
     implementation(project(":contract:forum"))
     implementation(project(":contract:topic"))
 
+    // Data
+    implementation(project(":data:core"))
+
+    // Network
+    implementation(libs.square.retrofit)
+
     // Shared
     implementation(project(":shared:shared-presentation"))
 

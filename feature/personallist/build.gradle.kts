@@ -59,8 +59,9 @@ dependencies {
 
     implementation(libs.elmslie.core)
 
-    implementation(project(":data"))
     implementation(project(":domain:userrate"))
+
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(project(":contract:user"))
     implementation(project(":contract:anime"))

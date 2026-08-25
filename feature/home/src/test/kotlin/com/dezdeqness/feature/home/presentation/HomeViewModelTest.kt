@@ -4,10 +4,8 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.auth.model.SessionState
-import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
-import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.contract.home.model.HomeEntity
 import com.dezdeqness.contract.home.repository.HomeRepository
@@ -50,7 +48,7 @@ class HomeViewModelTest {
     private lateinit var homeUiMapper: HomeUiMapper
 
     @MockK
-    private lateinit var homeGenresProvider: HomeGenresProvider
+    private lateinit var userInterestsProvider: UserInterestsProvider
 
     @MockK
     private lateinit var sessionManager: SessionManager
@@ -63,9 +61,6 @@ class HomeViewModelTest {
 
     @MockK
     private lateinit var imageUrlUtils: ImageUrlUtils
-
-    @MockK
-    private lateinit var settingsRepository: SettingsRepository
 
     @MockK
     private lateinit var homeComposer: HomeComposer
@@ -87,11 +82,9 @@ class HomeViewModelTest {
         every { logger.logInfo(any(), any()) } returns Unit
         every { logger.logInfo(any(), any(), any()) } returns Unit
         every { sessionManager.sessionState } returns sessionStateFlow
-        every {
-            settingsRepository.observePreference(UserSelectedInterestsPreference)
-        } returns emptyFlow()
+        every { userInterestsProvider.observeInterests() } returns emptyFlow()
         coEvery { homeComposer.composeSectionsInitial() } returns initialSections
-        coEvery { homeGenresProvider.getHomeSectionGenresIds() } returns listOf(GENRE_ID)
+        coEvery { userInterestsProvider.getInterestIds() } returns listOf(GENRE_ID)
     }
 
     @After
@@ -102,12 +95,11 @@ class HomeViewModelTest {
     private fun createViewModel() = HomeViewModel(
         homeRepository = homeRepository,
         homeUiMapper = homeUiMapper,
-        homeGenresProvider = homeGenresProvider,
+        userInterestsProvider = userInterestsProvider,
         sessionManager = sessionManager,
         configManager = configManager,
         getLatestHistoryItemUseCase = getLatestHistoryItemUseCase,
         imageUrlUtils = imageUrlUtils,
-        settingsRepository = settingsRepository,
         homeComposer = homeComposer,
         coroutineDispatcherProvider = object : CoroutineDispatcherProvider {
             override fun main() = Dispatchers.Main

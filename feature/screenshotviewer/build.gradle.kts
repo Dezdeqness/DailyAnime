@@ -66,6 +66,4 @@ dependencies {
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
     testImplementation(project(":common:foundation-test"))
-
-    implementation(project(":data"))
 }

@@ -66,6 +66,11 @@ dependencies {
 
     implementation(project(":contract:anime"))
     implementation(project(":contract:calendar"))
+    implementation(project(":contract:settings"))
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
+
+    // Network
+    implementation(libs.square.retrofit)
+    implementation(libs.square.moshi)
 }

@@ -3,9 +3,9 @@ package com.dezdeqness.feature.achievements.presentation
 import app.cash.turbine.test
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.Logger
-import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.contract.achievements.model.AchievementConfigDataEntity
 import com.dezdeqness.contract.achievements.model.AchievementEntity
+import com.dezdeqness.contract.achievements.repository.AchievementConfigRepository
 import com.dezdeqness.contract.achievements.repository.AchievementRepository
 import com.dezdeqness.feature.achievements.presentation.models.AchievementsUiModel
 import io.mockk.MockKAnnotations
@@ -33,7 +33,7 @@ class AchievementsViewModelTest {
     private lateinit var achievementRepository: AchievementRepository
 
     @MockK
-    private lateinit var configurationProvider: ConfigurationProvider
+    private lateinit var achievementConfigRepository: AchievementConfigRepository
 
     @MockK
     private lateinit var logger: Logger
@@ -58,7 +58,7 @@ class AchievementsViewModelTest {
             },
             logger = logger,
             achievementRepository = achievementRepository,
-            configurationProvider = configurationProvider,
+            achievementConfigRepository = achievementConfigRepository,
             achievementsComposer = achievementsComposer,
         )
 
@@ -78,7 +78,7 @@ class AchievementsViewModelTest {
         val commonAchievements = listOf(mockk<AchievementsUiModel>())
         val genreAchievements = listOf(mockk<AchievementsUiModel>())
 
-        every { configurationProvider.getAchievementConfig() } returns achievementConfig
+        every { achievementConfigRepository.getConfig() } returns achievementConfig
         every { achievementConfig.common } returns mapOf()
         every { achievementConfig.genres } returns mapOf()
         coEvery { achievementRepository.fetchAchievementsByUserId(USER_ID) } returns Result.success(userAchievements)
@@ -114,7 +114,7 @@ class AchievementsViewModelTest {
         val error = Exception("Network error")
         val achievementConfig = mockk<AchievementConfigDataEntity>()
 
-        every { configurationProvider.getAchievementConfig() } returns achievementConfig
+        every { achievementConfigRepository.getConfig() } returns achievementConfig
         coEvery { achievementRepository.fetchAchievementsByUserId(USER_ID) } returns Result.failure(error)
 
         viewModel.achievementsState.test {
@@ -150,7 +150,7 @@ class AchievementsViewModelTest {
 
         val achievementConfig = mockk<AchievementConfigDataEntity>()
 
-        every { configurationProvider.getAchievementConfig() } returns achievementConfig
+        every { achievementConfigRepository.getConfig() } returns achievementConfig
         coEvery { achievementRepository.fetchAchievementsByUserId(USER_ID) } throws error
 
         viewModel.achievementsState.test {
@@ -184,7 +184,7 @@ class AchievementsViewModelTest {
         val achievementConfig = mockk<AchievementConfigDataEntity>()
         val userAchievements = listOf(mockk<AchievementEntity>())
 
-        every { configurationProvider.getAchievementConfig() } returns achievementConfig
+        every { achievementConfigRepository.getConfig() } returns achievementConfig
         every { achievementConfig.common } returns mapOf()
         every { achievementConfig.genres } returns mapOf()
         coEvery { achievementRepository.fetchAchievementsByUserId(USER_ID) } returns Result.success(userAchievements)
