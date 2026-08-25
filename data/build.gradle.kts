@@ -61,6 +61,7 @@ ksp {
 }
 
 dependencies {
+    implementation(project(":data:core"))
     implementation(project(":domain:core"))
     implementation(project(":domain:auth"))
 
