@@ -6,12 +6,12 @@ import com.dezdeqness.contract.settings.models.InitialSectionPreference
 import com.dezdeqness.contract.settings.models.StatusesOrderPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.data.provider.StatusesProvider
 import com.dezdeqness.feature.settings.R
 import com.dezdeqness.feature.settings.SelectSectionItem
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.models.SectionType
+import com.dezdeqness.shared.domain.provider.StatusesProvider
 import com.dezdeqness.shared.presentation.mapper.PersonalRibbonMapper
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
 import javax.inject.Inject
