@@ -2,7 +2,7 @@ package com.dezdeqness.feature.settings.store.actors
 
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.data.provider.HomeGenresProvider
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.feature.settings.R
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
@@ -17,14 +17,14 @@ data object OpenSelectInterests : SettingsNamespace.Effect
 
 class ContentActor @Inject constructor(
     private val settingsRepository: SettingsRepository,
-    private val homeGenresProvider: HomeGenresProvider,
+    private val userInterestsProvider: UserInterestsProvider,
 ) : SectionActor {
 
     override val sectionType: SectionType = SectionType.Content
 
     override suspend fun buildSettings(): List<SettingUiPref> {
         val isAdultContentEnabled = settingsRepository.getPreference(AdultContentPreference)
-        val selectedInterests = homeGenresProvider.getHomeSectionGenres().map { it.name }
+        val selectedInterests = userInterestsProvider.getInterests().map { it.name }
         val interestsSubtitle = selectedInterests.joinToString(", ")
 
         return listOf(

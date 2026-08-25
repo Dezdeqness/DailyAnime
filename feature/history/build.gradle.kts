@@ -65,8 +65,12 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
     implementation(project(":domain:history"))
 
     implementation(project(":contract:history"))
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
+
 }
