@@ -3,8 +3,8 @@ package com.dezdeqness.feature.onboarding.selectgenres.presentation
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
@@ -28,7 +28,7 @@ class SelectGenresViewModel @Inject constructor(
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     logger: Logger,
     private val settingsRepository: SettingsRepository,
-    private val homeGenresProvider: HomeGenresProvider,
+    private val userInterestsProvider: UserInterestsProvider,
 ) : BaseViewModel(coroutineDispatcherProvider, logger) {
 
     override val viewModelTag = "SelectGenresViewModel"
@@ -46,7 +46,7 @@ class SelectGenresViewModel @Inject constructor(
 
             emit(SelectGenresUiState(genres = mappedGenres))
 
-            val selected = homeGenresProvider.getHomeSectionGenresIds()
+            val selected = userInterestsProvider.getInterestIds()
             selectedIds.update {
                 selected.toSet()
             }

@@ -1,14 +1,14 @@
 package com.dezdeqness.feature.home.presentation
 
-import com.dezdeqness.data.provider.HomeGenresProvider
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.feature.home.presentation.models.SectionUiModel
 
 class HomeComposer(
-    private val homeGenresProvider: HomeGenresProvider,
+    private val userInterestsProvider: UserInterestsProvider,
 ) {
 
     suspend fun composeSectionsInitial(): SectionsState {
-        val sections = homeGenresProvider.getHomeSectionGenres().map { genre ->
+        val sections = userInterestsProvider.getInterests().map { genre ->
             SectionUiModel(
                 id = genre.id,
                 numericId = genre.numericId,

@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.achievements.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.contract.achievements.repository.AchievementConfigRepository
 import com.dezdeqness.contract.achievements.repository.AchievementRepository
-import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.foundation.BaseViewModel
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
@@ -21,7 +21,7 @@ class AchievementsViewModel @Inject constructor(
     coroutineDispatcherProvider: CoroutineDispatcherProvider,
     logger: Logger,
     private val achievementRepository: AchievementRepository,
-    private val configurationProvider: ConfigurationProvider,
+    private val achievementConfigRepository: AchievementConfigRepository,
     private val achievementsComposer: AchievementsComposer,
 ) : BaseViewModel(coroutineDispatcherProvider, logger) {
 
@@ -31,7 +31,7 @@ class AchievementsViewModel @Inject constructor(
         flow {
             emit(AchievementsUiState(status = Status.Loading))
 
-            val config = configurationProvider.getAchievementConfig()
+            val config = achievementConfigRepository.getConfig()
             val result = achievementRepository.fetchAchievementsByUserId(id = userId)
 
             result

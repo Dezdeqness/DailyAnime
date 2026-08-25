@@ -57,8 +57,6 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
-    implementation(project(":data"))
-
     implementation(project(":contract:anime"))
     implementation(project(":contract:userrate"))
 }

@@ -64,5 +64,8 @@ dependencies {
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
 
+    implementation(project(":data:core"))
+
+    implementation(project(":contract:anime"))
     implementation(project(":contract:filter"))
 }

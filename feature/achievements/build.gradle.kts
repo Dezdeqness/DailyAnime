@@ -61,7 +61,11 @@ dependencies {
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
 
     implementation(project(":contract:achievements"))
+
+    // Network
+    implementation(libs.square.retrofit)
+    implementation(libs.square.moshi)
 }

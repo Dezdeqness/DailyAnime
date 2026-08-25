@@ -4,10 +4,10 @@ import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.GenreEntity
 import com.dezdeqness.contract.settings.models.UserSelectedInterestsPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.data.provider.HomeGenresProvider
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.models.GenreUiModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -44,7 +44,7 @@ class SelectGenresViewModelTest {
     private lateinit var settingsRepository: SettingsRepository
 
     @MockK
-    private lateinit var homeGenresProvider: HomeGenresProvider
+    private lateinit var userInterestsProvider: UserInterestsProvider
 
     private lateinit var viewModel: SelectGenresViewModel
 
@@ -67,7 +67,7 @@ class SelectGenresViewModelTest {
             },
             logger = logger,
             settingsRepository = settingsRepository,
-            homeGenresProvider = homeGenresProvider,
+            userInterestsProvider = userInterestsProvider,
         )
 
         val genre1 = mockk<GenreEntity>()
@@ -88,7 +88,7 @@ class SelectGenresViewModelTest {
         every { mapper.map(genre2) } returns uiGenres[1]
         every { mapper.map(genre3) } returns uiGenres[2]
         every { mapper.map(genre4) } returns uiGenres[3]
-        coEvery { homeGenresProvider.getHomeSectionGenresIds() } returns emptyList()
+        coEvery { userInterestsProvider.getInterestIds() } returns emptyList()
         coEvery {
             settingsRepository.setPreference(
                 UserSelectedInterestsPreference,
@@ -155,7 +155,7 @@ class SelectGenresViewModelTest {
     fun `WHEN 3 genres already selected and new genre clicked SHOULD not add new genre`() =
         runTest {
             val genreIds = listOf("genre1", "genre2", "genre3")
-            coEvery { homeGenresProvider.getHomeSectionGenresIds() } returns genreIds
+            coEvery { userInterestsProvider.getInterestIds() } returns genreIds
 
             viewModel.uiState.test {
                 advanceUntilIdle()
