@@ -5,10 +5,10 @@ import com.dezdeqness.contract.settings.models.NotificationTimePreference
 import com.dezdeqness.contract.settings.models.TimeEntity
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.feature.settings.R
-import com.dezdeqness.foundation.provider.AlarmManagerProvider
 import com.dezdeqness.feature.settings.store.core.SettingUiPref
 import com.dezdeqness.feature.settings.store.core.SettingsNamespace
 import com.dezdeqness.feature.settings.store.models.SectionType
+import com.dezdeqness.foundation.provider.AlarmManagerProvider
 import com.dezdeqness.shared.presentation.manager.WorkSchedulerManager
 import com.dezdeqness.shared.presentation.provider.PermissionCheckProvider
 import java.util.Locale

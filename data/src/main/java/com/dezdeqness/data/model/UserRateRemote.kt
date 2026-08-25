@@ -1,9 +1,8 @@
 package com.dezdeqness.data.model
 
-import com.dezdeqness.data.core.DataModel
 import com.squareup.moshi.Json
 
-class UserRateRemote : DataModel.Api {
+class UserRateRemote {
 
     @field:Json(name = "id")
     val id: Long = 0

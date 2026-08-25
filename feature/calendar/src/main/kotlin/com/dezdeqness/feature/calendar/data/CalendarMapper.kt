@@ -1,8 +1,8 @@
 package com.dezdeqness.feature.calendar.data
 
 import com.dezdeqness.contract.calendar.model.AnimeCalendarEntity
-import com.dezdeqness.data.util.TimestampConverter
 import com.dezdeqness.data.mapper.AnimeBriefMapper
+import com.dezdeqness.data.util.TimestampConverter
 import javax.inject.Inject
 
 internal class CalendarMapper @Inject constructor(

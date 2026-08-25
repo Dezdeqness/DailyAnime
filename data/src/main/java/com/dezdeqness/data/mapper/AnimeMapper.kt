@@ -5,7 +5,10 @@ import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
+import com.dezdeqness.contract.anime.model.GenreEntity
+import com.dezdeqness.contract.anime.model.GenreKindEntity
 import com.dezdeqness.contract.anime.model.ImageEntity
+import com.dezdeqness.contract.anime.model.TypeEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.home.model.HomeCalendarEntity
 import com.dezdeqness.contract.user.model.StatsItemEntity
@@ -15,7 +18,7 @@ import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
 import com.dezdeqness.data.UserRatesQuery
 import com.dezdeqness.data.UserRatesSearchQuery
-import com.dezdeqness.data.core.TimestampConverter
+import com.dezdeqness.data.util.TimestampConverter
 import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeBriefRemote
 import com.dezdeqness.data.model.db.AnimeLocal
@@ -24,27 +27,14 @@ import javax.inject.Singleton
 
 @Singleton
 class AnimeMapper @Inject constructor(
-    private val genreMapper: GenreMapper,
     private val studioMapper: StudioMapper,
     private val videoMapper: VideoMapper,
     private val imageMapper: ImageMapper,
     private val timestampConverter: TimestampConverter,
+    private val animeBriefMapper: AnimeBriefMapper,
 ) {
 
-    fun fromResponse(item: AnimeBriefRemote) = AnimeBriefEntity(
-        id = item.id,
-        name = item.name,
-        russian = item.russian,
-        image = imageMapper.fromResponse(item.image),
-        url = item.url,
-        kind = AnimeKind.fromString(item.kind),
-        score = item.score,
-        status = AnimeStatus.fromString(item.status),
-        episodes = item.episodes,
-        episodesAired = item.episodesAired,
-        airedOnTimestamp = timestampConverter.convertToTimeStamp(item.airedOn),
-        releasedOnTimestamp = timestampConverter.convertToTimeStamp(item.releasedOn),
-    )
+    fun fromResponse(item: AnimeBriefRemote) = animeBriefMapper.fromResponse(item)
 
     fun fromResponse(item: DetailsQuery.Anime1) = AnimeBriefEntity(
         id = item.id.toLong(),
@@ -154,9 +144,7 @@ class AnimeMapper @Inject constructor(
         studioList = item.studios.map { studio ->
             studioMapper.fromResponseGraphql(studio)
         },
-        genreList = item.genres?.map { genre ->
-            genreMapper.fromResponseGraphql(genre)
-        }.orEmpty(),
+        genreList = item.genres?.map(::fromResponseGraphqlGenre).orEmpty(),
         videoList = item.videos.map { video ->
             videoMapper.fromResponseGraphql(video)
         },
@@ -190,6 +178,14 @@ class AnimeMapper @Inject constructor(
                 value = status.count,
             )
         } ?: listOf(),
+    )
+
+    private fun fromResponseGraphqlGenre(genre: AnimeDetailsQuery.Genre) = GenreEntity(
+        numericId = genre.id,
+        id = "${genre.id}-${genre.name}",
+        name = genre.russian,
+        type = TypeEntity.fromString(genre.entryType.rawValue),
+        kind = GenreKindEntity.fromString(genre.kind.rawValue),
     )
 
     fun toDatabase(item: AnimeBriefEntity?): AnimeLocal? {

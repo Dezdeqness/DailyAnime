@@ -33,7 +33,3 @@ private fun <T : Annotation> Request.getCustomAnnotation(annotationClass: Class<
     this.tag(Invocation::class.java)?.method()?.getAnnotation(annotationClass)
 
 private fun Request.isNeedAuthorization() = this.getCustomAnnotation(NeedAuthorization::class.java) != null
-
-@Target(AnnotationTarget.FUNCTION)
-@Retention(AnnotationRetention.RUNTIME)
-annotation class NeedAuthorization
