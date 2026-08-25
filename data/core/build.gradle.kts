@@ -49,7 +49,7 @@ android {
 
 dependencies {
     api(project(":domain:core"))
-    implementation(project(":contract:achievements"))
+    api(project(":data:remote-common"))
     implementation(project(":contract:anime"))
     implementation(project(":contract:filter"))
     implementation(project(":contract:settings"))

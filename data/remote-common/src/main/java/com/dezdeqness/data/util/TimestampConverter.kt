@@ -1,4 +1,4 @@
-package com.dezdeqness.data.core
+package com.dezdeqness.data.util
 
 import java.text.SimpleDateFormat
 import java.util.Locale
