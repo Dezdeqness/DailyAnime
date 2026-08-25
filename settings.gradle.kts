@@ -19,6 +19,7 @@ rootProject.name = "Daily Anime"
 
 include(":app")
 include(":data")
+include(":data:core")
 
 // domain
 include(":domain:core")
