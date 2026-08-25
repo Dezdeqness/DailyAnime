@@ -1,6 +1,5 @@
 package com.dezdeqness.data.model
 
-import com.dezdeqness.data.core.DataModel
 import com.squareup.moshi.Json
 
 data class CharacterDetailsRemote(
@@ -29,4 +28,4 @@ data class CharacterDetailsRemote(
     val seyuList: List<CharacterRemote>,
     @field:Json(name = "animes")
     val animeList: List<AnimeBriefRemote>,
-) : DataModel.Api
+)

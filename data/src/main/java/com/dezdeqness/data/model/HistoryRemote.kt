@@ -1,6 +1,5 @@
 package com.dezdeqness.data.model
 
-import com.dezdeqness.data.core.DataModel
 import com.squareup.moshi.Json
 
 data class HistoryRemote(
@@ -15,7 +14,7 @@ data class HistoryRemote(
 
     @field:Json(name = "target")
     val historyItem: HistoryItem? = null,
-) : DataModel.Api
+)
 
 data class HistoryItem(
     @field:Json(name = "id")
@@ -32,4 +31,4 @@ data class HistoryItem(
 
     @field:Json(name = "image")
     val imageRemote: ImageRemote,
-) : DataModel.Api
+)

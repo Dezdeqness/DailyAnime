@@ -3,7 +3,6 @@ package com.dezdeqness.data.model.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.dezdeqness.data.core.DataModel
 
 @Entity(tableName = "account")
 data class AccountLocal(
@@ -32,7 +31,7 @@ data class AccountLocal(
 
     @ColumnInfo(name = "anime_types")
     val types: List<StatsLocal>? = null,
-) : DataModel.Db
+)
 
 data class StatusLocal(
     @ColumnInfo(name = "status_id")
@@ -49,7 +48,7 @@ data class StatusLocal(
 
     @ColumnInfo(name = "type")
     val type: String,
-) : DataModel.Db
+)
 
 data class StatsLocal(
     @ColumnInfo(name = "name")

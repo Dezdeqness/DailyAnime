@@ -1,6 +1,5 @@
 package com.dezdeqness.data.model
 
-import com.dezdeqness.data.core.DataModel
 import com.squareup.moshi.Json
 
 data class CharacterRemote(
@@ -18,4 +17,4 @@ data class CharacterRemote(
 
     @field:Json(name = "url")
     val url: String,
-) : DataModel.Api
+)

@@ -3,7 +3,7 @@ package com.dezdeqness.data.mapper
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.data.UserRatesQuery
 import com.dezdeqness.data.UserRatesSearchQuery
-import com.dezdeqness.data.core.TimestampConverter
+import com.dezdeqness.data.util.TimestampConverter
 import com.dezdeqness.data.model.UserRateRemote
 import com.dezdeqness.data.model.db.UserRateLocal
 import javax.inject.Inject

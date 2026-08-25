@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.dezdeqness.data.core.DataModel
 
 @Entity(tableName = "user_rate")
 data class UserRateLocal(
@@ -42,7 +41,7 @@ data class UserRateLocal(
 
     @Embedded
     val anime: AnimeLocal?,
-) : DataModel.Db
+)
 
 data class AnimeLocal(
     @ColumnInfo(name = "anime_id")
