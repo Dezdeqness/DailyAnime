@@ -1,10 +1,9 @@
-package com.dezdeqness.data.mapper
+package com.dezdeqness.feature.userrate.data
 
 import com.dezdeqness.contract.anime.model.ImageEntity
-import com.dezdeqness.data.model.db.ImageLocal
 import javax.inject.Inject
 
-class ImageDbMapper @Inject constructor() {
+internal class ImageDbMapper @Inject constructor() {
 
     fun fromDatabase(item: ImageLocal?) = if (item != null) {
         ImageEntity(

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.com.dezdeqness.compose)
+    alias(libs.plugins.com.dezdeqness.room)
     id("kotlin-parcelize")
 }
 
@@ -63,7 +64,6 @@ dependencies {
     implementation(project(":contract:settings"))
 
     implementation(project(":data:core"))
-    implementation(project(":data:database"))
     implementation(libs.square.retrofit)
     implementation(libs.square.moshi)
 }

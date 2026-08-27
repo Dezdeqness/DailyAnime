@@ -208,13 +208,17 @@ dependencies {
 
     // Shared
     implementation(project(":shared:shared-presentation"))
+    implementation(project(":shared:shared-domain"))
 
     // Androidx
     implementation(libs.androidx.browser)
 
     implementation(libs.elmslie.core)
 
-    implementation(project(":data"))
+    implementation(project(":data:core"))
+    implementation(project(":data:anime"))
+    implementation(project(":data:analytics"))
+    implementation(project(":data:user"))
     implementation(project(":domain:core"))
     implementation(project(":domain:anime"))
     implementation(project(":domain:userrate"))

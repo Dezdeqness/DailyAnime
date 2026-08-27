@@ -1,12 +1,11 @@
-package com.dezdeqness.data.mapper
+package com.dezdeqness.feature.userrate.data
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.data.model.db.UserRateLocal
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRatesDbMapper @Inject constructor(
+internal class UserRatesDbMapper @Inject constructor(
     private val animeDbMapper: AnimeDbMapper,
 ) {
 

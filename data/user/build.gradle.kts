@@ -5,6 +5,7 @@ plugins {
     id("com.google.protobuf") version "0.9.4"
     id("com.dezdeqness.config")
     id("com.dezdeqness.detekt")
+    id("com.dezdeqness.room")
 }
 
 android {
@@ -29,7 +30,6 @@ dependencies {
 
     implementation(project(":data:core"))
     implementation(project(":data:remote-common"))
-    implementation(project(":data:database"))
 
     // Crypto
     implementation(libs.google.tink)
