@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.home.data
+package com.dezdeqness.feature.home.data.datasource
 
 import com.dezdeqness.contract.home.model.HomeEntity
 import com.dezdeqness.data.type.OrderEnum

@@ -1,6 +1,8 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.datasource
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.feature.userrate.data.database.UserRatesDao
+import com.dezdeqness.feature.userrate.data.mapper.UserRatesDbMapper
 import javax.inject.Inject
 
 internal class UserRatesLocalDataSourceImpl @Inject constructor(

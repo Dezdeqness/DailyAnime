@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.details.character.data
+package com.dezdeqness.feature.details.character.data.datasource
 
 import com.dezdeqness.contract.character.model.CharacterDetailsEntity
 import com.dezdeqness.data.core.BaseDataSource

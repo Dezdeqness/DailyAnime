@@ -1,6 +1,7 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.mapper
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.feature.userrate.data.database.UserRateLocal
 import javax.inject.Inject
 import javax.inject.Singleton
 

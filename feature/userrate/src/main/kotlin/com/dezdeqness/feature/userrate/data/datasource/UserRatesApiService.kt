@@ -1,7 +1,9 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.datasource
 
 import com.dezdeqness.data.core.NeedAuthorization
 import com.dezdeqness.data.model.UserRateRemote
+import com.dezdeqness.feature.userrate.data.model.PostUserRateRequestBody
+import com.dezdeqness.feature.userrate.data.model.UpdateUserRateRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

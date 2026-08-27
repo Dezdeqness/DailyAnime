@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.repository
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.settings.models.AdultContentPreference
@@ -6,6 +6,8 @@ import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.data.core.UserLocalNotFound
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesLocalDataSource
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesRemoteDataSource
 import javax.inject.Inject
 
 internal class UserRatesRepositoryImpl @Inject constructor(

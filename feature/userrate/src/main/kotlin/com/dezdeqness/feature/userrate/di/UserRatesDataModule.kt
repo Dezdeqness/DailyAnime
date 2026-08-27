@@ -2,14 +2,14 @@ package com.dezdeqness.feature.userrate.di
 
 import android.content.Context
 import com.dezdeqness.contract.userrate.repository.UserRatesRepository
-import com.dezdeqness.feature.userrate.data.UserRateDatabase
-import com.dezdeqness.feature.userrate.data.UserRatesApiService
-import com.dezdeqness.feature.userrate.data.UserRatesDao
-import com.dezdeqness.feature.userrate.data.UserRatesLocalDataSource
-import com.dezdeqness.feature.userrate.data.UserRatesLocalDataSourceImpl
-import com.dezdeqness.feature.userrate.data.UserRatesRemoteDataSource
-import com.dezdeqness.feature.userrate.data.UserRatesRemoteDataSourceImpl
-import com.dezdeqness.feature.userrate.data.UserRatesRepositoryImpl
+import com.dezdeqness.feature.userrate.data.database.UserRateDatabase
+import com.dezdeqness.feature.userrate.data.database.UserRatesDao
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesApiService
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesLocalDataSource
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesLocalDataSourceImpl
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesRemoteDataSource
+import com.dezdeqness.feature.userrate.data.datasource.UserRatesRemoteDataSourceImpl
+import com.dezdeqness.feature.userrate.data.repository.UserRatesRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
