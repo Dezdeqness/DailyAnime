@@ -1,10 +1,10 @@
 package com.dezdeqness.feature.details.character.di
 
 import com.dezdeqness.contract.character.repository.CharacterRepository
-import com.dezdeqness.feature.details.character.data.CharacterApiService
-import com.dezdeqness.feature.details.character.data.CharacterRemoteDataSource
-import com.dezdeqness.feature.details.character.data.CharacterRemoteDataSourceImpl
-import com.dezdeqness.feature.details.character.data.CharacterRepositoryImpl
+import com.dezdeqness.feature.details.character.data.datasource.CharacterApiService
+import com.dezdeqness.feature.details.character.data.datasource.CharacterRemoteDataSource
+import com.dezdeqness.feature.details.character.data.datasource.CharacterRemoteDataSourceImpl
+import com.dezdeqness.feature.details.character.data.repository.CharacterRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

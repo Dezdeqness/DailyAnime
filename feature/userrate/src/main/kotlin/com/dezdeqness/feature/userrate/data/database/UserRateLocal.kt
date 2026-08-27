@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

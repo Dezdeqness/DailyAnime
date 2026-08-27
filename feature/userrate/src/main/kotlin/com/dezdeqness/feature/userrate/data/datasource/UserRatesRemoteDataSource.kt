@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.datasource
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 

@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.model
 
 import com.squareup.moshi.Json
 

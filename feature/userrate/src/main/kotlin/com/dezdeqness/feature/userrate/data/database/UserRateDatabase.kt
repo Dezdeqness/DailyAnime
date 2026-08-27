@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

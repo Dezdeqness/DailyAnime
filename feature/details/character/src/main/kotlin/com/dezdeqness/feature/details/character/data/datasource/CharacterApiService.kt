@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.details.character.data
+package com.dezdeqness.feature.details.character.data.datasource
 
 import com.dezdeqness.data.model.CharacterDetailsRemote
 import retrofit2.Call

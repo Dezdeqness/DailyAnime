@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.details.person.data
+package com.dezdeqness.feature.details.person.data.datasource
 
 import com.apollographql.apollo.ApolloClient
 import com.dezdeqness.data.PersonQuery

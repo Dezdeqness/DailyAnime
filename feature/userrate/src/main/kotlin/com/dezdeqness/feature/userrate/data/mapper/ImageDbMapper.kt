@@ -1,6 +1,7 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.mapper
 
 import com.dezdeqness.contract.anime.model.ImageEntity
+import com.dezdeqness.feature.userrate.data.database.ImageLocal
 import javax.inject.Inject
 
 internal class ImageDbMapper @Inject constructor() {

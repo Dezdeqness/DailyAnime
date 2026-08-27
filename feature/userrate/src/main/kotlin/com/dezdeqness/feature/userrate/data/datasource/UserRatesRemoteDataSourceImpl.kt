@@ -1,4 +1,4 @@
-package com.dezdeqness.feature.userrate.data
+package com.dezdeqness.feature.userrate.data.datasource
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
@@ -13,6 +13,10 @@ import com.dezdeqness.data.type.SortOrderEnum
 import com.dezdeqness.data.type.UserRateOrderFieldEnum
 import com.dezdeqness.data.type.UserRateOrderInputType
 import com.dezdeqness.data.type.UserRateStatusEnum
+import com.dezdeqness.feature.userrate.data.model.PostUserRate
+import com.dezdeqness.feature.userrate.data.model.PostUserRateRequestBody
+import com.dezdeqness.feature.userrate.data.model.UpdateUserRate
+import com.dezdeqness.feature.userrate.data.model.UpdateUserRateRequestBody
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named
