@@ -1,11 +1,9 @@
-package com.dezdeqness.data.datasource.db
+package com.dezdeqness.feature.userrate.data
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.data.datasource.db.dao.UserRatesDao
-import com.dezdeqness.data.mapper.UserRatesDbMapper
 import javax.inject.Inject
 
-class UserRatesLocalDataSourceImpl @Inject constructor(
+internal class UserRatesLocalDataSourceImpl @Inject constructor(
     private val userRatesDbMapper: UserRatesDbMapper,
     private val userRatesDao: UserRatesDao,
 ) : UserRatesLocalDataSource {

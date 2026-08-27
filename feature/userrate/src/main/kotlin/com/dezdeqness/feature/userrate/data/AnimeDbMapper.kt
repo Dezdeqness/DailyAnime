@@ -1,14 +1,13 @@
-package com.dezdeqness.data.mapper
+package com.dezdeqness.feature.userrate.data
 
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
-import com.dezdeqness.data.model.db.AnimeLocal
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AnimeDbMapper @Inject constructor(
+internal class AnimeDbMapper @Inject constructor(
     private val imageDbMapper: ImageDbMapper,
 ) {
 

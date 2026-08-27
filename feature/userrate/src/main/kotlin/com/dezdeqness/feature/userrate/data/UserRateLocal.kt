@@ -1,4 +1,4 @@
-package com.dezdeqness.data.model.db
+package com.dezdeqness.feature.userrate.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "user_rate")
-data class UserRateLocal(
+internal data class UserRateLocal(
     @PrimaryKey val id: Long,
 
     @ColumnInfo(name = "score")
@@ -43,7 +43,7 @@ data class UserRateLocal(
     val anime: AnimeLocal?,
 )
 
-data class AnimeLocal(
+internal data class AnimeLocal(
     @ColumnInfo(name = "anime_id")
     val id: Long,
 
@@ -81,7 +81,7 @@ data class AnimeLocal(
     val releasedOnTimestamp: Long,
 )
 
-data class ImageLocal(
+internal data class ImageLocal(
 
     @ColumnInfo(name = "original")
     val original: String,

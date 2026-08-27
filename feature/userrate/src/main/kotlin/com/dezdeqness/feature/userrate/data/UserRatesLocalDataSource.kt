@@ -1,8 +1,8 @@
-package com.dezdeqness.data.datasource.db
+package com.dezdeqness.feature.userrate.data
 
 import com.dezdeqness.contract.anime.model.UserRateEntity
 
-interface UserRatesLocalDataSource {
+internal interface UserRatesLocalDataSource {
 
     fun getUserRates(): List<UserRateEntity>
 

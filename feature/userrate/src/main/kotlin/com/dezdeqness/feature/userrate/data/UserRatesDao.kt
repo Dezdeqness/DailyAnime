@@ -1,13 +1,12 @@
-package com.dezdeqness.data.datasource.db.dao
+package com.dezdeqness.feature.userrate.data
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dezdeqness.data.model.db.UserRateLocal
 
 @Dao
-interface UserRatesDao {
+internal interface UserRatesDao {
 
     @Query("SELECT * FROM 'user_rate'")
     fun getUserRates(): List<UserRateLocal>

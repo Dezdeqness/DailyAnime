@@ -6,7 +6,6 @@ import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.contract.userrate.repository.UserRatesRepository
 import com.dezdeqness.data.core.UserLocalNotFound
-import com.dezdeqness.data.datasource.db.UserRatesLocalDataSource
 import javax.inject.Inject
 
 internal class UserRatesRepositoryImpl @Inject constructor(
