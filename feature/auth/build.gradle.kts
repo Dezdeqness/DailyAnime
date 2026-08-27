@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.com.dezdeqness.config)
     alias(libs.plugins.com.dezdeqness.detekt)
     alias(libs.plugins.com.dezdeqness.compose)
+    alias(libs.plugins.com.dezdeqness.room)
     alias(libs.plugins.screenshot)
 }
 
@@ -65,4 +66,6 @@ dependencies {
     implementation(project(":common:foundation"))
 
     implementation(project(":contract:auth"))
+    implementation(project(":contract:favourite"))
+    implementation(project(":contract:user"))
 }

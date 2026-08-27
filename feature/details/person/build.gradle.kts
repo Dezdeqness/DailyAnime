@@ -58,6 +58,8 @@ dependencies {
     implementation(project(":contract:favourite"))
     implementation(project(":contract:person"))
 
+    implementation(project(":data:core"))
+
     // Elm
     implementation(libs.elmslie.core)
 
