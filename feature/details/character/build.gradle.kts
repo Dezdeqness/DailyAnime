@@ -58,6 +58,9 @@ dependencies {
     implementation(project(":contract:favourite"))
     implementation(project(":contract:character"))
 
+    implementation(project(":data:core"))
+    implementation(libs.square.retrofit)
+
     // Elm
     implementation(libs.elmslie.core)
 

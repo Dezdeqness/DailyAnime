@@ -59,4 +59,11 @@ dependencies {
 
     implementation(project(":contract:anime"))
     implementation(project(":contract:userrate"))
+    implementation(project(":contract:user"))
+    implementation(project(":contract:settings"))
+
+    implementation(project(":data:core"))
+    implementation(project(":data:database"))
+    implementation(libs.square.retrofit)
+    implementation(libs.square.moshi)
 }
