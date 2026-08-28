@@ -2,8 +2,8 @@ package com.dezdeqness.di
 
 import android.content.Context
 import android.content.res.AssetManager
-import com.dezdeqness.contract.history.repository.HistorySearchRepository
 import com.dezdeqness.contract.settings.repository.SettingsRepository
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
 import com.dezdeqness.data.analytics.AnalyticsManager
@@ -13,16 +13,11 @@ import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.ConfigSettingsProvider
 import com.dezdeqness.data.core.config.local.DebugConfigProvider
 import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
-import com.dezdeqness.data.manager.PersonalListFilterManager
 import com.dezdeqness.data.manager.TokenManager
-import com.dezdeqness.data.mapper.AchievementMapper
-import com.dezdeqness.data.mapper.FilterMapper
-import com.dezdeqness.data.mapper.GenreMapper
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
-import com.dezdeqness.data.provider.HistorySearchListProvider
-import com.dezdeqness.data.repository.HistorySearchRepositoryImpl
-import com.dezdeqness.data.repository.SettingsRepositoryImpl
+import com.dezdeqness.feature.settings.data.SettingsRepositoryImpl
+import com.dezdeqness.feature.settings.data.UserInterestsProviderImpl
 import com.dezdeqness.foundation.Logger
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProviderImpl
@@ -30,6 +25,7 @@ import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
 import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import com.dezdeqness.shared.domain.provider.StatusesProvider
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.moshi.Moshi
@@ -46,22 +42,6 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideConfigurationProvider(
-        assetManager: AssetManager,
-        genreMapper: GenreMapper,
-        filterMapper: FilterMapper,
-        achievementMapper: AchievementMapper,
-        moshi: Moshi,
-    ) = ConfigurationProvider(
-        assetManager = assetManager,
-        genreMapper = genreMapper,
-        filterMapper = filterMapper,
-        achievementMapper = achievementMapper,
-        moshi = moshi,
-    )
-
-    @Singleton
-    @Provides
     fun provideTokenManager(context: Context) = TokenManager(context = context)
 
     @Singleton
@@ -73,11 +53,6 @@ class AppModule {
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(FilterTypeAdapter())
         .build()
-
-    @Singleton
-    @Provides
-    fun provideHistorySearchRepository(historySearchListProvider: HistorySearchListProvider): HistorySearchRepository =
-        HistorySearchRepositoryImpl(historySearchProvider = historySearchListProvider)
 
     @Singleton
     @Provides
@@ -134,14 +109,24 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePersonalListFilter(context: Context) = PersonalListFilterManager(
+    fun provideSettingsRepository(context: Context): SettingsRepository = SettingsRepositoryImpl(
         context = context,
     )
 
     @Singleton
     @Provides
-    fun provideSettingsRepository(context: Context): SettingsRepository = SettingsRepositoryImpl(
-        context = context,
+    fun provideStatusesProvider(): StatusesProvider = StatusesProvider()
+
+    @Singleton
+    @Provides
+    fun provideUserInterestsProvider(
+        configurationProvider: ConfigurationProvider,
+        configManager: ConfigManager,
+        settingsRepository: SettingsRepository,
+    ): UserInterestsProvider = UserInterestsProviderImpl(
+        configurationProvider = configurationProvider,
+        configManager = configManager,
+        settingsRepository = settingsRepository,
     )
 
     @Singleton

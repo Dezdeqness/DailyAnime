@@ -1,11 +1,8 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.home.repository.HomeRepository
-import com.dezdeqness.data.datasource.HomeRemoteDatasource
-import com.dezdeqness.data.datasource.HomeRemoteDatasourceImpl
-import com.dezdeqness.data.provider.HomeGenresProvider
-import com.dezdeqness.data.repository.HomeRepositoryImpl
+import com.dezdeqness.contract.settings.repository.UserInterestsProvider
+import com.dezdeqness.feature.home.di.HomeModule as FeatureHomeModule
 import com.dezdeqness.feature.home.presentation.HomeComposer
 import com.dezdeqness.feature.home.presentation.HomeViewModel
 import com.dezdeqness.foundation.di.ViewModelKey
@@ -14,21 +11,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
-@Module(includes = [HistoryModule::class])
+@Module(includes = [HistoryModule::class, FeatureHomeModule::class])
 abstract class HomeModule {
 
     companion object {
 
         @Provides
-        fun provideHomeComposer(homeGenresProvider: HomeGenresProvider) =
-            HomeComposer(homeGenresProvider = homeGenresProvider)
+        fun provideHomeComposer(userInterestsProvider: UserInterestsProvider) =
+            HomeComposer(userInterestsProvider = userInterestsProvider)
     }
-
-    @Binds
-    abstract fun bindHomeRepository(repository: HomeRepositoryImpl): HomeRepository
-
-    @Binds
-    abstract fun bindHomeRemoteDataSource(dataSourceImpl: HomeRemoteDatasourceImpl): HomeRemoteDatasource
 
     @Binds
     @IntoMap

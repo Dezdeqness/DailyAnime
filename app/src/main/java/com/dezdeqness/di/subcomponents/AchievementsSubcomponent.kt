@@ -1,7 +1,7 @@
 package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.core.BaseComponent
-import com.dezdeqness.di.modules.AchievementsModule
+import com.dezdeqness.feature.achievements.di.AchievementsModule
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent

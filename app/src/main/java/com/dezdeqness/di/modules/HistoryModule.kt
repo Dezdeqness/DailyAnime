@@ -5,6 +5,7 @@ import com.dezdeqness.contract.history.usecases.GetHistoryUseCase
 import com.dezdeqness.contract.history.usecases.GetLatestHistoryItemUseCase
 import com.dezdeqness.domain.history.usecases.GetHistoryUseCaseImpl
 import com.dezdeqness.domain.history.usecases.GetLatestHistoryItemUseCaseImpl
+import com.dezdeqness.feature.history.di.HistoryModule as FeatureHistoryModule
 import com.dezdeqness.feature.history.presentation.HistoryViewModel
 import com.dezdeqness.feature.history.presentation.store.HistoryActor
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace.Command
@@ -19,7 +20,7 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import money.vivid.elmslie.core.store.ElmStore
 
-@Module
+@Module(includes = [FeatureHistoryModule::class])
 abstract class HistoryModule {
 
     companion object {

@@ -3,6 +3,7 @@
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.contract.topic.usecases.GetTopicUseCase
 import com.dezdeqness.domain.topic.usecases.GetTopicUseCaseImpl
+import com.dezdeqness.feature.topics.di.TopicModule
 import com.dezdeqness.feature.topics.presentation.TopicListViewModel
 import com.dezdeqness.feature.topics.presentation.store.TopicListActor
 import com.dezdeqness.feature.topics.presentation.store.TopicListNamespace.Command

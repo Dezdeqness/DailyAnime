@@ -1,4 +1,4 @@
-package com.dezdeqness.di.modules
+package com.dezdeqness.feature.stats.di
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.feature.stats.presentation.profile.ProfileStatsComposer
@@ -15,7 +15,7 @@ abstract class StatsModule {
 
     companion object {
         @Provides
-        fun provideProfileStatsComposer(resourceProvider: ResourceProvider) = ProfileStatsComposer(
+        internal fun provideProfileStatsComposer(resourceProvider: ResourceProvider) = ProfileStatsComposer(
             resourceProvider = resourceProvider,
         )
     }
@@ -23,5 +23,5 @@ abstract class StatsModule {
     @Binds
     @IntoMap
     @ViewModelKey(ProfileStatsViewModel::class)
-    abstract fun bindProfileStatsViewModel(viewModel: ProfileStatsViewModel): ViewModel
+    internal abstract fun bindProfileStatsViewModel(viewModel: ProfileStatsViewModel): ViewModel
 }

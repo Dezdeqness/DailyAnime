@@ -1,7 +1,7 @@
 package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.core.BaseComponent
-import com.dezdeqness.di.modules.StatsModule
+import com.dezdeqness.feature.stats.di.StatsModule
 import dagger.Subcomponent
 
 @Subcomponent(modules = [StatsModule::class])

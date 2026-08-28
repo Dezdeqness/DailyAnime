@@ -18,9 +18,11 @@ dependencyResolutionManagement {
 rootProject.name = "Daily Anime"
 
 include(":app")
-include(":data")
 include(":data:core")
 include(":data:remote-common")
+include(":data:anime")
+include(":data:analytics")
+include(":data:user")
 
 // domain
 include(":domain:core")

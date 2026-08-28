@@ -1,4 +1,4 @@
-package com.dezdeqness.di.modules
+package com.dezdeqness.feature.profile.di
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.feature.profile.presentation.ProfileViewModel
@@ -13,5 +13,5 @@ abstract class ProfileModule {
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
+    internal abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 }

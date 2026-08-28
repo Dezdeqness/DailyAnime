@@ -1,4 +1,4 @@
-package com.dezdeqness.di.modules
+package com.dezdeqness.feature.favourite.di
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.feature.favourite.presentation.FavouritesViewModel
@@ -8,10 +8,10 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class FavouriteFeatureModule {
+abstract class FavouritePresentationModule {
 
     @Binds
     @IntoMap
     @ViewModelKey(FavouritesViewModel::class)
-    abstract fun bindFavouritesViewModel(viewModel: FavouritesViewModel): ViewModel
+    internal abstract fun bindFavouritesViewModel(viewModel: FavouritesViewModel): ViewModel
 }

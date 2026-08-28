@@ -8,7 +8,6 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
-import com.dezdeqness.di.modules.DatabaseModule
 import com.dezdeqness.di.modules.FavouriteModule
 import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
@@ -40,6 +39,8 @@ import com.dezdeqness.di.subcomponents.StatsComponent
 import com.dezdeqness.di.subcomponents.TopicDetailsComponent
 import com.dezdeqness.di.subcomponents.TopicsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
+import com.dezdeqness.feature.auth.di.AuthModule
+import com.dezdeqness.feature.userrate.di.UserRatesModule
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.presentation.routing.ApplicationRouter
@@ -58,8 +59,9 @@ import javax.inject.Singleton
         AppModule::class,
         AccountModule::class,
         DataModule::class,
-        DatabaseModule::class,
         FavouriteModule::class,
+        AuthModule::class,
+        UserRatesModule::class,
     ],
 )
 interface AppComponent {

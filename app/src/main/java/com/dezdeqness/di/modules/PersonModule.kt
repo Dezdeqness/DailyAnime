@@ -1,17 +1,7 @@
 package com.dezdeqness.di.modules
 
-import com.dezdeqness.contract.person.repository.PersonRepository
-import com.dezdeqness.data.datasource.PersonRemoteDataSource
-import com.dezdeqness.data.datasource.PersonRemoteDataSourceImpl
-import com.dezdeqness.data.repository.PersonRepositoryImpl
-import dagger.Binds
+import com.dezdeqness.feature.details.person.di.PersonModule as FeaturePersonModule
 import dagger.Module
 
-@Module
-abstract class PersonModule {
-    @Binds
-    abstract fun bindPersonRepository(repository: PersonRepositoryImpl): PersonRepository
-
-    @Binds
-    abstract fun bindPersonRemoteDataSource(dataSourceImpl: PersonRemoteDataSourceImpl): PersonRemoteDataSource
-}
+@Module(includes = [FeaturePersonModule::class])
+abstract class PersonModule

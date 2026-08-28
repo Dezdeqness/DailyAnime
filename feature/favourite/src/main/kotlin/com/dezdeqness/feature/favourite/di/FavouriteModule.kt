@@ -11,7 +11,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 
 @Module
-abstract class FavouriteDataModule {
+abstract class FavouriteModule {
 
     companion object {
         @Provides

@@ -8,7 +8,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class HomeDataModule {
+abstract class HomeModule {
 
     @Binds
     internal abstract fun bindHomeRepository(repository: HomeRepositoryImpl): HomeRepository

@@ -1,10 +1,9 @@
 package com.dezdeqness.di.subcomponents
 
-import com.dezdeqness.di.modules.AuthorizationModule
 import com.dezdeqness.presentation.features.authorization.AuthorizationActivity
 import dagger.Subcomponent
 
-@Subcomponent(modules = [AuthorizationModule::class])
+@Subcomponent
 interface AuthorizationComponent {
 
     @Subcomponent.Factory

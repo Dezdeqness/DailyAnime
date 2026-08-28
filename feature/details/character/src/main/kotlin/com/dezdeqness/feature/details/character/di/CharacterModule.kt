@@ -11,7 +11,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 
 @Module
-abstract class CharacterDataModule {
+abstract class CharacterModule {
 
     @Binds
     internal abstract fun bindCharacterRepository(repository: CharacterRepositoryImpl): CharacterRepository

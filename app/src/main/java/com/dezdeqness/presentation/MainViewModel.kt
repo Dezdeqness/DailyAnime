@@ -5,9 +5,9 @@ import com.dezdeqness.contract.settings.models.OnboardingCompletedPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.core.BaseViewModel
 import com.dezdeqness.data.core.AppLogger
-import com.dezdeqness.data.provider.LocaleProvider
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.message.MessageConsumer
+import com.dezdeqness.foundation.provider.LocaleProvider
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.presentation.event.NavigateToOnboarding
 import com.dezdeqness.utils.LocaleUtils

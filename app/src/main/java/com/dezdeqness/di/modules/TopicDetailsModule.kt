@@ -8,6 +8,7 @@ import com.dezdeqness.feature.topicdetails.presentation.store.TopicDetailsNamesp
 import com.dezdeqness.feature.topicdetails.presentation.store.TopicDetailsNamespace.Event
 import com.dezdeqness.feature.topicdetails.presentation.store.TopicDetailsNamespace.State
 import com.dezdeqness.feature.topicdetails.presentation.store.topicDetailsReducer
+import com.dezdeqness.feature.topics.di.TopicModule
 import com.dezdeqness.foundation.di.AssistedViewModelFactory
 import com.dezdeqness.foundation.di.AssistedViewModelKey
 import dagger.Binds

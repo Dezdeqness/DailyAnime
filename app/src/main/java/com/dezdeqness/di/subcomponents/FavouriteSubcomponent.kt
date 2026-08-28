@@ -1,13 +1,13 @@
 package com.dezdeqness.di.subcomponents
 
 import com.dezdeqness.di.core.BaseComponent
-import com.dezdeqness.di.modules.FavouriteFeatureModule
+import com.dezdeqness.feature.favourite.di.FavouritePresentationModule
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
-@Subcomponent(modules = [FavouriteFeatureModule::class, FavouriteArgsModule::class])
+@Subcomponent(modules = [FavouritePresentationModule::class, FavouriteArgsModule::class])
 interface FavouriteSubcomponent : BaseComponent {
     @Subcomponent.Builder
     interface Builder {

@@ -17,7 +17,7 @@ import javax.inject.Singleton
 import retrofit2.Retrofit
 
 @Module
-abstract class UserRatesDataModule {
+abstract class UserRatesModule {
 
     @Binds
     internal abstract fun bindUserRatesRepository(

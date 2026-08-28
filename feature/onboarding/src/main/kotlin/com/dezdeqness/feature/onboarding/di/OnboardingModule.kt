@@ -1,4 +1,4 @@
-package com.dezdeqness.di.modules
+package com.dezdeqness.feature.onboarding.di
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingViewModel
@@ -15,15 +15,15 @@ abstract class OnboardingModule {
     @Binds
     @IntoMap
     @ViewModelKey(OnboardingViewModel::class)
-    abstract fun bindOnboardingViewModel(viewModel: OnboardingViewModel): ViewModel
+    internal abstract fun bindOnboardingViewModel(viewModel: OnboardingViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(SelectGenresViewModel::class)
-    abstract fun bindSelectGenresViewModel(viewModel: SelectGenresViewModel): ViewModel
+    internal abstract fun bindSelectGenresViewModel(viewModel: SelectGenresViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(NotificationsViewModel::class)
-    abstract fun bindNotificationsViewModel(viewModel: NotificationsViewModel): ViewModel
+    internal abstract fun bindNotificationsViewModel(viewModel: NotificationsViewModel): ViewModel
 }
