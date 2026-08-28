@@ -1,4 +1,4 @@
-package com.dezdeqness.di.modules
+package com.dezdeqness.feature.screenshotsviewer.di
 
 import androidx.lifecycle.ViewModel
 import com.dezdeqness.data.core.config.ConfigManager
@@ -19,17 +19,18 @@ import money.vivid.elmslie.core.store.NoOpActor
 @Module
 abstract class ScreenshotsModule {
 
+    companion object {
+        @Provides
+        internal fun provideScreenshotStore(configManager: ConfigManager): ElmStore<Event, State, Effect, Command> =
+            ElmStore(
+                initialState = State(),
+                reducer = screenshotReducer(configManager.baseUrl.trimEnd('/')),
+                actor = NoOpActor(),
+            )
+    }
+
     @Binds
     @IntoMap
     @ViewModelKey(ScreenshotsViewModel::class)
-    abstract fun bindScreenshotsViewModel(viewModel: ScreenshotsViewModel): ViewModel
-
-    companion object {
-        @Provides
-        fun provideScreenshotStore(configManager: ConfigManager): ElmStore<Event, State, Effect, Command> = ElmStore(
-            initialState = State(),
-            reducer = screenshotReducer(configManager.baseUrl.trimEnd('/')),
-            actor = NoOpActor(),
-        )
-    }
+    internal abstract fun bindScreenshotsViewModel(viewModel: ScreenshotsViewModel): ViewModel
 }

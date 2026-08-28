@@ -1,21 +1,18 @@
-﻿package com.dezdeqness.di.modules
+package com.dezdeqness.di.modules
 
-import com.dezdeqness.contract.auth.SessionManager
+import android.content.Context
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.auth.usecases.LoginUseCase
 import com.dezdeqness.contract.auth.usecases.LogoutUseCase
 import com.dezdeqness.contract.auth.usecases.RefreshTokenUseCase
-import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.contract.history.repository.HistoryRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.core.CookieCleaner
-import com.dezdeqness.data.database.ShikimoriDatabase
+import com.dezdeqness.data.database.AccountDatabase
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.AccountRemoteDataSourceImpl
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
 import com.dezdeqness.data.datasource.db.AccountLocalDataSourceImpl
-import com.dezdeqness.data.datasource.db.dao.AccountSessionDao
-import com.dezdeqness.data.manager.SessionManagerImpl
 import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.repository.UserRepositoryImpl
 import com.dezdeqness.domain.auth.usecases.LoginUseCaseImpl
@@ -57,31 +54,12 @@ abstract class AccountModule {
         @Provides
         fun providerAuthRepository(repository: UserRepositoryImpl): AuthRepository = repository
 
-        @Provides
-        fun provideAccountDao(shikimoriDatabase: ShikimoriDatabase) = shikimoriDatabase.accountDao()
-
-        @Provides
-        fun provideAccountSessionDao(shikimoriDatabase: ShikimoriDatabase) = shikimoriDatabase.accountSessionDao()
-
         @Singleton
         @Provides
-        fun provideSessionManager(
-            loginUseCase: LoginUseCase,
-            logoutUseCase: LogoutUseCase,
-            refreshTokenUseCase: RefreshTokenUseCase,
-            authRepository: AuthRepository,
-            userRepository: UserRepository,
-            accountSessionDao: AccountSessionDao,
-            favouriteRepository: FavouriteRepository,
-        ): SessionManager = SessionManagerImpl(
-            loginUseCase = loginUseCase,
-            logoutUseCase = logoutUseCase,
-            refreshTokenUseCase = refreshTokenUseCase,
-            authRepository = authRepository,
-            userRepository = userRepository,
-            accountSessionDao = accountSessionDao,
-            favouriteRepository = favouriteRepository,
-        )
+        fun provideAccountDatabase(context: Context): AccountDatabase = AccountDatabase.build(context)
+
+        @Provides
+        fun provideAccountDao(database: AccountDatabase) = database.accountDao()
     }
 
     @Binds

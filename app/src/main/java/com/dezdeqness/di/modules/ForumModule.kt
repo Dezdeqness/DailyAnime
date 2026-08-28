@@ -1,13 +1,9 @@
 ﻿package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.forum.repository.ForumRepository
 import com.dezdeqness.contract.forum.usecases.GetForumsUseCase
-import com.dezdeqness.data.ForumApiService
-import com.dezdeqness.data.datasource.ForumRemoteDataSource
-import com.dezdeqness.data.datasource.ForumRemoteDataSourceImpl
-import com.dezdeqness.data.repository.ForumRepositoryImpl
 import com.dezdeqness.domain.forum.usecases.GetForumsUseCaseImpl
+import com.dezdeqness.feature.forum.di.ForumModule as FeatureForumModule
 import com.dezdeqness.feature.forum.presentation.ForumViewModel
 import com.dezdeqness.feature.forum.presentation.store.ForumActor
 import com.dezdeqness.feature.forum.presentation.store.ForumNamespace.Command
@@ -15,21 +11,18 @@ import com.dezdeqness.feature.forum.presentation.store.ForumNamespace.Effect
 import com.dezdeqness.feature.forum.presentation.store.ForumNamespace.Event
 import com.dezdeqness.feature.forum.presentation.store.ForumNamespace.State
 import com.dezdeqness.feature.forum.presentation.store.forumReducer
+import com.dezdeqness.feature.topics.di.TopicModule
 import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import money.vivid.elmslie.core.store.ElmStore
-import retrofit2.Retrofit
 
-@Module(includes = [TopicModule::class])
+@Module(includes = [FeatureForumModule::class, TopicModule::class])
 abstract class ForumModule {
 
     companion object {
-
-        @Provides
-        fun provideForumApiService(retrofit: Retrofit): ForumApiService = retrofit.create(ForumApiService::class.java)
 
         @Provides
         fun provideForumStore(actor: ForumActor): ElmStore<Event, State, Effect, Command> = ElmStore(
@@ -41,12 +34,6 @@ abstract class ForumModule {
 
     @Binds
     abstract fun bindGetForumsUseCase(getForumsUseCase: GetForumsUseCaseImpl): GetForumsUseCase
-
-    @Binds
-    abstract fun bindForumRemoteDataSource(impl: ForumRemoteDataSourceImpl): ForumRemoteDataSource
-
-    @Binds
-    abstract fun bindForumRepository(impl: ForumRepositoryImpl): ForumRepository
 
     @Binds
     @IntoMap

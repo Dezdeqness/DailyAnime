@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class SearchFilterDataModule {
+abstract class SearchFilterModule {
 
     @Binds
     internal abstract fun bindSearchFilterRepository(

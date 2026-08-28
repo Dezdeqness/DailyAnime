@@ -11,7 +11,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 
 @Module
-abstract class TopicDataModule {
+abstract class TopicModule {
 
     companion object {
         @Provides

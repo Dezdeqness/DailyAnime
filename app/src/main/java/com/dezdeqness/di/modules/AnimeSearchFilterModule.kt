@@ -1,8 +1,7 @@
 package com.dezdeqness.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.dezdeqness.contract.filter.repository.SearchFilterRepository
-import com.dezdeqness.data.repository.SearchFilterRepositoryImpl
+import com.dezdeqness.feature.searchfilter.di.SearchFilterModule
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterComposer
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterViewModel
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSeasonCellComposer
@@ -13,7 +12,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 
-@Module
+@Module(includes = [SearchFilterModule::class])
 abstract class AnimeSearchFilterModule {
 
     companion object {
@@ -31,9 +30,6 @@ abstract class AnimeSearchFilterModule {
         fun providesAnimeSeasonCellComposer(resourceManager: ResourceProvider) =
             AnimeSeasonCellComposer(resourceManager)
     }
-
-    @Binds
-    abstract fun bindSearchFilterRepository(searchFilterRepository: SearchFilterRepositoryImpl): SearchFilterRepository
 
     @Binds
     @IntoMap

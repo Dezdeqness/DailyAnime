@@ -62,6 +62,8 @@ dependencies {
     // Mock
     testImplementation(libs.mockk.mockk)
 
+    implementation(project(":data:core"))
+
     // Common
     implementation(project(":common:foundation-ui"))
     implementation(project(":common:foundation"))

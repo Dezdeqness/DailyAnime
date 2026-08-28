@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class HistoryDataModule {
+abstract class HistoryModule {
 
     @Binds
     internal abstract fun bindHistorySearchRepository(
