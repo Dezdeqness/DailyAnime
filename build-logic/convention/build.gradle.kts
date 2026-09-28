@@ -50,5 +50,9 @@ gradlePlugin {
             id = "com.dezdeqness.detekt"
             implementationClass = "com.dezdeqness.buildlogic.DetektPlugin"
         }
+        register("androidData") {
+            id = "com.dezdeqness.data"
+            implementationClass = "com.dezdeqness.buildlogic.DataModulePlugin"
+        }
     }
 }

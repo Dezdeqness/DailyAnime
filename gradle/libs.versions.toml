@@ -174,3 +174,4 @@ com-dezdeqness-firebase = { id = "com.dezdeqness.firebase", version = "unspecifi
 com-dezdeqness-config = { id = "com.dezdeqness.config", version = "unspecified" }
 com-dezdeqness-flavour = { id = "com.dezdeqness.flavour", version = "unspecified" }
 com-dezdeqness-detekt = { id = "com.dezdeqness.detekt", version = "unspecified" }
+com-dezdeqness-data = { id = "com.dezdeqness.data", version = "unspecified" }

@@ -18,6 +18,8 @@ dependencyResolutionManagement {
 rootProject.name = "Daily Anime"
 
 include(":app")
+
+// data
 include(":data:core")
 include(":data:remote-common")
 include(":data:anime")
