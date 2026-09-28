@@ -210,6 +210,40 @@ tasks.named("clean") {
     dependsOn("installGitHooks")
 }
 
+val dataRestrictedModuleRoots = listOf(":feature:", ":contract:", ":domain:", ":shared:", ":common:")
+val dataModulesAllowedEverywhere = setOf(":data:core")
+
+subprojects {
+    if (dataRestrictedModuleRoots.none { path.startsWith(it) }) return@subprojects
+
+    afterEvaluate {
+        val modulePath = path
+        val violations = configurations
+            .asSequence()
+            .flatMap { it.dependencies.withType<ProjectDependency>() }
+            .map { it.path }
+            .filter { it.startsWith(":data:") && it !in dataModulesAllowedEverywhere }
+            .distinct()
+            .sorted()
+            .toList()
+
+        val verify = tasks.register("verifyModuleDependencies") {
+            group = "verification"
+            description = "Fails if the module depends on :data:* other than ${dataModulesAllowedEverywhere.joinToString()}."
+            inputs.property("violations", violations)
+            doLast {
+                if (violations.isNotEmpty()) {
+                    throw GradleException(
+                        "$modulePath must not depend on ${violations.joinToString()}. " +
+                            "Data implementations are bound in :app DI",
+                    )
+                }
+            }
+        }
+        tasks.findByName("preBuild")?.dependsOn(verify)
+    }
+}
+
 subprojects {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
