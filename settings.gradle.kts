@@ -58,6 +58,8 @@ include(":contract:character")
 include(":contract:home")
 include(":contract:person")
 include(":contract:userrate")
+include(":contract:core")
+include(":contract:source")
 
 // features
 include(":feature:achievements")
