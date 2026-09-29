@@ -10,6 +10,7 @@ import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.FavouriteModule
 import com.dezdeqness.di.modules.RemoteModule
+import com.dezdeqness.di.source.shikimori.ShikimoriSourceModule
 import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
 import com.dezdeqness.di.subcomponents.AnimeComponent
@@ -62,6 +63,7 @@ import javax.inject.Singleton
         FavouriteModule::class,
         AuthModule::class,
         UserRatesModule::class,
+        ShikimoriSourceModule::class,
     ],
 )
 interface AppComponent {

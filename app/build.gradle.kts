@@ -243,6 +243,7 @@ dependencies {
     implementation(project(":contract:home"))
     implementation(project(":contract:person"))
     implementation(project(":contract:userrate"))
+    implementation(project(":contract:source"))
 
     implementation(project(":feature:achievements"))
     implementation(project(":feature:auth"))
