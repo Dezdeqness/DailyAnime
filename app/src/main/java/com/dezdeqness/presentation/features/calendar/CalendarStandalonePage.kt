@@ -6,11 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.calendar.presentation.CalendarActions
 import com.dezdeqness.feature.calendar.presentation.CalendarPage
 import com.dezdeqness.feature.calendar.presentation.CalendarViewModel
 import com.dezdeqness.presentation.AnimeDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun CalendarStandalonePage(
@@ -19,7 +19,7 @@ fun CalendarStandalonePage(
 ) {
     val context = LocalContext.current
     val calendarComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .calendarComponent()
             .create()
     }

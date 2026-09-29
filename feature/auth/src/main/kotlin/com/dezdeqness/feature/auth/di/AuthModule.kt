@@ -7,19 +7,19 @@ import com.dezdeqness.feature.auth.data.AccountSessionDao
 import com.dezdeqness.feature.auth.data.AuthDatabase
 import com.dezdeqness.feature.auth.data.SessionManagerImpl
 import com.dezdeqness.feature.auth.presentation.AuthorizationViewModel
+import com.dezdeqness.foundation.di.SourceScope
 import com.dezdeqness.foundation.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import javax.inject.Singleton
 
 @Module
 abstract class AuthModule {
 
     companion object {
 
-        @Singleton
+        @SourceScope
         @Provides
         internal fun provideAuthDatabase(context: Context): AuthDatabase =
             AuthDatabase.build(context)
@@ -30,7 +30,7 @@ abstract class AuthModule {
     }
 
     @Binds
-    @Singleton
+    @SourceScope
     internal abstract fun bindSessionManager(impl: SessionManagerImpl): SessionManager
 
     @Binds

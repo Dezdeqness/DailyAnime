@@ -6,11 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.di.subcomponents.AchievementsArgsModule
 import com.dezdeqness.feature.achievements.presentation.AchievementsActions
 import com.dezdeqness.feature.achievements.presentation.AchievementsPage
 import com.dezdeqness.feature.achievements.presentation.AchievementsViewModel
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun AchievementsStandalonePage(
@@ -20,7 +20,7 @@ fun AchievementsStandalonePage(
 ) {
     val context = LocalContext.current
     val achievementsComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .achievementsComponent()
             .argsModule(AchievementsArgsModule(userId = userId))
             .build()

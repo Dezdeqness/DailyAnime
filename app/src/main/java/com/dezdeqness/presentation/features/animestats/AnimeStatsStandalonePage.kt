@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
 import com.dezdeqness.feature.stats.presentation.StatsPage
 import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsArguments
 import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsTransferModel
 import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsViewModel
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun AnimeStatsStandalonePage(
@@ -22,7 +22,7 @@ fun AnimeStatsStandalonePage(
 ) {
     val context = LocalContext.current
     val animeStatsComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .animeStatsComponent()
             .argsModule(
                 AnimeStatsArgsModule(

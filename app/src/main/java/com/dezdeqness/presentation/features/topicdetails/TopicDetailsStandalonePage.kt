@@ -12,7 +12,6 @@ import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsActions
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsPage
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsViewModel
@@ -22,6 +21,7 @@ import com.dezdeqness.feature.topicdetails.presentation.store.TopicDetailsNamesp
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.CharacterDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun TopicDetailsStandalonePage(
@@ -31,7 +31,7 @@ fun TopicDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val topicDetailsComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .topicDetailsComponent()
             .create()
     }

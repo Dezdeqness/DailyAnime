@@ -5,15 +5,15 @@ import com.dezdeqness.contract.favourite.model.FavouriteLinkedType
 import com.dezdeqness.contract.favourite.model.FavouritesCacheState
 import com.dezdeqness.contract.favourite.model.matchingCacheTypes
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
+import com.dezdeqness.foundation.di.SourceScope
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-@Singleton
+@SourceScope
 internal class FavouriteRepositoryImpl @Inject constructor(
     private val remoteDataSource: FavouriteRemoteDataSource,
 ) : FavouriteRepository {

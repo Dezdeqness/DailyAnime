@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.di.subcomponents.ChronologyArgsModule
 import com.dezdeqness.feature.details.related.presentation.ChronologyListPage
 import com.dezdeqness.feature.details.related.presentation.RelatedListActions
 import com.dezdeqness.feature.details.related.presentation.RelatedListViewModel
 import com.dezdeqness.presentation.AnimeDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun AnimeChronologyStandalonePage(
@@ -21,7 +21,7 @@ fun AnimeChronologyStandalonePage(
 ) {
     val context = LocalContext.current
     val animeChronologyComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .animeChronologyComponent()
             .argsModule(ChronologyArgsModule(animeId))
             .build()

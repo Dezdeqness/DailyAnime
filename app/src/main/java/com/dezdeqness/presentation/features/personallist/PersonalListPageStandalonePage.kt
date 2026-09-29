@@ -12,12 +12,12 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.personallist.tab.PersonalListActions
 import com.dezdeqness.feature.personallist.tab.PersonalListPage
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
 import com.dezdeqness.feature.personallist.tab.StatusIdKey
 import com.dezdeqness.shared.presentation.model.RibbonStatusUiModel
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun PersonalListPageStandalonePage(
@@ -42,7 +42,7 @@ fun PersonalListPageStandalonePage(
 
         val context = LocalContext.current
         val personalListTabComponent = remember(statusId) {
-            context.appComponent
+            context.sourceComponent
                 .personalListTabComponent()
                 .create()
         }

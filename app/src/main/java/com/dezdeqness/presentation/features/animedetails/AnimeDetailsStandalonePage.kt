@@ -35,6 +35,7 @@ import com.dezdeqness.presentation.DetailsStats
 import com.dezdeqness.presentation.Screenshots
 import com.dezdeqness.presentation.Similar
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
+import com.dezdeqness.sourceComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -45,7 +46,7 @@ fun AnimeDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val component = remember {
-        context.appComponent
+        context.sourceComponent
             .animeDetailsFeatureComponent()
             .create()
     }

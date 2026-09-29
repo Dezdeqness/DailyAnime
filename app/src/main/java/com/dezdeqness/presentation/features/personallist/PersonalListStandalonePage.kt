@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.personallist.BottomSheet
 import com.dezdeqness.feature.personallist.DataStatus
 import com.dezdeqness.feature.personallist.PersonalListTabsViewModel
@@ -39,6 +38,7 @@ import com.dezdeqness.foundation.ui.views.GeneralEmpty
 import com.dezdeqness.foundation.ui.views.GeneralError
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.features.userrate.UserRateDialogStandalone
+import com.dezdeqness.sourceComponent
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -50,7 +50,7 @@ fun PersonalListStandalonePage(
 ) {
     val context = LocalContext.current
     val personalListComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .personalListComponent()
             .create()
     }

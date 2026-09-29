@@ -15,13 +15,13 @@ import com.dezdeqness.data.core.RefreshTokenInterceptor
 import com.dezdeqness.data.core.UserAgentTokenInterceptor
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.manager.TokenManager
+import com.dezdeqness.foundation.di.SourceScope
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
-import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,18 +33,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 class RemoteModule {
 
     @Named("logging")
-    @Singleton
+    @SourceScope
     @Provides
     fun providesLoggingInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BASIC
     }
 
     @Named("chucker")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideChuckerInterceptor(context: Context): Interceptor = ChuckerInterceptor(context)
 
-    @Singleton
+    @SourceScope
     @Provides
     fun providesHttpClient(
         @Named("user_agent") userAgentTokenInterceptor: Interceptor,
@@ -58,7 +58,7 @@ class RemoteModule {
         .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         .build()
 
-    @Singleton
+    @SourceScope
     @Provides
     fun providesRetrofit(
         @Named("okhttp_refresh") okHttpClient: OkHttpClient,
@@ -72,7 +72,7 @@ class RemoteModule {
         .build()
 
     @Named("Authorization")
-    @Singleton
+    @SourceScope
     @Provides
     fun providesAuthorizationRetrofit(
         okHttpClient: OkHttpClient,
@@ -86,7 +86,7 @@ class RemoteModule {
         .build()
 
     @Named("Account")
-    @Singleton
+    @SourceScope
     @Provides
     fun providesAccountRetrofit(
         @Named("okhttp_refresh") okHttpClient: OkHttpClient,
@@ -100,7 +100,7 @@ class RemoteModule {
         .build()
 
     @Named("okhttp_refresh")
-    @Singleton
+    @SourceScope
     @Provides
     fun providesHttpClientWithRefreshToken(
         @Named("authorization") authorizationInterceptor: Interceptor,
@@ -119,7 +119,7 @@ class RemoteModule {
         .build()
 
     @Named("shikimori_graphql_okhttp")
-    @Singleton
+    @SourceScope
     @Provides
     fun providesShikimoriGraphqlHttpClient(
         @Named("graphql_authorization") graphqlAuthorizationInterceptor: Interceptor,
@@ -138,7 +138,7 @@ class RemoteModule {
         .build()
 
     @Named("anilist_graphql_okhttp")
-    @Singleton
+    @SourceScope
     @Provides
     fun providesAnilistGraphqlHttpClient(@Named("chucker") chuckerInterceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder()
@@ -148,7 +148,7 @@ class RemoteModule {
             .build()
 
     @Named("shikimori_graphql_client")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideShikimoriGraphqlClient(
         @Named("graphql_operation_name") nameInterceptor: ApolloInterceptor,
@@ -161,7 +161,7 @@ class RemoteModule {
         .build()
 
     @Named("anilist_graphql_client")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideAnilistGraphqlClient(
         @Named("graphql_operation_name") nameInterceptor: ApolloInterceptor,
@@ -174,39 +174,39 @@ class RemoteModule {
         .build()
 
     @Named("refresh")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideRefreshTokenInterceptor(sessionManager: Lazy<SessionManager>): Interceptor =
         RefreshTokenInterceptor(sessionManager = sessionManager)
 
     @Named("authorization")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideAuthorizationTokenInterceptor(tokenManager: TokenManager): Interceptor =
         AuthorizationTokenInterceptor(tokenManager = tokenManager)
 
     @Named("graphql_authorization")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideGraphqlAuthorizationInterceptor(tokenManager: TokenManager): Interceptor =
         GraphqlAuthorizationInterceptor(tokenManager = tokenManager)
 
     @Named("graphql_operation_name")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideGraphqlOperationNameInterceptor(): ApolloInterceptor = GraphqlOperationNameInterceptor()
 
     @Named("user_agent")
-    @Singleton
+    @SourceScope
     @Provides
     fun provideUserAgentTokenInterceptor(): Interceptor = UserAgentTokenInterceptor()
 
-    @Singleton
+    @SourceScope
     @Provides
     fun provideAccountApiService(@Named("Account") retrofit: Retrofit): AccountApiService =
         retrofit.create(AccountApiService::class.java)
 
-    @Singleton
+    @SourceScope
     @Provides
     fun provideAuthorizationApiService(@Named("Authorization") retrofit: Retrofit): AuthorizationApiService =
         retrofit.create(AuthorizationApiService::class.java)

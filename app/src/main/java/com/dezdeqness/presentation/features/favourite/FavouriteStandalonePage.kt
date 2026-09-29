@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.contract.favourite.model.FavouriteType
 import com.dezdeqness.di.subcomponents.FavouriteArgsModule
 import com.dezdeqness.feature.favourite.presentation.FavouritesActions
@@ -15,6 +14,7 @@ import com.dezdeqness.feature.favourite.presentation.FavouritesViewModel
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.CharacterDetails
 import com.dezdeqness.presentation.PersonDetails
+import com.dezdeqness.sourceComponent
 
 private val PERSON_LIKE_TYPES = setOf(
     FavouriteType.PERSON,
@@ -31,7 +31,7 @@ fun FavouriteStandalonePage(
 ) {
     val context = LocalContext.current
     val favouritesComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .favouriteComponent()
             .argsModule(FavouriteArgsModule(userId = userId))
             .build()

@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.personallist.search.PersonalListSearchActions
 import com.dezdeqness.feature.personallist.search.PersonalListSearchExpandedPage
 import com.dezdeqness.feature.personallist.search.PersonalListSearchViewModel
 import com.dezdeqness.feature.personallist.search.PersonalListTab
 import com.dezdeqness.feature.personallist.search.composables.PersonalSearchTextField
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.sourceComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +33,7 @@ fun PersonalListSearch(
 
     val context = LocalContext.current
     val personalListSearchComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .personalListSearchComponent()
             .create()
     }

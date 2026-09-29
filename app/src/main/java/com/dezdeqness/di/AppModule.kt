@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.res.AssetManager
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.settings.repository.UserInterestsProvider
-import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.core.MessageProvider
-import com.dezdeqness.data.analytics.AnalyticsManager
-import com.dezdeqness.data.analytics.impl.AnalyticsManagerImpl
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.data.core.config.ConfigSettingsProvider
 import com.dezdeqness.data.core.config.local.DebugConfigProvider
 import com.dezdeqness.data.core.config.remote.RemoteConfigProvider
-import com.dezdeqness.data.manager.TokenManager
 import com.dezdeqness.data.model.FilterTypeAdapter
 import com.dezdeqness.data.provider.ConfigurationProvider
 import com.dezdeqness.feature.settings.data.SettingsRepositoryImpl
@@ -39,10 +35,6 @@ class AppModule {
     @Singleton
     @Provides
     fun provideAssetManager(context: Context): AssetManager = context.assets
-
-    @Singleton
-    @Provides
-    fun provideTokenManager(context: Context) = TokenManager(context = context)
 
     @Singleton
     @Provides
@@ -136,16 +128,6 @@ class AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAnalytics(context: Context) = FirebaseAnalytics.getInstance(context)
-
-    @Singleton
-    @Provides
-    fun provideAnalyticsManager(
-        userRepository: UserRepository,
-        firebaseAnalytics: FirebaseAnalytics,
-    ): AnalyticsManager = AnalyticsManagerImpl(
-        userRepository = userRepository,
-        firebaseAnalytics = firebaseAnalytics,
-    )
 
     @Singleton
     @Provides
