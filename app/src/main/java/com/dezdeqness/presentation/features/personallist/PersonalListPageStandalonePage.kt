@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.personallist.tab.PersonalListActions
 import com.dezdeqness.feature.personallist.tab.PersonalListPage
 import com.dezdeqness.feature.personallist.tab.PersonalListViewModel
@@ -42,7 +42,7 @@ fun PersonalListPageStandalonePage(
 
         val context = LocalContext.current
         val personalListTabComponent = remember(statusId) {
-            (context.applicationContext as ShikimoriApp).appComponent
+            context.appComponent
                 .personalListTabComponent()
                 .create()
         }

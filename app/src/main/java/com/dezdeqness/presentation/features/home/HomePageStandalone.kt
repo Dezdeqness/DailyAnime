@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.home.presentation.HomeActions
 import com.dezdeqness.feature.home.presentation.HomePage
 import com.dezdeqness.feature.home.presentation.HomeViewModel
@@ -23,7 +23,7 @@ fun HomePageStandalone(
 ) {
     val context = LocalContext.current
     val homeComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .homeComponent()
             .create()
     }

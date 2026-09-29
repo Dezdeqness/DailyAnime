@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.di.subcomponents.SimilarArgsModule
 import com.dezdeqness.feature.details.related.presentation.RelatedListActions
 import com.dezdeqness.feature.details.related.presentation.RelatedListViewModel
@@ -21,7 +21,7 @@ fun AnimeSimilarStandalonePage(
 ) {
     val context = LocalContext.current
     val animeSimilarComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .animeSimilarComponent()
             .argsModule(SimilarArgsModule(animeId))
             .build()

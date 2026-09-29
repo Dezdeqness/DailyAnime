@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.profile.presentation.ProfileActions
 import com.dezdeqness.feature.profile.presentation.ProfilePage
 import com.dezdeqness.feature.profile.presentation.ProfileViewModel
@@ -23,7 +23,7 @@ fun ProfilePageStandalone(
 ) {
     val context = LocalContext.current
     val profileComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .profileComponent()
             .create()
     }

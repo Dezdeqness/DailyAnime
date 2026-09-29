@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.stats.presentation.StatsPage
 import com.dezdeqness.feature.stats.presentation.profile.ProfileStatsViewModel
 
@@ -17,7 +17,7 @@ fun StatsStandalonePage(
 ) {
     val context = LocalContext.current
     val statsComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .statsComponent()
             .create()
     }

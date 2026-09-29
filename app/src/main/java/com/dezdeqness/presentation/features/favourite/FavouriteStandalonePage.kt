@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.contract.favourite.model.FavouriteType
 import com.dezdeqness.di.subcomponents.FavouriteArgsModule
 import com.dezdeqness.feature.favourite.presentation.FavouritesActions
@@ -31,7 +31,7 @@ fun FavouriteStandalonePage(
 ) {
     val context = LocalContext.current
     val favouritesComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .favouriteComponent()
             .argsModule(FavouriteArgsModule(userId = userId))
             .build()

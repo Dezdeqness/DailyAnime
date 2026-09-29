@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
 import com.dezdeqness.feature.details.person.presentation.PersonDetailsPage
 import com.dezdeqness.feature.details.person.presentation.PersonDetailsViewModel
@@ -29,7 +29,7 @@ fun PersonDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val component = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .personDetailsFeatureComponent()
             .create()
     }
@@ -52,7 +52,7 @@ fun PersonDetailsStandalonePage(
     val dispatcherProvider = remember { component.coroutineDispatcherProvider() }
     val scope = rememberCoroutineScope()
     val baseUrl = remember {
-        (context.applicationContext as ShikimoriApp).appComponent.configManager.baseUrl.trimEnd('/')
+        context.appComponent.configManager.baseUrl.trimEnd('/')
     }
 
     PersonDetailsPage(

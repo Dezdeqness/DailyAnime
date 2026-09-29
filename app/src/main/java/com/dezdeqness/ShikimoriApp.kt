@@ -1,6 +1,7 @@
 package com.dezdeqness
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import coil.Coil
 import coil.ImageLoader
@@ -9,8 +10,12 @@ import coil.decode.ImageDecoderDecoder
 import coil.disk.DiskCache
 import coil.util.DebugLogger
 import com.dezdeqness.contract.settings.models.ImageCacheMaxSizePreference
+import com.dezdeqness.contract.settings.models.SourceTypePreference
+import com.dezdeqness.contract.source.SourceType
 import com.dezdeqness.di.AppComponent
 import com.dezdeqness.di.DaggerAppComponent
+import com.dezdeqness.di.source.AvailableSources
+import com.dezdeqness.di.source.SourceComponent
 import com.dezdeqness.shared.presentation.bridge.ApplicationBridge
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
@@ -18,12 +23,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
 
     val appComponent: AppComponent by lazy {
         DaggerAppComponent.factory().create(applicationContext)
     }
+
+    private var currentSourceComponent: SourceComponent? = null
+
+    val sourceComponent: SourceComponent
+        get() = currentSourceComponent ?: createSourceComponent(storedSourceType()).also { currentSourceComponent = it }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
@@ -67,6 +78,20 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
         }
     }
 
+    fun rebuildSourceComponent() {
+        currentSourceComponent = createSourceComponent(storedSourceType())
+    }
+
+    private fun storedSourceType(): SourceType {
+        val stored = runBlocking { appComponent.settingsRepository.getPreference(SourceTypePreference) }
+        return stored.takeIf { it in AvailableSources.all } ?: SourceType.SHIKIMORI
+    }
+
+    private fun createSourceComponent(sourceType: SourceType): SourceComponent = when (sourceType) {
+        SourceType.SHIKIMORI -> appComponent.shikimoriComponent().create()
+        SourceType.ANILIST -> error("AniList source component is not wired yet")
+    }
+
     private fun createImageLoader(cacheSizeMb: Int) = ImageLoader.Builder(this)
         .allowHardware(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
         .components {
@@ -96,9 +121,13 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
     override fun isDebug() = BuildConfig.DEBUG
 }
 
-fun Application.getComponent(): AppComponent {
-    return (this as ShikimoriApp).appComponent
-}
+val Context.appComponent: AppComponent
+    get() = (applicationContext as ShikimoriApp).appComponent
+
+val Context.sourceComponent: SourceComponent
+    get() = (applicationContext as ShikimoriApp).sourceComponent
+
+fun Context.rebuildSourceComponent() = (applicationContext as ShikimoriApp).rebuildSourceComponent()
 
 // Taken from
 // https://stackoverflow.com/questions/72902856/cannotdeliverbroadcastexception-only-on-pixel-devices-running-android-12
@@ -111,7 +140,7 @@ private class CustomUncaughtExceptionHandler(
     override fun uncaughtException(thread: Thread, exception: Throwable) {
         if (shouldAbsorb(exception)) {
             application
-                .getComponent()
+                .appComponent
                 .appLogger
                 .logInfo("ShikimoriApp", "Absord ${exception::class.simpleName}", exception)
 

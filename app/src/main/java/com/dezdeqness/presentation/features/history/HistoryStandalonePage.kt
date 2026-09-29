@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.history.presentation.HistoryActions
 import com.dezdeqness.feature.history.presentation.HistoryPage
 import com.dezdeqness.feature.history.presentation.HistoryViewModel
@@ -20,7 +20,7 @@ fun HistoryStandalonePage(
 ) {
     val context = LocalContext.current
     val historyComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .historyComponent()
             .create()
     }

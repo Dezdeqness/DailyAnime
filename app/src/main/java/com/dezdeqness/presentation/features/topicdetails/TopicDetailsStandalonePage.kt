@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsActions
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsPage
 import com.dezdeqness.feature.topicdetails.presentation.TopicDetailsViewModel
@@ -31,7 +31,7 @@ fun TopicDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val topicDetailsComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .topicDetailsComponent()
             .create()
     }

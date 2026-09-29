@@ -7,10 +7,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.dezdeqness.appComponent
+import com.dezdeqness.contract.source.SourceType
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.features.useroboarding.OnboardingActivity
+import com.dezdeqness.rebuildSourceComponent
 import javax.inject.Inject
 import kotlin.getValue
 
@@ -29,7 +31,7 @@ class DebugScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         application
-            .getComponent()
+            .appComponent
             .debugComponent()
             .create()
             .inject(this)
@@ -56,18 +58,30 @@ class DebugScreenActivity : AppCompatActivity() {
                         }
 
                         override fun onApplyChangesClicked() {
-                            val intent = packageManager.getLaunchIntentForPackage(packageName)
-                            val mainIntent = Intent.makeRestartActivityTask(intent?.component)
-                            startActivity(mainIntent)
+                            restartApp()
                         }
 
                         override fun onTriggerOnboardingClicked() {
                             startActivity(OnboardingActivity.newIntent(this@DebugScreenActivity))
                         }
+
+                        override fun onSourceSelected(sourceType: SourceType) {
+                            if (sourceType == viewModel.uiState.value.source) return
+
+                            viewModel.saveSource(sourceType) {
+                                rebuildSourceComponent()
+                                restartApp()
+                            }
+                        }
                     },
                 )
             }
         }
+    }
+
+    private fun restartApp() {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        startActivity(Intent.makeRestartActivityTask(intent?.component))
     }
 
     companion object {

@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.dezdeqness.R
+import com.dezdeqness.appComponent
 import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingType
-import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.AppContentTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -35,7 +35,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val mode = application
-                .getComponent()
+                .appComponent
                 .settingsRepository()
                 .getPreference(NightThemePreference)
 

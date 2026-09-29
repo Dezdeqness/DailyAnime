@@ -16,7 +16,7 @@ import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsPage
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsUiEvent
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsViewModel
@@ -45,7 +45,7 @@ fun AnimeDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val component = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .animeDetailsFeatureComponent()
             .create()
     }
@@ -68,7 +68,7 @@ fun AnimeDetailsStandalonePage(
     val dispatcherProvider = remember { component.coroutineDispatcherProvider() }
     val scope = rememberCoroutineScope()
     val baseUrl = remember {
-        (context.applicationContext as ShikimoriApp).appComponent.configManager.baseUrl.trimEnd('/')
+        context.appComponent.configManager.baseUrl.trimEnd('/')
     }
 
     val state by viewModel.state.collectAsStateWithLifecycle()

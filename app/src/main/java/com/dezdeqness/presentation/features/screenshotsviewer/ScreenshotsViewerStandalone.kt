@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotViewerActions
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotViewerPage
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotsViewModel
@@ -25,7 +25,7 @@ fun ScreenshotsViewerStandalone(
 ) {
     val context = LocalContext.current
     val achievementsComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .screenshotsViewerComponent()
             .build()
     }

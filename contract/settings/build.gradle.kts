@@ -31,6 +31,7 @@ android {
 
 dependencies {
     implementation(project(":contract:anime"))
+    implementation(project(":contract:source"))
 
     // Coroutines
     implementation(libs.kotlinx.coroutines)

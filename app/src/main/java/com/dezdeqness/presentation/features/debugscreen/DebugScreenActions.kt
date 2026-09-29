@@ -1,5 +1,6 @@
 package com.dezdeqness.presentation.features.debugscreen
 
+import com.dezdeqness.contract.source.SourceType
 import com.dezdeqness.data.core.config.ConfigKeys
 
 interface DebugScreenActions {
@@ -9,4 +10,5 @@ interface DebugScreenActions {
     fun onBackPressed()
     fun onApplyChangesClicked()
     fun onTriggerOnboardingClicked()
+    fun onSourceSelected(sourceType: SourceType)
 }

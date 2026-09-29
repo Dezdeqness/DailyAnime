@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.feature.search.presentation.AnimeSearchActions
 import com.dezdeqness.feature.search.presentation.AnimeSearchPage
@@ -25,7 +25,7 @@ fun SearchPageStandalone(
 ) {
     val context = LocalContext.current
     val animeComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .animeComponent()
             .create()
     }

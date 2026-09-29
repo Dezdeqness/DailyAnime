@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dezdeqness.data.core.config.ConfigKeys
+import com.dezdeqness.feature.settings.composables.ListPreferencesDialog
 import com.dezdeqness.feature.settings.composables.SwitchSettingsView
 import com.dezdeqness.feature.settings.composables.TextSettingsView
 import com.dezdeqness.foundation.ui.theme.AppTheme
@@ -47,6 +48,7 @@ fun DebugScreenPage(
     val state by uiState.collectAsState()
     var editingKey by remember { mutableStateOf<ConfigKeys?>(null) }
     var inputValue by remember { mutableStateOf("") }
+    var isSourceDialogVisible by remember { mutableStateOf(false) }
 
     val entries = state.configValues.entries.toList()
 
@@ -71,6 +73,14 @@ fun DebugScreenPage(
                         title = "Trigger onboarding",
                         subtitle = "Launch the full onboarding flow",
                         onClick = actions::onTriggerOnboardingClicked,
+                    )
+                }
+
+                item {
+                    TextSettingsView(
+                        title = "Source",
+                        subtitle = state.source.displayName,
+                        onClick = { isSourceDialogVisible = true },
                     )
                 }
 
@@ -130,6 +140,19 @@ fun DebugScreenPage(
                 )
             }
         }
+    }
+
+    if (isSourceDialogVisible) {
+        ListPreferencesDialog(
+            values = state.availableSources,
+            selectedValue = state.source,
+            valueText = { it.displayName },
+            onValueSelected = { source ->
+                isSourceDialogVisible = false
+                actions.onSourceSelected(source)
+            },
+            onDismiss = { isSourceDialogVisible = false },
+        )
     }
 
     if (editingKey != null) {

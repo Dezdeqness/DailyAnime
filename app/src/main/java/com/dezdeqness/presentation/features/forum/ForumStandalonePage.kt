@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.forum.presentation.ForumActions
 import com.dezdeqness.feature.forum.presentation.ForumPage
 import com.dezdeqness.feature.forum.presentation.ForumViewModel
@@ -22,7 +22,7 @@ fun ForumStandalonePage(
 ) {
     val context = LocalContext.current
     val forumComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .forumComponent()
             .create()
     }

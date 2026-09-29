@@ -19,13 +19,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dezdeqness.R
+import com.dezdeqness.appComponent
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.analytics.model.AuthStatus
 import com.dezdeqness.feature.auth.presentation.AuthorizationEffect
 import com.dezdeqness.feature.auth.presentation.AuthorizationScreen
 import com.dezdeqness.feature.auth.presentation.AuthorizationViewModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.getComponent
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -45,7 +45,7 @@ class AuthorizationActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         application
-            .getComponent()
+            .appComponent
             .authorizationComponent()
             .create()
             .inject(this)
