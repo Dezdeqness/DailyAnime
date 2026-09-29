@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.personallist.search.PersonalListSearchActions
 import com.dezdeqness.feature.personallist.search.PersonalListSearchExpandedPage
 import com.dezdeqness.feature.personallist.search.PersonalListSearchViewModel
@@ -33,7 +33,7 @@ fun PersonalListSearch(
 
     val context = LocalContext.current
     val personalListSearchComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .personalListSearchComponent()
             .create()
     }

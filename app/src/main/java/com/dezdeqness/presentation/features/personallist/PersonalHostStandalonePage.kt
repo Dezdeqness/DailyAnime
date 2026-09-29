@@ -9,7 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedActions
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedScreen
@@ -24,7 +24,7 @@ fun PersonalHostStandalonePage(
 ) {
     val context = LocalContext.current
     val personalListComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .personalListComponent()
             .create()
     }

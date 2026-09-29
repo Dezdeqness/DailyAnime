@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.feature.userrate.UserRateActions
 import com.dezdeqness.feature.userrate.UserRateContent
@@ -37,7 +37,7 @@ fun UserRateDialogStandalone(
 
     val context = LocalContext.current
     val editRateComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .editRateComponent()
             .build()
     }

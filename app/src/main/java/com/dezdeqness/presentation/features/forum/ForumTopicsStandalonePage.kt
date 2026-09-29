@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.di.modules.TopicsArgsModule
 import com.dezdeqness.feature.topics.presentation.TopicListActions
 import com.dezdeqness.feature.topics.presentation.TopicListPage
@@ -24,7 +24,7 @@ fun ForumTopicsStandalonePage(
 ) {
     val context = LocalContext.current
     val newsComponent = remember(permalink) {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .topicsComponent()
             .argsModule(TopicsArgsModule(forumType = permalink))
             .build()

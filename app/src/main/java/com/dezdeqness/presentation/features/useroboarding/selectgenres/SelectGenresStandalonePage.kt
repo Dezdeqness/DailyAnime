@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresActions
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresContentPage
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresEvent
@@ -20,7 +20,7 @@ fun SelectGenresStandalonePage(
 ) {
     val context = LocalContext.current
     val selectGenresComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .selectGenresComponent()
             .create()
     }

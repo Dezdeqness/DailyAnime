@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.calendar.presentation.CalendarActions
 import com.dezdeqness.feature.calendar.presentation.CalendarPage
 import com.dezdeqness.feature.calendar.presentation.CalendarViewModel
@@ -19,7 +19,7 @@ fun CalendarStandalonePage(
 ) {
     val context = LocalContext.current
     val calendarComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .calendarComponent()
             .create()
     }

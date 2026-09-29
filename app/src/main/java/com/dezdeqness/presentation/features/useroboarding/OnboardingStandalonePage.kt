@@ -6,7 +6,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.ShikimoriApp
+import com.dezdeqness.appComponent
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingActions
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingEvent
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingFlowPage
@@ -32,7 +32,7 @@ fun OnboardingStandalonePage(
 ) {
     val context = LocalContext.current
     val onboardingComponent = remember {
-        (context.applicationContext as ShikimoriApp).appComponent
+        context.appComponent
             .onboardingComponent()
             .create()
     }

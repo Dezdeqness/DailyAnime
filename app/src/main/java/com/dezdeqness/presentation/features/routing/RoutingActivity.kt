@@ -32,11 +32,11 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.dezdeqness.R
+import com.dezdeqness.appComponent
 import com.dezdeqness.contract.settings.models.NightThemePreference
 import com.dezdeqness.contract.settings.models.ThemeMode
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.foundation.ui.theme.AppTheme
-import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.AppContentTheme
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
@@ -74,14 +74,14 @@ class RoutingActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         application
-            .getComponent()
+            .appComponent
             .routingComponent()
             .create()
             .inject(this)
 
         lifecycleScope.launch {
             val mode = application
-                .getComponent()
+                .appComponent
                 .settingsRepository()
                 .getPreference(NightThemePreference)
 

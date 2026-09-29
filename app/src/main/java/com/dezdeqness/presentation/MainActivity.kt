@@ -49,6 +49,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.dezdeqness.R
+import com.dezdeqness.appComponent
 import com.dezdeqness.contract.settings.models.InitialSection
 import com.dezdeqness.contract.settings.models.InitialSectionPreference
 import com.dezdeqness.contract.settings.models.NightThemePreference
@@ -59,7 +60,6 @@ import com.dezdeqness.feature.stats.presentation.anime.deserializeListFromString
 import com.dezdeqness.foundation.message.MessageEvent.MessageEventStatus
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.utils.collectEvents
-import com.dezdeqness.getComponent
 import com.dezdeqness.presentation.event.LanguageDisclaimer
 import com.dezdeqness.presentation.event.NavigateToOnboarding
 import com.dezdeqness.presentation.features.achievements.AchievementsStandalonePage
@@ -123,14 +123,14 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         application
-            .getComponent()
+            .appComponent
             .mainComponent()
             .create()
             .inject(this)
 
         lifecycleScope.launch {
             val mode = application
-                .getComponent()
+                .appComponent
                 .settingsRepository()
                 .getPreference(NightThemePreference)
 
@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             application
-                .getComponent()
+                .appComponent
                 .settingsRepository()
                 .observePreference(NightThemePreference)
                 .drop(1)
@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val section = application
-                .getComponent()
+                .appComponent
                 .settingsRepository()
                 .getPreference(InitialSectionPreference)
 
