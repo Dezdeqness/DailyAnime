@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.forum.presentation.ForumActions
 import com.dezdeqness.feature.forum.presentation.ForumPage
 import com.dezdeqness.feature.forum.presentation.ForumViewModel
@@ -14,6 +13,7 @@ import com.dezdeqness.feature.forum.presentation.store.ForumNamespace
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.ForumTopics
 import com.dezdeqness.presentation.TopicDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun ForumStandalonePage(
@@ -22,7 +22,7 @@ fun ForumStandalonePage(
 ) {
     val context = LocalContext.current
     val forumComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .forumComponent()
             .create()
     }

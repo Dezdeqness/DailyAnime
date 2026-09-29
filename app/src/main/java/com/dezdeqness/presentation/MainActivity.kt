@@ -90,6 +90,7 @@ import com.dezdeqness.presentation.routing.slideInFromTop
 import com.dezdeqness.presentation.routing.slideOutToBottom
 import com.dezdeqness.presentation.routing.slideOutToStart
 import com.dezdeqness.presentation.routing.slideOutToTop
+import com.dezdeqness.sourceComponent
 import com.dezdeqness.ui.CustomSnackbarVisuals
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         application
-            .appComponent
+            .sourceComponent
             .mainComponent()
             .create()
             .inject(this)

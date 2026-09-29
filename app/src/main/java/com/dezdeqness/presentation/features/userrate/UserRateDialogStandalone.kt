@@ -11,13 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.userrate.EditRateUiModel
 import com.dezdeqness.feature.userrate.UserRateActions
 import com.dezdeqness.feature.userrate.UserRateContent
 import com.dezdeqness.feature.userrate.UserRateViewModel
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.sourceComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +37,7 @@ fun UserRateDialogStandalone(
 
     val context = LocalContext.current
     val editRateComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .editRateComponent()
             .build()
     }

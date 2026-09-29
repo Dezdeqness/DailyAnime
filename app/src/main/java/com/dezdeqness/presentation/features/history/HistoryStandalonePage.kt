@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.history.presentation.HistoryActions
 import com.dezdeqness.feature.history.presentation.HistoryPage
 import com.dezdeqness.feature.history.presentation.HistoryViewModel
 import com.dezdeqness.feature.history.presentation.store.HistoryNamespace
 import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun HistoryStandalonePage(
@@ -20,7 +20,7 @@ fun HistoryStandalonePage(
 ) {
     val context = LocalContext.current
     val historyComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .historyComponent()
             .create()
     }

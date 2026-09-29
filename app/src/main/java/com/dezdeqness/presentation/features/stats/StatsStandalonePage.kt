@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.stats.presentation.StatsPage
 import com.dezdeqness.feature.stats.presentation.profile.ProfileStatsViewModel
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun StatsStandalonePage(
@@ -17,7 +17,7 @@ fun StatsStandalonePage(
 ) {
     val context = LocalContext.current
     val statsComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .statsComponent()
             .create()
     }

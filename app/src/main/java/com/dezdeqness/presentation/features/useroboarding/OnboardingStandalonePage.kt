@@ -6,7 +6,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingActions
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingEvent
 import com.dezdeqness.feature.onboarding.flow.presentation.OnboardingFlowPage
@@ -20,6 +19,7 @@ import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresC
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresEvent
 import com.dezdeqness.feature.onboarding.selectgenres.presentation.SelectGenresViewModel
 import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.sourceComponent
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -32,7 +32,7 @@ fun OnboardingStandalonePage(
 ) {
     val context = LocalContext.current
     val onboardingComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .onboardingComponent()
             .create()
     }

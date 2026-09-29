@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.feature.search.presentation.AnimeSearchActions
 import com.dezdeqness.feature.search.presentation.AnimeSearchPage
@@ -17,6 +16,7 @@ import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterActions
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterViewModel
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.AnimeDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun SearchPageStandalone(
@@ -25,7 +25,7 @@ fun SearchPageStandalone(
 ) {
     val context = LocalContext.current
     val animeComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .animeComponent()
             .create()
     }

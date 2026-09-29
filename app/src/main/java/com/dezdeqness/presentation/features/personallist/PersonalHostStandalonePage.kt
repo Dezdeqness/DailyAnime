@@ -9,12 +9,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedActions
 import com.dezdeqness.presentation.features.unauthorized.UnauthorizedScreen
 import com.dezdeqness.presentation.features.unauthorized.host.PersonalListHostViewModel
 import com.dezdeqness.shared.presentation.model.AuthorizedUiState
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun PersonalHostStandalonePage(
@@ -24,7 +24,7 @@ fun PersonalHostStandalonePage(
 ) {
     val context = LocalContext.current
     val personalListComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .personalListComponent()
             .create()
     }

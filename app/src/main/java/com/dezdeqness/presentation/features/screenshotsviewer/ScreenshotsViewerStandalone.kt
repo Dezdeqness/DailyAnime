@@ -10,11 +10,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotViewerActions
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotViewerPage
 import com.dezdeqness.feature.screenshotsviewer.ScreenshotsViewModel
 import com.dezdeqness.foundation.ui.utils.rememberSystemUiController
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun ScreenshotsViewerStandalone(
@@ -25,7 +25,7 @@ fun ScreenshotsViewerStandalone(
 ) {
     val context = LocalContext.current
     val achievementsComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .screenshotsViewerComponent()
             .build()
     }

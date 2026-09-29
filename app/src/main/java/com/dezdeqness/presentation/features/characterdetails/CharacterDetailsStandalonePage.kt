@@ -21,6 +21,7 @@ import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffec
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.PersonDetails
+import com.dezdeqness.sourceComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -31,7 +32,7 @@ fun CharacterDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val component = remember {
-        context.appComponent
+        context.sourceComponent
             .characterDetailsFeatureComponent()
             .create()
     }

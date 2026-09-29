@@ -1,47 +1,12 @@
 package com.dezdeqness.di
 
 import android.content.Context
-import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
-import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.DataModule
-import com.dezdeqness.di.modules.FavouriteModule
-import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.source.shikimori.ShikimoriComponent
-import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
-import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
-import com.dezdeqness.di.subcomponents.AnimeComponent
-import com.dezdeqness.di.subcomponents.AnimeDetailsFeatureComponent
-import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
-import com.dezdeqness.di.subcomponents.AnimeStatsComponent
-import com.dezdeqness.di.subcomponents.AuthorizationComponent
-import com.dezdeqness.di.subcomponents.CalendarComponent
-import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
-import com.dezdeqness.di.subcomponents.FavouriteSubcomponent
-import com.dezdeqness.di.subcomponents.ForumComponent
-import com.dezdeqness.di.subcomponents.HistoryComponent
-import com.dezdeqness.di.subcomponents.HomeComponent
-import com.dezdeqness.di.subcomponents.MainComponent
-import com.dezdeqness.di.subcomponents.OnboardingSubcomponent
-import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
-import com.dezdeqness.di.subcomponents.PersonalListComponent
-import com.dezdeqness.di.subcomponents.PersonalListSearchComponent
-import com.dezdeqness.di.subcomponents.PersonalListTabComponent
-import com.dezdeqness.di.subcomponents.ProfileComponent
-import com.dezdeqness.di.subcomponents.RoutingComponent
-import com.dezdeqness.di.subcomponents.ScreenshotsViewerComponent
-import com.dezdeqness.di.subcomponents.SelectGenresSubcomponent
-import com.dezdeqness.di.subcomponents.SettingsComponent
-import com.dezdeqness.di.subcomponents.StatsComponent
-import com.dezdeqness.di.subcomponents.TopicDetailsComponent
-import com.dezdeqness.di.subcomponents.TopicsComponent
-import com.dezdeqness.di.subcomponents.UserRateComponent
-import com.dezdeqness.feature.auth.di.AuthModule
-import com.dezdeqness.feature.userrate.di.UserRatesModule
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.presentation.routing.ApplicationRouter
@@ -55,14 +20,8 @@ import javax.inject.Singleton
 @Component(
     modules = [
         ViewModelBuilderModule::class,
-        AppSubcomponents::class,
-        RemoteModule::class,
         AppModule::class,
-        AccountModule::class,
         DataModule::class,
-        FavouriteModule::class,
-        AuthModule::class,
-        UserRatesModule::class,
     ],
 )
 interface AppComponent {
@@ -72,67 +31,11 @@ interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
-    fun animeComponent(): AnimeComponent.Factory
-
-    fun profileComponent(): ProfileComponent.Factory
-
-    fun authorizationComponent(): AuthorizationComponent.Factory
-
-    fun animeDetailsFeatureComponent(): AnimeDetailsFeatureComponent.Factory
-
-    fun characterDetailsFeatureComponent(): CharacterDetailsFeatureComponent.Factory
-
-    fun personDetailsFeatureComponent(): PersonDetailsFeatureComponent.Factory
-
-    fun personalListComponent(): PersonalListComponent.Factory
-
-    fun personalListTabComponent(): PersonalListTabComponent.Factory
-
-    fun personalListSearchComponent(): PersonalListSearchComponent.Factory
-
-    fun editRateComponent(): UserRateComponent.Builder
-
-    fun calendarComponent(): CalendarComponent.Factory
-
-    fun historyComponent(): HistoryComponent.Factory
-
-    fun settingsComponent(): SettingsComponent.Factory
-
-    fun statsComponent(): StatsComponent.Factory
-
-    fun animeStatsComponent(): AnimeStatsComponent.Builder
-
-    fun animeSimilarComponent(): AnimeSimilarComponent.Builder
-
-    fun animeChronologyComponent(): AnimeChronologyComponent.Builder
-
-    fun mainComponent(): MainComponent.Factory
-
-    fun routingComponent(): RoutingComponent.Factory
-
     fun settingsRepository(): SettingsRepository
 
     fun coroutineDispatcherProvider(): CoroutineDispatcherProvider
 
-    fun screenshotsViewerComponent(): ScreenshotsViewerComponent.Builder
-
-    fun homeComponent(): HomeComponent.Factory
-
     fun debugComponent(): DebugComponent.Factory
-
-    fun achievementsComponent(): AchievementsSubcomponent.Builder
-
-    fun favouriteComponent(): FavouriteSubcomponent.Builder
-
-    fun selectGenresComponent(): SelectGenresSubcomponent.Factory
-
-    fun onboardingComponent(): OnboardingSubcomponent.Factory
-
-    fun topicsComponent(): TopicsComponent.Builder
-
-    fun forumComponent(): ForumComponent.Factory
-
-    fun topicDetailsComponent(): TopicDetailsComponent.Factory
 
     fun shikimoriComponent(): ShikimoriComponent.Factory
 
@@ -142,13 +45,9 @@ interface AppComponent {
 
     val applicationRouter: ApplicationRouter
 
-    val analyticsManager: AnalyticsManager
-
     val settingsRepository: SettingsRepository
 
     val permissionCheckProvider: PermissionCheckProvider
 
     val workSchedulerManager: WorkSchedulerManager
-
-    val sessionManager: SessionManager
 }

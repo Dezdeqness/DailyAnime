@@ -10,10 +10,10 @@ import com.dezdeqness.feature.userrate.data.datasource.UserRatesLocalDataSourceI
 import com.dezdeqness.feature.userrate.data.datasource.UserRatesRemoteDataSource
 import com.dezdeqness.feature.userrate.data.datasource.UserRatesRemoteDataSourceImpl
 import com.dezdeqness.feature.userrate.data.repository.UserRatesRepositoryImpl
+import com.dezdeqness.foundation.di.SourceScope
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 import retrofit2.Retrofit
 
 @Module
@@ -39,7 +39,7 @@ abstract class UserRatesModule {
         internal fun provideUserRatesApiService(retrofit: Retrofit): UserRatesApiService =
             retrofit.create(UserRatesApiService::class.java)
 
-        @Singleton
+        @SourceScope
         @Provides
         internal fun provideUserRateDatabase(context: Context): UserRateDatabase =
             UserRateDatabase.build(context)

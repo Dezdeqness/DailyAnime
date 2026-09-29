@@ -56,9 +56,7 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
             appComponent.configManager.invalidate()
         }
 
-        launch(appComponent.coroutineDispatcherProvider().io()) {
-            appComponent.sessionManager.restoreSession()
-        }
+        restoreSession(sourceComponent)
 
         launch {
             Coil.setImageLoader(
@@ -79,7 +77,13 @@ class ShikimoriApp : Application(), CoroutineScope, ApplicationBridge {
     }
 
     fun rebuildSourceComponent() {
-        currentSourceComponent = createSourceComponent(storedSourceType())
+        currentSourceComponent = createSourceComponent(storedSourceType()).also(::restoreSession)
+    }
+
+    private fun restoreSession(component: SourceComponent) {
+        launch(appComponent.coroutineDispatcherProvider().io()) {
+            component.sessionManager.restoreSession()
+        }
     }
 
     private fun storedSourceType(): SourceType {

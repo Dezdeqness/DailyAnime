@@ -19,6 +19,7 @@ import com.dezdeqness.feature.details.person.presentation.PersonDetailsViewModel
 import com.dezdeqness.feature.details.person.presentation.PersonIdKey
 import com.dezdeqness.feature.details.person.presentation.store.PersonDetailsNamespace
 import com.dezdeqness.foundation.utils.collectEvents
+import com.dezdeqness.sourceComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -29,7 +30,7 @@ fun PersonDetailsStandalonePage(
 ) {
     val context = LocalContext.current
     val component = remember {
-        context.appComponent
+        context.sourceComponent
             .personDetailsFeatureComponent()
             .create()
     }

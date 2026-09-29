@@ -41,6 +41,7 @@ import com.dezdeqness.presentation.AppContentTheme
 import com.dezdeqness.presentation.event.HandlePermission
 import com.dezdeqness.presentation.event.NavigateToMainFlow
 import com.dezdeqness.presentation.routing.ApplicationRouter
+import com.dezdeqness.sourceComponent
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -74,7 +75,7 @@ class RoutingActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         application
-            .appComponent
+            .sourceComponent
             .routingComponent()
             .create()
             .inject(this)

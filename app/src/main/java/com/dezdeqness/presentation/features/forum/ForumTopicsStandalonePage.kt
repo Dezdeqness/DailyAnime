@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.di.modules.TopicsArgsModule
 import com.dezdeqness.feature.topics.presentation.TopicListActions
 import com.dezdeqness.feature.topics.presentation.TopicListPage
@@ -14,6 +13,7 @@ import com.dezdeqness.feature.topics.presentation.TopicListViewModel
 import com.dezdeqness.feature.topics.presentation.store.TopicListNamespace
 import com.dezdeqness.foundation.utils.collectEvents
 import com.dezdeqness.presentation.TopicDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun ForumTopicsStandalonePage(
@@ -24,7 +24,7 @@ fun ForumTopicsStandalonePage(
 ) {
     val context = LocalContext.current
     val newsComponent = remember(permalink) {
-        context.appComponent
+        context.sourceComponent
             .topicsComponent()
             .argsModule(TopicsArgsModule(forumType = permalink))
             .build()

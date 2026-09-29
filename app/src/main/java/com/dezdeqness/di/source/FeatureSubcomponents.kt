@@ -1,4 +1,4 @@
-package com.dezdeqness.di
+package com.dezdeqness.di.source
 
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
 import com.dezdeqness.di.subcomponents.AnimeComponent
@@ -8,7 +8,6 @@ import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
-import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.di.subcomponents.ForumComponent
 import com.dezdeqness.di.subcomponents.MainComponent
 import com.dezdeqness.di.subcomponents.PersonDetailsFeatureComponent
@@ -36,10 +35,9 @@ import dagger.Module
         AnimeSimilarComponent::class,
         MainComponent::class,
         ScreenshotsViewerComponent::class,
-        DebugComponent::class,
         TopicsComponent::class,
         ForumComponent::class,
         TopicDetailsComponent::class,
     ],
 )
-class AppSubcomponents
+class FeatureSubcomponents

@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.profile.presentation.ProfileActions
 import com.dezdeqness.feature.profile.presentation.ProfilePage
 import com.dezdeqness.feature.profile.presentation.ProfileViewModel
@@ -15,6 +14,7 @@ import com.dezdeqness.presentation.Favourites
 import com.dezdeqness.presentation.History
 import com.dezdeqness.presentation.Settings
 import com.dezdeqness.presentation.Stats
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun ProfilePageStandalone(
@@ -23,7 +23,7 @@ fun ProfilePageStandalone(
 ) {
     val context = LocalContext.current
     val profileComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .profileComponent()
             .create()
     }

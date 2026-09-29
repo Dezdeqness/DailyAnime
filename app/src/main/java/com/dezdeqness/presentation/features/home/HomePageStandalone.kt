@@ -7,13 +7,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.feature.home.presentation.HomeActions
 import com.dezdeqness.feature.home.presentation.HomePage
 import com.dezdeqness.feature.home.presentation.HomeViewModel
 import com.dezdeqness.presentation.AnimeDetails
 import com.dezdeqness.presentation.BottomBarNav
 import com.dezdeqness.presentation.History
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun HomePageStandalone(
@@ -23,7 +23,7 @@ fun HomePageStandalone(
 ) {
     val context = LocalContext.current
     val homeComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .homeComponent()
             .create()
     }

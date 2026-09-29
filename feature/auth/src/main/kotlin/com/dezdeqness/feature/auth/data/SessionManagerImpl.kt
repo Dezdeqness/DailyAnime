@@ -9,15 +9,15 @@ import com.dezdeqness.contract.auth.usecases.LogoutUseCase
 import com.dezdeqness.contract.auth.usecases.RefreshTokenUseCase
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
 import com.dezdeqness.contract.user.repository.UserRepository
+import com.dezdeqness.foundation.di.SourceScope
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-@Singleton
+@SourceScope
 internal class SessionManagerImpl @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val logoutUseCase: LogoutUseCase,

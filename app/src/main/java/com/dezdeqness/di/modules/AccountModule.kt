@@ -18,17 +18,17 @@ import com.dezdeqness.data.repository.UserRepositoryImpl
 import com.dezdeqness.domain.auth.usecases.LoginUseCaseImpl
 import com.dezdeqness.domain.auth.usecases.LogoutUseCaseImpl
 import com.dezdeqness.domain.auth.usecases.RefreshTokenUseCaseImpl
+import com.dezdeqness.foundation.di.SourceScope
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 abstract class AccountModule {
 
     companion object {
 
-        @Singleton
+        @SourceScope
         @Provides
         fun bindAccountRepository(
             accountRemoteDataSource: AccountRemoteDataSource,
@@ -42,19 +42,19 @@ abstract class AccountModule {
             cookieCleaner = cookieCleaner,
         )
 
-        @Singleton
+        @SourceScope
         @Provides
         fun providerAccountRepository(repository: UserRepositoryImpl): UserRepository = repository
 
-        @Singleton
+        @SourceScope
         @Provides
         fun providerHistoryRepository(repository: UserRepositoryImpl): HistoryRepository = repository
 
-        @Singleton
+        @SourceScope
         @Provides
         fun providerAuthRepository(repository: UserRepositoryImpl): AuthRepository = repository
 
-        @Singleton
+        @SourceScope
         @Provides
         fun provideAccountDatabase(context: Context): AccountDatabase = AccountDatabase.build(context)
 

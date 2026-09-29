@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.dezdeqness.appComponent
 import com.dezdeqness.di.subcomponents.SimilarArgsModule
 import com.dezdeqness.feature.details.related.presentation.RelatedListActions
 import com.dezdeqness.feature.details.related.presentation.RelatedListViewModel
 import com.dezdeqness.feature.details.related.presentation.SimilarListPage
 import com.dezdeqness.presentation.AnimeDetails
+import com.dezdeqness.sourceComponent
 
 @Composable
 fun AnimeSimilarStandalonePage(
@@ -21,7 +21,7 @@ fun AnimeSimilarStandalonePage(
 ) {
     val context = LocalContext.current
     val animeSimilarComponent = remember {
-        context.appComponent
+        context.sourceComponent
             .animeSimilarComponent()
             .argsModule(SimilarArgsModule(animeId))
             .build()
