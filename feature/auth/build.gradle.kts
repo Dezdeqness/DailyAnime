@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":common:foundation"))
 
     implementation(project(":contract:auth"))
+    implementation(project(":contract:source"))
     implementation(project(":contract:favourite"))
     implementation(project(":contract:user"))
 }

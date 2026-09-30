@@ -1,6 +1,5 @@
 package com.dezdeqness.di.modules
 
-import android.content.Context
 import com.dezdeqness.contract.auth.repository.AuthRepository
 import com.dezdeqness.contract.auth.usecases.LoginUseCase
 import com.dezdeqness.contract.auth.usecases.LogoutUseCase
@@ -8,7 +7,6 @@ import com.dezdeqness.contract.auth.usecases.RefreshTokenUseCase
 import com.dezdeqness.contract.history.repository.HistoryRepository
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.data.core.CookieCleaner
-import com.dezdeqness.data.database.AccountDatabase
 import com.dezdeqness.data.datasource.AccountRemoteDataSource
 import com.dezdeqness.data.datasource.AccountRemoteDataSourceImpl
 import com.dezdeqness.data.datasource.db.AccountLocalDataSource
@@ -53,13 +51,6 @@ abstract class AccountModule {
         @SourceScope
         @Provides
         fun providerAuthRepository(repository: UserRepositoryImpl): AuthRepository = repository
-
-        @SourceScope
-        @Provides
-        fun provideAccountDatabase(context: Context): AccountDatabase = AccountDatabase.build(context)
-
-        @Provides
-        fun provideAccountDao(database: AccountDatabase) = database.accountDao()
     }
 
     @Binds

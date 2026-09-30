@@ -8,11 +8,11 @@ import androidx.room.Query
 @Dao
 internal interface AccountSessionDao {
 
-    @Query("SELECT * FROM accounts WHERE is_active = 1 LIMIT 1")
-    suspend fun getActiveAccount(): AccountSessionLocal?
+    @Query("SELECT * FROM accounts WHERE is_active = 1 AND account_type = :accountType LIMIT 1")
+    suspend fun getActiveAccount(accountType: String): AccountSessionLocal?
 
-    @Query("UPDATE accounts SET is_active = 0")
-    suspend fun deactivateAll()
+    @Query("UPDATE accounts SET is_active = 0 WHERE account_type = :accountType")
+    suspend fun deactivateAll(accountType: String)
 
     @Query("UPDATE accounts SET is_active = 0 WHERE id = :id")
     suspend fun deactivateAccount(id: String)
