@@ -1,21 +1,12 @@
 package com.dezdeqness.data.manager
 
-import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import com.dezdeqness.contract.auth.model.TokenEntity
 import com.dezdeqness.data.TokenEntityProto
-import com.dezdeqness.data.serializer.TokenSerializer
-import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class TokenManager @Inject constructor(private val context: Context) {
-
-    private val Context.tokenDataStore: DataStore<TokenEntityProto> by dataStore(
-        fileName = "token_preferences.pb",
-        serializer = TokenSerializer(context),
-    )
+class TokenManager(private val tokenDataStore: DataStore<TokenEntityProto>) {
 
     fun setTokenData(tokenEntity: TokenEntity) {
         val proto = TokenEntityProto.newBuilder()
@@ -26,7 +17,7 @@ class TokenManager @Inject constructor(private val context: Context) {
             .build()
 
         runBlocking {
-            context.tokenDataStore.updateData { _ -> proto }
+            tokenDataStore.updateData { _ -> proto }
         }
     }
 
@@ -37,7 +28,7 @@ class TokenManager @Inject constructor(private val context: Context) {
     }
 
     fun getTokenData(): TokenEntity {
-        val protoData = runBlocking { context.tokenDataStore.data.first() }
+        val protoData = runBlocking { tokenDataStore.data.first() }
         return TokenEntity(
             accessToken = protoData.accessToken,
             refreshToken = protoData.refreshToken,
@@ -48,7 +39,7 @@ class TokenManager @Inject constructor(private val context: Context) {
 
     fun clear() {
         runBlocking {
-            context.tokenDataStore.updateData { _ ->
+            tokenDataStore.updateData { _ ->
                 TokenEntityProto.getDefaultInstance()
             }
         }
