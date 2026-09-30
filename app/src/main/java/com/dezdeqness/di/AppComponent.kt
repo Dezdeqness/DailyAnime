@@ -4,9 +4,12 @@ import android.content.Context
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
+import com.dezdeqness.di.modules.AccountStorageModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.source.shikimori.ShikimoriComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
+import com.dezdeqness.feature.auth.di.AuthStorageModule
+import com.dezdeqness.feature.userrate.di.UserRateStorageModule
 import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
 import com.dezdeqness.foundation.di.ViewModelBuilderModule
 import com.dezdeqness.presentation.routing.ApplicationRouter
@@ -22,6 +25,9 @@ import javax.inject.Singleton
         ViewModelBuilderModule::class,
         AppModule::class,
         DataModule::class,
+        AccountStorageModule::class,
+        AuthStorageModule::class,
+        UserRateStorageModule::class,
     ],
 )
 interface AppComponent {

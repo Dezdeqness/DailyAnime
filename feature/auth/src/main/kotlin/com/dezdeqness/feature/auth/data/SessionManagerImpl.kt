@@ -8,6 +8,8 @@ import com.dezdeqness.contract.auth.usecases.LoginUseCase
 import com.dezdeqness.contract.auth.usecases.LogoutUseCase
 import com.dezdeqness.contract.auth.usecases.RefreshTokenUseCase
 import com.dezdeqness.contract.favourite.repository.FavouriteRepository
+import com.dezdeqness.contract.source.SourceConfig
+import com.dezdeqness.contract.source.SourceType
 import com.dezdeqness.contract.user.repository.UserRepository
 import com.dezdeqness.foundation.di.SourceScope
 import javax.inject.Inject
@@ -26,12 +28,15 @@ internal class SessionManagerImpl @Inject constructor(
     private val userRepository: UserRepository,
     private val accountSessionDao: AccountSessionDao,
     private val favouriteRepository: FavouriteRepository,
+    sourceConfig: SourceConfig,
 ) : SessionManager {
 
     private val _sessionState = MutableStateFlow<SessionState>(SessionState.Loading)
     override val sessionState: StateFlow<SessionState> = _sessionState.asStateFlow()
 
     private val refreshMutex = Mutex()
+
+    private val accountType = sourceConfig.type.toAccountType()
 
     override val isAuthorized: Boolean
         get() = _sessionState.value is SessionState.Authenticated
@@ -44,11 +49,11 @@ internal class SessionManagerImpl @Inject constructor(
             val state = resolveFromLocal()
             if (state != null) {
                 val authenticated = state as SessionState.Authenticated
-                accountSessionDao.deactivateAll()
+                accountSessionDao.deactivateAll(accountType.name)
                 accountSessionDao.insertAccount(
                     AccountSessionLocal(
                         id = authenticated.userId.toString(),
-                        accountType = AccountType.SHIKIMORI.name,
+                        accountType = accountType.name,
                         isActive = true,
                     ),
                 )
@@ -60,7 +65,7 @@ internal class SessionManagerImpl @Inject constructor(
     }
 
     override suspend fun logout(): Result<Unit> {
-        val activeAccount = accountSessionDao.getActiveAccount()
+        val activeAccount = accountSessionDao.getActiveAccount(accountType.name)
         val result = logoutUseCase()
 
         if (result.isSuccess) {
@@ -75,7 +80,7 @@ internal class SessionManagerImpl @Inject constructor(
     }
 
     override suspend fun restoreSession() {
-        val activeAccount = accountSessionDao.getActiveAccount()
+        val activeAccount = accountSessionDao.getActiveAccount(accountType.name)
 
         if (activeAccount == null || !authRepository.isAuthorized()) {
             _sessionState.value = SessionState.Unauthenticated
@@ -104,7 +109,7 @@ internal class SessionManagerImpl @Inject constructor(
                     }
                 }
                 .onFailure {
-                    val activeAccount = accountSessionDao.getActiveAccount()
+                    val activeAccount = accountSessionDao.getActiveAccount(accountType.name)
                     if (activeAccount != null) {
                         accountSessionDao.deactivateAccount(activeAccount.id)
                     }
@@ -127,6 +132,7 @@ internal class SessionManagerImpl @Inject constructor(
                 userId = profile.id,
                 nickname = profile.nickname,
                 avatar = profile.avatar,
+                accountType = accountType,
             )
         } else {
             SessionState.Unauthenticated
@@ -139,6 +145,12 @@ internal class SessionManagerImpl @Inject constructor(
             userId = profile.id,
             nickname = profile.nickname,
             avatar = profile.avatar,
+            accountType = accountType,
         )
+    }
+
+    private fun SourceType.toAccountType() = when (this) {
+        SourceType.SHIKIMORI -> AccountType.SHIKIMORI
+        SourceType.ANILIST -> AccountType.ANILIST
     }
 }
