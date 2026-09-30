@@ -6,6 +6,8 @@ import com.dezdeqness.data.core.AppLogger
 import com.dezdeqness.data.core.config.ConfigManager
 import com.dezdeqness.di.modules.AccountStorageModule
 import com.dezdeqness.di.modules.DataModule
+import com.dezdeqness.di.modules.NetworkModule
+import com.dezdeqness.di.modules.TokenStorageModule
 import com.dezdeqness.di.source.shikimori.ShikimoriComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.feature.auth.di.AuthStorageModule
@@ -25,6 +27,8 @@ import javax.inject.Singleton
         ViewModelBuilderModule::class,
         AppModule::class,
         DataModule::class,
+        NetworkModule::class,
+        TokenStorageModule::class,
         AccountStorageModule::class,
         AuthStorageModule::class,
         UserRateStorageModule::class,

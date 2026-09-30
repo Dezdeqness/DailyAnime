@@ -2,7 +2,6 @@ package com.dezdeqness.di.source.shikimori
 
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.FavouriteModule
-import com.dezdeqness.di.modules.RemoteModule
 import com.dezdeqness.di.source.FeatureSubcomponents
 import com.dezdeqness.di.source.SourceComponent
 import com.dezdeqness.di.source.SourceSharedModule
@@ -17,7 +16,7 @@ import dagger.Subcomponent
         ShikimoriSourceModule::class,
         FeatureSubcomponents::class,
         SourceSharedModule::class,
-        RemoteModule::class,
+        ShikimoriRemoteModule::class,
         AccountModule::class,
         FavouriteModule::class,
         AuthModule::class,
