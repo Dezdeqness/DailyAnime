@@ -1,5 +1,6 @@
 package com.dezdeqness.di.source.shikimori
 
+import com.dezdeqness.data.anime.di.AnimeDataModule
 import com.dezdeqness.di.modules.AccountModule
 import com.dezdeqness.di.modules.FavouriteModule
 import com.dezdeqness.di.source.FeatureSubcomponents
@@ -17,6 +18,7 @@ import dagger.Subcomponent
         FeatureSubcomponents::class,
         SourceSharedModule::class,
         ShikimoriRemoteModule::class,
+        AnimeDataModule::class,
         AccountModule::class,
         FavouriteModule::class,
         AuthModule::class,

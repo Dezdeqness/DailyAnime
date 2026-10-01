@@ -1,6 +1,7 @@
 ﻿package com.dezdeqness.feature.search.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.contract.anime.model.AnimeSearchParams
 import com.dezdeqness.contract.anime.usecases.GetAnimeListUseCase
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.contract.history.repository.HistorySearchRepository
@@ -37,7 +38,6 @@ import kotlinx.coroutines.flow.update
 class AnimeViewModel @Inject constructor(
     private val getAnimeListUseCase: GetAnimeListUseCase,
     private val animeUiMapper: AnimeUiMapper,
-    private val animeFilterResponseConverter: AnimeFilterResponseConverter,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
     private val historySearchRepository: HistorySearchRepository,
@@ -93,8 +93,10 @@ class AnimeViewModel @Inject constructor(
             flow {
                 val result = getAnimeListUseCase.invoke(
                     pageNumber = event.page,
-                    searchQuery = event.input.query,
-                    queryMap = animeFilterResponseConverter.convertSearchFilterToQueryMap(event.input.filters),
+                    params = AnimeSearchParams(
+                        text = event.input.query,
+                        filters = mapFilters(event.input.filters),
+                    ),
                 )
 
                 emit(LoadResult(event = event, result = result))
@@ -208,6 +210,16 @@ class AnimeViewModel @Inject constructor(
 
         return previous
     }
+
+    private fun mapFilters(sections: List<SearchSectionUiModel>): Map<String, Set<String>> =
+        sections
+            .groupBy { it.queryId }
+            .mapValues { (_, sameQuerySections) ->
+                sameQuerySections.flatMapTo(linkedSetOf()) { section ->
+                    section.items.map { it.id }.filter { it in section.selectedCells }
+                }
+            }
+            .filterValues { it.isNotEmpty() }
 
     private fun onErrorMessage() {
         launchOnIo {

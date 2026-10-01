@@ -2,6 +2,9 @@
 
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeSearchParams
+import com.dezdeqness.contract.filter.model.AnimeCell
+import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.contract.settings.models.AdultContentPreference
 import com.dezdeqness.contract.settings.repository.SettingsRepository
 import com.dezdeqness.contract.history.repository.HistorySearchRepository
@@ -44,9 +47,6 @@ class AnimeViewModelTest {
     private lateinit var animeUiMapper: AnimeUiMapper
 
     @MockK
-    private lateinit var animeFilterResponseConverter: AnimeFilterResponseConverter
-
-    @MockK
     private lateinit var messageConsumer: MessageConsumer
 
     @MockK
@@ -72,12 +72,10 @@ class AnimeViewModelTest {
             settingsRepository.observePreference(AdultContentPreference)
         } returns emptyFlow()
         every { historySearchRepository.getSearchHistoryFlow() } returns flowOf(listOf())
-        every { animeFilterResponseConverter.convertSearchFilterToQueryMap(any()) } returns mapOf()
 
         viewModel = AnimeViewModel(
             getAnimeListUseCase = getAnimeListUseCase,
             animeUiMapper = animeUiMapper,
-            animeFilterResponseConverter = animeFilterResponseConverter,
             messageConsumer = messageConsumer,
             messageProvider = messageProvider,
             historySearchRepository = historySearchRepository,
@@ -101,7 +99,7 @@ class AnimeViewModelTest {
         val entity = mockk<AnimeBriefEntity>()
         val uiItems = listOf(animeItem())
 
-        coEvery { getAnimeListUseCase.invoke(any(), any(), any()) } returns Result.success(
+        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
             GetAnimeListUseCase.AnimeListState(
                 list = listOf(entity),
                 hasNextPage = true,
@@ -125,7 +123,7 @@ class AnimeViewModelTest {
 
     @Test
     fun `WHEN list empty SHOULD emit empty state`() = runTest {
-        coEvery { getAnimeListUseCase.invoke(any(), any(), any()) } returns Result.success(
+        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
             GetAnimeListUseCase.AnimeListState(list = listOf(), hasNextPage = false, currentPage = 1),
         )
         every { animeUiMapper.map(listOf()) } returns listOf()
@@ -141,7 +139,7 @@ class AnimeViewModelTest {
 
     @Test
     fun `WHEN initial load fails SHOULD emit error state`() = runTest {
-        coEvery { getAnimeListUseCase.invoke(any(), any(), any()) } returns Result.failure(Exception("boom"))
+        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.failure(Exception("boom"))
 
         viewModel.animeSearchState.test {
             advanceUntilIdle()
@@ -155,7 +153,7 @@ class AnimeViewModelTest {
     @Test
     fun `WHEN query changed SHOULD reload and store search history`() = runTest {
         val entity = mockk<AnimeBriefEntity>()
-        coEvery { getAnimeListUseCase.invoke(any(), any(), any()) } returns Result.success(
+        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
             GetAnimeListUseCase.AnimeListState(list = listOf(entity), hasNextPage = false, currentPage = 1),
         )
         every { animeUiMapper.map(any()) } returns listOf(animeItem())
@@ -178,10 +176,10 @@ class AnimeViewModelTest {
     @Test
     fun `WHEN load more SHOULD append next page`() = runTest {
         val entity = mockk<AnimeBriefEntity>()
-        coEvery { getAnimeListUseCase.invoke(pageNumber = 1, any(), any()) } returns Result.success(
+        coEvery { getAnimeListUseCase.invoke(pageNumber = 1, any()) } returns Result.success(
             GetAnimeListUseCase.AnimeListState(list = listOf(entity), hasNextPage = true, currentPage = 2),
         )
-        coEvery { getAnimeListUseCase.invoke(pageNumber = 2, any(), any()) } returns Result.success(
+        coEvery { getAnimeListUseCase.invoke(pageNumber = 2, any()) } returns Result.success(
             GetAnimeListUseCase.AnimeListState(list = listOf(entity), hasNextPage = false, currentPage = 3),
         )
         every { animeUiMapper.map(any()) } returns listOf(animeItem()) andThen listOf(animeItem(id = 2L))
@@ -199,6 +197,44 @@ class AnimeViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `WHEN sections share a query id SHOULD merge their selections into one filter`() = runTest {
+        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
+            GetAnimeListUseCase.AnimeListState(list = listOf(), hasNextPage = false, currentPage = 1),
+        )
+        every { animeUiMapper.map(any()) } returns listOf()
+
+        viewModel.animeSearchState.test {
+            advanceUntilIdle()
+
+            viewModel.onFilterChanged(
+                listOf(
+                    section(innerId = "genre", queryId = "genre", selected = setOf("1")),
+                    section(innerId = "theme", queryId = "genre", selected = setOf("2")),
+                    section(innerId = "kind", queryId = "kind", selected = setOf()),
+                ),
+            )
+            advanceUntilIdle()
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        coVerify {
+            getAnimeListUseCase.invoke(
+                pageNumber = 1,
+                params = AnimeSearchParams(text = "", filters = mapOf("genre" to setOf("1", "2"))),
+            )
+        }
+    }
+
+    private fun section(innerId: String, queryId: String, selected: Set<String>) = SearchSectionUiModel(
+        innerId = innerId,
+        queryId = queryId,
+        displayName = innerId,
+        items = listOf(AnimeCell(id = "1", displayName = "1"), AnimeCell(id = "2", displayName = "2")),
+        selectedCells = selected,
+    )
 
     private fun animeItem(id: Long = 1L) =
         AnimeUiModel(id = id, title = "Naruto", kind = "TV", logoUrl = "")
