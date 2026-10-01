@@ -45,6 +45,11 @@ abstract class BaseStoreViewModel<Event : Any, State : Any, Effect : Any, Comman
 
     protected open suspend fun handleEffect(effect: Effect): Boolean = false
 
+    override fun onCleared() {
+        store.stop()
+        super.onCleared()
+    }
+
     protected fun accept(event: Event) {
         store.accept(event)
     }

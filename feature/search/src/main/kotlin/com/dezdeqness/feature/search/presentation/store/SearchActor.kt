@@ -19,8 +19,8 @@ class SearchActor @Inject constructor(
         Command.ObserveAdultContent ->
             settingsRepository
                 .observePreference(AdultContentPreference)
-                .drop(1)
                 .distinctUntilChanged()
+                .drop(1)
                 .map { Event.AdultContentChanged }
     }
 }
