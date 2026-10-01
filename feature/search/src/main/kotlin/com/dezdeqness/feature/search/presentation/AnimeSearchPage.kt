@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -19,7 +18,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,41 +29,39 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dezdeqness.architecture.store.paging.PageFooter
+import com.dezdeqness.architecture.store.paging.PagedContent
 import com.dezdeqness.feature.search.presentation.composables.AnimeSearch
 import com.dezdeqness.feature.search.presentation.composables.AnimeSearchGrid
 import com.dezdeqness.feature.search.presentation.composables.FilterFab
-import com.dezdeqness.feature.search.presentation.composables.HistoryItem
 import com.dezdeqness.feature.search.presentation.composables.ShimmerSearchLoading
+import com.dezdeqness.feature.search.presentation.history.SearchHistory
 import com.dezdeqness.feature.search.presentation.preview.AnimeSearchPreviewData
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.GeneralEmpty
 import com.dezdeqness.foundation.ui.views.GeneralError
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AnimeSearchPage(
-    modifier: Modifier = Modifier,
     stateFlow: StateFlow<AnimeSearchState>,
-    pullRefreshFlow: StateFlow<Boolean>,
-    scrollNeedFlow: StateFlow<Boolean>,
-    isListScrollingFlow: StateFlow<Boolean>,
-    historySearchFlow: StateFlow<List<String>>,
+    historyFlow: StateFlow<List<String>>,
+    scrollToTopRequests: Flow<Unit>,
     actions: AnimeSearchActions,
+    modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
 
     val state by stateFlow.collectAsStateWithLifecycle()
 
-    val isPullDownRefreshing by pullRefreshFlow.collectAsStateWithLifecycle()
+    val history by historyFlow.collectAsStateWithLifecycle()
 
-    val isScrollNeed by scrollNeedFlow.collectAsStateWithLifecycle()
-
-    val isListScrolling by isListScrollingFlow.collectAsStateWithLifecycle()
-
-    val historySearch by historySearchFlow.collectAsStateWithLifecycle()
+    var isListScrolling by remember { mutableStateOf(false) }
 
     val scrollBehavior = SearchBarDefaults.enterAlwaysSearchBarScrollBehavior()
 
@@ -80,46 +76,29 @@ fun AnimeSearchPage(
                 scrollBehavior = scrollBehavior,
                 onQueryChanged = actions::onQueryChanged,
                 historyContent = { textFieldState, searchBarState ->
-                    LazyColumn {
-                        items(
-                            count = historySearch.size,
-                            key = { index ->
-                                historySearch[index]
-                            },
-                        ) { index ->
-                            val item = historySearch[index]
-
-                            HistoryItem(
-                                modifier = Modifier.animateItem(),
-                                title = item,
-                                onClicked = {
-                                    textFieldState.setTextAndPlaceCursorAtEnd(item)
-                                    actions.onQueryChanged(item)
-                                    scope.launch {
-                                        searchBarState.animateToCollapsed()
-                                    }
-                                },
-                                onRemoveClicked = {
-                                    actions.removeSearchHistoryItem(item)
-                                },
-                                onFulFillClicked = {
-                                    textFieldState.setTextAndPlaceCursorAtEnd(item)
-                                },
-                            )
-                        }
-                    }
+                    SearchHistory(
+                        history = history,
+                        onItemClick = { item ->
+                            textFieldState.setTextAndPlaceCursorAtEnd(item)
+                            actions.onQueryChanged(item)
+                            scope.launch { searchBarState.animateToCollapsed() }
+                        },
+                        onRemoveClick = actions::removeSearchHistoryItem,
+                        onFillClick = { item -> textFieldState.setTextAndPlaceCursorAtEnd(item) },
+                    )
                 },
             )
         },
         contentWindowInsets = WindowInsets(0.dp),
         floatingActionButton = {
+            val filterButton = state.filterButton
             AnimatedVisibility(
-                visible = isListScrolling.not(),
+                visible = filterButton is FilterButtonState.Shown && isListScrolling.not(),
                 enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight }) + fadeIn(),
                 exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight }) + fadeOut(),
             ) {
                 FilterFab(
-                    isFilterApplied = state.input.filters.isNotEmpty(),
+                    isFilterApplied = (filterButton as? FilterButtonState.Shown)?.isApplied == true,
                     onFilterClick = actions::onFabClicked,
                     onClearClick = actions::onFilterChanged,
                 )
@@ -127,10 +106,8 @@ fun AnimeSearchPage(
         },
     ) { contentPadding ->
         val pullRefreshState = rememberPullRefreshState(
-            refreshing = isPullDownRefreshing,
-            onRefresh = {
-                actions.onPullDownRefreshed()
-            },
+            refreshing = state.isRefreshing,
+            onRefresh = actions::onPullDownRefreshed,
         )
 
         Box(
@@ -140,8 +117,8 @@ fun AnimeSearchPage(
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.Center,
         ) {
-            when (state.status) {
-                AnimeSearchStatus.Initial, AnimeSearchStatus.Loading -> {
+            when (val content = state.content) {
+                PagedContent.Loading -> {
                     ShimmerSearchLoading(
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -149,49 +126,30 @@ fun AnimeSearchPage(
                     )
                 }
 
-                AnimeSearchStatus.Error -> {
+                PagedContent.Error -> {
                     GeneralError(modifier = Modifier.align(Alignment.Center))
                 }
 
-                AnimeSearchStatus.Empty -> {
+                PagedContent.Empty -> {
                     GeneralEmpty(modifier = Modifier.align(Alignment.Center))
                 }
 
-                AnimeSearchStatus.Loaded -> {
-                    var isPageLoading by remember {
-                        mutableStateOf(false)
-                    }
-
-                    // Workaround to fix pagination when load more was failure
-                    LaunchedEffect(state.list, isPullDownRefreshing) {
-                        isPageLoading = false
-                    }
-
+                is PagedContent.Items -> {
                     AnimeSearchGrid(
-                        list = state.list,
-                        hasNextPage = state.hasNextPage,
-                        isPageLoading = isPageLoading,
-                        isScrollNeed = isScrollNeed,
-                        onLoadMore = {
-                            actions.onLoadMore()
-                            isPageLoading = true
-                        },
-                        onNeedScroll = { gridState ->
-                            scope.launch {
-                                actions.onScrolled()
-                                gridState.animateScrollToItem(0)
-                            }
-                        },
+                        list = content.items,
+                        footer = content.footer,
+                        scrollToTopRequests = scrollToTopRequests,
+                        onLoadMore = actions::onLoadMore,
                         onAnimeClicked = actions::onAnimeClicked,
                         onScrollInProgress = { isScrolling ->
-                            actions.onScrollInProgress(isScrolling)
+                            isListScrolling = isScrolling
                         },
                     )
                 }
             }
 
             PullRefreshIndicator(
-                refreshing = isPullDownRefreshing,
+                refreshing = state.isRefreshing,
                 pullRefreshState,
                 Modifier.align(Alignment.TopCenter),
             )
@@ -206,14 +164,14 @@ fun AnimeSearchPagePreview() {
         AnimeSearchPage(
             stateFlow = MutableStateFlow(
                 AnimeSearchState(
-                    list = AnimeSearchPreviewData.list,
-                    status = AnimeSearchStatus.Loaded,
+                    content = PagedContent.Items(
+                        items = AnimeSearchPreviewData.list,
+                        footer = PageFooter.End,
+                    ),
                 ),
             ),
-            pullRefreshFlow = MutableStateFlow(false),
-            scrollNeedFlow = MutableStateFlow(false),
-            isListScrollingFlow = MutableStateFlow(false),
-            historySearchFlow = MutableStateFlow(listOf()),
+            historyFlow = MutableStateFlow(listOf()),
+            scrollToTopRequests = emptyFlow(),
             actions = AnimeSearchPreviewData.emptyActions,
         )
     }

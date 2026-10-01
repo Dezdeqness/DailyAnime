@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    api(project(":common:architecture"))
+
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)

@@ -13,9 +13,11 @@ class CompositeReducer<State : Any, Effect : Any, Command : Any>(
             ?.let { (it as EventMapper<Any>).map(event) }
             ?: event
 
-        val plugin = plugins.firstOrNull { it.eventType.isInstance(actual) }
-            ?: error("No FeatureReducer registered for ${actual::class.qualifiedName}")
+        val matching = plugins.filter { it.eventType.isInstance(actual) }
+        check(matching.isNotEmpty()) { "No FeatureReducer registered for ${actual::class.qualifiedName}" }
 
-        with(plugin as FeatureReducer<Any, State, Effect, Command>) { reduce(actual) }
+        matching.forEach { plugin ->
+            with(plugin as FeatureReducer<Any, State, Effect, Command>) { reduce(actual) }
+        }
     }
 }
