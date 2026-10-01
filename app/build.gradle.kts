@@ -214,6 +214,7 @@ dependencies {
     implementation(libs.androidx.browser)
 
     implementation(libs.elmslie.core)
+    implementation(project(":common:architecture"))
 
     implementation(project(":data:core"))
     implementation(project(":data:anime"))

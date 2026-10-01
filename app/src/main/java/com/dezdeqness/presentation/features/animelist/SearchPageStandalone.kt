@@ -11,6 +11,8 @@ import com.dezdeqness.contract.filter.model.SearchSectionUiModel
 import com.dezdeqness.feature.search.presentation.AnimeSearchActions
 import com.dezdeqness.feature.search.presentation.AnimeSearchPage
 import com.dezdeqness.feature.search.presentation.AnimeViewModel
+import com.dezdeqness.feature.search.presentation.history.SearchHistoryViewModel
+import com.dezdeqness.feature.search.presentation.store.SearchNamespace
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilter
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterActions
 import com.dezdeqness.feature.searchfilter.presentation.AnimeSearchFilterViewModel
@@ -35,14 +37,13 @@ fun SearchPageStandalone(
     val viewModel = viewModel<AnimeViewModel>(factory = animeComponent.viewModelFactory())
     val filterViewModel =
         viewModel<AnimeSearchFilterViewModel>(factory = animeComponent.viewModelFactory())
+    val historyViewModel = viewModel<SearchHistoryViewModel>(factory = animeComponent.viewModelFactory())
 
     Box(modifier = modifier) {
         AnimeSearchPage(
-            stateFlow = viewModel.animeSearchState,
-            pullRefreshFlow = viewModel.pullRefreshFlow,
-            scrollNeedFlow = viewModel.scrollNeedFlow,
-            isListScrollingFlow = viewModel.isListScrolling,
-            historySearchFlow = viewModel.historySearchFlow,
+            stateFlow = viewModel.uiState,
+            historyFlow = historyViewModel.history,
+            scrollToTopRequests = viewModel.scrollToTopRequests,
             actions = object : AnimeSearchActions {
                 override fun onPullDownRefreshed() {
                     viewModel.onPullDownRefreshed()
@@ -66,22 +67,15 @@ fun SearchPageStandalone(
 
                 override fun onQueryChanged(query: String) {
                     viewModel.onQueryChanged(query)
+                    historyViewModel.onQuerySubmitted(query)
                 }
 
                 override fun onFilterChanged(filtersList: List<SearchSectionUiModel>) {
-                    viewModel.onFilterChanged(filtersList = filtersList)
-                }
-
-                override fun onScrollInProgress(isScrollInProgress: Boolean) {
-                    viewModel.onScrollInProgress(isScrollInProgress)
+                    viewModel.onFilterChanged(filtersList)
                 }
 
                 override fun removeSearchHistoryItem(item: String) {
-                    viewModel.onRemoveSearchHistoryItem(item)
-                }
-
-                override fun onScrolled() {
-                    viewModel.onScrolled()
+                    historyViewModel.onRemoveClicked(item)
                 }
             },
         )
@@ -116,8 +110,10 @@ fun SearchPageStandalone(
         )
     }
 
-    viewModel.navigateToFilter.collectEvents { filters ->
-        filterViewModel.onFiltersReceived(filters)
+    viewModel.uiEffects.collectEvents { effect ->
+        if (effect is SearchNamespace.Effect.OpenFilters) {
+            filterViewModel.onFiltersReceived(effect.filters)
+        }
     }
 
     filterViewModel.appliedFilters.collectEvents { filters ->
