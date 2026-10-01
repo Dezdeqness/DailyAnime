@@ -1,35 +1,25 @@
 ﻿package com.dezdeqness.feature.search.presentation
 
-import app.cash.turbine.test
-import com.dezdeqness.contract.anime.model.AnimeBriefEntity
-import com.dezdeqness.contract.anime.model.AnimeSearchParams
+import com.dezdeqness.architecture.store.paging.PagingEvent
 import com.dezdeqness.contract.filter.model.AnimeCell
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
-import com.dezdeqness.contract.settings.models.AdultContentPreference
-import com.dezdeqness.contract.settings.repository.SettingsRepository
-import com.dezdeqness.contract.history.repository.HistorySearchRepository
-import com.dezdeqness.contract.anime.usecases.GetAnimeListUseCase
-import com.dezdeqness.feature.search.presentation.models.AnimeUiModel
-import com.dezdeqness.foundation.Logger
-import com.dezdeqness.foundation.coroutines.CoroutineDispatcherProvider
+import com.dezdeqness.feature.search.presentation.store.SearchNamespace.Effect
+import com.dezdeqness.feature.search.presentation.store.SearchNamespace.Event
+import com.dezdeqness.feature.search.presentation.store.SearchNamespace.State
 import com.dezdeqness.foundation.message.BaseMessageProvider
 import com.dezdeqness.foundation.message.MessageConsumer
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import junit.framework.TestCase.assertEquals
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import money.vivid.elmslie.core.store.ElmStore
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -37,56 +27,24 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class AnimeViewModelTest {
 
-    @MockK
-    private lateinit var logger: Logger
+    private val dispatcher = StandardTestDispatcher()
 
-    @MockK
-    private lateinit var getAnimeListUseCase: GetAnimeListUseCase
-
-    @MockK
-    private lateinit var animeUiMapper: AnimeUiMapper
-
-    @MockK
-    private lateinit var messageConsumer: MessageConsumer
-
-    @MockK
-    private lateinit var messageProvider: BaseMessageProvider
-
-    @MockK
-    private lateinit var historySearchRepository: HistorySearchRepository
-
-    @MockK
-    private lateinit var settingsRepository: SettingsRepository
+    private val states = MutableStateFlow(State())
+    private val effects = MutableSharedFlow<Effect>()
+    private val store = mockk<ElmStore<Any, State, Effect, Any>>(relaxUnitFun = true)
+    private val messageConsumer = mockk<MessageConsumer>(relaxed = true)
+    private val messageProvider = mockk<BaseMessageProvider>()
 
     private lateinit var viewModel: AnimeViewModel
 
     @Before
     fun setup() {
-        Dispatchers.setMain(StandardTestDispatcher())
+        Dispatchers.setMain(dispatcher)
+        every { store.states } returns states
+        every { store.effects } returns effects
+        every { messageProvider.getGeneralErrorMessage() } returns "error"
 
-        MockKAnnotations.init(this)
-
-        every { logger.logInfo(any(), any()) } returns Unit
-        every { logger.logInfo(any(), any(), any()) } returns Unit
-        every {
-            settingsRepository.observePreference(AdultContentPreference)
-        } returns emptyFlow()
-        every { historySearchRepository.getSearchHistoryFlow() } returns flowOf(listOf())
-
-        viewModel = AnimeViewModel(
-            getAnimeListUseCase = getAnimeListUseCase,
-            animeUiMapper = animeUiMapper,
-            messageConsumer = messageConsumer,
-            messageProvider = messageProvider,
-            historySearchRepository = historySearchRepository,
-            settingsRepository = settingsRepository,
-            coroutineDispatcherProvider = object : CoroutineDispatcherProvider {
-                override fun main() = Dispatchers.Main
-                override fun io() = Dispatchers.Main
-                override fun computation() = Dispatchers.Main
-            },
-            logger = logger,
-        )
+        viewModel = AnimeViewModel(store, messageConsumer, messageProvider)
     }
 
     @After
@@ -95,147 +53,52 @@ class AnimeViewModelTest {
     }
 
     @Test
-    fun `WHEN list loaded successfully SHOULD emit loaded state`() = runTest {
-        val entity = mockk<AnimeBriefEntity>()
-        val uiItems = listOf(animeItem())
-
-        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
-            GetAnimeListUseCase.AnimeListState(
-                list = listOf(entity),
-                hasNextPage = true,
-                currentPage = 2,
-            ),
-        )
-        every { animeUiMapper.map(listOf(entity)) } returns uiItems
-
-        viewModel.animeSearchState.test {
-            advanceUntilIdle()
-
-            val state = expectMostRecentItem()
-
-            assertEquals(uiItems, state.list)
-            assertEquals(AnimeSearchStatus.Loaded, state.status)
-            assertEquals(true, state.hasNextPage)
-
-            cancelAndIgnoreRemainingEvents()
-        }
+    fun `WHEN created SHOULD send Init to the store`() = runTest(dispatcher) {
+        verify(exactly = 1) { store.accept(Event.Init) }
     }
 
     @Test
-    fun `WHEN list empty SHOULD emit empty state`() = runTest {
-        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
-            GetAnimeListUseCase.AnimeListState(list = listOf(), hasNextPage = false, currentPage = 1),
-        )
-        every { animeUiMapper.map(listOf()) } returns listOf()
+    fun `WHEN query changed SHOULD send QueryChanged`() = runTest(dispatcher) {
+        viewModel.onQueryChanged("naruto")
 
-        viewModel.animeSearchState.test {
-            advanceUntilIdle()
-
-            assertEquals(AnimeSearchStatus.Empty, expectMostRecentItem().status)
-
-            cancelAndIgnoreRemainingEvents()
-        }
+        verify { store.accept(Event.QueryChanged("naruto")) }
     }
 
     @Test
-    fun `WHEN initial load fails SHOULD emit error state`() = runTest {
-        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.failure(Exception("boom"))
+    fun `WHEN filters changed SHOULD send FiltersChanged`() = runTest(dispatcher) {
+        val filters = listOf(section(selected = setOf("1")))
 
-        viewModel.animeSearchState.test {
-            advanceUntilIdle()
+        viewModel.onFilterChanged(filters)
 
-            assertEquals(AnimeSearchStatus.Error, expectMostRecentItem().status)
-
-            cancelAndIgnoreRemainingEvents()
-        }
+        verify { store.accept(Event.FiltersChanged(filters)) }
     }
 
     @Test
-    fun `WHEN query changed SHOULD reload and store search history`() = runTest {
-        val entity = mockk<AnimeBriefEntity>()
-        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
-            GetAnimeListUseCase.AnimeListState(list = listOf(entity), hasNextPage = false, currentPage = 1),
-        )
-        every { animeUiMapper.map(any()) } returns listOf(animeItem())
-        coEvery { historySearchRepository.addSearchHistory(any()) } returns Unit
+    fun `WHEN pulled to refresh SHOULD send PullRefreshed`() = runTest(dispatcher) {
+        viewModel.onPullDownRefreshed()
 
-        viewModel.animeSearchState.test {
-            advanceUntilIdle()
-
-            viewModel.onQueryChanged("naruto")
-            advanceUntilIdle()
-
-            assertEquals("naruto", expectMostRecentItem().input.query)
-
-            cancelAndIgnoreRemainingEvents()
-        }
-
-        coVerify { historySearchRepository.addSearchHistory("naruto") }
+        verify { store.accept(Event.PullRefreshed) }
     }
 
     @Test
-    fun `WHEN load more SHOULD append next page`() = runTest {
-        val entity = mockk<AnimeBriefEntity>()
-        coEvery { getAnimeListUseCase.invoke(pageNumber = 1, any()) } returns Result.success(
-            GetAnimeListUseCase.AnimeListState(list = listOf(entity), hasNextPage = true, currentPage = 2),
-        )
-        coEvery { getAnimeListUseCase.invoke(pageNumber = 2, any()) } returns Result.success(
-            GetAnimeListUseCase.AnimeListState(list = listOf(entity), hasNextPage = false, currentPage = 3),
-        )
-        every { animeUiMapper.map(any()) } returns listOf(animeItem()) andThen listOf(animeItem(id = 2L))
+    fun `WHEN load more requested SHOULD send paging LoadMore`() = runTest(dispatcher) {
+        viewModel.onLoadMore()
 
-        viewModel.animeSearchState.test {
-            advanceUntilIdle()
-
-            viewModel.onLoadMore()
-            advanceUntilIdle()
-
-            val state = expectMostRecentItem()
-            assertEquals(2, state.list.size)
-            assertEquals(AnimeSearchStatus.Loaded, state.status)
-
-            cancelAndIgnoreRemainingEvents()
-        }
+        verify { store.accept(PagingEvent.LoadMore) }
     }
 
     @Test
-    fun `WHEN sections share a query id SHOULD merge their selections into one filter`() = runTest {
-        coEvery { getAnimeListUseCase.invoke(any(), any()) } returns Result.success(
-            GetAnimeListUseCase.AnimeListState(list = listOf(), hasNextPage = false, currentPage = 1),
-        )
-        every { animeUiMapper.map(any()) } returns listOf()
+    fun `WHEN filter button clicked SHOULD send FilterClicked`() = runTest(dispatcher) {
+        viewModel.onFabClicked()
 
-        viewModel.animeSearchState.test {
-            advanceUntilIdle()
-
-            viewModel.onFilterChanged(
-                listOf(
-                    section(innerId = "genre", queryId = "genre", selected = setOf("1")),
-                    section(innerId = "theme", queryId = "genre", selected = setOf("2")),
-                    section(innerId = "kind", queryId = "kind", selected = setOf()),
-                ),
-            )
-            advanceUntilIdle()
-
-            cancelAndIgnoreRemainingEvents()
-        }
-
-        coVerify {
-            getAnimeListUseCase.invoke(
-                pageNumber = 1,
-                params = AnimeSearchParams(text = "", filters = mapOf("genre" to setOf("1", "2"))),
-            )
-        }
+        verify { store.accept(Event.FilterClicked) }
     }
 
-    private fun section(innerId: String, queryId: String, selected: Set<String>) = SearchSectionUiModel(
-        innerId = innerId,
-        queryId = queryId,
-        displayName = innerId,
-        items = listOf(AnimeCell(id = "1", displayName = "1"), AnimeCell(id = "2", displayName = "2")),
+    private fun section(selected: Set<String>) = SearchSectionUiModel(
+        innerId = "kind",
+        queryId = "kind",
+        displayName = "kind",
+        items = listOf(AnimeCell(id = "1", displayName = "1")),
         selectedCells = selected,
     )
-
-    private fun animeItem(id: Long = 1L) =
-        AnimeUiModel(id = id, title = "Naruto", kind = "TV", logoUrl = "")
 }
