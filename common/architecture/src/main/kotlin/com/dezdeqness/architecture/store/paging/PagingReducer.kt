@@ -44,7 +44,7 @@ class PagingReducer<Item : Any, Params : Any, Error : Any, State, Effect : Any, 
             PagingEvent.LoadMore -> {
                 val params = slice.nextParams ?: return
                 if (slice.isLoading || slice.isRefreshing || slice.endReached) return
-                state { state.updatePaging(slice.copy(isLoading = true)) as State }
+                state { state.updatePaging(slice.copy(isLoading = true, error = null)) as State }
                 commands { +commandFactory.create(params) }
             }
 
@@ -59,6 +59,7 @@ class PagingReducer<Item : Any, Params : Any, Error : Any, State, Effect : Any, 
                             isLoading = false,
                             isRefreshing = false,
                             endReached = nextParams == null,
+                            error = null,
                         ),
                     ) as State
                 }

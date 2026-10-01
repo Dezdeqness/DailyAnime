@@ -7,4 +7,12 @@ data class PagingState<Item : Any, Params : Any, Error : Any>(
     val isRefreshing: Boolean = false,
     val endReached: Boolean = false,
     val error: Error? = null,
-)
+) {
+    fun restart(params: Params): PagingState<Item, Params, Error> = copy(
+        nextParams = params,
+        isLoading = true,
+        isRefreshing = true,
+        endReached = false,
+        error = null,
+    )
+}

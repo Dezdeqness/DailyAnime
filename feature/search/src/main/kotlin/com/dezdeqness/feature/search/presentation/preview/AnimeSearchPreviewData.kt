@@ -18,12 +18,10 @@ object AnimeSearchPreviewData {
     val emptyActions = object : AnimeSearchActions {
         override fun onPullDownRefreshed() = Unit
         override fun onLoadMore() = Unit
-        override fun onScrolled() = Unit
         override fun onAnimeClicked(animeId: Long, title: String) = Unit
         override fun onFabClicked() = Unit
         override fun onQueryChanged(query: String) = Unit
         override fun onFilterChanged(filtersList: List<SearchSectionUiModel>) = Unit
-        override fun onScrollInProgress(isScrollInProgress: Boolean) = Unit
         override fun removeSearchHistoryItem(item: String) = Unit
     }
 }

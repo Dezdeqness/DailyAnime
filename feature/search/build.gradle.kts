@@ -72,4 +72,8 @@ dependencies {
     implementation(project(":shared:shared-presentation"))
 
     implementation(project(":domain:anime"))
+    implementation(project(":common:architecture"))
+
+    // Elmslie
+    implementation(libs.elmslie.core)
 }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
@@ -17,7 +16,9 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.dezdeqness.architecture.store.paging.PageFooter
 import com.dezdeqness.feature.search.presentation.models.AnimeUiModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 private const val PAGINATION_LOAD_FACTOR = 0.75
@@ -28,15 +29,15 @@ private const val LANDSCAPE_MAX_CELLS = 6
 fun AnimeSearchGrid(
     modifier: Modifier = Modifier,
     list: List<AnimeUiModel>,
-    hasNextPage: Boolean,
-    isPageLoading: Boolean,
-    isScrollNeed: Boolean,
+    footer: PageFooter,
+    scrollToTopRequests: Flow<Unit>,
     onLoadMore: () -> Unit,
-    onNeedScroll: (LazyGridState) -> Unit,
     onAnimeClicked: (Long, String) -> Unit,
     onScrollInProgress: (Boolean) -> Unit,
 ) {
     val gridState = rememberLazyGridState()
+    val hasNextPage = footer != PageFooter.End
+    val isPageLoading = footer == PageFooter.Loading
     val configuration = LocalConfiguration.current
 
     val cellCount = remember(configuration.orientation) {
@@ -64,10 +65,8 @@ fun AnimeSearchGrid(
         }
     }
 
-    LaunchedEffect(isScrollNeed) {
-        if (isScrollNeed) {
-            onNeedScroll(gridState)
-        }
+    LaunchedEffect(gridState, scrollToTopRequests) {
+        scrollToTopRequests.collect { gridState.animateScrollToItem(0) }
     }
 
     LaunchedEffect(isPageLoading, shouldStartPaginate.value) {

@@ -2,6 +2,9 @@ package com.dezdeqness.foundation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dezdeqness.architecture.store.paging.PageFooter
+import com.dezdeqness.architecture.store.paging.PagedContent
+import com.dezdeqness.architecture.store.paging.PagingState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,5 +47,21 @@ abstract class BaseStoreViewModel<Event : Any, State : Any, Effect : Any, Comman
 
     protected fun accept(event: Event) {
         store.accept(event)
+    }
+
+    protected fun <Item : Any> mapPagedContent(paging: PagingState<Item, *, *>): PagedContent<Item> = when {
+        paging.items.isNotEmpty() -> PagedContent.Items(
+            items = paging.items,
+            footer = when {
+                paging.isLoading && !paging.isRefreshing -> PageFooter.Loading
+                paging.error != null -> PageFooter.Failed
+                paging.endReached -> PageFooter.End
+                else -> PageFooter.CanLoadMore
+            },
+        )
+        paging.isLoading -> PagedContent.Loading
+        paging.error != null -> PagedContent.Error
+        paging.endReached -> PagedContent.Empty
+        else -> PagedContent.Loading
     }
 }
