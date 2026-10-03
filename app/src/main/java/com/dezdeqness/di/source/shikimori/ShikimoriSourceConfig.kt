@@ -9,6 +9,7 @@ object ShikimoriSourceConfig : SourceConfig {
 
     override val features: Set<SourceFeature> = setOf(
         ShikimoriSearch,
+        ShikimoriSearchFilter,
         ShikimoriAnimeDetails,
         ShikimoriChronology,
         ShikimoriSimilar,

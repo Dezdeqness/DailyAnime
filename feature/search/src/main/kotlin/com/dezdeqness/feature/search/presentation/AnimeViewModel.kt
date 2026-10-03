@@ -3,6 +3,9 @@
 import androidx.lifecycle.viewModelScope
 import com.dezdeqness.architecture.store.paging.PagingEvent
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
+import com.dezdeqness.contract.source.SourceConfig
+import com.dezdeqness.contract.source.SourceSearchFilter
+import com.dezdeqness.contract.source.hasFeature
 import com.dezdeqness.feature.search.presentation.store.SearchNamespace.Effect
 import com.dezdeqness.feature.search.presentation.store.SearchNamespace.Event
 import com.dezdeqness.feature.search.presentation.store.SearchNamespace.State
@@ -21,6 +24,7 @@ import money.vivid.elmslie.core.store.ElmStore
 
 class AnimeViewModel @Inject constructor(
     @SearchStore store: ElmStore<Any, State, Effect, Any>,
+    sourceConfig: SourceConfig,
     private val messageConsumer: MessageConsumer,
     private val messageProvider: BaseMessageProvider,
 ) : BaseStoreViewModel<Any, State, Effect, Any>(
@@ -30,9 +34,11 @@ class AnimeViewModel @Inject constructor(
     initialEvent = Event.Init,
 ) {
 
+    private val isFilterSupported = sourceConfig.hasFeature<SourceSearchFilter>()
+
     val uiState: StateFlow<AnimeSearchState> = state
         .map(::toUiState)
-        .stateIn(viewModelScope, SharingStarted.Eagerly, AnimeSearchState())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, toUiState())
 
     val scrollToTopRequests: Flow<Unit> = uiEffects
         .filterIsInstance<Effect.ScrollToTop>()
@@ -59,9 +65,13 @@ class AnimeViewModel @Inject constructor(
         Effect.ScrollToTop -> false
     }
 
-    private fun toUiState(state: State) = AnimeSearchState(
+    private fun toUiState(state: State = State()) = AnimeSearchState(
         content = mapPagedContent(state.paging),
         isRefreshing = state.paging.isRefreshing,
-        filterButton = FilterButtonState.Shown(isApplied = state.filters.isNotEmpty()),
+        filterButton = if (isFilterSupported) {
+            FilterButtonState.Shown(isApplied = state.filters.isNotEmpty())
+        } else {
+            FilterButtonState.Hidden
+        },
     )
 }
