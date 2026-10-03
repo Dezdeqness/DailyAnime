@@ -35,12 +35,16 @@ android {
 }
 
 dependencies {
+    api(project(":common:architecture"))
+    api(libs.elmslie.core)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutinesAndroid)
-    implementation(libs.kotlinx.coroutines.test)
+    api(libs.kotlinx.coroutines.test)
 
     // Unit Testing
     api(libs.junit.api)
     runtimeOnly(libs.junit.engine)
+    implementation(libs.androidx.test.junit)
 }
