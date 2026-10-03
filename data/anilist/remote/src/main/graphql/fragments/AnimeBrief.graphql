@@ -1,0 +1,33 @@
+fragment AnimeBrief on Media {
+    id
+    title {
+        userPreferred
+        romaji
+        english
+        native
+    }
+    coverImage {
+        extraLarge
+        large
+        medium
+    }
+    siteUrl
+    format
+    status
+    averageScore
+    episodes
+    nextAiringEpisode {
+        episode
+        airingAt
+    }
+    startDate {
+        year
+        month
+        day
+    }
+    endDate {
+        year
+        month
+        day
+    }
+}

@@ -1,0 +1,16 @@
+query SearchAnime(
+    $page: Int!,
+    $perPage: Int!,
+    $search: String,
+    $isAdult: Boolean,
+    $sort: [MediaSort],
+) {
+    Page(page: $page, perPage: $perPage) {
+        pageInfo {
+            hasNextPage
+        }
+        media(type: ANIME, search: $search, isAdult: $isAdult, sort: $sort) {
+            ...AnimeBrief
+        }
+    }
+}
