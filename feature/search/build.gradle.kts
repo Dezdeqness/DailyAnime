@@ -60,6 +60,7 @@ dependencies {
 
     // Mock
     testImplementation(libs.mockk.mockk)
+    testImplementation(project(":common:foundation-test"))
 
     // Common
     implementation(project(":common:foundation-ui"))
