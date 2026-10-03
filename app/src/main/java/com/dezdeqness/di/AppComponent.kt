@@ -8,6 +8,7 @@ import com.dezdeqness.di.modules.AccountStorageModule
 import com.dezdeqness.di.modules.DataModule
 import com.dezdeqness.di.modules.NetworkModule
 import com.dezdeqness.di.modules.TokenStorageModule
+import com.dezdeqness.di.source.anilist.AnilistComponent
 import com.dezdeqness.di.source.shikimori.ShikimoriComponent
 import com.dezdeqness.di.subcomponents.DebugComponent
 import com.dezdeqness.feature.auth.di.AuthStorageModule
@@ -48,6 +49,8 @@ interface AppComponent {
     fun debugComponent(): DebugComponent.Factory
 
     fun shikimoriComponent(): ShikimoriComponent.Factory
+
+    fun anilistComponent(): AnilistComponent.Factory
 
     val appLogger: AppLogger
 

@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
+import com.dezdeqness.di.source.SearchSourceComponent
 import com.dezdeqness.feature.search.presentation.AnimeSearchActions
 import com.dezdeqness.feature.search.presentation.AnimeSearchPage
 import com.dezdeqness.feature.search.presentation.AnimeViewModel
@@ -24,10 +25,10 @@ import com.dezdeqness.sourceComponent
 fun SearchPageStandalone(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    sourceComponent: SearchSourceComponent = LocalContext.current.sourceComponent,
 ) {
-    val context = LocalContext.current
-    val animeComponent = remember {
-        context.sourceComponent
+    val animeComponent = remember(sourceComponent) {
+        sourceComponent
             .animeComponent()
             .create()
     }

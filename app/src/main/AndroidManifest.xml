@@ -68,6 +68,7 @@
         </activity>
 
         <activity android:name="com.dezdeqness.presentation.features.debugscreen.DebugScreenActivity" />
+        <activity android:name="com.dezdeqness.presentation.features.debugscreen.page.DebugPageActivity" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
