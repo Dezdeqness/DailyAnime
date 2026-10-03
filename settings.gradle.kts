@@ -25,6 +25,8 @@ include(":data:remote-common")
 include(":data:anime")
 include(":data:analytics")
 include(":data:user")
+include(":data:anilist:remote")
+include(":data:anilist:anime")
 
 // domain
 include(":domain:core")

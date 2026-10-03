@@ -20,6 +20,9 @@ class ConfigManager(
     val baseGraphqlUrl: String
         get() = getValue(ConfigKeys.BASE_SHIKIMORI_GRAPHQL_URL)
 
+    val baseAnilistGraphqlUrl: String
+        get() = getValue(ConfigKeys.BASE_ANILIST_GRAPHQL_URL)
+
     val isCalendarEnabled: Boolean
         get() = getValue<Boolean>(ConfigKeys.CALENDAR_ENABLED) == true
 
