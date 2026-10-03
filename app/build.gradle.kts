@@ -220,6 +220,8 @@ dependencies {
     implementation(project(":data:anime"))
     implementation(project(":data:analytics"))
     implementation(project(":data:user"))
+    implementation(project(":data:anilist:remote"))
+    implementation(project(":data:anilist:anime"))
     implementation(project(":domain:core"))
     implementation(project(":domain:anime"))
     implementation(project(":domain:userrate"))

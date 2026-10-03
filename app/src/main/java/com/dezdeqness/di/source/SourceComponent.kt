@@ -1,11 +1,9 @@
 package com.dezdeqness.di.source
 
 import com.dezdeqness.contract.auth.SessionManager
-import com.dezdeqness.contract.source.SourceConfig
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
-import com.dezdeqness.di.subcomponents.AnimeComponent
 import com.dezdeqness.di.subcomponents.AnimeDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsComponent
@@ -32,14 +30,10 @@ import com.dezdeqness.di.subcomponents.TopicDetailsComponent
 import com.dezdeqness.di.subcomponents.TopicsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 
-interface SourceComponent {
-    val sourceConfig: SourceConfig
-
+interface SourceComponent : SearchSourceComponent {
     val sessionManager: SessionManager
 
     val analyticsManager: AnalyticsManager
-
-    fun animeComponent(): AnimeComponent.Factory
 
     fun profileComponent(): ProfileComponent.Factory
 

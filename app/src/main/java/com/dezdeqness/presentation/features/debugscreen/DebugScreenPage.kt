@@ -32,6 +32,7 @@ import com.dezdeqness.feature.settings.composables.TextSettingsView
 import com.dezdeqness.foundation.ui.theme.AppTheme
 import com.dezdeqness.foundation.ui.views.buttons.AppButton
 import com.dezdeqness.foundation.ui.views.toolbar.AppToolbar
+import com.dezdeqness.presentation.features.debugscreen.page.DebugPage
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,6 +74,15 @@ fun DebugScreenPage(
                         title = "Trigger onboarding",
                         subtitle = "Launch the full onboarding flow",
                         onClick = actions::onTriggerOnboardingClicked,
+                    )
+                }
+
+                items(DebugPage.entries.size) { index ->
+                    val page = DebugPage.entries[index]
+                    TextSettingsView(
+                        title = page.title,
+                        subtitle = page.subtitle,
+                        onClick = { actions.onDebugPageClicked(page) },
                     )
                 }
 

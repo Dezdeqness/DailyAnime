@@ -11,6 +11,8 @@ import com.dezdeqness.appComponent
 import com.dezdeqness.contract.source.SourceType
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.dezdeqness.foundation.ui.theme.AppTheme
+import com.dezdeqness.presentation.features.debugscreen.page.DebugPage
+import com.dezdeqness.presentation.features.debugscreen.page.DebugPageActivity
 import com.dezdeqness.presentation.features.useroboarding.OnboardingActivity
 import com.dezdeqness.rebuildSourceComponent
 import javax.inject.Inject
@@ -63,6 +65,10 @@ class DebugScreenActivity : AppCompatActivity() {
 
                         override fun onTriggerOnboardingClicked() {
                             startActivity(OnboardingActivity.newIntent(this@DebugScreenActivity))
+                        }
+
+                        override fun onDebugPageClicked(page: DebugPage) {
+                            startActivity(DebugPageActivity.newIntent(this@DebugScreenActivity, page))
                         }
 
                         override fun onSourceSelected(sourceType: SourceType) {
