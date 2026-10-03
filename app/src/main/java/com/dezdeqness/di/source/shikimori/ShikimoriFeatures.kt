@@ -12,9 +12,12 @@ import com.dezdeqness.contract.source.SourceNews
 import com.dezdeqness.contract.source.SourcePersonDetails
 import com.dezdeqness.contract.source.SourcePersonalList
 import com.dezdeqness.contract.source.SourceSearch
+import com.dezdeqness.contract.source.SourceSearchFilter
 import com.dezdeqness.contract.source.SourceSimilar
 
 object ShikimoriSearch : SourceSearch
+
+object ShikimoriSearchFilter : SourceSearchFilter
 
 object ShikimoriAnimeDetails : SourceAnimeDetails
 

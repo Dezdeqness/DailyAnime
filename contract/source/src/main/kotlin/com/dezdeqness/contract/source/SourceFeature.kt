@@ -4,6 +4,8 @@ sealed interface SourceFeature
 
 interface SourceSearch : SourceFeature
 
+interface SourceSearchFilter : SourceFeature
+
 interface SourceAnimeDetails : SourceFeature
 
 interface SourceChronology : SourceFeature

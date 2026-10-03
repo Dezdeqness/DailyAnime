@@ -3,6 +3,8 @@
 import com.dezdeqness.architecture.store.paging.PagingEvent
 import com.dezdeqness.contract.filter.model.AnimeCell
 import com.dezdeqness.contract.filter.model.SearchSectionUiModel
+import com.dezdeqness.contract.source.SourceConfig
+import com.dezdeqness.contract.source.SourceSearchFilter
 import com.dezdeqness.feature.search.presentation.store.SearchNamespace.Effect
 import com.dezdeqness.feature.search.presentation.store.SearchNamespace.Event
 import com.dezdeqness.feature.search.presentation.store.SearchNamespace.State
@@ -11,11 +13,13 @@ import com.dezdeqness.foundation.message.MessageConsumer
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -34,6 +38,7 @@ class AnimeViewModelTest {
     private val store = mockk<ElmStore<Any, State, Effect, Any>>(relaxUnitFun = true)
     private val messageConsumer = mockk<MessageConsumer>(relaxed = true)
     private val messageProvider = mockk<BaseMessageProvider>()
+    private val sourceConfig = mockk<SourceConfig>()
 
     private lateinit var viewModel: AnimeViewModel
 
@@ -43,8 +48,9 @@ class AnimeViewModelTest {
         every { store.states } returns states
         every { store.effects } returns effects
         every { messageProvider.getGeneralErrorMessage() } returns "error"
+        every { sourceConfig.features } returns setOf(TestSearchFilter)
 
-        viewModel = AnimeViewModel(store, messageConsumer, messageProvider)
+        viewModel = AnimeViewModel(store, sourceConfig, messageConsumer, messageProvider)
     }
 
     @After
@@ -93,6 +99,25 @@ class AnimeViewModelTest {
 
         verify { store.accept(Event.FilterClicked) }
     }
+
+    @Test
+    fun `GIVEN source with search filter WHEN filters applied SHOULD show applied filter button`() = runTest(dispatcher) {
+        states.value = State(filters = listOf(section(selected = setOf("1"))))
+        advanceUntilIdle()
+
+        assertEquals(FilterButtonState.Shown(isApplied = true), viewModel.uiState.value.filterButton)
+    }
+
+    @Test
+    fun `GIVEN source without search filter SHOULD hide filter button`() = runTest(dispatcher) {
+        every { sourceConfig.features } returns emptySet()
+        val viewModel = AnimeViewModel(store, sourceConfig, messageConsumer, messageProvider)
+        advanceUntilIdle()
+
+        assertEquals(FilterButtonState.Hidden, viewModel.uiState.value.filterButton)
+    }
+
+    private object TestSearchFilter : SourceSearchFilter
 
     private fun section(selected: Set<String>) = SearchSectionUiModel(
         innerId = "kind",
