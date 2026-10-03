@@ -21,7 +21,7 @@ class SearchActorTest {
     fun `WHEN adult content setting changes SHOULD emit an event per real change, skipping the initial value`() =
         runTest {
             every { settingsRepository.observePreference(AdultContentPreference) } returns
-                flowOf(true, false, true, true, false)
+                flowOf(false, false, true, true, false)
 
             val events = actor.execute(Command.ObserveAdultContent).toList()
 
