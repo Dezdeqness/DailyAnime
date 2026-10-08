@@ -2,8 +2,8 @@ package com.dezdeqness.data.core
 
 import android.util.Log
 import com.dezdeqness.foundation.Logger
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 
 class AppLogger : Logger {
 

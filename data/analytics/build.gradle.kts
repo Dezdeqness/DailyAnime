@@ -21,6 +21,7 @@ android {
 dependencies {
     implementation(project(":contract:user"))
 
+    implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.analytics)
     implementation(libs.androidx.core)
 
