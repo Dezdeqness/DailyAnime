@@ -72,6 +72,7 @@ dependencies {
     ksp(libs.dagger.compilier)
 
     // Firebase
+    implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.crashlytics)
     implementation(libs.google.firebase.config)
 

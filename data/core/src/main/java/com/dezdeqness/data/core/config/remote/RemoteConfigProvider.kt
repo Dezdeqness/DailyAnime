@@ -5,9 +5,9 @@ import com.dezdeqness.data.core.BuildConfig
 import com.dezdeqness.data.core.config.BaseConfigProvider
 import com.dezdeqness.data.core.config.ConfigKeys
 import com.google.android.gms.tasks.Task
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.google.firebase.Firebase
+import com.google.firebase.remoteconfig.remoteConfig
+import com.google.firebase.remoteconfig.remoteConfigSettings
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.resume
 import kotlinx.coroutines.runBlocking

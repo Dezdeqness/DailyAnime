@@ -22,10 +22,7 @@ turbineVersion = "1.2.0"
 zoomableVersion = "1.5.3"
 androidJunitVersion = "1.2.1"
 espressoVersion = "3.6.1"
-firebaseBomVersion = "33.13.0"
-firebaseCrashlyticsVersion = "19.4.3"
-firebaseAnalyticsVersion = "22.4.0"
-firebaseConfigVersion = "22.1.1"
+firebaseBomVersion = "34.0.0"
 coilVersion = "2.7.0"
 composeActivityVersion = "1.10.1"
 composeBomVersion = "2025.04.01"
@@ -39,7 +36,7 @@ kspVersion = "2.0.21-1.0.26"
 androidTools = "31.9.2"
 material3 = "1.4.0-alpha13"
 
-androidVersion = "8.2.2"
+androidVersion = "8.9.2"
 kotlinAndroidVersion = "2.0.21"
 firebaseCrashlyticsGradleVersion = "3.0.3"
 
@@ -117,9 +114,9 @@ androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoVersion" }
 
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBomVersion" }
-google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
-google-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalyticsVersion" }
-google-firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigVersion" }
+google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+google-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+google-firebase-config = { group = "com.google.firebase", name = "firebase-config" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coilVersion" }

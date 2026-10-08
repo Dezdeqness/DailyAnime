@@ -9,10 +9,10 @@ class AndroidConfigPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.pluginManager.apply("jacoco")
         target.extensions.configure<BaseExtension> {
-            compileSdkVersion(35)
+            compileSdkVersion(36)
             defaultConfig {
                 minSdk = 24
-                targetSdk = 35
+                targetSdk = 36
             }
         }
     }
