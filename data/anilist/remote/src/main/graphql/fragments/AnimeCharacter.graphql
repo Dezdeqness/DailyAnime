@@ -1,0 +1,15 @@
+fragment AnimeCharacter on CharacterEdge {
+    role
+    node {
+        id
+        name {
+            userPreferred
+            full
+        }
+        image {
+            large
+            medium
+        }
+        siteUrl
+    }
+}

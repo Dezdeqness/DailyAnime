@@ -1,0 +1,29 @@
+query AnimeDetails($id: Int!) {
+    Media(id: $id, type: ANIME) {
+        ...AnimeBrief
+        description(asHtml: true)
+        duration
+        genres
+        studios(isMain: true) {
+            nodes {
+                id
+                name
+            }
+        }
+        trailer {
+            id
+            site
+            thumbnail
+        }
+        stats {
+            scoreDistribution {
+                score
+                amount
+            }
+            statusDistribution {
+                status
+                amount
+            }
+        }
+    }
+}
