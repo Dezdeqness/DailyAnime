@@ -1,0 +1,7 @@
+fragment AnimeRelation on MediaEdge {
+    relationType
+    node {
+        type
+        ...AnimeBrief
+    }
+}

@@ -1,0 +1,14 @@
+query AnimeAdditionalInfo($id: Int!, $charactersPerPage: Int!) {
+    Media(id: $id, type: ANIME) {
+        relations {
+            edges {
+                ...AnimeRelation
+            }
+        }
+        characters(sort: [ROLE, RELEVANCE, ID], perPage: $charactersPerPage) {
+            edges {
+                ...AnimeCharacter
+            }
+        }
+    }
+}
