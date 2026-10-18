@@ -16,32 +16,38 @@ import com.dezdeqness.foundation.ui.views.chips.AppChip
 @Composable
 fun MoreInfoSection(
     modifier: Modifier = Modifier,
-    onSimilarClick: () -> Unit,
-    onChronologyClick: () -> Unit,
-    onStatsClick: () -> Unit,
+    onSimilarClick: (() -> Unit)?,
+    onChronologyClick: (() -> Unit)?,
+    onStatsClick: (() -> Unit)?,
 ) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
-        item {
-            AppChip(
-                title = stringResource(R.string.anime_details_action_similar),
-                onClick = onSimilarClick,
-            )
+        onSimilarClick?.let {
+            item {
+                AppChip(
+                    title = stringResource(R.string.anime_details_action_similar),
+                    onClick = onSimilarClick,
+                )
+            }
         }
-        item {
-            AppChip(
-                title = stringResource(R.string.anime_details_action_chronology),
-                onClick = onChronologyClick,
-            )
+        onChronologyClick?.let {
+            item {
+                AppChip(
+                    title = stringResource(R.string.anime_details_action_chronology),
+                    onClick = onChronologyClick,
+                )
+            }
         }
-        item {
-            AppChip(
-                title = stringResource(R.string.anime_details_action_stats),
-                onClick = onStatsClick,
-            )
+        onStatsClick?.let {
+            item {
+                AppChip(
+                    title = stringResource(R.string.anime_details_action_stats),
+                    onClick = onStatsClick,
+                )
+            }
         }
     }
 }

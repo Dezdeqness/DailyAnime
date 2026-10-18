@@ -17,7 +17,8 @@ object CharactersSectionRenderer :
     ) {
         CharactersSection(
             items = section.items,
-            onItemClick = { onEvent(AnimeDetailsUiEvent.CharacterClicked(it)) },
+            onItemClick = { id: Long -> onEvent(AnimeDetailsUiEvent.CharacterClicked(id)) }
+                .takeIf { section.isClickable },
         )
     }
 }

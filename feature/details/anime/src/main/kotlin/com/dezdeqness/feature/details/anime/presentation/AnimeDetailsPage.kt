@@ -76,3 +76,21 @@ fun AnimeDetailsContentPreview() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+fun AnimeDetailsAnilistContentPreview() {
+    AppTheme {
+        Surface(color = AppTheme.colors.background) {
+            val manager = remember {
+                animeDetailsRenderManager()
+            }
+            CompositionLocalProvider(LocalDetailsRenderManagerComposition provides manager) {
+                DetailsContent<AnimeDetailsUiEvent>(
+                    sections = AnimeDetailsPreviewData.anilistSections,
+                    onEvent = {},
+                )
+            }
+        }
+    }
+}

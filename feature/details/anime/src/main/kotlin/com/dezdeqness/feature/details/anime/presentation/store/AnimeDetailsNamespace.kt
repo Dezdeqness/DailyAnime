@@ -1,9 +1,10 @@
 package com.dezdeqness.feature.details.anime.presentation.store
 
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
+import com.dezdeqness.contract.anime.model.ScoreStat
+import com.dezdeqness.contract.anime.model.StatusStat
 import com.dezdeqness.contract.anime.model.UserRateEntity
 import com.dezdeqness.contract.favourite.model.FavouriteButtonState
-import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.feature.details.common.presentation.DetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
@@ -60,8 +61,8 @@ interface AnimeDetailsNamespace {
         data class NavigateToSimilar(val animeId: Long) : Effect
         data class NavigateToChronology(val animeId: Long) : Effect
         data class NavigateToStats(
-            val scores: List<StatsItemEntity>,
-            val statuses: List<StatsItemEntity>,
+            val scores: List<ScoreStat>,
+            val statuses: List<StatusStat>,
         ) : Effect
         data class NavigateToScreenshotViewer(
             val index: Int,

@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":contract:user"))
     implementation(project(":contract:userrate"))
     implementation(project(":contract:favourite"))
+    implementation(project(":contract:source"))
 
     // Features
     implementation(project(":feature:userrate"))
