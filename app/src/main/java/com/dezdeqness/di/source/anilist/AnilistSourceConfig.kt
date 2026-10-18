@@ -9,5 +9,7 @@ object AnilistSourceConfig : SourceConfig {
 
     override val features: Set<SourceFeature> = setOf(
         AnilistSearch,
+        AnilistAnimeDetails,
+        AnilistAnimeStats,
     )
 }

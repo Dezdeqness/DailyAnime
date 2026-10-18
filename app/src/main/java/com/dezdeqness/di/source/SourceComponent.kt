@@ -4,9 +4,7 @@ import com.dezdeqness.contract.auth.SessionManager
 import com.dezdeqness.data.analytics.AnalyticsManager
 import com.dezdeqness.di.subcomponents.AchievementsSubcomponent
 import com.dezdeqness.di.subcomponents.AnimeChronologyComponent
-import com.dezdeqness.di.subcomponents.AnimeDetailsFeatureComponent
 import com.dezdeqness.di.subcomponents.AnimeSimilarComponent
-import com.dezdeqness.di.subcomponents.AnimeStatsComponent
 import com.dezdeqness.di.subcomponents.AuthorizationComponent
 import com.dezdeqness.di.subcomponents.CalendarComponent
 import com.dezdeqness.di.subcomponents.CharacterDetailsFeatureComponent
@@ -30,7 +28,10 @@ import com.dezdeqness.di.subcomponents.TopicDetailsComponent
 import com.dezdeqness.di.subcomponents.TopicsComponent
 import com.dezdeqness.di.subcomponents.UserRateComponent
 
-interface SourceComponent : SearchSourceComponent {
+interface SourceComponent :
+    SearchSourceComponent,
+    AnimeDetailsSourceComponent,
+    AnimeStatsSourceComponent {
     val sessionManager: SessionManager
 
     val analyticsManager: AnalyticsManager
@@ -38,8 +39,6 @@ interface SourceComponent : SearchSourceComponent {
     fun profileComponent(): ProfileComponent.Factory
 
     fun authorizationComponent(): AuthorizationComponent.Factory
-
-    fun animeDetailsFeatureComponent(): AnimeDetailsFeatureComponent.Factory
 
     fun characterDetailsFeatureComponent(): CharacterDetailsFeatureComponent.Factory
 
@@ -60,8 +59,6 @@ interface SourceComponent : SearchSourceComponent {
     fun settingsComponent(): SettingsComponent.Factory
 
     fun statsComponent(): StatsComponent.Factory
-
-    fun animeStatsComponent(): AnimeStatsComponent.Builder
 
     fun animeSimilarComponent(): AnimeSimilarComponent.Builder
 

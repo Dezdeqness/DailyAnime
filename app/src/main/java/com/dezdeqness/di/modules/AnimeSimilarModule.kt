@@ -1,6 +1,6 @@
 package com.dezdeqness.di.modules
 
-import com.dezdeqness.contract.anime.repository.AnimeRepository
+import com.dezdeqness.contract.anime.repository.AnimeSimilarRepository
 import com.dezdeqness.data.utils.ImageUrlUtils
 import com.dezdeqness.domain.anime.usecases.BaseListableUseCase
 import com.dezdeqness.domain.anime.usecases.GetSimilarListUseCase
@@ -23,6 +23,6 @@ class AnimeSimilarModule {
     )
 
     @Provides
-    fun provideGetSimilarListUseCase(animeRepository: AnimeRepository): BaseListableUseCase =
-        GetSimilarListUseCase(animeRepository = animeRepository)
+    fun provideGetSimilarListUseCase(repository: AnimeSimilarRepository): BaseListableUseCase =
+        GetSimilarListUseCase(repository = repository)
 }

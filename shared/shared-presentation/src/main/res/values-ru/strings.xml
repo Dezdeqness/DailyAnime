@@ -18,4 +18,42 @@
     <string name="bottom_navigation_search">Поиск</string>
     <string name="bottom_navigation_news">Новости</string>
     <string name="bottom_navigation_profile">Профиль</string>
+
+    <string name="anime_relation_adaptation">Адаптация</string>
+    <string name="anime_relation_prequel">Предыстория</string>
+    <string name="anime_relation_sequel">Продолжение</string>
+    <string name="anime_relation_parent">Основная история</string>
+    <string name="anime_relation_side_story">Другая история</string>
+    <string name="anime_relation_full_story">Развёрнутая история</string>
+    <string name="anime_relation_character">Общий персонаж</string>
+    <string name="anime_relation_summary">Обобщение</string>
+    <string name="anime_relation_alternative">Альтернативная версия</string>
+    <string name="anime_relation_alternative_setting">Альтернативная история</string>
+    <string name="anime_relation_spin_off">Ответвление</string>
+    <string name="anime_relation_source">Первоисточник</string>
+    <string name="anime_relation_compilation">Компиляция</string>
+    <string name="anime_relation_contains">Содержит</string>
+    <string name="anime_relation_same_universe">Та же вселенная</string>
+    <string name="anime_relation_other">Прочее</string>
+
+    <string name="anime_character_role_main">Главный</string>
+    <string name="anime_character_role_supporting">Второстепенный</string>
+    <string name="anime_character_role_background">Фоновый</string>
+
+    <string name="anime_video_trailer">Трейлер</string>
+    <string name="anime_video_character_trailer">Трейлер персонажа</string>
+    <string name="anime_video_commercial">Реклама</string>
+    <string name="anime_video_opening">Опенинг</string>
+    <string name="anime_video_ending">Эндинг</string>
+    <string name="anime_video_music">Музыкальный клип</string>
+    <string name="anime_video_clip">Клип</string>
+    <string name="anime_video_episode_preview">Превью эпизода</string>
+    <string name="anime_video_other">Видео</string>
+
+    <string name="anime_age_rating_g">Для всех</string>
+    <string name="anime_age_rating_pg">Для детей</string>
+    <string name="anime_age_rating_pg_13">13+</string>
+    <string name="anime_age_rating_r">17+</string>
+    <string name="anime_age_rating_r_plus">18+</string>
+    <string name="anime_age_rating_rx">Хентай</string>
 </resources>

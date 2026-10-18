@@ -20,4 +20,42 @@
     <string name="bottom_navigation_search">Search</string>
     <string name="bottom_navigation_news">News</string>
     <string name="bottom_navigation_profile">Profile</string>
+
+    <string name="anime_relation_adaptation">Adaptation</string>
+    <string name="anime_relation_prequel">Prequel</string>
+    <string name="anime_relation_sequel">Sequel</string>
+    <string name="anime_relation_parent">Parent story</string>
+    <string name="anime_relation_side_story">Side story</string>
+    <string name="anime_relation_full_story">Full story</string>
+    <string name="anime_relation_character">Character</string>
+    <string name="anime_relation_summary">Summary</string>
+    <string name="anime_relation_alternative">Alternative version</string>
+    <string name="anime_relation_alternative_setting">Alternative setting</string>
+    <string name="anime_relation_spin_off">Spin-off</string>
+    <string name="anime_relation_source">Source</string>
+    <string name="anime_relation_compilation">Compilation</string>
+    <string name="anime_relation_contains">Contains</string>
+    <string name="anime_relation_same_universe">Same universe</string>
+    <string name="anime_relation_other">Other</string>
+
+    <string name="anime_character_role_main">Main</string>
+    <string name="anime_character_role_supporting">Supporting</string>
+    <string name="anime_character_role_background">Background</string>
+
+    <string name="anime_video_trailer">Trailer</string>
+    <string name="anime_video_character_trailer">Character trailer</string>
+    <string name="anime_video_commercial">Commercial</string>
+    <string name="anime_video_opening">Opening</string>
+    <string name="anime_video_ending">Ending</string>
+    <string name="anime_video_music">Music video</string>
+    <string name="anime_video_clip">Clip</string>
+    <string name="anime_video_episode_preview">Episode preview</string>
+    <string name="anime_video_other">Video</string>
+
+    <string name="anime_age_rating_g">All ages</string>
+    <string name="anime_age_rating_pg">For children</string>
+    <string name="anime_age_rating_pg_13">13+</string>
+    <string name="anime_age_rating_r">17+</string>
+    <string name="anime_age_rating_r_plus">18+</string>
+    <string name="anime_age_rating_rx">Hentai</string>
 </resources>

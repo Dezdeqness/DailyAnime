@@ -1,6 +1,6 @@
 package com.dezdeqness.di.modules
 
-import com.dezdeqness.contract.anime.repository.AnimeRepository
+import com.dezdeqness.contract.anime.repository.AnimeChronologyRepository
 import com.dezdeqness.domain.anime.usecases.BaseListableUseCase
 import com.dezdeqness.domain.anime.usecases.GetChronologyUseCase
 import com.dezdeqness.feature.details.related.presentation.RelatedListUiMapper
@@ -17,6 +17,6 @@ class AnimeChronologyModule {
         ChronologyUiMapper(animeKindUtils = animeKindUtils)
 
     @Provides
-    fun provideGetChronologyUseCase(animeRepository: AnimeRepository): BaseListableUseCase =
-        GetChronologyUseCase(animeRepository = animeRepository)
+    fun provideGetChronologyUseCase(repository: AnimeChronologyRepository): BaseListableUseCase =
+        GetChronologyUseCase(repository = repository)
 }
