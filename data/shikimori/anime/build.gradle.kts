@@ -1,9 +1,9 @@
 plugins {
-    id("com.dezdeqness.data")
+    alias(libs.plugins.com.dezdeqness.data)
 }
 
 android {
-    namespace = "com.dezdeqness.data.anime"
+    namespace = "com.dezdeqness.data.shikimori.anime"
 }
 
 dependencies {

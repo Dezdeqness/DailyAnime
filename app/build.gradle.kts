@@ -217,7 +217,7 @@ dependencies {
     implementation(project(":common:architecture"))
 
     implementation(project(":data:core"))
-    implementation(project(":data:anime"))
+    implementation(project(":data:shikimori:anime"))
     implementation(project(":data:analytics"))
     implementation(project(":data:user"))
     implementation(project(":data:anilist:remote"))
