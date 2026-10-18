@@ -1,4 +1,4 @@
-package com.dezdeqness.data.anime.datasource
+package com.dezdeqness.data.shikimori.anime.datasource
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
@@ -7,7 +7,6 @@ import com.dezdeqness.data.AnimeChronologyQuery
 import com.dezdeqness.data.AnimeDetailsQuery
 import com.dezdeqness.data.AnimeListQuery
 import com.dezdeqness.data.DetailsQuery
-import com.dezdeqness.data.anime.AnimeApiService
 import com.dezdeqness.data.core.BaseDataSource
 import com.dezdeqness.data.core.createApiException
 import com.dezdeqness.data.core.createGraphqlException
@@ -15,26 +14,27 @@ import com.dezdeqness.data.mapper.AnimeMapper
 import com.dezdeqness.data.mapper.RelatedItemMapper
 import com.dezdeqness.data.mapper.RoleMapper
 import com.dezdeqness.data.mapper.ScreenshotMapper
+import com.dezdeqness.data.shikimori.anime.ShikimoriAnimeApiService
 import com.dezdeqness.data.type.OrderEnum
 import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Named
 
-class AnimeRemoteDataSourceImpl @Inject constructor(
-    private val apiService: Lazy<AnimeApiService>,
+class ShikimoriAnimeRemoteDataSourceImpl @Inject constructor(
+    private val apiService: Lazy<ShikimoriAnimeApiService>,
     @Named("shikimori_graphql_client") private val apolloClient: ApolloClient,
     private val animeMapper: AnimeMapper,
     private val screenshotMapper: ScreenshotMapper,
     private val roleMapper: RoleMapper,
     private val relatedItemMapper: RelatedItemMapper,
-) : BaseDataSource(), AnimeRemoteDataSource {
+) : BaseDataSource(), ShikimoriAnimeRemoteDataSource {
 
     override suspend fun getListAnime(
         queryMap: Map<String, String>,
         pageNumber: Int,
         sizeOfPage: Int,
         searchQuery: String,
-        isAdultContentEnabled: Boolean,
+        isAdultContentHidden: Boolean,
     ) = tryWithCatchSuspend {
         val response = apolloClient.query(
             AnimeListQuery(
@@ -57,7 +57,7 @@ class AnimeRemoteDataSourceImpl @Inject constructor(
                 genre = Optional.presentIfNotNull(queryMap["genre"]),
                 studio = Optional.presentIfNotNull(queryMap["studio"]),
                 franchise = Optional.presentIfNotNull(queryMap["franchise"]),
-                censored = Optional.Present(isAdultContentEnabled),
+                censored = Optional.Present(isAdultContentHidden),
                 mylist = Optional.presentIfNotNull(queryMap["mylist"]),
                 search = Optional.presentIfNotNull(searchQuery.ifEmpty { null }),
             ),

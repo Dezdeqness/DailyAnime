@@ -22,7 +22,7 @@ include(":app")
 // data
 include(":data:core")
 include(":data:remote-common")
-include(":data:anime")
+include(":data:shikimori:anime")
 include(":data:analytics")
 include(":data:user")
 include(":data:anilist:remote")
