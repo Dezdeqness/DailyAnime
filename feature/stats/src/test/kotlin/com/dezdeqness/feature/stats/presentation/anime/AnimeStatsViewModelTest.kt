@@ -32,7 +32,7 @@ class AnimeStatsViewModelTest {
 
     private val arguments = AnimeStatsArguments(
         scoresArgument = listOf(AnimeStatsTransferModel(name = "10", value = 154)),
-        statusesArgument = listOf(AnimeStatsTransferModel(name = "watching", value = 12)),
+        statusesArgument = listOf(AnimeStatsTransferModel(name = "WATCHING", value = 12)),
     )
 
     private lateinit var viewModel: AnimeStatsViewModel

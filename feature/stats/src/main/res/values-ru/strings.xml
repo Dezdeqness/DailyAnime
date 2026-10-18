@@ -9,4 +9,5 @@
     <string name="stats_status_dropped">Брошено</string>
     <string name="stats_status_on_hold">Отложено</string>
     <string name="stats_status_watching">Смотрю</string>
+    <string name="stats_status_rewatching">Пересматриваю</string>
 </resources>
