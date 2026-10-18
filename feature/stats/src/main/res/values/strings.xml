@@ -9,4 +9,5 @@
     <string name="stats_status_dropped">dropped</string>
     <string name="stats_status_on_hold">On hold</string>
     <string name="stats_status_watching">Watching</string>
+    <string name="stats_status_rewatching">Rewatching</string>
 </resources>

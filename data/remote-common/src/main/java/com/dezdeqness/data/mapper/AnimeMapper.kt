@@ -1,5 +1,6 @@
 package com.dezdeqness.data.mapper
 
+import com.dezdeqness.contract.anime.model.AgeRating
 import com.dezdeqness.contract.anime.model.AnimeBriefEntity
 import com.dezdeqness.contract.anime.model.AnimeChronologyEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
@@ -8,10 +9,12 @@ import com.dezdeqness.contract.anime.model.AnimeStatus
 import com.dezdeqness.contract.anime.model.GenreEntity
 import com.dezdeqness.contract.anime.model.GenreKindEntity
 import com.dezdeqness.contract.anime.model.ImageEntity
+import com.dezdeqness.contract.anime.model.ScoreStat
+import com.dezdeqness.contract.anime.model.StatusStat
 import com.dezdeqness.contract.anime.model.TypeEntity
 import com.dezdeqness.contract.anime.model.UserRateEntity
+import com.dezdeqness.contract.anime.model.UserRateStatus
 import com.dezdeqness.contract.home.model.HomeCalendarEntity
-import com.dezdeqness.contract.user.model.StatsItemEntity
 import com.dezdeqness.data.AnimeChronologyQuery
 import com.dezdeqness.data.AnimeDetailsQuery
 import com.dezdeqness.data.AnimeListQuery
@@ -20,6 +23,8 @@ import com.dezdeqness.data.UserRatesQuery
 import com.dezdeqness.data.UserRatesSearchQuery
 import com.dezdeqness.data.fragment.HomeAnime
 import com.dezdeqness.data.model.AnimeBriefRemote
+import com.dezdeqness.data.type.AnimeRatingEnum
+import com.dezdeqness.data.type.UserRateStatusEnum
 import com.dezdeqness.data.util.TimestampConverter
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -122,7 +127,7 @@ class AnimeMapper @Inject constructor(
         score = item.score?.toFloat() ?: 0f,
         kind = AnimeKind.fromString(item.kind?.rawValue.orEmpty()),
         duration = item.duration?.toString().orEmpty(),
-        rating = item.rating?.rawValue.orEmpty(),
+        rating = ageRatings[item.rating] ?: AgeRating.UNKNOWN,
         airedOnTimestamp = timestampConverter.convertToTimeStamp(
             (item.airedOn?.date ?: "").toString(),
         ),
@@ -164,18 +169,20 @@ class AnimeMapper @Inject constructor(
                 updatedAtTimestamp = timestampConverter.convertToTimeStampWithTime(userRate.updatedAt.toString()),
             )
         },
-        scoresStats = item.scoresStats?.map { score ->
-            StatsItemEntity(
-                name = score.score.toString(),
-                value = score.count,
+        scoresStats = item.scoresStats.orEmpty().map { score ->
+            ScoreStat(
+                score = score.score,
+                count = score.count,
             )
-        } ?: listOf(),
-        statusesStats = item.statusesStats?.map { status ->
-            StatsItemEntity(
-                name = status.status.rawValue,
-                value = status.count,
-            )
-        } ?: listOf(),
+        },
+        statusesStats = item.statusesStats.orEmpty().mapNotNull { status ->
+            userRateStatuses[status.status]?.let {
+                StatusStat(
+                    status = it,
+                    count = status.count,
+                )
+            }
+        },
     )
 
     private fun fromResponseGraphqlGenre(genre: AnimeDetailsQuery.Genre) = GenreEntity(
@@ -238,4 +245,24 @@ class AnimeMapper @Inject constructor(
             (item.releasedOn?.date ?: "").toString(),
         ),
     )
+
+    companion object {
+        private val ageRatings = mapOf(
+            AnimeRatingEnum.g to AgeRating.G,
+            AnimeRatingEnum.pg to AgeRating.PG,
+            AnimeRatingEnum.pg_13 to AgeRating.PG_13,
+            AnimeRatingEnum.r to AgeRating.R,
+            AnimeRatingEnum.r_plus to AgeRating.R_PLUS,
+            AnimeRatingEnum.rx to AgeRating.RX,
+        )
+
+        private val userRateStatuses = mapOf(
+            UserRateStatusEnum.watching to UserRateStatus.WATCHING,
+            UserRateStatusEnum.planned to UserRateStatus.PLANNED,
+            UserRateStatusEnum.completed to UserRateStatus.COMPLETED,
+            UserRateStatusEnum.dropped to UserRateStatus.DROPPED,
+            UserRateStatusEnum.on_hold to UserRateStatus.ON_HOLD,
+            UserRateStatusEnum.rewatching to UserRateStatus.REWATCHING,
+        )
+    }
 }

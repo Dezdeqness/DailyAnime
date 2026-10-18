@@ -1,14 +1,20 @@
 package com.dezdeqness.data.anilist.anime.datasource
 
-import com.dezdeqness.data.anilist.graphql.AnimeAdditionalInfoQuery
-import com.dezdeqness.data.anilist.graphql.AnimeDetailsQuery
-import com.dezdeqness.data.anilist.graphql.SearchAnimeQuery
+import com.dezdeqness.contract.anime.DetailsAdditionalInfo
+import com.dezdeqness.contract.anime.model.AnimeBriefEntity
+import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
+import com.dezdeqness.contract.core.Page
 
 interface AnilistAnimeRemoteDataSource {
 
-    suspend fun search(query: SearchAnimeQuery): Result<SearchAnimeQuery.Page>
+    suspend fun getListAnime(
+        pageNumber: Int,
+        sizeOfPage: Int,
+        searchQuery: String,
+        isAdultContentHidden: Boolean,
+    ): Result<Page<AnimeBriefEntity>>
 
-    suspend fun getDetails(query: AnimeDetailsQuery): Result<AnimeDetailsQuery.Media>
+    suspend fun getDetailsAnimeMainInfo(id: Long): Result<AnimeDetailsEntity>
 
-    suspend fun getAdditionalInfo(query: AnimeAdditionalInfoQuery): Result<AnimeAdditionalInfoQuery.Media>
+    suspend fun getAdditionalInfo(id: Long): Result<DetailsAdditionalInfo>
 }

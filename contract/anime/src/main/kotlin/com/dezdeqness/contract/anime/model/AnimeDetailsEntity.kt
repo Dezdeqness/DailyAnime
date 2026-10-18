@@ -1,7 +1,5 @@
 package com.dezdeqness.contract.anime.model
 
-import com.dezdeqness.contract.user.model.StatsItemEntity
-
 data class AnimeDetailsEntity(
     override val id: Long,
     override val name: String,
@@ -12,7 +10,7 @@ data class AnimeDetailsEntity(
     override val kind: AnimeKind,
     override val url: String,
     val duration: String,
-    val rating: String,
+    val rating: AgeRating,
     override val status: AnimeStatus,
     override val airedOnTimestamp: Long,
     override val releasedOnTimestamp: Long,
@@ -26,8 +24,8 @@ data class AnimeDetailsEntity(
     val videoList: List<VideoEntity>,
     val nextEpisodeAtTimestamp: Long,
     val userRate: UserRateEntity?,
-    val scoresStats: List<StatsItemEntity>,
-    val statusesStats: List<StatsItemEntity>,
+    val scoresStats: List<ScoreStat>,
+    val statusesStats: List<StatusStat>,
 ) : AnimeBriefEntity(
     id = id,
     name = name,

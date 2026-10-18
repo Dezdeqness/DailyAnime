@@ -1,6 +1,7 @@
 package com.dezdeqness.feature.stats.presentation.anime
 
 import androidx.compose.ui.graphics.Color
+import com.dezdeqness.contract.anime.model.UserRateStatus
 import com.dezdeqness.feature.stats.R
 import com.dezdeqness.feature.stats.presentation.models.DiagramChartUiModel
 import com.dezdeqness.feature.stats.presentation.models.ScoreChartUiModel
@@ -57,13 +58,14 @@ class AnimeStatsComposer(
             )
             val statuses = arguments
                 .statusesArgument
-                .map { value ->
+                .mapNotNull { value ->
+                    val status = UserRateStatus.entries.find { it.name == value.name } ?: return@mapNotNull null
                     StatsData(
-                        name = getStatusByName(value.name),
+                        name = getStatusTitle(status),
                         value = value.value.toString(),
                         currentProgress = value.value,
                         textName = value.name,
-                        color = getColorByName(value.name),
+                        color = getStatusColor(status),
                     )
                 }
             statsList.add(
@@ -77,28 +79,21 @@ class AnimeStatsComposer(
         return statsList
     }
 
-    private fun getStatusByName(name: String) = when (name) {
-        PLANNED -> R.string.stats_status_planned
-        WATCHING -> R.string.stats_status_watching
-        DROPPED -> R.string.stats_status_dropped
-        ON_HOLD -> R.string.stats_status_on_hold
-        else -> R.string.stats_status_completed
+    private fun getStatusTitle(status: UserRateStatus) = when (status) {
+        UserRateStatus.PLANNED -> R.string.stats_status_planned
+        UserRateStatus.WATCHING -> R.string.stats_status_watching
+        UserRateStatus.REWATCHING -> R.string.stats_status_rewatching
+        UserRateStatus.DROPPED -> R.string.stats_status_dropped
+        UserRateStatus.ON_HOLD -> R.string.stats_status_on_hold
+        UserRateStatus.COMPLETED -> R.string.stats_status_completed
     }
 
-    private fun getColorByName(name: String) = when (name) {
-        WATCHING -> Color(0xFF42A5F5)
-        COMPLETED -> Color(0xFF66BB6A)
-        DROPPED -> Color(0xFFEF5350)
-        PLANNED -> Color(0xFFFFA726)
-        ON_HOLD -> Color(0xFF26C6DA)
-        else -> Color.Gray
-    }
-
-    companion object {
-        private const val PLANNED = "planned"
-        private const val WATCHING = "watching"
-        private const val DROPPED = "dropped"
-        private const val ON_HOLD = "on_hold"
-        private const val COMPLETED = "completed"
+    private fun getStatusColor(status: UserRateStatus) = when (status) {
+        UserRateStatus.WATCHING -> Color(0xFF42A5F5)
+        UserRateStatus.REWATCHING -> Color(0xFFAB47BC)
+        UserRateStatus.COMPLETED -> Color(0xFF66BB6A)
+        UserRateStatus.DROPPED -> Color(0xFFEF5350)
+        UserRateStatus.PLANNED -> Color(0xFFFFA726)
+        UserRateStatus.ON_HOLD -> Color(0xFF26C6DA)
     }
 }
