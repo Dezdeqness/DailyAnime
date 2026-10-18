@@ -16,9 +16,10 @@ object MoreInfoSectionRenderer :
         onEvent: (AnimeDetailsUiEvent) -> Unit,
     ) {
         MoreInfoSection(
-            onSimilarClick = { onEvent(AnimeDetailsUiEvent.SimilarClicked) },
-            onChronologyClick = { onEvent(AnimeDetailsUiEvent.ChronologyClicked) },
-            onStatsClick = { onEvent(AnimeDetailsUiEvent.StatsClicked) },
+            onSimilarClick = { onEvent(AnimeDetailsUiEvent.SimilarClicked) }.takeIf { section.isSimilarVisible },
+            onChronologyClick = { onEvent(AnimeDetailsUiEvent.ChronologyClicked) }
+                .takeIf { section.isChronologyVisible },
+            onStatsClick = { onEvent(AnimeDetailsUiEvent.StatsClicked) }.takeIf { section.isStatsVisible },
         )
     }
 }

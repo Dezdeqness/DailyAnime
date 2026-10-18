@@ -11,9 +11,16 @@ sealed interface AnimeDetailsSection : DetailsSection {
         }
     }
 
-    data object MoreInfo : AnimeDetailsSection {
+    data class MoreInfo(
+        val isSimilarVisible: Boolean,
+        val isChronologyVisible: Boolean,
+        val isStatsVisible: Boolean,
+    ) : AnimeDetailsSection {
         override val rendererType: String = TYPE
-        const val TYPE = "anime_more_info"
+
+        companion object {
+            const val TYPE = "anime_more_info"
+        }
     }
 
     data class Related(val items: List<RelatedItem>) : AnimeDetailsSection {
@@ -24,7 +31,10 @@ sealed interface AnimeDetailsSection : DetailsSection {
         }
     }
 
-    data class Characters(val items: List<CharacterItem>) : AnimeDetailsSection {
+    data class Characters(
+        val items: List<CharacterItem>,
+        val isClickable: Boolean,
+    ) : AnimeDetailsSection {
         override val rendererType: String = TYPE
 
         companion object {

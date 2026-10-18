@@ -4,6 +4,12 @@ import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
 import com.dezdeqness.contract.anime.model.AnimeKind
 import com.dezdeqness.contract.anime.model.AnimeStatus
+import com.dezdeqness.contract.source.SourceAnimeStats
+import com.dezdeqness.contract.source.SourceCharacterDetails
+import com.dezdeqness.contract.source.SourceChronology
+import com.dezdeqness.contract.source.SourceConfig
+import com.dezdeqness.contract.source.SourceSimilar
+import com.dezdeqness.contract.source.hasFeature
 import com.dezdeqness.feature.details.anime.R
 import com.dezdeqness.feature.details.anime.presentation.models.AnimeDetailsSection
 import com.dezdeqness.feature.details.anime.presentation.models.CharacterItem
@@ -19,6 +25,7 @@ import com.dezdeqness.feature.details.common.presentation.sections.HeaderSection
 import com.dezdeqness.feature.details.common.presentation.sections.TitleSection
 import com.dezdeqness.foundation.provider.ResourceProvider
 import com.dezdeqness.foundation.ui.views.details.BriefInfoEntry
+import com.dezdeqness.shared.presentation.mapper.AnimeLabelMapper
 import com.dezdeqness.shared.presentation.utils.AnimeKindUtils
 import com.dezdeqness.shared.presentation.utils.UrlNormalizer
 import java.text.SimpleDateFormat
@@ -32,6 +39,8 @@ class AnimeDetailsComposer @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val animeKindUtils: AnimeKindUtils,
     private val urlNormalizer: UrlNormalizer,
+    private val sourceConfig: SourceConfig,
+    private val animeLabelMapper: AnimeLabelMapper,
 ) {
 
     private val dateFormatter = SimpleDateFormat("dd MMM", Locale.getDefault())
@@ -48,7 +57,7 @@ class AnimeDetailsComposer @Inject constructor(
             rating = details.score,
         )
 
-        sections += TitleSection(text = details.russian)
+        sections += TitleSection(text = details.russian.ifEmpty { details.name })
 
         sections += BriefInfoSection(items = composeBriefInfo(details))
 
@@ -64,7 +73,14 @@ class AnimeDetailsComposer @Inject constructor(
             sections += DescriptionSection(html = details.descriptionHTML)
         }
 
-        sections += AnimeDetailsSection.MoreInfo
+        val moreInfo = AnimeDetailsSection.MoreInfo(
+            isSimilarVisible = sourceConfig.hasFeature<SourceSimilar>(),
+            isChronologyVisible = sourceConfig.hasFeature<SourceChronology>(),
+            isStatsVisible = sourceConfig.hasFeature<SourceAnimeStats>(),
+        )
+        if (moreInfo.isSimilarVisible || moreInfo.isChronologyVisible || moreInfo.isStatsVisible) {
+            sections += moreInfo
+        }
 
         full.relates
             .map {
@@ -72,10 +88,11 @@ class AnimeDetailsComposer @Inject constructor(
                 RelatedItem(
                     id = brief.id,
                     imageUrl = urlNormalizer.normalize(brief.image.original),
-                    type = it.relationTitleRussian.ifEmpty { it.relationTitle },
-                    briefInfo = animeKindUtils.mapKind(brief.kind) +
-                        " • " +
-                        yearFormatter.format(brief.airedOnTimestamp),
+                    type = animeLabelMapper.relationTitle(it.kind),
+                    briefInfo = listOfNotNull(
+                        animeKindUtils.mapKind(brief.kind),
+                        brief.airedOnTimestamp.takeIf { it != 0L }?.let(yearFormatter::format),
+                    ).joinToString(" • "),
                 )
             }
             .takeIf { it.isNotEmpty() }
@@ -90,7 +107,12 @@ class AnimeDetailsComposer @Inject constructor(
                 )
             }
             .takeIf { it.isNotEmpty() }
-            ?.let { sections += AnimeDetailsSection.Characters(items = it) }
+            ?.let {
+                sections += AnimeDetailsSection.Characters(
+                    items = it,
+                    isClickable = sourceConfig.hasFeature<SourceCharacterDetails>(),
+                )
+            }
 
         full.screenshots
             .map {
@@ -107,7 +129,7 @@ class AnimeDetailsComposer @Inject constructor(
             .map {
                 VideoItem(
                     imageUrl = secureUrl(it.imageUrl),
-                    name = it.name,
+                    name = animeLabelMapper.videoTitle(it),
                     sourceUrl = it.url,
                 )
             }
@@ -171,10 +193,10 @@ class AnimeDetailsComposer @Inject constructor(
             )
         }
 
-        if (details.rating.isNotEmpty() && details.rating != "none") {
+        animeLabelMapper.ageRatingTitle(details.rating)?.let { rating ->
             list += BriefInfoEntry(
                 title = resourceProvider.getString(R.string.anime_details_brief_age_rating),
-                info = resourceProvider.getString(PREFIX_AGE_RATING + details.rating),
+                info = rating,
             )
         }
 
@@ -226,6 +248,5 @@ class AnimeDetailsComposer @Inject constructor(
     companion object {
         private const val EXCLUDED_HOSTING = "vk"
         private const val PREFIX_STATUS = "anime_status_"
-        private const val PREFIX_AGE_RATING = "anime_details_age_rating_"
     }
 }

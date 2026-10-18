@@ -55,7 +55,7 @@ val animeDetailsReducer = object : BaseDetailsReducer<
                         details = event.details,
                         sections = event.sections,
                         isAuthorized = event.isAuthorized,
-                        title = entity.russian,
+                        title = entity.russian.ifEmpty { entity.name },
                         shareUrl = entity.url,
                     )
                 }
@@ -80,7 +80,7 @@ val animeDetailsReducer = object : BaseDetailsReducer<
                     state.copy(
                         editRateSheet = EditRateSheetState.Visible(
                             userRateId = entity.userRate?.id ?: -1L,
-                            title = entity.russian,
+                            title = entity.russian.ifEmpty { entity.name },
                         ),
                     )
                 }

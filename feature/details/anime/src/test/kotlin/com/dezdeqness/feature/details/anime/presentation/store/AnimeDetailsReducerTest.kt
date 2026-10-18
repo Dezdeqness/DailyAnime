@@ -3,9 +3,11 @@ package com.dezdeqness.feature.details.anime.presentation.store
 import app.cash.turbine.test
 import com.dezdeqness.contract.anime.model.AnimeDetailsEntity
 import com.dezdeqness.contract.anime.model.AnimeDetailsFullEntity
+import com.dezdeqness.contract.anime.model.ScoreStat
 import com.dezdeqness.contract.anime.model.ScreenshotEntity
+import com.dezdeqness.contract.anime.model.StatusStat
 import com.dezdeqness.contract.anime.model.UserRateEntity
-import com.dezdeqness.contract.user.model.StatsItemEntity
+import com.dezdeqness.contract.anime.model.UserRateStatus
 import com.dezdeqness.feature.details.anime.presentation.models.AnimeDetailsSection
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsCommand
 import com.dezdeqness.feature.details.common.presentation.store.BaseDetailsEffect
@@ -84,6 +86,33 @@ class AnimeDetailsReducerTest {
             assertEquals("Берсерк", loaded.title)
             assertEquals("/animes/33", loaded.shareUrl)
             assertEquals(true, loaded.isAuthorized)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `WHEN OnDetailsLoaded AND russian is empty SHOULD use name as title`() = runTest {
+        val animeEntity = mockk<AnimeDetailsEntity>(relaxed = true) {
+            every { russian } returns ""
+            every { name } returns "Berserk"
+        }
+        val full = mockk<AnimeDetailsFullEntity> {
+            every { animeDetailsEntity } returns animeEntity
+        }
+
+        val store = newStore(AnimeDetailsNamespace.State(id = 33L, status = DetailsStatus.Loading))
+
+        store.states.drop(1).test {
+            store.accept(
+                AnimeDetailsNamespace.Event.OnDetailsLoaded(
+                    details = full,
+                    sections = emptyList(),
+                    isAuthorized = false,
+                ),
+            )
+
+            assertEquals("Berserk", awaitItem().title)
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -313,8 +342,11 @@ class AnimeDetailsReducerTest {
 
     @Test
     fun `WHEN StatsClicked AND details present SHOULD emit NavigateToStats`() = runTest {
-        val scores = listOf(mockk<StatsItemEntity>())
-        val statuses = listOf(mockk<StatsItemEntity>(), mockk<StatsItemEntity>())
+        val scores = listOf(ScoreStat(score = 10, count = 5))
+        val statuses = listOf(
+            StatusStat(status = UserRateStatus.WATCHING, count = 3),
+            StatusStat(status = UserRateStatus.COMPLETED, count = 7),
+        )
         val animeEntity = mockk<AnimeDetailsEntity>(relaxed = true) {
             every { scoresStats } returns scores
             every { statusesStats } returns statuses

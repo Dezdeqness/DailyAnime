@@ -36,7 +36,7 @@ import com.dezdeqness.foundation.ui.views.image.AppImage
 fun CharactersSection(
     modifier: Modifier = Modifier,
     items: List<CharacterItem>,
-    onItemClick: (Long) -> Unit,
+    onItemClick: ((Long) -> Unit)?,
 ) {
     Column(modifier = modifier) {
         Header(
@@ -59,17 +59,24 @@ fun CharactersSection(
 @Composable
 private fun CharacterCard(
     item: CharacterItem,
-    onClick: (Long) -> Unit,
+    onClick: ((Long) -> Unit)?,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val clickModifier = if (onClick != null) {
+        Modifier.clickable(
+            onClick = { onClick(item.id) },
+            interactionSource = interactionSource,
+            indication = ripple(color = AppTheme.colors.ripple),
+        )
+    } else {
+        Modifier
+    }
+
     Column(
         modifier = Modifier
             .width(80.dp)
             .clip(RoundedCornerShape(8.dp))
-            .clickable(
-                onClick = { onClick(item.id) },
-                interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(color = AppTheme.colors.ripple),
-            ),
+            .then(clickModifier),
     ) {
         AppImage(
             data = item.imageUrl,
