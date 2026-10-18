@@ -40,12 +40,6 @@
     <string name="anime_details_date_next_episode">Up to %1$d episode</string>
     <string name="anime_details_age_rating_title">Age rating</string>
 
-    <string name="anime_details_age_rating_g">All ages</string>
-    <string name="anime_details_age_rating_pg">For children</string>
-    <string name="anime_details_age_rating_pg_13">13+</string>
-    <string name="anime_details_age_rating_r">17+</string>
-    <string name="anime_details_age_rating_r_plus">18+</string>
-    <string name="anime_details_age_rating_rx">Hentai</string>
     <string name="anime_details_state_error_title">Try again</string>
 
     <string name="edit_rate_status_watching">Watching</string>

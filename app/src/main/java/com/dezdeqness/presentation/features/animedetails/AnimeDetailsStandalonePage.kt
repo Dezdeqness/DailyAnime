@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.dezdeqness.appComponent
+import com.dezdeqness.di.source.AnimeDetailsSourceComponent
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsPage
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsUiEvent
 import com.dezdeqness.feature.details.anime.presentation.AnimeDetailsViewModel
@@ -43,10 +44,11 @@ fun AnimeDetailsStandalonePage(
     modifier: Modifier = Modifier,
     animeId: Long,
     navController: NavHostController,
+    sourceComponent: AnimeDetailsSourceComponent = LocalContext.current.sourceComponent,
 ) {
     val context = LocalContext.current
-    val component = remember {
-        context.sourceComponent
+    val component = remember(sourceComponent) {
+        sourceComponent
             .animeDetailsFeatureComponent()
             .create()
     }
@@ -100,7 +102,7 @@ fun AnimeDetailsStandalonePage(
                     }
                 }
                 is BaseDetailsEffect.Share -> {
-                    val absolute = if (base.url.startsWith(baseUrl)) base.url else baseUrl + base.url
+                    val absolute = if (base.url.startsWith("http")) base.url else baseUrl + base.url
                     ShareCompat.IntentBuilder(context)
                         .setType("text/plain")
                         .setText(absolute)
@@ -146,10 +148,10 @@ fun AnimeDetailsStandalonePage(
                 navController.navigate(
                     DetailsStats(
                         scoreString = serializeListToString(
-                            effect.scores.map { AnimeStatsTransferModel(it.name, it.value) },
+                            effect.scores.map { AnimeStatsTransferModel(it.score.toString(), it.count) },
                         ),
                         statusesString = serializeListToString(
-                            effect.statuses.map { AnimeStatsTransferModel(it.name, it.value) },
+                            effect.statuses.map { AnimeStatsTransferModel(it.status.name, it.count) },
                         ),
                     ),
                 )

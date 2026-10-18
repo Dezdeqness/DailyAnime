@@ -40,12 +40,6 @@
     <string name="anime_details_date_next_episode">До %1$d эпизода</string>
     <string name="anime_details_age_rating_title">Возрастной рейтинг</string>
 
-    <string name="anime_details_age_rating_g">Для всех</string>
-    <string name="anime_details_age_rating_pg">Для детей</string>
-    <string name="anime_details_age_rating_pg_13">13+</string>
-    <string name="anime_details_age_rating_r">17+</string>
-    <string name="anime_details_age_rating_r_plus">18+</string>
-    <string name="anime_details_age_rating_rx">Хентай</string>
     <string name="anime_details_state_error_title">Попробовать еще раз</string>
 
     <string name="edit_rate_status_watching">Смотрю</string>

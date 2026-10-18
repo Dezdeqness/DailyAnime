@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.dezdeqness.di.source.AnimeStatsSourceComponent
 import com.dezdeqness.di.subcomponents.AnimeStatsArgsModule
 import com.dezdeqness.feature.stats.presentation.StatsPage
 import com.dezdeqness.feature.stats.presentation.anime.AnimeStatsArguments
@@ -19,10 +20,10 @@ fun AnimeStatsStandalonePage(
     scoreList: List<AnimeStatsTransferModel>,
     statusesList: List<AnimeStatsTransferModel>,
     navController: NavHostController,
+    sourceComponent: AnimeStatsSourceComponent = LocalContext.current.sourceComponent,
 ) {
-    val context = LocalContext.current
-    val animeStatsComponent = remember {
-        context.sourceComponent
+    val animeStatsComponent = remember(sourceComponent) {
+        sourceComponent
             .animeStatsComponent()
             .argsModule(
                 AnimeStatsArgsModule(
