@@ -89,6 +89,12 @@
 -keep class com.dezdeqness.data.CalendarApiService { *; }
 -keep class com.dezdeqness.data.UserRatesApiService { *; }
 
+# Retrofit services and Moshi models moved out of :data into feature/data modules
+-keep interface com.dezdeqness.** { @retrofit2.http.* <methods>; }
+-keep class com.dezdeqness.**.data.**Remote { *; }
+-keep class com.dezdeqness.**.data.**Response { *; }
+-keep class com.dezdeqness.feature.userrate.data.model.** { *; }
+
 # JSR 305 annotations are for embedding nullability information.
 -dontwarn javax.annotation.**
 # JSR 305 annotations are for embedding nullability information.

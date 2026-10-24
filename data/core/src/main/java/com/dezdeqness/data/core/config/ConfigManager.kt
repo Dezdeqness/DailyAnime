@@ -29,6 +29,13 @@ class ConfigManager(
     val homeGenresList: List<String>
         get() = getValue<String>(ConfigKeys.HOME_GENRES_LIST_IDS).split(",")
 
+    val excludedTopics: Set<String>
+        get() = getValue<String>(ConfigKeys.EXCLUDED_TOPICS)
+            .split(",")
+            .map(String::trim)
+            .filter(String::isNotEmpty)
+            .toSet()
+
     suspend fun invalidate() {
         remoteConfigProvider.setDefaults()
         remoteConfigProvider.refresh()
