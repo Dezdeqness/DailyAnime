@@ -28,6 +28,10 @@ enum class ConfigKeys(
         key = "home_genres_list_ids",
         defaultValue = "2,27,22", // GENRE_ID_ADVENTURE, GENRE_ID_ROMANTIC, GENRE_ID_SHOUNEN
     ),
+    EXCLUDED_TOPICS(
+        key = "excluded_topics",
+        defaultValue = "hidden,premoderation,contests,clubs,vn,animanga,site,tierlists,reviews",
+    ),
     ;
 
     companion object {
