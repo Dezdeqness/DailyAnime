@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 internal data class TopicRemote(
     val id: Long,
     @field:Json("topic_title")
-    val topicTitle: String,
+    val topicTitle: String?,
     val body: String,
     @field:Json("html_body")
     val htmlBody: String,

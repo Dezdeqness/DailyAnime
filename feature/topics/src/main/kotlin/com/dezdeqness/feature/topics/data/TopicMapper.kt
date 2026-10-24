@@ -12,7 +12,7 @@ internal class TopicMapper @Inject constructor() {
         val linked = remote.linked
         return TopicEntity(
             id = remote.id,
-            topicTitle = remote.topicTitle,
+            topicTitle = remote.topicTitle.orEmpty(),
             body = remote.body,
             htmlBody = remote.htmlBody,
             htmlFooter = remote.htmlFooter.orEmpty(),
